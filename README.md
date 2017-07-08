@@ -1,5 +1,5 @@
 # babajka-frontend
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4a502ebd6aa04ba58d6375bf4739abfa)](https://www.codacy.com/app/Drapegnik/babajka-frontend?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=babajka/babajka-frontend&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a3dbbfeb35e84d4dbbb394be08ec196a)](https://www.codacy.com/app/babajka/babajka-frontend?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=babajka/babajka-frontend&amp;utm_campaign=Badge_Grade)
 [![Dependency Status](https://www.versioneye.com/user/projects/595a95d16725bd003b4078a8/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/595a95d16725bd003b4078a8)
 
 Next.js &amp; React app
