@@ -9,9 +9,11 @@
     "deploy": "now",
     "lint": "eslint --ext .js --ext .jsx pages/",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "npm run dev"
+    "postinstall": "npm run dev",
+    "update-styles": "npm i --save babajka-markup"
   },
   "dependencies": {
+    "babajka-markup": "0.0.15",
     "next": "^3.0.1-beta.5",
     "now": "^7.1.1",
     "react": "^15.6.1",
