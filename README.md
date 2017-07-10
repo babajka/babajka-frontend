@@ -10,4 +10,5 @@ Next.js &amp; React app
 * `npm run build` for build production(?) version
 * `npm run lint` for check code style with [`eslint`](http://eslint.org/) and [`airbnb`](https://github.com/airbnb/javascript/tree/master/react) react style guide
 * `npm run deploy` for dev-deploing using [`now`](https://zeit.co/now)
+* `npm run update-styles` for update styles from markup module
 
