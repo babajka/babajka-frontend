@@ -11,4 +11,7 @@ Next.js &amp; React app
 * `npm run lint` for check code style with [`eslint`](http://eslint.org/) and [`airbnb`](https://github.com/airbnb/javascript/tree/master/react) react style guide
 * `npm run deploy` for dev-deploing using [`now`](https://zeit.co/now)
 * `npm run update-styles` for update styles from markup module
+* `npm run storybook:run` for run storybook on [`localhost:9001`](http://localhost:9001/)
+* `npm run storybook:build` for build static version of storybook
+* `npm run storybook:deploy` for deploy storybook on [`gh-pages`](https://babajka.github.io/babajka-frontend)
 

@@ -7,10 +7,13 @@
     "build": "next build",
     "start": "npm run build && next start",
     "deploy": "now",
-    "lint": "eslint --ext .js --ext .jsx pages/",
+    "lint": "eslint --ext .js --ext .jsx .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "npm run dev",
-    "update-styles": "npm i --save babajka-markup"
+    "update-styles": "npm i --save babajka-markup",
+    "storybook:run": "start-storybook -p 9001",
+    "storybook:build": "build-storybook",
+    "storybook:deploy": "build-storybook && gh-pages -d storybook-static"
   },
   "dependencies": {
     "babajka-markup": "0.0.15",
@@ -31,11 +34,15 @@
   "homepage": "https://github.com/babajka/babajka-frontend#readme",
   "main": "index.js",
   "devDependencies": {
+    "@storybook/addon-info": "^3.1.9",
+    "@storybook/addon-knobs": "^3.1.9",
+    "@storybook/react": "^3.1.9",
     "babel-eslint": "^7.2.1",
     "eslint": "^3.18.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-react": "^6.10.3"
+    "eslint-plugin-react": "^6.10.3",
+    "gh-pages": "^1.0.0"
   }
 }
