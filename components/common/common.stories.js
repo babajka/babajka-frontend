@@ -1,0 +1,59 @@
+import React from 'react';
+import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
+import { withKnobs, text, boolean } from '@storybook/addon-knobs';
+
+import Button from './Button';
+import StyleLayout from './StyleLayout';
+
+const stories = storiesOf('common', module);
+
+stories.addWithInfo(
+  'StyleLayout',
+  'This is the HOC that wraps provided components and import babajka styles',
+  () => {
+    const ComponentToAddStyles = () => null;
+    return (<StyleLayout><ComponentToAddStyles /></StyleLayout>);
+  },
+  { inline: true },
+);
+
+stories.addDecorator(withKnobs);
+stories.addDecorator(getStory => (
+  <StyleLayout>{getStory()}</StyleLayout>
+));
+
+stories.add('Button',
+  () => {
+    const withText = {
+      onClick: action('WithText: onClick'),
+      disabled: boolean('WithText: disabled', false),
+      children: text('WithText: children', 'Click me!'),
+      className: text('WithText: className', 'button is-primary'),
+    };
+
+    const withEmoji = {
+      onClick: action('withEmoji: onClick'),
+      disabled: boolean('withEmoji: disabled', true),
+      children: text('withEmoji: children', '😀 😎 👍 💯'),
+      className: text('withEmoji: className', 'button is-success'),
+    };
+
+    return (
+      <ol style={{ margin: '5% 5% 0 5%' }}>
+        <li>
+          <h3>withText</h3>
+          <Button {...withText} >{withText.children}</Button>
+        </li>
+
+        <br />
+        <br />
+
+        <li>
+          <h3>withEmoji</h3>
+          <Button {...withEmoji} >{withEmoji.children}</Button>
+        </li>
+      </ol>
+    );
+  },
+);
