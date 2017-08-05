@@ -16,7 +16,7 @@
     "storybook:deploy": "build-storybook && gh-pages -d storybook-static"
   },
   "dependencies": {
-    "babajka-markup": "0.0.15",
+    "babajka-markup": "0.0.24",
     "next": "^3.0.1-beta.5",
     "now": "^7.1.1",
     "react": "^15.6.1",

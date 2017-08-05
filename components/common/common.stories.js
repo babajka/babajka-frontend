@@ -2,9 +2,11 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, text, boolean } from '@storybook/addon-knobs';
+import imagePath from '../../images/photo5.jpg';
 
 import Button from './Button';
 import StyleLayout from './StyleLayout';
+import ArticlePreview from '../ArticlePreview/ArticlePreview';
 
 const stories = storiesOf('common', module);
 
@@ -56,4 +58,20 @@ stories.add('Button',
       </ol>
     );
   },
+);
+
+stories.add('ArticlePreview',
+	() => {
+        const props = {
+			imagePath: imagePath,
+			articlePath: '',
+			articleTitle: 'Некоратка аб Ахматавай',
+			articleSubtitle: 'Настоящую нежность не спутаешь ни с чем...',
+			articleAuthor: 'Зоя Тмац'
+        };
+
+        return (
+            <ArticlePreview {...props}/>
+        );
+    }
 );
