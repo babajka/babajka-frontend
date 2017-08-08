@@ -12,24 +12,24 @@ const ArticlePreview = ({...props}) => (
 			<div className="card-content">
 				<span className="title is-spaced">
 					<a href={props.articlePath}>
-						{props.articleTitle}
+						{props.title}
 					</a>
 				</span>
-				<p className="subtitle">{props.articleSubtitle}</p>
-				<p className="subtitle author is-4">{props.articleAuthor}</p>
+				<p className="subtitle">{props.subtitle}</p>
+				<p className="subtitle author is-4">{props.author}</p>
 			</div>
 		</article>
 	</div>
 );
 
 ArticlePreview.propTypes = {
-	articleAuthor: PropTypes.string,
-	articlePath: PropTypes.string.isRequired,
-	articleSubtitle: PropTypes.string,
 	articleClassName: PropTypes.string,
-	articleTitle: PropTypes.string.isRequired,
-	imagePath: PropTypes.string.isRequired,
+	articlePath: PropTypes.string.isRequired,
+	author: PropTypes.string,
 	imageClassName: PropTypes.string,
+	imagePath: PropTypes.string.isRequired,
+	subtitle: PropTypes.string,
+	title: PropTypes.string.isRequired,
 };
 
 ArticlePreview.defaultProps = {

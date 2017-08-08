@@ -6,7 +6,7 @@ import imagePath from '../../images/photo5.jpg';
 
 import Button from './Button';
 import StyleLayout from './StyleLayout';
-import ArticlePreview from '../ArticlePreview/ArticlePreview';
+import ArticlePreview from '../articles/ArticlePreview';
 
 const stories = storiesOf('common', module);
 
@@ -63,11 +63,11 @@ stories.add('Button',
 stories.add('ArticlePreview',
 	() => {
         const props = {
-			imagePath: imagePath,
-			articlePath: '',
-			articleTitle: 'Некоратка аб Ахматавай',
-			articleSubtitle: 'Настоящую нежность не спутаешь ни с чем...',
-			articleAuthor: 'Зоя Тмац'
+			imagePath: text('Image path', imagePath),
+			articlePath: text('Article link', ''),
+			title: text('Article title', 'Некоратка аб Ахматавай'),
+			subtitle: text('Article subtitle', 'Настоящую нежность не спутаешь ни с чем...'),
+			author: text('Article author', 'Зоя Тмац')
         };
 
         return (
