@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, text, boolean } from '@storybook/addon-knobs';
 import imagePath from '../../images/photo5.jpg';
+import { withInfo } from '@storybook/addon-info';
 
 import Button from './Button';
 import StyleLayout from './StyleLayout';
@@ -10,14 +11,16 @@ import ArticlePreview from '../articles/ArticlePreview';
 
 const stories = storiesOf('common', module);
 
-stories.addWithInfo(
-  'StyleLayout',
-  'This is the HOC that wraps provided components and import babajka styles',
-  () => {
-    const ComponentToAddStyles = () => null;
-    return (<StyleLayout><ComponentToAddStyles /></StyleLayout>);
-  },
-  { inline: true },
+stories.add('StyleLayout',
+  withInfo({
+    text: 'This is the HOC that wraps provided components and import babajka styles',
+    inline: true,
+  })(
+    () => {
+      const ComponentToAddStyles = () => null;
+      return (<StyleLayout><ComponentToAddStyles /></StyleLayout>);
+    },
+  ),
 );
 
 stories.addDecorator(withKnobs);
@@ -47,10 +50,8 @@ stories.add('Button',
           <h3>withText</h3>
           <Button {...withText} >{withText.children}</Button>
         </li>
-
         <br />
         <br />
-
         <li>
           <h3>withEmoji</h3>
           <Button {...withEmoji} >{withEmoji.children}</Button>
