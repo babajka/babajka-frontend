@@ -9,18 +9,18 @@
     "deploy": "now",
     "lint": "eslint --ext .js --ext .jsx pages/ components/",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "npm run dev",
-    "update-styles": "npm i --save babajka-markup",
+    "postinstall": "sh copy-static.sh && npm run dev",
+    "update-styles": "npm i --save babajka-markup && sh copy-static.sh",
     "storybook": "start-storybook -p 9001",
     "storybook:build": "build-storybook",
     "storybook:deploy": "build-storybook && gh-pages -d storybook-static"
   },
   "dependencies": {
     "babajka-markup": "^0.1.1",
-    "next": "^3.0.1-beta.5",
-    "now": "^7.1.1",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "next": "^3.2.2",
+    "now": "^7.4.0",
+    "react": "^15.6.2",
+    "react-dom": "^15.6.2"
   },
   "repository": {
     "type": "git",
@@ -34,19 +34,17 @@
   "homepage": "https://github.com/babajka/babajka-frontend#readme",
   "main": "index.js",
   "devDependencies": {
-    "@storybook/addon-info": "^3.2.5",
-    "@storybook/addon-knobs": "^3.2.5",
-    "@storybook/react": "^3.2.5",
+    "@storybook/addon-info": "^3.2.13",
+    "@storybook/addon-knobs": "^3.2.13",
+    "@storybook/react": "^3.2.13",
     "babel-eslint": "^7.2.1",
     "babel-plugin-module-resolver": "^2.7.1",
     "classnames": "^2.2.5",
     "eslint": "^3.18.0",
     "eslint-config-airbnb": "^14.1.0",
-    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.3",
-    "gh-pages": "^1.0.0",
-    "glob": "^7.1.2",
-    "raw-loader": "^0.5.1"
+    "gh-pages": "^1.0.0"
   }
 }

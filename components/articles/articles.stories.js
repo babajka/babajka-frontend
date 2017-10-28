@@ -4,19 +4,13 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, text } from '@storybook/addon-knobs';
 import imagePath from 'babajka-markup/dist/images/photo5.jpg';
 
-import CoreLayout from 'components/common/CoreLayout';
+import StoriesDecorator from 'components/common/StoriesDecorator';
 import ArticlePreview from './ArticlePreview';
 
 const stories = storiesOf('articles', module);
 
 stories.addDecorator(withKnobs);
-stories.addDecorator(getStory => (
-  <CoreLayout>
-    <div style={{ marginLeft: '5%' }}>
-      {getStory()}
-    </div>
-  </CoreLayout>
-));
+stories.addDecorator(StoriesDecorator);
 
 stories.add('ArticlePreview',
   () => {

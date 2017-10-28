@@ -1,6 +1,7 @@
 .idea/
 .next/
 node_modules/
+static/
 storybook-static/
 *.log*
 *.DS_Store

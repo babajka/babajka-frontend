@@ -1,11 +1,13 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, text, boolean } from '@storybook/addon-knobs';
+import { withKnobs, text, boolean, select } from '@storybook/addon-knobs';
 import { withInfo } from '@storybook/addon-info';
 
-import Button from './Button';
+import StoriesDecorator from './StoriesDecorator';
 import CoreLayout from './CoreLayout';
+import Button from './Button';
+import Icon from './Icon';
 
 const stories = storiesOf('common', module);
 
@@ -26,9 +28,7 @@ stories.add('CoreLayout',
 );
 
 stories.addDecorator(withKnobs);
-stories.addDecorator(getStory => (
-  <CoreLayout>{getStory()}</CoreLayout>
-));
+stories.addDecorator(StoriesDecorator);
 
 stories.add('Button',
   () => {
@@ -62,3 +62,11 @@ stories.add('Button',
     );
   }
 );
+
+stories.add('Icon', () => {
+  const name = text('fa name', 'github-alt');
+  const size = select('fa size', ['lg', '2x', '3x', '4x', '5x'], '5x');
+  return (
+    <Icon name={name} size={size} />
+  );
+});
