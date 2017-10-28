@@ -5,25 +5,29 @@ import { withKnobs, text, boolean } from '@storybook/addon-knobs';
 import { withInfo } from '@storybook/addon-info';
 
 import Button from './Button';
-import StyleLayout from './StyleLayout';
+import CoreLayout from './CoreLayout';
 
 const stories = storiesOf('common', module);
 
-stories.add('StyleLayout',
+stories.add('CoreLayout',
   withInfo({
-    text: 'This is the HOC that wraps provided components and import babajka styles',
+    text: 'This is the HOC that wraps provided components and import babajka styles, add page title and etc.',
     inline: true,
   })(
     () => {
       const ComponentToAddStyles = () => null;
-      return (<StyleLayout><ComponentToAddStyles /></StyleLayout>);
-    },
-  ),
+      return (
+        <CoreLayout title="Awesome page">
+          <ComponentToAddStyles />
+        </CoreLayout>
+      );
+    }
+  )
 );
 
 stories.addDecorator(withKnobs);
 stories.addDecorator(getStory => (
-  <StyleLayout>{getStory()}</StyleLayout>
+  <CoreLayout>{getStory()}</CoreLayout>
 ));
 
 stories.add('Button',
@@ -56,5 +60,5 @@ stories.add('Button',
         </li>
       </ol>
     );
-  },
+  }
 );
