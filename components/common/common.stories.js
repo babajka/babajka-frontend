@@ -2,30 +2,32 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, text, boolean } from '@storybook/addon-knobs';
-import imagePath from '../../images/photo5.jpg';
 import { withInfo } from '@storybook/addon-info';
 
 import Button from './Button';
-import StyleLayout from './StyleLayout';
-import ArticlePreview from '../articles/ArticlePreview';
+import CoreLayout from './CoreLayout';
 
 const stories = storiesOf('common', module);
 
-stories.add('StyleLayout',
+stories.add('CoreLayout',
   withInfo({
-    text: 'This is the HOC that wraps provided components and import babajka styles',
+    text: 'This is the HOC that wraps provided components and import babajka styles, add page title and etc.',
     inline: true,
   })(
     () => {
       const ComponentToAddStyles = () => null;
-      return (<StyleLayout><ComponentToAddStyles /></StyleLayout>);
-    },
-  ),
+      return (
+        <CoreLayout title="Awesome page">
+          <ComponentToAddStyles />
+        </CoreLayout>
+      );
+    }
+  )
 );
 
 stories.addDecorator(withKnobs);
 stories.addDecorator(getStory => (
-  <StyleLayout>{getStory()}</StyleLayout>
+  <CoreLayout>{getStory()}</CoreLayout>
 ));
 
 stories.add('Button',
@@ -58,21 +60,5 @@ stories.add('Button',
         </li>
       </ol>
     );
-  },
-);
-
-stories.add('ArticlePreview',
-	() => {
-        const props = {
-			imagePath: text('Image path', imagePath),
-			articlePath: text('Article link', ''),
-			title: text('Article title', 'Некоратка аб Ахматавай'),
-			subtitle: text('Article subtitle', 'Настоящую нежность не спутаешь ни с чем...'),
-			author: text('Article author', 'Зоя Тмац')
-        };
-
-        return (
-            <ArticlePreview {...props}/>
-        );
-    }
+  }
 );

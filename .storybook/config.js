@@ -1,7 +1,7 @@
 import { configure, setAddon } from '@storybook/react';
 import infoAddon from '@storybook/addon-info';
 
-const req = require.context('../components', true, /\.stories\.jsx?$/);
+const req = require.context('../components', true, /\.stories\.js$/);
 
 function loadStories() {
   req.keys().forEach(req);
