@@ -5,7 +5,7 @@
 Next.js &amp; React app
 
 ## scripts
-* `npm start` to build and run app
+* `npm start` to build the app
 * `npm run dev` to run dev server with hot-reloading
 * `npm run build` to build production(?) version
 * `npm run lint` to check code style with [`eslint`](http://eslint.org/) and [`airbnb`](https://github.com/airbnb/javascript/tree/master/react) react style guide
