@@ -42,8 +42,8 @@ export const actions = {
   signIn: (data, signUp = false) => ({
     type: SIGNIN,
     payload: (signUp ?
-        request(api.auth.register, 'POST', data) :
-        request(api.auth.login, 'POST', data)
+      request(api.auth.register, 'POST', data) :
+      request(api.auth.login, 'POST', data)
     ),
   }),
 };
