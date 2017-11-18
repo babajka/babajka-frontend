@@ -19,13 +19,12 @@ stories.add('LoginForm',
       pending: boolean('Pending', false),
       signUpMode: boolean('Sign-up mode', false),
       errors: object('Errors', {
-        email: 'З поштай нешта не так',
-        password: 'Incorrect password.',
+        email: 'Гэта пошта з\'яўляецца несапраўднай',
+        password: 'Пароль занадта кароткі (мінімум 7 знакаў)',
       }),
       successStatus: object('Success messages', {
-        email: 'Карэктная пошта!',
-        password: true,
-        passwordAgain: 'Пароль падцверджаны!',
+        name: 'Гэта імя карыстальніка даступна',
+        passwordAgain: 'Паролі супалі',
       }),
     };
 
@@ -38,10 +37,8 @@ stories.add('LoginForm',
     }
 
     return (
-      <div className="login-page page-container">
-        <div className="column is-4 is-offset-4">
-          <LoginForm {...props} />
-        </div>
+      <div className="container login">
+        <LoginForm {...props} />
       </div>
     );
   }

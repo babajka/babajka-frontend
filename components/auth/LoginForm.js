@@ -1,30 +1,51 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Text } from 'react-form';
+import { Form, Text, Checkbox } from 'react-form';
 
 import Button from 'components/common/Button';
-import FormControl from './FormControl';
+import FormControl from './FormField';
 
-const FIELDS = ['name', 'email', 'password', 'passwordAgain'];
+const fields = {
+  name: {
+    label: 'Імя карыстальніка',
+    icon: 'user',
+    onlyOnSignUp: true,
+  },
+  email: {
+    label: 'Пошта',
+    icon: 'envelope',
+  },
+  password: {
+    label: (
+      <span>
+        Пароль
+        <a
+          className="is-pulled-right has-text-weight-normal login__input-forgot"
+          href=""
+        >
+          Забыліся на пароль?
+        </a>
+      </span>
+    ),
+    icon: 'unlock-alt',
+    inputType: 'password',
+  },
+  passwordAgain: {
+    label: 'Пацвердзіць пароль',
+    icon: 'unlock-alt',
+    inputType: 'password',
+    onlyOnSignUp: true,
+  },
+};
+
+const keys = Object.keys(fields);
+
 const errorsPropsTypes = {};
 const successPropTypes = {};
-FIELDS.forEach((field) => {
+keys.forEach((field) => {
   errorsPropsTypes[field] = PropTypes.string;
   successPropTypes[field] = PropTypes.oneOfType([PropTypes.string, PropTypes.bool]);
 });
-
-const errorValidator = ({ email }) => {
-  return {
-    email: email ? null : 'Input must contain Hello World'
-  };
-};
-
-const inputs = {
-  name: <Text className="input email-input" placeholder="Імя" />,
-  email: <Text className="input email-input" placeholder="Пошта" />,
-  password: <Text className="input password-input" type="password" placeholder="Пароль" />,
-  passwordAgain: <Text className="input password-input" type="password" placeholder="Падцвердзіце пароль" />
-};
 
 class LoginForm extends Component {
   static propTypes = {
@@ -46,76 +67,52 @@ class LoginForm extends Component {
     const { onSubmit, pending, signUpMode, errors, successStatus } = this.props;
 
     return (
-      <Form onSubmit={onSubmit} validateError={errorValidator}>
-        {formApi => (
-          <form className="login-form" onSubmit={formApi.submitForm}>
-            {signUpMode && (
-              <FormControl
-                icon="user"
-                pending={pending}
-                error={errors.name}
-                success={successStatus.name}
-              >
-                <Text className="input email-input" field="name" placeholder="Імя" />
-              </FormControl>
-            )}
-
-            <FormControl
-              icon="envelope-o"
-              pending={pending}
-              error={errors.email || formApi.errors.email}
-              success={successStatus.email}
-            >
-              <Text className="input email-input" field="email" placeholder="Пошта" />
-            </FormControl>
-
-            <FormControl
-              icon="lock"
-              pending={pending}
-              error={errors.password}
-              success={successStatus.password}
-            >
-              <Text
-                className="input password-input"
-                field="password"
-                type="password"
-                placeholder="Пароль"
-              />
-            </FormControl>
-
-            {signUpMode && (
-              <FormControl
-                error={errors.passwordAgain}
-                success={successStatus.passwordAgain}
-              >
-                <Text
-                  className="input password-input"
-                  field="passwordAgain"
-                  type="password"
-                  placeholder="Падцвердзіце пароль"
-                />
-              </FormControl>
-            )}
-
-            <p className="control login">
-              <Button
-                type="submit"
-                onClick={onSubmit}
-                className="button is-success is-outlined is-large is-fullwidth"
-              >
-                Паехалі
-              </Button>
-            </p>
-
-            <div className="section forgot-password">
-              <p className="has-text-centered">
-                <a>Забылі пароль?</a>
-                <a>Дапамога</a>
-              </p>
-            </div>
-          </form>
-        )}
-      </Form>
+      <div>
+        <h1 className="title is-size-5 has-text-centered">
+          Увайсці ў Вір
+        </h1>
+        <Form onSubmit={onSubmit}>
+          {formApi => (
+            <form onSubmit={formApi.submitForm}>
+              <div className="field">
+                <div className="control has-text-centered">
+                  <label htmlFor="mode" className="checkbox">
+                    <Checkbox id="mode" field="mode" />
+                    У мяне яшчэ няма акаўнта
+                  </label>
+                </div>
+              </div>
+              {keys
+                .filter(key => signUpMode || !fields[key].onlyOnSignUp)
+                .map(key => (
+                  <FormControl
+                    key={key}
+                    inputId={key}
+                    label={fields[key].label}
+                    icon={fields[key].icon}
+                    pending={pending}
+                    error={errors[key]}
+                    success={successStatus[key]}
+                  >
+                    <Text className="input" id={key} field={key} type={fields[key].inputType || 'text'} />
+                  </FormControl>
+                ))}
+              <div className="field">
+                <div className="control has-text-centered">
+                  <Button
+                    type="submit"
+                    pending={pending}
+                    onClick={onSubmit}
+                    className="button is-uppercase login__button"
+                  >
+                    Паехалі!
+                  </Button>
+                </div>
+              </div>
+            </form>
+          )}
+        </Form>
+      </div>
     );
   }
 }
