@@ -14,3 +14,6 @@ Next.js &amp; React app
 * `npm run storybook` to run storybook on [`localhost:9001`](http://localhost:9001/)
 * `npm run storybook:build` to build static version of storybook
 * `npm run storybook:deploy` to deploy storybook on [`gh-pages`](https://babajka.github.io/babajka-frontend)
+
+## rules
+* we use [`ducks convention`](https://github.com/erikras/ducks-modular-redux) for redux modules
