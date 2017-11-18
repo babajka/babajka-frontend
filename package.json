@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Next.js & React app",
   "scripts": {
-    "dev": "next",
+    "dev": "next -p 3000",
     "build": "next build",
     "start": "npm run build && next start",
     "deploy": "now",
