@@ -51,7 +51,6 @@ class LoginForm extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
     pending: PropTypes.bool,
-    signUpMode: PropTypes.bool,
     errors: PropTypes.shape(errorsPropsTypes),
     successStatus: PropTypes.shape(successPropTypes),
   };
@@ -60,11 +59,10 @@ class LoginForm extends Component {
     errors: {},
     successStatus: {},
     pending: false,
-    signUpMode: false,
   };
 
   render() {
-    const { onSubmit, pending, signUpMode, errors, successStatus } = this.props;
+    const { onSubmit, pending, errors, successStatus } = this.props;
 
     return (
       <div>
@@ -76,14 +74,18 @@ class LoginForm extends Component {
             <form onSubmit={formApi.submitForm}>
               <div className="field">
                 <div className="control has-text-centered">
-                  <label htmlFor="mode" className="checkbox">
-                    <Checkbox id="mode" field="mode" />
+                  <label htmlFor="signUp" className="checkbox">
+                    <Checkbox
+                      id="signUp"
+                      field="signUp"
+                      onChange={formApi.setValue.bind(null, 'signUpMode')}
+                    />
                     У мяне яшчэ няма акаўнта
                   </label>
                 </div>
               </div>
               {keys
-                .filter(key => signUpMode || !fields[key].onlyOnSignUp)
+                .filter(key => formApi.values.signUpMode || !fields[key].onlyOnSignUp)
                 .map(key => (
                   <FormControl
                     key={key}
@@ -102,7 +104,7 @@ class LoginForm extends Component {
                   <Button
                     type="submit"
                     pending={pending}
-                    onClick={onSubmit}
+                    onClick={formApi.submitForm}
                     className="button is-uppercase login__button"
                   >
                     Паехалі!

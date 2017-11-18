@@ -17,7 +17,6 @@ stories.add('LoginForm',
     const props = {
       onSubmit: action('Submit form'),
       pending: boolean('Pending', false),
-      signUpMode: boolean('Sign-up mode', false),
       errors: object('Errors', {
         email: 'Гэта пошта з\'яўляецца несапраўднай',
         password: 'Пароль занадта кароткі (мінімум 7 знакаў)',
