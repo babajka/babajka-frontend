@@ -9,7 +9,7 @@
     "deploy": "now",
     "lint": "eslint pages/ components/ redux/",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "sh copy-static.sh && npm run dev",
+    "postinstall": "sh copy-static.sh",
     "update-styles": "npm i --save babajka-markup && sh copy-static.sh",
     "storybook": "start-storybook -p 9001",
     "storybook:build": "build-storybook",
