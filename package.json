@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next -p 3000",
     "build": "next build",
-    "start": "npm run build && next start",
+    "prod": "next build && next start -p 3000",
     "deploy": "now",
     "lint": "eslint pages/ components/ redux/",
     "test": "echo \"Error: no test specified\" && exit 1",

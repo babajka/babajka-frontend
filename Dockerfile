@@ -6,12 +6,12 @@ WORKDIR /usr/src/app
 # Install app dependencies
 COPY package.json package-lock.json ./
 
-# TODO(uladbohdan): to consider adding --only=production option.
+# We don't need --only=production option here: devDependencies are required
+# in order to build the app.
 RUN npm install
 
 # Bundle app source
 COPY . .
 
 EXPOSE 3000
-# TODO(uladbohdan): Docker must operate with production configuration.
-CMD [ "npm", "run",  "dev" ]
+CMD [ "npm", "run",  "prod" ]
