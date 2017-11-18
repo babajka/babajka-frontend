@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Next.js & React app",
   "scripts": {
-    "dev": "next -p 8080",
+    "dev": "next -p 3000",
     "build": "next build",
     "start": "npm run build && next start",
     "deploy": "now",
@@ -25,8 +25,9 @@
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
-    "redux-duck": "^1.0.2",
-    "redux-thunk": "^2.2.0"
+    "redux-promise-middleware": "^4.4.2",
+    "redux-thunk": "^2.2.0",
+    "type-to-reducer": "^1.0.4"
   },
   "repository": {
     "type": "git",

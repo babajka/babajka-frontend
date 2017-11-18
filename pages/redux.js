@@ -2,31 +2,44 @@ import React, { PropTypes } from 'react';
 import withRedux from 'next-redux-wrapper';
 
 import initStore from 'redux/store';
-import { actions } from 'redux/ducks/auth';
+import { actions } from 'redux/ducks/articles';
 
 const mapStateToProps = state => ({
-  user: state.auth.user,
+  articles: state.articles.data,
+  pending: state.articles.pending,
+  error: state.articles.error,
 });
 
 const mapDispatchToProps = {
-  login: actions.login,
+  fetchAll: actions.fetchAll,
 };
 
-const Test = ({ user, login }) => (
+const Test = ({ articles, pending, error, fetchAll }) => (
   <div>
-    {user && (
-      <span>
-        <p>email: {user.email}</p>
-        <p>password: {user.password}</p>
-      </span>
+    <p>Articles:</p>
+    <ol>
+      {articles && (
+        articles.map(({ title, subtitle }, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <li key={index}>{title} : {subtitle}</li>
+        ))
+      )}
+    </ol>
+    <button onClick={fetchAll}>{pending ? 'Load...' : 'Fetch!'}</button>
+    {error && (
+      <p>{error}</p>
     )}
-    <button onClick={login.bind(null, 'test@gmail.com', 'password')}>Authorize!</button>
   </div>
 );
 
 Test.propTypes = {
-  user: PropTypes.shape({}).isRequired,
-  login: PropTypes.func.isRequired,
+  fetchAll: PropTypes.func.isRequired,
+  articles: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    subtitle: PropTypes.string.isRequired,
+  })),
+  pending: PropTypes.bool.isRequired,
+  error: PropTypes.oneOf(PropTypes.bool, PropTypes.shape({})),
 };
 
 export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(Test);

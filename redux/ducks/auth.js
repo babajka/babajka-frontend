@@ -1,23 +1,32 @@
-import { createDuck } from 'redux-duck';
+import createReducer from 'type-to-reducer';
 
-const duck = createDuck('auth');
+import { SUCCESS } from 'constants/redux';
+import request from 'utils/request';
+import api from 'constants/api';
+
+const duck = 'auth';
 
 // constants
-const LOGIN = duck.defineType('LOGIN');
+const LOGIN = `${duck}/LOGIN`;
 
-// reducers
+// reducer
 const initialState = {
   user: null,
 };
 
-export default duck.createReducer({
-  [LOGIN]: (state, { payload }) => ({
-    ...state,
-    user: payload,
-  }),
+export default createReducer({
+  [LOGIN]: {
+    [SUCCESS]: (state, { payload }) => ({
+      ...state,
+      user: payload,
+    }),
+  },
 }, initialState);
 
 // actions
 export const actions = {
-  login: (email, password) => duck.createAction(LOGIN)({ email, password }),
+  login: (email, password) => ({
+    type: LOGIN,
+    payload: request(api.auth.login, 'POST', { email, password }),
+  }),
 };

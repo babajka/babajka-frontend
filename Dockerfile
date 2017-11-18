@@ -12,5 +12,6 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-EXPOSE 8080
+EXPOSE 3000
+# TODO(uladbohdan): Docker must operate with production configuration.
 CMD [ "npm", "run",  "dev" ]
