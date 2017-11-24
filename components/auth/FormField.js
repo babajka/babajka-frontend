@@ -3,21 +3,23 @@ import PropTypes from 'prop-types';
 
 import Icon from 'components/common/Icon';
 
+/* eslint-disable jsx-a11y/label-has-for */
+
 const FormField = ({ inputId, label, icon, children, pending, error, success }) => (
   <div className="field">
-    <label className="label login__input-text" htmlFor={inputId}>{label}</label>
+    <label className="label login__input-text" htmlFor={inputId}>
+      {label}
+    </label>
     <div className="control has-icons-left has-icons-right">
       {children}
       <span className="icon is-small">
         <Icon name={icon} />
       </span>
     </div>
-    {!pending && error && (
-      <p className="help is-danger">{error}</p>
-    )}
-    {!pending && success && (typeof success === 'string') && (
-      <p className="help is-success">{success}</p>
-    )}
+    {!pending && error && <p className="help is-danger">{error}</p>}
+    {!pending &&
+      success &&
+      typeof success === 'string' && <p className="help is-success">{success}</p>}
   </div>
 );
 
@@ -32,7 +34,9 @@ FormField.propTypes = {
 };
 
 FormField.defaultProps = {
+  success: true,
   pending: false,
+  error: false,
 };
 
 export default FormField;

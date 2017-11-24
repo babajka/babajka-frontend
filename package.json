@@ -7,13 +7,20 @@
     "build": "next build",
     "prod": "next build && next start -p 3000",
     "deploy": "now",
-    "lint": "eslint pages/ components/ redux/",
+    "precommit": "lint-staged",
+    "lint": "npm run prettify && eslint '{!(.next*|*static*|node_modules*), }/**/*.js' --fix",
+    "prettier": "prettier --config .prettierrc --write",
+    "prettify": "npm run prettier '{!(.next*|*static*), }/**/*.{js,md}' '*.md'",
+    "watch": "onchange '**/*.{js,md}' -- npm run prettier {{changed}}",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "sh copy-static.sh",
     "update-styles": "npm i --save babajka-markup && sh copy-static.sh",
     "storybook": "start-storybook -p 9001",
     "storybook:build": "build-storybook",
     "storybook:deploy": "build-storybook && gh-pages -d storybook-static"
+  },
+  "lint-staged": {
+    "**/*.js": ["npm run lint", "git add"]
   },
   "dependencies": {
     "babajka-markup": "^0.1.2",
@@ -45,14 +52,22 @@
     "@storybook/addon-info": "^3.2.13",
     "@storybook/addon-knobs": "^3.2.13",
     "@storybook/react": "^3.2.13",
-    "babel-eslint": "^7.2.1",
+    "babel-eslint": "^8.0.2",
     "babel-plugin-module-resolver": "^2.7.1",
     "classnames": "^2.2.5",
-    "eslint": "^3.18.0",
-    "eslint-config-airbnb": "^14.1.0",
+    "eslint": "^4.11.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.8.0",
     "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-react": "^6.10.3",
-    "gh-pages": "^1.0.0"
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-prettier": "^2.3.1",
+    "eslint-plugin-react": "^7.5.1",
+    "gh-pages": "^1.0.0",
+    "glob": "^7.1.2",
+    "husky": "^0.14.3",
+    "lint-staged": "^5.0.0",
+    "onchange": "^3.2.1",
+    "prettier": "^1.8.2",
+    "raw-loader": "^0.5.1"
   }
 }

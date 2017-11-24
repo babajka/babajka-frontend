@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Text, Checkbox } from 'react-form';
 
@@ -19,10 +19,7 @@ const fields = {
     label: (
       <span>
         Пароль
-        <a
-          className="is-pulled-right has-text-weight-normal login__input-forgot"
-          href=""
-        >
+        <a className="is-pulled-right has-text-weight-normal login__input-forgot" href="/">
           Забыліся на пароль?
         </a>
       </span>
@@ -42,81 +39,71 @@ const keys = Object.keys(fields);
 
 const errorsPropsTypes = {};
 const successPropTypes = {};
-keys.forEach((field) => {
+keys.forEach(field => {
   errorsPropsTypes[field] = PropTypes.string;
   successPropTypes[field] = PropTypes.oneOfType([PropTypes.string, PropTypes.bool]);
 });
 
-class LoginForm extends Component {
-  static propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-    pending: PropTypes.bool,
-    errors: PropTypes.shape(errorsPropsTypes),
-    successStatus: PropTypes.shape(successPropTypes),
-  };
+const LoginForm = ({ onSubmit, pending, errors, successStatus }) => (
+  <div>
+    <h1 className="title is-size-5 has-text-centered">Увайсці ў Вір</h1>
+    <Form onSubmit={onSubmit}>
+      {formApi => (
+        <form onSubmit={formApi.submitForm}>
+          <div className="field">
+            <div className="control has-text-centered">
+              <label htmlFor="signUp" className="checkbox">
+                <Checkbox
+                  id="signUp"
+                  field="signUp"
+                  onChange={formApi.setValue.bind(null, 'signUpMode')}
+                />
+                У мяне яшчэ няма акаўнта
+              </label>
+            </div>
+          </div>
+          {keys.filter(key => formApi.values.signUpMode || !fields[key].onlyOnSignUp).map(key => (
+            <FormControl
+              key={key}
+              inputId={key}
+              label={fields[key].label}
+              icon={fields[key].icon}
+              pending={pending}
+              error={errors[key]}
+              success={successStatus[key]}
+            >
+              <Text className="input" id={key} field={key} type={fields[key].inputType || 'text'} />
+            </FormControl>
+          ))}
+          <div className="field">
+            <div className="control has-text-centered">
+              <Button
+                type="submit"
+                pending={pending}
+                onClick={formApi.submitForm}
+                className="button is-uppercase login__button"
+              >
+                Паехалі!
+              </Button>
+            </div>
+          </div>
+        </form>
+      )}
+    </Form>
+  </div>
+);
 
-  static defaultProps = {
-    errors: {},
-    successStatus: {},
-    pending: false,
-  };
+LoginForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  pending: PropTypes.bool,
+  errors: PropTypes.shape(errorsPropsTypes),
+  successStatus: PropTypes.shape(successPropTypes),
+};
 
-  render() {
-    const { onSubmit, pending, errors, successStatus } = this.props;
-
-    return (
-      <div>
-        <h1 className="title is-size-5 has-text-centered">
-          Увайсці ў Вір
-        </h1>
-        <Form onSubmit={onSubmit}>
-          {formApi => (
-            <form onSubmit={formApi.submitForm}>
-              <div className="field">
-                <div className="control has-text-centered">
-                  <label htmlFor="signUp" className="checkbox">
-                    <Checkbox
-                      id="signUp"
-                      field="signUp"
-                      onChange={formApi.setValue.bind(null, 'signUpMode')}
-                    />
-                    У мяне яшчэ няма акаўнта
-                  </label>
-                </div>
-              </div>
-              {keys
-                .filter(key => formApi.values.signUpMode || !fields[key].onlyOnSignUp)
-                .map(key => (
-                  <FormControl
-                    key={key}
-                    inputId={key}
-                    label={fields[key].label}
-                    icon={fields[key].icon}
-                    pending={pending}
-                    error={errors[key]}
-                    success={successStatus[key]}
-                  >
-                    <Text className="input" id={key} field={key} type={fields[key].inputType || 'text'} />
-                  </FormControl>
-                ))}
-              <div className="field">
-                <div className="control has-text-centered">
-                  <Button
-                    type="submit"
-                    pending={pending}
-                    onClick={formApi.submitForm}
-                    className="button is-uppercase login__button"
-                  >
-                    Паехалі!
-                  </Button>
-                </div>
-              </div>
-            </form>
-          )}
-        </Form>
-      </div>
-    );
-  }
-}
+LoginForm.defaultProps = {
+  errors: {},
+  successStatus: {},
+  pending: false,
+};
 
 export default LoginForm;

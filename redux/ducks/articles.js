@@ -16,24 +16,27 @@ const initialState = {
   data: null,
 };
 
-export default createReducer({
-  [FETCH_ALL]: {
-    [LOADING]: state => ({
-      ...state,
-      pending: true,
-    }),
-    [SUCCESS]: (state, { payload: { data } }) => ({
-      ...state,
-      data,
-      pending: false,
-    }),
-    [ERROR]: (state, { payload }) => ({
-      ...state,
-      error: payload,
-      pending: false,
-    }),
+export default createReducer(
+  {
+    [FETCH_ALL]: {
+      [LOADING]: state => ({
+        ...state,
+        pending: true,
+      }),
+      [SUCCESS]: (state, { payload: { data } }) => ({
+        ...state,
+        data,
+        pending: false,
+      }),
+      [ERROR]: (state, { payload }) => ({
+        ...state,
+        error: payload,
+        pending: false,
+      }),
+    },
   },
-}, initialState);
+  initialState
+);
 
 // actions
 export const actions = {

@@ -6,7 +6,7 @@ export const DEFAULT_OPTIONS = {
   },
 };
 
-export default (url, method = 'GET', rawBody = null) => (
+export default (url, method = 'GET', rawBody = null) =>
   new Promise((resolve, reject) => {
     if (!url) {
       reject(new Error('URL parameter required'));
@@ -19,7 +19,7 @@ export default (url, method = 'GET', rawBody = null) => (
 
     fetch(url, options)
       .then(response => response.json())
-      .then((response) => {
+      .then(response => {
         if (response.error) {
           reject(response.error);
         } else {
@@ -27,5 +27,4 @@ export default (url, method = 'GET', rawBody = null) => (
         }
       })
       .catch(reject);
-  })
-);
+  });

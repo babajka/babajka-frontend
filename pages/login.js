@@ -14,33 +14,27 @@ const mapStateToProps = state => ({
   errors: selectors.getLoginErrors(state),
 });
 
-const mapDispatchToProps = {
-  signIn: actions.signIn,
-};
+const mapDispatchToProps = { signIn: actions.signIn };
 
 const LoginPage = ({ user, pending, errors, signIn }) => {
-  const handleSubmit = ({ email, password, signUp }) => {
-    signIn({ email, password, name }, signUp);
+  const handleSubmit = ({ signUp, ...userData }) => {
+    signIn({ ...userData }, signUp);
   };
 
   return (
     <CoreLayout title="Login">
       {user && <p>Вітаем вас, {user.email}</p>}
       <div className="container login">
-        <LoginForm
-          onSubmit={handleSubmit}
-          pending={pending}
-          errors={errors}
-        />
+        <LoginForm onSubmit={handleSubmit} pending={pending} errors={errors} />
       </div>
     </CoreLayout>
   );
 };
 
 LoginPage.propTypes = {
-  user: PropTypes.shape({}),
+  user: PropTypes.shape({}).isRequired,
   pending: PropTypes.bool.isRequired,
-  errors: PropTypes.shape({}),
+  errors: PropTypes.shape({}).isRequired,
   signIn: PropTypes.func.isRequired,
 };
 

@@ -5,7 +5,10 @@ import PropTypes from 'prop-types';
 const CoreLayout = ({ title, children }) => (
   <div>
     <Head>
-      <title>Wir {title ? '| ' : ''}{title}</title>
+      <title>
+        Wir {title && '| '}
+        {title}
+      </title>
       <meta charSet="utf-8" />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -20,5 +23,7 @@ CoreLayout.propTypes = {
   children: PropTypes.node.isRequired,
   title: PropTypes.string,
 };
+
+CoreLayout.defaultProps = { title: '' };
 
 export default CoreLayout;

@@ -1,25 +1,35 @@
 {
   "parser": "babel-eslint",
-  "extends": "airbnb",
+  "extends": ["airbnb", "prettier"],
+  "plugins": [
+    "prettier"
+  ],
   "globals": {},
   "env": {
     "browser": true
   },
   "rules": {
-    "import/extensions": 0,
-    "import/no-extraneous-dependencies": 0,
+    "prettier/prettier": "error",
     "import/no-unresolved": 0,
+    "import/no-extraneous-dependencies": 0,
+    "import/extensions": [2, {
+        "css": "always",
+        "json": "always",
+        "svg": "always"
+      }],
 
     "react/jsx-no-bind": 0,
     "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
-    "react/require-default-props": 0,
-    "jsx-a11y/no-static-element-interactions": 0,
 
-    "linebreak-style": 0,
     "comma-dangle": ["error", {
       "arrays": "always-multiline",
       "objects": "always-multiline",
       "functions": "never"
-    }]
+    }],
+    "object-curly-newline": ["error", {
+      "ObjectExpression": { "multiline": true },
+      "ObjectPattern": { "multiline": true }
+    }],
+    "linebreak-style": 0
   }
 }

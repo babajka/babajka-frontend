@@ -8,16 +8,13 @@ import reducer from './ducks';
 
 const middlewares = [
   thunkMiddleware,
-  promiseMiddleware({
-    promiseTypeSuffixes: [LOADING, SUCCESS, ERROR],
-  }),
+  promiseMiddleware({ promiseTypeSuffixes: [LOADING, SUCCESS, ERROR] }),
 ];
 
-export default (initialState = {}) => (
+export default (initialState = {}) =>
   createStore(
     reducer,
     initialState,
     // TODO(@drapegnik): disable dev tools in production
-    composeWithDevTools(applyMiddleware(...middlewares)))
-
-);
+    composeWithDevTools(applyMiddleware(...middlewares))
+  );

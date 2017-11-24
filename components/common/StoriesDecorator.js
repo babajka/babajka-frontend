@@ -7,8 +7,6 @@ import CoreLayout from './CoreLayout';
 
 export default getStory => (
   <CoreLayout>
-    <div style={{ margin: '5%' }}>
-      {getStory()}
-    </div>
+    <div style={{ margin: '5%' }}>{getStory()}</div>
   </CoreLayout>
 );

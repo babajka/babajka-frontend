@@ -16,35 +16,37 @@ const initialState = {
   errors: {},
 };
 
-export default createReducer({
-  [SIGNIN]: {
-    [LOADING]: state => ({
-      ...state,
-      pending: true,
-    }),
-    [SUCCESS]: (state, { payload }) => ({
-      ...state,
-      user: payload,
-      errors: {},
-      pending: false,
-    }),
-    [ERROR]: (state, { payload }) => ({
-      ...state,
-      user: null, // TODO(@drapegnik): for testing, to remove
-      errors: payload,
-      pending: false,
-    }),
+export default createReducer(
+  {
+    [SIGNIN]: {
+      [LOADING]: state => ({
+        ...state,
+        pending: true,
+      }),
+      [SUCCESS]: (state, { payload }) => ({
+        ...state,
+        user: payload,
+        errors: {},
+        pending: false,
+      }),
+      [ERROR]: (state, { payload }) => ({
+        ...state,
+        user: null, // TODO(@drapegnik): for testing, to remove
+        errors: payload,
+        pending: false,
+      }),
+    },
   },
-}, initialState);
+  initialState
+);
 
 // actions
 export const actions = {
   signIn: (data, signUp = false) => ({
     type: SIGNIN,
-    payload: (signUp ?
-      request(api.auth.register, 'POST', data) :
-      request(api.auth.login, 'POST', data)
-    ),
+    payload: signUp
+      ? request(api.auth.register, 'POST', data)
+      : request(api.auth.login, 'POST', data),
   }),
 };
 

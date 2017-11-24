@@ -3,20 +3,26 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 const ArticlePreview = ({
-  title, subtitle, author, className, imageClassName, imagePath, onClick,
+  title,
+  subtitle,
+  author,
+  className,
+  imageClassName,
+  imagePath,
+  onClick,
 }) => (
   <div className={classNames('tile is-parent', className)}>
     <article className="card tile is-child">
       <div className="card-image">
         <figure className={classNames('image', imageClassName)}>
-          <a onClick={onClick}>
+          <a onClick={onClick} href="/link/to/article">
             <img alt={title} src={imagePath} />
           </a>
         </figure>
       </div>
       <div className="card-content">
         <span className="title is-spaced">
-          <a onClick={onClick}>
+          <a onClick={onClick} href="/link/to/article">
             {title}
           </a>
         </span>
@@ -29,11 +35,11 @@ const ArticlePreview = ({
 
 ArticlePreview.propTypes = {
   title: PropTypes.string.isRequired,
-  subtitle: PropTypes.string,
-  author: PropTypes.string,
-  className: PropTypes.string,
+  subtitle: PropTypes.string.isRequired,
+  author: PropTypes.string.isRequired,
+  className: PropTypes.string.isRequired,
   imagePath: PropTypes.string.isRequired,
-  imageClassName: PropTypes.string,
+  imageClassName: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
