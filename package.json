@@ -69,5 +69,6 @@
     "onchange": "^3.2.1",
     "prettier": "^1.8.2",
     "raw-loader": "^0.5.1"
-  }
+  },
+  "moduleRoots": ["."]
 }

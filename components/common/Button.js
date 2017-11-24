@@ -10,13 +10,14 @@ const Button = ({ children, className, pending, ...otherProps }) => (
 
 Button.propTypes = {
   className: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   children: PropTypes.node.isRequired,
   pending: PropTypes.bool,
   disabled: PropTypes.bool,
 };
 
 Button.defaultProps = {
+  onClick: () => null,
   className: 'button is-success',
   pending: false,
   disabled: false,

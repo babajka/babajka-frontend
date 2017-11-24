@@ -29,7 +29,8 @@ FormField.propTypes = {
   icon: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   pending: PropTypes.bool,
-  error: PropTypes.string,
+  // eslint-disable-next-line react/forbid-prop-types
+  error: PropTypes.any,
   success: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
 

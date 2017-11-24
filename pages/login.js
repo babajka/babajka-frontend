@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+import Router from 'next/router';
 import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
 
@@ -16,26 +17,42 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = { signIn: actions.signIn };
 
-const LoginPage = ({ user, pending, errors, signIn }) => {
-  const handleSubmit = ({ signUp, ...userData }) => {
-    signIn({ ...userData }, signUp);
+class LoginPage extends Component {
+  static propTypes = {
+    user: PropTypes.shape({}),
+    pending: PropTypes.bool.isRequired,
+    errors: PropTypes.shape({}).isRequired,
+    signIn: PropTypes.func.isRequired,
+    url: PropTypes.shape({ query: PropTypes.shape({ next: PropTypes.string }).isRequired })
+      .isRequired,
   };
 
-  return (
-    <CoreLayout title="Login">
-      {user && <p>Вітаем вас, {user.email}</p>}
-      <div className="container login">
-        <LoginForm onSubmit={handleSubmit} pending={pending} errors={errors} />
-      </div>
-    </CoreLayout>
-  );
-};
+  static defaultProps = { user: null };
 
-LoginPage.propTypes = {
-  user: PropTypes.shape({}).isRequired,
-  pending: PropTypes.bool.isRequired,
-  errors: PropTypes.shape({}).isRequired,
-  signIn: PropTypes.func.isRequired,
-};
+  componentDidMount() {
+    const { user } = this.props;
+    if (user) {
+      Router.replace('/');
+    }
+  }
+
+  handleSubmit = ({ signUp, ...userData }) => {
+    const { signIn, url: { query: { next = '/' } } } = this.props;
+    signIn({ ...userData }, signUp).then(() => Router.push(next));
+  };
+
+  render() {
+    const { user, pending, errors } = this.props;
+
+    return (
+      <CoreLayout title="Login">
+        {user && <p>Вітаем вас, {user.email}</p>}
+        <div className="container login">
+          <LoginForm onSubmit={this.handleSubmit} pending={pending} errors={errors} />
+        </div>
+      </CoreLayout>
+    );
+  }
+}
 
 export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(LoginPage);
