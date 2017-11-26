@@ -42,11 +42,9 @@ class LoginPage extends Component {
   };
 
   render() {
-    const { user, pending, errors } = this.props;
-
+    const { pending, errors } = this.props;
     return (
       <CoreLayout title="Login">
-        {user && <p>Вітаем вас, {user.email}</p>}
         <div className="container login">
           <LoginForm onSubmit={this.handleSubmit} pending={pending} errors={errors} />
         </div>

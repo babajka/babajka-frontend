@@ -16,22 +16,12 @@ stories.add('LoginForm', () => {
   const props = {
     onSubmit: action('Submit form'),
     pending: boolean('Pending', false),
-    errors: object('Errors', {
-      email: "Гэта пошта з'яўляецца несапраўднай",
-      password: 'Пароль занадта кароткі (мінімум 7 знакаў)',
-    }),
-    successStatus: object('Success messages', {
-      name: 'Гэта імя карыстальніка даступна',
-      passwordAgain: 'Паролі супалі',
-    }),
+    errors: object('Backend errors', { email: 'Гэта пошта занята' }),
   };
 
   const mode = select('Mode', ['not touched', 'error', 'success']);
   if (mode !== 'error') {
     props.errors = {};
-  }
-  if (mode !== 'success') {
-    props.successStatus = {};
   }
 
   return (

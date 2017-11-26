@@ -5,39 +5,40 @@ import Icon from 'components/common/Icon';
 
 /* eslint-disable jsx-a11y/label-has-for */
 
-const FormField = ({ inputId, label, icon, children, pending, error, success }) => (
-  <div className="field">
-    <label className="label login__input-text" htmlFor={inputId}>
-      {label}
-    </label>
-    <div className="control has-icons-left has-icons-right">
-      {children}
-      <span className="icon is-small">
-        <Icon name={icon} />
-      </span>
+const FormField = ({ inputId, label, icon, children, pending, touched, error, successMessage }) => {
+  const hasError = !pending && touched && error;
+  return (
+    <div className="field">
+      <label className="label login__input-text" htmlFor={inputId}>
+        {label}
+      </label>
+      <div className="control has-icons-left">
+        <span className="icon is-small">
+          <Icon name={icon} />
+        </span>
+        {children(hasError)}
+      </div>
+      {hasError && <p className="help is-danger">{error}</p>}
+      {touched && !error && <p className="help is-success">{successMessage}</p>}
     </div>
-    {!pending && error && <p className="help is-danger">{error}</p>}
-    {!pending &&
-      success &&
-      typeof success === 'string' && <p className="help is-success">{success}</p>}
-  </div>
-);
+  );
+};
 
 FormField.propTypes = {
   inputId: PropTypes.string.isRequired,
   label: PropTypes.node.isRequired,
   icon: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.func.isRequired,
   pending: PropTypes.bool,
-  // eslint-disable-next-line react/forbid-prop-types
-  error: PropTypes.any,
-  success: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  touched: PropTypes.bool.isRequired,
+  error: PropTypes.string,
+  successMessage: PropTypes.string,
 };
 
 FormField.defaultProps = {
-  success: true,
+  successMessage: null,
   pending: false,
-  error: false,
+  error: null,
 };
 
 export default FormField;
