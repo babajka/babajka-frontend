@@ -1,32 +1,30 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object, select } from '@storybook/addon-knobs';
+import { withKnobs, boolean, text } from '@storybook/addon-knobs';
+import classNames from 'classnames';
 
 import StoriesDecorator from 'components/common/StoriesDecorator';
 
-import LoginForm from './LoginForm';
+import FormField from './FormField';
 
 const stories = storiesOf('auth', module);
 
 stories.addDecorator(withKnobs);
 stories.addDecorator(StoriesDecorator);
 
-stories.add('LoginForm', () => {
+stories.add('FormField', () => {
   const props = {
-    onSubmit: action('Submit form'),
-    pending: boolean('Pending', false),
-    errors: object('Backend errors', { email: 'Гэта пошта занята' }),
+    label: text('label', 'email'),
+    icon: text('icon', 'github-alt'),
+    pending: boolean('pending', false),
+    touched: boolean('touched', false),
+    error: text('error', 'invalid email'),
+    successMessage: text('successMessage', 'correct email'),
   };
 
-  const mode = select('Mode', ['not touched', 'error', 'success']);
-  if (mode !== 'error') {
-    props.errors = {};
-  }
-
   return (
-    <div className="container login">
-      <LoginForm {...props} />
-    </div>
+    <FormField inputId="email" {...props}>
+      {hasError => <input id="email" className={classNames('input', { 'is-danger': hasError })} />}
+    </FormField>
   );
 });

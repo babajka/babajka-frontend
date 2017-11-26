@@ -7,7 +7,7 @@ import Button from 'components/common/Button';
 import text from 'constants/dictionary';
 import { isEmail, isEqual, required, checkLength } from 'utils/validators';
 
-import FormControl from './FormField';
+import FormField from './FormField';
 
 const fields = {
   firstName: {
@@ -100,7 +100,7 @@ const LoginForm = ({ onSubmit, pending, errors }) => {
               {keys
                 .filter(key => formApi.values.signUpMode || !fields[key].onlyOnSignUp)
                 .map(key => (
-                  <FormControl
+                  <FormField
                     key={key}
                     inputId={key}
                     label={fields[key].label}
@@ -118,7 +118,7 @@ const LoginForm = ({ onSubmit, pending, errors }) => {
                         type={fields[key].inputType || 'text'}
                       />
                     )}
-                  </FormControl>
+                  </FormField>
                 ))}
               <div className="field">
                 <div className="control has-text-centered">
