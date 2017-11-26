@@ -30,9 +30,11 @@ const fields = {
     label: (
       <span>
         {text.password}
-        <a className="is-pulled-right has-text-weight-normal login__input-forgot" href="/">
-          {text.forgotPassword}
-        </a>
+        {false && ( // TODO(@drapegnik): implement
+          <a className="is-pulled-right has-text-weight-normal login__input-forgot" href="/">
+            {text.forgotPassword}
+          </a>
+        )}
       </span>
     ),
     icon: 'unlock-alt',
@@ -72,11 +74,24 @@ const hasErrors = errors => !!Object.values(errors).filter(Boolean).length;
 
 const LoginForm = ({ onSubmit, pending, errors }) => {
   let serverErrors = { ...errors };
+
+  const handleModeSwitch = (formApi, value) => {
+    const clearTouch = {};
+    formApi.setValue('signUp', value);
+    Object.keys(fields).forEach(field => {
+      if (!formApi.values[field]) {
+        clearTouch[field] = false;
+      }
+    });
+    formApi.setAllTouched(clearTouch);
+  };
+
   return (
     <div>
       <h1 className="title is-size-5 has-text-centered">{text.sigInTitle}</h1>
       <Form onSubmit={onSubmit} validateError={errorValidator}>
         {formApi => {
+          // FIXME(@drapegnik): find more clean way to handle server-side errors
           if (serverErrors) {
             Object.keys(fields).forEach(key => {
               formApi.setError(key, serverErrors[key]);
@@ -91,35 +106,33 @@ const LoginForm = ({ onSubmit, pending, errors }) => {
                     <Checkbox
                       id="signUp"
                       field="signUp"
-                      onChange={formApi.setValue.bind(null, 'signUpMode')}
+                      onChange={handleModeSwitch.bind(null, formApi)}
                     />
                     {text.noAccount}
                   </label>
                 </div>
               </div>
-              {keys
-                .filter(key => formApi.values.signUpMode || !fields[key].onlyOnSignUp)
-                .map(key => (
-                  <FormField
-                    key={key}
-                    inputId={key}
-                    label={fields[key].label}
-                    icon={fields[key].icon}
-                    pending={pending}
-                    touched={!!formApi.touched[key]}
-                    error={formApi.errors[key]}
-                    successMessage={fields[key].successMessage}
-                  >
-                    {hasError => (
-                      <Text
-                        className={classNames('input', { 'is-danger': hasError })}
-                        id={key}
-                        field={key}
-                        type={fields[key].inputType || 'text'}
-                      />
-                    )}
-                  </FormField>
-                ))}
+              {keys.filter(key => formApi.values.signUp || !fields[key].onlyOnSignUp).map(key => (
+                <FormField
+                  key={key}
+                  inputId={key}
+                  label={fields[key].label}
+                  icon={fields[key].icon}
+                  pending={pending}
+                  touched={!!formApi.touched[key]}
+                  error={formApi.errors[key]}
+                  successMessage={fields[key].successMessage}
+                >
+                  {hasError => (
+                    <Text
+                      className={classNames('input', { 'is-danger': hasError })}
+                      id={key}
+                      field={key}
+                      type={fields[key].inputType || 'text'}
+                    />
+                  )}
+                </FormField>
+              ))}
               <div className="field">
                 <div className="control has-text-centered">
                   <Button
