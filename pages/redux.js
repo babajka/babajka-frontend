@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
 
 import initStore from 'redux/store';
@@ -10,36 +11,35 @@ const mapStateToProps = state => ({
   error: state.articles.error,
 });
 
-const mapDispatchToProps = {
-  fetchAll: actions.fetchAll,
-};
+const mapDispatchToProps = { fetchAll: actions.fetchAll };
 
 const Test = ({ articles, pending, error, fetchAll }) => (
   <div>
     <p>Articles:</p>
     <ol>
-      {articles && (
+      {articles &&
         articles.map(({ title, subtitle }, index) => (
           // eslint-disable-next-line react/no-array-index-key
-          <li key={index}>{title} : {subtitle}</li>
-        ))
-      )}
+          <li key={index}>
+            {title} : {subtitle}
+          </li>
+        ))}
     </ol>
     <button onClick={fetchAll}>{pending ? 'Load...' : 'Fetch!'}</button>
-    {error && (
-      <p>{error}</p>
-    )}
+    {error && <p>{error}</p>}
   </div>
 );
 
 Test.propTypes = {
   fetchAll: PropTypes.func.isRequired,
-  articles: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    subtitle: PropTypes.string.isRequired,
-  })),
+  articles: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      subtitle: PropTypes.string.isRequired,
+    })
+  ).isRequired,
   pending: PropTypes.bool.isRequired,
-  error: PropTypes.oneOf(PropTypes.bool, PropTypes.shape({})),
+  error: PropTypes.oneOf(PropTypes.bool, PropTypes.shape({})).isRequired,
 };
 
 export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(Test);

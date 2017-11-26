@@ -4,34 +4,26 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, text } from '@storybook/addon-knobs';
 import imagePath from 'babajka-markup/dist/images/photo5.jpg';
 
-import CoreLayout from 'components/common/CoreLayout';
+import StoriesDecorator from 'components/common/StoriesDecorator';
 import ArticlePreview from './ArticlePreview';
 
 const stories = storiesOf('articles', module);
 
 stories.addDecorator(withKnobs);
-stories.addDecorator(getStory => (
-  <CoreLayout>
-    <div style={{ marginLeft: '5%' }}>
-      {getStory()}
-    </div>
-  </CoreLayout>
-));
+stories.addDecorator(StoriesDecorator);
 
-stories.add('ArticlePreview',
-  () => {
-    const props = {
-      className: text('className', 'is-5'),
-      imageClassName: text('imageClassName', 'is-3by2'),
-      title: text('title', 'Некоратка аб Ахматавай'),
-      subtitle: text('subtitle', 'Настоящую нежность не спутаешь ни с чем...'),
-      author: text('author', 'Зоя Тмац'),
-      url: text('url', '#'),
-      imagePath: text('image path', imagePath),
-      articlePath: text('article link', ''),
-      onClick: action('click on title or image'),
-    };
+stories.add('ArticlePreview', () => {
+  const props = {
+    className: text('className', 'is-5'),
+    imageClassName: text('imageClassName', 'is-3by2'),
+    title: text('title', 'Некоратка аб Ахматавай'),
+    subtitle: text('subtitle', 'Настоящую нежность не спутаешь ни с чем...'),
+    author: text('author', 'Зоя Тмац'),
+    url: text('url', '#'),
+    imagePath: text('image path', imagePath),
+    articlePath: text('article link', ''),
+    onClick: action('click on title or image'),
+  };
 
-    return (<ArticlePreview {...props} />);
-  }
-);
+  return <ArticlePreview {...props} />;
+});

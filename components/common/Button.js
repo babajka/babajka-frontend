@@ -1,20 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
-const Button = ({ children, ...otherProps }) => (
-  <button {...otherProps}>{children}</button>
+const Button = ({ children, className, pending, ...otherProps }) => (
+  <button className={classNames(className, { 'is-loading': pending })} {...otherProps}>
+    {children}
+  </button>
 );
 
 Button.propTypes = {
-  className: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  onClick: PropTypes.func,
   children: PropTypes.node.isRequired,
-  disabled: PropTypes.bool.isRequired,
+  pending: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 Button.defaultProps = {
-  disabled: false,
+  onClick: () => null,
   className: 'button is-success',
+  pending: false,
+  disabled: false,
 };
 
 export default Button;

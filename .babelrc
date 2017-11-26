@@ -5,8 +5,7 @@
   ],
   "plugins": [
     ["module-resolver", {
-      "root": ["./"],
-      "cwd": "babelrc"
+      "root": ["./"]
     }]
   ]
 }
