@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Next.js & React app",
   "scripts": {
-    "dev": "next -p 3001",
+    "dev": "next -p 3000",
     "build": "next build",
     "prod": "next build && next start -p 3000",
     "deploy": "now",
@@ -20,10 +20,7 @@
     "storybook:deploy": "build-storybook && gh-pages -d storybook-static"
   },
   "lint-staged": {
-    "**/*.js": [
-      "npm run lint",
-      "git add"
-    ]
+    "**/*.js": ["npm run lint", "git add"]
   },
   "dependencies": {
     "babajka-markup": "^0.1.2",
@@ -73,7 +70,5 @@
     "prettier": "^1.8.2",
     "raw-loader": "^0.5.1"
   },
-  "moduleRoots": [
-    "."
-  ]
+  "moduleRoots": ["."]
 }
