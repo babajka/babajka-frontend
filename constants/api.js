@@ -1,4 +1,4 @@
-const BASE_URL = 'http://babajka-backend-1.herokuapp.com';
+const BASE_URL = process.env.BABAJKA_BACKEND_URL || 'http://babajka-backend-1.herokuapp.com';
 const API_URL = `${BASE_URL}/api`;
 const AUTH_URL = `${BASE_URL}/auth`;
 
