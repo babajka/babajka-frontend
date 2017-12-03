@@ -14,8 +14,8 @@ Next.js &amp; React app
 * `npm run lint` to check code style with [`eslint`](http://eslint.org/),
   [`airbnb`](https://github.com/airbnb/javascript/tree/master/react) react style guide and
   [`prettier`](https://prettier.io)
-* `npm run lint` to just fix style with `prettier`
-* `npm run watch` to watch & fix changed files style
+* `npm run lint` to just fix style with `prettier` and check on `eslint` errors
+* `npm run prettify:watch` to watch & fix changed files style
 * `npm run deploy` to dev-deploy using [`now`](https://zeit.co/now)
 * `npm run update-styles` to update styles from markup module
 * `npm run storybook` to run storybook on [`localhost:9001`](http://localhost:9001/)

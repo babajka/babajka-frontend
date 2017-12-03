@@ -4,6 +4,7 @@
   "description": "Next.js & React app",
   "scripts": {
     "dev": "next -p 3000",
+    "local-backend": "export BABAJKA_BACKEND_URL=http://localhost:8080 && npm run dev",
     "build": "next build",
     "prod": "next build && next start -p 3000",
     "deploy": "now",
@@ -11,7 +12,7 @@
     "lint": "npm run prettify && eslint '{!(.next*|*static*|node_modules*), }/**/*.js' --fix",
     "prettier": "prettier --config .prettierrc --write",
     "prettify": "npm run prettier '{!(.next*|*static*), }/**/*.{js,md}' '*.md'",
-    "watch": "onchange '**/*.{js,md}' -- npm run prettier {{changed}}",
+    "prettify:watch": "onchange '**/*.{js,md}' -- npm run prettier {{changed}}",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "sh copy-static.sh",
     "update-styles": "npm i --save babajka-markup && sh copy-static.sh",
@@ -21,7 +22,8 @@
   },
   "lint-staged": {
     "**/*.js": [
-      "npm run lint",
+      "npm run prettier",
+      "eslint --fix",
       "git add"
     ]
   },
