@@ -30,6 +30,7 @@
       "ObjectExpression": { "multiline": true },
       "ObjectPattern": { "multiline": true }
     }],
-    "linebreak-style": 0
+    "linebreak-style": 0,
+    "no-console": ["error", { allow: ["warn", "error"] }],
   }
 }

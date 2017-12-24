@@ -21,7 +21,8 @@
   },
   "lint-staged": {
     "**/*.js": [
-      "npm run lint",
+      "npm run prettier",
+      "eslint --fix",
       "git add"
     ]
   },
