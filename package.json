@@ -20,7 +20,10 @@
     "storybook:deploy": "build-storybook && gh-pages -d storybook-static"
   },
   "lint-staged": {
-    "**/*.js": ["npm run lint", "git add"]
+    "**/*.js": [
+      "npm run lint",
+      "git add"
+    ]
   },
   "dependencies": {
     "babajka-markup": "^0.1.2",
@@ -70,5 +73,7 @@
     "prettier": "^1.8.2",
     "raw-loader": "^0.5.1"
   },
-  "moduleRoots": ["."]
+  "moduleRoots": [
+    "."
+  ]
 }
