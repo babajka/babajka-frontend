@@ -1,12 +1,18 @@
 {
-  "presets": [
-    "next/babel",
-    "stage-0"
-  ],
+  "presets": ["next/babel", "stage-0"],
   "plugins": [
-    ["module-resolver", {
-      "root": ["./"]
-    }],
+    [
+      "inline-import",
+      {
+        "extensions": [".css"]
+      }
+    ],
+    [
+      "module-resolver",
+      {
+        "root": ["./"]
+      }
+    ],
     ["transform-define", "./env-config.js"]
   ]
 }
