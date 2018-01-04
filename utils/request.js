@@ -20,12 +20,19 @@ export default (url, method = 'GET', rawBody = null) =>
 
     fetch(url, options)
       .then(response => {
+        const contentType = response.headers.get('content-type');
+
+        if (contentType.includes('application/json')) {
+          return response.json();
+        }
+
         if (!response.ok) {
           return {
             error: response.statusText,
           };
         }
-        return response.json();
+
+        return {};
       })
       .then(jsonResponse => {
         if (jsonResponse.error) {
