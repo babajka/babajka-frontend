@@ -19,12 +19,19 @@ export default (url, method = 'GET', rawBody = null) =>
     }
 
     fetch(url, options)
-      .then(response => response.json())
       .then(response => {
-        if (response.error) {
-          reject(response.error);
+        if (!response.ok) {
+          return {
+            error: response.statusText,
+          };
+        }
+        return response.json();
+      })
+      .then(jsonResponse => {
+        if (jsonResponse.error) {
+          reject(jsonResponse.error);
         } else {
-          resolve(response);
+          resolve(jsonResponse);
         }
       })
       .catch(reject);
