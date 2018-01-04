@@ -20,6 +20,8 @@ app.prepare().then(() => {
   server.listen(port, err => {
     if (err) throw err;
     // eslint-disable-next-line no-console
-    console.log(`> Ready on http://localhost:${port}`);
+    console.log(`Using Backend on ${BACKEND_URL}`);
+    // eslint-disable-next-line no-console
+    console.log(`Ready on http://localhost:${port}`);
   });
 });
