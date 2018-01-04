@@ -4,6 +4,7 @@ export const DEFAULT_OPTIONS = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
   },
+  credentials: 'same-origin',
 };
 
 export default (url, method = 'GET', rawBody = null) =>
