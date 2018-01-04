@@ -4,7 +4,7 @@
   "description": "Next.js & React app",
   "scripts": {
     "start": "npm run dev",
-    "dev": "node server.js",
+    "dev": "export PORT=3000 && node server.js",
     "local-backend": "export BABAJKA_BACKEND_URL=http://localhost:8080 && npm run dev",
     "build": "next build",
     "prod": "npm run build && NODE_ENV=production node server.js",
