@@ -16,7 +16,6 @@ Next.js &amp; React app
   [`prettier`](https://prettier.io)
 * `npm run lint` to just fix style with `prettier` and check on `eslint` errors
 * `npm run prettify:watch` to watch & fix changed files style
-* `npm run deploy` to dev-deploy using [`now`](https://zeit.co/now)
 * `npm run update-styles` to update styles from markup module
 * `npm run storybook` to run storybook on [`localhost:9001`](http://localhost:9001/)
 * `npm run storybook:build` to build static version of storybook

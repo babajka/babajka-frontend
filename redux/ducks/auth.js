@@ -8,6 +8,8 @@ const duck = 'auth';
 
 // constants
 const SIGNIN = `${duck}/SIGNIN`;
+const SIGNOUT = `${duck}/SIGNOUT`;
+const GET_CURRENT_USER = `${duck}/GET_CURRENT_USER`;
 
 // reducer
 const initialState = {
@@ -31,9 +33,20 @@ export default createReducer(
       }),
       [ERROR]: (state, { payload }) => ({
         ...state,
-        user: null, // TODO(@drapegnik): for testing, to remove
         errors: payload,
         pending: false,
+      }),
+    },
+    [SIGNOUT]: {
+      [SUCCESS]: state => ({
+        ...state,
+        user: null,
+      }),
+    },
+    [GET_CURRENT_USER]: {
+      [SUCCESS]: (state, { payload }) => ({
+        ...state,
+        user: payload,
       }),
     },
   },
@@ -42,11 +55,19 @@ export default createReducer(
 
 // actions
 export const actions = {
+  getCurrentUser: () => ({
+    type: GET_CURRENT_USER,
+    payload: request(api.users.getCurrent),
+  }),
   signIn: (data, signUp = false) => ({
     type: SIGNIN,
     payload: signUp
       ? request(api.auth.register, 'POST', data)
       : request(api.auth.login, 'POST', data),
+  }),
+  signOut: () => ({
+    type: SIGNOUT,
+    payload: request(api.auth.logout),
   }),
 };
 

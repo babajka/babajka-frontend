@@ -4,6 +4,7 @@ export const DEFAULT_OPTIONS = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
   },
+  credentials: 'same-origin',
 };
 
 export default (url, method = 'GET', rawBody = null) =>
@@ -18,12 +19,26 @@ export default (url, method = 'GET', rawBody = null) =>
     }
 
     fetch(url, options)
-      .then(response => response.json())
       .then(response => {
-        if (response.error) {
-          reject(response.error);
+        const contentType = response.headers.get('content-type');
+
+        if (contentType.includes('application/json')) {
+          return response.json();
+        }
+
+        if (!response.ok) {
+          return {
+            error: response.statusText,
+          };
+        }
+
+        return {};
+      })
+      .then(jsonResponse => {
+        if (jsonResponse.error) {
+          reject(jsonResponse.error);
         } else {
-          resolve(response);
+          resolve(jsonResponse);
         }
       })
       .catch(reject);
