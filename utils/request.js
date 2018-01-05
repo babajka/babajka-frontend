@@ -1,3 +1,5 @@
+import fetch from 'isomorphic-fetch';
+
 export const DEFAULT_OPTIONS = {
   mode: 'cors',
   headers: {

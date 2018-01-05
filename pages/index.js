@@ -1,36 +1,56 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Link from 'next/link';
 import withRedux from 'next-redux-wrapper';
 
 import CoreLayout from 'components/common/CoreLayout';
-import Button from 'components/common/Button';
 
-import { actions, selectors } from 'redux/ducks/auth';
 import initStore from 'redux/store';
+import { actions, selectors } from 'redux/ducks/articles';
 
-const mapStateToProps = state => ({ user: selectors.getUser(state) });
+const mapStateToProps = state => ({
+  articles: selectors.getAll(state),
+  pending: selectors.isPending(state),
+  error: selectors.isError(state),
+});
 
-const mapDispatchToProps = { signOut: actions.signOut };
+class HomePage extends Component {
+  static propTypes = {
+    articles: PropTypes.arrayOf(
+      PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        subtitle: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    pending: PropTypes.bool.isRequired,
+    // eslint-disable-next-line react/forbid-prop-types
+    error: PropTypes.any.isRequired,
+  };
 
-const HomePage = ({ user, signOut }) => (
-  <CoreLayout>
-    <h1 className="title">Welcome to next.js!</h1>
-    <p>Hello, {user ? user.email : 'anonymous'}!</p>
-    {!user && (
-      <Link href="login">
-        <Button>login</Button>
-      </Link>
-    )}
-    {user && <Button onClick={signOut.bind(null)}>logout</Button>}
-  </CoreLayout>
-);
+  static getInitialProps({ store: { dispatch }, isServer }) {
+    const action = actions.fetchAll(isServer);
+    dispatch(action);
+    return action.payload;
+  }
 
-HomePage.propTypes = {
-  user: PropTypes.shape({ email: PropTypes.string.isRequired }),
-  signOut: PropTypes.func.isRequired,
-};
+  render() {
+    const { articles, pending, error } = this.props;
+    return (
+      <CoreLayout>
+        <p>Articles:</p>
+        <ol>
+          {articles &&
+            articles.map(({ title, subtitle }, index) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <li key={index}>
+                {title} : {subtitle}
+              </li>
+            ))}
+        </ol>
+        {pending && <p>Loading...</p>}
+        {error && <p>{error}</p>}
+      </CoreLayout>
+    );
+  }
+}
 
-HomePage.defaultProps = { user: null };
-
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(HomePage);
+export default withRedux(initStore, mapStateToProps)(HomePage);

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import withRedux from 'next-redux-wrapper';
+import { connect } from 'react-redux';
 
-import initStore from 'redux/store';
+import Header from 'components/common/Header';
+
 import { actions, selectors } from 'redux/ducks/auth';
 
 const mapStateToProps = state => ({
@@ -45,10 +46,11 @@ class CoreLayout extends Component {
           <link rel="stylesheet" href="/static/styles/assets.min.css" />
           <link rel="stylesheet" href="/static/styles/bundle.min.css" />
         </Head>
+        <Header />
         {children}
       </div>
     );
   }
 }
 
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(CoreLayout);
+export default connect(mapStateToProps, mapDispatchToProps)(CoreLayout);

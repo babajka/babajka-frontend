@@ -40,8 +40,20 @@ export default createReducer(
 
 // actions
 export const actions = {
-  fetchAll: () => ({
+  fetchAll: isServer => ({
     type: FETCH_ALL,
-    payload: request(api.articles.getAll),
+    payload: request(api(isServer).articles.getAll),
   }),
+};
+
+// selectors
+const getState = state => state.articles;
+const getAll = state => getState(state).data;
+const isPending = state => getState(state).pending;
+const isError = state => getState(state).error;
+
+export const selectors = {
+  getAll,
+  isPending,
+  isError,
 };
