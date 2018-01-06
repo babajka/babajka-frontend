@@ -19,7 +19,7 @@ const Header = ({ user, signOut }) => (
         <Button>login</Button>
       </Link>
     )}
-    {user && <Button onClick={signOut.bind(null)}>logout</Button>}
+    {user && <Button onClick={signOut}>logout</Button>}
   </div>
 );
 

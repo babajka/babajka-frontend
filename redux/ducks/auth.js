@@ -67,7 +67,7 @@ export const actions = {
   }),
   signOut: () => ({
     type: SIGNOUT,
-    payload: request(api.auth.logout),
+    payload: request.fetch(api.auth.logout),
   }),
 };
 
