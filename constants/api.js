@@ -1,7 +1,7 @@
 const API_URL = '/api';
 const AUTH_URL = '/auth';
 
-const api = {
+export default {
   auth: {
     login: `${AUTH_URL}/login`,
     register: `${AUTH_URL}/register`,
@@ -13,5 +13,3 @@ const api = {
     getCurrent: `${API_URL}/users/current`,
   },
 };
-
-export default api;

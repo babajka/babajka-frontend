@@ -1,8 +1,9 @@
 const express = require('express');
 const next = require('next');
 const proxy = require('http-proxy-middleware');
+const cookieParser = require('cookie-parser');
 
-const BACKEND_URL = process.env.BABAJKA_BACKEND_URL || 'http://dev.wir.by:8080';
+const { BACKEND_URL } = require('./constants/server');
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
@@ -11,6 +12,7 @@ const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
   const server = express();
+  server.use(cookieParser());
 
   server.use('/auth', proxy({ target: BACKEND_URL, changeOrigin: true }));
   server.use('/api', proxy({ target: BACKEND_URL, changeOrigin: true }));

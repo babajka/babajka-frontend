@@ -8,6 +8,7 @@ import LoginForm from 'components/auth/LoginForm';
 
 import { actions, selectors } from 'redux/ducks/auth';
 import initStore from 'redux/store';
+import request from 'utils/request';
 
 const mapStateToProps = state => ({
   user: selectors.getUser(state),
@@ -28,6 +29,10 @@ class LoginPage extends Component {
   };
 
   static defaultProps = { user: null };
+
+  static getInitialProps(ctx) {
+    return request.populate(ctx, [actions.getCurrentUser]);
+  }
 
   componentDidMount() {
     const { user } = this.props;

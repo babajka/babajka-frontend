@@ -1,36 +1,52 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Link from 'next/link';
 import withRedux from 'next-redux-wrapper';
 
 import CoreLayout from 'components/common/CoreLayout';
-import Button from 'components/common/Button';
 
-import { actions, selectors } from 'redux/ducks/auth';
 import initStore from 'redux/store';
+import { actions as articlesActions, selectors } from 'redux/ducks/articles';
+import { actions as auth } from 'redux/ducks/auth';
+import request from 'utils/request';
 
-const mapStateToProps = state => ({ user: selectors.getUser(state) });
+const mapStateToProps = state => ({
+  articles: selectors.getAll(state),
+  error: selectors.isError(state),
+});
 
-const mapDispatchToProps = { signOut: actions.signOut };
+class HomePage extends Component {
+  static propTypes = {
+    articles: PropTypes.arrayOf(
+      PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        subtitle: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
+  };
 
-const HomePage = ({ user, signOut }) => (
-  <CoreLayout>
-    <h1 className="title">Welcome to next.js!</h1>
-    <p>Hello, {user ? user.email : 'anonymous'}!</p>
-    {!user && (
-      <Link href="login">
-        <Button>login</Button>
-      </Link>
-    )}
-    {user && <Button onClick={signOut.bind(null)}>logout</Button>}
-  </CoreLayout>
-);
+  static getInitialProps(ctx) {
+    // TODO: somehow extract getCurrentUser to populate method
+    return request.populate(ctx, [auth.getCurrentUser, articlesActions.fetchAll]);
+  }
 
-HomePage.propTypes = {
-  user: PropTypes.shape({ email: PropTypes.string.isRequired }),
-  signOut: PropTypes.func.isRequired,
-};
+  render() {
+    const { articles, error } = this.props;
+    return (
+      <CoreLayout>
+        <p>Articles:</p>
+        <ol>
+          {articles &&
+            articles.map(({ title, subtitle, slug, type }) => (
+              <li key={slug}>
+                {title} : {subtitle} : {type}
+              </li>
+            ))}
+        </ol>
+        {error && <p>{error}</p>}
+      </CoreLayout>
+    );
+  }
+}
 
-HomePage.defaultProps = { user: null };
-
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(HomePage);
+export default withRedux(initStore, mapStateToProps)(HomePage);
