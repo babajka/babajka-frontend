@@ -60,7 +60,9 @@ class Request {
     }
     const actions = actionsToLoad.map(action => action(isServer));
     actions.forEach(action => dispatch(action));
-    return Promise.all(actions.map(action => action.payload));
+    const promises = actions.map(action => action.payload.catch(e => e));
+    // TODO: better error handling
+    return Promise.all(promises).catch(err => console.error(err));
   };
 }
 
