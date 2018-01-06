@@ -1,6 +1,7 @@
 const express = require('express');
 const next = require('next');
 const proxy = require('http-proxy-middleware');
+const cookieParser = require('cookie-parser');
 
 const { BACKEND_URL } = require('./constants/server');
 
@@ -11,6 +12,7 @@ const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
   const server = express();
+  server.use(cookieParser());
 
   server.use('/auth', proxy({ target: BACKEND_URL, changeOrigin: true }));
   server.use('/api', proxy({ target: BACKEND_URL, changeOrigin: true }));

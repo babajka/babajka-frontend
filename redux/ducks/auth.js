@@ -57,17 +57,17 @@ export default createReducer(
 export const actions = {
   getCurrentUser: () => ({
     type: GET_CURRENT_USER,
-    payload: request(api().users.getCurrent),
+    payload: request.fetch(api.users.getCurrent),
   }),
   signIn: (data, signUp = false) => ({
     type: SIGNIN,
     payload: signUp
-      ? request(api().auth.register, 'POST', data)
-      : request(api().auth.login, 'POST', data),
+      ? request.fetch(api.auth.register, 'POST', data)
+      : request.fetch(api.auth.login, 'POST', data),
   }),
   signOut: () => ({
     type: SIGNOUT,
-    payload: request(api().auth.logout),
+    payload: request(api.auth.logout),
   }),
 };
 

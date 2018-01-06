@@ -5,11 +5,12 @@ import withRedux from 'next-redux-wrapper';
 import CoreLayout from 'components/common/CoreLayout';
 
 import initStore from 'redux/store';
-import { actions, selectors } from 'redux/ducks/articles';
+import { actions as articlesActions, selectors } from 'redux/ducks/articles';
+import { actions as auth } from 'redux/ducks/auth';
+import request from 'utils/request';
 
 const mapStateToProps = state => ({
   articles: selectors.getAll(state),
-  pending: selectors.isPending(state),
   error: selectors.isError(state),
 });
 
@@ -21,32 +22,27 @@ class HomePage extends Component {
         subtitle: PropTypes.string.isRequired,
       })
     ).isRequired,
-    pending: PropTypes.bool.isRequired,
-    // eslint-disable-next-line react/forbid-prop-types
-    error: PropTypes.any.isRequired,
+    error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   };
 
-  static getInitialProps({ store: { dispatch }, isServer }) {
-    const action = actions.fetchAll(isServer);
-    dispatch(action);
-    return action.payload;
+  static getInitialProps(ctx) {
+    // TODO: somehow extract getCurrentUser to populate method
+    return request.populate(ctx, [auth.getCurrentUser, articlesActions.fetchAll]);
   }
 
   render() {
-    const { articles, pending, error } = this.props;
+    const { articles, error } = this.props;
     return (
       <CoreLayout>
         <p>Articles:</p>
         <ol>
           {articles &&
-            articles.map(({ title, subtitle }, index) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <li key={index}>
-                {title} : {subtitle}
+            articles.map(({ title, subtitle, slug, type }) => (
+              <li key={slug}>
+                {title} : {subtitle} : {type}
               </li>
             ))}
         </ol>
-        {pending && <p>Loading...</p>}
         {error && <p>{error}</p>}
       </CoreLayout>
     );

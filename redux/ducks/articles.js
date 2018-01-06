@@ -40,9 +40,9 @@ export default createReducer(
 
 // actions
 export const actions = {
-  fetchAll: isServer => ({
+  fetchAll: () => ({
     type: FETCH_ALL,
-    payload: request(api(isServer).articles.getAll),
+    payload: request.fetch(api.articles.getAll),
   }),
 };
 
