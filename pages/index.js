@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
 
 import CoreLayout from 'components/common/CoreLayout';
+import ArticlesGrid from 'components/articles/grid/ArticlesGrid';
 
 import initStore from 'redux/store';
 import { actions as articlesActions, selectors } from 'redux/ducks/articles';
@@ -34,15 +35,9 @@ class HomePage extends Component {
     const { articles, error } = this.props;
     return (
       <CoreLayout>
-        <p>Articles:</p>
-        <ol>
-          {articles &&
-            articles.map(({ title, subtitle, slug, type }) => (
-              <li key={slug}>
-                {title} : {subtitle} : {type}
-              </li>
-            ))}
-        </ol>
+        <div className="main-page">
+          <ArticlesGrid articles={articles} firstLineArticlesNumber={3} />
+        </div>
         {error && <p>{error}</p>}
       </CoreLayout>
     );

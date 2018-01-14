@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+const mockImagePath = './static/images/photo5.jpg';
+
 const ArticlePreview = ({
   title,
   subtitle,
@@ -16,7 +18,7 @@ const ArticlePreview = ({
       <div className="card-image">
         <figure className={classNames('image', imageClassName)}>
           <a onClick={onClick} href="/link/to/article">
-            <img alt={title} src={imagePath} />
+            <img alt={title} src={imagePath || mockImagePath} />
           </a>
         </figure>
       </div>
@@ -36,11 +38,17 @@ const ArticlePreview = ({
 ArticlePreview.propTypes = {
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired,
-  className: PropTypes.string.isRequired,
+  author: PropTypes.string,
+  className: PropTypes.string,
   imagePath: PropTypes.string.isRequired,
-  imageClassName: PropTypes.string.isRequired,
+  imageClassName: PropTypes.string,
   onClick: PropTypes.func.isRequired,
+};
+
+ArticlePreview.defaultProps = {
+  author: '',
+  className: '',
+  imageClassName: '',
 };
 
 export default ArticlePreview;
