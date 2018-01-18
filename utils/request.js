@@ -1,11 +1,12 @@
 import fetch from 'isomorphic-fetch';
 
-import { SESSION_COOKIE, BACKEND_URL } from 'constants/server';
+import { BACKEND_AUTH, BACKEND_URL, SESSION_COOKIE } from 'constants/server';
 
 export const DEFAULT_OPTIONS = {
   mode: 'cors',
   headers: {
     Accept: 'application/json',
+    Authorization: BACKEND_AUTH,
     'Content-Type': 'application/json',
   },
   credentials: 'same-origin',
