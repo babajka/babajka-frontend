@@ -1,6 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
+
+import articlePropTypes from 'utils/customPropTypes';
 
 const mockImagePath = './static/images/photo5.jpg';
 
@@ -35,15 +36,7 @@ const ArticlePreview = ({
   </div>
 );
 
-ArticlePreview.propTypes = {
-  title: PropTypes.string.isRequired,
-  subtitle: PropTypes.string.isRequired,
-  author: PropTypes.string,
-  className: PropTypes.string,
-  imagePath: PropTypes.string.isRequired,
-  imageClassName: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
-};
+ArticlePreview.propTypes = articlePropTypes;
 
 ArticlePreview.defaultProps = {
   author: '',

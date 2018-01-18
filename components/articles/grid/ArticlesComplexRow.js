@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import articlePropTypes from 'utils/customPropTypes';
 import ArticleRow from './ArticlesRow';
 import Diary from '../Diary';
 
@@ -17,12 +18,7 @@ const ArticlesComplexRow = ({ articles }) => (
 );
 
 ArticlesComplexRow.propTypes = {
-  articles: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      subtitle: PropTypes.string.isRequired,
-    })
-  ).isRequired,
+  articles: PropTypes.arrayOf(articlePropTypes).isRequired,
 };
 
 export default ArticlesComplexRow;

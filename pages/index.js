@@ -4,6 +4,7 @@ import withRedux from 'next-redux-wrapper';
 
 import CoreLayout from 'components/common/CoreLayout';
 import ArticlesGrid from 'components/articles/grid/ArticlesGrid';
+import articlePropTypes from 'utils/customPropTypes';
 
 import initStore from 'redux/store';
 import { actions as articlesActions, selectors } from 'redux/ducks/articles';
@@ -17,12 +18,7 @@ const mapStateToProps = state => ({
 
 class HomePage extends Component {
   static propTypes = {
-    articles: PropTypes.arrayOf(
-      PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        subtitle: PropTypes.string.isRequired,
-      })
-    ).isRequired,
+    articles: PropTypes.arrayOf(articlePropTypes).isRequired,
     error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   };
 
@@ -36,7 +32,7 @@ class HomePage extends Component {
     return (
       <CoreLayout>
         <div className="main-page">
-          <ArticlesGrid articles={articles} firstLineArticlesNumber={3} />
+          <ArticlesGrid firstLineArticles={articles.slice(0, 4)} restOfArticles={articles} />
         </div>
         {error && <p>{error}</p>}
       </CoreLayout>

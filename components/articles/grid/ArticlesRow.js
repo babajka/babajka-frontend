@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import articlePropTypes from 'utils/customPropTypes';
 import ArticlePreview from '../ArticlePreview';
 
 const ArticlesRow = ({ articles }) => (
@@ -9,12 +10,7 @@ const ArticlesRow = ({ articles }) => (
 );
 
 ArticlesRow.propTypes = {
-  articles: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      subtitle: PropTypes.string.isRequired,
-    })
-  ).isRequired,
+  articles: PropTypes.arrayOf(articlePropTypes).isRequired,
 };
 
 export default ArticlesRow;
