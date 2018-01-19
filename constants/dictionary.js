@@ -1,4 +1,4 @@
-// FIXME(@drapegnik): change it on real internationalization
+// FIXME(@drapegnik): replace it with on real internationalization
 export default {
   // auth
   sigInTitle: 'Увайсці ў Вір',
