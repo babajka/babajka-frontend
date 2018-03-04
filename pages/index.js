@@ -37,9 +37,19 @@ class HomePage extends Component {
         <p>Articles:</p>
         <ol>
           {articles &&
-            articles.map(({ title, subtitle, slug, type }) => (
-              <li key={slug}>
-                {title} : {subtitle} : {type}
+            articles.map(({ brand, type, locales }) => (
+              <li key={(locales.en && locales.en.slug) || (locales.be && locales.be.slug)}>
+                {type}
+                <br />
+                {locales &&
+                  Object.values(locales).map(({ title, subtitle, text, slug, locale }) => (
+                    <div>
+                      <u>{locale}</u> : <b>{title}</b> : <i>{slug}</i> : {subtitle} : {text} :{' '}
+                      {brand.names[locale]}
+                      <br />
+                    </div>
+                  ))}
+                <br />
               </li>
             ))}
         </ol>
