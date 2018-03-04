@@ -38,7 +38,7 @@ class HomePage extends Component {
         <ol>
           {articles &&
             articles.map(({ brand, type, locales }) => (
-              <li key={locales.en.slug || locales.be.slug}>
+              <li key={(locales.en && locales.en.slug) || (locales.be && locales.be.slug)}>
                 {type}
                 <br />
                 {locales &&
