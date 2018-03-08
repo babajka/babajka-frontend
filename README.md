@@ -10,18 +10,27 @@ Next.js &amp; React app
 
 * `npm run dev` to run dev server with hot-reloading
 * `npm run build` to build a production version
-* `npm run prod` to build and run a production version
+* `npm run start-prod` to build and run a production version
 * `npm run lint` to check code style with [`eslint`](http://eslint.org/),
   [`airbnb`](https://github.com/airbnb/javascript/tree/master/react) react style guide and
   [`prettier`](https://prettier.io)
 * `npm run lint` to just fix style with `prettier` and check on `eslint` errors
 * `npm run prettify:watch` to watch & fix changed files style
-* `npm run deploy` to dev-deploy using [`now`](https://zeit.co/now)
 * `npm run update-styles` to update styles from markup module
 * `npm run storybook` to run storybook on [`localhost:9001`](http://localhost:9001/)
 * `npm run storybook:build` to build static version of storybook
 * `npm run storybook:deploy` to deploy storybook on
   [`gh-pages`](https://babajka.github.io/babajka-frontend)
+
+## configuration
+
+Some variables may be set to control the frontend:
+
+* `BABAJKA_BACKEND_URL` sets URL of the Backend instance. Defaults to `http://dev.wir.by`. You might
+  want to use `http://localhost:8080` for local development.
+* `BABAJKA_BACKEND_AUTH` contains credentials necessary to access the remote Backend on
+  `dev.wir.by`. Check out Slack `#develop` channel for the format and the value of the variable. You
+  don't need to set the variable if your Backend is running locally.
 
 ## rules
 

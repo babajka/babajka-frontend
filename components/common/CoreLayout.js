@@ -1,6 +1,8 @@
 import React from 'react';
-import Head from 'next/head';
 import PropTypes from 'prop-types';
+import Head from 'next/head';
+
+import Header from 'components/common/Header';
 
 const CoreLayout = ({ title, children }) => (
   <div>
@@ -15,13 +17,14 @@ const CoreLayout = ({ title, children }) => (
       <link rel="stylesheet" href="/static/styles/assets.min.css" />
       <link rel="stylesheet" href="/static/styles/bundle.min.css" />
     </Head>
+    <Header />
     {children}
   </div>
 );
 
 CoreLayout.propTypes = {
-  children: PropTypes.node.isRequired,
   title: PropTypes.string,
+  children: PropTypes.node.isRequired,
 };
 
 CoreLayout.defaultProps = { title: '' };

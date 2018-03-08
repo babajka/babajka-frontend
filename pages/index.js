@@ -1,30 +1,62 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Link from 'next/link';
 import withRedux from 'next-redux-wrapper';
 
 import CoreLayout from 'components/common/CoreLayout';
-import Button from 'components/common/Button';
 
-import { selectors } from 'redux/ducks/auth';
 import initStore from 'redux/store';
+import { actions as articlesActions, selectors } from 'redux/ducks/articles';
+import { actions as auth } from 'redux/ducks/auth';
+import request from 'utils/request';
 
-const mapStateToProps = state => ({ user: selectors.getUser(state) });
+const mapStateToProps = state => ({
+  articles: selectors.getAll(state),
+  error: selectors.isError(state),
+});
 
-const HomePage = ({ user }) => (
-  <CoreLayout>
-    <h1 className="title">Welcome to next.js!</h1>
-    <p>Hello, {user ? user.email : 'anonymous'}!</p>
-    {!user && (
-      <Link href="login">
-        <Button>login</Button>
-      </Link>
-    )}
-  </CoreLayout>
-);
+class HomePage extends Component {
+  static propTypes = {
+    articles: PropTypes.arrayOf(
+      PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        subtitle: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
+  };
 
-HomePage.propTypes = { user: PropTypes.shape({ email: PropTypes.string.isRequired }) };
+  static getInitialProps(ctx) {
+    // TODO: somehow extract getCurrentUser to populate method
+    return request.populate(ctx, [auth.getCurrentUser, articlesActions.fetchAll]);
+  }
 
-HomePage.defaultProps = { user: null };
+  render() {
+    const { articles, error } = this.props;
+    return (
+      <CoreLayout>
+        <p>Articles:</p>
+        <ol>
+          {articles &&
+            articles.map(({ brand, type, locales }) => (
+              <li key={(locales.en && locales.en.slug) || (locales.be && locales.be.slug)}>
+                {type}
+                <br />
+                {locales &&
+                  Object.values(locales).map(({ title, subtitle, text, slug, locale }) => (
+                    <div>
+                      <u>{locale}</u> : <b>{title}</b> : <i>{slug}</i> : {subtitle} : {text} :{' '}
+                      {brand.names[locale]}
+                      <br />
+                    </div>
+                  ))}
+                <br />
+              </li>
+            ))}
+        </ol>
+        {error && <p>{error}</p>}
+      </CoreLayout>
+    );
+  }
+}
 
 export default withRedux(initStore, mapStateToProps)(HomePage);

@@ -1,30 +1,70 @@
+import fetch from 'isomorphic-fetch';
+
+import { BACKEND_AUTH, BACKEND_URL, SESSION_COOKIE } from 'constants/server';
+
 export const DEFAULT_OPTIONS = {
   mode: 'cors',
   headers: {
     Accept: 'application/json',
+    Authorization: BACKEND_AUTH,
     'Content-Type': 'application/json',
   },
+  credentials: 'same-origin',
 };
 
-export default (url, method = 'GET', rawBody = null) =>
-  new Promise((resolve, reject) => {
-    if (!url) {
-      reject(new Error('URL parameter required'));
-    }
+class Request {
+  fetch = (url, method = 'GET', rawBody = null) =>
+    new Promise((resolve, reject) => {
+      if (!url) {
+        reject(new Error('URL parameter required'));
+      }
 
-    const options = { ...DEFAULT_OPTIONS, method };
-    if (rawBody) {
-      options.body = JSON.stringify(rawBody);
-    }
+      const options = { ...DEFAULT_OPTIONS, method };
+      options.headers.Cookie = this.cookie;
+      if (rawBody) {
+        options.body = JSON.stringify(rawBody);
+      }
 
-    fetch(url, options)
-      .then(response => response.json())
-      .then(response => {
-        if (response.error) {
-          reject(response.error);
-        } else {
-          resolve(response);
-        }
-      })
-      .catch(reject);
-  });
+      // for requests from server we need to avoid proxying
+      const prefix = this.isServer ? BACKEND_URL : '';
+      fetch(`${prefix}${url}`, options)
+        .then(response => {
+          const contentType = response.headers.get('content-type');
+
+          if (contentType.includes('application/json')) {
+            return response.json();
+          }
+
+          if (!response.ok) {
+            return {
+              error: response.statusText,
+            };
+          }
+
+          return {};
+        })
+        .then(jsonResponse => {
+          if (jsonResponse.error) {
+            reject(jsonResponse.error);
+          } else {
+            resolve(jsonResponse);
+          }
+        })
+        .catch(reject);
+    });
+
+  populate = ({ store: { dispatch }, isServer, req }, actionsToLoad) => {
+    // TODO: check if we can omit this `if`
+    this.isServer = isServer;
+    if (isServer) {
+      this.cookie = `${SESSION_COOKIE}=${req.cookies[SESSION_COOKIE]}`;
+    }
+    const actions = actionsToLoad.map(action => action(isServer));
+    actions.forEach(action => dispatch(action));
+    const promises = actions.map(action => action.payload.catch(e => e));
+    // TODO: better error handling
+    return Promise.all(promises).catch(err => console.error(err));
+  };
+}
+
+export default new Request();

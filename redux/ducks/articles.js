@@ -42,6 +42,18 @@ export default createReducer(
 export const actions = {
   fetchAll: () => ({
     type: FETCH_ALL,
-    payload: request(api.articles.getAll),
+    payload: request.fetch(api.articles.getAll),
   }),
+};
+
+// selectors
+const getState = state => state.articles;
+const getAll = state => getState(state).data;
+const isPending = state => getState(state).pending;
+const isError = state => getState(state).error;
+
+export const selectors = {
+  getAll,
+  isPending,
+  isError,
 };
