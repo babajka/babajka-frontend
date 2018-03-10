@@ -46,9 +46,17 @@ export const actions = {
   }),
 };
 
+/* TODO: receive current language from store */
+const CURRENT_LANG = 'be';
+
 // selectors
 const getState = state => state.articles;
-const getAll = state => getState(state).data;
+const getAll = state =>
+  getState(state).data.map(({ brand, type, locales }) => ({
+    ...locales[CURRENT_LANG],
+    brand: { slug: brand.slug, name: brand.names[CURRENT_LANG] },
+    type,
+  }));
 const isPending = state => getState(state).pending;
 const isError = state => getState(state).error;
 
