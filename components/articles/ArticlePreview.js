@@ -1,7 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
-
 import articlePropTypes from 'utils/customPropTypes';
+
+import SpecialHeading from './SpecialHeading';
 
 const mockImagePath = './static/images/photo5.jpg';
 
@@ -13,6 +14,7 @@ const ArticlePreview = ({
   imageClassName,
   imagePath,
   onClick,
+  brand,
 }) => (
   <div className={classNames('tile is-parent', className)}>
     <article className="card tile is-child">
@@ -22,6 +24,7 @@ const ArticlePreview = ({
             <img alt={title} src={imagePath || mockImagePath} />
           </a>
         </figure>
+        {brand && <SpecialHeading {...brand} />}
       </div>
       <div className="card-content">
         <span className="title is-spaced">
