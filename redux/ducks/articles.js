@@ -46,17 +46,18 @@ export const actions = {
   }),
 };
 
-/* TODO: receive current language from store */
-const CURRENT_LANG = 'be';
+const getLocalizedBrand = (brand, lang) => ({ slug: brand.slug, name: brand.names[lang] });
+
+const getLocalizedArticles = (articles, lang = 'be') =>
+  articles.map(({ brand, type, locales }) => ({
+    ...locales[lang],
+    brand: getLocalizedBrand(brand, lang),
+    type,
+  }));
 
 // selectors
 const getState = state => state.articles;
-const getAll = state =>
-  getState(state).data.map(({ brand, type, locales }) => ({
-    ...locales[CURRENT_LANG],
-    brand: { slug: brand.slug, name: brand.names[CURRENT_LANG] },
-    type,
-  }));
+const getAll = state => getLocalizedArticles(getState(state).data);
 const isPending = state => getState(state).pending;
 const isError = state => getState(state).error;
 

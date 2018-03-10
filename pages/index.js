@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
 
 import CoreLayout from 'components/common/CoreLayout';
-import ArticlesGrid from 'components/articles/grid/ArticlesGrid';
+import ArticlesRow from 'components/articles/grid/ArticlesRow';
+import ArticlesComplexRow from 'components/articles/grid/ArticlesComplexRow';
 import articlePropTypes from 'utils/customPropTypes';
-
 import initStore from 'redux/store';
 import { actions as articlesActions, selectors } from 'redux/ducks/articles';
 import { actions as auth } from 'redux/ducks/auth';
@@ -33,7 +33,8 @@ class HomePage extends Component {
       <CoreLayout>
         <div className="main-page page-container">
           <div className="page-content">
-            <ArticlesGrid firstLineArticles={articles.slice(0, 4)} restOfArticles={articles} />
+            <ArticlesRow articles={articles.slice(0, 4)} />
+            <ArticlesComplexRow articles={articles} />
           </div>
         </div>
         {error && <p>{error}</p>}
