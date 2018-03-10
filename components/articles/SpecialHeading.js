@@ -18,6 +18,8 @@ const SpecialHeading = ({ slug, name, imagePath }) => (
   </div>
 );
 
+/* TODO: need to take appropriate picture (perhaps, using slug or name) */
+
 SpecialHeading.propTypes = {
   slug: PropTypes.string.isRequired,
   imagePath: PropTypes.string.isRequired,
