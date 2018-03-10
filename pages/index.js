@@ -31,8 +31,10 @@ class HomePage extends Component {
     const { articles, error } = this.props;
     return (
       <CoreLayout>
-        <div className="main-page">
-          <ArticlesGrid firstLineArticles={articles.slice(0, 4)} restOfArticles={articles} />
+        <div className="main-page page-container">
+          <div className="page-content">
+            <ArticlesGrid firstLineArticles={articles.slice(0, 4)} restOfArticles={articles} />
+          </div>
         </div>
         {error && <p>{error}</p>}
       </CoreLayout>
