@@ -12,7 +12,7 @@ const ArticlesComplexRow = ({ articles }) => (
     </div>
 
     <div className="tile is-vertical">
-      <Diary {...articles[0]} text={articles[0].text.bel} />
+      <Diary {...articles[0]} text={articles[0].locales.be.text} />
     </div>
   </div>
 );
