@@ -14,7 +14,7 @@ const articlePropTypes = {
   imagePath: PropTypes.string.isRequired,
   imageClassName: PropTypes.string,
   onClick: PropTypes.func.isRequired,
-  brand: brandPropTypes,
+  brand: PropTypes.shape(brandPropTypes),
 };
 
 export default articlePropTypes;
