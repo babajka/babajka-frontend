@@ -17,4 +17,13 @@ const articlePropTypes = {
   brand: PropTypes.shape(brandPropTypes),
 };
 
-export default articlePropTypes;
+const diaryPropTypes = {
+  text: PropTypes.string.isRequired,
+  colloquialDate: PropTypes.string.isRequired,
+  author: PropTypes.string.isRequired,
+  year: PropTypes.string.isRequired,
+  getNextDiary: PropTypes.func.isRequired,
+  getPrevDiary: PropTypes.func.isRequired,
+};
+
+export { diaryPropTypes, articlePropTypes };

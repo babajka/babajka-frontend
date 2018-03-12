@@ -12,4 +12,5 @@ export default {
     getAll: `${API_URL}/users`,
     getCurrent: `${API_URL}/users/current`,
   },
+  diary: { getByDay: `${API_URL}/specials/diary` },
 };
