@@ -18,7 +18,7 @@ const mapStateToProps = state => ({
 
 class HomePage extends Component {
   static propTypes = {
-    articles: PropTypes.arrayOf(articlePropTypes).isRequired,
+    articles: PropTypes.arrayOf(PropTypes.shape(articlePropTypes)).isRequired,
     error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   };
 

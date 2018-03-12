@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import articlePropTypes from 'utils/customPropTypes';
 import ArticleRow from './ArticlesRow';
-import Diary from '../Diary';
 
 const ArticlesComplexRow = ({ articles }) => (
   <div className="second-line tile is-ancestor">
@@ -12,13 +11,13 @@ const ArticlesComplexRow = ({ articles }) => (
     </div>
 
     <div className="tile is-vertical">
-      <Diary {...articles[0]} text={articles[0].text} />
+      {/* <Diary {...articles[0]} text={articles[0].text} /> */}
     </div>
   </div>
 );
 
 ArticlesComplexRow.propTypes = {
-  articles: PropTypes.arrayOf(articlePropTypes).isRequired,
+  articles: PropTypes.arrayOf(PropTypes.shape(articlePropTypes)).isRequired,
 };
 
 export default ArticlesComplexRow;
