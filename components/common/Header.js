@@ -4,12 +4,16 @@ import Link from 'next/link';
 import { connect } from 'react-redux';
 import { actions, selectors } from 'redux/ducks/auth';
 
+import text from 'constants/dictionary';
+
 import Button from 'components/common/Button';
 import LanguageSwitcher from './LanguageSwitcher';
 
 const mapStateToProps = state => ({ user: selectors.getUser(state) });
 
 const mapDispatchToProps = { signOut: actions.signOut };
+
+/* TODO: get values for langs and links from dictionary ? */
 
 const langs = [
   { id: 'be', value: 'беларуская' },
@@ -54,7 +58,7 @@ const Header = ({ user, signOut }) => (
             <span>{user && user.email}</span>
             <div>
               <Button onClick={e => signOut(e)} className="button logout is-text">
-                Выйсці
+                {text.signOutTitle}
               </Button>
             </div>
             <div>
