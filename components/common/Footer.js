@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import classNames from 'classnames';
 
 const socialNets = [
@@ -48,8 +49,10 @@ const Footer = () => (
         <br />
         Прасоўваем беларускую культуру.
         <br />
-        {/* TODO: add link to the page 'about' */}
-        Чытайце больш пра нас і пра праект тут
+        Чытайце больш пра нас і пра праект
+        <Link href="/about">
+          <a> тут </a>
+        </Link>
       </div>
       <div className="column social">
         <div>Сачыце за намі ў сацыяльных сетках:</div>
