@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
+import Link from 'next/link';
 
 import CoreLayout from 'components/common/CoreLayout';
 
@@ -16,10 +17,10 @@ const mapStateToProps = state => ({
 
 class HomePage extends Component {
   static propTypes = {
+    // TODO: add article model
     articles: PropTypes.arrayOf(
       PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        subtitle: PropTypes.string.isRequired,
+        locales: PropTypes.shape({}),
       })
     ).isRequired,
     error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
@@ -43,9 +44,11 @@ class HomePage extends Component {
                 <br />
                 {locales &&
                   Object.values(locales).map(({ title, subtitle, text, slug, locale }) => (
-                    <div>
-                      <u>{locale}</u> : <b>{title}</b> : <i>{slug}</i> : {subtitle} : {text} :{' '}
-                      {brand.names[locale]}
+                    <div key={slug}>
+                      <Link href={`/article?slug=${slug}`} as={`/article/${slug}`}>
+                        {locale}
+                      </Link>{' '}
+                      : <b>{title}</b> : <i>{slug}</i> : {subtitle} : {text} : {brand.names[locale]}
                       <br />
                     </div>
                   ))}

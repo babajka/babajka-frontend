@@ -16,7 +16,10 @@ app.prepare().then(() => {
 
   server.use('/auth', proxy({ target: BACKEND_URL, changeOrigin: true }));
   server.use('/api', proxy({ target: BACKEND_URL, changeOrigin: true }));
-
+  server.get('/article/:slug', (req, res) => {
+    const { slug } = req.params;
+    app.render(req, res, '/article', { ...req.query, slug });
+  });
   server.get('*', (req, res) => handle(req, res));
 
   server.listen(port, err => {

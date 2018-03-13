@@ -8,31 +8,46 @@ const duck = 'articles';
 
 // constants
 const FETCH_ALL = `${duck}/FETCH_ALL`;
+const FETCH_BY_SLUG = `${duck}/FETCH_BY_SLUG`;
 
 // reducer
 const initialState = {
   pending: false,
   error: false,
   data: null,
+  current: null,
 };
+
+const pendingReducer = state => ({
+  ...state,
+  pending: true,
+});
+
+const errorReducer = (state, { payload }) => ({
+  ...state,
+  error: payload,
+  pending: false,
+});
 
 export default createReducer(
   {
     [FETCH_ALL]: {
-      [LOADING]: state => ({
-        ...state,
-        pending: true,
-      }),
+      [LOADING]: pendingReducer,
       [SUCCESS]: (state, { payload: { data } }) => ({
         ...state,
         data,
         pending: false,
       }),
-      [ERROR]: (state, { payload }) => ({
+      [ERROR]: errorReducer,
+    },
+    [FETCH_BY_SLUG]: {
+      [LOADING]: pendingReducer,
+      [SUCCESS]: (state, { payload }) => ({
         ...state,
-        error: payload,
+        current: payload,
         pending: false,
       }),
+      [ERROR]: errorReducer,
     },
   },
   initialState
@@ -44,16 +59,22 @@ export const actions = {
     type: FETCH_ALL,
     payload: request.fetch(api.articles.getAll),
   }),
+  fetchBySlug: slug => ({
+    type: FETCH_BY_SLUG,
+    payload: request.fetch(api.articles.getBySlug(slug)),
+  }),
 };
 
 // selectors
 const getState = state => state.articles;
 const getAll = state => getState(state).data;
+const getCurrent = state => getState(state).current;
 const isPending = state => getState(state).pending;
 const isError = state => getState(state).error;
 
 export const selectors = {
   getAll,
+  getCurrent,
   isPending,
   isError,
 };
