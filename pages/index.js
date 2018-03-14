@@ -5,11 +5,17 @@ import withRedux from 'next-redux-wrapper';
 import CoreLayout from 'components/common/CoreLayout';
 import ArticlesRow from 'components/articles/grid/ArticlesRow';
 import ArticlesComplexRow from 'components/articles/grid/ArticlesComplexRow';
+import Button from 'components/common/Button';
+
 import articlePropTypes from 'utils/customPropTypes';
+
 import initStore from 'redux/store';
 import { actions as articlesActions, selectors } from 'redux/ducks/articles';
 import { actions as auth } from 'redux/ducks/auth';
+
 import request from 'utils/request';
+
+import text from 'constants/dictionary';
 
 const mapStateToProps = state => ({
   articles: selectors.getAll(state),
@@ -35,6 +41,9 @@ class HomePage extends Component {
           <div className="page-content">
             <ArticlesRow articles={articles.slice(0, 4)} />
             <ArticlesComplexRow articles={articles} />
+            <div className="load-more" align="center">
+              <Button className="button">{text.loadMoreButton}</Button>
+            </div>
           </div>
         </div>
         {error && <p>{error}</p>}
