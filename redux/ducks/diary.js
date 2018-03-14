@@ -39,7 +39,7 @@ export default createReducer(
 
 // actions
 export const actions = {
-  getByDay: (locale = 'be', month = '02', day = '13') => ({
+  getByDay: (locale = 'be', month = new Date().getMonth() + 1, day = new Date().getDay()) => ({
     type: GET_BY_DAY,
     payload: request.fetch(`${api.diary.getByDay}/${locale}/${month}/${day}`),
   }),
@@ -47,12 +47,12 @@ export const actions = {
 
 // selectors
 const getState = state => state.diary;
-const getDiary = state => getState(state).data;
+const getCurrent = state => getState(state).data;
 const isPending = state => getState(state).pending;
 const isError = state => getState(state).error;
 
 export const selectors = {
-  getDiary,
+  getCurrent,
   getState,
   isPending,
   isError,

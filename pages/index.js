@@ -15,7 +15,7 @@ import request from 'utils/request';
 
 const mapStateToProps = state => ({
   articles: articlesSelectors.getAll(state),
-  diary: diarySelectors.getDiary(state),
+  diary: diarySelectors.getCurrent(state),
   error: articlesSelectors.isError(state),
 });
 
@@ -36,7 +36,7 @@ class HomePage extends Component {
     return request.populate(ctx, [
       auth.getCurrentUser,
       articlesActions.fetchAll,
-      diaryActions.getByDay,
+      diaryActions.getByDay.bind(null, 'be', '02', '13'), // temporarily
     ]);
   }
 
