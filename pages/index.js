@@ -46,7 +46,7 @@ class HomePage extends Component {
       <CoreLayout>
         <div className="main-page page-container">
           <div className="page-content">
-            <ArticlesRow articles={articles.slice(0, 4)} />
+            <ArticlesRow articles={articles.slice(0, 4)} className="is-ancestor" />
             <ArticlesComplexRow
               articles={articles}
               diary={() => (
