@@ -11,10 +11,12 @@ const articlePropTypes = {
   slug: PropTypes.string.isRequired,
   author: PropTypes.string,
   className: PropTypes.string,
-  imagePath: PropTypes.string.isRequired,
+  imagePath: PropTypes.string, // TODO: need to be required
   imageClassName: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func, // TODO: need to be required
   brand: PropTypes.shape(brandPropTypes),
+  articleId: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 const diaryPropTypes = {

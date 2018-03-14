@@ -17,7 +17,7 @@ const ArticlePreview = ({
   brand,
 }) => (
   <div className={classNames('tile is-parent', className)}>
-    <article className="card tile is-child">
+    <article className="card tile is-child is-flex">
       <div className="card-image">
         <figure className={classNames('image', imageClassName)}>
           <a onClick={onClick} href="/link/to/article">
@@ -33,7 +33,10 @@ const ArticlePreview = ({
           </a>
         </span>
         <p className="subtitle">{subtitle}</p>
-        <p className="subtitle author is-4">{author}</p>
+        <div className="author">
+          <img alt={title} src={imagePath || mockImagePath} />
+          <div className="name">{author}</div>
+        </div>
       </div>
     </article>
   </div>

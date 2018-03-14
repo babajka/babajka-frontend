@@ -1,5 +1,8 @@
 import React from 'react';
+import Link from 'next/link';
 import classNames from 'classnames';
+
+import text from 'constants/dictionary';
 
 const socialNets = [
   {
@@ -44,15 +47,17 @@ const Footer = () => (
   <footer className="app-footer">
     <div className="columns">
       <div className="column general-info">
-        Wir.by - Адукацыйная платформа <i className="fa fa-copyright" /> 2018
+        {text.projectGeneralInfo} <i className="fa fa-copyright" /> 2018
         <br />
-        Прасоўваем беларускую культуру.
+        {text.projectGoal}
         <br />
-        {/* TODO: add link to the page 'about' */}
-        Чытайце больш пра нас і пра праект тут
+        {text.readAboutUs}
+        <Link href="/about">
+          <a> {text.here} </a>
+        </Link>
       </div>
       <div className="column social">
-        <div>Сачыце за намі ў сацыяльных сетках:</div>
+        <div>{text.followSocialLinks}</div>
         <div className="links">
           {socialNets.length &&
             socialNets.map(net => (

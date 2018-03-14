@@ -15,7 +15,7 @@ const ArticlesComplexRow = ({ articles, diary }) => (
 );
 
 ArticlesComplexRow.propTypes = {
-  articles: PropTypes.arrayOf(articlePropTypes).isRequired,
+  articles: PropTypes.arrayOf(PropTypes.shape(articlePropTypes)).isRequired,
   diary: PropTypes.func.isRequired,
 };
 

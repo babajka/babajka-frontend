@@ -49,9 +49,10 @@ export const actions = {
 const getLocalizedBrand = (brand, lang) => ({ slug: brand.slug, name: brand.names[lang] });
 
 const getLocalizedArticles = (articles, lang = 'be') =>
-  articles.map(({ brand, type, locales }) => ({
+  articles.map(({ brand, type, locales, author }) => ({
     ...locales[lang],
     brand: getLocalizedBrand(brand, lang),
+    author: `${author.firstName} ${author.lastName}`,
     type,
   }));
 
