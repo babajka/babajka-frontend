@@ -47,7 +47,7 @@ const Footer = () => (
   <footer className="app-footer">
     <div className="columns">
       <div className="column general-info">
-        {text.projectGeneralInfo} <i className="fa fa-copyright" /> 2018
+        {text.projectGeneralInfo} <i className="fa fa-copyright" /> {new Date().getFullYear()}
         <br />
         {text.projectGoal}
         <br />
@@ -59,18 +59,17 @@ const Footer = () => (
       <div className="column social">
         <div>{text.followSocialLinks}</div>
         <div className="links">
-          {socialNets.length &&
-            socialNets.map(net => (
-              <a
-                key={net.id}
-                className={classNames('button is-medium is-rounded', net.buttonClass)}
-                href={net.link}
-              >
-                <span className="icon is-medium">
-                  <i className={classNames('fa', net.iconClass)} />
-                </span>
-              </a>
-            ))}
+          {socialNets.map(net => (
+            <a
+              key={net.id}
+              className={classNames('button is-medium is-rounded', net.buttonClass)}
+              href={net.link}
+            >
+              <span className="icon is-medium">
+                <i className={classNames('fa', net.iconClass)} />
+              </span>
+            </a>
+          ))}
         </div>
       </div>
     </div>
