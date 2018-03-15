@@ -7,7 +7,7 @@ import ArticlesRow from 'components/articles/grid/ArticlesRow';
 import ArticlesComplexRow from 'components/articles/grid/ArticlesComplexRow';
 import Button from 'components/common/Button';
 
-import articlePropTypes from 'utils/customPropTypes';
+import { ArticleModel } from 'utils/customPropTypes';
 
 import initStore from 'redux/store';
 import { actions as articlesActions, selectors } from 'redux/ducks/articles';
@@ -22,9 +22,11 @@ const mapStateToProps = state => ({
   error: selectors.isError(state),
 });
 
+const FIRST_LINE_END = 4;
+
 class HomePage extends Component {
   static propTypes = {
-    articles: PropTypes.arrayOf(PropTypes.shape(articlePropTypes)).isRequired,
+    articles: PropTypes.arrayOf(PropTypes.shape(ArticleModel)).isRequired,
     error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   };
 
@@ -39,7 +41,7 @@ class HomePage extends Component {
       <CoreLayout>
         <div className="main-page page-container">
           <div className="page-content">
-            <ArticlesRow articles={articles.slice(0, 4)} />
+            <ArticlesRow articles={articles.slice(0, FIRST_LINE_END)} />
             <ArticlesComplexRow articles={articles} />
             <div className="load-more" align="center">
               <Button className="button">{text.loadMoreButton}</Button>

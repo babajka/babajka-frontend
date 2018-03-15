@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 
-const brandPropTypes = {
+export const BrandModel = {
   slug: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
 };
 
-const articlePropTypes = {
+export const ArticleModel = {
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
@@ -14,9 +14,7 @@ const articlePropTypes = {
   imagePath: PropTypes.string, // TODO: need to be required
   imageClassName: PropTypes.string,
   onClick: PropTypes.func, // TODO: need to be required
-  brand: PropTypes.shape(brandPropTypes),
+  brand: PropTypes.shape(BrandModel),
   articleId: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
 };
-
-export default articlePropTypes;

@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import articlePropTypes from 'utils/customPropTypes';
+import { ArticleModel } from 'utils/customPropTypes';
 
 import SpecialHeading from './SpecialHeading';
 
@@ -42,7 +42,7 @@ const ArticlePreview = ({
   </div>
 );
 
-ArticlePreview.propTypes = articlePropTypes;
+ArticlePreview.propTypes = ArticleModel;
 
 ArticlePreview.defaultProps = {
   author: '',
