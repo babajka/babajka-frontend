@@ -45,7 +45,7 @@ class HomePage extends Component {
                 {locales &&
                   Object.values(locales).map(({ title, subtitle, text, slug, locale }) => (
                     <div key={slug}>
-                      <Link href={`/article?slug=${slug}`} as={`/article/${slug}`}>
+                      <Link href={`/article?slug=${slug}&mode=public`} as={`/article/${slug}`}>
                         {locale}
                       </Link>{' '}
                       : <b>{title}</b> : <i>{slug}</i> : {subtitle} : {text} : {brand.names[locale]}
