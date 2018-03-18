@@ -32,7 +32,7 @@ const socialNets = [
   {
     buttonClass: 'youtube',
     iconClass: 'fa-youtube',
-    link: 'https://youtube.com/wir_by',
+    link: 'https://www.youtube.com/channel/UCoj_6A55mEPeba8ZfBHqfCw',
     id: '5',
   },
   {
