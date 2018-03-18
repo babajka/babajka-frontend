@@ -1,18 +1,12 @@
 import React from 'react';
 import classNames from 'classnames';
-import Link from 'next/link';
 
 import { ArticleModel } from 'utils/customPropTypes';
 
+import ArticleLink from './ArticleLink';
 import SpecialHeading from './SpecialHeading';
 
 const mockImagePath = './static/images/photo5.jpg';
-
-const ArticleLink = ({ slug, children }) => (
-  <Link href={`/article?slug=${slug}&mode=public`} as={`/article/${slug}`}>
-    {children}
-  </Link>
-);
 
 const ArticlePreview = ({
   slug,

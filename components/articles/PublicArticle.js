@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Link from 'next/link';
 import renderHTML from 'react-render-html';
+
+import Button from 'components/common/Button';
+import ArticleLink from './ArticleLink';
 
 const PublicArticle = ({ slug, text }) => (
   <div>
     <h1>
-      <Link href={`/article?slug=${slug}&mode=edit`} as={`/article/${slug}/edit`}>
-        Edit
-      </Link>
+      <ArticleLink slug={slug} mode="edit">
+        <Button>Edit Article</Button>
+      </ArticleLink>
     </h1>
     {renderHTML(text)}
   </div>

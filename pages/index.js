@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
 
 import CoreLayout from 'components/common/CoreLayout';
+import Button from 'components/common/Button';
+import ArticleLink from 'components/articles/ArticleLink';
 import ArticlesRow from 'components/articles/grid/ArticlesRow';
 import ArticlesComplexRow from 'components/articles/grid/ArticlesComplexRow';
-import Button from 'components/common/Button';
 
 import { ArticlesModel } from 'utils/customPropTypes';
 
@@ -37,6 +38,9 @@ class HomePage extends Component {
     const { articles, error } = this.props;
     return (
       <CoreLayout>
+        <ArticleLink mode="create">
+          <Button>Create Article</Button>
+        </ArticleLink>
         <div className="main-page page-container">
           <div className="page-content">
             <ArticlesRow articles={articles.slice(0, FIRST_LINE_END)} />
