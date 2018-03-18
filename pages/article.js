@@ -9,7 +9,8 @@ import initStore from 'redux/store';
 import { actions as articlesActions, selectors } from 'redux/ducks/articles';
 import { actions as auth } from 'redux/ducks/auth';
 import request from 'utils/request';
-import { getLocalized } from 'utils/getters';
+import { getLocalizedArticle } from 'utils/getters';
+import { ArticleModel } from 'utils/customPropTypes';
 
 const mapStateToProps = state => ({
   article: selectors.getCurrent(state),
@@ -27,10 +28,8 @@ class ArticlePage extends Component {
 
   render() {
     const { article, url: { query: { mode } } } = this.props;
-    // TODO: fix
-    const locale = 'ru';
     if (mode === 'public') {
-      const localized = getLocalized(article, locale);
+      const localized = getLocalizedArticle(article);
       return <PublicArticle {...localized} />;
     }
     return <EditArticleForm mode={mode} />;
@@ -38,14 +37,16 @@ class ArticlePage extends Component {
 }
 
 ArticlePage.propTypes = {
-  // TODO: replace with Article model
-  // eslint-disable-next-line
-  article: PropTypes.object,
+  article: ArticleModel,
   url: PropTypes.shape({
     query: PropTypes.shape({
       mode: PropTypes.oneOf(['public', 'create', 'edit']),
     }).isRequired,
   }).isRequired,
+};
+
+ArticlePage.defaultProps = {
+  article: null,
 };
 
 export default withRedux(initStore, mapStateToProps)(ArticlePage);

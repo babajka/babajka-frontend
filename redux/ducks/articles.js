@@ -3,6 +3,7 @@ import createReducer from 'type-to-reducer';
 import { LOADING, SUCCESS, ERROR } from 'constants/redux';
 import api from 'constants/api';
 import request from 'utils/request';
+import { getLocalizedArticles } from 'utils/getters';
 
 const duck = 'articles';
 
@@ -67,7 +68,7 @@ export const actions = {
 
 // selectors
 const getState = state => state.articles;
-const getAll = state => getState(state).data;
+const getAll = state => getLocalizedArticles(getState(state).data);
 const getCurrent = state => getState(state).current;
 const isPending = state => getState(state).pending;
 const isError = state => getState(state).error;

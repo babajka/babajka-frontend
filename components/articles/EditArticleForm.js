@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getLocalized } from 'utils/getters';
+import { ArticleModel } from 'utils/customPropTypes';
+import { getLocalizedArticle } from 'utils/getters';
 import { selectors } from 'redux/ducks/articles';
 
 import Editor from './Editor';
@@ -12,7 +13,7 @@ const mapStateToProps = state => ({
 });
 
 const EditArticleForm = ({ mode, article }) => {
-  const localized = getLocalized(article, 'be');
+  const localized = getLocalizedArticle(article);
   const content = localized ? localized.text : '';
   return (
     <div>
@@ -25,10 +26,12 @@ const EditArticleForm = ({ mode, article }) => {
 };
 
 EditArticleForm.propTypes = {
-  // TODO: replace with Article model
-  // eslint-disable-next-line
-  article: PropTypes.object,
+  article: ArticleModel,
   mode: PropTypes.oneOf(['edit', 'create']).isRequired,
+};
+
+EditArticleForm.defaultProps = {
+  article: null,
 };
 
 export default connect(mapStateToProps)(EditArticleForm);

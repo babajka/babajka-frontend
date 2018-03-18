@@ -1,28 +1,30 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
-import Link from 'next/link';
 
 import CoreLayout from 'components/common/CoreLayout';
+import ArticlesRow from 'components/articles/grid/ArticlesRow';
+import ArticlesComplexRow from 'components/articles/grid/ArticlesComplexRow';
+import Button from 'components/common/Button';
+
+import { ArticlesModel } from 'utils/customPropTypes';
 
 import initStore from 'redux/store';
 import { actions as articlesActions, selectors } from 'redux/ducks/articles';
 import { actions as auth } from 'redux/ducks/auth';
 import request from 'utils/request';
+import text from 'constants/dictionary';
 
 const mapStateToProps = state => ({
   articles: selectors.getAll(state),
   error: selectors.isError(state),
 });
 
+const FIRST_LINE_END = 4;
+
 class HomePage extends Component {
   static propTypes = {
-    // TODO: add article model
-    articles: PropTypes.arrayOf(
-      PropTypes.shape({
-        locales: PropTypes.shape({}),
-      })
-    ).isRequired,
+    articles: ArticlesModel.isRequired,
     error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   };
 
@@ -35,27 +37,15 @@ class HomePage extends Component {
     const { articles, error } = this.props;
     return (
       <CoreLayout>
-        <p>Articles:</p>
-        <ol>
-          {articles &&
-            articles.map(({ brand, type, locales }) => (
-              <li key={(locales.en && locales.en.slug) || (locales.be && locales.be.slug)}>
-                {type}
-                <br />
-                {locales &&
-                  Object.values(locales).map(({ title, subtitle, text, slug, locale }) => (
-                    <div key={slug}>
-                      <Link href={`/article?slug=${slug}&mode=public`} as={`/article/${slug}`}>
-                        {locale}
-                      </Link>{' '}
-                      : <b>{title}</b> : <i>{slug}</i> : {subtitle} : {text} : {brand.names[locale]}
-                      <br />
-                    </div>
-                  ))}
-                <br />
-              </li>
-            ))}
-        </ol>
+        <div className="main-page page-container">
+          <div className="page-content">
+            <ArticlesRow articles={articles.slice(0, FIRST_LINE_END)} />
+            <ArticlesComplexRow articles={articles} />
+            <div className="load-more" align="center">
+              <Button className="button">{text.loadMoreButton}</Button>
+            </div>
+          </div>
+        </div>
         {error && <p>{error}</p>}
       </CoreLayout>
     );

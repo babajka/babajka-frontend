@@ -1,46 +1,59 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import Link from 'next/link';
+
+import { ArticleModel } from 'utils/customPropTypes';
+
+import SpecialHeading from './SpecialHeading';
+
+const mockImagePath = './static/images/photo5.jpg';
+
+const ArticleLink = ({ slug, children }) => (
+  <Link href={`/article?slug=${slug}&mode=public`} as={`/article/${slug}`}>
+    {children}
+  </Link>
+);
 
 const ArticlePreview = ({
+  slug,
   title,
   subtitle,
   author,
   className,
   imageClassName,
   imagePath,
-  onClick,
+  brand,
 }) => (
   <div className={classNames('tile is-parent', className)}>
-    <article className="card tile is-child">
+    <article className="card tile is-child is-flex">
       <div className="card-image">
         <figure className={classNames('image', imageClassName)}>
-          <a onClick={onClick} href="/link/to/article">
-            <img alt={title} src={imagePath} />
-          </a>
+          <ArticleLink slug={slug}>
+            <img alt={title} src={imagePath || mockImagePath} />
+          </ArticleLink>
         </figure>
+        {brand && <SpecialHeading {...brand} />}
       </div>
       <div className="card-content">
         <span className="title is-spaced">
-          <a onClick={onClick} href="/link/to/article">
-            {title}
-          </a>
+          <ArticleLink slug={slug}>{title}</ArticleLink>
         </span>
         <p className="subtitle">{subtitle}</p>
-        <p className="subtitle author is-4">{author}</p>
+        <div className="author">
+          <img alt={title} src={imagePath || mockImagePath} />
+          <div className="name">{author}</div>
+        </div>
       </div>
     </article>
   </div>
 );
 
-ArticlePreview.propTypes = {
-  title: PropTypes.string.isRequired,
-  subtitle: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired,
-  className: PropTypes.string.isRequired,
-  imagePath: PropTypes.string.isRequired,
-  imageClassName: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
+ArticlePreview.propTypes = ArticleModel;
+
+ArticlePreview.defaultProps = {
+  author: '',
+  className: '',
+  imageClassName: '',
 };
 
 export default ArticlePreview;

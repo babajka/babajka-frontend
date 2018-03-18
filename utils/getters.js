@@ -1,3 +1,11 @@
-export const getLocalized = (article, locale) => article && article.locales[locale];
+export const getLocalizedBrand = (brand, lang) => ({ slug: brand.slug, name: brand.names[lang] });
 
-export const foo = 'bar';
+export const getLocalizedArticle = (article, lang = 'be') => article && article.locales[lang];
+
+export const getLocalizedArticles = (articles, lang = 'be') =>
+  articles.map(({ brand, type, locales, author }) => ({
+    ...locales[lang],
+    brand: getLocalizedBrand(brand, lang),
+    author: `${author.firstName} ${author.lastName}`,
+    type,
+  }));
