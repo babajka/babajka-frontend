@@ -1,16 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import qs from 'qs';
 
-const LINKS = {
-  public: slug => `/article/${slug}`,
-  edit: slug => `/article/${slug}/edit`,
-  create: () => `/articles/create`,
-};
+import { ARTICLE_BY_MODE, getArticleUrl } from 'constants/routing';
 
 const ArticleLink = ({ slug, mode, children }) => (
-  <Link href={`/article?${qs.stringify({ slug, mode })}`} as={LINKS[mode](slug)}>
+  <Link href={getArticleUrl} as={ARTICLE_BY_MODE[mode](slug)}>
     {children}
   </Link>
 );

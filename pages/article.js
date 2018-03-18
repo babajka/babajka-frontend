@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
 
-import EditArticleForm from 'components/articles/EditArticleForm';
+import CoreLayout from 'components/common/CoreLayout';
 import PublicArticle from 'components/articles/PublicArticle';
+import EditArticleForm from 'components/articles/edit/EditArticleForm';
 
 import initStore from 'redux/store';
 import { actions as articlesActions, selectors } from 'redux/ducks/articles';
 import { actions as auth } from 'redux/ducks/auth';
 import request from 'utils/request';
 import { getLocalizedArticle } from 'utils/getters';
-import { ArticleModel } from 'utils/customPropTypes';
+import { ArticleShape } from 'utils/customPropTypes';
 
 const mapStateToProps = state => ({
   article: selectors.getCurrent(state),
@@ -30,14 +31,22 @@ class ArticlePage extends Component {
     const { article, url: { query: { mode } } } = this.props;
     if (mode === 'public') {
       const localized = getLocalizedArticle(article);
-      return <PublicArticle {...localized} />;
+      return (
+        <CoreLayout>
+          <PublicArticle {...localized} />
+        </CoreLayout>
+      );
     }
-    return <EditArticleForm mode={mode} />;
+    return (
+      <CoreLayout>
+        <EditArticleForm mode={mode} />
+      </CoreLayout>
+    );
   }
 }
 
 ArticlePage.propTypes = {
-  article: ArticleModel,
+  article: ArticleShape,
   url: PropTypes.shape({
     query: PropTypes.shape({
       mode: PropTypes.oneOf(['public', 'create', 'edit']),

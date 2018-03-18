@@ -65,7 +65,7 @@ class Request {
           }
         })
         .catch(reject);
-    }).catch(err => console.error('> api error: ', err));
+    });
 
   populate = ({ store: { dispatch }, isServer, req, res }, actionsToLoad) => {
     this.isServer = isServer;

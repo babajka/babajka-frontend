@@ -8,7 +8,7 @@ import ArticleLink from 'components/articles/ArticleLink';
 import ArticlesRow from 'components/articles/grid/ArticlesRow';
 import ArticlesComplexRow from 'components/articles/grid/ArticlesComplexRow';
 
-import { ArticlesModel } from 'utils/customPropTypes';
+import { ArticlesArray } from 'utils/customPropTypes';
 
 import initStore from 'redux/store';
 import { actions as articlesActions, selectors } from 'redux/ducks/articles';
@@ -25,7 +25,7 @@ const FIRST_LINE_END = 4;
 
 class HomePage extends Component {
   static propTypes = {
-    articles: ArticlesModel.isRequired,
+    articles: ArticlesArray.isRequired,
     error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   };
 

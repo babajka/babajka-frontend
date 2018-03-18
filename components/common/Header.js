@@ -24,7 +24,7 @@ const langs = [
 ];
 
 const links = [
-  { href: 'articles', value: 'АРТЫКУЛЫ', id: 'articles' },
+  { href: '/', value: 'АРТЫКУЛЫ', id: 'articles' },
   { href: 'collections', value: 'КАЛЕКЦЫІ', id: 'collections' },
   { href: 'partners', value: 'ПАРТНЁРЫ', id: 'partners' },
 ];
@@ -36,7 +36,7 @@ const Header = ({ user, signOut }) => (
         {/* TODO: replace with div background? */}
         <img
           className="logo-image"
-          src="static/images/logo-turq-transparent.png"
+          src="/static/images/logo-turq-transparent.png"
           alt="It is a logo"
         />
       </a>
@@ -44,7 +44,6 @@ const Header = ({ user, signOut }) => (
     <div id="navmenu" className="navbar-menu">
       <div className="navbar-start">
         {links &&
-          links.length &&
           links.map(link => (
             <span key={link.id} className="navbar-item">
               <Link href={link.href}>

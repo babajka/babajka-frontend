@@ -10,6 +10,9 @@ export default {
   articles: {
     getAll: `${API_URL}/articles`,
     getBySlug: slug => `${API_URL}/articles/${slug}`,
+    getBrands: `${API_URL}/articles/brands`,
+    create: `${API_URL}/articles`,
+    addLocale: id => `${API_URL}/articles/localize/${id}`,
   },
   users: {
     getAll: `${API_URL}/users`,

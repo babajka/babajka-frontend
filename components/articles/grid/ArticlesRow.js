@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ArticlesModel } from 'utils/customPropTypes';
+import { ArticlesArray } from 'utils/customPropTypes';
 
 import ArticlePreview from '../ArticlePreview';
 
@@ -11,7 +11,7 @@ const ArticlesRow = ({ articles }) => (
 );
 
 ArticlesRow.propTypes = {
-  articles: ArticlesModel.isRequired, // eslint-disable-line react/no-typos
+  articles: ArticlesArray.isRequired, // eslint-disable-line react/no-typos
 };
 
 export default ArticlesRow;

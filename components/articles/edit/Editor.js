@@ -31,14 +31,14 @@ const formats = [
 
 export default class Editor extends Component {
   static propTypes = {
+    onChange: PropTypes.func.isRequired,
     content: PropTypes.string.isRequired,
   };
+
   constructor(props) {
     super(props);
     const { content } = this.props;
-    this.state = {
-      content,
-    };
+    this.state = { content };
     if (typeof window !== 'undefined') {
       // eslint-disable-next-line global-require
       this.ReactQuill = require('react-quill');
@@ -46,9 +46,9 @@ export default class Editor extends Component {
   }
 
   handleChange = content => {
+    const { onChange } = this.props;
     this.setState({ content });
-    // eslint-disable-next-line no-console
-    console.log(content);
+    onChange(content);
   };
 
   render() {
