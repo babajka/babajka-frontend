@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-
+import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
 
 const CoreLayout = ({ title, children }) => (
@@ -19,6 +19,7 @@ const CoreLayout = ({ title, children }) => (
     </Head>
     <Header />
     {children}
+    <Footer />
   </div>
 );
 

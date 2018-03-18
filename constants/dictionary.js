@@ -2,6 +2,7 @@
 export default {
   // auth
   sigInTitle: 'Увайсці ў Вір',
+  signOutTitle: 'Выйсці',
   noAccount: 'У мяне яшчэ няма акаўнта',
   loginButton: 'Паехалі!',
   required: 'Гэта поле абавязкавае',
@@ -18,4 +19,12 @@ export default {
   passwordsEqual: 'Паролі супалі',
   passwordsNotEqual: 'Паролі не супадаюць',
   forgotPassword: 'Забыліся на пароль?',
+  // footer
+  followSocialLinks: 'Сачыце за намі ў сацыяльных сетках:',
+  projectGeneralInfo: 'Wir.by - Адукацыйная платформа',
+  projectGoal: 'Прасоўваем беларускую культуру.',
+  readAboutUs: 'Чытайце больш пра нас і пра праект',
+  here: 'тут',
+  // buttons
+  loadMoreButton: 'Загрузіць яшчэ!',
 };

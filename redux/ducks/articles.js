@@ -46,9 +46,19 @@ export const actions = {
   }),
 };
 
+const getLocalizedBrand = (brand, lang) => ({ slug: brand.slug, name: brand.names[lang] });
+
+const getLocalizedArticles = (articles, lang = 'be') =>
+  articles.map(({ brand, type, locales, author }) => ({
+    ...locales[lang],
+    brand: getLocalizedBrand(brand, lang),
+    author: `${author.firstName} ${author.lastName}`,
+    type,
+  }));
+
 // selectors
 const getState = state => state.articles;
-const getAll = state => getState(state).data;
+const getAll = state => getLocalizedArticles(getState(state).data);
 const isPending = state => getState(state).pending;
 const isError = state => getState(state).error;
 
