@@ -1,10 +1,12 @@
 import React from 'react';
+import Router from 'next/router';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { connect } from 'react-redux';
 import { actions, selectors } from 'redux/ducks/auth';
 
 import text from 'constants/dictionary';
+import { LOGIN_ROUTE } from 'constants/routing';
 
 import Button from 'components/common/Button';
 import LanguageSwitcher from './LanguageSwitcher';
@@ -57,8 +59,11 @@ const Header = ({ user, signOut }) => (
           <div className="user">
             <span>{user && user.email}</span>
             <div>
-              <Button onClick={e => signOut(e)} className="button logout is-text">
-                {text.signOutTitle}
+              <Button
+                onClick={e => (user ? signOut(e) : Router.push(LOGIN_ROUTE))}
+                className="button logout is-text"
+              >
+                {user ? text.signOutTitle : text.sigInTitle}
               </Button>
             </div>
             <div>

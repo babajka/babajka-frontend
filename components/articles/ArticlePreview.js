@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import articlePropTypes from 'utils/customPropTypes';
+import { ArticleModel } from 'utils/customPropTypes';
 
 import SpecialHeading from './SpecialHeading';
 
@@ -33,16 +33,18 @@ const ArticlePreview = ({
           </a>
         </span>
         <p className="subtitle">{subtitle}</p>
-        <div className="author">
-          <img alt={title} src={imagePath || mockImagePath} />
-          <div className="name">{author}</div>
-        </div>
+        {author && (
+          <div className="author">
+            <img alt={title} src={imagePath || mockImagePath} />
+            <div className="name">{author}</div>
+          </div>
+        )}
       </div>
     </article>
   </div>
 );
 
-ArticlePreview.propTypes = articlePropTypes;
+ArticlePreview.propTypes = ArticleModel;
 
 ArticlePreview.defaultProps = {
   author: '',

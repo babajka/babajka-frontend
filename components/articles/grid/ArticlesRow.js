@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ArticleModel } from 'utils/customPropTypes';
 import classNames from 'classnames';
-import articlePropTypes from 'utils/customPropTypes';
 import ArticlePreview from '../ArticlePreview';
 
 const ArticlesRow = ({ articles, className }) => (
@@ -11,7 +11,7 @@ const ArticlesRow = ({ articles, className }) => (
 );
 
 ArticlesRow.propTypes = {
-  articles: PropTypes.arrayOf(PropTypes.shape(articlePropTypes)).isRequired,
+  articles: PropTypes.arrayOf(PropTypes.shape(ArticleModel)).isRequired,
   className: PropTypes.string,
 };
 

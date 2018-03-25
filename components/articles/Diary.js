@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { diaryPropTypes } from '../../utils/customPropTypes';
+import { DiaryModel } from '../../utils/customPropTypes';
 
 const LEFT_ARROW_KEY = 37;
 const RIGHT_ARROW_KEY = 38;
@@ -36,6 +36,6 @@ const Diary = ({ text, author, colloquialDate, getNextDiary, getPrevDiary }) => 
   </div>
 );
 
-Diary.propTypes = diaryPropTypes;
+Diary.propTypes = DiaryModel;
 
 export default Diary;

@@ -25,4 +25,6 @@ export default {
   projectGoal: 'Прасоўваем беларускую культуру.',
   readAboutUs: 'Чытайце больш пра нас і пра праект',
   here: 'тут',
+  // buttons
+  loadMoreButton: 'Загрузіць яшчэ!',
 };
