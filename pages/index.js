@@ -57,7 +57,7 @@ class HomePage extends Component {
             <ArticlesRow articles={articles.slice(0, FIRST_LINE_END)} />
             <ArticlesComplexRow
               articles={articles}
-              diary={() => (
+              renderDiary={() => (
                 <Diary {...diary} getNextDiary={() => getByDay()} getPrevDiary={() => getByDay()} />
               )}
             />
