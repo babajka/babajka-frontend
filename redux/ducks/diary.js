@@ -39,7 +39,7 @@ export default createReducer(
 
 // actions
 export const actions = {
-  getByDay: (locale = 'be', month = new Date().getMonth() + 1, day = new Date().getDay()) => ({
+  getByDay: (locale = 'be', month = new Date().getMonth() + 1, day = new Date().getDate()) => ({
     type: GET_BY_DAY,
     payload: request.fetch(`${api.diary.getByDay}/${locale}/${month}/${day}`),
   }),
