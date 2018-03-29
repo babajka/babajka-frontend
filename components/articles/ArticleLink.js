@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { ARTICLE_BY_MODE, getArticleUrl } from 'constants/routing';
 
 const ArticleLink = ({ slug, mode, children }) => (
-  <Link href={getArticleUrl} as={ARTICLE_BY_MODE[mode](slug)}>
+  <Link href={getArticleUrl(slug, mode)} as={ARTICLE_BY_MODE[mode](slug)}>
     {children}
   </Link>
 );

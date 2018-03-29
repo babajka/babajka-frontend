@@ -23,14 +23,18 @@ const ArticlePreview = ({
       <div className="card-image">
         <figure className={classNames('image', imageClassName)}>
           <ArticleLink slug={slug}>
-            <img alt={title} src={imagePath || mockImagePath} />
+            <a>
+              <img alt={title} src={imagePath || mockImagePath} />
+            </a>
           </ArticleLink>
         </figure>
         {brand && <SpecialHeading {...brand} />}
       </div>
       <div className="card-content">
         <span className="title is-spaced">
-          <ArticleLink slug={slug}>{title}</ArticleLink>
+          <ArticleLink slug={slug}>
+            <a>{title}</a>
+          </ArticleLink>
         </span>
         <p className="subtitle">{subtitle}</p>
         {author && (

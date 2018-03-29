@@ -1,16 +1,12 @@
 import Router from 'next/router';
 import qs from 'qs';
 
-export const LOGIN_ROUTE = '/login';
-
-export const ABOUT_ROUTE = '/about';
-
 export const ARTICLE_ROUTE = '/article';
 
 export const ARTICLE_BY_MODE = {
   public: slug => `${ARTICLE_ROUTE}/${slug}`,
   edit: slug => `${ARTICLE_ROUTE}/${slug}/edit`,
-  create: () => `articles/create`,
+  create: () => `/articles/create`,
 };
 
 // FIXME
@@ -24,3 +20,14 @@ export const redirectToArticle = (slug, mode) =>
     },
     `${window.location.origin}${ARTICLE_BY_MODE.edit(slug)}`
   );
+
+export default {
+  home: '/',
+  login: '/login',
+  about: '/about',
+  partners: '/partners',
+  collections: '/collections',
+  articles: {
+    create: ARTICLE_BY_MODE.create(),
+  },
+};
