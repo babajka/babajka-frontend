@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Form, Text, TextArea } from 'react-form';
 
-import text from 'constants/dictionary';
 import { actions, selectors } from 'redux/ducks/articles';
 import { ArticleShape } from 'utils/customPropTypes';
 import { getLocalizedArticle } from 'utils/getters';
 import { redirectToArticle } from 'constants/routing';
 
 import Button from 'components/common/Button';
+import Icon from 'components/common/Icon';
 import Editor from './Editor';
 
 const mapStateToProps = state => ({
@@ -66,29 +66,54 @@ class EditLocaleForm extends Component {
     return (
       <Form onSubmit={this.handleSubmit} defaultValues={{ ...initLocale, ...localized }}>
         {formApi => (
-          <form onSubmit={formApi.submitForm}>
-            <div>
-              <Button
-                type="submit"
-                // pending={pending}
-                onClick={formApi.submitForm}
-              >
-                {text.addLocale}
+          <form className="inputs" onSubmit={formApi.submitForm}>
+            <div className="basics">
+              <Text
+                id="title"
+                field="title"
+                className="long-input input spaced"
+                placeholder="Назва артыкула"
+              />
+              <div className="long-input field spaced">
+                <Text
+                  id="slug"
+                  field="slug"
+                  className="input"
+                  placeholder="Напрыклад: bielaruskaje-kino"
+                />
+                <p className="help">Slug артыкула: вызначае адрас артыкула ў інтэрнэце</p>
+              </div>
+              <div className="field spaced">
+                <div className="control">
+                  <TextArea
+                    id="subtitle"
+                    field="subtitle"
+                    className="textarea is-small"
+                    cols="50"
+                    rows="2"
+                    type="text"
+                    placeholder="Кароткае апісанне артыкула (напрыклад, для preview на галоўнай старонцы)."
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="field editor">
+              <Editor
+                content={formApi.values.text}
+                onChange={body => formApi.setValue('text', body)}
+              />
+            </div>
+            <div className="action-buttons">
+              <Button className="remove-button button">
+                <span className="icon is-small">
+                  <Icon name="remove" />
+                </span>
+                <span>Выдаліць лакалізацыю</span>
+              </Button>
+              <Button className="save-button button" type="submit" onClick={formApi.submitForm}>
+                Захаваць для публікацыі
               </Button>
             </div>
-            <div>
-              <Text id="title" field="title" type="text" placeholder="Назва" />
-            </div>
-            <div>
-              <TextArea id="subtitle" field="subtitle" type="text" placeholder="Апісанне" />
-            </div>
-            <div>
-              <Text id="slug" field="slug" type="text" placeholder="Спасылка" />
-            </div>
-            <Editor
-              content={formApi.values.text}
-              onChange={body => formApi.setValue('text', body)}
-            />
           </form>
         )}
       </Form>
