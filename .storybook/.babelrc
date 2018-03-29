@@ -1,0 +1,12 @@
+{
+  "presets": ["next/babel", "stage-0"],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": ["./"]
+      }
+    ],
+    ["transform-define", "./env-config.js"]
+  ]
+}

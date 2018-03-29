@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
 
-import CoreLayout from 'components/common/CoreLayout';
+import PageLayout from 'components/common/PageLayout';
 import PublicArticle from 'components/articles/PublicArticle';
 import EditArticleForm from 'components/articles/edit/EditArticleForm';
 
@@ -32,15 +32,15 @@ class ArticlePage extends Component {
     if (mode === 'public') {
       const localized = getLocalizedArticle(article);
       return (
-        <CoreLayout>
+        <PageLayout>
           <PublicArticle {...localized} />
-        </CoreLayout>
+        </PageLayout>
       );
     }
     return (
-      <CoreLayout>
+      <PageLayout>
         <EditArticleForm mode={mode} />
-      </CoreLayout>
+      </PageLayout>
     );
   }
 }

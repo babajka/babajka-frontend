@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
 
-import CoreLayout from 'components/common/CoreLayout';
+import PageLayout from 'components/common/PageLayout';
 import Button from 'components/common/Button';
 import ArticleLink from 'components/articles/ArticleLink';
 import ArticlesRow from 'components/articles/grid/ArticlesRow';
@@ -37,7 +37,7 @@ class HomePage extends Component {
   render() {
     const { articles, error } = this.props;
     return (
-      <CoreLayout>
+      <PageLayout>
         <ArticleLink mode="create">
           <Button>Create Article</Button>
         </ArticleLink>
@@ -51,7 +51,7 @@ class HomePage extends Component {
           </div>
         </div>
         {error && <p>{error}</p>}
-      </CoreLayout>
+      </PageLayout>
     );
   }
 }
