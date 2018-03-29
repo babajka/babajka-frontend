@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
 
-const CoreLayout = ({ title, children }) => (
+export const CoreLayout = ({ title, children }) => (
   <div>
     <Head>
       <title>
@@ -17,9 +17,7 @@ const CoreLayout = ({ title, children }) => (
       <link rel="stylesheet" href="/static/styles/assets.min.css" />
       <link rel="stylesheet" href="/static/styles/bundle.min.css" />
     </Head>
-    <Header />
     {children}
-    <Footer />
   </div>
 );
 
@@ -30,4 +28,12 @@ CoreLayout.propTypes = {
 
 CoreLayout.defaultProps = { title: '' };
 
-export default CoreLayout;
+// TODO: remove next-line after merge `editor-quil`
+// eslint-disable-next-line react/prop-types
+export default ({ children, title }) => (
+  <CoreLayout title={title}>
+    <Header />
+    {children}
+    <Footer />
+  </CoreLayout>
+);
