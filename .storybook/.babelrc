@@ -2,12 +2,6 @@
   "presets": ["next/babel", "stage-0"],
   "plugins": [
     [
-      "inline-import",
-      {
-        "extensions": [".css"]
-      }
-    ],
-    [
       "module-resolver",
       {
         "root": ["./"]

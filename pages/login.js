@@ -3,7 +3,7 @@ import Router from 'next/router';
 import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
 
-import CoreLayout from 'components/common/CoreLayout';
+import PageLayout from 'components/common/PageLayout';
 import LoginForm from 'components/auth/LoginForm';
 
 import { actions, selectors } from 'redux/ducks/auth';
@@ -49,11 +49,11 @@ class LoginPage extends Component {
   render() {
     const { pending, errors } = this.props;
     return (
-      <CoreLayout title="Login">
+      <PageLayout title="Login">
         <div className="container login">
           <LoginForm onSubmit={this.handleSubmit} pending={pending} errors={errors} />
         </div>
-      </CoreLayout>
+      </PageLayout>
     );
   }
 }

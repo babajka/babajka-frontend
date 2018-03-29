@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import Footer from 'components/common/Footer';
-import Header from 'components/common/Header';
 
-export const CoreLayout = ({ title, children }) => (
+const CoreLayout = ({ title, children }) => (
   <div>
     <Head>
       <title>
@@ -28,12 +26,4 @@ CoreLayout.propTypes = {
 
 CoreLayout.defaultProps = { title: '' };
 
-// TODO: remove next-line after merge `editor-quil`
-// eslint-disable-next-line react/prop-types
-export default ({ children, title }) => (
-  <CoreLayout title={title}>
-    <Header />
-    {children}
-    <Footer />
-  </CoreLayout>
-);
+export default CoreLayout;

@@ -5,7 +5,7 @@ import { withKnobs, text, boolean, select, object } from '@storybook/addon-knobs
 import { withInfo } from '@storybook/addon-info';
 
 import StoriesDecorator from './StoriesDecorator';
-import { CoreLayout } from './CoreLayout';
+import CoreLayout from './CoreLayout';
 import Button from './Button';
 import Icon from './Icon';
 import Select from './Select';
@@ -93,6 +93,7 @@ stories.add('Select', () => {
         <h3>with custom renderOption</h3>
         <Select
           {...props}
+          placeholder="Select author..."
           options={[
             {
               id: 1,

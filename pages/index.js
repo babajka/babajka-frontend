@@ -2,19 +2,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
 
-import CoreLayout from 'components/common/CoreLayout';
+import PageLayout from 'components/common/PageLayout';
+import Button from 'components/common/Button';
 import ArticlesRow from 'components/articles/grid/ArticlesRow';
 import ArticlesComplexRow from 'components/articles/grid/ArticlesComplexRow';
-import Button from 'components/common/Button';
 
-import { ArticleModel } from 'utils/customPropTypes';
+import { ArticlesArray } from 'utils/customPropTypes';
 
 import initStore from 'redux/store';
 import { actions as articlesActions, selectors } from 'redux/ducks/articles';
 import { actions as auth } from 'redux/ducks/auth';
-
 import request from 'utils/request';
-
 import text from 'constants/dictionary';
 
 const mapStateToProps = state => ({
@@ -26,7 +24,7 @@ const FIRST_LINE_END = 4;
 
 class HomePage extends Component {
   static propTypes = {
-    articles: PropTypes.arrayOf(PropTypes.shape(ArticleModel)).isRequired,
+    articles: ArticlesArray.isRequired,
     error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   };
 
@@ -38,7 +36,7 @@ class HomePage extends Component {
   render() {
     const { articles, error } = this.props;
     return (
-      <CoreLayout>
+      <PageLayout>
         <div className="main-page page-container">
           <div className="page-content">
             <ArticlesRow articles={articles.slice(0, FIRST_LINE_END)} />
@@ -49,7 +47,7 @@ class HomePage extends Component {
           </div>
         </div>
         {error && <p>{error}</p>}
-      </CoreLayout>
+      </PageLayout>
     );
   }
 }
