@@ -15,7 +15,7 @@ const ArticlePreview = ({
   author,
   className,
   imageClassName,
-  imagePath,
+  imageUrl,
   brand,
 }) => (
   <div className={classNames('tile is-parent', className)}>
@@ -24,7 +24,7 @@ const ArticlePreview = ({
         <figure className={classNames('image', imageClassName)}>
           <ArticleLink slug={slug}>
             <a>
-              <img alt={title} src={imagePath || mockImagePath} />
+              <img alt={title} src={imageUrl || mockImagePath} />
             </a>
           </ArticleLink>
         </figure>
@@ -39,8 +39,10 @@ const ArticlePreview = ({
         <p className="subtitle">{subtitle}</p>
         {author && (
           <div className="author">
-            <img alt={title} src={imagePath || mockImagePath} />
-            <div className="name">{author}</div>
+            <img alt={title} src={author.imageUrl || mockImagePath} />
+            <div className="name">
+              {author.firstName} {author.lastName}
+            </div>
           </div>
         )}
       </div>
@@ -51,7 +53,7 @@ const ArticlePreview = ({
 ArticlePreview.propTypes = ArticleModel;
 
 ArticlePreview.defaultProps = {
-  author: '',
+  author: null,
   className: '',
   imageClassName: '',
 };

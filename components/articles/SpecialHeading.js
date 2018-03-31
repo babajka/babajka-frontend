@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const SpecialHeading = ({ slug, name, imagePath }) => (
+const SpecialHeading = ({ slug, name, imageUrl }) => (
   <div className="media special-heading is-pulled-right">
     <div className="media-left">
       <figure className="image is-32x32">
         <a href={slug}>
-          <img src={imagePath} alt="Img" />
+          <img src={imageUrl} alt="Img" />
         </a>
       </figure>
     </div>
@@ -20,12 +20,12 @@ const SpecialHeading = ({ slug, name, imagePath }) => (
 
 SpecialHeading.propTypes = {
   slug: PropTypes.string.isRequired,
-  imagePath: PropTypes.string,
+  imageUrl: PropTypes.string,
   name: PropTypes.string.isRequired,
 };
 
 SpecialHeading.defaultProps = {
-  imagePath: './static/images/kurilka_icon.png',
+  imageUrl: './static/images/kurilka_icon.png',
 };
 
 export default SpecialHeading;
