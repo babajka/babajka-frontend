@@ -3,6 +3,7 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a3dbbfeb35e84d4dbbb394be08ec196a)](https://www.codacy.com/app/babajka/babajka-frontend?utm_source=github.com&utm_medium=referral&utm_content=babajka/babajka-frontend&utm_campaign=Badge_Grade)
 [![Dependency Status](https://www.versioneye.com/user/projects/595a95d16725bd003b4078a8/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/595a95d16725bd003b4078a8)
+[![StackShare](https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/wir-by/frontend)
 
 Next.js &amp; React app
 

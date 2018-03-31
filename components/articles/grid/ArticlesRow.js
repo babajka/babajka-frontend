@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ArticleModel } from 'utils/customPropTypes';
 import classNames from 'classnames';
+
+import { ArticlesArray } from 'utils/customPropTypes';
+
 import ArticlePreview from '../ArticlePreview';
 
 const ArticlesRow = ({ articles, className }) => (
@@ -11,12 +13,11 @@ const ArticlesRow = ({ articles, className }) => (
 );
 
 ArticlesRow.propTypes = {
-  articles: PropTypes.arrayOf(PropTypes.shape(ArticleModel)).isRequired,
+  articles: ArticlesArray.isRequired, // eslint-disable-line react/no-typos
   className: PropTypes.string,
 };
 
 ArticlesRow.defaultProps = {
   className: '',
 };
-
 export default ArticlesRow;

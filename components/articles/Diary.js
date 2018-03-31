@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DiaryModel } from '../../utils/customPropTypes';
+import { DiaryModel } from 'utils/customPropTypes';
 
 const LEFT_ARROW_KEY = 37;
 const RIGHT_ARROW_KEY = 38;

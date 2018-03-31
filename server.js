@@ -16,7 +16,20 @@ app.prepare().then(() => {
 
   server.use('/auth', proxy({ target: BACKEND_URL, changeOrigin: true }));
   server.use('/api', proxy({ target: BACKEND_URL, changeOrigin: true }));
-
+  server.get('/articles/create', (req, res) =>
+    app.render(req, res, '/article', { ...req.query, slug: null, mode: 'create' })
+  );
+  server.get('/article/:slug/:mode?', (req, res) => {
+    const { slug, mode = 'public' } = req.params;
+    if (!slug || !['public', 'edit'].includes(mode)) {
+      res.writeHead(302, {
+        Location: '/_error',
+      });
+      res.end();
+      res.finished = true;
+    }
+    app.render(req, res, '/article', { ...req.query, slug, mode });
+  });
   server.get('*', (req, res) => handle(req, res));
 
   server.listen(port, err => {

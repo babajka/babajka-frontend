@@ -1,8 +1,8 @@
 import createReducer from 'type-to-reducer';
 
-import { ERROR, LOADING, SUCCESS } from 'constants/redux';
-import request from 'utils/request';
 import api from 'constants/api';
+import request from 'utils/request';
+import { defaultReducer } from 'utils/redux';
 
 const duck = 'auth';
 
@@ -20,35 +20,22 @@ const initialState = {
 
 export default createReducer(
   {
-    [SIGNIN]: {
-      [LOADING]: state => ({
-        ...state,
-        pending: true,
-      }),
-      [SUCCESS]: (state, { payload }) => ({
-        ...state,
-        user: payload,
-        errors: {},
-        pending: false,
-      }),
-      [ERROR]: (state, { payload }) => ({
-        ...state,
-        errors: payload,
-        pending: false,
-      }),
-    },
-    [SIGNOUT]: {
-      [SUCCESS]: state => ({
-        ...state,
-        user: null,
-      }),
-    },
-    [GET_CURRENT_USER]: {
-      [SUCCESS]: (state, { payload }) => ({
-        ...state,
-        user: payload,
-      }),
-    },
+    [SIGNIN]: defaultReducer((state, { payload }) => ({
+      ...state,
+      user: payload,
+      errors: {},
+      pending: false,
+    })),
+    [SIGNOUT]: defaultReducer(state => ({
+      ...state,
+      user: null,
+      pending: false,
+    })),
+    [GET_CURRENT_USER]: defaultReducer((state, { payload }) => ({
+      ...state,
+      user: payload,
+      pending: false,
+    })),
   },
   initialState
 );

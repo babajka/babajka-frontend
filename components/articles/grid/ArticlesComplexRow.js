@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ArticleModel } from 'utils/customPropTypes';
+
+import { ArticlesArray } from 'utils/customPropTypes';
+
 import ArticleRow from './ArticlesRow';
 
 const FIRST_LINE_END = 2;
@@ -18,8 +20,8 @@ const ArticlesComplexRow = ({ articles, renderDiary }) => (
 );
 
 ArticlesComplexRow.propTypes = {
+  articles: ArticlesArray.isRequired, // eslint-disable-line react/no-typos
   renderDiary: PropTypes.func.isRequired,
-  articles: PropTypes.arrayOf(PropTypes.shape(ArticleModel)).isRequired,
 };
 
 export default ArticlesComplexRow;

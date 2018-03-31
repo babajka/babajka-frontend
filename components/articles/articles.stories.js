@@ -1,6 +1,5 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
 import { withKnobs, text } from '@storybook/addon-knobs';
 import imagePath from 'babajka-markup/dist/images/photo5.jpg';
 
@@ -22,7 +21,6 @@ stories.add('ArticlePreview', () => {
     url: text('url', '#'),
     imagePath: text('image path', imagePath),
     articlePath: text('article link', ''),
-    onClick: action('click on title or image'),
   };
 
   return <ArticlePreview {...props} />;

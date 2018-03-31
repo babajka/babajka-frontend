@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch';
+import Router from 'next/router';
 
 import { BACKEND_AUTH, BACKEND_URL, SESSION_COOKIE } from 'constants/server';
 
@@ -31,6 +32,19 @@ class Request {
         .then(response => {
           const contentType = response.headers.get('content-type');
 
+          if (response.status === 404) {
+            if (this.isServer) {
+              const { res } = this;
+              res.writeHead(302, {
+                Location: '/_error',
+              });
+              res.end();
+              res.finished = true;
+            } else {
+              Router.push({ pathname: '_error' });
+            }
+          }
+
           if (contentType.includes('application/json')) {
             return response.json();
           }
@@ -53,9 +67,10 @@ class Request {
         .catch(reject);
     });
 
-  populate = ({ store: { dispatch }, isServer, req }, actionsToLoad) => {
-    // TODO: check if we can omit this `if`
+  populate = ({ store: { dispatch }, isServer, req, res }, actionsToLoad) => {
     this.isServer = isServer;
+    this.res = res;
+    // TODO: check if we can omit this `if`
     if (isServer) {
       this.cookie = `${SESSION_COOKIE}=${req.cookies[SESSION_COOKIE]}`;
     }

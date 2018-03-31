@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Icon = ({ name, size }) => <i className={`fa fa-${name} fa-${size}`} />;
+const Icon = ({ name, size, ...props }) => <i className={`fa fa-${name} fa-${size}`} {...props} />;
 
 Icon.propTypes = {
   name: PropTypes.string.isRequired,

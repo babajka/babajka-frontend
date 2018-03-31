@@ -19,6 +19,9 @@ export default {
   passwordsEqual: 'Паролі супалі',
   passwordsNotEqual: 'Паролі не супадаюць',
   forgotPassword: 'Забыліся на пароль?',
+  // articles
+  next: 'Далей',
+  addLocale: 'Дадаць пераклад',
   // footer
   followSocialLinks: 'Сачыце за намі ў сацыяльных сетках:',
   projectGeneralInfo: 'Wir.by - Адукацыйная платформа',

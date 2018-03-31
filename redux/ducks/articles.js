@@ -1,39 +1,49 @@
 import createReducer from 'type-to-reducer';
 
-import { LOADING, SUCCESS, ERROR } from 'constants/redux';
 import api from 'constants/api';
 import request from 'utils/request';
+import { getLocalizedArticles, getLocalizedBrands } from 'utils/getters';
+import { defaultReducer } from 'utils/redux';
 
 const duck = 'articles';
 
 // constants
 const FETCH_ALL = `${duck}/FETCH_ALL`;
+const FETCH_BY_SLUG = `${duck}/FETCH_BY_SLUG`;
+const FETCH_BRANDS = `${duck}/FETCH_BRANDS`;
+const CREATE = `${duck}/CREATE`;
+const ADD_LOCALE = `${duck}/ADD_LOCALE`;
 
 // reducer
 const initialState = {
   pending: false,
   error: false,
   data: null,
+  current: null,
+  brands: null,
 };
+
+const currentReducer = defaultReducer((state, { payload }) => ({
+  ...state,
+  current: payload,
+  pending: false,
+}));
 
 export default createReducer(
   {
-    [FETCH_ALL]: {
-      [LOADING]: state => ({
-        ...state,
-        pending: true,
-      }),
-      [SUCCESS]: (state, { payload: { data } }) => ({
-        ...state,
-        data,
-        pending: false,
-      }),
-      [ERROR]: (state, { payload }) => ({
-        ...state,
-        error: payload,
-        pending: false,
-      }),
-    },
+    [FETCH_ALL]: defaultReducer((state, { payload: { data } }) => ({
+      ...state,
+      data,
+      pending: false,
+    })),
+    [FETCH_BY_SLUG]: currentReducer,
+    [FETCH_BRANDS]: defaultReducer((state, { payload }) => ({
+      ...state,
+      brands: payload,
+      pending: false,
+    })),
+    [CREATE]: currentReducer,
+    // [ADD_LOCALE]: currentReducer, todo fix
   },
   initialState
 );
@@ -44,29 +54,37 @@ export const actions = {
     type: FETCH_ALL,
     payload: request.fetch(api.articles.getAll),
   }),
+  fetchBySlug: slug => ({
+    type: FETCH_BY_SLUG,
+    payload: request.fetch(api.articles.getBySlug(slug)),
+  }),
+  fetchBrands: () => ({
+    type: FETCH_BRANDS,
+    payload: request.fetch(api.articles.getBrands),
+  }),
+  create: article => ({
+    type: CREATE,
+    payload: request.fetch(api.articles.create, 'POST', article),
+  }),
+  addLocale: (articleId, locale) => ({
+    type: ADD_LOCALE,
+    payload: request.fetch(api.articles.addLocale(articleId), 'POST', locale),
+  }),
 };
-
-const getLocalizedBrand = (brand, lang) => ({ slug: brand.slug, name: brand.names[lang] });
-
-/* TODO: move to getters file */
-const getAuthor = author => author && `${author.firstName} ${author.lastName}`;
-
-const getLocalizedArticles = (articles, lang = 'be') =>
-  articles.map(({ brand, type, locales, author }) => ({
-    ...locales[lang],
-    brand: getLocalizedBrand(brand, lang),
-    author: getAuthor(author),
-    type,
-  }));
 
 // selectors
 const getState = state => state.articles;
+// TODO: pass current lang as second param
 const getAll = state => getLocalizedArticles(getState(state).data);
+const getCurrent = state => getState(state).current;
+const getBrands = state => getLocalizedBrands(getState(state).brands);
 const isPending = state => getState(state).pending;
 const isError = state => getState(state).error;
 
 export const selectors = {
   getAll,
+  getCurrent,
+  getBrands,
   isPending,
   isError,
 };

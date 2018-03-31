@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import Footer from 'components/common/Footer';
-import Header from 'components/common/Header';
 
 const CoreLayout = ({ title, children }) => (
   <div>
@@ -17,9 +15,7 @@ const CoreLayout = ({ title, children }) => (
       <link rel="stylesheet" href="/static/styles/assets.min.css" />
       <link rel="stylesheet" href="/static/styles/bundle.min.css" />
     </Head>
-    <Header />
     {children}
-    <Footer />
   </div>
 );
 

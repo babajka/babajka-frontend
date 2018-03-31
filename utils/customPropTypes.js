@@ -5,6 +5,10 @@ export const BrandModel = {
   name: PropTypes.string.isRequired,
 };
 
+export const BrandShape = PropTypes.shape(BrandModel);
+
+export const BrandsArray = PropTypes.arrayOf(BrandShape);
+
 export const ArticleModel = {
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string.isRequired,
@@ -13,11 +17,14 @@ export const ArticleModel = {
   className: PropTypes.string,
   imagePath: PropTypes.string, // TODO: need to be required
   imageClassName: PropTypes.string,
-  onClick: PropTypes.func, // TODO: need to be required
-  brand: PropTypes.shape(BrandModel),
+  brand: BrandShape,
   articleId: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
 };
+
+export const ArticleShape = PropTypes.shape(ArticleModel);
+
+export const ArticlesArray = PropTypes.arrayOf(ArticleShape);
 
 export const DiaryModel = {
   text: PropTypes.string.isRequired,
@@ -27,3 +34,5 @@ export const DiaryModel = {
   getNextDiary: PropTypes.func,
   getPrevDiary: PropTypes.func,
 };
+
+export const DiaryShape = PropTypes.shape(DiaryModel);
