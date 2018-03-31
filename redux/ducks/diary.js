@@ -1,8 +1,8 @@
 import createReducer from 'type-to-reducer';
 
-import { LOADING, SUCCESS, ERROR } from 'constants/redux';
 import api from 'constants/api';
 import request from 'utils/request';
+import { defaultReducer } from 'utils/redux';
 
 const duck = 'specials/diary';
 
@@ -17,22 +17,11 @@ const initialState = {
 
 export default createReducer(
   {
-    [GET_BY_DAY]: {
-      [LOADING]: state => ({
-        ...state,
-        pending: true,
-      }),
-      [SUCCESS]: (state, { payload }) => ({
-        ...state,
-        data: payload,
-        pending: false,
-      }),
-      [ERROR]: (state, { payload }) => ({
-        ...state,
-        error: payload,
-        pending: false,
-      }),
-    },
+    [GET_BY_DAY]: defaultReducer((state, { payload }) => ({
+      ...state,
+      data: payload,
+      pending: false,
+    })),
   },
   initialState
 );
@@ -41,7 +30,7 @@ export default createReducer(
 export const actions = {
   getByDay: (locale = 'be', month = new Date().getMonth() + 1, day = new Date().getDate()) => ({
     type: GET_BY_DAY,
-    payload: request.fetch(`${api.diary.getByDay}/${locale}/${month}/${day}`),
+    payload: request.fetch(api.diary.getByDay(locale, month, day)),
   }),
 };
 

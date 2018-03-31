@@ -23,9 +23,9 @@ const mapStateToProps = state => ({
   diary: diarySelectors.getCurrent(state),
 });
 
-const mapDispatchToProps = dispatch => ({
-  getByDay: () => dispatch(diaryActions.getByDay()),
-});
+const mapDispatchToProps = {
+  getByDay: diaryActions.getByDay,
+};
 
 const FIRST_LINE_END = 4;
 
