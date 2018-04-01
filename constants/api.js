@@ -18,4 +18,7 @@ export default {
     getAll: `${API_URL}/users`,
     getCurrent: `${API_URL}/users/current`,
   },
+  diary: {
+    getByDay: (locale, month, day) => `${API_URL}/specials/diary/${locale}/${month}/${day}`,
+  },
 };

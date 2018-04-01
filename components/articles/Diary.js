@@ -1,15 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
+import { DiaryModel } from 'utils/customPropTypes';
 
 const LEFT_ARROW_KEY = 37;
 const RIGHT_ARROW_KEY = 38;
 
-const Diary = ({ text, author, date, getNextDiary, getPrevDiary }) => (
+const Diary = ({ text, author, colloquialDate, getNextDiary, getPrevDiary }) => (
   <div className="diary-article tile is-parent">
     <article className="card tile is-child notification">
       <h1 className="title">Дзённік дня</h1>
       <div className="date">
-        <span>{date}</span>
+        <span>{colloquialDate}</span>
       </div>
       <span
         className="icon is-small arrow arrow-left"
@@ -35,12 +36,6 @@ const Diary = ({ text, author, date, getNextDiary, getPrevDiary }) => (
   </div>
 );
 
-Diary.propTypes = {
-  text: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired,
-  getNextDiary: PropTypes.func.isRequired,
-  getPrevDiary: PropTypes.func.isRequired,
-};
+Diary.propTypes = DiaryModel;
 
 export default Diary;
