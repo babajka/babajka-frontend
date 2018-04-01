@@ -1,7 +1,7 @@
-export const getLocalizedBrand = (brand, lang = 'be') => ({
-  slug: brand.slug,
-  imageUrl: brand.imageUrl,
-  name: brand.names[lang],
+export const getLocalizedBrand = ({ slug, imageUrl, names }, lang = 'be') => ({
+  slug,
+  imageUrl,
+  name: names[lang],
 });
 
 export const getLocalizedBrands = (brands, lang = 'be') =>

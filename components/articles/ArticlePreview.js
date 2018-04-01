@@ -6,7 +6,7 @@ import { ArticleModel } from 'utils/customPropTypes';
 import ArticleLink from './ArticleLink';
 import SpecialHeading from './SpecialHeading';
 
-const mockImagePath = './static/images/photo5.jpg';
+const mockImagePath = '/static/images/photo5.jpg';
 
 const ArticlePreview = ({
   slug,
