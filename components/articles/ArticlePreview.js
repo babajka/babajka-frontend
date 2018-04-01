@@ -2,8 +2,9 @@ import React from 'react';
 import classNames from 'classnames';
 
 import { ArticleModel } from 'utils/customPropTypes';
+import { Link, ROUTES_NAMES } from 'routes';
+import { DEFAULT_LOCALE } from 'constants';
 
-import ArticleLink from './ArticleLink';
 import SpecialHeading from './SpecialHeading';
 
 const mockImagePath = '/static/images/photo5.jpg';
@@ -22,26 +23,26 @@ const ArticlePreview = ({
     <article className="card tile is-child is-flex">
       <div className="card-image">
         <figure className={classNames('image', imageClassName)}>
-          <ArticleLink slug={slug}>
+          <Link route={ROUTES_NAMES.article} params={{ slug, lang: DEFAULT_LOCALE }}>
             <a>
               <img alt={title} src={imageUrl || mockImagePath} />
             </a>
-          </ArticleLink>
+          </Link>
         </figure>
         {brand && <SpecialHeading {...brand} />}
       </div>
       <div className="card-content">
         <span className="title is-spaced">
-          <ArticleLink slug={slug}>
+          <Link route={ROUTES_NAMES.article} params={{ slug, lang: DEFAULT_LOCALE }}>
             <a>{title}</a>
-          </ArticleLink>
+          </Link>
         </span>
         <p className="subtitle">{subtitle}</p>
         {author && (
           <div className="author">
             <img alt={title} src={author.imageUrl || mockImagePath} />
             <div className="name">
-              {author.firstName} {author.lastName}
+              {author.firstName.be} {author.lastName.be}
             </div>
           </div>
         )}

@@ -6,7 +6,8 @@ import { Form, Text, TextArea } from 'react-form';
 import { actions, selectors } from 'redux/ducks/articles';
 import { ArticleShape } from 'utils/customPropTypes';
 import { getLocalizedArticle } from 'utils/getters';
-import { redirectToArticle } from 'constants/routing';
+import { Router, ROUTES_NAMES } from 'routes';
+import { DEFAULT_LOCALE } from 'constants';
 
 import Button from 'components/common/Button';
 import Icon from 'components/common/Icon';
@@ -55,7 +56,9 @@ class EditLocaleForm extends Component {
     const data = { locale, ...form };
     this.handleCreate()
       .then(id => addLocale(id, data))
-      .then(({ value: { slug } }) => redirectToArticle(slug, 'edit'));
+      .then(({ value: { slug } }) =>
+        Router.replace(ROUTES_NAMES.article, { slug, mode: 'edit', lang: DEFAULT_LOCALE })
+      );
   };
 
   render() {

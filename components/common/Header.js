@@ -1,67 +1,46 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'next/router';
-import Link from 'next/link';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 
 import Clickable from 'components/common/Clickable';
-import ArticleLink from 'components/articles/ArticleLink';
 
 import { actions, selectors } from 'redux/ducks/auth';
 import text from 'constants/dictionary';
-import routes from 'constants/routing';
+import { Link, Router, NAVBAR_ROUTES, ROUTES_NAMES } from 'routes';
+import { LOCALES } from 'constants';
 
 const mapStateToProps = state => ({ user: selectors.getUser(state) });
-
 const mapDispatchToProps = { signOut: actions.signOut };
 
-/* TODO: get values for langs and links from dictionary ? */
-// const langs = [
-//   { id: 'be', value: 'беларуская' },
-//   { id: 'ru', value: 'русский' },
-//   { id: 'en', value: 'english' },
-// ];
+const checkActive = (path, name) => path.split('/').slice(-1)[0] === name;
 
-const { home, collections, partners, articles, about, login } = routes;
-
-// TODO: replace with some routing lib
 // TODO: check for permissions for routes
-const ROUTES = [
-  { href: home, value: 'АРТЫКУЛЫ', id: 'articles' },
-  { href: collections, value: 'КАЛЕКЦЫІ', id: 'collections' },
-  { href: partners, value: 'ПАРТНЁРЫ', id: 'partners' },
-  {
-    href: articles.create,
-    id: 'create-article',
-    value: 'СТВАРЫЦЬ АРТЫКУЛ',
-    NavLink: ({ children }) => <ArticleLink mode="create">{children}</ArticleLink>,
-  },
-  { href: about, value: 'ПРА НАС', id: 'about' },
-];
-
-const Header = ({ user, signOut, router }) => (
-  <div className="navbar ">
+const Header = ({ user, signOut, lang, router: { asPath } }) => (
+  <div className="navbar">
     <div className="navbar-brand">
-      <a className="navbar-item" href="/">
-        {/* TODO: replace with div background? */}
-        <img
-          className="logo-image"
-          src="/static/images/logo-turq-transparent.png"
-          alt="Wir.by logo"
-        />
-      </a>
+      <Link route={ROUTES_NAMES.home} params={{ lang }}>
+        <a className="navbar-item">
+          {/* TODO: replace with div background? */}
+          <img
+            className="logo-image"
+            src="/static/images/logo-turq-transparent.png"
+            alt="Wir.by logo"
+          />
+        </a>
+      </Link>
     </div>
     <div id="navmenu" className="navbar-menu">
       <div className="navbar-start">
-        {ROUTES.map(({ NavLink = Link, id, href, value }) => (
-          <NavLink key={id} href={href}>
+        {NAVBAR_ROUTES.map(({ name, label, pattern = name, params, isActive = checkActive }) => (
+          <Link key={name} route={name} params={{ lang, ...params }}>
             <a className="navbar-item">
-              <span className={classNames('rubric', { 'is-active': router.asPath === href })}>
-                {value}
+              <span className={classNames('rubric', { 'is-active': isActive(asPath, pattern) })}>
+                {label.toUpperCase()}
               </span>
             </a>
-          </NavLink>
+          </Link>
         ))}
       </div>
 
@@ -73,7 +52,7 @@ const Header = ({ user, signOut, router }) => (
               <Clickable
                 tag="a"
                 className="logout"
-                onClick={() => (user ? signOut() : router.push(login))}
+                onClick={() => (user ? signOut() : Router.pushRoute(ROUTES_NAMES.login, { lang }))}
               >
                 {user ? text.signOutTitle : text.sigInTitle}
               </Clickable>
@@ -81,7 +60,7 @@ const Header = ({ user, signOut, router }) => (
             <div>
               <div className="dropdown is-right is-hoverable">
                 <div className="dropdown-trigger">
-                  <span className="current-lang">беларуская</span>
+                  <span className="current-lang">{LOCALES[lang]}</span>
                 </div>
               </div>
             </div>
@@ -93,6 +72,7 @@ const Header = ({ user, signOut, router }) => (
 );
 
 Header.propTypes = {
+  lang: PropTypes.string.isRequired,
   router: PropTypes.shape({
     asPath: PropTypes.string.isRequired,
   }).isRequired,

@@ -16,6 +16,7 @@ import { actions as auth } from 'redux/ducks/auth';
 import { actions as diaryActions, selectors as diarySelectors } from 'redux/ducks/diary';
 import request from 'utils/request';
 import text from 'constants/dictionary';
+import { DEFAULT_LOCALE } from 'constants';
 
 const mapStateToProps = state => ({
   articles: articlesSelectors.getAll(state),
@@ -31,6 +32,9 @@ const FIRST_LINE_END = 4;
 
 class HomePage extends Component {
   static propTypes = {
+    url: PropTypes.shape({
+      query: PropTypes.object.isRequired,
+    }).isRequired,
     articles: ArticlesArray.isRequired,
     diary: DiaryShape.isRequired,
     getByDay: PropTypes.func.isRequired,
@@ -42,14 +46,14 @@ class HomePage extends Component {
     return request.populate(ctx, [
       auth.getCurrentUser,
       articlesActions.fetchAll,
-      diaryActions.getByDay.bind(null, 'be', '02', '13'), // temporarily
+      diaryActions.getByDay.bind(null, DEFAULT_LOCALE, '02', '13'), // temporarily
     ]);
   }
 
   render() {
-    const { articles, error, diary, getByDay } = this.props;
+    const { articles, error, diary, getByDay, url } = this.props;
     return (
-      <PageLayout>
+      <PageLayout url={url}>
         <div className="main-page page-container">
           <div className="page-content">
             <ArticlesRow articles={articles.slice(0, FIRST_LINE_END)} />

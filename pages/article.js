@@ -28,17 +28,18 @@ class ArticlePage extends Component {
   }
 
   render() {
-    const { article, url: { query: { mode } } } = this.props;
-    if (mode === 'public') {
+    const { article, url } = this.props;
+    const { query: { mode } } = url;
+    if (!mode) {
       const localized = getLocalizedArticle(article);
       return (
-        <PageLayout>
+        <PageLayout url={url}>
           <PublicArticle {...localized} />
         </PageLayout>
       );
     }
     return (
-      <PageLayout>
+      <PageLayout url={url}>
         <EditArticleForm mode={mode} />
       </PageLayout>
     );

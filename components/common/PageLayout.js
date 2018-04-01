@@ -4,9 +4,10 @@ import Footer from './Footer';
 import Header from './Header';
 import CoreLayout from './CoreLayout';
 
-export default ({ children, title }) => (
+// TODO: share `lang` with all tree via Context
+export default ({ children, title, url }) => (
   <CoreLayout title={title}>
-    <Header />
+    <Header lang={url.query.lang} />
     {children}
     <Footer />
   </CoreLayout>

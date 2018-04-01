@@ -5,8 +5,8 @@ import PageLayout from 'components/common/PageLayout';
 
 import initStore from 'redux/store';
 
-const CollectionsPage = () => (
-  <PageLayout>
+const CollectionsPage = ({ url }) => (
+  <PageLayout url={url}>
     <h1>TODO: Collections Page</h1>
   </PageLayout>
 );

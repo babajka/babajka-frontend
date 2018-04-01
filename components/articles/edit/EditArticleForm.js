@@ -6,25 +6,11 @@ import { Form, Text } from 'react-form';
 
 import { ArticleShape, BrandsArray } from 'utils/customPropTypes';
 import { actions, selectors } from 'redux/ducks/articles';
+import { LANGS } from 'constants';
 
 import Select from 'components/common/Select';
 import Clickable from 'components/common/Clickable';
 import EditLocaleForm from './EditLocaleForm';
-
-const LANGS = [
-  {
-    id: 'be',
-    label: 'беларуская',
-  },
-  {
-    id: 'ru',
-    label: 'русский',
-  },
-  {
-    id: 'en',
-    label: 'English',
-  },
-];
 
 const mapStateToProps = state => ({
   article: selectors.getCurrent(state),

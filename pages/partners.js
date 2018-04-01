@@ -5,8 +5,8 @@ import PageLayout from 'components/common/PageLayout';
 
 import initStore from 'redux/store';
 
-const PartnersPage = () => (
-  <PageLayout>
+const PartnersPage = ({ url }) => (
+  <PageLayout url={url}>
     <h1>TODO: Partners Page</h1>
   </PageLayout>
 );

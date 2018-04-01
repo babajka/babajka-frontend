@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import Router from 'next/router';
 import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
+import { Router, ROUTES_NAMES } from 'routes';
+import { DEFAULT_LOCALE } from 'constants';
 
 import PageLayout from 'components/common/PageLayout';
 import LoginForm from 'components/auth/LoginForm';
@@ -37,19 +38,19 @@ class LoginPage extends Component {
   componentDidMount() {
     const { user } = this.props;
     if (user) {
-      Router.replace('/');
+      Router.replaceRoute(ROUTES_NAMES.home, { lang: DEFAULT_LOCALE });
     }
   }
 
   handleSubmit = ({ signUp, ...userData }) => {
-    const { signIn, url: { query: { next = '/' } } } = this.props;
-    signIn({ ...userData }, signUp).then(() => Router.push(next));
+    const { signIn, url: { query: { next = `/${DEFAULT_LOCALE}/articles` } } } = this.props;
+    signIn({ ...userData }, signUp).then(() => Router.pushRoute(next));
   };
 
   render() {
-    const { pending, errors } = this.props;
+    const { pending, errors, url } = this.props;
     return (
-      <PageLayout title="Login">
+      <PageLayout title="Login" url={url}>
         <div className="container login">
           <LoginForm onSubmit={this.handleSubmit} pending={pending} errors={errors} />
         </div>
