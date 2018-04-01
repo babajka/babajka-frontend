@@ -38,6 +38,11 @@ const Header = ({ user, signOut, router: { asPath } }) => (
           />
         </a>
       </Link>
+      <div id="navburger" className="button navbar-burger">
+        <span />
+        <span />
+        <span />
+      </div>
     </div>
     <div id="navmenu" className="navbar-menu">
       <div className="navbar-start">
@@ -57,11 +62,12 @@ const Header = ({ user, signOut, router: { asPath } }) => (
           <LocaleContext.Consumer>
             {lang => (
               <div className="user">
+                {/* TODO: to replace user.email with user.displayName once supported by API */}
                 <span>{user && user.email}</span>
-                <div>
+                <div className="auth-section">
                   <Clickable
                     tag="a"
-                    className="logout"
+                    className="auth-button"
                     onClick={() =>
                       user ? signOut() : Router.pushRoute(ROUTES_NAMES.login, { lang })
                     }
@@ -69,7 +75,7 @@ const Header = ({ user, signOut, router: { asPath } }) => (
                     {user ? text.signOutTitle : text.sigInTitle}
                   </Clickable>
                 </div>
-                <div>
+                <div className="lang-section">
                   <div className="dropdown is-right is-hoverable">
                     <div className="dropdown-trigger">
                       <span className="current-lang">{LOCALES[lang]}</span>

@@ -46,7 +46,7 @@ class HomePage extends Component {
     return request.populate(ctx, [
       auth.getCurrentUser,
       articlesActions.fetchAll,
-      diaryActions.getByDay.bind(null, DEFAULT_LOCALE, '02', '13'), // temporarily
+      diaryActions.getByDay.bind(null, DEFAULT_LOCALE, '02', '17'), // temporarily
     ]);
   }
 
@@ -55,17 +55,18 @@ class HomePage extends Component {
     return (
       <PageLayout url={url}>
         <div className="main-page page-container">
-          <div className="page-content">
-            <ArticlesRow articles={articles.slice(0, FIRST_LINE_END)} />
-            <ArticlesComplexRow
-              articles={articles}
-              renderDiary={() => (
-                <Diary {...diary} getNextDiary={() => getByDay()} getPrevDiary={() => getByDay()} />
-              )}
-            />
-            <div className="load-more" align="center">
-              <Button className="button">{text.loadMoreButton}</Button>
-            </div>
+          <ArticlesRow
+            articles={articles.slice(0, FIRST_LINE_END)}
+            className="first-line is-ancestor"
+          />
+          <ArticlesComplexRow
+            articles={articles}
+            renderDiary={() => (
+              <Diary {...diary} getNextDiary={() => getByDay()} getPrevDiary={() => getByDay()} />
+            )}
+          />
+          <div className="load-more" align="center">
+            <Button className="button">{text.loadMoreButton}</Button>
           </div>
         </div>
         {error && <p>{error}</p>}

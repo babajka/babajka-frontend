@@ -8,9 +8,13 @@ import LocaleContext from './LocaleContext';
 export default ({ children, title, url }) => (
   <LocaleContext.Provider value={url.query.lang}>
     <CoreLayout title={title}>
-      <Header />
-      {children}
-      <Footer />
+      <div className="babajka-root">
+        <div className="babajka-content">
+          <Header />
+          <div className="page-content">{children}</div>
+          <Footer />
+        </div>
+      </div>
     </CoreLayout>
   </LocaleContext.Provider>
 );

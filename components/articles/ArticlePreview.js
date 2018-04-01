@@ -29,10 +29,10 @@ const ArticlePreview = ({
             </a>
           </Link>
         </figure>
-        {brand && <SpecialHeading {...brand} />}
+        {brand && brand.slug !== 'wir' && <SpecialHeading {...brand} />}
       </div>
       <div className="card-content">
-        <span className="title is-spaced">
+        <span className="title">
           <Link route={ROUTES_NAMES.article} params={{ slug }}>
             <a>{title}</a>
           </Link>

@@ -112,7 +112,7 @@ class EditArticleForm extends Component {
     ];
 
     return (
-      <div className="article-page-edit page-content">
+      <div className="article-page-edit">
         <div className="title">Рэдактар артыкулаў</div>
         <Form onSubmit={this.handleSubmit} defaultValues={article || initArticle}>
           {formApi => (

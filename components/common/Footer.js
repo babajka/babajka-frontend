@@ -53,7 +53,7 @@ const Footer = () => (
         <br />
         {text.readAboutUs}
         <Link href="/about">
-          <a> {text.here} </a>
+          <a>{text.here}</a>
         </Link>
       </div>
       <div className="column social">
