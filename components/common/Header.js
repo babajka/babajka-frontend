@@ -11,12 +11,18 @@ import LocaleContext from 'components/common/LocaleContext';
 import { actions, selectors } from 'redux/ducks/auth';
 import text from 'constants/dictionary';
 import { Router, NAVBAR_ROUTES, ROUTES_NAMES } from 'routes';
-import { LOCALES } from 'constants';
+import { LOCALES, LANGS } from 'constants';
 
 const mapStateToProps = state => ({ user: selectors.getUser(state) });
 const mapDispatchToProps = { signOut: actions.signOut };
 
 const checkActive = (path, name) => path.split('/').slice(-1)[0] === name;
+
+const getLocaleSwitchUrl = (path, lang) => {
+  const parts = path.split('/');
+  parts[1] = lang;
+  return parts.join('/');
+};
 
 // TODO: check for permissions for routes
 const Header = ({ user, signOut, router: { asPath } }) => (
@@ -67,6 +73,15 @@ const Header = ({ user, signOut, router: { asPath } }) => (
                   <div className="dropdown is-right is-hoverable">
                     <div className="dropdown-trigger">
                       <span className="current-lang">{LOCALES[lang]}</span>
+                    </div>
+                    <div className="dropdown-menu" role="menu">
+                      <div className="dropdown-content">
+                        {LANGS.filter(({ id }) => id !== lang).map(({ id, label }) => (
+                          <Link route={getLocaleSwitchUrl(asPath, id)} params={{ lang: id }}>
+                            <a className="dropdown-item lang">{label}</a>
+                          </Link>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
