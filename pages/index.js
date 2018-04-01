@@ -8,7 +8,7 @@ import ArticlesRow from 'components/articles/grid/ArticlesRow';
 import Diary from 'components/articles/Diary';
 import ArticlesComplexRow from 'components/articles/grid/ArticlesComplexRow';
 
-import { ArticlesArray, DiaryShape } from 'utils/customPropTypes';
+import { ArticlesArray, DiaryShape, PaginationShape } from 'utils/customPropTypes';
 
 import initStore from 'redux/store';
 import { actions as articlesActions, selectors as articlesSelectors } from 'redux/ducks/articles';
@@ -19,20 +19,27 @@ import text from 'constants/dictionary';
 
 const mapStateToProps = state => ({
   articles: articlesSelectors.getAll(state),
+  pagination: articlesSelectors.getPagination(state),
   error: articlesSelectors.isError(state),
   diary: diarySelectors.getCurrent(state),
 });
 
 const mapDispatchToProps = {
   getByDay: diaryActions.getByDay,
+  getChunk: articlesActions.fetchChunk,
 };
 
 const FIRST_LINE_END = 4;
+const FIRST_PAGE_NUMBER = 0;
+const FIRST_PAGE_SIZE = 6;
+const COMMON_PAGE_SIZE = 8;
 
 class HomePage extends Component {
   static propTypes = {
     articles: ArticlesArray.isRequired,
     diary: DiaryShape.isRequired,
+    pagination: PropTypes.oneOfType([PropTypes.bool, PaginationShape]).isRequired,
+    getChunk: PropTypes.func.isRequired,
     getByDay: PropTypes.func.isRequired,
     error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   };
@@ -41,13 +48,13 @@ class HomePage extends Component {
     // TODO: somehow extract getCurrentUser to populate method
     return request.populate(ctx, [
       auth.getCurrentUser,
-      articlesActions.fetchAll,
+      articlesActions.fetchChunk.bind(null, FIRST_PAGE_NUMBER, FIRST_PAGE_SIZE),
       diaryActions.getByDay.bind(null, 'be', '02', '13'), // temporarily
     ]);
   }
 
   render() {
-    const { articles, error, diary, getByDay } = this.props;
+    const { articles, error, diary, pagination, getByDay, getChunk } = this.props;
     return (
       <PageLayout>
         <div className="main-page page-container">
@@ -60,7 +67,14 @@ class HomePage extends Component {
               )}
             />
             <div className="load-more" align="center">
-              <Button className="button">{text.loadMoreButton}</Button>
+              {pagination && (
+                <Button
+                  className="button"
+                  onClick={() => getChunk(pagination.page, COMMON_PAGE_SIZE)}
+                >
+                  {text.loadMoreButton}
+                </Button>
+              )}
             </div>
           </div>
         </div>

@@ -9,6 +9,7 @@ const duck = 'articles';
 
 // constants
 const FETCH_ALL = `${duck}/FETCH_ALL`;
+const FETCH_CHUNK = `${duck}/FETCH_CHUNK`;
 const FETCH_BY_SLUG = `${duck}/FETCH_BY_SLUG`;
 const FETCH_BRANDS = `${duck}/FETCH_BRANDS`;
 const CREATE = `${duck}/CREATE`;
@@ -18,8 +19,9 @@ const ADD_LOCALE = `${duck}/ADD_LOCALE`;
 const initialState = {
   pending: false,
   error: false,
-  data: null,
+  data: [],
   current: null,
+  pagination: null,
   brands: null,
 };
 
@@ -34,6 +36,12 @@ export default createReducer(
     [FETCH_ALL]: defaultReducer((state, { payload: { data } }) => ({
       ...state,
       data,
+      pending: false,
+    })),
+    [FETCH_CHUNK]: defaultReducer((state, { payload: { data, next } }) => ({
+      ...state,
+      data: [...state.data, ...data],
+      pagination: next,
       pending: false,
     })),
     [FETCH_BY_SLUG]: currentReducer,
@@ -53,6 +61,10 @@ export const actions = {
   fetchAll: () => ({
     type: FETCH_ALL,
     payload: request.fetch(api.articles.getAll),
+  }),
+  fetchChunk: (page, pageSize) => ({
+    type: FETCH_CHUNK,
+    payload: request.fetch(api.articles.getChunk(page, pageSize)),
   }),
   fetchBySlug: slug => ({
     type: FETCH_BY_SLUG,
@@ -76,6 +88,7 @@ export const actions = {
 const getState = state => state.articles;
 // TODO: pass current lang as second param
 const getAll = state => getLocalizedArticles(getState(state).data);
+const getPagination = state => getState(state).pagination;
 const getCurrent = state => getState(state).current;
 const getBrands = state => getLocalizedBrands(getState(state).brands);
 const isPending = state => getState(state).pending;
@@ -83,6 +96,7 @@ const isError = state => getState(state).error;
 
 export const selectors = {
   getAll,
+  getPagination,
   getCurrent,
   getBrands,
   isPending,

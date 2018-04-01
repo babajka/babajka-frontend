@@ -1,5 +1,12 @@
 import PropTypes from 'prop-types';
 
+export const PaginationModel = {
+  page: PropTypes.number.isRequired,
+  pageSize: PropTypes.number.isRequired,
+};
+
+export const PaginationShape = PropTypes.shape(PaginationModel);
+
 export const BrandModel = {
   slug: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,

@@ -9,6 +9,7 @@ export default {
   },
   articles: {
     getAll: `${API_URL}/articles`,
+    getChunk: (page, pageSize) => `${API_URL}/articles?page=${page}&pageSize=${pageSize}`,
     getBySlug: slug => `${API_URL}/articles/${slug}`,
     getBrands: `${API_URL}/articles/brands`,
     create: `${API_URL}/articles`,
