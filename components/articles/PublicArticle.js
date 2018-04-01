@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import renderHTML from 'react-render-html';
 
-import { Link, ROUTES_NAMES } from 'routes';
-import { DEFAULT_LOCALE } from 'constants';
+import Link from 'components/common/Link';
+import { ROUTES_NAMES } from 'routes';
 
 const PublicArticle = ({ slug, text }) => (
   <div>
     <h1>
-      <Link route={ROUTES_NAMES.article} params={{ slug, mode: 'edit', lang: DEFAULT_LOCALE }}>
+      <Link route={ROUTES_NAMES.article} params={{ slug, mode: 'edit' }}>
         <a>Edit Article</a>
       </Link>
     </h1>

@@ -10,6 +10,7 @@ import { LANGS } from 'constants';
 
 import Select from 'components/common/Select';
 import Clickable from 'components/common/Clickable';
+import LocaleContext from 'components/common/LocaleContext';
 import EditLocaleForm from './EditLocaleForm';
 
 const mapStateToProps = state => ({
@@ -168,12 +169,17 @@ class EditArticleForm extends Component {
             </ul>
           </div>
           {currentLocale && (
-            <EditLocaleForm
-              mode={mode}
-              locale={currentLocale}
-              createArticle={this.handleSubmit}
-              draftArticle={draftArticle}
-            />
+            <LocaleContext.Consumer>
+              {lang => (
+                <EditLocaleForm
+                  lang={lang}
+                  mode={mode}
+                  locale={currentLocale}
+                  createArticle={this.handleSubmit}
+                  draftArticle={draftArticle}
+                />
+              )}
+            </LocaleContext.Consumer>
           )}
         </div>
       </div>

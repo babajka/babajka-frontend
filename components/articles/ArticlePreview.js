@@ -1,9 +1,9 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import Link from 'components/common/Link';
 import { ArticleModel } from 'utils/customPropTypes';
-import { Link, ROUTES_NAMES } from 'routes';
-import { DEFAULT_LOCALE } from 'constants';
+import { ROUTES_NAMES } from 'routes';
 
 import SpecialHeading from './SpecialHeading';
 
@@ -23,7 +23,7 @@ const ArticlePreview = ({
     <article className="card tile is-child is-flex">
       <div className="card-image">
         <figure className={classNames('image', imageClassName)}>
-          <Link route={ROUTES_NAMES.article} params={{ slug, lang: DEFAULT_LOCALE }}>
+          <Link route={ROUTES_NAMES.article} params={{ slug }}>
             <a>
               <img alt={title} src={imageUrl || mockImagePath} />
             </a>
@@ -33,7 +33,7 @@ const ArticlePreview = ({
       </div>
       <div className="card-content">
         <span className="title is-spaced">
-          <Link route={ROUTES_NAMES.article} params={{ slug, lang: DEFAULT_LOCALE }}>
+          <Link route={ROUTES_NAMES.article} params={{ slug }}>
             <a>{title}</a>
           </Link>
         </span>

@@ -3,12 +3,14 @@ import React from 'react';
 import Footer from './Footer';
 import Header from './Header';
 import CoreLayout from './CoreLayout';
+import LocaleContext from './LocaleContext';
 
-// TODO: share `lang` with all tree via Context
 export default ({ children, title, url }) => (
-  <CoreLayout title={title}>
-    <Header lang={url.query.lang} />
-    {children}
-    <Footer />
-  </CoreLayout>
+  <LocaleContext.Provider value={url.query.lang}>
+    <CoreLayout title={title}>
+      <Header />
+      {children}
+      <Footer />
+    </CoreLayout>
+  </LocaleContext.Provider>
 );

@@ -18,8 +18,8 @@ import request from 'utils/request';
 import text from 'constants/dictionary';
 import { DEFAULT_LOCALE } from 'constants';
 
-const mapStateToProps = state => ({
-  articles: articlesSelectors.getAll(state),
+const mapStateToProps = (state, { url: { query } }) => ({
+  articles: articlesSelectors.getAll(state, query.lang),
   error: articlesSelectors.isError(state),
   diary: diarySelectors.getCurrent(state),
 });

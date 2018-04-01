@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
 import { Router, ROUTES_NAMES } from 'routes';
-import { DEFAULT_LOCALE } from 'constants';
 
 import PageLayout from 'components/common/PageLayout';
 import LoginForm from 'components/auth/LoginForm';
@@ -36,14 +35,14 @@ class LoginPage extends Component {
   }
 
   componentDidMount() {
-    const { user } = this.props;
+    const { user, url: { query: { lang } } } = this.props;
     if (user) {
-      Router.replaceRoute(ROUTES_NAMES.home, { lang: DEFAULT_LOCALE });
+      Router.replaceRoute(ROUTES_NAMES.home, { lang });
     }
   }
 
   handleSubmit = ({ signUp, ...userData }) => {
-    const { signIn, url: { query: { next = `/${DEFAULT_LOCALE}/articles` } } } = this.props;
+    const { signIn, url: { query: { lang, next = `/${lang}/articles` } } } = this.props;
     signIn({ ...userData }, signUp).then(() => Router.pushRoute(next));
   };
 
