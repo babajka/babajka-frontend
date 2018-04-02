@@ -5,13 +5,13 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 
 import { actions, selectors } from 'redux/ducks/auth';
-import text from 'constants/dictionary';
 import { Router, NAVBAR_ROUTES, ROUTES_NAMES } from 'routes';
 import { LOCALES, LANGS } from 'constants';
 
 import Clickable from 'components/common/Clickable';
 import Link from 'components/common/Link';
 import LocaleContext from 'components/common/LocaleContext';
+import Text from 'components/common/Text';
 
 const mapStateToProps = state => ({ user: selectors.getUser(state) });
 const mapDispatchToProps = { signOut: actions.signOut };
@@ -66,14 +66,14 @@ class Header extends Component {
         </div>
         <div className={classNames('navbar-menu', { 'is-active': burgerActive })}>
           <div className="navbar-start">
-            {/* // TODO: check for permissions for routes */}
-            {NAVBAR_ROUTES.map(({ name, label, pattern = name, params, isActive }) => (
+            {/* // TODO: check permissions for routes */}
+            {NAVBAR_ROUTES.map(({ name, pattern = name, params, isActive }) => (
               <Link key={name} route={name} params={params}>
                 <a className="navbar-item">
                   <span
                     className={classNames('rubric', { 'is-active': isActive(asPath, pattern) })}
                   >
-                    {label.toUpperCase()}
+                    <Text id={`header.${name}`} render={t => t.toUpperCase()} />
                   </span>
                 </a>
               </Link>
@@ -95,7 +95,7 @@ class Header extends Component {
                           user ? signOut() : Router.pushRoute(ROUTES_NAMES.login, { lang })
                         }
                       >
-                        {user ? text.signOutTitle : text.sigInTitle}
+                        <Text id={`auth.${user ? 'signOut' : 'signIn'}`} />
                       </Clickable>
                     </div>
                     <div className="lang-section">
