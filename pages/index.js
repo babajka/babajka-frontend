@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
 
-import PageLayout from 'components/common/PageLayout';
+import PageLayout from 'components/common/layout/PageLayout';
 import Button from 'components/common/Button';
 import ArticlesRow from 'components/articles/grid/ArticlesRow';
 import Diary from 'components/articles/Diary';
@@ -46,7 +46,7 @@ class HomePage extends Component {
     return request.populate(ctx, [
       auth.getCurrentUser,
       articlesActions.fetchAll,
-      diaryActions.getByDay.bind(null, DEFAULT_LOCALE, '02', '17'), // temporarily
+      diaryActions.getByDay.bind(null, DEFAULT_LOCALE, '02', '13'), // temporarily
     ]);
   }
 

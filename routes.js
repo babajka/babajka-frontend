@@ -4,20 +4,25 @@ const { LOCALES } = require('./constants');
 
 const langs = Object.keys(LOCALES).join('|');
 
+const isActive = (path, name) => path.split('/').slice(-1)[0] === name;
+
 const NAVBAR_ROUTES = [
   {
     name: 'home',
     label: 'Артыкулы',
     pattern: 'articles',
     page: 'index',
+    isActive,
   },
   {
     name: 'collections',
     label: 'Калекцыі',
+    isActive,
   },
   {
     name: 'partners',
     label: 'Партнёры',
+    isActive,
   },
   {
     name: 'create-article',
@@ -35,6 +40,7 @@ const NAVBAR_ROUTES = [
   {
     name: 'about',
     label: 'Пра Нас',
+    isActive,
   },
 ];
 

@@ -8,6 +8,6 @@ Icon.propTypes = {
   size: PropTypes.string,
 };
 
-Icon.defaultProps = { size: 'lg' };
+Icon.defaultProps = { size: '' };
 
 export default Icon;

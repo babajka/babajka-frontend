@@ -1,7 +1,7 @@
 import React from 'react';
 import withRedux from 'next-redux-wrapper';
 
-import PageLayout from 'components/common/PageLayout';
+import PageLayout from 'components/common/layout/PageLayout';
 
 import initStore from 'redux/store';
 

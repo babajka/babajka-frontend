@@ -19,7 +19,10 @@ app.prepare().then(() => {
   server.use('/auth', proxy({ target: BACKEND_URL, changeOrigin: true }));
   server.use('/api', proxy({ target: BACKEND_URL, changeOrigin: true }));
   // TODO: redirect on preffered lang
-  server.get('/', (req, res) => res.redirect(`/${DEFAULT_LOCALE}/articles`));
+  server.get('/:lang?', (req, res) => {
+    const { lang = DEFAULT_LOCALE } = req.params;
+    return res.redirect(`/${lang}/articles`);
+  });
   server.get('*', (req, res) => handle(req, res));
 
   server.listen(port, err => {

@@ -5,7 +5,7 @@ import { withKnobs, text, boolean, select, object } from '@storybook/addon-knobs
 import { withInfo } from '@storybook/addon-info';
 
 import StoriesDecorator from './StoriesDecorator';
-import CoreLayout from './CoreLayout';
+import CoreLayout from './layout/CoreLayout';
 import Button from './Button';
 import Icon from './Icon';
 import Select from './Select';
@@ -64,7 +64,7 @@ stories.add('Button', () => {
 
 stories.add('Icon', () => {
   const name = text('fa name', 'github-alt');
-  const size = select('fa size', ['lg', '2x', '3x', '4x', '5x'], '5x');
+  const size = select('fa size', ['', 'lg', '2x', '3x', '4x', '5x'], '5x');
   return <Icon name={name} size={size} />;
 });
 

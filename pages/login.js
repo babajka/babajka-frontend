@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
 import { Router, ROUTES_NAMES } from 'routes';
 
-import PageLayout from 'components/common/PageLayout';
+import PageLayout from 'components/common/layout/PageLayout';
 import LoginForm from 'components/auth/LoginForm';
 
 import { actions, selectors } from 'redux/ducks/auth';
