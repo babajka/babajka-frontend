@@ -1,6 +1,7 @@
 import createReducer from 'type-to-reducer';
 
 import api from 'constants/api';
+import { DEFAULT_LOCALE } from 'constants';
 import request from 'utils/request';
 import { defaultReducer } from 'utils/redux';
 
@@ -28,7 +29,11 @@ export default createReducer(
 
 // actions
 export const actions = {
-  getByDay: (locale = 'be', month = new Date().getMonth() + 1, day = new Date().getDate()) => ({
+  getByDay: (
+    locale = DEFAULT_LOCALE,
+    month = new Date().getMonth() + 1,
+    day = new Date().getDate()
+  ) => ({
     type: GET_BY_DAY,
     payload: request.fetch(api.diary.getByDay(locale, month, day)),
   }),

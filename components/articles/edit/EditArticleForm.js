@@ -6,25 +6,12 @@ import { Form, Text } from 'react-form';
 
 import { ArticleShape, BrandsArray } from 'utils/customPropTypes';
 import { actions, selectors } from 'redux/ducks/articles';
+import { LANGS } from 'constants';
 
 import Select from 'components/common/Select';
 import Clickable from 'components/common/Clickable';
+import LocaleContext from 'components/common/LocaleContext';
 import EditLocaleForm from './EditLocaleForm';
-
-const LANGS = [
-  {
-    id: 'be',
-    label: 'беларуская',
-  },
-  {
-    id: 'ru',
-    label: 'русский',
-  },
-  {
-    id: 'en',
-    label: 'English',
-  },
-];
 
 const mapStateToProps = state => ({
   article: selectors.getCurrent(state),
@@ -125,7 +112,7 @@ class EditArticleForm extends Component {
     ];
 
     return (
-      <div className="article-page-edit page-content">
+      <div className="article-page-edit">
         <div className="title">Рэдактар артыкулаў</div>
         <Form onSubmit={this.handleSubmit} defaultValues={article || initArticle}>
           {formApi => (
@@ -182,12 +169,17 @@ class EditArticleForm extends Component {
             </ul>
           </div>
           {currentLocale && (
-            <EditLocaleForm
-              mode={mode}
-              locale={currentLocale}
-              createArticle={this.handleSubmit}
-              draftArticle={draftArticle}
-            />
+            <LocaleContext.Consumer>
+              {lang => (
+                <EditLocaleForm
+                  lang={lang}
+                  mode={mode}
+                  locale={currentLocale}
+                  createArticle={this.handleSubmit}
+                  draftArticle={draftArticle}
+                />
+              )}
+            </LocaleContext.Consumer>
           )}
         </div>
       </div>

@@ -25,7 +25,9 @@ SpecialHeading.propTypes = {
 };
 
 SpecialHeading.defaultProps = {
-  imageUrl: './static/images/kurilka_icon.png',
+  // TODO: to replace with some truly default image.
+  imageUrl:
+    'http://res.cloudinary.com/dhgy4yket/image/upload/c_scale,w_100/v1522527334/babajka-dev/kurilka.jpg',
 };
 
 export default SpecialHeading;

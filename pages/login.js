@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Router from 'next/router';
 import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
+import { Router, ROUTES_NAMES } from 'routes';
 
-import PageLayout from 'components/common/PageLayout';
+import PageLayout from 'components/common/layout/PageLayout';
 import LoginForm from 'components/auth/LoginForm';
 
 import { actions, selectors } from 'redux/ducks/auth';
@@ -35,21 +35,21 @@ class LoginPage extends Component {
   }
 
   componentDidMount() {
-    const { user } = this.props;
+    const { user, url: { query: { lang } } } = this.props;
     if (user) {
-      Router.replace('/');
+      Router.replaceRoute(ROUTES_NAMES.home, { lang });
     }
   }
 
   handleSubmit = ({ signUp, ...userData }) => {
-    const { signIn, url: { query: { next = '/' } } } = this.props;
-    signIn({ ...userData }, signUp).then(() => Router.push(next));
+    const { signIn, url: { query: { lang, next = `/${lang}/articles` } } } = this.props;
+    signIn({ ...userData }, signUp).then(() => Router.pushRoute(next));
   };
 
   render() {
-    const { pending, errors } = this.props;
+    const { pending, errors, url } = this.props;
     return (
-      <PageLayout title="Login">
+      <PageLayout title="Login" url={url}>
         <div className="container login">
           <LoginForm onSubmit={this.handleSubmit} pending={pending} errors={errors} />
         </div>

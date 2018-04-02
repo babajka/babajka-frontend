@@ -74,8 +74,7 @@ export const actions = {
 
 // selectors
 const getState = state => state.articles;
-// TODO: pass current lang as second param
-const getAll = state => getLocalizedArticles(getState(state).data);
+const getAll = (state, lang) => getLocalizedArticles(getState(state).data, lang);
 const getCurrent = state => getState(state).current;
 const getBrands = state => getLocalizedBrands(getState(state).brands);
 const isPending = state => getState(state).pending;

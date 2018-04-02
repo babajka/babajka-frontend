@@ -6,7 +6,7 @@ import { Form, Text, TextArea } from 'react-form';
 import { actions, selectors } from 'redux/ducks/articles';
 import { ArticleShape } from 'utils/customPropTypes';
 import { getLocalizedArticle } from 'utils/getters';
-import { redirectToArticle } from 'constants/routing';
+import { Router, ROUTES_NAMES } from 'routes';
 
 import Button from 'components/common/Button';
 import Icon from 'components/common/Icon';
@@ -27,6 +27,7 @@ const initLocale = {
 
 class EditLocaleForm extends Component {
   static propTypes = {
+    lang: PropTypes.string.isRequired,
     article: ArticleShape,
     draftArticle: PropTypes.shape({
       type: PropTypes.string.isRequired,
@@ -51,11 +52,13 @@ class EditLocaleForm extends Component {
   };
 
   handleSubmit = form => {
-    const { locale, addLocale } = this.props;
+    const { locale, addLocale, lang } = this.props;
     const data = { locale, ...form };
     this.handleCreate()
       .then(id => addLocale(id, data))
-      .then(({ value: { slug } }) => redirectToArticle(slug, 'edit'));
+      .then(({ value: { slug } }) =>
+        Router.replace(ROUTES_NAMES.article, { slug, mode: 'edit', lang })
+      );
   };
 
   render() {
