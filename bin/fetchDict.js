@@ -1,31 +1,41 @@
 #!/usr/bin/env node
 const { writeFileSync } = require('fs');
-const fetch = require('isomorphic-fetch');
+const keyBy = require('lodash/keyBy');
+const pick = require('lodash/pick');
 const set = require('lodash/set');
 
-const ID = `1b3Or9-t_pDZq6GOL4MRUbFhoXuteVxCrRHTM17DLALg`;
-const URL = `https://spreadsheets.google.com/feeds/list/${ID}/od6/public/values?alt=json`;
-const PREFIX = 'gsx$';
-const VALUE = '$t';
-const KEY = 'key';
+const GoogleSpreadsheet = require('google-spreadsheet');
+
+const doc = new GoogleSpreadsheet('1b3Or9-t_pDZq6GOL4MRUbFhoXuteVxCrRHTM17DLALg');
+
+// Please keep arrays below in an alphabetical order.
+// Locale is ignored unless in a list below.
+const locales = ['be', 'en', 'en'];
+// Spreadsheet Tab is ignored unless in a list below.
+const scopes = ['auth', 'forms', 'footer', 'header', 'home'];
+
 const dict = {};
 
-const getLocales = row =>
-  Object.keys(row)
-    .filter(key => key.startsWith(PREFIX) && !key.endsWith(KEY))
-    .map(key => key.slice(-2));
+doc.getInfo((err, info) => {
+  const sheets = pick(keyBy(info.worksheets, 'title'), scopes);
 
-const get = (row, key) => row[`${PREFIX}${key}`][VALUE];
-
-fetch(URL)
-  .then(res => res.json())
-  .then(({ feed: { entry } }) => {
-    entry.forEach(row => {
-      const locales = getLocales(row);
-      const key = get(row, KEY);
-      locales.forEach(l => {
-        set(dict, `${key}.${l}`, get(row, l));
-      });
-    });
-  })
-  .then(() => writeFileSync('constants/i18n.json', JSON.stringify(dict)));
+  Promise.all(
+    Object.values(sheets).map(
+      sheet =>
+        new Promise(resolve => {
+          const scope = sheet.title;
+          sheet.getRows({}, (error, rows) => {
+            rows.forEach(row => {
+              const { key } = row;
+              locales.forEach(locale => {
+                set(dict, [scope, key, locale], row[locale]);
+              });
+            });
+            resolve();
+          });
+        })
+    )
+  ).then(() => {
+    writeFileSync('constants/i18n.json', JSON.stringify(dict));
+  });
+});
