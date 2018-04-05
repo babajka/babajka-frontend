@@ -20,3 +20,11 @@ export const getLocalizedArticles = (articles, lang = DEFAULT_LOCALE) =>
     brand: getLocalizedBrand(brand, lang),
     type,
   }));
+
+export const getArticlesRows = (articles, rowSize) => {
+  const articlesRows = [];
+  for (let i = 0; i < articles.length; i += rowSize) {
+    articlesRows.push(articles.slice(i, i + rowSize));
+  }
+  return articlesRows;
+};

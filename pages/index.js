@@ -9,6 +9,7 @@ import Diary from 'components/articles/Diary';
 import ArticlesComplexRow from 'components/articles/grid/ArticlesComplexRow';
 
 import { ArticlesArray, DiaryShape, PaginationShape } from 'utils/customPropTypes';
+import { getArticlesRows } from 'utils/getters';
 
 import initStore from 'redux/store';
 import { actions as articlesActions, selectors as articlesSelectors } from 'redux/ducks/articles';
@@ -30,10 +31,9 @@ const mapDispatchToProps = {
   getChunk: articlesActions.fetchChunk,
 };
 
-const FIRST_LINE_END = 4;
+const ROW_SIZE = 4;
 const FIRST_PAGE_NUMBER = 0;
-const FIRST_PAGE_SIZE = 6;
-const COMMON_PAGE_SIZE = 8;
+const PAGE_SIZE = 8;
 
 class HomePage extends Component {
   static propTypes = {
@@ -52,34 +52,39 @@ class HomePage extends Component {
     // TODO: somehow extract getCurrentUser to populate method
     return request.populate(ctx, [
       auth.getCurrentUser,
-      articlesActions.fetchAll,
-      articlesActions.fetchChunk.bind(null, FIRST_PAGE_NUMBER, FIRST_PAGE_SIZE),
+      articlesActions.fetchChunk.bind(null, FIRST_PAGE_NUMBER, PAGE_SIZE),
       diaryActions.getByDay.bind(null, DEFAULT_LOCALE, '02', '13'), // temporarily
     ]);
   }
 
   render() {
     const { articles, error, diary, pagination, getByDay, getChunk, url } = this.props;
+    const articlesRows = getArticlesRows(articles, ROW_SIZE);
+
     return (
       <PageLayout url={url}>
         <div className="main-page page-container">
           <div className="page-content">
-            <ArticlesRow
-              articles={articles.slice(0, FIRST_LINE_END)}
-              className="first-line is-ancestor"
-            />
+            <ArticlesRow articles={articlesRows[0]} className="first-line is-ancestor" />
             <ArticlesComplexRow
-              articles={articles}
+              articles={articlesRows[1]}
               renderDiary={() => (
                 <Diary {...diary} getNextDiary={() => getByDay()} getPrevDiary={() => getByDay()} />
               )}
             />
+            {articles.length > PAGE_SIZE &&
+              articlesRows
+                .slice(2)
+                .map(data => (
+                  <ArticlesRow
+                    key={data[0]._id}
+                    articles={data}
+                    className="first-line is-ancestor"
+                  />
+                ))}
             <div className="load-more" align="center">
               {pagination && (
-                <Button
-                  className="button"
-                  onClick={() => getChunk(pagination.page, COMMON_PAGE_SIZE)}
-                >
+                <Button className="button" onClick={() => getChunk(pagination.page, PAGE_SIZE)}>
                   {text.loadMoreButton}
                 </Button>
               )}
