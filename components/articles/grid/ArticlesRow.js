@@ -7,7 +7,7 @@ import { ArticlesArray } from 'utils/customPropTypes';
 import ArticlePreview from '../ArticlePreview';
 
 const ArticlesRow = ({ articles, className }) => (
-  <div className={classNames(className, 'articles-row tile')}>
+  <div className={classNames(className, 'tile')}>
     {articles &&
       articles.map(article => (
         <ArticlePreview key={article.articleId} imageClassName="is-3by2" {...article} />

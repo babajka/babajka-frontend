@@ -3,12 +3,14 @@ const next = require('next');
 const proxy = require('http-proxy-middleware');
 const cookieParser = require('cookie-parser');
 
+const routes = require('./routes');
 const { BACKEND_URL } = require('./constants/server');
+const { DEFAULT_LOCALE } = require('./constants');
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
-const handle = app.getRequestHandler();
+const handle = routes.getRequestHandler(app);
 
 app.prepare().then(() => {
   const server = express();
@@ -16,19 +18,10 @@ app.prepare().then(() => {
 
   server.use('/auth', proxy({ target: BACKEND_URL, changeOrigin: true }));
   server.use('/api', proxy({ target: BACKEND_URL, changeOrigin: true }));
-  server.get('/articles/create', (req, res) =>
-    app.render(req, res, '/article', { ...req.query, slug: null, mode: 'create' })
-  );
-  server.get('/article/:slug/:mode?', (req, res) => {
-    const { slug, mode = 'public' } = req.params;
-    if (!slug || !['public', 'edit'].includes(mode)) {
-      res.writeHead(302, {
-        Location: '/_error',
-      });
-      res.end();
-      res.finished = true;
-    }
-    app.render(req, res, '/article', { ...req.query, slug, mode });
+  // TODO: redirect on preffered lang
+  server.get('/:lang?', (req, res) => {
+    const { lang = DEFAULT_LOCALE } = req.params;
+    return res.redirect(`/${lang}/articles`);
   });
   server.get('*', (req, res) => handle(req, res));
 

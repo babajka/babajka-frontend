@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
 
-import PageLayout from 'components/common/PageLayout';
+import PageLayout from 'components/common/layout/PageLayout';
 import Button from 'components/common/Button';
 import ArticlesRow from 'components/articles/grid/ArticlesRow';
 import Diary from 'components/articles/Diary';
@@ -16,9 +16,10 @@ import { actions as auth } from 'redux/ducks/auth';
 import { actions as diaryActions, selectors as diarySelectors } from 'redux/ducks/diary';
 import request from 'utils/request';
 import text from 'constants/dictionary';
+import { DEFAULT_LOCALE } from 'constants';
 
-const mapStateToProps = state => ({
-  articles: articlesSelectors.getAll(state),
+const mapStateToProps = (state, { url: { query } }) => ({
+  articles: articlesSelectors.getAll(state, query.lang),
   pagination: articlesSelectors.getPagination(state),
   error: articlesSelectors.isError(state),
   diary: diarySelectors.getCurrent(state),
@@ -36,6 +37,9 @@ const COMMON_PAGE_SIZE = 8;
 
 class HomePage extends Component {
   static propTypes = {
+    url: PropTypes.shape({
+      query: PropTypes.object.isRequired,
+    }).isRequired,
     articles: ArticlesArray.isRequired,
     diary: DiaryShape.isRequired,
     pagination: PropTypes.oneOfType([PropTypes.bool, PaginationShape]).isRequired,
@@ -48,18 +52,22 @@ class HomePage extends Component {
     // TODO: somehow extract getCurrentUser to populate method
     return request.populate(ctx, [
       auth.getCurrentUser,
+      articlesActions.fetchAll,
       articlesActions.fetchChunk.bind(null, FIRST_PAGE_NUMBER, FIRST_PAGE_SIZE),
-      diaryActions.getByDay.bind(null, 'be', '02', '13'), // temporarily
+      diaryActions.getByDay.bind(null, DEFAULT_LOCALE, '02', '13'), // temporarily
     ]);
   }
 
   render() {
-    const { articles, error, diary, pagination, getByDay, getChunk } = this.props;
+    const { articles, error, diary, pagination, getByDay, getChunk, url } = this.props;
     return (
-      <PageLayout>
+      <PageLayout url={url}>
         <div className="main-page page-container">
           <div className="page-content">
-            <ArticlesRow articles={articles.slice(0, FIRST_LINE_END)} />
+            <ArticlesRow
+              articles={articles.slice(0, FIRST_LINE_END)}
+              className="first-line is-ancestor"
+            />
             <ArticlesComplexRow
               articles={articles}
               renderDiary={() => (

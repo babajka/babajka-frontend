@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import renderHTML from 'react-render-html';
 
-import Button from 'components/common/Button';
-import ArticleLink from './ArticleLink';
+import Link from 'components/common/Link';
+import { ROUTES_NAMES } from 'routes';
 
 const PublicArticle = ({ slug, text }) => (
   <div>
     <h1>
-      <ArticleLink slug={slug} mode="edit">
-        <Button>Edit Article</Button>
-      </ArticleLink>
+      <Link route={ROUTES_NAMES.article} params={{ slug, mode: 'edit' }}>
+        <a>Edit Article</a>
+      </Link>
     </h1>
     {renderHTML(text)}
   </div>

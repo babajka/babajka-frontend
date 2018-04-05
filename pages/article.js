@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
 
-import PageLayout from 'components/common/PageLayout';
+import PageLayout from 'components/common/layout/PageLayout';
 import PublicArticle from 'components/articles/PublicArticle';
 import EditArticleForm from 'components/articles/edit/EditArticleForm';
 
@@ -28,17 +28,18 @@ class ArticlePage extends Component {
   }
 
   render() {
-    const { article, url: { query: { mode } } } = this.props;
-    if (mode === 'public') {
-      const localized = getLocalizedArticle(article);
+    const { article, url } = this.props;
+    const { query: { mode, lang } } = url;
+    if (!mode) {
+      const localized = getLocalizedArticle(article, lang);
       return (
-        <PageLayout>
+        <PageLayout url={url}>
           <PublicArticle {...localized} />
         </PageLayout>
       );
     }
     return (
-      <PageLayout>
+      <PageLayout url={url}>
         <EditArticleForm mode={mode} />
       </PageLayout>
     );

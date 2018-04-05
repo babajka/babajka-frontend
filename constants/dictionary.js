@@ -26,7 +26,7 @@ export default {
   followSocialLinks: 'Сачыце за намі ў сацыяльных сетках:',
   projectGeneralInfo: 'Wir.by - Адукацыйная платформа',
   projectGoal: 'Прасоўваем беларускую культуру.',
-  readAboutUs: 'Чытайце больш пра нас і пра праект',
+  readAboutUs: 'Чытайце больш пра нас і пра праект ',
   here: 'тут',
   // buttons
   loadMoreButton: 'Загрузіць яшчэ!',
