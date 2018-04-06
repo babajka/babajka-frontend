@@ -16,18 +16,10 @@ const SpecialHeading = ({ slug, name, imageUrl }) => (
   </div>
 );
 
-/* TODO: need to take appropriate picture (perhaps, using slug or name) */
-
 SpecialHeading.propTypes = {
   slug: PropTypes.string.isRequired,
-  imageUrl: PropTypes.string,
+  imageUrl: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-};
-
-SpecialHeading.defaultProps = {
-  // TODO: to replace with some truly default image.
-  imageUrl:
-    'http://res.cloudinary.com/dhgy4yket/image/upload/c_scale,w_100/v1522527334/babajka-dev/kurilka.jpg',
 };
 
 export default SpecialHeading;

@@ -16,7 +16,6 @@ import { actions as articlesActions, selectors as articlesSelectors } from 'redu
 import { actions as auth } from 'redux/ducks/auth';
 import { actions as diaryActions, selectors as diarySelectors } from 'redux/ducks/diary';
 import request from 'utils/request';
-import { DEFAULT_LOCALE } from 'constants';
 
 const mapStateToProps = (state, { url: { query } }) => ({
   articles: articlesSelectors.getAll(state, query.lang),
@@ -46,7 +45,7 @@ class HomePage extends Component {
     return request.populate(ctx, [
       auth.getCurrentUser,
       articlesActions.fetchAll,
-      diaryActions.getByDay.bind(null, DEFAULT_LOCALE, '02', '13'), // temporarily
+      // diaryActions.getByDay.bind(null, DEFAULT_LOCALE, '02', '13'), // FIXME(@tyndria) temporarily
     ]);
   }
 

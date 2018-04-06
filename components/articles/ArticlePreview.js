@@ -6,8 +6,7 @@ import { ArticleModel } from 'utils/customPropTypes';
 import { ROUTES_NAMES } from 'routes';
 
 import SpecialHeading from './SpecialHeading';
-
-const mockImagePath = '/static/images/photo5.jpg';
+import Author from './Author';
 
 const ArticlePreview = ({
   slug,
@@ -25,7 +24,7 @@ const ArticlePreview = ({
         <figure className={classNames('image', imageClassName)}>
           <Link route={ROUTES_NAMES.article} params={{ slug }}>
             <a>
-              <img alt={title} src={imageUrl || mockImagePath} />
+              <img alt={title} src={imageUrl} />
             </a>
           </Link>
         </figure>
@@ -38,14 +37,7 @@ const ArticlePreview = ({
           </Link>
         </span>
         <p className="subtitle">{subtitle}</p>
-        {author && (
-          <div className="author">
-            <img alt={title} src={author.imageUrl || mockImagePath} />
-            <div className="name">
-              {author.firstName.be} {author.lastName.be}
-            </div>
-          </div>
-        )}
+        {author && <Author {...author} />}
       </div>
     </article>
   </div>

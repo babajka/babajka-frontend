@@ -85,8 +85,7 @@ class Header extends Component {
               <LocaleContext.Consumer>
                 {lang => (
                   <div className="user">
-                    {/* TODO: to replace user.email with user.displayName once supported by API */}
-                    <div className="name-section">{user && user.email}</div>
+                    <div className="name-section">{user && user.displayName}</div>
                     <div className="auth-section">
                       <Clickable
                         tag="a"
