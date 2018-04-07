@@ -4,6 +4,7 @@ import withRedux from 'next-redux-wrapper';
 
 import PageLayout from 'components/common/layout/PageLayout';
 import Button from 'components/common/Button';
+import Text from 'components/common/Text';
 import ArticlesRow from 'components/articles/grid/ArticlesRow';
 import Diary from 'components/articles/Diary';
 import ArticlesComplexRow from 'components/articles/grid/ArticlesComplexRow';
@@ -15,8 +16,6 @@ import { actions as articlesActions, selectors as articlesSelectors } from 'redu
 import { actions as auth } from 'redux/ducks/auth';
 import { actions as diaryActions, selectors as diarySelectors } from 'redux/ducks/diary';
 import request from 'utils/request';
-import text from 'constants/dictionary';
-import { DEFAULT_LOCALE } from 'constants';
 
 const mapStateToProps = (state, { url: { query } }) => ({
   articles: articlesSelectors.getAll(state, query.lang),
@@ -46,7 +45,7 @@ class HomePage extends Component {
     return request.populate(ctx, [
       auth.getCurrentUser,
       articlesActions.fetchAll,
-      diaryActions.getByDay.bind(null, DEFAULT_LOCALE, '02', '13'), // temporarily
+      // diaryActions.getByDay.bind(null, DEFAULT_LOCALE, '02', '13'), // FIXME(@tyndria) temporarily
     ]);
   }
 
@@ -66,7 +65,9 @@ class HomePage extends Component {
             )}
           />
           <div className="load-more" align="center">
-            <Button className="button">{text.loadMoreButton}</Button>
+            <Button className="button">
+              <Text id="home.loadMore" />
+            </Button>
           </div>
         </div>
         {error && <p>{error}</p>}

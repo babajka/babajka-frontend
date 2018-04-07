@@ -1,12 +1,10 @@
-import text from 'constants/dictionary';
-
 const emailRegexp = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/;
 
-export const isEmail = (email, message = text.badEmail) =>
-  email.match(emailRegexp) ? null : message;
+export const isEmail = (email, massageId = 'auth.badEmail') =>
+  email.match(emailRegexp) ? null : massageId;
 
-export const isEqual = (value1, value2, message) => (value1 === value2 ? null : message);
+export const isEqual = (value1, value2, massageId) => (value1 === value2 ? null : massageId);
 
-export const required = (field, message = text.required) => (field ? null : message);
+export const required = (field, massageId = 'forms.required') => (field ? null : massageId);
 
-export const checkLength = (value, length, message) => (value.length < length ? message : null);
+export const checkLength = (value, length, massageId) => (value.length < length ? massageId : null);

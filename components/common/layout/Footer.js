@@ -2,27 +2,29 @@ import React from 'react';
 
 import Icon from 'components/common/Icon';
 import Link from 'components/common/Link';
+import Text from 'components/common/Text';
 import ExternalLink from 'components/common/ExternalLink';
 
 import { ROUTES_NAMES } from 'routes';
 import { NETWORKS } from 'constants/social';
-import text from 'constants/dictionary';
 
 const Footer = () => (
   <footer className="app-footer">
     <div className="columns">
       <div className="column general-info">
-        {text.projectGeneralInfo} <Icon name="copyright" /> {new Date().getFullYear()}
+        <Text id="footer.projectGeneralInfo" /> <Icon name="copyright" /> {new Date().getFullYear()}
         <br />
-        {text.projectGoal}
+        <Text id="footer.projectGoal" />
         <br />
-        {text.readAboutUs}
+        <Text id="footer.readAboutUs" />{' '}
         <Link route={ROUTES_NAMES.about}>
-          <a>{text.here}</a>
+          <a>
+            <Text id="footer.here" />
+          </a>
         </Link>
       </div>
       <div className="column social">
-        <div>{text.followSocialLinks}</div>
+        <Text id="footer.followSocialLinks" />
         <div className="links">
           {NETWORKS.map(({ name, link }) => (
             <ExternalLink key={name} href={link} className={`button is-medium is-rounded ${name}`}>
