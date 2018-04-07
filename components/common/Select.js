@@ -12,6 +12,7 @@ const Arrow = ({ isOpen }) => (
   </span>
 );
 
+// TODO: extract Dropdown component (like lang switcher)
 // TODO: fix searchable mode
 const Select = ({
   className,

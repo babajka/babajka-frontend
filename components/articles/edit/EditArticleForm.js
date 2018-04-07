@@ -4,64 +4,83 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { Form, Text } from 'react-form';
 
-import { ArticleShape, BrandsArray } from 'utils/customPropTypes';
 import { actions, selectors } from 'redux/ducks/articles';
+import { ArticleShape, BrandsArray, LangType } from 'utils/customPropTypes';
+import { Router, ROUTES_NAMES } from 'routes';
 import { LANGS } from 'constants';
 
 import Select from 'components/common/Select';
 import Clickable from 'components/common/Clickable';
-import LocaleContext from 'components/common/LocaleContext';
 import EditLocaleForm from './EditLocaleForm';
 
 const mapStateToProps = state => ({
-  article: selectors.getCurrent(state),
+  article: selectors.getRawCurrent(state),
   brands: selectors.getBrands(state),
 });
 
 const mapDispatchToProps = {
   fetchBrands: actions.fetchBrands,
+  createArticle: actions.create,
+  updateArticle: actions.update,
 };
 
 const initArticle = {
   type: 'text',
   brand: 'wir',
+  locales: {},
+};
+
+const initLocale = {
+  text: 'type something...',
 };
 
 class EditArticleForm extends Component {
   static propTypes = {
+    lang: LangType.isRequired,
+    articleLocale: LangType,
+    // TODO: fix prop tupe
     article: ArticleShape,
     brands: BrandsArray,
     mode: PropTypes.oneOf(['edit', 'create']).isRequired,
     fetchBrands: PropTypes.func.isRequired,
+    createArticle: PropTypes.func.isRequired,
+    updateArticle: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
+    articleLocale: null,
     article: initArticle,
     brands: null,
   };
 
-  state = {
-    draftArticle: initArticle,
-    locales: {},
-    currentLocale: null,
-  };
+  componentWillMount() {
+    const { articleLocale } = this.props;
+    this.setState({ currentLocale: articleLocale });
+  }
 
   componentDidMount() {
     const { fetchBrands } = this.props;
     fetchBrands();
   }
 
-  handleSubmit = draftArticle => {
-    this.setState({ draftArticle });
+  handleSubmit = form => {
+    const { mode, lang, createArticle, updateArticle } = this.props;
+    const action = mode === 'create' ? createArticle : updateArticle;
+    action(form).then(({ id }) =>
+      Router.replace(ROUTES_NAMES.article, { slug: id, mode: 'edit', lang })
+    );
   };
 
   render() {
     const { mode, article, brands } = this.props;
-    const { locales, currentLocale, draftArticle } = this.state;
-
-    const keys = Object.keys(locales);
-    const availableLocales = LANGS.filter(({ id }) => !keys.includes(id));
-    const addedLocales = LANGS.filter(({ id }) => keys.includes(id));
+    const { currentLocale } = this.state;
+    const defaultValues =
+      mode === 'create'
+        ? initArticle
+        : {
+            ...article,
+            brand: article.brand.slug,
+          };
 
     const FIELDS = [
       {
@@ -114,74 +133,79 @@ class EditArticleForm extends Component {
     return (
       <div className="article-page-edit">
         <div className="title">Рэдактар артыкулаў</div>
-        <Form onSubmit={this.handleSubmit} defaultValues={article || initArticle}>
-          {formApi => (
-            <form className="common-data" onSubmit={formApi.submitForm}>
-              <div className="common-data-title">Рэдагаваць асноўныя звесткі</div>
-              <div className="inputs">
-                {FIELDS.map(({ id, label, options, type, placeholder, hide }) => {
-                  if (hide && hide(formApi.values)) {
-                    return null;
-                  }
-                  return (
-                    <div
-                      key={id}
-                      className={classNames('field', { 'long-input': type === 'input' })}
-                    >
-                      {type === 'input' && (
-                        <Text id={id} field={id} className="input" placeholder={placeholder} />
-                      )}
-                      <p className="help">{label}</p>
-                      {options && (
-                        <Select
-                          value={formApi.values[id]}
-                          options={options}
-                          onChange={formApi.setValue.bind(null, id)}
-                        />
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </form>
-          )}
+        <Form onSubmit={this.handleSubmit} defaultValues={defaultValues}>
+          {formApi => {
+            const { locales } = formApi.values;
+            const keys = Object.keys(locales);
+            const availableLocales = LANGS.filter(({ id }) => !keys.includes(id));
+            const addedLocales = LANGS.filter(({ id }) => keys.includes(id));
+
+            return (
+              <form onSubmit={formApi.submitForm}>
+                <div className="common-data">
+                  <div className="common-data-title">Рэдагаваць асноўныя звесткі</div>
+                  <div className="inputs">
+                    {FIELDS.map(({ id, label, options, type, placeholder, hide }) => {
+                      if (hide && hide(formApi.values)) {
+                        return null;
+                      }
+                      return (
+                        <div
+                          key={id}
+                          className={classNames('field', { 'long-input': type === 'input' })}
+                        >
+                          {type === 'input' && (
+                            <Text id={id} field={id} className="input" placeholder={placeholder} />
+                          )}
+                          <p className="help">{label}</p>
+                          {options && (
+                            <Select
+                              value={formApi.values[id]}
+                              options={options}
+                              onChange={formApi.setValue.bind(null, id)}
+                            />
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div className="localized-data">
+                  <div className="localized-data-title">Лакалізаваць артыкул</div>
+                  {!!availableLocales.length && (
+                    <Select
+                      dropdown
+                      className="add-locale-button"
+                      placeholder="Дадаць лакалізацыю"
+                      options={availableLocales}
+                      onChange={l => {
+                        formApi.setValue('locales', {
+                          ...locales,
+                          [l]: { ...initLocale },
+                        });
+                        this.setState({ currentLocale: l });
+                      }}
+                    />
+                  )}
+                  <div className="tabs is-centered">
+                    <ul>
+                      {addedLocales.map(({ id, label }) => (
+                        <li key={id} className={classNames({ 'is-active': id === currentLocale })}>
+                          <Clickable tag="a" onClick={() => this.setState({ currentLocale: id })}>
+                            {id.toUpperCase()} - {label}
+                          </Clickable>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  {currentLocale && (
+                    <EditLocaleForm prefix={`locales.${currentLocale}`} formApi={formApi} />
+                  )}
+                </div>
+              </form>
+            );
+          }}
         </Form>
-        <div className="localized-data">
-          <div className="localized-data-title">Лакалізаваць артыкул</div>
-          {!!availableLocales.length && (
-            <Select
-              dropdown
-              className="add-locale-button"
-              placeholder="Дадаць лакалізацыю"
-              options={availableLocales}
-              onChange={l => this.setState({ locales: { ...locales, [l]: {} }, currentLocale: l })}
-            />
-          )}
-          <div className="tabs is-centered">
-            <ul>
-              {addedLocales.map(({ id, label }) => (
-                <li key={id} className={classNames({ 'is-active': id === currentLocale })}>
-                  <Clickable tag="a" onClick={() => this.setState({ currentLocale: id })}>
-                    {id.toUpperCase()} - {label}
-                  </Clickable>
-                </li>
-              ))}
-            </ul>
-          </div>
-          {currentLocale && (
-            <LocaleContext.Consumer>
-              {lang => (
-                <EditLocaleForm
-                  lang={lang}
-                  mode={mode}
-                  locale={currentLocale}
-                  createArticle={this.handleSubmit}
-                  draftArticle={draftArticle}
-                />
-              )}
-            </LocaleContext.Consumer>
-          )}
-        </div>
       </div>
     );
   }

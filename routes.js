@@ -1,3 +1,4 @@
+const { cloneElement } = require('react');
 const routes = require('next-routes')();
 
 const { LOCALES } = require('./constants');
@@ -33,6 +34,8 @@ const NAVBAR_ROUTES = [
       const [_, __, route, mode] = path.split('/');
       return route === 'articles' && mode === 'create';
     },
+    // dirty hack to force reload page, needed to clear store
+    NavLink: ({ children, lang }) => cloneElement(children, { href: `/${lang}/articles/create` }),
   },
   {
     name: 'about',

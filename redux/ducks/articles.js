@@ -1,9 +1,14 @@
 import createReducer from 'type-to-reducer';
 
 import api from 'constants/api';
-import request from 'utils/request';
-import { getLocalizedArticles, getLocalizedBrands } from 'utils/getters';
 import { defaultReducer } from 'utils/redux';
+import request from 'utils/request';
+import {
+  getLocalizedArticles,
+  getLocalizedArticle,
+  getLocalizedBrands,
+  getLocalesBySlug,
+} from 'utils/getters';
 
 const duck = 'articles';
 
@@ -12,6 +17,7 @@ const FETCH_ALL = `${duck}/FETCH_ALL`;
 const FETCH_BY_SLUG = `${duck}/FETCH_BY_SLUG`;
 const FETCH_BRANDS = `${duck}/FETCH_BRANDS`;
 const CREATE = `${duck}/CREATE`;
+const UPDATE = `${duck}/UPDATE`;
 const ADD_LOCALE = `${duck}/ADD_LOCALE`;
 
 // reducer
@@ -20,12 +26,14 @@ const initialState = {
   error: false,
   data: null,
   current: null,
+  localeBySlug: {},
   brands: null,
 };
 
 const currentReducer = defaultReducer((state, { payload }) => ({
   ...state,
   current: payload,
+  localeBySlug: getLocalesBySlug(payload),
   pending: false,
 }));
 
@@ -66,6 +74,10 @@ export const actions = {
     type: CREATE,
     payload: request.fetch(api.articles.create, 'POST', article),
   }),
+  update: article => ({
+    type: UPDATE,
+    payload: request.fetch(api.articles.update(article.id), 'PUT', article),
+  }),
   addLocale: (articleId, locale) => ({
     type: ADD_LOCALE,
     payload: request.fetch(api.articles.addLocale(articleId), 'POST', locale),
@@ -74,15 +86,25 @@ export const actions = {
 
 // selectors
 const getState = state => state.articles;
-const getAll = (state, lang) => getLocalizedArticles(getState(state).data, lang);
-const getCurrent = state => getState(state).current;
-const getBrands = state => getLocalizedBrands(getState(state).brands);
 const isPending = state => getState(state).pending;
 const isError = state => getState(state).error;
 
+const getRawArticles = state => getState(state).data;
+const getAll = (state, lang) => getLocalizedArticles(getRawArticles(state), lang);
+
+const getRawCurrent = state => getState(state).current;
+const getLocaleBySlug = (state, slug) => getState(state).localeBySlug[slug];
+const getCurrent = (state, slug) =>
+  getLocalizedArticle(getRawCurrent(state), getLocaleBySlug(state, slug));
+
+const getRawBrands = state => getState(state).brands;
+const getBrands = (state, lang) => getLocalizedBrands(getRawBrands(state), lang);
+
 export const selectors = {
   getAll,
+  getRawCurrent,
   getCurrent,
+  getLocaleBySlug,
   getBrands,
   isPending,
   isError,
