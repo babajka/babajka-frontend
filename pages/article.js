@@ -54,7 +54,6 @@ ArticlePage.propTypes = {
       mode: PropTypes.oneOf(['public', 'create', 'edit']),
     }).isRequired,
   }).isRequired,
-  clearArticle: PropTypes.func.isRequired,
 };
 
 ArticlePage.defaultProps = {

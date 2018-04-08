@@ -4,7 +4,7 @@ import { Form, Text as TextField, Checkbox } from 'react-form';
 import classNames from 'classnames';
 
 import Button from 'components/common/Button';
-import { isEmail, isEqual, required, checkLength } from 'utils/validators';
+import { isEmail, isEqual, required, checkLength, hasErrors } from 'utils/validators';
 import Text from 'components/common/Text';
 
 import FormField from './FormField';
@@ -65,8 +65,6 @@ const errorsPropsTypes = {};
 keys.forEach(field => {
   errorsPropsTypes[field] = PropTypes.string;
 });
-
-const hasErrors = errors => !!Object.values(errors).filter(Boolean).length;
 
 const LoginForm = ({ onSubmit, pending, errors }) => {
   let serverErrors = { ...errors };

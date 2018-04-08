@@ -18,7 +18,6 @@ const FETCH_BY_SLUG = `${duck}/FETCH_BY_SLUG`;
 const FETCH_BRANDS = `${duck}/FETCH_BRANDS`;
 const CREATE = `${duck}/CREATE`;
 const UPDATE = `${duck}/UPDATE`;
-const ADD_LOCALE = `${duck}/ADD_LOCALE`;
 
 // reducer
 const initialState = {
@@ -51,7 +50,7 @@ export default createReducer(
       pending: false,
     })),
     [CREATE]: currentReducer,
-    // [ADD_LOCALE]: currentReducer, todo fix
+    [UPDATE]: currentReducer,
   },
   initialState
 );
@@ -76,11 +75,7 @@ export const actions = {
   }),
   update: article => ({
     type: UPDATE,
-    payload: request.fetch(api.articles.update(article.id), 'PUT', article),
-  }),
-  addLocale: (articleId, locale) => ({
-    type: ADD_LOCALE,
-    payload: request.fetch(api.articles.addLocale(articleId), 'POST', locale),
+    payload: request.fetch(api.articles.update(article._id), 'PUT', article),
   }),
 };
 

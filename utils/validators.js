@@ -1,5 +1,7 @@
 const emailRegexp = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/;
 
+export const hasErrors = errors => !!Object.values(errors).filter(Boolean).length;
+
 export const isEmail = (email, massageId = 'auth.badEmail') =>
   email.match(emailRegexp) ? null : massageId;
 

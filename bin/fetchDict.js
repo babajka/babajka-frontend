@@ -12,7 +12,7 @@ const doc = new GoogleSpreadsheet('1b3Or9-t_pDZq6GOL4MRUbFhoXuteVxCrRHTM17DLALg'
 // Locale is ignored unless in a list below.
 const locales = ['be', 'en', 'ru'];
 // Spreadsheet Tab is ignored unless in a list below.
-const scopes = ['auth', 'footer', 'forms', 'header', 'home'];
+const scopes = ['auth', 'footer', 'forms', 'header', 'home', 'article', 'common'];
 
 const dict = {};
 

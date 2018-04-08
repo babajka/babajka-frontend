@@ -9,6 +9,9 @@ const localize = (object, lang = DEFAULT_LOCALE) =>
   object && (object[lang] || object[DEFAULT_LOCALE] || Object.values(object)[0]);
 
 export const getLocalizedAuthor = (author, lang) => {
+  if (!author) {
+    return null;
+  }
   const localized = { ...author };
   ['firstName', 'lastName', 'displayName', 'bio'].forEach(key => {
     localized[key] = localize(author[key], lang);
