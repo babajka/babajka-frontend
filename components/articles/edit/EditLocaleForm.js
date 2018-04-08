@@ -6,7 +6,7 @@ import set from 'lodash/set';
 import classNames from 'classnames';
 
 import { ArticleShape } from 'utils/customPropTypes';
-import { required, hasErrors } from 'utils/validators';
+import { required, hasErrors, isSlug } from 'utils/validators';
 import { ROUTES_NAMES } from 'routes';
 
 import Link from 'components/common/Link';
@@ -27,12 +27,12 @@ const localeFields = [
   },
   {
     field: 'slug',
-    validator: required,
+    validator: field => required(field) || isSlug(field),
   },
 ];
 
 // FIXME: it's very ugly & difficult method, has no ideas how to fix it
-// mb use NestedForm, but a has another bugs with inspect
+// mb use NestedForm, but there are another bugs with it
 // TODO: migrate on react-form@3 & check NestedForms
 export const localesFalidator = locales => {
   const localesErrors = {};
@@ -48,6 +48,7 @@ export const localesFalidator = locales => {
   return localesHasErrors ? localesErrors : null;
 };
 
+// TODO: consider to extract to common component & merge with `auth/FormField`
 const Field = ({ formApi, Component = TextField, withHelp, pending, ...props }) => {
   const { id, field, className = 'input' } = props;
   const error = get(formApi.errors, field);
