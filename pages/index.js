@@ -60,29 +60,27 @@ class HomePage extends Component {
 
   render() {
     const { articles, error, diary, pagination, getByDay, getChunk, url } = this.props;
+
     const articlesRows = getArticlesRows(articles, ROW_SIZE);
+    const firstPageRows = { first: articlesRows[0], second: articlesRows[1] };
+    const remainRows = articlesRows.slice(2);
 
     return (
       <PageLayout url={url}>
         <div className="main-page page-container">
           <div className="page-content">
-            <ArticlesRow articles={articlesRows[0]} className="first-line is-ancestor" />
+            <ArticlesRow articles={firstPageRows.first} className="first-line is-ancestor" />
             <ArticlesComplexRow
-              articles={articlesRows[1]}
+              articles={firstPageRows.second}
               renderDiary={() => (
                 <Diary {...diary} getNextDiary={() => getByDay()} getPrevDiary={() => getByDay()} />
               )}
             />
+
             {articles.length > PAGE_SIZE &&
-              articlesRows
-                .slice(2)
-                .map(data => (
-                  <ArticlesRow
-                    key={data[0]._id}
-                    articles={data}
-                    className="first-line is-ancestor"
-                  />
-                ))}
+              remainRows.map(data => (
+                <ArticlesRow key={data[0]._id} articles={data} className="first-line is-ancestor" />
+              ))}
             <div className="load-more" align="center">
               {pagination && (
                 <Button className="button" onClick={() => getChunk(pagination.page, PAGE_SIZE)}>
