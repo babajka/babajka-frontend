@@ -7,7 +7,7 @@ import get from 'lodash/get';
 
 import { actions, selectors } from 'redux/ducks/articles';
 import { ArticleShape, BrandsArray, LangType } from 'utils/customPropTypes';
-import { required } from 'utils/validators';
+import { required, isUrl } from 'utils/validators';
 import { Router, ROUTES_NAMES } from 'routes';
 import { LANGS } from 'constants';
 
@@ -69,14 +69,14 @@ const getFields = ({ brands }) => [
     id: 'imageUrl',
     type: 'input',
     help: 'image-help',
-    validator: ({ imageUrl }) => required(imageUrl),
+    validator: ({ imageUrl }) => required(imageUrl) || isUrl(imageUrl),
   },
   {
     id: 'videoUrl',
     type: 'input',
     help: 'video-help',
     hide: ({ type }) => type !== 'video',
-    validator: ({ type, videoUrl }) => type === 'video' && required(videoUrl),
+    validator: ({ type, videoUrl }) => type === 'video' && (required(videoUrl) || isUrl(videoUrl)),
   },
 ];
 

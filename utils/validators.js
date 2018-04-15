@@ -13,3 +13,7 @@ export const checkLength = (value, length, massageId) => (value.length < length 
 const slugRegexp = /^[a-zA-Z0-9_-]+$/;
 export const isSlug = (slug, messageId = 'article.slug-req') =>
   slug.match(slugRegexp) ? null : messageId;
+
+const urlRegexp = /[-a-zA-Z0-9@:%_+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_+.~#?&//=]*)?/gi;
+export const isUrl = (url, messageId = 'article.valide-url') =>
+  url.match(urlRegexp) ? null : messageId;
