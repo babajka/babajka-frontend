@@ -18,6 +18,7 @@ Next.js &amp; React app
 * `npm run lint` to just fix style with `prettier` and check on `eslint` errors
 * `npm run prettify:watch` to watch & fix changed files style
 * `npm run update-styles` to update styles from markup module
+* `npm run update-dict` to fetch translations from [GoogleDrive](https://docs.google.com/spreadsheets/d/e/2PACX-1vTAexRyfGOsnzvZKvVpPkr8M-l3Ph2vAvBqVu7W_vrPOQ3iUIGg4ZVcOLCeFj-Qg6BowPluH9QO3vXM/pubhtml#) and store it in `constants/i18n.json` (gitignored)
 * `npm run storybook` to run storybook on [`localhost:9001`](http://localhost:9001/)
 * `npm run storybook:build` to build static version of storybook
 * `npm run storybook:deploy` to deploy storybook on

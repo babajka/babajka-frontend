@@ -12,6 +12,14 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = routes.getRequestHandler(app);
 
+process.on('uncaughtException', err => {
+  console.error('Uncaught Exception: ', err);
+});
+
+process.on('unhandledRejection', (reason, p) => {
+  console.error('Unhandled Rejection: Promise:', p, 'Reason:', reason);
+});
+
 app.prepare().then(() => {
   const server = express();
   server.use(cookieParser());

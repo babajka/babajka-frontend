@@ -1,38 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Text, Checkbox } from 'react-form';
+import { Form, Text as TextField, Checkbox } from 'react-form';
 import classNames from 'classnames';
 
 import Button from 'components/common/Button';
-import text from 'constants/dictionary';
 import { isEmail, isEqual, required, checkLength } from 'utils/validators';
+import Text from 'components/common/Text';
 
 import FormField from './FormField';
 
 const fields = {
   firstName: {
-    label: text.firstName,
     icon: 'user',
     onlyOnSignUp: true,
     validator: ({ signUp, firstName }) => signUp && required(firstName),
   },
   lastName: {
-    label: text.lastName,
     icon: 'user',
     onlyOnSignUp: true,
   },
   email: {
-    label: text.email,
     icon: 'envelope',
     validator: ({ email }) => required(email) || isEmail(email),
   },
   password: {
     label: (
       <span>
-        {text.password}
+        <Text id="auth.password" />
         {false && ( // TODO(@drapegnik): implement
           <a className="is-pulled-right has-text-weight-normal login__input-forgot" href="/">
-            {text.forgotPassword}
+            <Text id="auth.forgotPassword" />
           </a>
         )}
       </span>
@@ -40,17 +37,16 @@ const fields = {
     icon: 'unlock-alt',
     inputType: 'password',
     validator: ({ signUp, password }) =>
-      required(password) || (signUp && checkLength(password, 7, text.badPassword)),
+      required(password) || (signUp && checkLength(password, 7, 'auth.badPassword')),
   },
   passwordAgain: {
-    label: text.passwordAgain,
     icon: 'unlock-alt',
     inputType: 'password',
     onlyOnSignUp: true,
     validator: ({ signUp, password, passwordAgain }) =>
       signUp &&
-      (required(passwordAgain) || isEqual(password, passwordAgain, text.passwordsNotEqual)),
-    successMessage: text.passwordsEqual,
+      (required(passwordAgain) || isEqual(password, passwordAgain, 'auth.passwordsNotEqual')),
+    successMessage: 'auth.passwordsEqual',
   },
 };
 
@@ -88,7 +84,9 @@ const LoginForm = ({ onSubmit, pending, errors }) => {
 
   return (
     <div>
-      <h1 className="title is-size-5 has-text-centered">{text.sigInTitle}</h1>
+      <h1 className="title is-size-5 has-text-centered">
+        <Text id="auth.signIn" />
+      </h1>
       <Form onSubmit={onSubmit} validateError={errorValidator}>
         {formApi => {
           // FIXME(@drapegnik): find more clean way to handle server-side errors
@@ -108,7 +106,7 @@ const LoginForm = ({ onSubmit, pending, errors }) => {
                       field="signUp"
                       onChange={handleModeSwitch.bind(null, formApi)}
                     />
-                    {text.noAccount}
+                    <Text id="auth.noAccount" />
                   </label>
                 </div>
               </div>
@@ -124,7 +122,7 @@ const LoginForm = ({ onSubmit, pending, errors }) => {
                   successMessage={fields[key].successMessage}
                 >
                   {hasError => (
-                    <Text
+                    <TextField
                       className={classNames('input', { 'is-danger': hasError })}
                       id={key}
                       field={key}
@@ -142,7 +140,7 @@ const LoginForm = ({ onSubmit, pending, errors }) => {
                     onClick={formApi.submitForm}
                     className="button is-uppercase login__button"
                   >
-                    {text.loginButton}
+                    <Text id="auth.submit" />
                   </Button>
                 </div>
               </div>

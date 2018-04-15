@@ -4,6 +4,7 @@ import withRedux from 'next-redux-wrapper';
 
 import PageLayout from 'components/common/layout/PageLayout';
 import Button from 'components/common/Button';
+import Text from 'components/common/Text';
 import ArticlesRow from 'components/articles/grid/ArticlesRow';
 import Diary from 'components/articles/Diary';
 import ArticlesComplexRow from 'components/articles/grid/ArticlesComplexRow';
@@ -16,8 +17,6 @@ import { actions as articlesActions, selectors as articlesSelectors } from 'redu
 import { actions as auth } from 'redux/ducks/auth';
 import { actions as diaryActions, selectors as diarySelectors } from 'redux/ducks/diary';
 import request from 'utils/request';
-import text from 'constants/dictionary';
-import { DEFAULT_LOCALE } from 'constants';
 
 const mapStateToProps = (state, { url: { query } }) => ({
   articles: articlesSelectors.getAll(state, query.lang),
@@ -50,11 +49,13 @@ class HomePage extends Component {
 
   static getInitialProps(ctx) {
     // TODO: somehow extract getCurrentUser to populate method
-    return request.populate(ctx, [
+    const initialRequests = [
       auth.getCurrentUser,
+      // diaryActions.getByDay.bind(null, DEFAULT_LOCALE, '02', '13'), // FIXME(@tyndria) temporarily
       articlesActions.fetchChunk.bind(null, FIRST_PAGE_NUMBER, PAGE_SIZE),
-      diaryActions.getByDay.bind(null, DEFAULT_LOCALE, '02', '13'), // temporarily
-    ]);
+    ];
+
+    return request.populate(ctx, initialRequests);
   }
 
   render() {
@@ -85,7 +86,7 @@ class HomePage extends Component {
             <div className="load-more" align="center">
               {pagination && (
                 <Button className="button" onClick={() => getChunk(pagination.page, PAGE_SIZE)}>
-                  {text.loadMoreButton}
+                  <Text id="home.loadMore" />
                 </Button>
               )}
             </div>

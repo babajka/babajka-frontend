@@ -20,6 +20,7 @@ export const BrandsArray = PropTypes.arrayOf(BrandShape);
 export const AuthorModel = {
   firstName: PropTypes.string.isRequired,
   lastName: PropTypes.string.isRequired,
+  displayName: PropTypes.string.isRequired,
   bio: PropTypes.string,
   email: PropTypes.string.isRequired,
   role: PropTypes.string.isRequired,
@@ -35,7 +36,7 @@ export const ArticleModel = {
   slug: PropTypes.string.isRequired,
   author: AuthorShape,
   className: PropTypes.string,
-  imageUrl: PropTypes.string, // TODO: need to be required
+  imageUrl: PropTypes.string.isRequired,
   imageClassName: PropTypes.string,
   brand: BrandShape,
   articleId: PropTypes.string.isRequired,

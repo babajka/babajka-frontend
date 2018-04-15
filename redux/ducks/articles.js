@@ -31,6 +31,8 @@ const currentReducer = defaultReducer((state, { payload }) => ({
   pending: false,
 }));
 
+const FIRST_PAGE_NUMBER = 0;
+
 export default createReducer(
   {
     [FETCH_ALL]: defaultReducer((state, { payload: { data } }) => ({
@@ -40,7 +42,7 @@ export default createReducer(
     })),
     [FETCH_CHUNK]: defaultReducer((state, { payload: { data, next } }) => ({
       ...state,
-      data: [...state.data, ...data],
+      data: next.page === FIRST_PAGE_NUMBER + 1 ? data : [...state.data, ...data],
       pagination: next,
       pending: false,
     })),

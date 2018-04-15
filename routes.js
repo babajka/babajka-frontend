@@ -9,23 +9,20 @@ const isActive = (path, name) => path.split('/').slice(-1)[0] === name;
 const NAVBAR_ROUTES = [
   {
     name: 'home',
-    label: 'Артыкулы',
     pattern: 'articles',
     page: 'index',
     isActive,
   },
   {
     name: 'collections',
-    label: 'Калекцыі',
     isActive,
   },
   {
     name: 'partners',
-    label: 'Партнёры',
     isActive,
   },
   {
-    name: 'create-article',
+    name: 'createArticle',
     label: 'Стварыць Артыкул',
     pattern: 'articles/:mode(create)',
     page: 'article',
@@ -53,11 +50,10 @@ const ROUTES = [
     name: 'article',
     pattern: 'article/:slug/:mode(edit)?',
   },
-].map(({ name, pattern = name, page = name, label = name }) => ({
+].map(({ name, pattern = name, page = name }) => ({
   name,
   pattern: `/:lang(${langs})/${pattern}`,
   page,
-  label,
 }));
 
 const ROUTES_NAMES = {};

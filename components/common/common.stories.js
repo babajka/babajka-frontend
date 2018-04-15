@@ -6,9 +6,11 @@ import { withInfo } from '@storybook/addon-info';
 
 import StoriesDecorator from './StoriesDecorator';
 import CoreLayout from './layout/CoreLayout';
+import LocaleContext from './LocaleContext';
 import Button from './Button';
 import Icon from './Icon';
 import Select from './Select';
+import Text from './Text';
 
 const stories = storiesOf('common', module);
 
@@ -124,3 +126,34 @@ stories.add('Select', () => {
     </ol>
   );
 });
+
+stories.add(
+  'Text',
+  withInfo({
+    text: 'Component to translate ui across the app.',
+    inline: true,
+  })(() => {
+    const id = text('dict key', 'header.home');
+    const lang = select('locale', ['be', 'ru', 'en'], 'be');
+    return (
+      <LocaleContext.Provider value={lang}>
+        <ol style={{ margin: '5% 5% 0 5%' }}>
+          <li>
+            <h3>
+              <b>default:</b>
+            </h3>
+            <Text id={id} />
+          </li>
+          <br />
+          <br />
+          <li>
+            <h3>
+              <b>with custom render:</b>
+            </h3>
+            <Text id={id} render={t => t.toUpperCase()} />
+          </li>
+        </ol>
+      </LocaleContext.Provider>
+    );
+  })
+);
