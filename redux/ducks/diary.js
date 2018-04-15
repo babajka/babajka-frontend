@@ -14,13 +14,17 @@ const initialState = {
   pending: false,
   error: false,
   data: null,
+  next: null,
+  prev: null,
 };
 
 export default createReducer(
   {
-    [GET_BY_DAY]: defaultReducer((state, { payload }) => ({
+    [GET_BY_DAY]: defaultReducer((state, { payload: { data, next, prev } }) => ({
       ...state,
-      data: payload,
+      data,
+      next,
+      prev,
       pending: false,
     })),
   },

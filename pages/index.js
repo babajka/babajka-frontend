@@ -45,7 +45,7 @@ class HomePage extends Component {
     return request.populate(ctx, [
       auth.getCurrentUser,
       articlesActions.fetchAll,
-      // diaryActions.getByDay.bind(null, DEFAULT_LOCALE, '02', '13'), // FIXME(@tyndria) temporarily
+      diaryActions.getByDay.bind(null, 'be', '02', '13'), // FIXME(@tyndria) temporarily
     ]);
   }
 
@@ -61,7 +61,11 @@ class HomePage extends Component {
           <ArticlesComplexRow
             articles={articles}
             renderDiary={() => (
-              <Diary {...diary} getNextDiary={() => getByDay()} getPrevDiary={() => getByDay()} />
+              <Diary
+                {...diary}
+                getNextDiary={() => getByDay('be', '02', '13')}
+                getPrevDiary={() => getByDay()}
+              />
             )}
           />
           <div className="load-more" align="center">

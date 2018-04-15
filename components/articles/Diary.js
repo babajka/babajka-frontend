@@ -5,12 +5,13 @@ import { DiaryModel } from 'utils/customPropTypes';
 const LEFT_ARROW_KEY = 37;
 const RIGHT_ARROW_KEY = 38;
 
-const Diary = ({ text, author, colloquialDate, getNextDiary, getPrevDiary }) => (
+const Diary = ({ text, author, month, day, year, getNextDiary, getPrevDiary }) => (
   <div className="diary-article tile is-parent">
     <article className="card tile is-child notification">
       <h1 className="title">Дзённік дня</h1>
       <div className="date">
-        <span>{colloquialDate}</span>
+        {/* TODO: discuss how to represent date depending on locale */}
+        <span>{new Date(year, month, day).toDateString()}</span>
       </div>
       <span
         className="icon is-small arrow arrow-left"

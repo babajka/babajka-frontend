@@ -42,11 +42,11 @@ export const ArticlesArray = PropTypes.arrayOf(ArticleShape);
 
 export const DiaryModel = {
   text: PropTypes.string.isRequired,
-  colloquialDate: PropTypes.string.isRequired,
+  day: PropTypes.string.isRequired,
+  month: PropTypes.string.isRequired,
+  locale: PropTypes.string.isRequired,
   author: PropTypes.string.isRequired,
   year: PropTypes.string.isRequired,
-  getNextDiary: PropTypes.func,
-  getPrevDiary: PropTypes.func,
 };
 
 export const DiaryShape = PropTypes.shape(DiaryModel);
