@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'routes';
 import LocaleContext from 'components/common/LocaleContext';
 
-export default ({ params = {}, ...props }) => (
+export default ({ params = {}, lang: _, ...props }) => (
   <LocaleContext.Consumer>
     {lang => (
       <Link

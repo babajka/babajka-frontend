@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { AuthorShape } from 'utils/customPropTypes';
+import { AuthorModel } from 'utils/customPropTypes';
 
 const Author = ({ displayName, imageUrl }) => (
   <div className="author">
@@ -9,6 +9,6 @@ const Author = ({ displayName, imageUrl }) => (
   </div>
 );
 
-Author.propTypes = AuthorShape;
+Author.propTypes = AuthorModel;
 
 export default Author;

@@ -45,6 +45,12 @@ export default class Editor extends Component {
     }
   }
 
+  componentWillReceiveProps({ content }) {
+    if (content !== this.state.content) {
+      this.setState({ content });
+    }
+  }
+
   handleChange = content => {
     const { onChange } = this.props;
     this.setState({ content });

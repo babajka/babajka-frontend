@@ -49,7 +49,7 @@ class Header extends Component {
               {/* TODO: replace with div background? */}
               <img
                 className="logo-image"
-                src="/static/images/logo-turq-transparent.png"
+                src="/static-prod/logo-turq-transparent.png"
                 alt="Wir.by logo"
               />
             </a>
@@ -64,26 +64,25 @@ class Header extends Component {
             <span />
           </Clickable>
         </div>
-        <div className={classNames('navbar-menu', { 'is-active': burgerActive })}>
-          <div className="navbar-start">
-            {/* // TODO: check permissions for routes */}
-            {NAVBAR_ROUTES.map(({ name, pattern = name, params, isActive }) => (
-              <Link key={name} route={name} params={params}>
-                <a className="navbar-item">
-                  <span
-                    className={classNames('rubric', { 'is-active': isActive(asPath, pattern) })}
-                  >
-                    <Text id={`header.${name}`} render={t => t.toUpperCase()} />
-                  </span>
-                </a>
-              </Link>
-            ))}
-          </div>
-
-          <div className="navbar-end">
-            <div className="navbar-item">
-              <LocaleContext.Consumer>
-                {lang => (
+        <LocaleContext.Consumer>
+          {lang => (
+            <div className={classNames('navbar-menu', { 'is-active': burgerActive })}>
+              <div className="navbar-start">
+                {/* // TODO: check permissions for routes */}
+                {NAVBAR_ROUTES.map(({ NavLink = Link, name, pattern = name, params, isActive }) => (
+                  <NavLink key={name} route={name} params={params} lang={lang}>
+                    <a className="navbar-item">
+                      <span
+                        className={classNames('rubric', { 'is-active': isActive(asPath, pattern) })}
+                      >
+                        <Text id={`header.${name}`} render={t => t.toUpperCase()} />
+                      </span>
+                    </a>
+                  </NavLink>
+                ))}
+              </div>
+              <div className="navbar-end">
+                <div className="navbar-item">
                   <div className="user">
                     <div className="name-section">{user && user.displayName}</div>
                     <div className="auth-section">
@@ -118,11 +117,11 @@ class Header extends Component {
                       </div>
                     </div>
                   </div>
-                )}
-              </LocaleContext.Consumer>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          )}
+        </LocaleContext.Consumer>
       </div>
     );
   }

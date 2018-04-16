@@ -1,127 +1,162 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Form, Text, TextArea } from 'react-form';
+import { Text as TextField, TextArea } from 'react-form';
+import get from 'lodash/get';
+import set from 'lodash/set';
+import classNames from 'classnames';
 
-import { actions, selectors } from 'redux/ducks/articles';
 import { ArticleShape } from 'utils/customPropTypes';
-import { getLocalizedArticle } from 'utils/getters';
-import { Router, ROUTES_NAMES } from 'routes';
+import { required, hasErrors, isSlug } from 'utils/validators';
+import { ROUTES_NAMES } from 'routes';
 
+import Link from 'components/common/Link';
+import Text from 'components/common/Text';
 import Button from 'components/common/Button';
+import Clickable from 'components/common/Clickable';
 import Icon from 'components/common/Icon';
 import Editor from './Editor';
 
-const mapStateToProps = state => ({
-  article: selectors.getCurrent(state),
-});
+const localeFields = [
+  {
+    field: 'title',
+    validator: required,
+  },
+  {
+    field: 'subtitle',
+    validator: required,
+  },
+  {
+    field: 'slug',
+    validator: field => required(field) || isSlug(field),
+  },
+];
 
-const mapDispatchToProps = {
-  createArticle: actions.create,
-  addLocale: actions.addLocale,
+// FIXME: it's very ugly & difficult method, has no ideas how to fix it
+// mb use NestedForm, but there are another bugs with it
+// TODO: migrate on react-form@3 & check NestedForms
+export const localesFalidator = locales => {
+  const localesErrors = {};
+  const localesHasErrors = !!Object.keys(locales)
+    .map(loc => {
+      localeFields.forEach(({ field, validator }) => {
+        const path = `${loc}.${field}`;
+        set(localesErrors, path, validator(get(locales, path)));
+      });
+      return Object.values(localesErrors[loc]).some(Boolean);
+    })
+    .filter(Boolean).length;
+  return localesHasErrors ? localesErrors : null;
 };
 
-const initLocale = {
-  text: 'type something...',
+// TODO: consider to extract to common component & merge with `auth/FormField`
+const Field = ({ formApi, Component = TextField, withHelp, pending, ...props }) => {
+  const { id, field, className = 'input' } = props;
+  const error = get(formApi.errors, field);
+  const touched = !!get(formApi.touched, field);
+  const hasError = !pending && touched && !!error;
+  const fieldName = field.split('.').pop();
+  return (
+    <div className="edit-info__item field">
+      <label htmlFor={id} className="label">
+        <Text id={`article.${fieldName}`} />
+      </label>
+      <div className="control">
+        <Component {...props} className={classNames(className, { 'is-danger': hasError })} />
+      </div>
+      {hasError && (
+        <p className="help is-danger">
+          <Text id={error} />
+        </p>
+      )}
+      {withHelp && (
+        <p className="help">
+          <Text id={`article.${fieldName}-help`} />
+        </p>
+      )}
+    </div>
+  );
 };
 
-class EditLocaleForm extends Component {
-  static propTypes = {
-    lang: PropTypes.string.isRequired,
-    article: ArticleShape,
-    draftArticle: PropTypes.shape({
-      type: PropTypes.string.isRequired,
-      brand: PropTypes.string.isRequired,
-    }).isRequired,
-    locale: PropTypes.string.isRequired,
-    mode: PropTypes.oneOf(['edit', 'create']).isRequired,
-    createArticle: PropTypes.func.isRequired,
-    addLocale: PropTypes.func.isRequired,
-  };
-
-  static defaultProps = {
-    article: null,
-  };
-
-  handleCreate = () => {
-    const { mode, article, createArticle, draftArticle } = this.props;
-    if (mode === 'create') {
-      return createArticle(draftArticle).then(({ value: { _id } }) => _id);
-    }
-    return Promise.resolve(article._id);
-  };
-
-  handleSubmit = form => {
-    const { locale, addLocale, lang } = this.props;
-    const data = { locale, ...form };
-    this.handleCreate()
-      .then(id => addLocale(id, data))
-      .then(({ value: { slug } }) =>
-        Router.replace(ROUTES_NAMES.article, { slug, mode: 'edit', lang })
-      );
-  };
-
-  render() {
-    const { article, locale } = this.props;
-    const localized = getLocalizedArticle(article, locale);
-
-    /* eslint-disable jsx-a11y/label-has-for */
-    return (
-      <Form onSubmit={this.handleSubmit} defaultValues={{ ...initLocale, ...localized }}>
-        {formApi => (
-          <form className="inputs" onSubmit={formApi.submitForm}>
-            <div className="basics">
-              <Text
-                id="title"
-                field="title"
-                className="long-input input spaced"
-                placeholder="Назва артыкула"
-              />
-              <div className="long-input field spaced">
-                <Text
-                  id="slug"
-                  field="slug"
-                  className="input"
-                  placeholder="Напрыклад: bielaruskaje-kino"
-                />
-                <p className="help">Slug артыкула: вызначае адрас артыкула ў інтэрнэце</p>
-              </div>
-              <div className="field spaced">
-                <div className="control">
-                  <TextArea
-                    id="subtitle"
-                    field="subtitle"
-                    className="textarea is-small"
-                    cols="50"
-                    rows="2"
-                    type="text"
-                    placeholder="Кароткае апісанне артыкула (напрыклад, для preview на галоўнай старонцы)."
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="field editor">
-              <Editor
-                content={formApi.values.text}
-                onChange={body => formApi.setValue('text', body)}
-              />
-            </div>
-            <div className="action-buttons">
-              <Button className="remove-button button">
-                <span className="icon is-small">
-                  <Icon name="remove" />
-                </span>
-                <span>Выдаліць лакалізацыю</span>
-              </Button>
-              <Button className="save-button button" type="submit" onClick={formApi.submitForm}>
-                Захаваць для публікацыі
-              </Button>
-            </div>
-          </form>
+const EditLocaleForm = ({ article, prefix, formApi, onRemove, pending }) => {
+  const slug = get(article, `${prefix}.slug`);
+  return (
+    <div className="inputs">
+      <div className="edit-info">
+        <Field
+          formApi={formApi}
+          id={`${prefix}.title`}
+          field={`${prefix}.title`}
+          pending={pending}
+        />
+        <Field
+          formApi={formApi}
+          id={`${prefix}.slug`}
+          field={`${prefix}.slug`}
+          withHelp
+          placeholder="belaruskae-kino"
+          pending={pending}
+        />
+        <Field
+          Component={TextArea}
+          formApi={formApi}
+          id={`${prefix}.subtitle`}
+          field={`${prefix}.subtitle`}
+          pending={pending}
+          className="textarea is-small"
+          withHelp
+          cols="50"
+          rows="2"
+          type="text"
+        />
+      </div>
+      <div className="field editor">
+        <Editor
+          content={get(formApi.values, `${prefix}.text`)}
+          onChange={body => formApi.setValue(`${prefix}.text`, body)}
+        />
+      </div>
+      <div className="action-buttons">
+        <Clickable tag="div" className="remove-button button" onClick={onRemove}>
+          <span className="icon is-small">
+            <Icon name="remove" />
+          </span>
+          <span>
+            <Text id="article.remove-locale" />
+          </span>
+        </Clickable>
+        {slug && (
+          <Link route={ROUTES_NAMES.article} params={{ slug }}>
+            <Button className="save-button button">
+              <Text id="article.preview" />
+            </Button>
+          </Link>
         )}
-      </Form>
-    );
-  }
-}
+        <Button
+          className="save-button button"
+          type="submit"
+          disabled={hasErrors(formApi.errors)}
+          pending={pending}
+        >
+          <Text id="article.save" />
+        </Button>
+      </div>
+    </div>
+  );
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditLocaleForm);
+EditLocaleForm.propTypes = {
+  article: ArticleShape,
+  pending: PropTypes.bool.isRequired,
+  prefix: PropTypes.string.isRequired,
+  formApi: PropTypes.shape({
+    values: PropTypes.object.isRequired,
+    setValue: PropTypes.func.isRequired,
+  }).isRequired,
+  onRemove: PropTypes.func.isRequired,
+};
+
+EditLocaleForm.defaultProps = {
+  article: null,
+};
+
+export default EditLocaleForm;
