@@ -18,13 +18,12 @@ const NAVBAR_ROUTES = [
     name: 'collections',
     isActive,
   },
-  {
-    name: 'partners',
-    isActive,
-  },
+  // {
+  //   name: 'partners',
+  //   isActive,
+  // },
   {
     name: 'createArticle',
-    label: 'Стварыць Артыкул',
     pattern: 'articles/:mode(create)',
     page: 'article',
     params: {
