@@ -1,4 +1,5 @@
 import fromPairs from 'lodash/fromPairs';
+import chunk from 'lodash/chunk';
 import { DEFAULT_LOCALE } from 'constants';
 
 // here is rules for localization:
@@ -48,10 +49,4 @@ export const getLocalizedArticle = (article, lang) => {
 export const getLocalizedArticles = (articles, lang) =>
   articles.map(article => getLocalizedArticle(article, lang));
 
-export const getArticlesRows = (articles, rowSize) => {
-  const articlesRows = [];
-  for (let i = 0; i < articles.length; i += rowSize) {
-    articlesRows.push(articles.slice(i, i + rowSize));
-  }
-  return articlesRows;
-};
+export const getArticlesRows = (articles, rowSize) => chunk(articles, rowSize);

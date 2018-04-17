@@ -31,7 +31,6 @@ const mapDispatchToProps = {
 };
 
 const ROW_SIZE = 4;
-const FIRST_PAGE_NUMBER = 0;
 const PAGE_SIZE = 8;
 
 class HomePage extends Component {
@@ -52,7 +51,7 @@ class HomePage extends Component {
     const initialRequests = [
       auth.getCurrentUser,
       // diaryActions.getByDay.bind(null, DEFAULT_LOCALE, '02', '13'), // FIXME(@tyndria) temporarily
-      articlesActions.fetchChunk.bind(null, FIRST_PAGE_NUMBER, PAGE_SIZE),
+      articlesActions.fetchChunk,
     ];
 
     return request.populate(ctx, initialRequests);
@@ -62,16 +61,15 @@ class HomePage extends Component {
     const { articles, error, diary, pagination, getByDay, getChunk, url } = this.props;
 
     const articlesRows = getArticlesRows(articles, ROW_SIZE);
-    const firstPageRows = { first: articlesRows[0], second: articlesRows[1] };
-    const remainRows = articlesRows.slice(2);
+    const [firstRow, secondRow, ...remainRows] = articlesRows;
 
     return (
       <PageLayout url={url}>
         <div className="main-page page-container">
           <div className="page-content">
-            <ArticlesRow articles={firstPageRows.first} className="first-line is-ancestor" />
+            <ArticlesRow articles={firstRow} className="first-line is-ancestor" />
             <ArticlesComplexRow
-              articles={firstPageRows.second}
+              articles={secondRow}
               renderDiary={() => (
                 <Diary {...diary} getNextDiary={() => getByDay()} getPrevDiary={() => getByDay()} />
               )}

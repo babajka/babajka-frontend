@@ -8,8 +8,10 @@ export default {
     logout: `${AUTH_URL}/logout`,
   },
   articles: {
-    getAll: `${API_URL}/articles`,
-    getChunk: (page, pageSize) => `${API_URL}/articles?page=${page}&pageSize=${pageSize}`,
+    getAll: (page, pageSize) => {
+      const baseUrl = `${API_URL}/articles`;
+      return page && pageSize ? `${baseUrl}?page=${page}&pageSize=${pageSize}` : baseUrl;
+    },
     getBySlug: slug => `${API_URL}/articles/${slug}`,
     getBrands: `${API_URL}/articles/brands`,
     create: `${API_URL}/articles`,

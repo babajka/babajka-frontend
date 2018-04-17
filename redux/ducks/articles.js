@@ -69,11 +69,11 @@ export default createReducer(
 export const actions = {
   fetchAll: () => ({
     type: FETCH_ALL,
-    payload: request.fetch(api.articles.getAll),
+    payload: request.fetch(api.articles.getAll()),
   }),
-  fetchChunk: (page, pageSize) => ({
+  fetchChunk: (page = 0, pageSize = 8) => ({
     type: FETCH_CHUNK,
-    payload: request.fetch(api.articles.getChunk(page, pageSize)),
+    payload: request.fetch(api.articles.getAll(page, pageSize)),
   }),
   fetchBySlug: slug => ({
     type: FETCH_BY_SLUG,
