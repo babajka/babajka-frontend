@@ -1,9 +1,14 @@
 import createReducer from 'type-to-reducer';
 
 import api from 'constants/api';
-import request from 'utils/request';
-import { getLocalizedArticles, getLocalizedBrands } from 'utils/getters';
 import { defaultReducer } from 'utils/redux';
+import request from 'utils/request';
+import {
+  getLocalizedArticles,
+  getLocalizedArticle,
+  getLocalizedBrands,
+  getLocalesBySlug,
+} from 'utils/getters';
 
 const duck = 'articles';
 
@@ -13,7 +18,7 @@ const FETCH_CHUNK = `${duck}/FETCH_CHUNK`;
 const FETCH_BY_SLUG = `${duck}/FETCH_BY_SLUG`;
 const FETCH_BRANDS = `${duck}/FETCH_BRANDS`;
 const CREATE = `${duck}/CREATE`;
-const ADD_LOCALE = `${duck}/ADD_LOCALE`;
+const UPDATE = `${duck}/UPDATE`;
 
 // reducer
 const initialState = {
@@ -22,12 +27,14 @@ const initialState = {
   data: [],
   current: null,
   pagination: null,
+  localeBySlug: {},
   brands: null,
 };
 
 const currentReducer = defaultReducer((state, { payload }) => ({
   ...state,
   current: payload,
+  localeBySlug: getLocalesBySlug(payload),
   pending: false,
 }));
 
@@ -53,7 +60,7 @@ export default createReducer(
       pending: false,
     })),
     [CREATE]: currentReducer,
-    // [ADD_LOCALE]: currentReducer, todo fix
+    [UPDATE]: currentReducer,
   },
   initialState
 );
@@ -80,25 +87,36 @@ export const actions = {
     type: CREATE,
     payload: request.fetch(api.articles.create, 'POST', article),
   }),
-  addLocale: (articleId, locale) => ({
-    type: ADD_LOCALE,
-    payload: request.fetch(api.articles.addLocale(articleId), 'POST', locale),
+  update: article => ({
+    type: UPDATE,
+    payload: request.fetch(api.articles.update(article._id), 'PUT', article),
   }),
 };
 
 // selectors
 const getState = state => state.articles;
-const getAll = (state, lang) => getLocalizedArticles(getState(state).data, lang);
-const getPagination = state => getState(state).pagination;
-const getCurrent = state => getState(state).current;
-const getBrands = state => getLocalizedBrands(getState(state).brands);
 const isPending = state => getState(state).pending;
 const isError = state => getState(state).error;
+
+const getRawArticles = state => getState(state).data;
+const getAll = (state, lang) => getLocalizedArticles(getRawArticles(state), lang);
+
+const getPagination = state => getState(state).pagination;
+
+const getRawCurrent = state => getState(state).current;
+const getLocaleBySlug = (state, slug) => getState(state).localeBySlug[slug];
+const getCurrent = (state, slug) =>
+  getLocalizedArticle(getRawCurrent(state), getLocaleBySlug(state, slug));
+
+const getRawBrands = state => getState(state).brands;
+const getBrands = (state, lang) => getLocalizedBrands(getRawBrands(state), lang);
 
 export const selectors = {
   getAll,
   getPagination,
+  getRawCurrent,
   getCurrent,
+  getLocaleBySlug,
   getBrands,
   isPending,
   isError,

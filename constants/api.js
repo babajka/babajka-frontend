@@ -13,6 +13,7 @@ export default {
     getBySlug: slug => `${API_URL}/articles/${slug}`,
     getBrands: `${API_URL}/articles/brands`,
     create: `${API_URL}/articles`,
+    update: id => `${API_URL}/articles/${id}`,
     addLocale: id => `${API_URL}/articles/localize/${id}`,
   },
   users: {

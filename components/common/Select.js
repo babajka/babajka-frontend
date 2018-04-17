@@ -12,6 +12,7 @@ const Arrow = ({ isOpen }) => (
   </span>
 );
 
+// TODO: extract Dropdown component (like lang switcher)
 // TODO: fix searchable mode
 const Select = ({
   className,
@@ -96,7 +97,7 @@ Select.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-      label: PropTypes.string.isRequired,
+      label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
     })
   ).isRequired,
   valueWholeObject: PropTypes.bool,
