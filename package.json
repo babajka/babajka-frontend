@@ -4,7 +4,7 @@
   "description": "Next.js & React app",
   "scripts": {
     "start": "npm run dev",
-    "dev": "export PORT=3000 && node server.js",
+    "dev": "export PORT=3000 && npm run reset-cache && node server.js",
     "local-backend": "export BABAJKA_BACKEND_URL=http://localhost:8080 && npm run dev",
     "build": "next build",
     "start-prod": "npm run build && NODE_ENV=production node server.js",
@@ -19,6 +19,7 @@
     "storybook": "start-storybook -p 9001",
     "storybook:build": "build-storybook",
     "storybook:deploy": "build-storybook && gh-pages -d storybook-static",
+    "reset-cache": "rm -rf node_modules/.cache && rm -rf .next/",
     "postinstall": "npm run copy-static && npm run update-dict"
   },
   "lint-staged": {
@@ -33,7 +34,7 @@
     "@storybook/addon-info": "^3.2.19",
     "@storybook/addon-knobs": "^3.2.19",
     "@storybook/react": "^3.2.19",
-    "babajka-markup": "^0.7.1",
+    "babajka-markup": "^0.7.6",
     "classnames": "^2.2.5",
     "cookie-parser": "^1.4.3",
     "downshift": "^1.31.2",

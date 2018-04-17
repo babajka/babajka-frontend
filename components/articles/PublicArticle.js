@@ -1,14 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import renderHTML from 'react-render-html';
 
 import Link from 'components/common/Link';
-import { ROUTES_NAMES } from 'routes';
 
-const PublicArticle = ({ slug, text }) => (
+import { ROUTES_NAMES } from 'routes';
+import { ArticleModel } from 'utils/customPropTypes';
+
+const PublicArticle = ({ articleId, text, articleLocale }) => (
   <div>
     <h1>
-      <Link route={ROUTES_NAMES.article} params={{ slug, mode: 'edit' }}>
+      <Link route={ROUTES_NAMES.article} params={{ slug: articleId, mode: 'edit', articleLocale }}>
         <a>Edit Article</a>
       </Link>
     </h1>
@@ -16,9 +17,6 @@ const PublicArticle = ({ slug, text }) => (
   </div>
 );
 
-PublicArticle.propTypes = {
-  slug: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-};
+PublicArticle.propTypes = ArticleModel;
 
 export default PublicArticle;

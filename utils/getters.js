@@ -1,3 +1,4 @@
+import fromPairs from 'lodash/fromPairs';
 import { DEFAULT_LOCALE } from 'constants';
 
 // here is rules for localization:
@@ -8,8 +9,11 @@ const localize = (object, lang = DEFAULT_LOCALE) =>
   object && (object[lang] || object[DEFAULT_LOCALE] || Object.values(object)[0]);
 
 export const getLocalizedAuthor = (author, lang) => {
+  if (!author) {
+    return null;
+  }
   const localized = { ...author };
-  ['firstName', 'lastName', 'displayName'].forEach(key => {
+  ['firstName', 'lastName', 'displayName', 'bio'].forEach(key => {
     localized[key] = localize(author[key], lang);
   });
   return localized;
@@ -24,13 +28,22 @@ export const getLocalizedBrand = ({ slug, imageUrl, names }, lang) => ({
 export const getLocalizedBrands = (brands, lang) =>
   brands && brands.map(brand => getLocalizedBrand(brand, lang));
 
-export const getLocalizedArticle = (article, lang) => article && localize(article.locales, lang);
+export const getLocalesBySlug = ({ locales }) =>
+  fromPairs(Object.entries(locales).map(([key, { slug }]) => [slug, key]));
 
-export const getLocalizedArticles = (articles, lang) =>
-  articles.map(({ brand, type, locales, author, imageUrl }) => ({
-    ...getLocalizedArticle({ locales }, lang),
+export const getLocalizedArticle = (article, lang) => {
+  if (!article) {
+    return null;
+  }
+  const { brand, type, locales, author, imageUrl } = article;
+  return {
+    ...localize(locales, lang),
     author: getLocalizedAuthor(author, lang),
     brand: getLocalizedBrand(brand, lang),
     imageUrl,
     type,
-  }));
+  };
+};
+
+export const getLocalizedArticles = (articles, lang) =>
+  articles.map(article => getLocalizedArticle(article, lang));
