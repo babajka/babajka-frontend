@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
+
 import Modal from 'components/common/Modal';
+import Clickable from 'components/common/Clickable';
+
 import { DiaryModel } from 'utils/customPropTypes';
 import getTruncatedText from 'utils/text';
 
-const LEFT_ARROW_KEY = 37;
-const RIGHT_ARROW_KEY = 38;
-
 const MAX_WORDS_NUMBER = 70;
-
-const text =
-  'З калегам на выставе перасоўнікаў. Увогуле добрая, лепшая, чым у Акадэміі. Некаторыя рэчы Левітана [109] дасканалыя (сакавік, папараць), Сярова [110] (восень, партрэт), Шыльдэра [111] (вогнепаклоннікі). У майстэрні адчуваў сябе не вельмі. Калісьці сказалі мне, што я «соrbeau blanc» [112]. I сапраўды, так мала ў мяне агульнага з іншымі калегамі, такім чужым адчуваю сябе ў кожным натоўпе, як быццам бы я іншага гатунку....З калегам на выставе перасоўнікаў. Увогуле добрая, лепшая, чым у Акадэміі. Некаторыя рэчы Левітана [109] дасканалыя (сакавік, папараць), Сярова [110] (восень, партрэт), Шыльдэра [111] (вогнепаклоннікі). У майстэрні адчуваў сябе не вельмі. Калісьці сказалі мне, што я «соrbeau blanc» [112]. I сапраўды, так мала ў мяне агульнага з іншымі калегамі, такім чужым адчуваю сябе ў кожным натоўпе, як быццам бы я іншага гатунку....З калегам на выставе перасоўнікаў. Увогуле добрая, лепшая, чым у Акадэміі. Некаторыя рэчы Левітана [109] дасканалыя (сакавік, папараць), Сярова [110] (восень, партрэт), Шыльдэра [111] (вогнепаклоннікі). У майстэрні адчуваў сябе не вельмі. Калісьці сказалі мне, што я «соrbeau blanc» [112]. I сапраўды, так мала ў мяне агульнага з іншымі калегамі, такім чужым адчуваю сябе ў кожным натоўпе, як быццам бы я іншага гатунку....З калегам на выставе перасоўнікаў. Увогуле добрая, лепшая, чым у Акадэміі. Некаторыя рэчы Левітана [109] дасканалыя (сакавік, папараць), Сярова [110] (восень, партрэт), Шыльдэра [111] (вогнепаклоннікі). У майстэрні адчуваў сябе не вельмі. Калісьці сказалі мне, што я «соrbeau blanc» [112]. I сапраўды, так мала ў мяне агульнага з іншымі калегамі, такім чужым адчуваю сябе ў кожным натоўпе, як быццам бы я іншага гатунку....З калегам на выставе перасоўнікаў. Увогуле добрая, лепшая, чым у Акадэміі. Некаторыя рэчы Левітана [109] дасканалыя (сакавік, папараць), Сярова [110] (восень, партрэт), Шыльдэра [111] (вогнепаклоннікі). У майстэрні адчуваў сябе не вельмі. Калісьці сказалі мне, што я «соrbeau blanc» [112]. I сапраўды, так мала ў мяне агульнага з іншымі калегамі, такім чужым адчуваю сябе ў кожным натоўпе, як быццам бы я іншага гатунку....З калегам на выставе перасоўнікаў. Увогуле добрая, лепшая, чым у Акадэміі. Некаторыя рэчы Левітана [109] дасканалыя (сакавік, папараць), Сярова [110] (восень, партрэт), Шыльдэра [111] (вогнепаклоннікі). У майстэрні адчуваў сябе не вельмі. Калісьці сказалі мне, што я «соrbeau blanc» [112]. I сапраўды, так мала ў мяне агульнага з іншымі калегамі, такім чужым адчуваю сябе ў кожным натоўпе, як быццам бы я іншага гатунку....';
 
 class Diary extends Component {
   constructor() {
@@ -22,7 +19,7 @@ class Diary extends Component {
   };
 
   render() {
-    const { author, month, day, year, getNextDiary, getPrevDiary } = this.props;
+    const { author, text, month, day, year, getNextDiary, getPrevDiary } = this.props;
     const { isModalActive } = this.state;
 
     const dateElement = (
@@ -35,26 +32,22 @@ class Diary extends Component {
     return (
       <div className="diary-article tile is-parent">
         <article className="card tile is-child notification">
-          <h1 className="title">Дзённік дня</h1>
+          <h1 className="title has-text-primary">Дзённік дня</h1>
           {dateElement}
-          <span
+          <Clickable
             className="icon is-small arrow arrow-left"
-            role="button"
-            tabIndex="0"
-            onKeyDown={e => e.keyCode === LEFT_ARROW_KEY && getPrevDiary()}
             onClick={getPrevDiary}
+            onKeyPress={() => {}}
           >
             <i className="fa fa-chevron-left" />
-          </span>
-          <span
+          </Clickable>
+          <Clickable
             className="icon is-small arrow arrow-right"
-            role="button"
-            tabIndex="0"
-            onKeyDown={e => e.keyCode === RIGHT_ARROW_KEY && getNextDiary()}
             onClick={getNextDiary}
+            onKeyPress={() => {}}
           >
             <i className="fa fa-chevron-right" />
-          </span>
+          </Clickable>
           <div className="content diary">{getTruncatedText(text, MAX_WORDS_NUMBER)}</div>
           <div className="control">
             <span className="subtitle">{author}</span>

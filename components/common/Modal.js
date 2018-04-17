@@ -9,7 +9,7 @@ const Modal = ({ renderBody, renderFooter, toggle, title, isActive }) => (
     <Clickable tag="div" className="modal-background" onClick={toggle} />
     <div className="modal-card">
       <header className="modal-card-head">
-        <p className="modal-card-title">{title}</p>
+        <p className="modal-card-title has-text-primary">{title}</p>
       </header>
       <div className="modal-card-body">{renderBody()}</div>
       {renderFooter && <footer className="modal-card-foot">{renderFooter()}</footer>}
