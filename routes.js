@@ -35,6 +35,7 @@ const NAVBAR_ROUTES = [
     },
     // dirty hack to force reload page, needed to clear store
     NavLink: ({ children, lang }) => cloneElement(children, { href: `/${lang}/articles/create` }),
+    permission: 'canCreateArticle',
   },
   {
     name: 'about',

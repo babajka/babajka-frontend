@@ -8,6 +8,7 @@ import {
   getLocalizedArticle,
   getLocalizedBrands,
   getLocalesBySlug,
+  getShortLocale,
 } from 'utils/getters';
 
 const duck = 'articles';
@@ -89,6 +90,11 @@ const getAll = (state, lang) => getLocalizedArticles(getRawArticles(state), lang
 
 const getRawCurrent = state => getState(state).current;
 const getLocaleBySlug = (state, slug) => getState(state).localeBySlug[slug];
+const getOtherLocales = (state, currentLocale) =>
+  Object.entries(getRawCurrent(state).locales)
+    .filter(([locale]) => locale !== currentLocale)
+    .map(([_, locale]) => locale)
+    .map(getShortLocale);
 const getCurrent = (state, slug) =>
   getLocalizedArticle(getRawCurrent(state), getLocaleBySlug(state, slug));
 
@@ -100,6 +106,7 @@ export const selectors = {
   getRawCurrent,
   getCurrent,
   getLocaleBySlug,
+  getOtherLocales,
   getBrands,
   isPending,
   isError,

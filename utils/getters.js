@@ -47,3 +47,5 @@ export const getLocalizedArticle = (article, lang) => {
 
 export const getLocalizedArticles = (articles, lang) =>
   articles.map(article => getLocalizedArticle(article, lang));
+
+export const getShortLocale = ({ locale, slug, title }) => ({ locale, slug, title });
