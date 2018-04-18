@@ -26,6 +26,10 @@ app.prepare().then(() => {
 
   server.use('/auth', proxy({ target: BACKEND_URL, changeOrigin: true }));
   server.use('/api', proxy({ target: BACKEND_URL, changeOrigin: true }));
+  // test redirection is to access data located in public/test backend path.
+  // This is useful for fully local development.
+  server.use('/test', proxy({ target: BACKEND_URL, changeOrigin: true }));
+
   // TODO: redirect on preffered lang
   server.get('/:lang?', (req, res) => {
     const { lang = DEFAULT_LOCALE } = req.params;
