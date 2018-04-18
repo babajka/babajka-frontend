@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 
-const CoreLayout = ({ title, children }) => (
+import { localize } from 'components/common/Text';
+
+const CoreLayout = ({ lang, title, children }) => (
   <div>
     <Head>
       <title>
         Wir.by {title && '| '}
-        {title}
+        {localize(title, lang)}
       </title>
       <meta charSet="utf-8" />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -22,6 +24,7 @@ const CoreLayout = ({ title, children }) => (
 );
 
 CoreLayout.propTypes = {
+  lang: PropTypes.string.isRequired,
   title: PropTypes.string,
   children: PropTypes.node.isRequired,
 };

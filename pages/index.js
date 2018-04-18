@@ -52,7 +52,7 @@ class HomePage extends Component {
   render() {
     const { articles, error, diary, getByDay, url } = this.props;
     return (
-      <PageLayout url={url}>
+      <PageLayout url={url} title="header.home">
         <div className="main-page page-container">
           <ArticlesRow
             articles={articles.slice(0, FIRST_LINE_END)}

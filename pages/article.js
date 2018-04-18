@@ -32,14 +32,14 @@ class ArticlePage extends Component {
     const { query: { mode } } = url;
     if (!mode) {
       return (
-        <PageLayout url={url}>
+        <PageLayout url={url} title="header.home">
           <PublicArticle {...article} articleLocale={articleLocale} />
         </PageLayout>
       );
     }
 
     return (
-      <PageLayout url={url}>
+      <PageLayout url={url} title="header.createArticle">
         <EditArticleForm lang={url.query.lang} articleLocale={articleLocale} mode={mode} />
       </PageLayout>
     );
