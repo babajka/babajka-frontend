@@ -15,12 +15,13 @@
     "prettify:watch": "onchange '**/*.{js,md}' -- npm run prettier {{changed}}",
     "update-styles": "npm i --save babajka-markup@latest && npm run copy-static",
     "update-dict": "node bin/fetchDict.js",
+    "update-team": "node bin/fetchTeam.js",
     "copy-static": "sh bin/copy-static.sh",
     "storybook": "start-storybook -p 9001",
     "storybook:build": "build-storybook",
     "storybook:deploy": "build-storybook && gh-pages -d storybook-static",
     "reset-cache": "rm -rf node_modules/.cache && rm -rf .next/",
-    "postinstall": "npm run copy-static && npm run update-dict"
+    "postinstall": "npm run copy-static && npm run update-dict && npm run update-team"
   },
   "lint-staged": {
     "**/*.js": [
