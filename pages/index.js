@@ -9,7 +9,7 @@ import ArticlesRow from 'components/articles/grid/ArticlesRow';
 import Diary from 'components/articles/Diary';
 import ArticlesComplexRow from 'components/articles/grid/ArticlesComplexRow';
 
-import { ArticlesArray, DiaryShape, PaginationShape } from 'utils/customPropTypes';
+import { ArticlesArray, DiaryShape } from 'utils/customPropTypes';
 import { getArticlesRows } from 'utils/getters';
 
 import initStore from 'redux/store';
@@ -20,7 +20,7 @@ import request from 'utils/request';
 
 const mapStateToProps = (state, { url: { query } }) => ({
   articles: articlesSelectors.getAll(state, query.lang),
-  pagination: articlesSelectors.getPagination(state),
+  nextPage: articlesSelectors.getNextPage(state),
   error: articlesSelectors.isError(state),
   diary: diarySelectors.getCurrent(state),
 });
@@ -40,7 +40,7 @@ class HomePage extends Component {
     }).isRequired,
     articles: ArticlesArray.isRequired,
     diary: DiaryShape.isRequired,
-    pagination: PropTypes.oneOfType([PropTypes.bool, PaginationShape]).isRequired,
+    nextPage: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]).isRequired,
     getChunk: PropTypes.func.isRequired,
     getByDay: PropTypes.func.isRequired,
     error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
@@ -58,7 +58,7 @@ class HomePage extends Component {
   }
 
   render() {
-    const { articles, error, diary, pagination, getByDay, getChunk, url } = this.props;
+    const { articles, error, diary, nextPage, getByDay, getChunk, url } = this.props;
 
     const articlesRows = getArticlesRows(articles, ROW_SIZE);
     const [firstRow, secondRow, ...remainRows] = articlesRows;
@@ -67,25 +67,30 @@ class HomePage extends Component {
       <PageLayout url={url}>
         <div className="main-page page-container">
           <div className="page-content">
-            <ArticlesRow articles={firstRow} className="first-line is-ancestor" />
-            <ArticlesComplexRow
-              articles={secondRow}
-              renderDiary={() => (
-                <Diary {...diary} getNextDiary={() => getByDay()} getPrevDiary={() => getByDay()} />
-              )}
-            />
+            {firstRow && <ArticlesRow articles={firstRow} className="first-line is-ancestor" />}
+            {secondRow && (
+              <ArticlesComplexRow
+                articles={secondRow}
+                renderDiary={() => (
+                  <Diary
+                    {...diary}
+                    getNextDiary={() => getByDay()}
+                    getPrevDiary={() => getByDay()}
+                  />
+                )}
+              />
+            )}
 
-            {articles.length > PAGE_SIZE &&
-              remainRows.map(data => (
-                <ArticlesRow key={data[0]._id} articles={data} className="first-line is-ancestor" />
-              ))}
-            <div className="load-more" align="center">
-              {pagination && (
-                <Button className="button" onClick={() => getChunk(pagination.page, PAGE_SIZE)}>
+            {remainRows.map(data => (
+              <ArticlesRow key={data[0]._id} articles={data} className="first-line is-ancestor" />
+            ))}
+            {nextPage && (
+              <div className="load-more" align="center">
+                <Button className="button" onClick={() => getChunk(nextPage, PAGE_SIZE)}>
                   <Text id="home.loadMore" />
                 </Button>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
         {error && <p>{error}</p>}

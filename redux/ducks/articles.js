@@ -103,7 +103,7 @@ const isError = state => getState(state).error;
 const getRawArticles = state => getState(state).data;
 const getAll = (state, lang) => getLocalizedArticles(getRawArticles(state), lang);
 
-const getPagination = state => getState(state).pagination;
+const getNextPage = state => getState(state).pagination.page;
 
 const getRawCurrent = state => getState(state).current;
 const getLocaleBySlug = (state, slug) => getState(state).localeBySlug[slug];
@@ -115,7 +115,7 @@ const getBrands = (state, lang) => getLocalizedBrands(getRawBrands(state), lang)
 
 export const selectors = {
   getAll,
-  getPagination,
+  getNextPage,
   getRawCurrent,
   getCurrent,
   getLocaleBySlug,
