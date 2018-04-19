@@ -38,7 +38,7 @@ const currentReducer = defaultReducer((state, { payload }) => ({
   pending: false,
 }));
 
-const FIRST_PAGE_NUMBER = 0;
+const FIRST_PAGE = 0;
 
 export default createReducer(
   {
@@ -49,7 +49,7 @@ export default createReducer(
     })),
     [FETCH_CHUNK]: defaultReducer((state, { payload: { data, next } }) => ({
       ...state,
-      data: next.page === FIRST_PAGE_NUMBER + 1 ? data : [...state.data, ...data],
+      data: next.page === FIRST_PAGE + 1 ? data : [...state.data, ...data],
       pagination: next,
       pending: false,
     })),
@@ -65,15 +65,17 @@ export default createReducer(
   initialState
 );
 
+const DEFAULT_PAGE_SIZE = 8;
+
 // actions
 export const actions = {
   fetchAll: () => ({
     type: FETCH_ALL,
     payload: request.fetch(api.articles.getAll()),
   }),
-  fetchChunk: (page = 0, pageSize = 8) => ({
+  fetchChunk: (page = FIRST_PAGE, pageSize = DEFAULT_PAGE_SIZE) => ({
     type: FETCH_CHUNK,
-    payload: request.fetch(api.articles.getAll(page, pageSize)),
+    payload: request.fetch(api.articles.getAll({ page, pageSize })),
   }),
   fetchBySlug: slug => ({
     type: FETCH_BY_SLUG,
