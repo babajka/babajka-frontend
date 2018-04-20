@@ -30,9 +30,6 @@ Some variables may be set to control the frontend:
 
 * `BABAJKA_BACKEND_URL` sets URL of the Backend instance. Defaults to `http://dev.wir.by`. You might
   want to use `http://localhost:8080` for local development.
-* `BABAJKA_BACKEND_AUTH` contains credentials necessary to access the remote Backend on
-  `dev.wir.by`. Check out Slack `#develop` channel for the format and the value of the variable. You
-  don't need to set the variable if your Backend is running locally.
 
 ## rules
 
