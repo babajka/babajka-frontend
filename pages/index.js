@@ -10,24 +10,33 @@ import Diary from 'components/articles/Diary';
 import ArticlesComplexRow from 'components/articles/grid/ArticlesComplexRow';
 
 import { ArticlesArray, DiaryShape } from 'utils/customPropTypes';
+import { getArticlesRows } from 'utils/getters';
 
 import initStore from 'redux/store';
 import { actions as articlesActions, selectors as articlesSelectors } from 'redux/ducks/articles';
 import { actions as auth } from 'redux/ducks/auth';
-import { actions as diaryActions, selectors as diarySelectors } from 'redux/ducks/diary';
+import {
+  actions as diaryActions,
+  selectors as diarySelectors,
+  CLOSEST_DIARY,
+} from 'redux/ducks/diary';
 import request from 'utils/request';
 
 const mapStateToProps = (state, { url: { query } }) => ({
   articles: articlesSelectors.getAll(state, query.lang),
+  nextPage: articlesSelectors.getNextPage(state),
   error: articlesSelectors.isError(state),
   diary: diarySelectors.getCurrent(state),
 });
 
 const mapDispatchToProps = {
   getByDay: diaryActions.getByDay,
+  getChunk: articlesActions.fetchChunk,
+  getClosestDiary: diaryActions.getClosest,
 };
 
-const FIRST_LINE_END = 4;
+const ROW_SIZE = 4;
+const PAGE_SIZE = 8;
 
 class HomePage extends Component {
   static propTypes = {
@@ -36,42 +45,58 @@ class HomePage extends Component {
     }).isRequired,
     articles: ArticlesArray.isRequired,
     diary: DiaryShape.isRequired,
+    nextPage: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]).isRequired,
+    getChunk: PropTypes.func.isRequired,
     getByDay: PropTypes.func.isRequired,
+    getClosestDiary: PropTypes.func.isRequired,
     error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   };
 
   static getInitialProps(ctx) {
     // TODO: somehow extract getCurrentUser to populate method
-    return request.populate(ctx, [
+    const initialRequests = [
       auth.getCurrentUser,
-      articlesActions.fetchAll,
-      diaryActions.getByDay.bind(null, 'be', '02', '13'), // FIXME(@tyndria) temporarily
-    ]);
+      diaryActions.getByDay,
+      articlesActions.fetchChunk,
+    ];
+
+    return request.populate(ctx, initialRequests);
   }
 
   render() {
-    const { articles, error, diary, getByDay, url } = this.props;
+    const { articles, error, diary, nextPage, getClosestDiary, getChunk, url } = this.props;
+
+    const articlesRows = getArticlesRows(articles, ROW_SIZE);
+    const [firstRow, secondRow, ...remainRows] = articlesRows;
+
     return (
       <PageLayout url={url}>
         <div className="main-page page-container">
-          <ArticlesRow
-            articles={articles.slice(0, FIRST_LINE_END)}
-            className="first-line is-ancestor"
-          />
-          <ArticlesComplexRow
-            articles={articles}
-            renderDiary={() => (
-              <Diary
-                {...diary}
-                getNextDiary={() => getByDay('be', '02', '13')}
-                getPrevDiary={() => getByDay()}
+          <div className="page-content">
+            {firstRow && <ArticlesRow articles={firstRow} className="first-line is-ancestor" />}
+            {secondRow && (
+              <ArticlesComplexRow
+                articles={secondRow}
+                renderDiary={() => (
+                  <Diary
+                    {...diary}
+                    getNextDiary={() => getClosestDiary(CLOSEST_DIARY.next)}
+                    getPrevDiary={() => getClosestDiary(CLOSEST_DIARY.prev)}
+                  />
+                )}
               />
             )}
-          />
-          <div className="load-more" align="center">
-            <Button className="button">
-              <Text id="home.loadMore" />
-            </Button>
+
+            {remainRows.map(data => (
+              <ArticlesRow key={data[0]._id} articles={data} className="first-line is-ancestor" />
+            ))}
+            {nextPage && (
+              <div className="load-more" align="center">
+                <Button className="button" onClick={() => getChunk(nextPage, PAGE_SIZE)}>
+                  <Text id="home.loadMore" />
+                </Button>
+              </div>
+            )}
           </div>
         </div>
         {error && <p>{error}</p>}

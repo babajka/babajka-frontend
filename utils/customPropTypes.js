@@ -2,6 +2,13 @@ import PropTypes from 'prop-types';
 
 import { LOCALES } from 'constants';
 
+export const PaginationModel = {
+  page: PropTypes.number.isRequired,
+  pageSize: PropTypes.number.isRequired,
+};
+
+export const PaginationShape = PropTypes.shape(PaginationModel);
+
 export const BrandModel = {
   slug: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
@@ -43,11 +50,11 @@ export const ArticlesArray = PropTypes.arrayOf(ArticleShape);
 
 export const DiaryModel = {
   text: PropTypes.string.isRequired,
-  day: PropTypes.string.isRequired,
-  month: PropTypes.string.isRequired,
-  locale: PropTypes.string.isRequired,
+  colloquialDate: PropTypes.string.isRequired,
   author: PropTypes.string.isRequired,
   year: PropTypes.string.isRequired,
+  getNextDiary: PropTypes.func,
+  getPrevDiary: PropTypes.func,
 };
 
 export const DiaryShape = PropTypes.shape(DiaryModel);

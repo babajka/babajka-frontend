@@ -10,6 +10,11 @@ const duck = 'specials/diary';
 // constants
 const GET_BY_DAY = `${duck}/GET_BY_DAY`;
 
+export const CLOSEST_DIARY = {
+  next: 'next',
+  prev: 'prev',
+};
+
 const initialState = {
   pending: false,
   error: false,
@@ -41,6 +46,13 @@ export const actions = {
     type: GET_BY_DAY,
     payload: request.fetch(api.diary.getByDay(locale, month, day)),
   }),
+  getClosest: closest => (dispatch, getState) => {
+    const { month, day } = getState().diary[closest];
+    dispatch({
+      type: GET_BY_DAY,
+      payload: request.fetch(api.diary.getByDay(DEFAULT_LOCALE, month, day)),
+    });
+  },
 };
 
 // selectors

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import Modal from 'components/common/Modal';
 import Clickable from 'components/common/Clickable';
 
-import { DiaryModel } from 'utils/customPropTypes';
 import getTruncatedText from 'utils/text';
 
 const MAX_WORDS_NUMBER = 70;
@@ -31,7 +31,7 @@ class Diary extends Component {
 
     return (
       <div className="diary-article tile is-parent">
-        <article className="card tile is-child notification">
+        <article className="card tile is-child notification is-flex">
           <h1 className="title has-text-primary">Дзённік дня</h1>
           {dateElement}
           <Clickable
@@ -48,7 +48,11 @@ class Diary extends Component {
           >
             <i className="fa fa-chevron-right" />
           </Clickable>
-          <div className="content diary">{getTruncatedText(text, MAX_WORDS_NUMBER)}</div>
+          {text ? (
+            <div className="content diary">{getTruncatedText(text, MAX_WORDS_NUMBER)}</div>
+          ) : (
+            <div className="no-text">Сёння зусім не думаецца...</div>
+          )}
           <div className="control">
             <span className="subtitle">{author}</span>
             {/* TODO: add to i18n dictionary */}
@@ -75,6 +79,22 @@ class Diary extends Component {
   }
 }
 
-Diary.propTypes = DiaryModel;
+Diary.propTypes = {
+  text: PropTypes.string,
+  day: PropTypes.string,
+  month: PropTypes.string,
+  author: PropTypes.string,
+  year: PropTypes.string,
+  getNextDiary: PropTypes.func.isRequired,
+  getPrevDiary: PropTypes.func.isRequired,
+};
+
+Diary.defaultProps = {
+  text: null,
+  day: new Date().getDay(),
+  month: new Date().getMonth(),
+  author: '',
+  year: new Date().getYear(),
+};
 
 export default Diary;
