@@ -20,6 +20,7 @@ import request from 'utils/request';
 
 const mapStateToProps = (state, { url: { query } }) => ({
   articles: articlesSelectors.getAll(state, query.lang),
+  articlesPending: articlesSelectors.isPending(state),
   nextPage: articlesSelectors.getNextPage(state),
   error: articlesSelectors.isError(state),
   diary: diarySelectors.getCurrent(state),
@@ -39,6 +40,7 @@ class HomePage extends Component {
       query: PropTypes.object.isRequired,
     }).isRequired,
     articles: ArticlesArray.isRequired,
+    articlesPending: PropTypes.bool.isRequired,
     diary: DiaryShape.isRequired,
     nextPage: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]).isRequired,
     getChunk: PropTypes.func.isRequired,
@@ -58,7 +60,16 @@ class HomePage extends Component {
   }
 
   render() {
-    const { articles, error, diary, nextPage, getByDay, getChunk, url } = this.props;
+    const {
+      articles,
+      articlesPending,
+      error,
+      diary,
+      nextPage,
+      getByDay,
+      getChunk,
+      url,
+    } = this.props;
 
     const articlesRows = getArticlesRows(articles, ROW_SIZE);
     const [firstRow, secondRow, ...remainRows] = articlesRows;
@@ -86,7 +97,11 @@ class HomePage extends Component {
             ))}
             {nextPage && (
               <div className="load-more" align="center">
-                <Button className="button" onClick={() => getChunk(nextPage, PAGE_SIZE)}>
+                <Button
+                  className="button"
+                  pending={articlesPending}
+                  onClick={() => getChunk(nextPage, PAGE_SIZE)}
+                >
                   <Text id="home.loadMore" />
                 </Button>
               </div>
