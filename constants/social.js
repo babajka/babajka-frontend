@@ -25,4 +25,4 @@ export const NETWORKS = [
   },
 ];
 
-export const stub = 1;
+export const GA_ID = 'UA-117143376-1';

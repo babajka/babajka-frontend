@@ -8,10 +8,11 @@ import dict from 'constants/i18n.json';
 
 const defaultRender = text => <Fragment>{text}</Fragment>;
 
+export const localize = (id, lang) =>
+  get(dict, `${id}.${lang}`) || get(dict, `${id}.${DEFAULT_LOCALE}`) || '';
+
 const Text = ({ id, children, render = children }) => (
-  <LocaleContext.Consumer>
-    {lang => render(get(dict, `${id}.${lang}`) || get(dict, `${id}.${DEFAULT_LOCALE}`) || '')}
-  </LocaleContext.Consumer>
+  <LocaleContext.Consumer>{lang => render(localize(id, lang))}</LocaleContext.Consumer>
 );
 
 Text.propTypes = {

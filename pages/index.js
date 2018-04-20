@@ -75,7 +75,7 @@ class HomePage extends Component {
     const [firstRow, secondRow, ...remainRows] = articlesRows;
 
     return (
-      <PageLayout url={url}>
+      <PageLayout url={url} title="header.home">
         <div className="main-page page-container">
           <div className="page-content">
             {firstRow && <ArticlesRow articles={firstRow} className="first-line is-ancestor" />}
