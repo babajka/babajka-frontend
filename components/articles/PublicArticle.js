@@ -45,7 +45,7 @@ const PublicArticle = ({
     <p>
       чытайце таксама на:{' '}
       {otherLocales.map(({ locale, slug, title: t }) => [
-        <Link route={ROUTES_NAMES.article} params={{ slug }}>
+        <Link key={locale} route={ROUTES_NAMES.article} params={{ slug }}>
           <a title={t}>{LOCALES[locale]}</a>
         </Link>,
         ', ',

@@ -16,7 +16,7 @@ const ArticlesRow = ({ articles, className }) => (
 );
 
 ArticlesRow.propTypes = {
-  articles: ArticlesArray.isRequired, // eslint-disable-line react/no-typos
+  articles: ArticlesArray.isRequired,
   className: PropTypes.string,
 };
 

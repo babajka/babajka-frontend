@@ -12,7 +12,7 @@ export default {
     logout: `${AUTH_URL}/logout`,
   },
   articles: {
-    getAll: pagination => `${API_URL}/articles${qs.stringify(pagination, queryOptions)}`,
+    getChunk: pagination => `${API_URL}/articles${qs.stringify(pagination, queryOptions)}`,
     getBySlug: slug => `${API_URL}/articles/${slug}`,
     getBrands: `${API_URL}/articles/brands`,
     create: `${API_URL}/articles`,

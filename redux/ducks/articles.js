@@ -14,7 +14,6 @@ import {
 const duck = 'articles';
 
 // constants
-const FETCH_ALL = `${duck}/FETCH_ALL`;
 const FETCH_CHUNK = `${duck}/FETCH_CHUNK`;
 const FETCH_BY_SLUG = `${duck}/FETCH_BY_SLUG`;
 const FETCH_BRANDS = `${duck}/FETCH_BRANDS`;
@@ -43,11 +42,6 @@ const FIRST_PAGE = 0;
 
 export default createReducer(
   {
-    [FETCH_ALL]: defaultReducer((state, { payload: { data } }) => ({
-      ...state,
-      data,
-      pending: false,
-    })),
     [FETCH_CHUNK]: defaultReducer((state, { payload: { data, next } }) => ({
       ...state,
       data: next.page === FIRST_PAGE + 1 ? data : [...state.data, ...data],
@@ -70,13 +64,9 @@ const DEFAULT_PAGE_SIZE = 8;
 
 // actions
 export const actions = {
-  fetchAll: () => ({
-    type: FETCH_ALL,
-    payload: request.fetch(api.articles.getAll()),
-  }),
   fetchChunk: (page = FIRST_PAGE, pageSize = DEFAULT_PAGE_SIZE) => ({
     type: FETCH_CHUNK,
-    payload: request.fetch(api.articles.getAll({ page, pageSize })),
+    payload: request.fetch(api.articles.getChunk({ page, pageSize })),
   }),
   fetchBySlug: slug => ({
     type: FETCH_BY_SLUG,
