@@ -14,7 +14,7 @@ import {
 const duck = 'articles';
 
 // constants
-const FETCH_ALL = `${duck}/FETCH_ALL`;
+const FETCH_CHUNK = `${duck}/FETCH_CHUNK`;
 const FETCH_BY_SLUG = `${duck}/FETCH_BY_SLUG`;
 const FETCH_BRANDS = `${duck}/FETCH_BRANDS`;
 const CREATE = `${duck}/CREATE`;
@@ -24,8 +24,9 @@ const UPDATE = `${duck}/UPDATE`;
 const initialState = {
   pending: false,
   error: false,
-  data: null,
+  data: [],
   current: null,
+  pagination: null,
   localeBySlug: {},
   brands: null,
 };
@@ -37,11 +38,14 @@ const currentReducer = defaultReducer((state, { payload }) => ({
   pending: false,
 }));
 
+const FIRST_PAGE = 0;
+
 export default createReducer(
   {
-    [FETCH_ALL]: defaultReducer((state, { payload: { data } }) => ({
+    [FETCH_CHUNK]: defaultReducer((state, { payload: { data, next } }) => ({
       ...state,
-      data,
+      data: next.page === FIRST_PAGE + 1 ? data : [...state.data, ...data],
+      pagination: next,
       pending: false,
     })),
     [FETCH_BY_SLUG]: currentReducer,
@@ -56,11 +60,13 @@ export default createReducer(
   initialState
 );
 
+const DEFAULT_PAGE_SIZE = 8;
+
 // actions
 export const actions = {
-  fetchAll: () => ({
-    type: FETCH_ALL,
-    payload: request.fetch(api.articles.getAll),
+  fetchChunk: (page = FIRST_PAGE, pageSize = DEFAULT_PAGE_SIZE) => ({
+    type: FETCH_CHUNK,
+    payload: request.fetch(api.articles.getChunk({ page, pageSize })),
   }),
   fetchBySlug: slug => ({
     type: FETCH_BY_SLUG,
@@ -88,6 +94,8 @@ const isError = state => getState(state).error;
 const getRawArticles = state => getState(state).data;
 const getAll = (state, lang) => getLocalizedArticles(getRawArticles(state), lang);
 
+const getNextPage = state => getState(state).pagination.page;
+
 const getRawCurrent = state => getState(state).current;
 const getLocaleBySlug = (state, slug) => getState(state).localeBySlug[slug];
 const getOtherLocales = (state, currentLocale) =>
@@ -103,6 +111,7 @@ const getBrands = (state, lang) => getLocalizedBrands(getRawBrands(state), lang)
 
 export const selectors = {
   getAll,
+  getNextPage,
   getRawCurrent,
   getCurrent,
   getLocaleBySlug,
