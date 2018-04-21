@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import Modal from 'components/common/Modal';
 import Clickable from 'components/common/Clickable';
@@ -10,7 +11,6 @@ import { actions as diaryActions, selectors as diarySelectors } from 'redux/duck
 import getTruncatedText from 'utils/text';
 import { isToday } from 'utils/validators';
 
-//  TODO: { url: { query } }
 const mapStateToProps = state => ({
   diary: diarySelectors.getCurrent(state),
 });
@@ -22,6 +22,17 @@ const mapDispatchToProps = {
 };
 
 const MAX_WORDS_NUMBER = 70;
+
+const NAV_BUTTONS = {
+  next: {
+    className: 'arrow-right',
+    iconClassName: 'fa-chevron-right',
+  },
+  prev: {
+    className: 'arrow-left',
+    iconClassName: 'fa-chevron-left',
+  },
+};
 
 class Diary extends Component {
   constructor() {
@@ -43,13 +54,13 @@ class Diary extends Component {
     </div>
   );
 
-  renderNavigationButton = (handleClick, direction) => (
+  renderNavigationButton = (handleClick, { className, iconClassName }) => (
     <Clickable
-      className={`icon is-small arrow arrow-${direction}`}
+      className={classNames('icon is-small arrow', className)}
       onClick={handleClick}
       onKeyPress={() => {}}
     >
-      <i className={`fa fa-chevron-${direction}`} />
+      <i className={classNames('fa', iconClassName)} />
     </Clickable>
   );
 
@@ -73,9 +84,7 @@ class Diary extends Component {
   };
 
   render() {
-    const { diary, getNext, getPrev } = this.props;
-
-    const { author, text, date } = diary;
+    const { diary: { author, text, date }, getNext, getPrev } = this.props;
 
     return (
       <div className="diary-article tile is-parent">
@@ -84,8 +93,8 @@ class Diary extends Component {
 
           {this.renderDateElement()}
 
-          {this.renderNavigationButton(getPrev, 'left')}
-          {!isToday(date) && this.renderNavigationButton(getNext, 'right')}
+          {this.renderNavigationButton(getPrev, NAV_BUTTONS.prev)}
+          {!isToday(date) && this.renderNavigationButton(getNext, NAV_BUTTONS.next)}
 
           {text ? (
             <div className="content diary">{getTruncatedText(text, MAX_WORDS_NUMBER)}</div>
