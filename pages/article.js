@@ -2,20 +2,23 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
 
+import Text from 'components/common/Text';
 import PageLayout from 'components/common/layout/PageLayout';
 import PublicArticle from 'components/articles/PublicArticle';
 import EditArticleForm from 'components/articles/edit/EditArticleForm';
 
 import initStore from 'redux/store';
 import { actions as articlesActions, selectors } from 'redux/ducks/articles';
-import { actions as auth } from 'redux/ducks/auth';
+import { actions as auth, selectors as authSelectors } from 'redux/ducks/auth';
 import request from 'utils/request';
 import { ArticleShape, LangType } from 'utils/customPropTypes';
+import { Router, ROUTES_NAMES } from 'routes';
 
 const mapStateToProps = (state, { url: { query } }) => ({
   article: selectors.getCurrent(state, query.slug),
   articleLocale: query.articleLocale || selectors.getLocaleBySlug(state, query.slug),
   error: selectors.isError(state),
+  permissions: authSelectors.getPermissions(state),
 });
 
 class ArticlePage extends Component {
@@ -27,19 +30,40 @@ class ArticlePage extends Component {
     );
   }
 
+  // FIXME: find better way to close routes
+  componentDidMount() {
+    const { url, permissions } = this.props;
+    const { query: { mode, lang, slug } } = url;
+    if (mode === 'create' && !permissions.canCreateArticle) {
+      Router.replaceRoute(ROUTES_NAMES.home, { lang });
+    } else if (mode === 'edit' && !permissions.canManageArticles) {
+      Router.replaceRoute(ROUTES_NAMES.article, { lang, slug });
+    }
+  }
+
   render() {
-    const { article, url, articleLocale } = this.props;
+    const { article, url, articleLocale, permissions } = this.props;
     const { query: { mode } } = url;
-    if (!mode) {
+    if (!mode || (mode === 'edit' && !permissions.canManageArticles)) {
       return (
-        <PageLayout url={url}>
+        <PageLayout url={url} title="header.home">
           <PublicArticle {...article} articleLocale={articleLocale} />
         </PageLayout>
       );
     }
 
+    if (mode === 'create' && !permissions.canCreateArticle) {
+      return (
+        <PageLayout url={url} title="header.home">
+          <p className="text is-size-5 has-text-primary">
+            <Text id="common.forbidden" />
+          </p>
+        </PageLayout>
+      );
+    }
+
     return (
-      <PageLayout url={url}>
+      <PageLayout url={url} title="header.createArticle">
         <EditArticleForm lang={url.query.lang} articleLocale={articleLocale} mode={mode} />
       </PageLayout>
     );
@@ -54,6 +78,7 @@ ArticlePage.propTypes = {
       mode: PropTypes.oneOf(['public', 'create', 'edit']),
     }).isRequired,
   }).isRequired,
+  permissions: PropTypes.shape({}).isRequired,
 };
 
 ArticlePage.defaultProps = {

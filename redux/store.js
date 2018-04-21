@@ -4,11 +4,13 @@ import thunkMiddleware from 'redux-thunk';
 import promiseMiddleware from 'redux-promise-middleware';
 
 import { LOADING, SUCCESS, ERROR } from 'constants/redux';
+import analytics from './middlewares/analytics';
 import reducer from './ducks';
 
 const middlewares = [
   thunkMiddleware,
   promiseMiddleware({ promiseTypeSuffixes: [LOADING, SUCCESS, ERROR] }),
+  analytics,
 ];
 
 export default (initialState = {}) =>
