@@ -5,5 +5,4 @@ static/
 storybook-static/
 *.log*
 *.DS_Store
-constants/i18n.json
-constants/team.json
+data/*.json

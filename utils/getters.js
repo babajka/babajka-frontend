@@ -52,3 +52,20 @@ export const getLocalizedArticles = (articles, lang) =>
 export const getShortLocale = ({ locale, slug, title }) => ({ locale, slug, title });
 
 export const getArticlesRows = (articles, rowSize) => chunk(articles, rowSize);
+
+export const getLocalizedTeam = (team, lang) =>
+  team &&
+  team.map(({ name, role, ...rest }, index) => ({
+    ...rest,
+    id: index,
+    name: localize(name, lang),
+    role: localize(role, lang),
+  }));
+
+export const getLocalizedVacancies = (vacancies, lang) =>
+  vacancies &&
+  vacancies.map(({ title, description }, index) => ({
+    id: index,
+    title: localize(title, lang),
+    description: localize(description, lang),
+  }));

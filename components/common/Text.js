@@ -4,7 +4,7 @@ import get from 'lodash/get';
 
 import LocaleContext from 'components/common/LocaleContext';
 import { DEFAULT_LOCALE } from 'constants';
-import dict from 'constants/i18n.json';
+import dict from 'data/i18n.json';
 
 const defaultRender = text => <Fragment>{text}</Fragment>;
 

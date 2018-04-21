@@ -36,6 +36,6 @@ doc.getInfo((err, info) => {
         })
     )
   ).then(() => {
-    writeFileSync('constants/i18n.json', JSON.stringify(dict));
+    writeFileSync('data/i18n.json', JSON.stringify(dict));
   });
 });

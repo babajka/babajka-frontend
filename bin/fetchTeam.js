@@ -10,32 +10,33 @@ const doc = new GoogleSpreadsheet('1oWExrh42zTrYPWWNRgdxRQayB7_5HHar3zZxOUY6G5E'
 // Please keep arrays below in an alphabetical order.
 // Locale is ignored unless in a list below.
 const locales = ['be', 'en', 'ru'];
-// Team member attribute is ignored unless in a list below.
-const scopesUnlocalized = ['image'];
-const scopesLocalized = ['name', 'role'];
 
-const team = [];
-
-doc.getInfo((err, info) => {
-  const teamSheet = keyBy(info.worksheets, 'title').team;
-
+const parseSheet = (sheet, scopesLocalized = [], scopesUnlocalized = []) =>
   new Promise(resolve => {
-    teamSheet.getRows({}, (error, rows) => {
+    const team = [];
+    sheet.getRows({}, (error, rows) => {
       rows.forEach(row => {
-        const teamMember = {};
+        const data = {};
         scopesUnlocalized.forEach(scope => {
-          set(teamMember, [scope], row[scope]);
+          set(data, [scope], row[scope]);
         });
         locales.forEach(locale => {
           scopesLocalized.forEach(scope => {
-            set(teamMember, [scope, locale], row[`${locale}.${scope}`]);
+            set(data, [scope, locale], row[`${locale}.${scope}`]);
           });
         });
-        team.push(teamMember);
+        team.push(data);
       });
-      resolve();
+      resolve(team);
     });
-  }).then(() => {
-    writeFileSync('constants/team.json', JSON.stringify(team));
   });
+
+doc.getInfo((err, info) => {
+  const { team, vacancies } = keyBy(info.worksheets, 'title');
+  parseSheet(team, ['name', 'role'], ['image']).then(data =>
+    writeFileSync('data/team.json', JSON.stringify(data))
+  );
+  parseSheet(vacancies, ['title', 'description']).then(data =>
+    writeFileSync('data/vacancies.json', JSON.stringify(data))
+  );
 });
