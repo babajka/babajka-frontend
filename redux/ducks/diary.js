@@ -2,18 +2,15 @@ import createReducer from 'type-to-reducer';
 
 import api from 'constants/api';
 import { DEFAULT_LOCALE } from 'constants';
+
 import request from 'utils/request';
 import { defaultReducer } from 'utils/redux';
+import { getDate } from 'utils/getters';
 
 const duck = 'specials/diary';
 
 // constants
 const GET_BY_DAY = `${duck}/GET_BY_DAY`;
-
-export const CLOSEST_DIARY = {
-  next: 'next',
-  prev: 'prev',
-};
 
 const initialState = {
   pending: false,
@@ -25,13 +22,18 @@ const initialState = {
 
 export default createReducer(
   {
-    [GET_BY_DAY]: defaultReducer((state, { payload: { data, next, prev } }) => ({
-      ...state,
-      data,
-      next,
-      prev,
-      pending: false,
-    })),
+    [GET_BY_DAY]: defaultReducer(
+      (state, { payload: { data: { day, month, year, ...rest }, next, prev } }) => ({
+        ...state,
+        data: {
+          ...rest,
+          date: getDate(day, month, year),
+        },
+        next,
+        prev,
+        pending: false,
+      })
+    ),
   },
   initialState
 );

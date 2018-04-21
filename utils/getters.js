@@ -50,3 +50,5 @@ export const getLocalizedArticles = (articles, lang) =>
   articles.map(article => getLocalizedArticle(article, lang));
 
 export const getArticlesRows = (articles, rowSize) => chunk(articles, rowSize);
+
+export const getDate = (day, month, year) => day && month && year && new Date(day, month, year);

@@ -74,7 +74,10 @@ class Request {
     if (isServer) {
       this.cookie = `${SESSION_COOKIE}=${req.cookies[SESSION_COOKIE]}`;
     }
-    const actions = actionsToLoad.map(action => action(isServer));
+
+    /* @tyndria: fix the line below, can't get why do we need to pass parameter isServer
+    *  const actions = actionsToLoad.map(action => action(isServer)); */
+    const actions = actionsToLoad.map(action => action());
     actions.forEach(action => dispatch(action));
     const promises = actions.map(action => action.payload.catch(e => e));
     // TODO: better error handling

@@ -15,11 +15,7 @@ import { getArticlesRows } from 'utils/getters';
 import initStore from 'redux/store';
 import { actions as articlesActions, selectors as articlesSelectors } from 'redux/ducks/articles';
 import { actions as auth } from 'redux/ducks/auth';
-import {
-  actions as diaryActions,
-  selectors as diarySelectors,
-  CLOSEST_DIARY,
-} from 'redux/ducks/diary';
+import { actions as diaryActions, selectors as diarySelectors } from 'redux/ducks/diary';
 import request from 'utils/request';
 
 const mapStateToProps = (state, { url: { query } }) => ({
@@ -80,8 +76,8 @@ class HomePage extends Component {
                 renderDiary={() => (
                   <Diary
                     {...diary}
-                    getNextDiary={() => getClosestDiary(CLOSEST_DIARY.next)}
-                    getPrevDiary={() => getClosestDiary(CLOSEST_DIARY.prev)}
+                    getNextDiary={() => getClosestDiary('next')}
+                    getPrevDiary={() => getClosestDiary('prev')}
                   />
                 )}
               />
