@@ -9,7 +9,6 @@ import { actions as diaryActions, selectors as diarySelectors } from 'redux/duck
 
 import getTruncatedText from 'utils/text';
 import { isToday } from 'utils/validators';
-import { DiaryShape } from 'utils/customPropTypes';
 
 //  TODO: { url: { query } }
 const mapStateToProps = state => ({
@@ -18,7 +17,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   getByDay: diaryActions.getByDay,
-  getClosest: diaryActions.getClosest,
+  getNext: () => diaryActions.getClosest('next'),
+  getPrev: () => diaryActions.getClosest('prev'),
 };
 
 const MAX_WORDS_NUMBER = 70;
@@ -73,7 +73,9 @@ class Diary extends Component {
   };
 
   render() {
-    const { diary: { author, text, date }, getClosest } = this.props;
+    const { diary, getNext, getPrev } = this.props;
+
+    const { author, text, date } = diary;
 
     return (
       <div className="diary-article tile is-parent">
@@ -82,8 +84,8 @@ class Diary extends Component {
 
           {this.renderDateElement()}
 
-          {this.renderNavigationButton(getClosest, 'left')}
-          {!isToday(date) && this.renderNavigationButton(getClosest, 'right')}
+          {this.renderNavigationButton(getPrev, 'left')}
+          {!isToday(date) && this.renderNavigationButton(getNext, 'right')}
 
           {text ? (
             <div className="content diary">{getTruncatedText(text, MAX_WORDS_NUMBER)}</div>
@@ -106,14 +108,17 @@ class Diary extends Component {
   }
 }
 
-Diary.propTypes = {
-  diary: DiaryShape,
-  getClosest: PropTypes.func.isRequired,
-  getByDay: PropTypes.func.isRequired,
+export const DiaryModel = {
+  text: PropTypes.string.isRequired,
+  date: PropTypes.instanceOf(Date).isRequired,
+  author: PropTypes.string.isRequired,
 };
 
-Diary.defaultProps = {
-  diary: {},
+Diary.propTypes = {
+  diary: PropTypes.shape(DiaryModel).isRequired,
+  getNext: PropTypes.func.isRequired,
+  getPrev: PropTypes.func.isRequired,
+  getByDay: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Diary);

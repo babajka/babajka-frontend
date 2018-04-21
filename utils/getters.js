@@ -54,3 +54,9 @@ export const getShortLocale = ({ locale, slug, title }) => ({ locale, slug, titl
 export const getArticlesRows = (articles, rowSize) => chunk(articles, rowSize);
 
 export const getDate = (day, month, year) => day && month && year && new Date(day, month, year);
+
+export const getDiary = ({ author = '', text = '', day, month, year }) => ({
+  author,
+  text,
+  date: getDate(day, month, year) || new Date(),
+});

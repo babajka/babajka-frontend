@@ -10,7 +10,7 @@ export const required = (field, massageId = 'forms.required') => (field ? null :
 
 export const checkLength = (value, length, massageId) => (value.length < length ? massageId : null);
 
-export const isToday = date => date.toDateString() === new Date().toDateString();
+export const isToday = date => new Date(date).toDateString() === new Date().toDateString();
 
 const slugRegexp = /^[a-zA-Z0-9_-]+$/;
 export const isSlug = (slug, messageId = 'article.slug-req') =>
