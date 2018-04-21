@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import Modal from 'components/common/Modal';
+import Text from 'components/common/Text';
 import Clickable from 'components/common/Clickable';
 
 import { actions as diaryActions, selectors as diarySelectors } from 'redux/ducks/diary';
@@ -70,7 +71,7 @@ class Diary extends Component {
     return (
       <Modal
         isActive={isModalActive}
-        title="Дзённік дня"
+        title={<Text id="diary.title" />}
         toggle={this.toggleModal}
         renderBody={() => (
           <div>
@@ -89,7 +90,9 @@ class Diary extends Component {
     return (
       <div className="diary-article tile is-parent">
         <article className="card tile is-child notification is-flex">
-          <h1 className="title has-text-primary">Дзённік дня</h1>
+          <h1 className="title has-text-primary">
+            <Text id="diary.title" />
+          </h1>
 
           {this.renderDateElement()}
 
@@ -99,15 +102,18 @@ class Diary extends Component {
           {text ? (
             <div className="content diary">{getTruncatedText(text, MAX_WORDS_NUMBER)}</div>
           ) : (
-            <div className="no-text">Сёння зусім не думаецца...</div>
+            <div className="no-text">
+              <Text id="diary.noText" />
+            </div>
           )}
 
           <div className="control">
             <span className="subtitle">{author}</span>
-            {/* TODO: add to i18n dictionary */}
-            <button className="button is-light read-btn" onClick={this.toggleModal}>
-              Чытаць
-            </button>
+            {text && (
+              <button className="button is-light read-btn" onClick={this.toggleModal}>
+                <Text id="diary.read" />
+              </button>
+            )}
           </div>
 
           {this.renderModalElement()}
