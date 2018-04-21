@@ -49,7 +49,7 @@ class LoginPage extends Component {
   render() {
     const { pending, errors, url } = this.props;
     return (
-      <PageLayout title="Login" url={url}>
+      <PageLayout title="auth.signIn" url={url}>
         <div className="container login">
           <LoginForm onSubmit={this.handleSubmit} pending={pending} errors={errors} />
         </div>

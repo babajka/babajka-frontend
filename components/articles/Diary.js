@@ -1,11 +1,25 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Modal from 'components/common/Modal';
 import Clickable from 'components/common/Clickable';
 
+import { actions as diaryActions, selectors as diarySelectors } from 'redux/ducks/diary';
+
 import getTruncatedText from 'utils/text';
 import { isToday } from 'utils/validators';
+import { DiaryShape } from 'utils/customPropTypes';
+
+//  TODO: { url: { query } }
+const mapStateToProps = state => ({
+  diary: diarySelectors.getCurrent(state),
+});
+
+const mapDispatchToProps = {
+  getByDay: diaryActions.getByDay,
+  getClosest: diaryActions.getClosest,
+};
 
 const MAX_WORDS_NUMBER = 70;
 
@@ -15,12 +29,17 @@ class Diary extends Component {
     this.state = { isModalActive: false };
   }
 
+  componentDidMount() {
+    const { getByDay } = this.props;
+    getByDay();
+  }
+
   toggleModal = () => this.setState(prevState => ({ isModalActive: !prevState.isModalActive }));
 
   renderDateElement = () => (
     <div className="date">
       {/* TODO: discuss how to represent date depending on locale */}
-      <div className="is-pulled-right">{new Date(this.props.date).toDateString()}</div>
+      <div className="is-pulled-right">{new Date(this.props.diary.date).toDateString()}</div>
     </div>
   );
 
@@ -35,7 +54,7 @@ class Diary extends Component {
   );
 
   renderModalElement = () => {
-    const { text, author } = this.props;
+    const { diary: { text, author } } = this.props;
     const { isModalActive } = this.state;
     return (
       <Modal
@@ -54,7 +73,7 @@ class Diary extends Component {
   };
 
   render() {
-    const { author, text, date, getNextDiary, getPrevDiary } = this.props;
+    const { diary: { author, text, date }, getClosest } = this.props;
 
     return (
       <div className="diary-article tile is-parent">
@@ -63,8 +82,8 @@ class Diary extends Component {
 
           {this.renderDateElement()}
 
-          {this.renderNavigationButton(getPrevDiary, 'left')}
-          {!isToday(date) && this.renderNavigationButton(getNextDiary, 'right')}
+          {this.renderNavigationButton(getClosest, 'left')}
+          {!isToday(date) && this.renderNavigationButton(getClosest, 'right')}
 
           {text ? (
             <div className="content diary">{getTruncatedText(text, MAX_WORDS_NUMBER)}</div>
@@ -88,17 +107,13 @@ class Diary extends Component {
 }
 
 Diary.propTypes = {
-  text: PropTypes.string,
-  author: PropTypes.string,
-  date: PropTypes.instanceOf(Date),
-  getNextDiary: PropTypes.func.isRequired,
-  getPrevDiary: PropTypes.func.isRequired,
+  diary: DiaryShape,
+  getClosest: PropTypes.func.isRequired,
+  getByDay: PropTypes.func.isRequired,
 };
 
 Diary.defaultProps = {
-  text: null,
-  author: '',
-  date: new Date(),
+  diary: {},
 };
 
-export default Diary;
+export default connect(mapStateToProps, mapDispatchToProps)(Diary);

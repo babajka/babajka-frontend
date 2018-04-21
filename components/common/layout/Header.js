@@ -13,7 +13,10 @@ import Link from 'components/common/Link';
 import LocaleContext from 'components/common/LocaleContext';
 import Text from 'components/common/Text';
 
-const mapStateToProps = state => ({ user: selectors.getUser(state) });
+const mapStateToProps = state => ({
+  user: selectors.getUser(state),
+  permissions: selectors.getPermissions(state),
+});
 const mapDispatchToProps = { signOut: actions.signOut };
 
 const getLocaleSwitchUrl = (path, lang) => {
@@ -28,6 +31,7 @@ class Header extends Component {
       asPath: PropTypes.string.isRequired,
     }).isRequired,
     user: PropTypes.shape({ email: PropTypes.string.isRequired }),
+    permissions: PropTypes.shape({}).isRequired,
     signOut: PropTypes.func.isRequired,
   };
 
@@ -37,9 +41,19 @@ class Header extends Component {
     burgerActive: false,
   };
 
+  handleAuthClick = lang => {
+    const { user, signOut } = this.props;
+    if (!user) {
+      Router.pushRoute(ROUTES_NAMES.login, { lang });
+      return;
+    }
+    signOut().then(() => Router.pushRoute(ROUTES_NAMES.home, { lang }));
+  };
+
   render() {
-    const { user, signOut, router: { asPath } } = this.props;
+    const { user, permissions, router: { asPath } } = this.props;
     const { burgerActive } = this.state;
+    const routes = NAVBAR_ROUTES.filter(({ permission: key }) => !key || permissions[key]);
 
     return (
       <div className="navbar">
@@ -68,8 +82,7 @@ class Header extends Component {
           {lang => (
             <div className={classNames('navbar-menu', { 'is-active': burgerActive })}>
               <div className="navbar-start">
-                {/* // TODO: check permissions for routes */}
-                {NAVBAR_ROUTES.map(({ NavLink = Link, name, pattern = name, params, isActive }) => (
+                {routes.map(({ NavLink = Link, name, pattern = name, params, isActive }) => (
                   <NavLink key={name} route={name} params={params} lang={lang}>
                     <a className="navbar-item">
                       <span
@@ -89,9 +102,7 @@ class Header extends Component {
                       <Clickable
                         tag="a"
                         className="auth-button"
-                        onClick={() =>
-                          user ? signOut() : Router.pushRoute(ROUTES_NAMES.login, { lang })
-                        }
+                        onClick={this.handleAuthClick.bind(null, lang)}
                       >
                         <Text id={`auth.${user ? 'signOut' : 'signIn'}`} />
                       </Clickable>

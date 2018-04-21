@@ -49,6 +49,8 @@ export const getLocalizedArticle = (article, lang) => {
 export const getLocalizedArticles = (articles, lang) =>
   articles.map(article => getLocalizedArticle(article, lang));
 
+export const getShortLocale = ({ locale, slug, title }) => ({ locale, slug, title });
+
 export const getArticlesRows = (articles, rowSize) => chunk(articles, rowSize);
 
 export const getDate = (day, month, year) => day && month && year && new Date(day, month, year);

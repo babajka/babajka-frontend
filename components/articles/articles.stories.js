@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs, text } from '@storybook/addon-knobs';
-import imagePath from 'babajka-markup/dist/images/photo5.jpg';
+import imagePath from 'static/images/mock/photo5.jpg';
 
 import StoriesDecorator from 'components/common/StoriesDecorator';
 import ArticlePreview from './ArticlePreview';

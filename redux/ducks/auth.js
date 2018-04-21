@@ -61,11 +61,16 @@ export const actions = {
 // selectors
 const getState = state => state.auth;
 const getUser = state => getState(state).user;
+const getPermissions = state => {
+  const user = getUser(state);
+  return user ? user.permissions : {};
+};
 const isLoginPending = state => getState(state).pending;
 const getLoginErrors = state => getState(state).errors;
 
 export const selectors = {
   getUser,
+  getPermissions,
   isLoginPending,
   getLoginErrors,
 };
