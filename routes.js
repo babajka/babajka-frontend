@@ -14,10 +14,10 @@ const NAVBAR_ROUTES = [
     page: 'index',
     isActive,
   },
-  {
-    name: 'collections',
-    isActive,
-  },
+  // {
+  //   name: 'collections',
+  //   isActive,
+  // },
   // {
   //   name: 'partners',
   //   isActive,

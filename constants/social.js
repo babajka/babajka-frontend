@@ -1,3 +1,5 @@
+export const USER_PIC = '/static/images/team/placeholder.png';
+
 export const NETWORKS = [
   {
     name: 'facebook',
