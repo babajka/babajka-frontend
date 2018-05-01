@@ -26,6 +26,10 @@ export const getLocalizedBrand = ({ slug, imageUrl, names }, lang) => ({
   name: localize(names, lang),
 });
 
+export const getLocalizedCollection = ({ name }, lang) => ({
+  name: localize(name, lang),
+});
+
 export const getLocalizedBrands = (brands, lang) =>
   brands && brands.map(brand => getLocalizedBrand(brand, lang));
 
@@ -36,13 +40,17 @@ export const getLocalizedArticle = (article, lang) => {
   if (!article) {
     return null;
   }
-  const { brand, type, locales, author, imageUrl } = article;
+  const { brand, type, locales, author, imageUrl, collectionId, publishAt } = article;
   return {
     ...localize(locales, lang),
     author: getLocalizedAuthor(author, lang),
     brand: getLocalizedBrand(brand, lang),
     imageUrl,
     type,
+    // TODO(andemerie): add 'collection' field to all 'article' objects on server, even if this
+    // article doesn't belong to any collection; remove the following check, when it is implemented
+    collection: collectionId ? getLocalizedCollection(collectionId, lang) : null,
+    publishAt,
   };
 };
 

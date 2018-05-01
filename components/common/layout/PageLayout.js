@@ -11,7 +11,8 @@ export default ({ children, title, url }) => (
       <div className="babajka-root">
         <div className="babajka-content">
           <Header />
-          <div className="page-content">{children}</div>
+          {/* <div className="page-content">{children}</div> */}
+          {children}
           <Footer />
         </div>
       </div>

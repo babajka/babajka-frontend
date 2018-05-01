@@ -9,4 +9,6 @@ const LOCALES = {
 
 const LANGS = Object.entries(LOCALES).map(([id, label]) => ({ id, label }));
 
-module.exports = { LOCALES, DEFAULT_LOCALE, LANGS };
+const DATE_FORMAT = 'D MMMM YYYY';
+
+module.exports = { LOCALES, DEFAULT_LOCALE, LANGS, DATE_FORMAT };
