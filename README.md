@@ -23,6 +23,8 @@ Next.js &amp; React app
 * `npm run storybook:build` to build static version of storybook
 * `npm run storybook:deploy` to deploy storybook on
   [`gh-pages`](https://babajka.github.io/babajka-frontend)
+* `npm run reset-cache` to delete `.next` builded & cached files
+* `npm run analyze` to check bundle sizes with [`webpack-bundle-analyzer`](https://github.com/webpack-contrib/webpack-bundle-analyzer)
 
 ## configuration
 
