@@ -9,7 +9,6 @@ import Clickable from 'components/common/Clickable';
 
 import { actions as diaryActions, selectors as diarySelectors } from 'redux/ducks/diary';
 
-import getTruncatedText from 'utils/text';
 import { isToday } from 'utils/validators';
 
 const mapStateToProps = state => ({
@@ -21,8 +20,6 @@ const mapDispatchToProps = {
   getNext: () => diaryActions.getClosest('next'),
   getPrev: () => diaryActions.getClosest('prev'),
 };
-
-const MAX_WORDS_NUMBER = 70;
 
 const NAV_BUTTONS = {
   next: {
@@ -88,8 +85,8 @@ class Diary extends Component {
     const { diary: { author, text, date }, getNext, getPrev } = this.props;
 
     return (
-      <div className="diary-article tile is-parent">
-        <article className="card tile is-child notification is-flex">
+      <div className="tile is-parent">
+        <article className="diary-article card tile notification is-flex">
           <h1 className="title has-text-primary">
             <Text id="diary.title" />
           </h1>
@@ -100,10 +97,17 @@ class Diary extends Component {
           {!isToday(date) && this.renderNavigationButton(getNext, NAV_BUTTONS.next)}
 
           {text ? (
-            <div className="content diary">{getTruncatedText(text, MAX_WORDS_NUMBER)}</div>
+            <div className="content">
+              <div className="diary">{text}</div>
+              <div className="ellipsis">...</div>
+            </div>
           ) : (
-            <div className="no-text">
-              <Text id="diary.noText" />
+            <div className="no-content">
+              <img
+                className="logo-image"
+                src="/static/images/logo/turq-transparent.png"
+                alt="Wir.by logo"
+              />
             </div>
           )}
 
