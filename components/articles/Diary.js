@@ -86,42 +86,44 @@ class Diary extends Component {
 
     return (
       <div className="tile is-parent">
-        <article className="diary-article card tile notification is-flex">
-          <h1 className="title has-text-primary">
-            <Text id="diary.title" />
-          </h1>
+        <div className="card tile is-child diary-wrapper">
+          <article className="diary-article">
+            <h1 className="title has-text-primary">
+              <Text id="diary.title" />
+            </h1>
 
-          {this.renderDateElement()}
+            {this.renderDateElement()}
+
+            {text ? (
+              <div className="diary-content">
+                <div className="text">{text}</div>
+                <div className="ellipsis">...</div>
+              </div>
+            ) : (
+              <div className="no-content">
+                <img
+                  className="logo-image"
+                  src="/static/images/logo/turq-transparent.png"
+                  alt="Wir.by logo"
+                />
+              </div>
+            )}
+
+            <div className="control">
+              <span className="subtitle author">{author}</span>
+              {text && (
+                <button className="button is-light read-btn" onClick={this.toggleModal}>
+                  <Text id="diary.read" />
+                </button>
+              )}
+            </div>
+          </article>
 
           {this.renderNavigationButton(getPrev, NAV_BUTTONS.prev)}
           {!isToday(date) && this.renderNavigationButton(getNext, NAV_BUTTONS.next)}
 
-          {text ? (
-            <div className="content">
-              <div className="diary">{text}</div>
-              <div className="ellipsis">...</div>
-            </div>
-          ) : (
-            <div className="no-content">
-              <img
-                className="logo-image"
-                src="/static/images/logo/turq-transparent.png"
-                alt="Wir.by logo"
-              />
-            </div>
-          )}
-
-          <div className="control">
-            <span className="subtitle">{author}</span>
-            {text && (
-              <button className="button is-light read-btn" onClick={this.toggleModal}>
-                <Text id="diary.read" />
-              </button>
-            )}
-          </div>
-
           {this.renderModalElement()}
-        </article>
+        </div>
       </div>
     );
   }
