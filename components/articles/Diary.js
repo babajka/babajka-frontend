@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import Modal from 'components/common/Modal';
-import Text from 'components/common/Text';
+import Text, { localize } from 'components/common/Text';
 import Clickable from 'components/common/Clickable';
 
 import { actions as diaryActions, selectors as diarySelectors } from 'redux/ducks/diary';
-
 import { isToday } from 'utils/validators';
+import { DEFAULT_LOCALE } from 'constants';
 
 const mapStateToProps = state => ({
   diary: diarySelectors.getCurrent(state),
@@ -25,10 +25,12 @@ const NAV_BUTTONS = {
   next: {
     className: 'arrow-right',
     iconClassName: 'fa-chevron-right',
+    title: 'diary.next',
   },
   prev: {
     className: 'arrow-left',
     iconClassName: 'fa-chevron-left',
+    title: 'diary.previous',
   },
 };
 
@@ -52,23 +54,27 @@ class Diary extends Component {
     </div>
   );
 
-  renderNavigationButton = (handleClick, { className, iconClassName }) => (
-    <Clickable
-      className={classNames('icon is-small arrow', className)}
-      onClick={handleClick}
-      onKeyPress={() => {}}
-    >
-      <i className={classNames('fa', iconClassName)} />
-    </Clickable>
-  );
+  renderNavigationButton = (handleClick, { className, iconClassName, title }) => {
+    const { lang } = this.props;
+    return (
+      <Clickable
+        className={classNames('icon is-small arrow', className)}
+        onClick={handleClick}
+        title={localize(title, lang)}
+        onKeyPress={() => {}}
+      >
+        <i className={classNames('fa', iconClassName)} />
+      </Clickable>
+    );
+  };
 
   renderModalElement = () => {
-    const { diary: { text, author } } = this.props;
+    const { diary: { text, author }, lang } = this.props;
     const { isModalActive } = this.state;
     return (
       <Modal
         isActive={isModalActive}
-        title={<Text id="diary.title" />}
+        title={localize('diary.title', lang)}
         toggle={this.toggleModal}
         renderBody={() => (
           <div>
@@ -137,9 +143,14 @@ export const DiaryModel = {
 
 Diary.propTypes = {
   diary: PropTypes.shape(DiaryModel).isRequired,
+  lang: PropTypes.string,
   getNext: PropTypes.func.isRequired,
   getPrev: PropTypes.func.isRequired,
   getByDay: PropTypes.func.isRequired,
+};
+
+Diary.defaultProps = {
+  lang: DEFAULT_LOCALE,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Diary);

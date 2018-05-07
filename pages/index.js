@@ -53,6 +53,8 @@ class HomePage extends Component {
   render() {
     const { articles, articlesPending, error, nextPage, getChunk, url } = this.props;
 
+    const { query: { lang } } = url;
+
     const articlesRows = getArticlesRows(articles, ROW_SIZE);
     const [firstRow, secondRow, ...remainRows] = articlesRows;
 
@@ -61,7 +63,9 @@ class HomePage extends Component {
         <div className="main-page page-container">
           <div className="page-content">
             {firstRow && <ArticlesRow articles={firstRow} className="first-line is-ancestor" />}
-            {secondRow && <ArticlesComplexRow articles={secondRow} renderDiary={() => <Diary />} />}
+            {secondRow && (
+              <ArticlesComplexRow articles={secondRow} renderDiary={() => <Diary lang={lang} />} />
+            )}
 
             {remainRows.map(data => (
               <ArticlesRow key={data[0]._id} articles={data} className="first-line is-ancestor" />
