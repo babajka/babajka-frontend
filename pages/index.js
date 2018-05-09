@@ -10,7 +10,7 @@ import Diary from 'components/articles/Diary';
 import ArticlesComplexRow from 'components/articles/grid/ArticlesComplexRow';
 
 import { ArticlesArray } from 'utils/customPropTypes';
-import { getArticlesRows } from 'utils/getters';
+import { getMainArticlesRows } from 'utils/getters';
 
 import initStore from 'redux/store';
 import { actions as articlesActions, selectors as articlesSelectors } from 'redux/ducks/articles';
@@ -55,7 +55,8 @@ class HomePage extends Component {
 
     const { query: { lang } } = url;
 
-    const articlesRows = getArticlesRows(articles, ROW_SIZE);
+    const COMPLEX_ROW_SIZE = 5;
+    const articlesRows = getMainArticlesRows(articles, ROW_SIZE, COMPLEX_ROW_SIZE);
     const [firstRow, secondRow, ...remainRows] = articlesRows;
 
     return (
