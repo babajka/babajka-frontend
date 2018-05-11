@@ -74,7 +74,7 @@ class Request {
       this.cookie = `${SESSION_COOKIE}=${req.cookies[SESSION_COOKIE]}`;
     }
 
-    /* @tyndria: fix the line below, can't get why do we need to pass parameter isServer
+    /* @tyndria: I changed the line below, can't get why do we need to pass parameter isServer
     *  const actions = actionsToLoad.map(action => action(isServer)); */
     const actions = actionsToLoad.map(action => action());
     actions.forEach(action => dispatch(action));

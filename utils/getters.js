@@ -1,5 +1,6 @@
 import fromPairs from 'lodash/fromPairs';
 import chunk from 'lodash/chunk';
+import moment from 'moment';
 import { DEFAULT_LOCALE } from 'constants';
 
 // here is rules for localization:
@@ -77,10 +78,8 @@ export const getLocalizedVacancies = (vacancies, lang) =>
     description: localize(description, lang),
   }));
 
-export const getDate = (day, month, year) => day && month && year && new Date(day, month, year);
-
 export const getDiary = ({ author = '', text = '', day, month, year }) => ({
   author,
   text,
-  date: getDate(day, month, year) || new Date(),
+  date: moment({ day, month, year }) || moment(),
 });
