@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const hasErrors = errors => !!Object.values(errors).filter(Boolean).length;
 
 const emailRegexp = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/;
@@ -10,7 +12,7 @@ export const required = (field, massageId = 'forms.required') => (field ? null :
 
 export const checkLength = (value, length, massageId) => (value.length < length ? massageId : null);
 
-export const isToday = date => new Date(date).toDateString() === new Date().toDateString();
+export const isToday = date => moment(date).isSame(moment(), 'day');
 
 const slugRegexp = /^[a-zA-Z0-9_-]+$/;
 export const isSlug = (slug, messageId = 'article.slug-req') =>

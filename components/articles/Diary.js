@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import classNames from 'classnames';
 
 import Modal from 'components/common/Modal';
@@ -41,18 +42,23 @@ class Diary extends Component {
   }
 
   componentDidMount() {
-    const { getByDay } = this.props;
-    getByDay();
+    this.props.getByDay();
   }
 
   toggleModal = () => this.setState(prevState => ({ isModalActive: !prevState.isModalActive }));
 
-  renderDateElement = () => (
-    <div className="date">
-      {/* TODO: discuss how to represent date depending on locale */}
-      <div className="is-pulled-right">{new Date(this.props.diary.date).toDateString()}</div>
-    </div>
-  );
+  renderDateElement = () => {
+    const { lang, diary: { date } } = this.props;
+    return (
+      <div className="date">
+        <div className="is-pulled-right">
+          {moment(date)
+            .locale(lang)
+            .format('LL')}
+        </div>
+      </div>
+    );
+  };
 
   renderNavigationButton = (handleClick, { className, iconClassName, title }) => {
     const { lang } = this.props;
@@ -78,8 +84,8 @@ class Diary extends Component {
         toggle={this.toggleModal}
         renderBody={() => (
           <div>
+            <div className="diary-content">{text}</div>
             {this.renderDateElement()}
-            <div className="content diary">{text}</div>
           </div>
         )}
         renderFooter={() => <span className="subtitle">{author}</span>}
