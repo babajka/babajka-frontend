@@ -1,11 +1,14 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const webpack = require('webpack');
 const StatsPlugin = require('stats-webpack-plugin');
 
 const { ANALYZE } = process.env;
 
 module.exports = {
   webpack(config, { isServer }) {
+    config.plugins.push(new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en-au|ru|be/));
+
     if (ANALYZE) {
       config.plugins.push(
         new BundleAnalyzerPlugin({
