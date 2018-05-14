@@ -62,27 +62,25 @@ class HomePage extends Component {
     return (
       <PageLayout url={url} title="header.home">
         <div className="main-page page-container">
-          <div className="page-content">
-            {firstRow && <ArticlesRow articles={firstRow} className="first-line is-ancestor" />}
-            {secondRow && (
-              <ArticlesComplexRow articles={secondRow} renderDiary={() => <Diary lang={lang} />} />
-            )}
+          {firstRow && <ArticlesRow articles={firstRow} className="first-line is-ancestor" />}
+          {secondRow && (
+            <ArticlesComplexRow articles={secondRow} renderDiary={() => <Diary lang={lang} />} />
+          )}
 
-            {remainRows.map(data => (
-              <ArticlesRow key={data[0]._id} articles={data} className="first-line is-ancestor" />
-            ))}
-            {nextPage && (
-              <div className="load-more" align="center">
-                <Button
-                  className="button"
-                  pending={articlesPending}
-                  onClick={() => getChunk(nextPage, PAGE_SIZE)}
-                >
-                  <Text id="home.loadMore" />
-                </Button>
-              </div>
-            )}
-          </div>
+          {remainRows.map(data => (
+            <ArticlesRow key={data[0]._id} articles={data} className="first-line is-ancestor" />
+          ))}
+          {nextPage && (
+            <div className="load-more" align="center">
+              <Button
+                className="button"
+                pending={articlesPending}
+                onClick={() => getChunk(nextPage, PAGE_SIZE)}
+              >
+                <Text id="home.loadMore" />
+              </Button>
+            </div>
+          )}
         </div>
         {error && <p>{error}</p>}
       </PageLayout>

@@ -10,8 +10,8 @@ const FIRST_LINE_END = 2;
 const SECOND_LINE_END = 5;
 
 const ArticlesComplexRow = ({ articles, renderDiary }) => (
-  <div>
-    <div className="tile">
+  <div className="second-line">
+    <div className="tile is-ancestor">
       {articles &&
         articles
           .slice(0, FIRST_LINE_END)
@@ -22,7 +22,10 @@ const ArticlesComplexRow = ({ articles, renderDiary }) => (
       {renderDiary()}
     </div>
 
-    <ArticleRow articles={articles.slice(FIRST_LINE_END, SECOND_LINE_END)} />
+    <ArticleRow
+      className="is-ancestor"
+      articles={articles.slice(FIRST_LINE_END, SECOND_LINE_END)}
+    />
   </div>
 );
 
