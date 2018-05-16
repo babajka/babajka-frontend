@@ -7,10 +7,12 @@ import classNames from 'classnames';
 import Modal from 'components/common/Modal';
 import Text, { localize } from 'components/common/Text';
 import Clickable from 'components/common/Clickable';
+import Icon from 'components/common/Icon';
+import Button from 'components/common/Button';
 
 import { actions as diaryActions, selectors as diarySelectors } from 'redux/ducks/diary';
 import { isToday } from 'utils/validators';
-import { DEFAULT_LOCALE } from 'constants';
+import { DEFAULT_LOCALE, DATE_FORMAT } from 'constants';
 
 const mapStateToProps = state => ({
   diary: diarySelectors.getCurrent(state),
@@ -25,12 +27,12 @@ const mapDispatchToProps = {
 const NAV_BUTTONS = {
   next: {
     className: 'arrow-right',
-    iconClassName: 'fa-chevron-right',
+    iconClassName: 'chevron-right',
     title: 'diary.next',
   },
   prev: {
     className: 'arrow-left',
-    iconClassName: 'fa-chevron-left',
+    iconClassName: 'chevron-left',
     title: 'diary.previous',
   },
 };
@@ -54,7 +56,7 @@ class Diary extends Component {
         <div className="is-pulled-right">
           {moment(date)
             .locale(lang)
-            .format('LL')}
+            .format(DATE_FORMAT)}
         </div>
       </div>
     );
@@ -67,9 +69,8 @@ class Diary extends Component {
         className={classNames('icon is-small arrow', className)}
         onClick={handleClick}
         title={localize(title, lang)}
-        onKeyPress={() => {}}
       >
-        <i className={classNames('fa', iconClassName)} />
+        <Icon name={iconClassName} />
       </Clickable>
     );
   };
@@ -124,9 +125,9 @@ class Diary extends Component {
             <div className="control">
               <span className="subtitle author">{author}</span>
               {text && (
-                <button className="button is-light read-btn" onClick={this.toggleModal}>
+                <Button className="button is-light read-btn" onClick={this.toggleModal}>
                   <Text id="diary.read" />
-                </button>
+                </Button>
               )}
             </div>
           </article>

@@ -3,11 +3,17 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const webpack = require('webpack');
 const StatsPlugin = require('stats-webpack-plugin');
 
+const { LOCALES } = require('./constants');
+
+const langs = Object.keys(LOCALES).join('|');
+
 const { ANALYZE } = process.env;
 
 module.exports = {
   webpack(config, { isServer }) {
-    config.plugins.push(new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en-au|ru|be/));
+    config.plugins.push(
+      new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, new RegExp(langs))
+    );
 
     if (ANALYZE) {
       config.plugins.push(
