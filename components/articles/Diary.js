@@ -12,7 +12,7 @@ import Button from 'components/common/Button';
 
 import { actions as diaryActions, selectors as diarySelectors } from 'redux/ducks/diary';
 import { isToday } from 'utils/validators';
-import { DEFAULT_LOCALE, DATE_FORMAT } from 'constants';
+import { DATE_FORMAT } from 'constants';
 
 const mapStateToProps = state => ({
   diary: diarySelectors.getCurrent(state),
@@ -144,20 +144,16 @@ class Diary extends Component {
 
 export const DiaryModel = {
   text: PropTypes.string.isRequired,
-  date: PropTypes.instanceOf(Date).isRequired,
+  date: PropTypes.PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]).isRequired,
   author: PropTypes.string.isRequired,
 };
 
 Diary.propTypes = {
   diary: PropTypes.shape(DiaryModel).isRequired,
-  lang: PropTypes.string,
+  lang: PropTypes.string.isRequired,
   getNext: PropTypes.func.isRequired,
   getPrev: PropTypes.func.isRequired,
   getByDay: PropTypes.func.isRequired,
-};
-
-Diary.defaultProps = {
-  lang: DEFAULT_LOCALE,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Diary);

@@ -21,11 +21,12 @@ const Clickable = ({ tag, onClick, children, ...props }) => {
 Clickable.propTypes = {
   tag: PropTypes.string,
   onClick: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
 };
 
 Clickable.defaultProps = {
   tag: 'span',
+  children: null,
 };
 
 export default Clickable;
