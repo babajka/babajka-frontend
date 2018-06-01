@@ -9,13 +9,12 @@ import ArticlesRow from 'components/articles/grid/ArticlesRow';
 import Diary from 'components/articles/Diary';
 import ArticlesComplexRow from 'components/articles/grid/ArticlesComplexRow';
 
-import { ArticlesArray, DiaryShape } from 'utils/customPropTypes';
-import { getArticlesRows } from 'utils/getters';
+import { ArticlesArray } from 'utils/customPropTypes';
+import { getMainArticlesRows } from 'utils/getters';
 
 import initStore from 'redux/store';
 import { actions as articlesActions, selectors as articlesSelectors } from 'redux/ducks/articles';
 import { actions as auth } from 'redux/ducks/auth';
-import { actions as diaryActions, selectors as diarySelectors } from 'redux/ducks/diary';
 import request from 'utils/request';
 
 const mapStateToProps = (state, { url: { query } }) => ({
@@ -23,11 +22,9 @@ const mapStateToProps = (state, { url: { query } }) => ({
   articlesPending: articlesSelectors.isPending(state),
   nextPage: articlesSelectors.getNextPage(state),
   error: articlesSelectors.isError(state),
-  diary: diarySelectors.getCurrent(state),
 });
 
 const mapDispatchToProps = {
-  getByDay: diaryActions.getByDay,
   getChunk: articlesActions.fetchChunk,
 };
 
@@ -41,37 +38,25 @@ class HomePage extends Component {
     }).isRequired,
     articles: ArticlesArray.isRequired,
     articlesPending: PropTypes.bool.isRequired,
-    diary: DiaryShape.isRequired,
     nextPage: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]).isRequired,
     getChunk: PropTypes.func.isRequired,
-    getByDay: PropTypes.func.isRequired,
     error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   };
 
   static getInitialProps(ctx) {
     // TODO: somehow extract getCurrentUser to populate method
-    const initialRequests = [
-      auth.getCurrentUser,
-      // diaryActions.getByDay.bind(null, DEFAULT_LOCALE, '02', '13'), // FIXME(@tyndria) temporarily
-      articlesActions.fetchChunk,
-    ];
+    const initialRequests = [auth.getCurrentUser, articlesActions.fetchChunk];
 
     return request.populate(ctx, initialRequests);
   }
 
   render() {
-    const {
-      articles,
-      articlesPending,
-      error,
-      diary,
-      nextPage,
-      getByDay,
-      getChunk,
-      url,
-    } = this.props;
+    const { articles, articlesPending, error, nextPage, getChunk, url } = this.props;
 
-    const articlesRows = getArticlesRows(articles, ROW_SIZE);
+    const { query: { lang } } = url;
+
+    const COMPLEX_ROW_SIZE = 5;
+    const articlesRows = getMainArticlesRows(articles, ROW_SIZE, COMPLEX_ROW_SIZE);
     const [firstRow, secondRow, ...remainRows] = articlesRows;
 
     return (
@@ -79,12 +64,7 @@ class HomePage extends Component {
         <div className="main-page page-container">
           {firstRow && <ArticlesRow articles={firstRow} className="first-line is-ancestor" />}
           {secondRow && (
-            <ArticlesComplexRow
-              articles={secondRow}
-              renderDiary={() => (
-                <Diary {...diary} getNextDiary={() => getByDay()} getPrevDiary={() => getByDay()} />
-              )}
-            />
+            <ArticlesComplexRow articles={secondRow} renderDiary={() => <Diary lang={lang} />} />
           )}
 
           {remainRows.map(data => (

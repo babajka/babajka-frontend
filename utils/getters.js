@@ -1,5 +1,6 @@
 import fromPairs from 'lodash/fromPairs';
 import chunk from 'lodash/chunk';
+import moment from 'moment';
 import { DEFAULT_LOCALE } from 'constants';
 
 // here is rules for localization:
@@ -53,6 +54,13 @@ export const getShortLocale = ({ locale, slug, title }) => ({ locale, slug, titl
 
 export const getArticlesRows = (articles, rowSize) => chunk(articles, rowSize);
 
+export const getMainArticlesRows = (articles, rowSize, complexRowSize) => {
+  const firstRow = articles.slice(0, rowSize);
+  const secondRowEnd = rowSize + complexRowSize;
+  const secondRow = articles.slice(rowSize, secondRowEnd);
+  return [firstRow, secondRow, ...getArticlesRows(articles.slice(secondRowEnd), rowSize)];
+};
+
 export const getLocalizedTeam = (team, lang) =>
   team &&
   team.map(({ name, role, ...rest }, index) => ({
@@ -69,3 +77,9 @@ export const getLocalizedVacancies = (vacancies, lang) =>
     title: localize(title, lang),
     description: localize(description, lang),
   }));
+
+export const getDiary = ({ author = '', text = '', day, month, year }) => ({
+  author,
+  text,
+  date: (moment({ day, month, year }) || moment()).valueOf(),
+});

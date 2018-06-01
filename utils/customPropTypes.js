@@ -48,15 +48,4 @@ export const ArticleShape = PropTypes.shape(ArticleModel);
 
 export const ArticlesArray = PropTypes.arrayOf(ArticleShape);
 
-export const DiaryModel = {
-  text: PropTypes.string.isRequired,
-  colloquialDate: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired,
-  year: PropTypes.string.isRequired,
-  getNextDiary: PropTypes.func,
-  getPrevDiary: PropTypes.func,
-};
-
-export const DiaryShape = PropTypes.shape(DiaryModel);
-
 export const LangType = PropTypes.oneOf(Object.keys(LOCALES));

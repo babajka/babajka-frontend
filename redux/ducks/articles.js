@@ -60,11 +60,11 @@ export default createReducer(
   initialState
 );
 
-const DEFAULT_PAGE_SIZE = 8;
+const MAIN_PAGE_SIZE = 9;
 
 // actions
 export const actions = {
-  fetchChunk: (page = FIRST_PAGE, pageSize = DEFAULT_PAGE_SIZE) => ({
+  fetchChunk: (page = FIRST_PAGE, pageSize = MAIN_PAGE_SIZE) => ({
     type: FETCH_CHUNK,
     payload: request.fetch(api.articles.getChunk({ page, pageSize })),
   }),
