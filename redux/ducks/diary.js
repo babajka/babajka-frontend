@@ -18,7 +18,7 @@ const initialState = {
   data: {
     author: '',
     text: '',
-    date: new Date(),
+    date: Date.now(),
   },
   next: null,
   prev: null,

@@ -144,7 +144,7 @@ class Diary extends Component {
 
 export const DiaryModel = {
   text: PropTypes.string.isRequired,
-  date: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]).isRequired,
+  date: PropTypes.number.isRequired,
   author: PropTypes.string.isRequired,
 };
 
