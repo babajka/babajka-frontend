@@ -12,6 +12,7 @@ const ArticlesRow = ({ articles, className }) => (
       articles.map(article => (
         <ArticlePreview key={article.articleId} imageClassName="is-3by2" {...article} />
       ))}
+    {Array(Math.max(0, 3 - articles.length)).fill(<div className="tile" />)}
   </div>
 );
 
