@@ -51,7 +51,7 @@ class AboutPage extends Component {
         <div className="about-container">
           <div className="title">Wir.by</div>
           <div className="goal">
-            <Text id="common.goal" />
+            <Text id="about.goal" />
           </div>
           <hr />
           {vacancies &&
@@ -59,9 +59,9 @@ class AboutPage extends Component {
               <Fragment>
                 <div className="helpus">
                   <div className="title">
-                    <Text id="common.join-us" />
+                    <Text id="about.join-us" />
                   </div>
-                  <Text id="common.looking-for" />
+                  <Text id="about.looking-for" />
                   <div className="positions is-centered">
                     {vacancies.map(vacancy => (
                       <Clickable
@@ -91,29 +91,36 @@ class AboutPage extends Component {
               <Fragment>
                 <div className="team">
                   <div className="title">
-                    <Text id="common.team" />
+                    <Text id="about.team" />
                   </div>
                   {/* eslint-disable-next-line react/no-array-index-key */}
                   {teamChunks.map((data, index) => <TeamRow key={index} data={data} />)}
                   <div className="thanks">
-                    Выражаем падзяку <b>Ганне Бучко</b> (лагатып) і <b>Даніілу Пячэнка</b>{' '}
-                    (саўндтрэк да лекцый).
+                    <Text id="about.thanks-beginning" />{' '}
+                    <b>
+                      <Text id="about.thanks-hanna" />{' '}
+                    </b>
+                    <Text id="about.thanks-logo-and" />{' '}
+                    <b>
+                      <Text id="about.thanks-daniil" />{' '}
+                    </b>
+                    <Text id="about.thanks-soundtrack" />
                   </div>
                 </div>
                 <hr />
               </Fragment>
             )}
           <div className="contact">
-            <Text id="common.find-us" />
+            <Text id="about.find-us" />
             <br />
-            <Text id="common.mail-to-us" />
+            <Text id="about.mail-to-us" />
             <br />
-            <Text id="common.mail-to-dev" /> <MailLink />
+            <Text id="about.mail-to-dev" /> <MailLink />
             <br />
-            <Text id="common.mail-to-help" /> <MailLink to="help" />
+            <Text id="about.mail-to-help" /> <MailLink to="help" />
             <div className="talaka">
               <span className="talaka-text">
-                <Text id="common.we-on" />
+                <Text id="about.we-on" />
               </span>{' '}
               <a className="talaka" href="https://www.talaka.org/projects/2495/overview">
                 <img
@@ -123,7 +130,7 @@ class AboutPage extends Component {
                   width="30"
                 />{' '}
                 <span className="talaka-text">
-                  <Text id="common.talaka" />
+                  <Text id="about.talaka" />
                 </span>
               </a>
             </div>

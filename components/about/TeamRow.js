@@ -16,13 +16,15 @@ const Teammate = ({ image, name, role }) => (
 
 const TeamCol = ({ data }) => (
   <div className="column">
-    <div className="columns">{data.map(user => <Teammate key={user.id} {...user} />)}</div>
+    <div className="columns">
+      {data.map(user => <Teammate key={user.id} {...user} />)}
+      {Array(Math.max(0, 3 - data.length)).fill(<div className="column is-4" />)}
+    </div>
   </div>
 );
 
 const TeamRow = ({ data }) => (
   <div className="columns is-centered is-desktop">
-    {data.length < ROW_SIZE && <div className="column is-3" />}
     {/* eslint-disable-next-line react/no-array-index-key */}
     {chunk(data, COL_SIZE).map((colData, index) => <TeamCol key={index} data={colData} />)}
   </div>
