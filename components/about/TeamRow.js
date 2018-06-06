@@ -18,7 +18,7 @@ const TeamCol = ({ data }) => (
   <div className="column">
     <div className="columns">
       {data.map(user => <Teammate key={user.id} {...user} />)}
-      {Array(Math.max(0, 3 - data.length)).fill(<div className="column is-4" />)}
+      {Array(Math.max(0, COL_SIZE - data.length)).fill(<div className="column is-4" />)}
     </div>
   </div>
 );
