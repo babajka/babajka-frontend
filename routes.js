@@ -25,7 +25,7 @@ const NAVBAR_ROUTES = [
   {
     name: 'createArticle',
     pattern: 'articles/:mode(create)',
-    page: 'article',
+    page: 'editArticle',
     params: {
       mode: 'create',
     },
@@ -51,7 +51,11 @@ const ROUTES = [
   },
   {
     name: 'article',
-    pattern: 'article/:slug/:mode(edit)?',
+    pattern: 'article/:slug',
+  },
+  {
+    name: 'editArticle',
+    pattern: 'article/:slug/:mode(edit)',
   },
 ].map(({ name, pattern = name, page = name }) => ({
   name,

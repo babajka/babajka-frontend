@@ -53,7 +53,7 @@ const PublicArticle = ({
                 id="article.edit-article"
                 render={t => (
                   <Link
-                    route={ROUTES_NAMES.article}
+                    route={ROUTES_NAMES.editArticle}
                     params={{ slug: articleId, mode: 'edit', articleLocale }}
                   >
                     <a className="icon-button button is-hidden-desktop" title={t}>
@@ -143,7 +143,7 @@ const PublicArticle = ({
                   id="article.edit-article"
                   render={t => (
                     <Link
-                      route={ROUTES_NAMES.article}
+                      route={ROUTES_NAMES.editArticle}
                       params={{ slug: articleId, mode: 'edit', articleLocale }}
                     >
                       <a
