@@ -3,7 +3,7 @@ import chunk from 'lodash/chunk';
 import moment from 'moment';
 import { DEFAULT_LOCALE } from 'constants';
 
-// here is rules for localization:
+// here are the rules for localization:
 // 1. requested lang
 // 2. default (be)
 // 3. any existing
