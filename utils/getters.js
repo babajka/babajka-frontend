@@ -27,8 +27,16 @@ export const getLocalizedBrand = ({ slug, imageUrl, names }, lang) => ({
   name: localize(names, lang),
 });
 
-export const getLocalizedCollection = ({ name }, lang) => ({
+export const getLocalizedCollection = (
+  { slug, imageUrl, name, description, prev, next },
+  lang
+) => ({
+  slug,
+  imageUrl,
   name: localize(name, lang),
+  description: localize(description, lang),
+  prev: prev && getLocalizedArticle(prev), // eslint-disable-line no-use-before-define
+  next: next && getLocalizedArticle(next), // eslint-disable-line no-use-before-define
 });
 
 export const getLocalizedBrands = (brands, lang) =>
@@ -41,16 +49,14 @@ export const getLocalizedArticle = (article, lang) => {
   if (!article) {
     return null;
   }
-  const { brand, type, locales, author, imageUrl, collectionId, publishAt } = article;
+  const { brand, type, locales, author, imageUrl, collection, publishAt } = article;
   return {
     ...localize(locales, lang),
-    author: getLocalizedAuthor(author, lang),
-    brand: getLocalizedBrand(brand, lang),
+    author: author && getLocalizedAuthor(author, lang),
+    brand: brand && getLocalizedBrand(brand, lang),
+    collection: collection && getLocalizedCollection(collection, lang),
     imageUrl,
     type,
-    // TODO(andemerie): add 'collection' field to all 'article' objects on server, even if this
-    // article doesn't belong to any collection; remove the following check, when it is implemented
-    collection: collectionId ? getLocalizedCollection(collectionId, lang) : null,
     publishAt,
   };
 };

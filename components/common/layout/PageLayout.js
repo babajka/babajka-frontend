@@ -11,8 +11,8 @@ export default ({ children, title, url }) => (
       <div className="babajka-root">
         <div className="babajka-content">
           <Header />
-          {/* <div className="page-content">{children}</div> */}
-          {children}
+          {/* possible issues with article page due to `page-content` */}
+          <div className="page-content">{children}</div>
           <Footer />
         </div>
       </div>

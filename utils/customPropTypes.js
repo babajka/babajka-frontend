@@ -32,6 +32,15 @@ export const AuthorModel = {
 
 export const AuthorShape = PropTypes.shape(AuthorModel);
 
+export const CollectionModel = {
+  name: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string,
+};
+
+export const CollectionShape = PropTypes.shape(CollectionModel);
+
 export const ArticleModel = {
   articleId: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,

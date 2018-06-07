@@ -27,4 +27,6 @@ export const NETWORKS = [
   },
 ];
 
+export const EXPORT_TO_NETWORS = ['facebook', 'vk', 'twitter'];
+
 export const GA_ID = 'UA-117143376-1';
