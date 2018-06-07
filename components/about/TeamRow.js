@@ -14,14 +14,17 @@ const Teammate = ({ image, name, role }) => (
   </div>
 );
 
-const TeamCol = ({ data }) => (
-  <div className="column">
-    <div className="columns">
-      {data.map(user => <Teammate key={user.id} {...user} />)}
-      {Array(Math.max(0, COL_SIZE - data.length)).fill(<div className="column is-4" />)}
+const TeamCol = ({ data }) => {
+  const length = Math.max(0, COL_SIZE - data.length);
+  return (
+    <div className="column">
+      <div className="columns">
+        {data.map(user => <Teammate key={user.id} {...user} />)}
+        {Array.from({ length }, (_, i) => <div key={`empty-tile-${i}`} className="column is-4" />)}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const TeamRow = ({ data }) => (
   <div className="columns is-centered is-desktop">

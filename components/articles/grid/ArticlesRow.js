@@ -8,15 +8,18 @@ import ArticlePreview from '../ArticlePreview';
 
 const MIN_TILES_IN_ROW = 3;
 
-const ArticlesRow = ({ articles, className }) => (
-  <div className={classNames(className, 'tile')}>
-    {articles &&
-      articles.map(article => (
-        <ArticlePreview key={article.articleId} imageClassName="is-3by2" {...article} />
-      ))}
-    {Array(Math.max(0, MIN_TILES_IN_ROW - articles.length)).fill(<div className="tile" />)}
-  </div>
-);
+const ArticlesRow = ({ articles, className }) => {
+  const length = Math.max(0, MIN_TILES_IN_ROW - articles.length);
+  return (
+    <div className={classNames(className, 'tile')}>
+      {articles &&
+        articles.map(article => (
+          <ArticlePreview key={article.articleId} imageClassName="is-3by2" {...article} />
+        ))}
+      {Array.from({ length }, (_, i) => <div key={`empty-tile-${i}`} className="tile" />)}
+    </div>
+  );
+};
 
 ArticlesRow.propTypes = {
   articles: ArticlesArray.isRequired,
