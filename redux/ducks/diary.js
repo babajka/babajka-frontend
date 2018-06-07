@@ -2,8 +2,10 @@ import createReducer from 'type-to-reducer';
 
 import api from 'constants/api';
 import { DEFAULT_LOCALE } from 'constants';
+
 import request from 'utils/request';
 import { defaultReducer } from 'utils/redux';
+import { getDiary } from 'utils/getters';
 
 const duck = 'specials/diary';
 
@@ -13,14 +15,22 @@ const GET_BY_DAY = `${duck}/GET_BY_DAY`;
 const initialState = {
   pending: false,
   error: false,
-  data: null,
+  data: {
+    author: '',
+    text: '',
+    date: Date.now(),
+  },
+  next: null,
+  prev: null,
 };
 
 export default createReducer(
   {
-    [GET_BY_DAY]: defaultReducer((state, { payload }) => ({
+    [GET_BY_DAY]: defaultReducer((state, { payload: { data, next, prev } }) => ({
       ...state,
-      data: payload,
+      data: getDiary(data),
+      next,
+      prev,
       pending: false,
     })),
   },
@@ -37,6 +47,13 @@ export const actions = {
     type: GET_BY_DAY,
     payload: request.fetch(api.diary.getByDay(locale, month, day)),
   }),
+  getClosest: closest => (dispatch, getState) => {
+    const { month, day } = getState().diary[closest];
+    dispatch({
+      type: GET_BY_DAY,
+      payload: request.fetch(api.diary.getByDay(DEFAULT_LOCALE, month, day)),
+    });
+  },
 };
 
 // selectors

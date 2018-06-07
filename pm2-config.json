@@ -2,6 +2,10 @@
   "apps": [{
     "name": "frontend",
     "script": "npm",
-    "args": "run start-prod"
+    "args": "run start-prod -- http://localhost:8080"
+  },{
+    "name": "frontend-production",
+    "script": "npm",
+    "args": "run start-prod -- http://localhost:8089"
   }]
 }

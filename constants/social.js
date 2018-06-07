@@ -1,4 +1,4 @@
-export const USER_PIC = '/static/images/team/placeholder.png';
+export const USER_PIC = '/static/images/placeholders/user.png';
 
 export const NETWORKS = [
   {
