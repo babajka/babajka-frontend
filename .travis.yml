@@ -1,6 +1,13 @@
 language: node_js
 node_js:
-  - '7'
+- '10'
 script:
-  - npm run lint
-  - npm run build
+- npm run lint
+- npm run build
+cache:
+  directories:
+  - node_modules
+notifications:
+  slack:
+    rooms:
+      secure: IJQ/In8oX+KAdJ4REPp81F8KIa/LTymLmWRdOLFSv06Ju+hOa69vi0DmTKgd9nYy+vzxMsJDCSStIJ+knKtfk5B6OZYNAmq/Etz388Ly2Ih/S+06XAMLJf3/uc61eLpPjmFf6fImZo+PRhPlNW21U9AEXRG0COga2T8AAH8dWPuZjbnK/kY5JyjtzuQti5/GW+M7YiYxfw7UKIiIfBxZXNYbeE1l+R9LVIaw2pwbVtDTpw61JosTTWmq/fvOsXCGYHLigJmLLLliK9f35aij4Wa612RFMSBZ0FaYbp6Flt5RlbTOuwe01u4CuAVMfc4h4DFoxCOhIU7R7ZFqX9oOTVl7Z2lVvvOYloHMzgKG20g4aV0pqVxX+yl3lh4dMQ6mtzTIaI75w9MIEzg2sxx6lMrO76P576W0L6VXs5Qt29/9MHf8CQ8MowpxTChncH6fBD66ebHX+Ixo3yTyjsDiXG9LkwFmMjE7k4/BqYcwjwO5Gb4Wn1IBWTE1iL/Nq4kIUsQ+eA2LgwxP1F/ARQZO0N8ZXfSlSiUjn0ouF4CrFgq5ZP1obT4fIi7+cJC8I54K6x8O3hcSEtdT5tHV3QettDYki/d3Eh3SuIDP5gVciLm1x+5txWrIM6zjU1AO/e8AV5SSkHSURgiv3wphw8nQUxSC4DkEknPsGPVCPbGbSVY=

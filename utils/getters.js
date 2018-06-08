@@ -27,6 +27,18 @@ export const getLocalizedBrand = ({ slug, imageUrl, names }, lang) => ({
   name: localize(names, lang),
 });
 
+export const getLocalizedCollection = (
+  { slug, imageUrl, name, description, prev, next },
+  lang
+) => ({
+  slug,
+  imageUrl,
+  name: localize(name, lang),
+  description: localize(description, lang),
+  prev: prev && getLocalizedArticle(prev), // eslint-disable-line no-use-before-define
+  next: next && getLocalizedArticle(next), // eslint-disable-line no-use-before-define
+});
+
 export const getLocalizedBrands = (brands, lang) =>
   brands && brands.map(brand => getLocalizedBrand(brand, lang));
 
@@ -37,13 +49,15 @@ export const getLocalizedArticle = (article, lang) => {
   if (!article) {
     return null;
   }
-  const { brand, type, locales, author, imageUrl } = article;
+  const { brand, type, locales, author, imageUrl, collection, publishAt } = article;
   return {
     ...localize(locales, lang),
-    author: getLocalizedAuthor(author, lang),
-    brand: getLocalizedBrand(brand, lang),
+    author: author && getLocalizedAuthor(author, lang),
+    brand: brand && getLocalizedBrand(brand, lang),
+    collection: collection && getLocalizedCollection(collection, lang),
     imageUrl,
     type,
+    publishAt,
   };
 };
 
