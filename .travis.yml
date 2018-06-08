@@ -7,3 +7,7 @@ script:
 cache:
     directories:
         - "node_modules"
+notifications:
+    slack:
+        rooms:
+            - secure: "HM1RbfTXm1IIicehYWAiUeLOe6wp/mGd1F1AbTrbpWmVwSue8bazrtAzInZn3LkXh4MerS3pPhwMQ3nSv5pHJZg0jHz0gGnA7iE5ZGpxSJaQfgBnUgi0bZfLCjW+8RRbl67D5PMrQ86yr5/jkGyRY2UPc5/9ulAvu9chcenaEeI0A/fLox7Fabh9iNIQz7HeuZwf9WZs5h3xY0+0FQfhx7TxAKdcB+mrTxJekof9mdxwY1FogFKbl8U9hXWvEOReLe8neQPAp62WGxJmgv9r+gnHFzXU31Z44pnBw+7Er0Hesctmh3YD4LMeSIqLcq3SJZnB63mclHZCR0fxmrEiOGf4y+5FDRqmwu9n7fy4m0GoeDGUmZ/5gMfwrJgdAtNqTw2q2pG128Lb4z32OCbpJruixKmVLgBdd2HEp1rtVjpkpVZwH5CuruvCcYygDmLxUSclgKfnQcjmt69MV+eJ06B5s3U9PE7MGZbl8siGHlBiWP0g1Kkhb61UPjWuS5/NnujVO1V5aaj0LBXnWbijXg0neYYQ2DC3/8/yzgPtEBokb/pXCiFpto6llGDMndepQ0utZ/mpHYhrp3shxxmUnlXmiROYoI5IHgLeoyWVOgBFWZCLeJrylsMUqZn5LvYFjk8MvoIqdFmzScIMhPGng6Y43ZzrVVRTiVqv6g1iTMU="
