@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import { ArticlesArray } from 'utils/customPropTypes';
 
-import ArticlePreview from '../ArticlePreview';
+import ArticlePreview from './ArticlePreview';
 
 const MIN_TILES_IN_ROW = 3;
 

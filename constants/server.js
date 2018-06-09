@@ -1,4 +1,4 @@
-const BACKEND_URL = process.argv[2] || process.env.BABAJKA_BACKEND_URL || 'http://api.wir.by';
+const BACKEND_URL = process.argv[2] || 'http://api.wir.by';
 const SESSION_COOKIE = 'csid';
 
 // please use commonjs modules here for compatibility with server

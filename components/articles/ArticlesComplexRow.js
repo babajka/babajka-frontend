@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { ArticlesArray } from 'utils/customPropTypes';
 
 import ArticleRow from './ArticlesRow';
-import ArticlePreview from '../ArticlePreview';
+import ArticlePreview from './ArticlePreview';
 
 const FIRST_LINE_END = 2;
 const SECOND_LINE_END = 5;

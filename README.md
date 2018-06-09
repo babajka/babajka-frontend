@@ -28,10 +28,7 @@ Next.js &amp; React app
 
 ## configuration
 
-Some variables may be set to control the frontend:
-
-* `BABAJKA_BACKEND_URL` sets URL of the Backend instance. Defaults to `http://dev.wir.by`. You might
-  want to use `http://localhost:8080` for local development.
+* `npm run dev -- http://localhost:8080` sets url to the local backend instance. (defaults to `http://api.wir.by`)
 
 ## rules
 

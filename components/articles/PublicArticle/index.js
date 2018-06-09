@@ -13,10 +13,10 @@ import { LOCALES } from 'constants';
 import { EXPORT_TO_NETWORS } from 'constants/social';
 import { ArticleModel } from 'utils/customPropTypes';
 
-import AuthorBlock from './public/AuthorBlock';
-import CollectionBlock from './public/CollectionBlock';
-import PublishInfo from './public/PublishInfo';
-import ShareToButton from './public/ShareToButton';
+import AuthorBlock from './AuthorBlock';
+import CollectionBlock from './CollectionBlock';
+import PublishInfo from './PublishInfo';
+import ShareToButton from './ShareToButton';
 
 const mapStateToProps = (state, { articleLocale }) => ({
   otherLocales: selectors.getOtherLocales(state, articleLocale),

@@ -12,7 +12,6 @@
       {
         "root": ["./"]
       }
-    ],
-    ["transform-define", "./env-config.js"]
+    ]
   ]
 }
