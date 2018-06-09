@@ -12,7 +12,11 @@ export const required = (field, massageId = 'forms.required') => (field ? null :
 
 export const checkLength = (value, length, massageId) => (value.length < length ? massageId : null);
 
-export const isToday = date => moment(date).isSame(moment(), 'day');
+export const isSameDay = date => {
+  const now = moment();
+  const day = moment(date);
+  return day.date() === now.date() && day.month() === now.month();
+};
 
 const slugRegexp = /^[a-zA-Z0-9_-]+$/;
 export const isSlug = (slug, messageId = 'article.slug-req') =>
