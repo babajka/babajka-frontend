@@ -11,7 +11,7 @@ import Icon from 'components/common/Icon';
 import Button from 'components/common/Button';
 
 import { actions as diaryActions, selectors as diarySelectors } from 'redux/ducks/diary';
-import { isToday } from 'utils/validators';
+import { isSameDay } from 'utils/validators';
 import { DATE_FORMAT } from 'constants';
 
 const mapStateToProps = state => ({
@@ -105,7 +105,7 @@ class Diary extends Component {
               <Text id="diary.title" />
             </h1>
 
-            {this.renderDateElement()}
+            {text && this.renderDateElement()}
 
             {text ? (
               <div className="diary-content">
@@ -133,7 +133,7 @@ class Diary extends Component {
           </article>
 
           {this.renderNavigationButton(getPrev, NAV_BUTTONS.prev)}
-          {!isToday(date) && this.renderNavigationButton(getNext, NAV_BUTTONS.next)}
+          {!isSameDay(date) && this.renderNavigationButton(getNext, NAV_BUTTONS.next)}
 
           {this.renderModalElement()}
         </div>
