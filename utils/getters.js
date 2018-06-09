@@ -95,5 +95,5 @@ export const getLocalizedVacancies = (vacancies, lang) =>
 export const getDiary = ({ author = '', text = '', day, month, year }) => ({
   author,
   text,
-  date: (moment({ day, month, year }) || moment()).valueOf(),
+  date: ((month && moment({ day, month: month - 1, year })) || moment()).valueOf(),
 });
