@@ -10,11 +10,14 @@ import {
   getLocalesBySlug,
   getShortLocale,
 } from 'utils/getters';
+import { PAGE_SIZE, MAIN_PAGE_SIZE } from 'constants/articles';
 
 const duck = 'articles';
 
 // constants
+const INITIAL_FETCH = `${duck}/INITIAL_FETCH`;
 const FETCH_CHUNK = `${duck}/FETCH_CHUNK`;
+const MERGE_CACHED = `${duck}/MERGE_CACHED`;
 const FETCH_BY_SLUG = `${duck}/FETCH_BY_SLUG`;
 const FETCH_BRANDS = `${duck}/FETCH_BRANDS`;
 const CREATE = `${duck}/CREATE`;
@@ -25,8 +28,10 @@ const initialState = {
   pending: false,
   error: false,
   data: [],
+  nextData: [],
   current: null,
-  pagination: null,
+  pagination: {},
+  nextPagination: {},
   localeBySlug: {},
   brands: null,
 };
@@ -38,16 +43,26 @@ const currentReducer = defaultReducer((state, { payload }) => ({
   pending: false,
 }));
 
-const FIRST_PAGE = 0;
-
 export default createReducer(
   {
-    [FETCH_CHUNK]: defaultReducer((state, { payload: { data, next } }) => ({
+    [INITIAL_FETCH]: defaultReducer((state, { payload: { data, next } }) => ({
       ...state,
-      data: next.page === FIRST_PAGE + 1 ? data : [...state.data, ...data],
+      data,
       pagination: next,
       pending: false,
     })),
+    [FETCH_CHUNK]: defaultReducer((state, { payload: { data, next } }) => ({
+      ...state,
+      nextData: data,
+      nextPagination: next,
+      pending: false,
+    })),
+    [MERGE_CACHED]: state => ({
+      ...state,
+      data: [...state.data, ...state.nextData],
+      nextData: [],
+      pagination: state.nextPagination,
+    }),
     [FETCH_BY_SLUG]: currentReducer,
     [FETCH_BRANDS]: defaultReducer((state, { payload }) => ({
       ...state,
@@ -60,13 +75,18 @@ export default createReducer(
   initialState
 );
 
-const MAIN_PAGE_SIZE = 9;
-
 // actions
 export const actions = {
-  fetchChunk: (page = FIRST_PAGE, pageSize = MAIN_PAGE_SIZE) => ({
+  initialFetch: () => ({
+    type: INITIAL_FETCH,
+    payload: request.fetch(api.articles.getChunk({ page: 0, pageSize: MAIN_PAGE_SIZE })),
+  }),
+  fetchChunk: (page = 0, pageSize = PAGE_SIZE) => ({
     type: FETCH_CHUNK,
     payload: request.fetch(api.articles.getChunk({ page, pageSize })),
+  }),
+  mergeCached: () => ({
+    type: MERGE_CACHED,
   }),
   fetchBySlug: slug => ({
     type: FETCH_BY_SLUG,
@@ -95,6 +115,7 @@ const getRawArticles = state => getState(state).data;
 const getAll = (state, lang) => getLocalizedArticles(getRawArticles(state), lang);
 
 const getNextPage = state => getState(state).pagination.page;
+const getNextNextPage = state => getState(state).nextPagination.page;
 
 const getRawCurrent = state => getState(state).current;
 const getLocaleBySlug = (state, slug) => getState(state).localeBySlug[slug];
@@ -112,6 +133,7 @@ const getBrands = (state, lang) => getLocalizedBrands(getRawBrands(state), lang)
 export const selectors = {
   getAll,
   getNextPage,
+  getNextNextPage,
   getRawCurrent,
   getCurrent,
   getLocaleBySlug,

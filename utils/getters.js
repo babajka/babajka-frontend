@@ -92,8 +92,9 @@ export const getLocalizedVacancies = (vacancies, lang) =>
     description: localize(description, lang),
   }));
 
-export const getDiary = ({ author = '', text = '', day, month, year }) => ({
+export const getDiary = ({ author = '', text = '', day, month, year } = {}) => ({
   author,
   text,
+  // TODO(tyndria): extract it in some func & simplify
   date: ((month && moment({ day, month: month - 1, year })) || moment()).valueOf(),
 });
