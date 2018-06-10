@@ -14,7 +14,7 @@ import Text from 'components/common/Text';
 import Button from 'components/common/Button';
 import Clickable from 'components/common/Clickable';
 import Icon from 'components/common/Icon';
-import Editor from './Editor';
+import Editor from 'components/common/Editor';
 
 const localeFields = [
   {
@@ -111,8 +111,8 @@ const EditLocaleForm = ({ article, prefix, formApi, onRemove, pending }) => {
       </div>
       <div className="field editor">
         <Editor
-          content={get(formApi.values, `${prefix}.text`)}
-          onChange={body => formApi.setValue(`${prefix}.text`, body)}
+          content={get(formApi.values, `${prefix}.content`)}
+          onChange={content => formApi.setValue(`${prefix}.content`, content)}
         />
       </div>
       <div className="action-buttons">

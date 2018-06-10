@@ -10,3 +10,5 @@ mkdir static/stubs
 # The way it is written below works equally on both platforms.
 cp -R "${MARKUP_DIST}/static/." "static/"
 cp -R "${MARKUP_DIST}/stubs/." "static/stubs/"
+
+cp -R node_modules/Dante2/dist/ static/Dante2

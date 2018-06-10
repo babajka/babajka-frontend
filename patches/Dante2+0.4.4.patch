@@ -1,0 +1,14 @@
+patch-package
+--- a/node_modules/Dante2/lib/index.js
++++ b/node_modules/Dante2/lib/index.js
+@@ -5,8 +5,8 @@ exports.DanteEditor = exports.Dante = undefined;
+ 
+ var _init = require('./components/init.js');
+ 
+-window.Dante = _init.Dante;
+-window.DanteEditor = _init.DanteEditor;
++// window.Dante = _init.Dante;
++// window.DanteEditor = _init.DanteEditor;
+ 
+ exports.Dante = _init.Dante;
+ exports.DanteEditor = _init.DanteEditor;

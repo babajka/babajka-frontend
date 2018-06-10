@@ -22,7 +22,7 @@
     "storybook:deploy": "build-storybook && gh-pages -d storybook-static",
     "reset-cache": "rm -rf node_modules/.cache && rm -rf .next/",
     "analyze": "cross-env ANALYZE=1 next build",
-    "postinstall": "npm run copy-static && npm run update-dict && npm run update-team"
+    "postinstall": "patch-package && npm run copy-static && npm run update-dict && npm run update-team"
   },
   "lint-staged": {
     "**/*.js": [
@@ -56,10 +56,9 @@
     "react-dom": "^16.3.0",
     "react-form": "^2.15.2",
     "react-ga": "^2.4.1",
-    "react-no-ssr": "^1.1.0",
-    "react-quill": "^1.2.3",
     "react-redux": "^5.0.6",
     "react-render-html": "^0.6.0",
+    "redraft": "^0.10.1",
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
     "redux-promise-middleware": "^5.0.0",
@@ -79,7 +78,6 @@
   "main": "index.js",
   "devDependencies": {
     "babel-eslint": "^8.0.2",
-    "babel-plugin-inline-import": "^2.0.6",
     "babel-plugin-module-resolver": "^3.0.0",
     "cross-env": "^5.1.4",
     "eslint": "^4.11.0",
@@ -95,8 +93,8 @@
     "husky": "^0.14.3",
     "lint-staged": "^5.0.0",
     "onchange": "^3.2.1",
+    "patch-package": "^5.1.1",
     "prettier": "^1.8.2",
-    "raw-loader": "^0.5.1",
     "stats-webpack-plugin": "^0.6.2",
     "webpack": "^3.10.0",
     "webpack-bundle-analyzer": "^2.11.1"

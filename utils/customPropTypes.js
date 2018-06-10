@@ -46,7 +46,7 @@ export const ArticleModel = {
   slug: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
+  content: PropTypes.shape({}).isRequired,
   imageUrl: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   author: AuthorShape,
