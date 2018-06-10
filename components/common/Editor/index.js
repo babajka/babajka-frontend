@@ -1,18 +1,12 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { DanteEditor } from 'Dante2/lib';
 
-// import defaultContent from './content.json';
+import defaultContent from './content.json';
 import widgets from './widgets';
 import tooltips from './tooltips';
-import {
-  xhr,
-  dataStorage,
-  defaultWrappers,
-  continuousBlocks,
-  keyCommands,
-  characterConvertMapping,
-} from './config';
+import { defaultWrappers, continuousBlocks, keyCommands, characterConvertMapping } from './config';
 
 const config = {
   el: 'dante2-editor',
@@ -21,10 +15,6 @@ const config = {
   debug: false,
   title_placeholder: 'Title',
   body_placeholder: 'Write your story',
-
-  xhr,
-  data_storage: dataStorage,
-
   widgets,
   tooltips,
   default_wrappers: defaultWrappers,
@@ -33,11 +23,22 @@ const config = {
   character_convert_mapping: characterConvertMapping,
 };
 
-export default ({ content }) => (
+const Editor = ({ content, onChange }) => (
   <Fragment>
     <Head>
       <link rel="stylesheet" href="/static/Dante2/DanteStyles.css" />
     </Head>
-    <DanteEditor config={config} content={content} />
+    <DanteEditor config={config} content={content} onChange={onChange} />
   </Fragment>
 );
+
+Editor.propTypes = {
+  content: PropTypes.shape({}),
+  onChange: PropTypes.func.isRequired,
+};
+
+Editor.defaultProps = {
+  content: defaultContent,
+};
+
+export default Editor;

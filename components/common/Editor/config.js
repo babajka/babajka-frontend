@@ -1,19 +1,5 @@
 import React from 'react';
 
-export const xhr = {
-  before_handler: null,
-  success_handler: null,
-  error_handler: null,
-};
-
-export const dataStorage = {
-  url: null,
-  method: 'POST',
-  success_handler: null,
-  failure_handler: null,
-  interval: 1500,
-};
-
 const addBreaklines = children => children.map(child => [child, <br key="item-br" />]);
 
 export const defaultWrappers = [
