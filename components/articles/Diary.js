@@ -6,6 +6,7 @@ import classNames from 'classnames';
 
 import Modal from 'components/common/Modal';
 import Text, { localize } from 'components/common/Text';
+import TextWithBr from 'components/common/TextWithBr';
 import Clickable from 'components/common/Clickable';
 import Icon from 'components/common/Icon';
 import Button from 'components/common/Button';
@@ -85,7 +86,9 @@ class Diary extends Component {
         toggle={this.toggleModal}
         renderBody={() => (
           <div>
-            <div className="diary-content">{text}</div>
+            <div className="diary-content">
+              <TextWithBr text={text} />
+            </div>
             {this.renderDateElement()}
           </div>
         )}
@@ -109,7 +112,9 @@ class Diary extends Component {
 
             {text ? (
               <div className="diary-content">
-                <div className="text">{text}</div>
+                <div className="text">
+                  <TextWithBr text={text} />
+                </div>
                 <div className="ellipsis">...</div>
               </div>
             ) : (
