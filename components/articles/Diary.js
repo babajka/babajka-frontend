@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import classNames from 'classnames';
 
 import Modal from 'components/common/Modal';
@@ -13,7 +12,7 @@ import Button from 'components/common/Button';
 
 import { actions as diaryActions, selectors as diarySelectors } from 'redux/ducks/diary';
 import { isSameDay } from 'utils/validators';
-import { DATE_FORMAT } from 'constants';
+import { formatDate } from 'utils/formatters';
 
 const mapStateToProps = state => ({
   diary: diarySelectors.getCurrent(state),
@@ -51,14 +50,10 @@ class Diary extends Component {
   toggleModal = () => this.setState(prevState => ({ isModalActive: !prevState.isModalActive }));
 
   renderDateElement = () => {
-    const { lang, diary: { date } } = this.props;
+    const { diary: { date } } = this.props;
     return (
       <div className="date">
-        <div className="is-pulled-right">
-          {moment(date)
-            .locale(lang)
-            .format(DATE_FORMAT)}
-        </div>
+        <div className="is-pulled-right">{formatDate(date)}</div>
       </div>
     );
   };

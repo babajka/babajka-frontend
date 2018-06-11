@@ -39,6 +39,7 @@ const PublicArticle = ({
   publishAt,
   // TODO(andemerie): decide how to implement video page and where to check the following type
   // type,
+  published,
 }) => (
   <div className="article-container container">
     <div className="columns">
@@ -80,7 +81,7 @@ const PublicArticle = ({
                 )}
               />
             )} */}
-            <PublishInfo publishAt={publishAt} />
+            <PublishInfo publishAt={publishAt} published={published} />
           </div>
           {otherLocales &&
             !!otherLocales.length && (

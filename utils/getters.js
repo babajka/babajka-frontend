@@ -58,6 +58,7 @@ export const getLocalizedArticle = (article, lang) => {
     imageUrl,
     type,
     publishAt,
+    published: publishAt && moment(publishAt).isBefore(moment()),
   };
 };
 

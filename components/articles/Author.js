@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import { AuthorModel } from 'utils/customPropTypes';
 
 const Author = ({ displayName, imageUrl }) => (
-  <div className="author">
+  <Fragment>
     <img alt={displayName} src={imageUrl} />
-    <div className="name">{displayName}</div>
-  </div>
+    <div className="author-name">
+      <span>{displayName}</span>
+    </div>
+  </Fragment>
 );
 
 Author.propTypes = AuthorModel;

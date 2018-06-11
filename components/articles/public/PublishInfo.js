@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 
 import Text from 'components/common/Text';
-import { DATE_FORMAT } from 'constants';
+
+import { formatDate } from 'utils/formatters';
+
 import InfoIcon from './InfoIcon';
 
-const PublishInfo = ({ publishAt }) => {
+const PublishInfo = ({ published, publishAt }) => {
   if (!publishAt) {
     return (
       <span className="article__info-item tag is-warning is-uppercase">
@@ -15,26 +17,24 @@ const PublishInfo = ({ publishAt }) => {
     );
   }
 
-  const publishAtMoment = moment(publishAt);
-  const formattedPublishAt = publishAtMoment.format(DATE_FORMAT);
-
-  if (publishAtMoment.isBefore(moment())) {
+  if (published) {
     return (
       <span className="article__info-item">
         <InfoIcon name="clock-o" />
-        {formattedPublishAt}
+        {formatDate(publishAt)}
       </span>
     );
   }
 
   return (
     <span className="article__info-item article__info-planned tag is-uppercase">
-      <Text id="article.will-be-published" /> {formattedPublishAt}
+      <Text id="article.will-be-published" /> {moment(publishAt).fromNow()}
     </span>
   );
 };
 
 PublishInfo.propTypes = {
+  published: PropTypes.bool.isRequired,
   publishAt: PropTypes.string,
 };
 
