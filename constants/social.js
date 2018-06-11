@@ -3,7 +3,7 @@ export const USER_PIC = '/static/images/placeholders/user.png';
 export const NETWORKS = [
   {
     name: 'facebook',
-    link: 'https://facebook.com/wir_by',
+    link: 'https://facebook.com/wirdotby',
   },
   {
     name: 'vk',
