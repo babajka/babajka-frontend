@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
@@ -51,7 +51,7 @@ export default class AuthorBlock extends Component {
     const { opened } = this.state;
 
     return (
-      <Fragment>
+      <>
         {opened && (
           <div className="article__author-block is-hidden-desktop">
             <AuthorClickable displayName={displayName} onClick={this.onToggle} />
@@ -103,7 +103,7 @@ export default class AuthorBlock extends Component {
             </div>
           </div>
         </div>
-      </Fragment>
+      </>
     );
   }
 }

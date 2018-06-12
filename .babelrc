@@ -1,5 +1,17 @@
 {
-  "presets": ["next/babel", "stage-0"],
+  "presets": [
+    "next/babel",
+    [
+      "@babel/preset-env",
+      {
+        "modules": false,
+        "targets": {
+          "browsers": "defaults",
+          "node": true
+        }
+      }
+    ]
+  ],
   "plugins": [
     [
       "inline-import",
@@ -11,6 +23,14 @@
       "module-resolver",
       {
         "root": ["./"]
+      }
+    ],
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "regenerator": false,
+        "useBuiltIns": true,
+        "polyfill": false
       }
     ]
   ]

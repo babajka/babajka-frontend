@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
 import Text from 'components/common/Text';
 import { CollectionShape } from 'utils/customPropTypes';
@@ -20,7 +20,7 @@ export default class CollectionBlock extends Component {
     const { activeArrowName } = this.state;
 
     return (
-      <Fragment>
+      <>
         <div className="article__collection-block article__another-names is-hidden-touch">
           <ArrowHint name="previous" activeName={activeArrowName} data={prev} />
           <ArrowHint name="next" activeName={activeArrowName} data={next} />
@@ -39,7 +39,7 @@ export default class CollectionBlock extends Component {
           </div>
           <Arrow name="next" setActive={this.setActiveArrow} data={next} />
         </div>
-      </Fragment>
+      </>
     );
   }
 }

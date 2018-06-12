@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
@@ -6,7 +6,7 @@ import LocaleContext from 'components/common/LocaleContext';
 import { DEFAULT_LOCALE } from 'constants';
 import dict from 'data/i18n.json';
 
-const defaultRender = text => <Fragment>{text}</Fragment>;
+const defaultRender = text => <>{text}</>;
 
 export const localize = (id, lang) =>
   get(dict, `${id}.${lang}`) || get(dict, `${id}.${DEFAULT_LOCALE}`) || '';
