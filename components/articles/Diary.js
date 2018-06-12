@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import cn from 'classnames';
 
 import Modal from 'components/common/Modal';
 import Text, { localize } from 'components/common/Text';
@@ -62,7 +62,7 @@ class Diary extends Component {
     const { lang } = this.props;
     return (
       <Clickable
-        className={classNames('icon is-small arrow', className)}
+        className={cn('icon is-small arrow', className)}
         onClick={handleClick}
         title={localize(title, lang)}
       >

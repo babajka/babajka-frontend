@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import cn from 'classnames';
 
 import Icon from 'components/common/Icon';
 import Text from 'components/common/Text';
@@ -11,7 +11,7 @@ import InfoIcon from './InfoIcon';
 
 const AuthorClickable = ({ displayName, isOpen, onClick }) => (
   <Clickable
-    className={classNames('article__info-item article__info-item--clickable', {
+    className={cn('article__info-item article__info-item--clickable', {
       'is-hidden-desktop': isOpen,
     })}
     onClick={onClick}

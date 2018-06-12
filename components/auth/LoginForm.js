@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Text as TextField, Checkbox } from 'react-form';
-import classNames from 'classnames';
+import cn from 'classnames';
 
 import Button from 'components/common/Button';
 import { isEmail, isEqual, required, checkLength, hasErrors } from 'utils/validators';
@@ -121,7 +121,7 @@ const LoginForm = ({ onSubmit, pending, errors }) => {
                 >
                   {hasError => (
                     <TextField
-                      className={classNames('input', { 'is-danger': hasError })}
+                      className={cn('input', { 'is-danger': hasError })}
                       id={key}
                       field={key}
                       type={fields[key].inputType || 'text'}

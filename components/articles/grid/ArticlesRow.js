@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import cn from 'classnames';
 
 import CompleteRow from 'components/common/CompleteRow';
 
@@ -11,7 +11,7 @@ import ArticlePreview from '../ArticlePreview';
 const MIN_TILES_IN_ROW = 3;
 
 const ArticlesRow = ({ articles, className }) => (
-  <div className={classNames(className, 'tile')}>
+  <div className={cn(className, 'tile')}>
     {articles && (
       <CompleteRow className="tile" requiredSize={MIN_TILES_IN_ROW}>
         {articles.map(article => (

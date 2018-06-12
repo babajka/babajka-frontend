@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import cn from 'classnames';
 
 const Button = ({ children, className, pending, ...otherProps }) => (
-  <button className={classNames(className, { 'is-loading': pending })} {...otherProps}>
+  <button className={cn(className, { 'is-loading': pending })} {...otherProps}>
     {children}
   </button>
 );

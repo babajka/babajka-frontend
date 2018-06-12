@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import cn from 'classnames';
 
 import Icon from 'components/common/Icon';
 import Text from 'components/common/Text';
@@ -11,9 +11,9 @@ const ShareToButton = ({ name, side }) => (
   <Text
     id={`article.share-${name}`}
     render={t => (
-      <a className={classNames('icon-button button', { 'article-side__button': side })} title={t}>
+      <a className={cn('icon-button button', { 'article-side__button': side })} title={t}>
         <span
-          className={classNames(`icon-button__${name}-icon icon`, {
+          className={cn(`icon-button__${name}-icon icon`, {
             [`article__${name}-icon`]: !side,
           })}
         >

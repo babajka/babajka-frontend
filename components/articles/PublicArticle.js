@@ -17,6 +17,7 @@ import AuthorBlock from './public/AuthorBlock';
 import CollectionBlock from './public/CollectionBlock';
 import PublishInfo from './public/PublishInfo';
 import ShareToButton from './public/ShareToButton';
+import EditLink from './public/EditLink';
 
 const mapStateToProps = (state, { articleLocale }) => ({
   otherLocales: selectors.getOtherLocales(state, articleLocale),
@@ -50,21 +51,15 @@ const PublicArticle = ({
           <div className="article__title-block">
             <h3 className="article__title title">{title}</h3>
             {canEditArticle && (
-              <Text
-                id="article.edit-article"
-                render={t => (
-                  <Link
-                    route={ROUTES_NAMES.editArticle}
-                    params={{ slug: articleId, mode: 'edit', articleLocale }}
-                  >
-                    <a className="icon-button button is-hidden-desktop" title={t}>
-                      <span className="article__usual-icon icon-button__usual-icon icon">
-                        <Icon name="pencil" size="lg" />
-                      </span>
-                    </a>
-                  </Link>
-                )}
-              />
+              <EditLink
+                className="is-hidden-desktop"
+                slug={articleId}
+                articleLocale={articleLocale}
+              >
+                <span className="article__usual-icon icon-button__usual-icon icon">
+                  <Icon name="pencil" size="lg" />
+                </span>
+              </EditLink>
             )}
           </div>
           <div className="article__info">
@@ -140,24 +135,15 @@ const PublicArticle = ({
           <ul className="article-side__top">
             {canEditArticle && (
               <li>
-                <Text
-                  id="article.edit-article"
-                  render={t => (
-                    <Link
-                      route={ROUTES_NAMES.editArticle}
-                      params={{ slug: articleId, mode: 'edit', articleLocale }}
-                    >
-                      <a
-                        className="article-side__button article-side__button--edit icon-button button"
-                        title={t}
-                      >
-                        <span className="icon-button__usual-icon icon">
-                          <Icon name="pencil" size="lg" />
-                        </span>
-                      </a>
-                    </Link>
-                  )}
-                />
+                <EditLink
+                  className="article-side__button article-side__button--edit"
+                  slug={articleId}
+                  articleLocale={articleLocale}
+                >
+                  <span className="icon-button__usual-icon icon">
+                    <Icon name="pencil" size="lg" />
+                  </span>
+                </EditLink>
               </li>
             )}
             {EXPORT_TO_NETWORKS.map(name => (
