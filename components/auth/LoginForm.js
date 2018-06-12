@@ -110,6 +110,11 @@ const LoginForm = ({ onSubmit, pending, errors, allowSignUp }) => {
                   </div>
                 </div>
               )}
+              {!allowSignUp && (
+                <div className="signup-not-available">
+                  <Text id="auth.signup-not-available" />
+                </div>
+              )}
               {keys.filter(key => formApi.values.signUp || !fields[key].onlyOnSignUp).map(key => (
                 <FormField
                   key={key}
