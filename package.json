@@ -21,7 +21,9 @@
     "storybook:build": "build-storybook",
     "storybook:deploy": "build-storybook && gh-pages -d storybook-static",
     "reset-cache": "rm -rf node_modules/.cache && rm -rf .next/",
-    "analyze": "cross-env ANALYZE=1 next build",
+    "analyze": "BUNDLE_ANALYZE=both npm run build",
+    "analyze:server": "BUNDLE_ANALYZE=server npm run build",
+    "analyze:client": "BUNDLE_ANALYZE=browser npm run build",
     "postinstall": "npm run copy-static && npm run update-dict && npm run update-team"
   },
   "lint-staged": {
@@ -36,6 +38,7 @@
     "@storybook/addon-info": "^3.2.19",
     "@storybook/addon-knobs": "^3.2.19",
     "@storybook/react": "^3.2.19",
+    "@zeit/next-bundle-analyzer": "^0.1.1",
     "Dante2": "^0.4.4",
     "babajka-markup": "^0.8.8",
     "classnames": "^2.2.5",
@@ -96,10 +99,7 @@
     "lint-staged": "^5.0.0",
     "onchange": "^3.2.1",
     "prettier": "^1.8.2",
-    "raw-loader": "^0.5.1",
-    "stats-webpack-plugin": "^0.6.2",
-    "webpack": "^3.10.0",
-    "webpack-bundle-analyzer": "^2.11.1"
+    "webpack": "^3.10.0"
   },
   "moduleRoots": [
     "."

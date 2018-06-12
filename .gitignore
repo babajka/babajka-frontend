@@ -1,6 +1,7 @@
 .idea/
 .next/
 node_modules/
+reports/
 static/
 storybook-static/
 *.log*
