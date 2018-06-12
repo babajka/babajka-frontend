@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import Icon from 'components/common/Icon';
 import Text from 'components/common/Text';
 
-import { EXPORT_TO_NETWORS } from 'constants/social';
+import { EXPORT_TO_NETWORKS } from 'constants/social';
 
 const ShareToButton = ({ name, side }) => (
   <Text
@@ -25,7 +25,7 @@ const ShareToButton = ({ name, side }) => (
 );
 
 ShareToButton.propTypes = {
-  name: PropTypes.oneOf(EXPORT_TO_NETWORS).isRequired,
+  name: PropTypes.oneOf(EXPORT_TO_NETWORKS).isRequired,
   side: PropTypes.bool,
 };
 

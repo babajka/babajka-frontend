@@ -10,7 +10,7 @@ import { selectors } from 'redux/ducks/articles';
 import { selectors as authSelectors } from 'redux/ducks/auth';
 import { ROUTES_NAMES } from 'routes';
 import { LOCALES } from 'constants';
-import { EXPORT_TO_NETWORS } from 'constants/social';
+import { EXPORT_TO_NETWORKS } from 'constants/social';
 import { ArticleModel } from 'utils/customPropTypes';
 
 import AuthorBlock from './public/AuthorBlock';
@@ -123,7 +123,7 @@ const PublicArticle = ({
           </div>
           {/* TODO(andemerie): implement ability to share article on social networks */}
           <div className="article__actions">
-            {EXPORT_TO_NETWORS.map(name => <ShareToButton key={`actions-${name}`} name={name} />)}
+            {EXPORT_TO_NETWORKS.map(name => <ShareToButton key={`actions-${name}`} name={name} />)}
           </div>
         </div>
         <hr className="article__line" />
@@ -160,7 +160,7 @@ const PublicArticle = ({
                 />
               </li>
             )}
-            {EXPORT_TO_NETWORS.map(name => (
+            {EXPORT_TO_NETWORKS.map(name => (
               <li key={`side-${name}`}>
                 <ShareToButton name={name} side />
               </li>
