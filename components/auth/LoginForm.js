@@ -66,7 +66,7 @@ keys.forEach(field => {
   errorsPropsTypes[field] = PropTypes.string;
 });
 
-const LoginForm = ({ onSubmit, pending, errors }) => {
+const LoginForm = ({ onSubmit, pending, errors, allowSignUp }) => {
   let serverErrors = { ...errors };
 
   const handleModeSwitch = (formApi, value) => {
@@ -96,18 +96,20 @@ const LoginForm = ({ onSubmit, pending, errors }) => {
           }
           return (
             <form onSubmit={formApi.submitForm}>
-              <div className="field">
-                <div className="control has-text-centered">
-                  <label htmlFor="signUp" className="checkbox">
-                    <Checkbox
-                      id="signUp"
-                      field="signUp"
-                      onChange={handleModeSwitch.bind(null, formApi)}
-                    />
-                    <Text id="auth.noAccount" />
-                  </label>
+              {allowSignUp && (
+                <div className="field">
+                  <div className="control has-text-centered">
+                    <label htmlFor="signUp" className="checkbox">
+                      <Checkbox
+                        id="signUp"
+                        field="signUp"
+                        onChange={handleModeSwitch.bind(null, formApi)}
+                      />
+                      <Text id="auth.noAccount" />
+                    </label>
+                  </div>
                 </div>
-              </div>
+              )}
               {keys.filter(key => formApi.values.signUp || !fields[key].onlyOnSignUp).map(key => (
                 <FormField
                   key={key}
@@ -151,6 +153,7 @@ const LoginForm = ({ onSubmit, pending, errors }) => {
 };
 
 LoginForm.propTypes = {
+  allowSignUp: PropTypes.bool.isRequired,
   onSubmit: PropTypes.func.isRequired,
   pending: PropTypes.bool,
   errors: PropTypes.shape(errorsPropsTypes),
