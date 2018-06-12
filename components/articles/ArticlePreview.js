@@ -1,17 +1,23 @@
 import React from 'react';
 import cn from 'classnames';
 import moment from 'moment';
+import { connect } from 'react-redux';
 
 import { localize } from 'components/common/Text';
 import Link from 'components/common/Link';
 import Icon from 'components/common/Icon';
 import LocaleContext from 'components/common/LocaleContext';
 
+import { selectors as authSelectors } from 'redux/ducks/auth';
 import { ArticleModel } from 'utils/customPropTypes';
 import { ROUTES_NAMES } from 'routes';
 
 import SpecialHeading from './SpecialHeading';
 import Author from './Author';
+
+const mapStateToProps = state => ({
+  canEditArticle: authSelectors.getPermissions(state).canManageArticles,
+});
 
 const ArticlePreview = ({
   articleId,
@@ -25,6 +31,7 @@ const ArticlePreview = ({
   brand,
   publishAt,
   published,
+  canEditArticle,
 }) => (
   <LocaleContext.Consumer>
     {lang => (
@@ -45,12 +52,14 @@ const ArticlePreview = ({
             </figure>
             {brand && brand.slug !== 'wir' && <SpecialHeading {...brand} />}
             <div className="actions">
-              <Link
-                route={ROUTES_NAMES.editArticle}
-                params={{ slug: articleId, mode: 'edit', articleLocale: lang }}
-              >
-                <Icon name="pencil" size="lg" />
-              </Link>
+              {canEditArticle && (
+                <Link
+                  route={ROUTES_NAMES.editArticle}
+                  params={{ slug: articleId, mode: 'edit', articleLocale: lang }}
+                >
+                  <Icon name="pencil" size="lg" />
+                </Link>
+              )}
             </div>
           </div>
           <div className="card-content">
@@ -85,4 +94,4 @@ ArticlePreview.defaultProps = {
   imageClassName: '',
 };
 
-export default ArticlePreview;
+export default connect(mapStateToProps)(ArticlePreview);
