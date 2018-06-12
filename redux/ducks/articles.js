@@ -99,6 +99,9 @@ export const actions = {
   create: article => ({
     type: CREATE,
     payload: request.fetch(api.articles.create, 'POST', article),
+    meta: {
+      ga: true,
+    },
   }),
   update: article => ({
     type: UPDATE,
