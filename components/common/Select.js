@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Downshift from 'downshift';
-import classNames from 'classnames';
+import cn from 'classnames';
 
 import Button from './Button';
 import Icon from './Icon';
@@ -37,7 +37,7 @@ const Select = ({
       inputValue,
       selectedItem: selected,
     }) => (
-      <div className={classNames('babajka-dropdown dropdown', className, { 'is-active': isOpen })}>
+      <div className={cn('babajka-dropdown dropdown', className, { 'is-active': isOpen })}>
         <div className="dropdown-trigger">
           {dropdown && (
             <Button {...getToggleButtonProps({ className: 'button' })}>
@@ -76,7 +76,7 @@ const Select = ({
               .map(item => (
                 <li
                   {...getItemProps({ item })}
-                  className={classNames('dropdown-item', {
+                  className={cn('dropdown-item', {
                     'is-active': selected && selected.id === item.id,
                   })}
                   key={item.id}

@@ -3,7 +3,7 @@ export const USER_PIC = '/static/images/placeholders/user.png';
 export const NETWORKS = [
   {
     name: 'facebook',
-    link: 'https://facebook.com/wir_by',
+    link: 'https://facebook.com/wirdotby',
   },
   {
     name: 'vk',
@@ -27,6 +27,6 @@ export const NETWORKS = [
   },
 ];
 
-export const EXPORT_TO_NETWORS = ['facebook', 'vk', 'twitter'];
+export const EXPORT_TO_NETWORKS = ['facebook', 'vk', 'twitter'];
 
 export const GA_ID = 'UA-117143376-1';

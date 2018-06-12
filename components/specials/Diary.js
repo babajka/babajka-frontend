@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import moment from 'moment';
-import classNames from 'classnames';
+import cn from 'classnames';
 
 import Modal from 'components/common/Modal';
 import Text, { localize } from 'components/common/Text';
+import TextWithBr from 'components/common/TextWithBr';
 import Clickable from 'components/common/Clickable';
 import Icon from 'components/common/Icon';
 import Button from 'components/common/Button';
 
 import { actions as diaryActions, selectors as diarySelectors } from 'redux/ducks/diary';
 import { isSameDay } from 'utils/validators';
-import { DATE_FORMAT } from 'constants';
+import { formatDate } from 'utils/formatters';
 
 const mapStateToProps = state => ({
   diary: diarySelectors.getCurrent(state),
@@ -50,14 +50,10 @@ class Diary extends Component {
   toggleModal = () => this.setState(prevState => ({ isModalActive: !prevState.isModalActive }));
 
   renderDateElement = () => {
-    const { lang, diary: { date } } = this.props;
+    const { diary: { date } } = this.props;
     return (
       <div className="date">
-        <div className="is-pulled-right">
-          {moment(date)
-            .locale(lang)
-            .format(DATE_FORMAT)}
-        </div>
+        <div className="is-pulled-right">{formatDate(date)}</div>
       </div>
     );
   };
@@ -66,7 +62,7 @@ class Diary extends Component {
     const { lang } = this.props;
     return (
       <Clickable
-        className={classNames('icon is-small arrow', className)}
+        className={cn('icon is-small arrow', className)}
         onClick={handleClick}
         title={localize(title, lang)}
       >
@@ -85,7 +81,9 @@ class Diary extends Component {
         toggle={this.toggleModal}
         renderBody={() => (
           <div>
-            <div className="diary-content">{text}</div>
+            <div className="diary-content">
+              <TextWithBr text={text} />
+            </div>
             {this.renderDateElement()}
           </div>
         )}
@@ -109,7 +107,9 @@ class Diary extends Component {
 
             {text ? (
               <div className="diary-content">
-                <div className="text">{text}</div>
+                <div className="text">
+                  <TextWithBr text={text} />
+                </div>
                 <div className="ellipsis">...</div>
               </div>
             ) : (

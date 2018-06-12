@@ -10,13 +10,14 @@ import { selectors } from 'redux/ducks/articles';
 import { selectors as authSelectors } from 'redux/ducks/auth';
 import { ROUTES_NAMES } from 'routes';
 import { LOCALES } from 'constants';
-import { EXPORT_TO_NETWORS } from 'constants/social';
+import { EXPORT_TO_NETWORKS } from 'constants/social';
 import { ArticleModel } from 'utils/customPropTypes';
 
 import AuthorBlock from './AuthorBlock';
 import CollectionBlock from './CollectionBlock';
 import PublishInfo from './PublishInfo';
 import ShareToButton from './ShareToButton';
+import EditLink from './EditLink';
 
 const mapStateToProps = (state, { articleLocale }) => ({
   otherLocales: selectors.getOtherLocales(state, articleLocale),
@@ -39,6 +40,7 @@ const PublicArticle = ({
   publishAt,
   // TODO(andemerie): decide how to implement video page and where to check the following type
   // type,
+  published,
 }) => (
   <div className="article-container container">
     <div className="columns">
@@ -49,21 +51,15 @@ const PublicArticle = ({
           <div className="article__title-block">
             <h3 className="article__title title">{title}</h3>
             {canEditArticle && (
-              <Text
-                id="article.edit-article"
-                render={t => (
-                  <Link
-                    route={ROUTES_NAMES.editArticle}
-                    params={{ slug: articleId, mode: 'edit', articleLocale }}
-                  >
-                    <a className="icon-button button is-hidden-desktop" title={t}>
-                      <span className="article__usual-icon icon-button__usual-icon icon">
-                        <Icon name="pencil" size="lg" />
-                      </span>
-                    </a>
-                  </Link>
-                )}
-              />
+              <EditLink
+                className="is-hidden-desktop"
+                slug={articleId}
+                articleLocale={articleLocale}
+              >
+                <span className="article__usual-icon icon-button__usual-icon icon">
+                  <Icon name="pencil" size="lg" />
+                </span>
+              </EditLink>
             )}
           </div>
           <div className="article__info">
@@ -80,7 +76,7 @@ const PublicArticle = ({
                 )}
               />
             )} */}
-            <PublishInfo publishAt={publishAt} />
+            <PublishInfo publishAt={publishAt} published={published} />
           </div>
           {otherLocales &&
             !!otherLocales.length && (
@@ -122,7 +118,7 @@ const PublicArticle = ({
           </div>
           {/* TODO(andemerie): implement ability to share article on social networks */}
           <div className="article__actions">
-            {EXPORT_TO_NETWORS.map(name => <ShareToButton key={`actions-${name}`} name={name} />)}
+            {EXPORT_TO_NETWORKS.map(name => <ShareToButton key={`actions-${name}`} name={name} />)}
           </div>
         </div>
         <hr className="article__line" />
@@ -139,27 +135,18 @@ const PublicArticle = ({
           <ul className="article-side__top">
             {canEditArticle && (
               <li>
-                <Text
-                  id="article.edit-article"
-                  render={t => (
-                    <Link
-                      route={ROUTES_NAMES.editArticle}
-                      params={{ slug: articleId, mode: 'edit', articleLocale }}
-                    >
-                      <a
-                        className="article-side__button article-side__button--edit icon-button button"
-                        title={t}
-                      >
-                        <span className="icon-button__usual-icon icon">
-                          <Icon name="pencil" size="lg" />
-                        </span>
-                      </a>
-                    </Link>
-                  )}
-                />
+                <EditLink
+                  className="article-side__button article-side__button--edit"
+                  slug={articleId}
+                  articleLocale={articleLocale}
+                >
+                  <span className="icon-button__usual-icon icon">
+                    <Icon name="pencil" size="lg" />
+                  </span>
+                </EditLink>
               </li>
             )}
-            {EXPORT_TO_NETWORS.map(name => (
+            {EXPORT_TO_NETWORKS.map(name => (
               <li key={`side-${name}`}>
                 <ShareToButton name={name} side />
               </li>
