@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs, boolean, text } from '@storybook/addon-knobs';
-import classNames from 'classnames';
+import cn from 'classnames';
 
 import StoriesDecorator from 'components/common/StoriesDecorator';
 
@@ -23,9 +23,7 @@ stories.add('FormField', () => {
 
   return (
     <FormField inputId="password" {...props}>
-      {hasError => (
-        <input id="password" className={classNames('input', { 'is-danger': hasError })} />
-      )}
+      {hasError => <input id="password" className={cn('input', { 'is-danger': hasError })} />}
     </FormField>
   );
 });

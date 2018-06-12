@@ -51,6 +51,9 @@ export const actions = {
     payload: signUp
       ? request.fetch(api.auth.register, 'POST', data)
       : request.fetch(api.auth.login, 'POST', data),
+    meta: {
+      ga: true,
+    },
   }),
   signOut: () => ({
     type: SIGNOUT,

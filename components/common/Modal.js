@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import cn from 'classnames';
 
 import Clickable from 'components/common/Clickable';
 import Button from 'components/common/Button';
 import Icon from 'components/common/Icon';
 
 const Modal = ({ renderBody, renderFooter, toggle, title, isActive }) => (
-  <div className={classNames('modal', { 'is-active': isActive })}>
+  <div className={cn('modal', { 'is-active': isActive })}>
     <Clickable tag="div" className="modal-background" onClick={toggle} />
     <div className="modal-card">
       <header className="modal-card-head">

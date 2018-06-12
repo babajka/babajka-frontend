@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import classNames from 'classnames';
+import cn from 'classnames';
 import { Form, Text as TextField } from 'react-form';
 import get from 'lodash/get';
 
@@ -177,10 +177,7 @@ class EditArticleForm extends Component {
                       const hasError = !pending && touched && !!error;
 
                       return (
-                        <div
-                          key={id}
-                          className={classNames('field', { 'long-input': type === 'input' })}
-                        >
+                        <div key={id} className={cn('field', { 'long-input': type === 'input' })}>
                           {type === 'input' && (
                             <Text
                               id={`article.${help}`}
@@ -188,7 +185,7 @@ class EditArticleForm extends Component {
                                 <TextField
                                   id={id}
                                   field={id}
-                                  className={classNames('input', { 'is-danger': hasError })}
+                                  className={cn('input', { 'is-danger': hasError })}
                                   placeholder={placeholder}
                                 />
                               )}
@@ -243,13 +240,13 @@ class EditArticleForm extends Component {
                       {addedLocales.map(({ id, label }) => (
                         <li
                           key={id}
-                          className={classNames({
+                          className={cn({
                             'is-active': id === currentLocale,
                           })}
                         >
                           <Clickable tag="a" onClick={() => this.setState({ currentLocale: id })}>
                             <span
-                              className={classNames({
+                              className={cn({
                                 'has-text-danger': id !== currentLocale && localeHasError(id),
                               })}
                             >

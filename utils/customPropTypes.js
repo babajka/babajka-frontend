@@ -51,6 +51,8 @@ export const ArticleModel = {
   type: PropTypes.string.isRequired,
   author: AuthorShape,
   brand: BrandShape,
+  publishAt: PropTypes.string,
+  published: PropTypes.bool.isRequired,
 };
 
 export const ArticleShape = PropTypes.shape(ArticleModel);

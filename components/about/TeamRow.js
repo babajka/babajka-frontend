@@ -1,6 +1,8 @@
 import React from 'react';
 import chunk from 'lodash/chunk';
 
+import CompleteRow from 'components/common/CompleteRow';
+
 import { USER_PIC } from 'constants/social';
 
 export const ROW_SIZE = 6;
@@ -14,17 +16,15 @@ const Teammate = ({ image, name, role }) => (
   </div>
 );
 
-const TeamCol = ({ data }) => {
-  const length = Math.max(0, COL_SIZE - data.length);
-  return (
-    <div className="column">
-      <div className="columns">
+const TeamCol = ({ data }) => (
+  <div className="column">
+    <div className="columns">
+      <CompleteRow className="column is-4" requiredSize={COL_SIZE}>
         {data.map(user => <Teammate key={user.id} {...user} />)}
-        {Array.from({ length }, (_, i) => <div key={`empty-tile-${i}`} className="column is-4" />)}
-      </div>
+      </CompleteRow>
     </div>
-  );
-};
+  </div>
+);
 
 const TeamRow = ({ data }) => (
   <div className="columns is-centered is-desktop">

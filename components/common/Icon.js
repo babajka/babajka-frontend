@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import cn from 'classnames';
 
 const Icon = ({ className, name, size, ...props }) => (
-  <i className={classNames(className, `fa fa-${name} fa-${size}`)} aria-hidden="true" {...props} />
+  <i className={cn(className, `fa fa-${name} fa-${size}`)} aria-hidden="true" {...props} />
 );
 
 Icon.propTypes = {

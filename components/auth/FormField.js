@@ -24,7 +24,8 @@ const FormField = ({ inputId, label, icon, children, pending, touched, error, su
         </p>
       )}
       {touched &&
-        !error && (
+        !error &&
+        successMessage && (
           <p className="help is-success">
             <Text id={successMessage} />
           </p>

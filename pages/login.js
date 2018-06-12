@@ -24,8 +24,12 @@ class LoginPage extends Component {
     pending: PropTypes.bool.isRequired,
     errors: PropTypes.shape({}).isRequired,
     signIn: PropTypes.func.isRequired,
-    url: PropTypes.shape({ query: PropTypes.shape({ next: PropTypes.string }).isRequired })
-      .isRequired,
+    url: PropTypes.shape({
+      query: PropTypes.shape({
+        next: PropTypes.string,
+        invite: PropTypes.string,
+      }).isRequired,
+    }).isRequired,
   };
 
   static defaultProps = { user: null };
@@ -51,7 +55,12 @@ class LoginPage extends Component {
     return (
       <PageLayout title="auth.signIn" url={url}>
         <div className="container login">
-          <LoginForm onSubmit={this.handleSubmit} pending={pending} errors={errors} />
+          <LoginForm
+            allowSignUp={url.query.invite === 'beta-test-sign-up'}
+            onSubmit={this.handleSubmit}
+            pending={pending}
+            errors={errors}
+          />
         </div>
       </PageLayout>
     );

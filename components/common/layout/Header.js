@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'next/router';
 import { connect } from 'react-redux';
-import classNames from 'classnames';
+import cn from 'classnames';
 
 import { actions, selectors } from 'redux/ducks/auth';
 import { Router, NAVBAR_ROUTES, ROUTES_NAMES } from 'routes';
@@ -71,7 +71,7 @@ class Header extends Component {
           <Clickable
             tag="div"
             onClick={() => this.setState({ burgerActive: !burgerActive })}
-            className={classNames('button navbar-burger', { 'is-active': burgerActive })}
+            className={cn('button navbar-burger', { 'is-active': burgerActive })}
           >
             <span />
             <span />
@@ -80,14 +80,12 @@ class Header extends Component {
         </div>
         <LocaleContext.Consumer>
           {lang => (
-            <div className={classNames('navbar-menu', { 'is-active': burgerActive })}>
+            <div className={cn('navbar-menu', { 'is-active': burgerActive })}>
               <div className="navbar-start">
                 {routes.map(({ NavLink = Link, name, pattern = name, params, isActive }) => (
                   <NavLink key={name} route={name} params={params} lang={lang}>
                     <a className="navbar-item">
-                      <span
-                        className={classNames('rubric', { 'is-active': isActive(asPath, pattern) })}
-                      >
+                      <span className={cn('rubric', { 'is-active': isActive(asPath, pattern) })}>
                         <Text id={`header.${name}`} render={t => t.toUpperCase()} />
                       </span>
                     </a>
