@@ -1,5 +1,5 @@
 import React from 'react';
-import classNames from 'classnames';
+import cn from 'classnames';
 import moment from 'moment';
 
 import { localize } from 'components/common/Text';
@@ -29,14 +29,14 @@ const ArticlePreview = ({
   <LocaleContext.Consumer>
     {lang => (
       <div
-        className={classNames('tile is-parent', className, {
+        className={cn('tile is-parent', className, {
           'with-opacity': !published,
         })}
         title={published ? '' : localize('article.not-published', lang)}
       >
         <article className="card tile is-child is-flex">
           <div className="card-image">
-            <figure className={classNames('image', imageClassName)}>
+            <figure className={cn('image', imageClassName)}>
               <Link route={ROUTES_NAMES.article} params={{ slug }}>
                 <a>
                   <img alt={title} src={imageUrl} />
