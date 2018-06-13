@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Text as TextField, Checkbox } from 'react-form';
-import classNames from 'classnames';
+import cn from 'classnames';
 
 import Button from 'components/common/Button';
 import { isEmail, isEqual, required, checkLength, hasErrors } from 'utils/validators';
@@ -66,7 +66,7 @@ keys.forEach(field => {
   errorsPropsTypes[field] = PropTypes.string;
 });
 
-const LoginForm = ({ onSubmit, pending, errors }) => {
+const LoginForm = ({ onSubmit, pending, errors, allowSignUp }) => {
   let serverErrors = { ...errors };
 
   const handleModeSwitch = (formApi, value) => {
@@ -96,18 +96,25 @@ const LoginForm = ({ onSubmit, pending, errors }) => {
           }
           return (
             <form onSubmit={formApi.submitForm}>
-              <div className="field">
-                <div className="control has-text-centered">
-                  <label htmlFor="signUp" className="checkbox">
-                    <Checkbox
-                      id="signUp"
-                      field="signUp"
-                      onChange={handleModeSwitch.bind(null, formApi)}
-                    />
-                    <Text id="auth.noAccount" />
-                  </label>
+              {allowSignUp && (
+                <div className="field">
+                  <div className="control has-text-centered">
+                    <label htmlFor="signUp" className="checkbox">
+                      <Checkbox
+                        id="signUp"
+                        field="signUp"
+                        onChange={handleModeSwitch.bind(null, formApi)}
+                      />
+                      <Text id="auth.noAccount" />
+                    </label>
+                  </div>
                 </div>
-              </div>
+              )}
+              {!allowSignUp && (
+                <div className="signup-not-available">
+                  <Text id="auth.signup-not-available" />
+                </div>
+              )}
               {keys.filter(key => formApi.values.signUp || !fields[key].onlyOnSignUp).map(key => (
                 <FormField
                   key={key}
@@ -121,7 +128,7 @@ const LoginForm = ({ onSubmit, pending, errors }) => {
                 >
                   {hasError => (
                     <TextField
-                      className={classNames('input', { 'is-danger': hasError })}
+                      className={cn('input', { 'is-danger': hasError })}
                       id={key}
                       field={key}
                       type={fields[key].inputType || 'text'}
@@ -151,6 +158,7 @@ const LoginForm = ({ onSubmit, pending, errors }) => {
 };
 
 LoginForm.propTypes = {
+  allowSignUp: PropTypes.bool.isRequired,
   onSubmit: PropTypes.func.isRequired,
   pending: PropTypes.bool,
   errors: PropTypes.shape(errorsPropsTypes),

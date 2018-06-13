@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import cn from 'classnames';
 
 import Icon from 'components/common/Icon';
 import Text from 'components/common/Text';
@@ -11,7 +11,7 @@ import InfoIcon from './InfoIcon';
 
 const AuthorClickable = ({ displayName, isOpen, onClick }) => (
   <Clickable
-    className={classNames('article__info-item article__info-item--clickable', {
+    className={cn('article__info-item article__info-item--clickable', {
       'is-hidden-desktop': isOpen,
     })}
     onClick={onClick}
@@ -51,7 +51,7 @@ export default class AuthorBlock extends Component {
     const { opened } = this.state;
 
     return (
-      <Fragment>
+      <>
         {opened && (
           <div className="article__author-block is-hidden-desktop">
             <AuthorClickable displayName={displayName} onClick={this.onToggle} />
@@ -103,7 +103,7 @@ export default class AuthorBlock extends Component {
             </div>
           </div>
         </div>
-      </Fragment>
+      </>
     );
   }
 }

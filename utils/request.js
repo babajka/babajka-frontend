@@ -44,7 +44,7 @@ class Request {
             }
           }
 
-          if (contentType.includes('application/json')) {
+          if (contentType && contentType.includes('application/json')) {
             return response.json();
           }
 

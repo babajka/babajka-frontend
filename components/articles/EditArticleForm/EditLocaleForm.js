@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Text as TextField, TextArea } from 'react-form';
 import get from 'lodash/get';
 import set from 'lodash/set';
-import classNames from 'classnames';
+import cn from 'classnames';
 
 import { ArticleShape } from 'utils/customPropTypes';
 import { required, hasErrors, isSlug } from 'utils/validators';
@@ -61,7 +61,7 @@ const Field = ({ formApi, Component = TextField, withHelp, pending, ...props }) 
         <Text id={`article.${fieldName}`} />
       </label>
       <div className="control">
-        <Component {...props} className={classNames(className, { 'is-danger': hasError })} />
+        <Component {...props} className={cn(className, { 'is-danger': hasError })} />
       </div>
       {hasError && (
         <p className="help is-danger">
