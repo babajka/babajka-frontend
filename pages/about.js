@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import withRedux from 'next-redux-wrapper';
 import chunk from 'lodash/chunk';
 
@@ -56,7 +56,7 @@ class AboutPage extends Component {
           <hr />
           {vacancies &&
             vacancies.length && (
-              <Fragment>
+              <>
                 <div className="helpus">
                   <div className="title">
                     <Text id="about.join-us" />
@@ -84,11 +84,11 @@ class AboutPage extends Component {
                   )}
                 </div>
                 <hr />
-              </Fragment>
+              </>
             )}
           {team &&
             team.length && (
-              <Fragment>
+              <>
                 <div className="team">
                   <div className="title">
                     <Text id="about.team" />
@@ -108,7 +108,7 @@ class AboutPage extends Component {
                   </div>
                 </div>
                 <hr />
-              </Fragment>
+              </>
             )}
           <div className="contact">
             <Text id="about.find-us" />

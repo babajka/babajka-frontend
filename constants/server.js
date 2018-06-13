@@ -1,5 +1,6 @@
-const BACKEND_URL = process.argv[2] || process.env.BABAJKA_BACKEND_URL || 'http://api.wir.by';
+const BACKEND_URL = process.argv[2] || 'http://api.wir.by';
+const MARKUP_URL = 'http://localhost:3001';
 const SESSION_COOKIE = 'csid';
 
 // please use commonjs modules here for compatibility with server
-module.exports = { BACKEND_URL, SESSION_COOKIE };
+module.exports = { BACKEND_URL, MARKUP_URL, SESSION_COOKIE };

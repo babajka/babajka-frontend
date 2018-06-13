@@ -1,5 +1,5 @@
 {
-  "presets": ["next/babel", "stage-0"],
+  "presets": ["next/babel"],
   "plugins": [
     [
       "inline-import",
@@ -12,7 +12,6 @@
       {
         "root": ["./"]
       }
-    ],
-    ["transform-define", "./env-config.js"]
+    ]
   ]
 }

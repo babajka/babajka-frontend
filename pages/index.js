@@ -5,9 +5,9 @@ import withRedux from 'next-redux-wrapper';
 import PageLayout from 'components/common/layout/PageLayout';
 import Button from 'components/common/Button';
 import Text from 'components/common/Text';
-import ArticlesRow from 'components/articles/grid/ArticlesRow';
-import Diary from 'components/articles/Diary';
-import ArticlesComplexRow from 'components/articles/grid/ArticlesComplexRow';
+import Diary from 'components/specials/Diary';
+import ArticlesRow from 'components/articles/ArticlesRow';
+import ArticlesComplexRow from 'components/articles/ArticlesComplexRow';
 
 import { ArticlesArray } from 'utils/customPropTypes';
 import { getMainArticlesRows } from 'utils/getters';
@@ -53,7 +53,6 @@ class HomePage extends Component {
   static getInitialProps(ctx) {
     // TODO: somehow extract getCurrentUser to populate method
     const initialRequests = [auth.getCurrentUser, articlesActions.initialFetch];
-
     return request.populate(ctx, initialRequests);
   }
 
@@ -87,7 +86,6 @@ class HomePage extends Component {
           {secondRow && (
             <ArticlesComplexRow articles={secondRow} renderDiary={() => <Diary lang={lang} />} />
           )}
-
           {remainRows.map(data => (
             <ArticlesRow key={data[0]._id} articles={data} className="first-line is-ancestor" />
           ))}

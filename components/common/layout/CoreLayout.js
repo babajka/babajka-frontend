@@ -5,6 +5,7 @@ import ReactGA from 'react-ga';
 import moment from 'moment';
 
 import { localize } from 'components/common/Text';
+import { MARKUP_URL } from 'constants/server';
 import { GA_ID } from 'constants/social';
 
 class CoreLayout extends Component {
@@ -17,10 +18,12 @@ class CoreLayout extends Component {
   static defaultProps = { title: '' };
 
   componentDidMount() {
-    ReactGA.initialize(GA_ID, {
-      debug: true,
-    });
-    ReactGA.pageview(document.location.pathname);
+    if (__PROD__) {
+      ReactGA.initialize(GA_ID, {
+        debug: false,
+      });
+      ReactGA.pageview(document.location.pathname);
+    }
   }
 
   render() {
@@ -38,8 +41,14 @@ class CoreLayout extends Component {
           <meta name="viewport" content="initial-scale=1.0, width=device-width" />
           <meta name="theme-color" content="#1a9582" />
           <link rel="icon" type="image/png" href="/static/images/logo/favicon-colored.png" />
-          <link rel="stylesheet" href="/static/styles/bundle.min.css" />
-          <link rel="stylesheet" href="/static/styles/assets.min.css" />
+          <link
+            rel="stylesheet"
+            href={`${__DEBUG_STYLES__ ? MARKUP_URL : ''}/static/styles/bundle.min.css`}
+          />
+          <link
+            rel="stylesheet"
+            href={`${__DEBUG_STYLES__ ? MARKUP_URL : ''}/static/styles/assets.min.css`}
+          />
         </Head>
         {children}
       </div>

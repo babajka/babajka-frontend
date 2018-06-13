@@ -4,7 +4,7 @@ import withRedux from 'next-redux-wrapper';
 
 import Text from 'components/common/Text';
 import PageLayout from 'components/common/layout/PageLayout';
-import EditArticleForm from 'components/articles/edit/EditArticleForm';
+import EditArticleForm from 'components/articles/EditArticleForm';
 
 import initStore from 'redux/store';
 import { actions as articlesActions, selectors } from 'redux/ducks/articles';

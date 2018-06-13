@@ -9,9 +9,11 @@ Next.js &amp; React app
 
 ## scripts
 
-* `npm run dev` to run dev server with hot-reloading
+* `npm start` to run dev server with hot-reloading (`npm run dev`)
+* `npm run start:prod` to build and run a production version
 * `npm run build` to build a production version
-* `npm run start-prod` to build and run a production version
+* `npm run local-backend` to run dev server that uses `http://localhost:8080` as backend
+* `npm run local-styles` to run dev server that uses `http://localhost:3001` as styles server
 * `npm run lint` to check code style with [`eslint`](http://eslint.org/),
   [`airbnb`](https://github.com/airbnb/javascript/tree/master/react) react style guide and
   [`prettier`](https://prettier.io)
@@ -20,18 +22,17 @@ Next.js &amp; React app
 * `npm run update-styles` to update styles from markup module
 * `npm run update-dict` to fetch translations from [GoogleDrive](https://docs.google.com/spreadsheets/d/e/2PACX-1vTAexRyfGOsnzvZKvVpPkr8M-l3Ph2vAvBqVu7W_vrPOQ3iUIGg4ZVcOLCeFj-Qg6BowPluH9QO3vXM/pubhtml#) and store it in `data/i18n.json` (gitignored)
 * `npm run storybook` to run storybook on [`localhost:9001`](http://localhost:9001/)
-* `npm run storybook:build` to build static version of storybook
-* `npm run storybook:deploy` to deploy storybook on
-  [`gh-pages`](https://babajka.github.io/babajka-frontend)
+  * `npm run storybook:build` to build static version of storybook
+  * `npm run storybook:deploy` to deploy storybook on
+    [`gh-pages`](https://babajka.github.io/babajka-frontend)
 * `npm run reset-cache` to delete `.next` builded & cached files
-* `npm run analyze` to check bundle sizes with [`webpack-bundle-analyzer`](https://github.com/webpack-contrib/webpack-bundle-analyzer)
+* `npm run analyze` to check bundle sizes with [`webpack-bundle-analyzer`](https://github.com/webpack-contrib/webpack-bundle-analyzer) (create reports in `reports/`)
+  * `npm run analyze:server`
+  * `npm run analyze:client`
 
 ## configuration
 
-Some variables may be set to control the frontend:
-
-* `BABAJKA_BACKEND_URL` sets URL of the Backend instance. Defaults to `http://dev.wir.by`. You might
-  want to use `http://localhost:8080` for local development.
+* `npm run dev -- http://localhost:8080` sets url to the local backend instance. (defaults to `http://api.wir.by`)
 
 ## rules
 
