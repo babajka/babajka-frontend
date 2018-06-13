@@ -19,6 +19,7 @@ module.exports = withBundleAnalyzer({
           __PROD__: ENV === 'production',
           __DEV__: ENV === 'development',
           __TESTING__: ENV === 'testing',
+          __DEBUG_STYLES__: process.env.DEBUG_STYLES === 'true',
         }),
       ]
     );

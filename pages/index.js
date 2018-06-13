@@ -53,7 +53,6 @@ class HomePage extends Component {
   static getInitialProps(ctx) {
     // TODO: somehow extract getCurrentUser to populate method
     const initialRequests = [auth.getCurrentUser, articlesActions.initialFetch];
-
     return request.populate(ctx, initialRequests);
   }
 

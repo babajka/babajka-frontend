@@ -12,6 +12,8 @@ Next.js &amp; React app
 * `npm start` to run dev server with hot-reloading (`npm run dev`)
 * `npm run start:prod` to build and run a production version
 * `npm run build` to build a production version
+* `npm run local-backend` to run dev server that uses `http://localhost:8080` as backend
+* `npm run local-styles` to run dev server that uses `http://localhost:3001` as styles server
 * `npm run lint` to check code style with [`eslint`](http://eslint.org/),
   [`airbnb`](https://github.com/airbnb/javascript/tree/master/react) react style guide and
   [`prettier`](https://prettier.io)

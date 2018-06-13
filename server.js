@@ -5,7 +5,7 @@ const proxy = require('http-proxy-middleware');
 const cookieParser = require('cookie-parser');
 
 const routes = require('./routes');
-const { BACKEND_URL } = require('./constants/server');
+const { BACKEND_URL, MARKUP_URL } = require('./constants/server');
 const { DEFAULT_LOCALE } = require('./constants');
 
 const port = parseInt(process.env.PORT, 10) || 3000;
@@ -41,6 +41,9 @@ app.prepare().then(() => {
   server.listen(port, err => {
     if (err) throw err;
     console.log(`> Using Backend on\t${BACKEND_URL}`);
+    if (process.env.DEBUG_STYLES === 'true') {
+      console.log(`> Using Markup on\t${MARKUP_URL}`);
+    }
     console.log(`> Ready on\t\thttp://localhost:${port}`);
     console.log(`> And you can use\thttp://local.wir.by:${port}`);
     console.log(`> For cookies support add '127.0.0.1 local.wir.by' in your hosts file`);

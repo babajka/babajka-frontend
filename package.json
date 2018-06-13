@@ -6,6 +6,7 @@
     "start": "npm run dev",
     "start:prod": "npm run build && cross-env NODE_ENV=production node server.js",
     "dev": "cross-env PORT=3000 && npm run reset-cache && node server.js",
+    "local-styles": "cross-env DEBUG_STYLES=true npm run dev",
     "local-backend": "npm run dev -- http://localhost:8080",
     "build": "cross-env NODE_ENV=production next build",
     "precommit": "lint-staged",
