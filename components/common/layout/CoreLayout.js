@@ -17,10 +17,12 @@ class CoreLayout extends Component {
   static defaultProps = { title: '' };
 
   componentDidMount() {
-    ReactGA.initialize(GA_ID, {
-      debug: true,
-    });
-    ReactGA.pageview(document.location.pathname);
+    if (__PROD__) {
+      ReactGA.initialize(GA_ID, {
+        debug: false,
+      });
+      ReactGA.pageview(document.location.pathname);
+    }
   }
 
   render() {

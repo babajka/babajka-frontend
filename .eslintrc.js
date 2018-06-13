@@ -2,7 +2,13 @@ module.exports = {
   parser: 'babel-eslint',
   extends: ['airbnb', 'prettier'],
   plugins: ['prettier'],
-  globals: {},
+  globals: {
+    __ENV__: false,
+    __VERSION__: false,
+    __PROD__: false,
+    __DEV__: false,
+    __TESTING__: false,
+  },
   env: {
     browser: true,
   },

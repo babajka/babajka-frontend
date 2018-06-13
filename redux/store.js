@@ -10,8 +10,8 @@ import reducer from './ducks';
 const middlewares = [
   thunkMiddleware,
   promiseMiddleware({ promiseTypeSuffixes: [LOADING, SUCCESS, ERROR] }),
-  analytics,
-];
+  __PROD__ && analytics,
+].filter(Boolean);
 
 export default (initialState = {}) =>
   createStore(

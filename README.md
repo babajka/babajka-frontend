@@ -9,9 +9,9 @@ Next.js &amp; React app
 
 ## scripts
 
-* `npm run dev` to run dev server with hot-reloading
+* `npm start` to run dev server with hot-reloading (`npm run dev`)
+* `npm run start:prod` to build and run a production version
 * `npm run build` to build a production version
-* `npm run start-prod` to build and run a production version
 * `npm run lint` to check code style with [`eslint`](http://eslint.org/),
   [`airbnb`](https://github.com/airbnb/javascript/tree/master/react) react style guide and
   [`prettier`](https://prettier.io)
