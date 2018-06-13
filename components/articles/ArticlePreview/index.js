@@ -32,6 +32,7 @@ const ArticlePreview = ({
   publishAt,
   published,
   canEditArticle,
+  type,
 }) => (
   <LocaleContext.Consumer>
     {lang => (
@@ -61,6 +62,13 @@ const ArticlePreview = ({
                 </Link>
               )}
             </div>
+            {type === 'video' && (
+              <Link route={ROUTES_NAMES.article} params={{ slug }}>
+                <a className="video-article">
+                  <i className="fa fa-play" />
+                </a>
+              </Link>
+            )}
           </div>
           <div className="card-content">
             <span className="title">
