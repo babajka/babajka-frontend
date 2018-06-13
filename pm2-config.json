@@ -1,6 +1,6 @@
 {
   "apps": [{
-    "name": "frontend",
+    "name": "frontend-staging",
     "script": "npm",
     "args": "run start-prod -- http://localhost:8080"
   },{
