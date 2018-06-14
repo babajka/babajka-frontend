@@ -28,7 +28,9 @@ const Editor = ({ content, onChange }) => (
     <Head>
       <link rel="stylesheet" href="/static/Dante2/DanteStyles.css" />
     </Head>
-    <DanteEditor config={config} content={content} onChange={onChange} />
+    <div className="dante2-namespace">
+      <DanteEditor config={config} content={content} onChange={onChange} />
+    </div>
   </Fragment>
 );
 
