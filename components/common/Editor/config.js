@@ -119,3 +119,10 @@ export const characterConvertMapping = {
   '==': 'unstyled',
   '` ': 'code-block',
 };
+
+export const IMAGE_CLASS_BY_DIR = {
+  left: 'graf--layoutOutsetLeft',
+  center: '',
+  wide: 'sectionLayout--fullWidth',
+  fill: 'graf--layoutFillWidth',
+};

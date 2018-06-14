@@ -1,17 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import { defaultWrappers } from 'components/common/Editor/config';
+import { IMAGE_CLASS_BY_DIR, defaultWrappers } from 'components/common/Editor/config';
 
 const imageRenderer = (children, { data, keys }) =>
   children.map((child, index) => (
-    <figure
-      className={classNames('graf graf--figure', {
-        'graf--layoutOutsetLeft': data[index].direction === 'left',
-        'sectionLayout--fullWidth': data[index].direction === 'wide',
-        'graf--layoutFillWidth': data[index].direction === 'fill',
-      })}
-    >
+    <figure className={classNames('graf graf--figure', IMAGE_CLASS_BY_DIR[data[index].direction])}>
       <div key={keys[index]}>
         <div className="aspectRatioPlaceholder is-locked">
           <div
