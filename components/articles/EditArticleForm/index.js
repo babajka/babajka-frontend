@@ -75,7 +75,7 @@ const getFields = ({ brands }) => [
     id: 'imageFolderUrl',
     type: 'input',
     help: 'image-folder-help',
-    validator: ({ imageFolderUrl }) => isUrl(imageFolderUrl),
+    validator: ({ imageFolderUrl = '' }) => isUrl(imageFolderUrl),
   },
   {
     id: 'videoUrl',
