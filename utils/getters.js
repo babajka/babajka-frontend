@@ -49,13 +49,23 @@ export const getLocalizedArticle = (article, lang) => {
   if (!article) {
     return null;
   }
-  const { brand, type, locales, author, imageUrl, collection, publishAt } = article;
+  const {
+    brand,
+    type,
+    locales,
+    author,
+    imagePreviewUrl,
+    imageFolderUrl,
+    collection,
+    publishAt,
+  } = article;
   return {
     ...localize(locales, lang),
     author: author && getLocalizedAuthor(author, lang),
     brand: brand && getLocalizedBrand(brand, lang),
     collection: collection && getLocalizedCollection(collection, lang),
-    imageUrl,
+    imagePreviewUrl,
+    imageFolderUrl,
     type,
     publishAt,
     published: publishAt && moment(publishAt).isBefore(moment()),

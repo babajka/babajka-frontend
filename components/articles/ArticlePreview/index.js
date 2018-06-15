@@ -27,7 +27,7 @@ const ArticlePreview = ({
   author,
   className,
   imageClassName,
-  imageUrl,
+  imagePreviewUrl,
   brand,
   publishAt,
   published,
@@ -46,7 +46,7 @@ const ArticlePreview = ({
             <figure className={cn('image', imageClassName)}>
               <Link route={ROUTES_NAMES.article} params={{ slug }}>
                 <a>
-                  <img alt={title} src={imageUrl} />
+                  <img alt={title} src={imagePreviewUrl} />
                 </a>
               </Link>
             </figure>

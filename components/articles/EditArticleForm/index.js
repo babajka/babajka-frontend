@@ -66,10 +66,16 @@ const getFields = ({ brands }) => [
     id: 'publicationDate',
   },
   {
-    id: 'imageUrl',
+    id: 'imagePreviewUrl',
     type: 'input',
-    help: 'image-help',
-    validator: ({ imageUrl }) => required(imageUrl) || isUrl(imageUrl),
+    help: 'image-preview-help',
+    validator: ({ imagePreviewUrl }) => required(imagePreviewUrl) || isUrl(imagePreviewUrl),
+  },
+  {
+    id: 'imageFolderUrl',
+    type: 'input',
+    help: 'image-folder-help',
+    validator: ({ imageFolderUrl }) => isUrl(imageFolderUrl),
   },
   {
     id: 'videoUrl',

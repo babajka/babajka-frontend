@@ -35,7 +35,7 @@ const PublicArticle = ({
   author,
   // brand,
   otherLocales,
-  imageUrl,
+  imageFolderUrl,
   // text, // TODO: deprecate
   content,
   publishAt,
@@ -96,9 +96,11 @@ const PublicArticle = ({
             )}
         </div>
 
-        <figure className="article__imagewrapper image">
-          <Text id="article.article-image" render={t => <img src={imageUrl} alt={t} />} />
-        </figure>
+        {imageFolderUrl && (
+          <figure className="article__imagewrapper image">
+            <Text id="article.article-image" render={t => <img src={imageFolderUrl} alt={t} />} />
+          </figure>
+        )}
 
         <div className="is-size-5 article__text">
           <Renderer content={content} />
