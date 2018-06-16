@@ -5,7 +5,6 @@ import get from 'lodash/get';
 import set from 'lodash/set';
 import cn from 'classnames';
 
-import { ArticleShape } from 'utils/customPropTypes';
 import { required, hasErrors, isSlug } from 'utils/validators';
 import { ROUTES_NAMES } from 'routes';
 
@@ -77,7 +76,7 @@ const Field = ({ formApi, Component = TextField, withHelp, pending, ...props }) 
   );
 };
 
-const EditLocaleForm = ({ article, prefix, formApi, onRemove, pending }) => {
+const EditLocaleForm = ({ article, prefix, formApi, onRemove, pending, error }) => {
   const slug = get(article, `${prefix}.slug`);
   return (
     <div className="inputs">
@@ -115,6 +114,11 @@ const EditLocaleForm = ({ article, prefix, formApi, onRemove, pending }) => {
           onChange={content => formApi.setValue(`${prefix}.content`, content)}
         />
       </div>
+      {!!error && (
+        <p className="help is-danger">
+          <Text id="common.ooooooops" />
+        </p>
+      )}
       <div className="action-buttons">
         <Clickable tag="div" className="remove-button button" onClick={onRemove}>
           <span className="icon is-small">
@@ -145,8 +149,11 @@ const EditLocaleForm = ({ article, prefix, formApi, onRemove, pending }) => {
 };
 
 EditLocaleForm.propTypes = {
-  article: ArticleShape,
+  article: PropTypes.shape({
+    slug: PropTypes.string,
+  }),
   pending: PropTypes.bool.isRequired,
+  error: PropTypes.any, // eslint-disable-line
   prefix: PropTypes.string.isRequired,
   formApi: PropTypes.shape({
     values: PropTypes.object.isRequired,

@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import cn from 'classnames';
 import { Form, Text as TextField } from 'react-form';
 import get from 'lodash/get';
+import noop from 'lodash/noop';
+import omit from 'lodash/omit';
 
 import { actions, selectors } from 'redux/ducks/articles';
-import { ArticleShape, BrandsArray, LangType } from 'utils/customPropTypes';
+import { BrandsArray, LangType } from 'utils/customPropTypes';
 import { required, isUrl } from 'utils/validators';
 import { Router, ROUTES_NAMES } from 'routes';
 import { LANGS } from 'constants';
@@ -20,6 +22,7 @@ const mapStateToProps = state => ({
   article: selectors.getRawCurrent(state),
   brands: selectors.getBrands(state),
   pending: selectors.isPending(state),
+  error: selectors.isError(state),
 });
 
 const mapDispatchToProps = {
@@ -51,6 +54,7 @@ const getFields = ({ brands }) => [
         label: <Text id="common.video" />,
       },
     ],
+    size: 'xs',
   },
   {
     id: 'author',
@@ -58,9 +62,10 @@ const getFields = ({ brands }) => [
   {
     id: 'brandSlug',
     options: brands && brands.map(({ slug: id, name: label }) => ({ id, label })),
+    size: 'l',
   },
   {
-    id: 'collection',
+    id: 'collectionSlug',
   },
   {
     id: 'publicationDate',
@@ -90,13 +95,16 @@ class EditArticleForm extends Component {
   static propTypes = {
     lang: LangType.isRequired,
     articleLocale: LangType,
-    article: ArticleShape,
+    article: PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+    }),
     brands: BrandsArray,
     pending: PropTypes.bool.isRequired,
     mode: PropTypes.oneOf(['edit', 'create']).isRequired,
     fetchBrands: PropTypes.func.isRequired,
     createArticle: PropTypes.func.isRequired,
     updateArticle: PropTypes.func.isRequired,
+    error: PropTypes.any, // eslint-disable-line
   };
 
   static defaultProps = {
@@ -128,15 +136,15 @@ class EditArticleForm extends Component {
   };
 
   render() {
-    const { mode, article, brands, pending } = this.props;
+    const { mode, article, brands, pending, error } = this.props;
     const { currentLocale } = this.state;
-    const defaultValues =
-      mode === 'create'
-        ? initArticle
-        : {
-            ...article,
-            brandSlug: article.brand.slug,
-          };
+    const { brand, collection } = article || {};
+    const formattedArticle = {
+      ...omit(article, ['collection', 'brand']),
+      brandSlug: brand && brand.slug,
+      collectionSlug: collection && collection.slug,
+    };
+    const defaultValues = mode === 'create' ? initArticle : formattedArticle;
     const fields = getFields({ brands });
     const errorValidator = values => {
       const errors = {};
@@ -156,6 +164,7 @@ class EditArticleForm extends Component {
         </div>
         <Form
           onSubmit={this.handleSubmit}
+          onSubmitFailure={noop}
           defaultValues={defaultValues}
           validateError={errorValidator}
         >
@@ -174,13 +183,13 @@ class EditArticleForm extends Component {
                     <Text id="article.common" />
                   </div>
                   <div className="inputs">
-                    {fields.map(({ id, options, type, help, hide }) => {
+                    {fields.map(({ id, options, type, help, hide, size }) => {
                       if (hide && hide(formApi.values)) {
                         return null;
                       }
-                      const error = formApi.errors[id];
+                      const fieldError = formApi.errors[id];
                       const touched = !!formApi.touched[id];
-                      const hasError = !pending && touched && !!error;
+                      const hasError = !pending && touched && !!fieldError;
 
                       return (
                         <div key={id} className={cn('field', { 'long-input': type === 'input' })}>
@@ -199,7 +208,7 @@ class EditArticleForm extends Component {
                           )}
                           {hasError && (
                             <p className="help is-danger">
-                              <Text id={error} />
+                              <Text id={fieldError} />
                             </p>
                           )}
                           <p className="help">
@@ -207,6 +216,7 @@ class EditArticleForm extends Component {
                           </p>
                           {options && (
                             <Select
+                              size={size}
                               value={formApi.values[id]}
                               options={options}
                               onChange={formApi.setValue.bind(null, id)}
@@ -269,6 +279,7 @@ class EditArticleForm extends Component {
                       prefix={`locales.${currentLocale}`}
                       formApi={formApi}
                       pending={pending}
+                      error={error}
                       onRemove={() => {}}
                     />
                   )}
