@@ -42,7 +42,6 @@ class HomePage extends Component {
     nextNextPage: PropTypes.number,
     getChunk: PropTypes.func.isRequired,
     mergeCached: PropTypes.func.isRequired,
-    error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   };
 
   static defaultProps = {
@@ -72,7 +71,7 @@ class HomePage extends Component {
   };
 
   render() {
-    const { articles, articlesPending, error, nextPage, url } = this.props;
+    const { articles, articlesPending, nextPage, url } = this.props;
 
     const { query: { lang } } = url;
 
@@ -97,7 +96,6 @@ class HomePage extends Component {
             </div>
           )}
         </div>
-        {error && <p>{error}</p>}
       </PageLayout>
     );
   }
