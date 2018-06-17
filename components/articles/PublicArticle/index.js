@@ -153,7 +153,7 @@ const PublicArticle = ({
             )}
             {EXPORT_TO_NETWORKS.map(name => (
               <li key={`side-${name}`}>
-                <ShareToButton name={name} side />
+                <ShareToButton name={name} title={title} side />
               </li>
             ))}
           </ul>
