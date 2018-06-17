@@ -16,6 +16,7 @@ export default {
     getBySlug: slug => `${API_URL}/articles/${slug}`,
     getBrands: `${API_URL}/articles/brands`,
     getAuthors: `${API_URL}/articles/authors`,
+    getColletions: `${API_URL}/articles/collections`,
     create: `${API_URL}/articles`,
     update: id => `${API_URL}/articles/${id}`,
     addLocale: id => `${API_URL}/articles/localize/${id}`,

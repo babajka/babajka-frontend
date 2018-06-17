@@ -8,7 +8,7 @@ import noop from 'lodash/noop';
 import omit from 'lodash/omit';
 
 import { actions, selectors } from 'redux/ducks/articles';
-import { AuthorsArray, BrandsArray, LangType } from 'utils/customPropTypes';
+import { AuthorsArray, BrandsArray, CollectionsArray, LangType } from 'utils/customPropTypes';
 import { required, isUrl } from 'utils/validators';
 import { Router, ROUTES_NAMES } from 'routes';
 import { LANGS } from 'constants';
@@ -23,6 +23,7 @@ const mapStateToProps = state => ({
   article: selectors.getRawCurrent(state),
   brands: selectors.getBrands(state),
   authors: selectors.getAuthors(state),
+  collections: selectors.getColletions(state),
   pending: selectors.isPending(state),
   serverErrors: selectors.getErrors(state) || {},
 });
@@ -30,6 +31,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   fetchBrands: actions.fetchBrands,
   fetchAuthors: actions.fetchAuthors,
+  fetchCollections: actions.fetchCollections,
   createArticle: actions.create,
   updateArticle: actions.update,
 };
@@ -44,7 +46,7 @@ const initLocale = {
   text: 'type something...',
 };
 
-const getFields = ({ authors, lang }) => [
+const getFields = ({ authors, collections, lang }) => [
   {
     id: 'type',
     type: 'select',
@@ -85,6 +87,12 @@ const getFields = ({ authors, lang }) => [
   // },
   {
     id: 'collectionSlug',
+    type: 'select',
+    controlProps: {
+      options: collections && collections.map(({ slug: id, name: label }) => ({ id, label })),
+      placeholder: localize('article.not-in-collection', lang),
+      clerable: true,
+    },
   },
   {
     id: 'publicationDate',
@@ -119,10 +127,12 @@ class EditArticleForm extends Component {
     }),
     brands: BrandsArray,
     authors: AuthorsArray,
+    collections: CollectionsArray,
     pending: PropTypes.bool.isRequired,
     mode: PropTypes.oneOf(['edit', 'create']).isRequired,
     fetchBrands: PropTypes.func.isRequired,
     fetchAuthors: PropTypes.func.isRequired,
+    fetchCollections: PropTypes.func.isRequired,
     createArticle: PropTypes.func.isRequired,
     updateArticle: PropTypes.func.isRequired,
     serverErrors: PropTypes.shape({}).isRequired,
@@ -133,6 +143,7 @@ class EditArticleForm extends Component {
     article: initArticle,
     brands: null,
     authors: null,
+    collections: null,
   };
 
   componentWillMount() {
@@ -141,9 +152,10 @@ class EditArticleForm extends Component {
   }
 
   componentDidMount() {
-    const { fetchBrands, fetchAuthors } = this.props;
+    const { fetchBrands, fetchAuthors, fetchCollections } = this.props;
     fetchBrands();
     fetchAuthors();
+    fetchCollections();
   }
 
   handleSubmit = form => {
@@ -159,7 +171,7 @@ class EditArticleForm extends Component {
   };
 
   render() {
-    const { mode, article, lang, authors, brands, pending, serverErrors } = this.props;
+    const { mode, article, lang, authors, brands, collections, pending, serverErrors } = this.props;
     const { currentLocale } = this.state;
     const { brand, collection, _id: slug } = article || {};
     const formattedArticle = {
@@ -168,7 +180,7 @@ class EditArticleForm extends Component {
       collectionSlug: collection && collection.slug,
     };
     const defaultValues = mode === 'create' ? initArticle : formattedArticle;
-    const fields = getFields({ brands, authors, lang });
+    const fields = getFields({ brands, authors, collections, lang });
     const errorValidator = values => {
       const errors = {};
       fields.forEach(({ id, validator }) => {

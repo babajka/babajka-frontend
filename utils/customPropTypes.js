@@ -43,6 +43,8 @@ export const CollectionModel = {
 
 export const CollectionShape = PropTypes.shape(CollectionModel);
 
+export const CollectionsArray = PropTypes.arrayOf(CollectionShape);
+
 export const ArticleModel = {
   articleId: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,

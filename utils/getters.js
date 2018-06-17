@@ -10,6 +10,9 @@ import { DEFAULT_LOCALE } from 'constants';
 const localize = (object, lang = DEFAULT_LOCALE) =>
   object && (object[lang] || object[DEFAULT_LOCALE] || Object.values(object)[0]);
 
+const getLocalizedArray = localizeItem => (items, lang) =>
+  items && items.map(item => localizeItem(item, lang));
+
 export const getLocalizedAuthor = (author, lang) => {
   if (!author) {
     return null;
@@ -21,14 +24,15 @@ export const getLocalizedAuthor = (author, lang) => {
   return localized;
 };
 
-export const getLocalizedAuthors = (authors, lang) =>
-  authors && authors.map(author => getLocalizedAuthor(author, lang));
+export const getLocalizedAuthors = getLocalizedArray(getLocalizedAuthor);
 
 export const getLocalizedBrand = ({ slug, imageUrl, names }, lang) => ({
   slug,
   imageUrl,
   name: localize(names, lang),
 });
+
+export const getLocalizedBrands = getLocalizedArray(getLocalizedBrand);
 
 export const getLocalizedCollection = (
   { slug, imageUrl, name, description, prev, next },
@@ -42,8 +46,7 @@ export const getLocalizedCollection = (
   next: next && getLocalizedArticle(next), // eslint-disable-line no-use-before-define
 });
 
-export const getLocalizedBrands = (brands, lang) =>
-  brands && brands.map(brand => getLocalizedBrand(brand, lang));
+export const getLocalizedCollections = getLocalizedArray(getLocalizedCollection);
 
 export const getLocalesBySlug = ({ locales }) =>
   fromPairs(Object.entries(locales).map(([key, { slug }]) => [slug, key]));
@@ -75,8 +78,7 @@ export const getLocalizedArticle = (article, lang) => {
   };
 };
 
-export const getLocalizedArticles = (articles, lang) =>
-  articles.map(article => getLocalizedArticle(article, lang));
+export const getLocalizedArticles = getLocalizedArray(getLocalizedArticle);
 
 export const getShortLocale = ({ locale, slug, title }) => ({ locale, slug, title });
 
