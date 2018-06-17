@@ -7,10 +7,12 @@ const cookieParser = require('cookie-parser');
 const routes = require('./routes');
 const { BACKEND_URL, MARKUP_URL } = require('./constants/server');
 const { DEFAULT_LOCALE } = require('./constants');
-const { ARGS } = require('./utils/args');
+const getArgs = require('./utils/args');
+
+const ARGS = getArgs();
 
 const port = ARGS.port || 3000;
-const dev = ARGS.env !== 'production';
+const dev = ARGS.env !== 'production' && ARGS.env !== 'staging';
 const app = next({ dev });
 const handle = routes.getRequestHandler(app);
 

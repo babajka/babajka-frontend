@@ -4,7 +4,7 @@
   "description": "Next.js & React app",
   "scripts": {
     "start": "npm run dev",
-    "start:prod": "npm run build && cross-env NODE_ENV=production node server.js --env=production",
+    "start:prod": "npm run build && cross-env NODE_ENV=production node server.js",
     "dev": "npm run reset-cache && node server.js --port=3000",
     "local-styles": "npm run dev -- --debug_styles=3001",
     "local-backend": "npm run dev -- --backend_url=http://localhost:8080",

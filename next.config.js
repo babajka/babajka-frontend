@@ -4,9 +4,10 @@ const webpack = require('webpack');
 
 const packageJson = require('./package.json');
 const { LOCALES } = require('./constants');
-const { ARGS } = require('./utils/args');
+const getArgs = require('./utils/args');
 
 const langs = Object.keys(LOCALES).join('|');
+const ARGS = getArgs();
 const ENV = ARGS.env;
 
 module.exports = withBundleAnalyzer({

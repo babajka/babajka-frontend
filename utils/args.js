@@ -7,6 +7,4 @@ const optionDefinitions = [
   { name: 'debug_styles', type: Number },
 ];
 
-const ARGS = commandLineArgs(optionDefinitions);
-
-module.exports = { ARGS };
+module.exports = () => commandLineArgs(optionDefinitions);
