@@ -6,6 +6,7 @@ module.exports = {
     __ENV__: false,
     __VERSION__: false,
     __PROD__: false,
+    __STAGING__: false,
     __DEV__: false,
     __TESTING__: false,
     __DEBUG_STYLES__: false,

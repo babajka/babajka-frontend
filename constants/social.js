@@ -44,4 +44,4 @@ export const NETWORKS_URLS = {
     `https://twitter.com/share?url=${DOMAIN_SECURE}${url}&text=${encodeURI(title)}`,
 };
 
-export const GA_ID = 'UA-117143376-1';
+export const getGoogleAnalyticsID = isProd => (isProd ? 'UA-117143376-2' : 'UA-117143376-1');
