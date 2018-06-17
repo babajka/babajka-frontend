@@ -1,6 +1,16 @@
 import moment from 'moment';
+import isObject from 'lodash/isObject';
 
-export const hasErrors = errors => !!Object.values(errors).filter(Boolean).length;
+export const hasErrors = (errors, touched) =>
+  errors &&
+  !!Object.keys(errors).filter(key => {
+    const err = errors[key];
+    const touch = touched[key];
+    if (isObject(touch)) {
+      return hasErrors(err, touch);
+    }
+    return touch && err;
+  }).length;
 
 const emailRegexp = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/;
 export const isEmail = (email, massageId = 'auth.badEmail') =>

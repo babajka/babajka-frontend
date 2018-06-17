@@ -139,7 +139,7 @@ const LoginForm = ({ onSubmit, pending, errors, allowSignUp }) => {
               <div className="field">
                 <div className="control has-text-centered">
                   <Button
-                    disabled={hasErrors(formApi.errors)}
+                    disabled={hasErrors(formApi.errors, formApi.touched)}
                     type="submit"
                     pending={pending}
                     onClick={formApi.submitForm}
