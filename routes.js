@@ -57,6 +57,9 @@ const ROUTES = [
     name: 'editArticle',
     pattern: 'article/:slug/:mode(edit)',
   },
+  {
+    name: 'editorTest', // TODO: remove this temp route
+  },
 ].map(({ name, pattern = name, page = name }) => ({
   name,
   pattern: `/:lang(${langs})/${pattern}`,

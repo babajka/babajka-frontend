@@ -1,10 +1,10 @@
 import React from 'react';
-import renderHTML from 'react-render-html';
 import { connect } from 'react-redux';
 
 import Icon from 'components/common/Icon';
 import Link from 'components/common/Link';
 import Text from 'components/common/Text';
+import Renderer from 'components/common/Renderer';
 
 import { selectors } from 'redux/ducks/articles';
 import { selectors as authSelectors } from 'redux/ducks/auth';
@@ -35,8 +35,9 @@ const PublicArticle = ({
   author,
   // brand,
   otherLocales,
-  imageUrl,
-  text,
+  imageFolderUrl,
+  // text, // TODO: deprecate
+  content,
   publishAt,
   // TODO(andemerie): decide how to implement video page and where to check the following type
   // type,
@@ -95,11 +96,15 @@ const PublicArticle = ({
             )}
         </div>
 
-        <figure className="article__imagewrapper image">
-          <Text id="article.article-image" render={t => <img src={imageUrl} alt={t} />} />
-        </figure>
+        {imageFolderUrl && (
+          <figure className="article__imagewrapper image">
+            <Text id="article.article-image" render={t => <img src={imageFolderUrl} alt={t} />} />
+          </figure>
+        )}
 
-        <div className="is-size-5 article__text">{renderHTML(text)}</div>
+        <div className="is-size-5 article__text">
+          <Renderer content={content} />
+        </div>
 
         <div className="article__bottom">
           <div className="is-hidden-mobile">

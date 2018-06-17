@@ -36,11 +36,17 @@ const initialState = {
   brands: null,
 };
 
+const defaultState = {
+  pending: false,
+  error: false,
+  errors: {},
+};
+
 const currentReducer = defaultReducer((state, { payload }) => ({
   ...state,
   current: payload,
   localeBySlug: getLocalesBySlug(payload),
-  pending: false,
+  ...defaultState,
 }));
 
 export default createReducer(
@@ -49,13 +55,13 @@ export default createReducer(
       ...state,
       data,
       pagination: next,
-      pending: false,
+      ...defaultState,
     })),
     [FETCH_CHUNK]: defaultReducer((state, { payload: { data, next } }) => ({
       ...state,
       nextData: data,
       nextPagination: next,
-      pending: false,
+      ...defaultState,
     })),
     [MERGE_CACHED]: state => ({
       ...state,
@@ -67,7 +73,7 @@ export default createReducer(
     [FETCH_BRANDS]: defaultReducer((state, { payload }) => ({
       ...state,
       brands: payload,
-      pending: false,
+      ...defaultState,
     })),
     [CREATE]: currentReducer,
     [UPDATE]: currentReducer,
@@ -113,6 +119,7 @@ export const actions = {
 const getState = state => state.articles;
 const isPending = state => getState(state).pending;
 const isError = state => getState(state).error;
+const getErrors = state => getState(state).errors;
 
 const getRawArticles = state => getState(state).data;
 const getAll = (state, lang) => getLocalizedArticles(getRawArticles(state), lang);
@@ -144,4 +151,5 @@ export const selectors = {
   getBrands,
   isPending,
   isError,
+  getErrors,
 };

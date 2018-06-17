@@ -3,11 +3,15 @@ import { LOADING, SUCCESS, ERROR } from 'constants/redux';
 export const pendingReducer = state => ({
   ...state,
   pending: true,
+  error: false,
 });
 
 const getErrors = payload => {
+  if (!__PROD__) {
+    console.error('Error during api call: ', payload);
+  }
   if (typeof payload === 'object') {
-    return { errors: payload };
+    return { error: true, errors: payload };
   }
   return { error: payload };
 };

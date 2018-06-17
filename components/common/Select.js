@@ -16,6 +16,7 @@ const Arrow = ({ isOpen }) => (
 // TODO: fix searchable mode
 const Select = ({
   className,
+  size,
   value,
   options,
   valueWholeObject,
@@ -37,10 +38,17 @@ const Select = ({
       inputValue,
       selectedItem: selected,
     }) => (
-      <div className={cn('babajka-dropdown dropdown', className, { 'is-active': isOpen })}>
-        <div className="dropdown-trigger">
+      <div
+        className={cn(
+          'babajka-dropdown dropdown',
+          className,
+          { 'is-active': isOpen },
+          `size-${size}`
+        )}
+      >
+        <div className="babajka-dropdown__trigger dropdown-trigger">
           {dropdown && (
-            <Button {...getToggleButtonProps({ className: 'button' })}>
+            <Button {...getToggleButtonProps({ className: `button size-${size}` })}>
               <span>{placeholder}</span>
               <Arrow isOpen={isOpen} />
             </Button>
@@ -93,6 +101,7 @@ const Select = ({
 
 Select.propTypes = {
   className: PropTypes.string,
+  size: PropTypes.oneOf(['xs', 's', 'm', 'l']),
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   options: PropTypes.arrayOf(
     PropTypes.shape({
@@ -111,6 +120,7 @@ Select.propTypes = {
 
 Select.defaultProps = {
   className: '',
+  size: 'm',
   value: null,
   valueWholeObject: false,
   searchable: false,

@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import cn from 'classnames';
 import { Form, Text as TextField } from 'react-form';
 import get from 'lodash/get';
+import noop from 'lodash/noop';
+import omit from 'lodash/omit';
 
 import { actions, selectors } from 'redux/ducks/articles';
-import { ArticleShape, BrandsArray, LangType } from 'utils/customPropTypes';
+import { BrandsArray, LangType } from 'utils/customPropTypes';
 import { required, isUrl } from 'utils/validators';
 import { Router, ROUTES_NAMES } from 'routes';
 import { LANGS } from 'constants';
@@ -14,12 +16,13 @@ import { LANGS } from 'constants';
 import Text from 'components/common/Text';
 import Select from 'components/common/Select';
 import Clickable from 'components/common/Clickable';
-import EditLocaleForm, { localesFalidator } from './EditLocaleForm';
+import EditLocaleForm, { localesValidator } from './EditLocaleForm';
 
 const mapStateToProps = state => ({
   article: selectors.getRawCurrent(state),
   brands: selectors.getBrands(state),
   pending: selectors.isPending(state),
+  serverErrors: selectors.getErrors(state) || {},
 });
 
 const mapDispatchToProps = {
@@ -51,6 +54,7 @@ const getFields = ({ brands }) => [
         label: <Text id="common.video" />,
       },
     ],
+    size: 'xs',
   },
   {
     id: 'author',
@@ -58,18 +62,25 @@ const getFields = ({ brands }) => [
   {
     id: 'brandSlug',
     options: brands && brands.map(({ slug: id, name: label }) => ({ id, label })),
+    size: 'l',
   },
   {
-    id: 'collection',
+    id: 'collectionSlug',
   },
   {
     id: 'publicationDate',
   },
   {
-    id: 'imageUrl',
+    id: 'imagePreviewUrl',
     type: 'input',
-    help: 'image-help',
-    validator: ({ imageUrl }) => required(imageUrl) || isUrl(imageUrl),
+    help: 'image-preview-help',
+    validator: ({ imagePreviewUrl }) => required(imagePreviewUrl) || isUrl(imagePreviewUrl),
+  },
+  {
+    id: 'imageFolderUrl',
+    type: 'input',
+    help: 'image-folder-help',
+    validator: ({ imageFolderUrl = '' }) => isUrl(imageFolderUrl),
   },
   {
     id: 'videoUrl',
@@ -84,13 +95,16 @@ class EditArticleForm extends Component {
   static propTypes = {
     lang: LangType.isRequired,
     articleLocale: LangType,
-    article: ArticleShape,
+    article: PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+    }),
     brands: BrandsArray,
     pending: PropTypes.bool.isRequired,
     mode: PropTypes.oneOf(['edit', 'create']).isRequired,
     fetchBrands: PropTypes.func.isRequired,
     createArticle: PropTypes.func.isRequired,
     updateArticle: PropTypes.func.isRequired,
+    serverErrors: PropTypes.shape({}).isRequired,
   };
 
   static defaultProps = {
@@ -113,24 +127,24 @@ class EditArticleForm extends Component {
     const { article, mode, lang, createArticle, updateArticle } = this.props;
     if (mode === 'create') {
       return createArticle(form).then(({ value: { _id: slug } }) => {
-        Router.replaceRoute(ROUTES_NAMES.article, { slug, mode: 'edit', lang });
+        // TODO: check that redirect is occurs
+        Router.replaceRoute(ROUTES_NAMES.editArticle, { slug, lang });
       });
     }
     const { _id } = article;
-    // FIXME(drapegnik):
-    return updateArticle({ ...form, _id, brand: null });
+    return updateArticle({ ...form, _id });
   };
 
   render() {
-    const { mode, article, brands, pending } = this.props;
+    const { mode, article, lang, brands, pending, serverErrors } = this.props;
     const { currentLocale } = this.state;
-    const defaultValues =
-      mode === 'create'
-        ? initArticle
-        : {
-            ...article,
-            brandSlug: article.brand.slug,
-          };
+    const { brand, collection, _id: slug } = article || {};
+    const formattedArticle = {
+      ...omit(article, ['collection', 'brand']),
+      brandSlug: brand && brand.slug,
+      collectionSlug: collection && collection.slug,
+    };
+    const defaultValues = mode === 'create' ? initArticle : formattedArticle;
     const fields = getFields({ brands });
     const errorValidator = values => {
       const errors = {};
@@ -139,7 +153,7 @@ class EditArticleForm extends Component {
           errors[id] = validator(values);
         }
       });
-      errors.locales = localesFalidator(values.locales);
+      errors.locales = localesValidator(values.locales);
       return errors;
     };
 
@@ -150,12 +164,13 @@ class EditArticleForm extends Component {
         </div>
         <Form
           onSubmit={this.handleSubmit}
+          onSubmitFailure={noop}
           defaultValues={defaultValues}
           validateError={errorValidator}
         >
           {formApi => {
             const { locales } = formApi.values;
-            const keys = Object.keys(locales);
+            const keys = Object.keys(locales).filter(key => locales[key]);
             const availableLocales = LANGS.filter(({ id }) => !keys.includes(id));
             const addedLocales = LANGS.filter(({ id }) => keys.includes(id));
             const localeTouched = l => get(formApi.touched, `locales.${l}`);
@@ -168,13 +183,13 @@ class EditArticleForm extends Component {
                     <Text id="article.common" />
                   </div>
                   <div className="inputs">
-                    {fields.map(({ id, options, type, help, hide }) => {
+                    {fields.map(({ id, options, type, help, hide, size }) => {
                       if (hide && hide(formApi.values)) {
                         return null;
                       }
-                      const error = formApi.errors[id];
+                      const fieldError = formApi.errors[id];
                       const touched = !!formApi.touched[id];
-                      const hasError = !pending && touched && !!error;
+                      const hasError = !pending && touched && !!fieldError;
 
                       return (
                         <div key={id} className={cn('field', { 'long-input': type === 'input' })}>
@@ -193,7 +208,7 @@ class EditArticleForm extends Component {
                           )}
                           {hasError && (
                             <p className="help is-danger">
-                              <Text id={error} />
+                              <Text id={fieldError} />
                             </p>
                           )}
                           <p className="help">
@@ -201,6 +216,7 @@ class EditArticleForm extends Component {
                           </p>
                           {options && (
                             <Select
+                              size={size}
                               value={formApi.values[id]}
                               options={options}
                               onChange={formApi.setValue.bind(null, id)}
@@ -263,7 +279,19 @@ class EditArticleForm extends Component {
                       prefix={`locales.${currentLocale}`}
                       formApi={formApi}
                       pending={pending}
-                      onRemove={() => {}}
+                      errors={serverErrors}
+                      onRemove={() => {
+                        const nextLocales = omit(locales, currentLocale);
+                        const [nextLocale] = Object.keys(nextLocales);
+                        formApi.setValue('locales', nextLocales);
+                        this.setState({ currentLocale: nextLocale });
+                        Router.replaceRoute(ROUTES_NAMES.editArticle, {
+                          slug,
+                          lang,
+                          articleLocale: nextLocale,
+                          mode: 'edit',
+                        });
+                      }}
                     />
                   )}
                 </div>

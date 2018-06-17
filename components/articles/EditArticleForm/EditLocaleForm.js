@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Text as TextField, TextArea } from 'react-form';
+import cn from 'classnames';
 import get from 'lodash/get';
 import set from 'lodash/set';
-import cn from 'classnames';
 
-import { ArticleShape } from 'utils/customPropTypes';
 import { required, hasErrors, isSlug } from 'utils/validators';
 import { ROUTES_NAMES } from 'routes';
 
@@ -14,7 +13,7 @@ import Text from 'components/common/Text';
 import Button from 'components/common/Button';
 import Clickable from 'components/common/Clickable';
 import Icon from 'components/common/Icon';
-import Editor from './Editor';
+import Editor from 'components/common/Editor';
 
 const localeFields = [
   {
@@ -34,7 +33,7 @@ const localeFields = [
 // FIXME: it's very ugly & difficult method, has no ideas how to fix it
 // mb use NestedForm, but there are another bugs with it
 // TODO: migrate on react-form@3 & check NestedForms
-export const localesFalidator = locales => {
+export const localesValidator = locales => {
   const localesErrors = {};
   const localesHasErrors = !!Object.keys(locales)
     .map(loc => {
@@ -49,9 +48,9 @@ export const localesFalidator = locales => {
 };
 
 // TODO: consider to extract to common component & merge with `auth/FormField`
-const Field = ({ formApi, Component = TextField, withHelp, pending, ...props }) => {
+const Field = ({ formApi, Component = TextField, withHelp, pending, errors, ...props }) => {
   const { id, field, className = 'input' } = props;
-  const error = get(formApi.errors, field);
+  const error = get({ ...formApi.errors, ...errors }, field);
   const touched = !!get(formApi.touched, field);
   const hasError = !pending && touched && !!error;
   const fieldName = field.split('.').pop();
@@ -77,7 +76,7 @@ const Field = ({ formApi, Component = TextField, withHelp, pending, ...props }) 
   );
 };
 
-const EditLocaleForm = ({ article, prefix, formApi, onRemove, pending }) => {
+const EditLocaleForm = ({ article, prefix, formApi, onRemove, pending, errors }) => {
   const slug = get(article, `${prefix}.slug`);
   return (
     <div className="inputs">
@@ -87,6 +86,7 @@ const EditLocaleForm = ({ article, prefix, formApi, onRemove, pending }) => {
           id={`${prefix}.title`}
           field={`${prefix}.title`}
           pending={pending}
+          errors={errors}
         />
         <Field
           formApi={formApi}
@@ -95,6 +95,7 @@ const EditLocaleForm = ({ article, prefix, formApi, onRemove, pending }) => {
           withHelp
           placeholder="belaruskae-kino"
           pending={pending}
+          errors={errors}
         />
         <Field
           Component={TextArea}
@@ -107,12 +108,13 @@ const EditLocaleForm = ({ article, prefix, formApi, onRemove, pending }) => {
           cols="50"
           rows="2"
           type="text"
+          errors={errors}
         />
       </div>
       <div className="field editor">
         <Editor
-          content={get(formApi.values, `${prefix}.text`)}
-          onChange={body => formApi.setValue(`${prefix}.text`, body)}
+          content={get(formApi.values, `${prefix}.content`)}
+          onChange={content => formApi.setValue(`${prefix}.content`, content)}
         />
       </div>
       <div className="action-buttons">
@@ -134,7 +136,7 @@ const EditLocaleForm = ({ article, prefix, formApi, onRemove, pending }) => {
         <Button
           className="save-button button"
           type="submit"
-          disabled={hasErrors(formApi.errors)}
+          disabled={hasErrors(formApi.errors, formApi.touched)}
           pending={pending}
         >
           <Text id="article.save" />
@@ -145,7 +147,9 @@ const EditLocaleForm = ({ article, prefix, formApi, onRemove, pending }) => {
 };
 
 EditLocaleForm.propTypes = {
-  article: ArticleShape,
+  article: PropTypes.shape({
+    slug: PropTypes.string,
+  }),
   pending: PropTypes.bool.isRequired,
   prefix: PropTypes.string.isRequired,
   formApi: PropTypes.shape({
@@ -153,6 +157,7 @@ EditLocaleForm.propTypes = {
     setValue: PropTypes.func.isRequired,
   }).isRequired,
   onRemove: PropTypes.func.isRequired,
+  errors: PropTypes.shape({}).isRequired,
 };
 
 EditLocaleForm.defaultProps = {
