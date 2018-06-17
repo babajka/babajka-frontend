@@ -1,4 +1,6 @@
-const { ARGS } = require('../utils/args');
+const getArgs = require('../utils/args');
+
+const ARGS = getArgs();
 
 const BACKEND_URL = ARGS.backend_url || 'http://api.wir.by';
 const MARKUP_URL = ARGS.debug_styles ? `http://localhost:${ARGS.debug_styles}` : '';
