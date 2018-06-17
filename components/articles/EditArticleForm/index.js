@@ -136,9 +136,9 @@ class EditArticleForm extends Component {
   };
 
   render() {
-    const { mode, article, brands, pending, serverErrors } = this.props;
+    const { mode, article, lang, brands, pending, serverErrors } = this.props;
     const { currentLocale } = this.state;
-    const { brand, collection } = article || {};
+    const { brand, collection, _id: slug } = article || {};
     const formattedArticle = {
       ...omit(article, ['collection', 'brand']),
       brandSlug: brand && brand.slug,
@@ -170,7 +170,7 @@ class EditArticleForm extends Component {
         >
           {formApi => {
             const { locales } = formApi.values;
-            const keys = Object.keys(locales);
+            const keys = Object.keys(locales).filter(key => locales[key]);
             const availableLocales = LANGS.filter(({ id }) => !keys.includes(id));
             const addedLocales = LANGS.filter(({ id }) => keys.includes(id));
             const localeTouched = l => get(formApi.touched, `locales.${l}`);
@@ -280,7 +280,18 @@ class EditArticleForm extends Component {
                       formApi={formApi}
                       pending={pending}
                       errors={serverErrors}
-                      onRemove={() => {}}
+                      onRemove={() => {
+                        const nextLocales = omit(locales, currentLocale);
+                        const [nextLocale] = Object.keys(nextLocales);
+                        formApi.setValue('locales', nextLocales);
+                        this.setState({ currentLocale: nextLocale });
+                        Router.replaceRoute(ROUTES_NAMES.editArticle, {
+                          slug,
+                          lang,
+                          articleLocale: nextLocale,
+                          mode: 'edit',
+                        });
+                      }}
                     />
                   )}
                 </div>
