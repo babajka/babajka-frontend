@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 import Downshift from 'downshift';
 import cn from 'classnames';
 
+import Clickable from './Clickable';
 import Button from './Button';
 import Icon from './Icon';
+
+const DEFAULT_STATE = { selectedItem: null, inputValue: '', highlightedIndex: 0 };
 
 const Arrow = ({ isOpen }) => (
   <span className="icon is-small is-right">
@@ -20,6 +23,7 @@ const Select = ({
   value,
   options,
   valueWholeObject,
+  clerable,
   searchable,
   dropdown,
   placeholder,
@@ -28,7 +32,7 @@ const Select = ({
 }) => (
   <Downshift
     defaultSelectedItem={options.find(({ id }) => id === value)}
-    onChange={item => onChange(valueWholeObject ? item : item.id)}
+    onChange={item => onChange(valueWholeObject ? item : item && item.id)}
     itemToString={i => (i == null ? '' : i.label)}
     render={({
       getInputProps,
@@ -37,6 +41,7 @@ const Select = ({
       isOpen,
       inputValue,
       selectedItem: selected,
+      reset,
     }) => (
       <div
         className={cn(
@@ -72,6 +77,16 @@ const Select = ({
             </div>
           )}
         </div>
+        {selected &&
+          clerable && (
+            <Clickable
+              tag="span"
+              className="babajka-dropdown-clear"
+              onClick={reset.bind(null, DEFAULT_STATE)}
+            >
+              ×
+            </Clickable>
+          )}
         <div className="babajka-dropdown-menu dropdown-menu" id="dropdown-menu" role="menu">
           <ul className="babajka-dropdown-content dropdown-content">
             {options
@@ -106,7 +121,7 @@ Select.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-      label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+      label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     })
   ).isRequired,
   valueWholeObject: PropTypes.bool,

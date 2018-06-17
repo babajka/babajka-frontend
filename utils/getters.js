@@ -21,6 +21,9 @@ export const getLocalizedAuthor = (author, lang) => {
   return localized;
 };
 
+export const getLocalizedAuthors = (authors, lang) =>
+  authors && authors.map(author => getLocalizedAuthor(author, lang));
+
 export const getLocalizedBrand = ({ slug, imageUrl, names }, lang) => ({
   slug,
   imageUrl,

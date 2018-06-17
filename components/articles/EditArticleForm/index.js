@@ -8,25 +8,28 @@ import noop from 'lodash/noop';
 import omit from 'lodash/omit';
 
 import { actions, selectors } from 'redux/ducks/articles';
-import { BrandsArray, LangType } from 'utils/customPropTypes';
+import { AuthorsArray, BrandsArray, LangType } from 'utils/customPropTypes';
 import { required, isUrl } from 'utils/validators';
 import { Router, ROUTES_NAMES } from 'routes';
 import { LANGS } from 'constants';
 
-import Text from 'components/common/Text';
+import Text, { localize } from 'components/common/Text';
 import Select from 'components/common/Select';
 import Clickable from 'components/common/Clickable';
 import EditLocaleForm, { localesValidator } from './EditLocaleForm';
+import Author from './Author';
 
 const mapStateToProps = state => ({
   article: selectors.getRawCurrent(state),
   brands: selectors.getBrands(state),
+  authors: selectors.getAuthors(state),
   pending: selectors.isPending(state),
   serverErrors: selectors.getErrors(state) || {},
 });
 
 const mapDispatchToProps = {
   fetchBrands: actions.fetchBrands,
+  fetchAuthors: actions.fetchAuthors,
   createArticle: actions.create,
   updateArticle: actions.update,
 };
@@ -41,29 +44,45 @@ const initLocale = {
   text: 'type something...',
 };
 
-const getFields = ({ brands }) => [
+const getFields = ({ authors, lang }) => [
   {
     id: 'type',
-    options: [
-      {
-        id: 'text',
-        label: <Text id="common.text" />,
-      },
-      {
-        id: 'video',
-        label: <Text id="common.video" />,
-      },
-    ],
-    size: 'xs',
+    type: 'select',
+    controlProps: {
+      options: [
+        {
+          id: 'text',
+          label: <Text id="common.text" />,
+        },
+        {
+          id: 'video',
+          label: <Text id="common.video" />,
+        },
+      ],
+      size: 'xs',
+    },
   },
   {
-    id: 'author',
+    id: 'authorEmail',
+    type: 'select',
+    controlProps: {
+      // TODO: mb add `idField` to Select
+      options: authors && authors.map(({ email: id, ...rest }) => ({ id, ...rest })),
+      renderOption: ({ displayName, imageUrl }) => (
+        <Author name={displayName} imageUrl={imageUrl} />
+      ),
+      placeholder: localize('article.author-not-selected', lang),
+      clerable: true,
+    },
   },
-  {
-    id: 'brandSlug',
-    options: brands && brands.map(({ slug: id, name: label }) => ({ id, label })),
-    size: 'l',
-  },
+  // {
+  //   id: 'brandSlug',
+  //   type: 'select',
+  //   controlProps: {
+  //     options: brands && brands.map(({ slug: id, name: label }) => ({ id, label })),
+  //     size: 'l',
+  //   },
+  // },
   {
     id: 'collectionSlug',
   },
@@ -99,9 +118,11 @@ class EditArticleForm extends Component {
       _id: PropTypes.string.isRequired,
     }),
     brands: BrandsArray,
+    authors: AuthorsArray,
     pending: PropTypes.bool.isRequired,
     mode: PropTypes.oneOf(['edit', 'create']).isRequired,
     fetchBrands: PropTypes.func.isRequired,
+    fetchAuthors: PropTypes.func.isRequired,
     createArticle: PropTypes.func.isRequired,
     updateArticle: PropTypes.func.isRequired,
     serverErrors: PropTypes.shape({}).isRequired,
@@ -111,6 +132,7 @@ class EditArticleForm extends Component {
     articleLocale: null,
     article: initArticle,
     brands: null,
+    authors: null,
   };
 
   componentWillMount() {
@@ -119,8 +141,9 @@ class EditArticleForm extends Component {
   }
 
   componentDidMount() {
-    const { fetchBrands } = this.props;
+    const { fetchBrands, fetchAuthors } = this.props;
     fetchBrands();
+    fetchAuthors();
   }
 
   handleSubmit = form => {
@@ -136,7 +159,7 @@ class EditArticleForm extends Component {
   };
 
   render() {
-    const { mode, article, lang, brands, pending, serverErrors } = this.props;
+    const { mode, article, lang, authors, brands, pending, serverErrors } = this.props;
     const { currentLocale } = this.state;
     const { brand, collection, _id: slug } = article || {};
     const formattedArticle = {
@@ -145,7 +168,7 @@ class EditArticleForm extends Component {
       collectionSlug: collection && collection.slug,
     };
     const defaultValues = mode === 'create' ? initArticle : formattedArticle;
-    const fields = getFields({ brands });
+    const fields = getFields({ brands, authors, lang });
     const errorValidator = values => {
       const errors = {};
       fields.forEach(({ id, validator }) => {
@@ -183,7 +206,7 @@ class EditArticleForm extends Component {
                     <Text id="article.common" />
                   </div>
                   <div className="inputs">
-                    {fields.map(({ id, options, type, help, hide, size }) => {
+                    {fields.map(({ id, type, help, hide, controlProps }) => {
                       if (hide && hide(formApi.values)) {
                         return null;
                       }
@@ -214,14 +237,14 @@ class EditArticleForm extends Component {
                           <p className="help">
                             <Text id={`article.${id}`} />
                           </p>
-                          {options && (
-                            <Select
-                              size={size}
-                              value={formApi.values[id]}
-                              options={options}
-                              onChange={formApi.setValue.bind(null, id)}
-                            />
-                          )}
+                          {type === 'select' &&
+                            controlProps.options && (
+                              <Select
+                                value={formApi.values[id]}
+                                onChange={formApi.setValue.bind(null, id)}
+                                {...controlProps}
+                              />
+                            )}
                         </div>
                       );
                     })}

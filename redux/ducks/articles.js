@@ -7,6 +7,7 @@ import {
   getLocalizedArticles,
   getLocalizedArticle,
   getLocalizedBrands,
+  getLocalizedAuthors,
   getLocalesBySlug,
   getShortLocale,
 } from 'utils/getters';
@@ -20,6 +21,7 @@ const FETCH_CHUNK = `${duck}/FETCH_CHUNK`;
 const MERGE_CACHED = `${duck}/MERGE_CACHED`;
 const FETCH_BY_SLUG = `${duck}/FETCH_BY_SLUG`;
 const FETCH_BRANDS = `${duck}/FETCH_BRANDS`;
+const FETCH_AUTHORS = `${duck}/FETCH_AUTHORS`;
 const CREATE = `${duck}/CREATE`;
 const UPDATE = `${duck}/UPDATE`;
 
@@ -75,6 +77,11 @@ export default createReducer(
       brands: payload,
       ...defaultState,
     })),
+    [FETCH_AUTHORS]: defaultReducer((state, { payload }) => ({
+      ...state,
+      authors: payload,
+      ...defaultState,
+    })),
     [CREATE]: currentReducer,
     [UPDATE]: currentReducer,
   },
@@ -101,6 +108,10 @@ export const actions = {
   fetchBrands: () => ({
     type: FETCH_BRANDS,
     payload: request.fetch(api.articles.getBrands),
+  }),
+  fetchAuthors: () => ({
+    type: FETCH_AUTHORS,
+    payload: request.fetch(api.articles.getAuthors),
   }),
   create: article => ({
     type: CREATE,
@@ -140,6 +151,9 @@ const getCurrent = (state, slug) =>
 const getRawBrands = state => getState(state).brands;
 const getBrands = (state, lang) => getLocalizedBrands(getRawBrands(state), lang);
 
+const getRawAuthors = state => getState(state).authors;
+const getAuthors = (state, lang) => getLocalizedAuthors(getRawAuthors(state), lang);
+
 export const selectors = {
   getAll,
   getNextPage,
@@ -149,6 +163,7 @@ export const selectors = {
   getLocaleBySlug,
   getOtherLocales,
   getBrands,
+  getAuthors,
   isPending,
   isError,
   getErrors,
