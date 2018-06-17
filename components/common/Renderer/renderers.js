@@ -8,17 +8,8 @@ const imageRenderer = (children, { data, keys }) =>
     <figure className={classNames('graf graf--figure', IMAGE_CLASS_BY_DIR[data[index].direction])}>
       <div key={keys[index]}>
         <div className="aspectRatioPlaceholder is-locked">
-          <div
-            style={{ paddingBottom: `${data[index].aspect_ratio.ratio}%` }}
-            className="aspect-ratio-fill"
-          />
-          <img
-            alt={children}
-            src={data[index].url}
-            height={data[index].aspect_ratio.height}
-            width={data[index].aspect_ratio.width}
-            className="graf-image"
-          />
+          <div style={{ paddingBottom: '100%' }} className="aspect-ratio-fill" />
+          <img alt={children} src={data[index].url} className="graf-image" />
         </div>
         <figcaption className="imageCaption">
           <span>{child}</span>

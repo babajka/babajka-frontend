@@ -16,13 +16,13 @@ import { LANGS } from 'constants';
 import Text from 'components/common/Text';
 import Select from 'components/common/Select';
 import Clickable from 'components/common/Clickable';
-import EditLocaleForm, { localesFalidator } from './EditLocaleForm';
+import EditLocaleForm, { localesValidator } from './EditLocaleForm';
 
 const mapStateToProps = state => ({
   article: selectors.getRawCurrent(state),
   brands: selectors.getBrands(state),
   pending: selectors.isPending(state),
-  error: selectors.isError(state),
+  serverErrors: selectors.getErrors(state) || {},
 });
 
 const mapDispatchToProps = {
@@ -104,7 +104,7 @@ class EditArticleForm extends Component {
     fetchBrands: PropTypes.func.isRequired,
     createArticle: PropTypes.func.isRequired,
     updateArticle: PropTypes.func.isRequired,
-    error: PropTypes.any, // eslint-disable-line
+    serverErrors: PropTypes.shape({}).isRequired,
   };
 
   static defaultProps = {
@@ -127,18 +127,18 @@ class EditArticleForm extends Component {
     const { article, mode, lang, createArticle, updateArticle } = this.props;
     if (mode === 'create') {
       return createArticle(form).then(({ value: { _id: slug } }) => {
-        Router.replaceRoute(ROUTES_NAMES.article, { slug, mode: 'edit', lang });
+        // TODO: check that redirect is occurs
+        Router.replaceRoute(ROUTES_NAMES.editArticle, { slug, lang });
       });
     }
     const { _id } = article;
-    // FIXME(drapegnik):
-    return updateArticle({ ...form, _id, brand: null });
+    return updateArticle({ ...form, _id });
   };
 
   render() {
-    const { mode, article, brands, pending, error } = this.props;
+    const { mode, article, lang, brands, pending, serverErrors } = this.props;
     const { currentLocale } = this.state;
-    const { brand, collection } = article || {};
+    const { brand, collection, _id: slug } = article || {};
     const formattedArticle = {
       ...omit(article, ['collection', 'brand']),
       brandSlug: brand && brand.slug,
@@ -153,7 +153,7 @@ class EditArticleForm extends Component {
           errors[id] = validator(values);
         }
       });
-      errors.locales = localesFalidator(values.locales);
+      errors.locales = localesValidator(values.locales);
       return errors;
     };
 
@@ -170,7 +170,7 @@ class EditArticleForm extends Component {
         >
           {formApi => {
             const { locales } = formApi.values;
-            const keys = Object.keys(locales);
+            const keys = Object.keys(locales).filter(key => locales[key]);
             const availableLocales = LANGS.filter(({ id }) => !keys.includes(id));
             const addedLocales = LANGS.filter(({ id }) => keys.includes(id));
             const localeTouched = l => get(formApi.touched, `locales.${l}`);
@@ -279,8 +279,19 @@ class EditArticleForm extends Component {
                       prefix={`locales.${currentLocale}`}
                       formApi={formApi}
                       pending={pending}
-                      error={error}
-                      onRemove={() => {}}
+                      errors={serverErrors}
+                      onRemove={() => {
+                        const nextLocales = omit(locales, currentLocale);
+                        const [nextLocale] = Object.keys(nextLocales);
+                        formApi.setValue('locales', nextLocales);
+                        this.setState({ currentLocale: nextLocale });
+                        Router.replaceRoute(ROUTES_NAMES.editArticle, {
+                          slug,
+                          lang,
+                          articleLocale: nextLocale,
+                          mode: 'edit',
+                        });
+                      }}
                     />
                   )}
                 </div>

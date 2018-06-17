@@ -39,6 +39,7 @@ const initialState = {
 const defaultState = {
   pending: false,
   error: false,
+  errors: {},
 };
 
 const currentReducer = defaultReducer((state, { payload }) => ({
@@ -118,6 +119,7 @@ export const actions = {
 const getState = state => state.articles;
 const isPending = state => getState(state).pending;
 const isError = state => getState(state).error;
+const getErrors = state => getState(state).errors;
 
 const getRawArticles = state => getState(state).data;
 const getAll = (state, lang) => getLocalizedArticles(getRawArticles(state), lang);
@@ -149,4 +151,5 @@ export const selectors = {
   getBrands,
   isPending,
   isError,
+  getErrors,
 };

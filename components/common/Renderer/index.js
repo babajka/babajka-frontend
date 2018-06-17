@@ -14,18 +14,22 @@ const Renderer = ({ content }) => {
       <Head>
         <link rel="stylesheet" href="/static/Dante2/DanteStyles.css" />
       </Head>
-      <div className="postArticle">
-        <div className="postContent">
-          <div className="postField postField--body">
-            <section className="section--first section--last">
-              <div className="section-content container">
-                <div className="section-inner layoutSingleColumn">
-                  <div className="DraftEditor-root">
-                    <div className="DraftEditor-editorContainer">{redraft(content, renderers)}</div>
+      <div className="dante2-namespace">
+        <div className="postArticle">
+          <div className="postContent">
+            <div className="postField postField--body">
+              <section className="section--first section--last">
+                <div className="section-content dante2-container">
+                  <div className="section-inner layoutSingleColumn">
+                    <div className="DraftEditor-root">
+                      <div className="DraftEditor-editorContainer">
+                        {redraft(content, renderers)}
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
+            </div>
           </div>
         </div>
       </div>
