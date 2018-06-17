@@ -7,9 +7,10 @@ const cookieParser = require('cookie-parser');
 const routes = require('./routes');
 const { BACKEND_URL, MARKUP_URL } = require('./constants/server');
 const { DEFAULT_LOCALE } = require('./constants');
+const { ARGS } = require('./utils/args');
 
-const port = parseInt(process.env.PORT, 10) || 3000;
-const dev = process.env.NODE_ENV !== 'production';
+const port = ARGS.port || 3000;
+const dev = ARGS.env !== 'production';
 const app = next({ dev });
 const handle = routes.getRequestHandler(app);
 
@@ -41,7 +42,7 @@ app.prepare().then(() => {
   server.listen(port, err => {
     if (err) throw err;
     console.log(`> Using Backend on\t${BACKEND_URL}`);
-    if (process.env.DEBUG_STYLES === 'true') {
+    if (ARGS.debug_styles) {
       console.log(`> Using Markup on\t${MARKUP_URL}`);
     }
     console.log(`> Ready on\t\thttp://localhost:${port}`);

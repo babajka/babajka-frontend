@@ -11,4 +11,6 @@ const LANGS = Object.entries(LOCALES).map(([id, label]) => ({ id, label }));
 
 const DATE_FORMAT = 'D MMMM YYYY';
 
-module.exports = { LOCALES, DEFAULT_LOCALE, LANGS, DATE_FORMAT };
+const DOMAIN_SECURE = 'https://wir.by';
+
+module.exports = { LOCALES, DEFAULT_LOCALE, LANGS, DATE_FORMAT, DOMAIN_SECURE };

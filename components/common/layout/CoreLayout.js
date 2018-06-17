@@ -6,7 +6,7 @@ import moment from 'moment';
 
 import { localize } from 'components/common/Text';
 import { MARKUP_URL } from 'constants/server';
-import { GA_ID } from 'constants/social';
+import { getGoogleAnalyticsID } from 'constants/social';
 
 class CoreLayout extends Component {
   static propTypes = {
@@ -18,8 +18,8 @@ class CoreLayout extends Component {
   static defaultProps = { title: '' };
 
   componentDidMount() {
-    if (__PROD__) {
-      ReactGA.initialize(GA_ID, {
+    if (__PROD__ || __STAGING__) {
+      ReactGA.initialize(getGoogleAnalyticsID(__PROD__), {
         debug: false,
       });
       ReactGA.pageview(document.location.pathname);
