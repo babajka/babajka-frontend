@@ -80,7 +80,7 @@ class HomePage extends Component {
 
     return (
       <PageLayout url={url} title="header.home">
-        <div className="main-page page-container">
+        <div className="page-content main-page page-container">
           {firstRow && <ArticlesRow articles={firstRow} className="first-line is-ancestor" />}
           {secondRow && (
             <ArticlesComplexRow articles={secondRow} renderDiary={() => <Diary lang={lang} />} />

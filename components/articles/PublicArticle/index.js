@@ -25,7 +25,7 @@ const mapStateToProps = (state, { articleLocale }) => ({
   canEditArticle: authSelectors.getPermissions(state).canManageArticles,
 });
 
-// TODO(andemerie): move styles from markup repo to this repo and finish styles for this page
+// TODO(andemerie): finish styles for this page
 const PublicArticle = ({
   collection,
   canEditArticle,
@@ -36,11 +36,10 @@ const PublicArticle = ({
   // brand,
   otherLocales,
   imageFolderUrl,
-  // text, // TODO: deprecate
   content,
   publishAt,
-  // TODO(andemerie): decide how to implement video page and where to check the following type
-  // type,
+  type,
+  videoId,
   published,
 }) => (
   <div className="article-container container">
@@ -96,10 +95,29 @@ const PublicArticle = ({
             )}
         </div>
 
-        {imageFolderUrl && (
-          <figure className="article__imagewrapper image">
-            <Text id="article.article-image" render={t => <img src={imageFolderUrl} alt={t} />} />
-          </figure>
+        {type === 'text' &&
+          imageFolderUrl && (
+            <figure className="article__imagewrapper image">
+              <Text id="article.article-image" render={t => <img src={imageFolderUrl} alt={t} />} />
+            </figure>
+          )}
+        {type === 'video' && (
+          <Text
+            id="article.article-image"
+            render={t => (
+              <div className="article__playerwrapper">
+                <iframe
+                  id="ytplayer"
+                  className="article__player"
+                  title={t}
+                  type="text/html"
+                  src={`https://www.youtube.com/embed/${videoId}`}
+                  frameBorder="0"
+                  allowFullScreen
+                />
+              </div>
+            )}
+          />
         )}
 
         <div className="is-size-5 article__text">
@@ -121,7 +139,6 @@ const PublicArticle = ({
                 </span>
               ))}
           </div>
-          {/* TODO(andemerie): implement ability to share article on social networks */}
           <div className="article__actions">
             {EXPORT_TO_NETWORKS.map(name => <ShareToButton key={`actions-${name}`} name={name} />)}
           </div>
@@ -139,17 +156,29 @@ const PublicArticle = ({
         <div className="article-side__actions">
           <ul className="article-side__top">
             {canEditArticle && (
-              <li>
-                <EditLink
-                  className="article-side__button article-side__button--edit"
-                  slug={articleId}
-                  articleLocale={articleLocale}
-                >
-                  <span className="icon-button__usual-icon icon">
-                    <Icon name="pencil" size="lg" />
-                  </span>
-                </EditLink>
-              </li>
+              <>
+                <li>
+                  <EditLink
+                    className="article-side__button"
+                    slug={articleId}
+                    articleLocale={articleLocale}
+                  >
+                    <span className="icon-button__usual-icon icon">
+                      <Icon name="pencil" size="lg" />
+                    </span>
+                  </EditLink>
+                </li>
+                <li>
+                  <a
+                    className="article-side__button article-side__button--remove icon-button button"
+                    title="Выдаліць артыкул"
+                  >
+                    <span className="icon-button__usual-icon icon">
+                      <Icon name="trash" size="lg" />
+                    </span>
+                  </a>
+                </li>
+              </>
             )}
             {EXPORT_TO_NETWORKS.map(name => (
               <li key={`side-${name}`}>

@@ -47,9 +47,11 @@ class EditArticlePage extends Component {
     if (mode === 'create' && !permissions.canCreateArticle) {
       return (
         <PageLayout url={url} title="header.home">
-          <p className="text is-size-5 has-text-primary">
-            <Text id="common.forbidden" />
-          </p>
+          <div className="page-content">
+            <p className="text is-size-5 has-text-primary">
+              <Text id="common.forbidden" />
+            </p>
+          </div>
         </PageLayout>
       );
     }

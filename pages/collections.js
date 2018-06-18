@@ -16,7 +16,9 @@ class CollectionsPage extends Component {
     const { url } = this.props;
     return (
       <PageLayout url={url} title="header.collections">
-        <h1>TODO: Collections Page</h1>
+        <div className="page-content">
+          <h1>TODO: Collections Page</h1>
+        </div>
       </PageLayout>
     );
   }
