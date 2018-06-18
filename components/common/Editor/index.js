@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { DanteEditor } from 'Dante2/lib';
@@ -24,14 +24,14 @@ const config = {
 };
 
 const Editor = ({ content, onChange }) => (
-  <Fragment>
+  <>
     <Head>
       <link rel="stylesheet" href="/static/Dante2/DanteStyles.css" />
     </Head>
     <div className="dante2-namespace">
       <DanteEditor config={config} content={content} onChange={onChange} />
     </div>
-  </Fragment>
+  </>
 );
 
 Editor.propTypes = {

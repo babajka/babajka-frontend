@@ -32,6 +32,8 @@ export const AuthorModel = {
 
 export const AuthorShape = PropTypes.shape(AuthorModel);
 
+export const AuthorsArray = PropTypes.arrayOf(AuthorShape);
+
 export const CollectionModel = {
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
@@ -40,6 +42,8 @@ export const CollectionModel = {
 };
 
 export const CollectionShape = PropTypes.shape(CollectionModel);
+
+export const CollectionsArray = PropTypes.arrayOf(CollectionShape);
 
 export const ArticleModel = {
   articleId: PropTypes.string.isRequired,

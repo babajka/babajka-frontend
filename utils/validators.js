@@ -28,10 +28,12 @@ export const isSameDay = date => {
   return day.date() === now.date() && day.month() === now.month();
 };
 
+export const validDate = date => !moment(date).isValid() && 'forms.invalidDate';
+
 const slugRegexp = /^[a-zA-Z0-9_-]+$/;
 export const isSlug = (slug, messageId = 'article.slug-req') =>
   slug.match(slugRegexp) ? null : messageId;
 
 const urlRegexp = /[-a-zA-Z0-9@:%_+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_+.~#?&//=]*)?/gi;
 export const isUrl = (url, messageId = 'article.valide-url') =>
-  url.match(urlRegexp) ? null : messageId;
+  url === '' || url.match(urlRegexp) ? null : messageId;

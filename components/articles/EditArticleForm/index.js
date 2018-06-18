@@ -8,25 +8,31 @@ import noop from 'lodash/noop';
 import omit from 'lodash/omit';
 
 import { actions, selectors } from 'redux/ducks/articles';
-import { BrandsArray, LangType } from 'utils/customPropTypes';
-import { required, isUrl } from 'utils/validators';
+import { AuthorsArray, BrandsArray, CollectionsArray, LangType } from 'utils/customPropTypes';
+import { required, isUrl, validDate } from 'utils/validators';
 import { Router, ROUTES_NAMES } from 'routes';
 import { LANGS } from 'constants';
 
-import Text from 'components/common/Text';
+import Text, { localize } from 'components/common/Text';
 import Select from 'components/common/Select';
 import Clickable from 'components/common/Clickable';
+import DateTimePicker from 'components/common/DateTimePicker';
 import EditLocaleForm, { localesValidator } from './EditLocaleForm';
+import Author from './Author';
 
 const mapStateToProps = state => ({
   article: selectors.getRawCurrent(state),
   brands: selectors.getBrands(state),
+  authors: selectors.getAuthors(state),
+  collections: selectors.getColletions(state),
   pending: selectors.isPending(state),
   serverErrors: selectors.getErrors(state) || {},
 });
 
 const mapDispatchToProps = {
   fetchBrands: actions.fetchBrands,
+  fetchAuthors: actions.fetchAuthors,
+  fetchCollections: actions.fetchCollections,
   createArticle: actions.create,
   updateArticle: actions.update,
 };
@@ -37,38 +43,70 @@ const initArticle = {
   locales: {},
 };
 
-const initLocale = {
-  text: 'type something...',
-};
+const initLocale = {};
 
-const getFields = ({ brands }) => [
+const getFields = ({ authors, collections, lang }) => [
   {
     id: 'type',
-    options: [
-      {
-        id: 'text',
-        label: <Text id="common.text" />,
-      },
-      {
-        id: 'video',
-        label: <Text id="common.video" />,
-      },
-    ],
-    size: 'xs',
+    type: 'select',
+    controlProps: {
+      options: [
+        {
+          id: 'text',
+          label: <Text id="common.text" />,
+        },
+        {
+          id: 'video',
+          label: <Text id="common.video" />,
+        },
+      ],
+      size: 'xs',
+    },
   },
   {
-    id: 'author',
+    id: 'authorEmail',
+    label: 'author',
+    type: 'select',
+    controlProps: {
+      // TODO: mb add `idField` to Select
+      options: authors && authors.map(({ email: id, ...rest }) => ({ id, ...rest })),
+      renderOption: ({ displayName, imageUrl }) => (
+        <Author name={displayName} imageUrl={imageUrl} />
+      ),
+      placeholder: localize('article.author-not-selected', lang),
+      clerable: true,
+    },
   },
-  {
-    id: 'brandSlug',
-    options: brands && brands.map(({ slug: id, name: label }) => ({ id, label })),
-    size: 'l',
-  },
+  // {
+  //   id: 'brandSlug',
+  //   label: 'brand',
+  //   type: 'select',
+  //   controlProps: {
+  //     options: brands && brands.map(({ slug: id, name: label }) => ({ id, label })),
+  //     size: 'l',
+  //   },
+  // },
   {
     id: 'collectionSlug',
+    label: 'collection',
+    type: 'select',
+    controlProps: {
+      options: collections && collections.map(({ slug: id, name: label }) => ({ id, label })),
+      placeholder: localize('article.not-in-collection', lang),
+      clerable: true,
+    },
   },
   {
-    id: 'publicationDate',
+    id: 'publishAt',
+    label: 'publicationDate',
+    type: 'custom',
+    render: ({ errorBlock, ...props }) => (
+      <>
+        <DateTimePicker {...props} placeholder={localize('article.not-scheduled', lang)} />
+        {errorBlock}
+      </>
+    ),
+    validator: ({ publishAt }) => publishAt !== null && validDate(publishAt),
   },
   {
     id: 'imagePreviewUrl',
@@ -99,9 +137,13 @@ class EditArticleForm extends Component {
       _id: PropTypes.string.isRequired,
     }),
     brands: BrandsArray,
+    authors: AuthorsArray,
+    collections: CollectionsArray,
     pending: PropTypes.bool.isRequired,
     mode: PropTypes.oneOf(['edit', 'create']).isRequired,
     fetchBrands: PropTypes.func.isRequired,
+    fetchAuthors: PropTypes.func.isRequired,
+    fetchCollections: PropTypes.func.isRequired,
     createArticle: PropTypes.func.isRequired,
     updateArticle: PropTypes.func.isRequired,
     serverErrors: PropTypes.shape({}).isRequired,
@@ -111,6 +153,8 @@ class EditArticleForm extends Component {
     articleLocale: null,
     article: initArticle,
     brands: null,
+    authors: null,
+    collections: null,
   };
 
   componentWillMount() {
@@ -119,8 +163,10 @@ class EditArticleForm extends Component {
   }
 
   componentDidMount() {
-    const { fetchBrands } = this.props;
+    const { fetchBrands, fetchAuthors, fetchCollections } = this.props;
     fetchBrands();
+    fetchAuthors();
+    fetchCollections();
   }
 
   handleSubmit = form => {
@@ -136,7 +182,7 @@ class EditArticleForm extends Component {
   };
 
   render() {
-    const { mode, article, lang, brands, pending, serverErrors } = this.props;
+    const { mode, article, lang, authors, brands, collections, pending, serverErrors } = this.props;
     const { currentLocale } = this.state;
     const { brand, collection, _id: slug } = article || {};
     const formattedArticle = {
@@ -145,7 +191,7 @@ class EditArticleForm extends Component {
       collectionSlug: collection && collection.slug,
     };
     const defaultValues = mode === 'create' ? initArticle : formattedArticle;
-    const fields = getFields({ brands });
+    const fields = getFields({ brands, authors, collections, lang });
     const errorValidator = values => {
       const errors = {};
       fields.forEach(({ id, validator }) => {
@@ -183,45 +229,61 @@ class EditArticleForm extends Component {
                     <Text id="article.common" />
                   </div>
                   <div className="inputs">
-                    {fields.map(({ id, options, type, help, hide, size }) => {
+                    {fields.map(({ id, label, type, help, hide, controlProps, render }) => {
                       if (hide && hide(formApi.values)) {
                         return null;
                       }
                       const fieldError = formApi.errors[id];
                       const touched = !!formApi.touched[id];
                       const hasError = !pending && touched && !!fieldError;
+                      const errorBlock = (
+                        <p className="help is-danger">
+                          <Text id={fieldError} />
+                        </p>
+                      );
 
                       return (
-                        <div key={id} className={cn('field', { 'long-input': type === 'input' })}>
+                        <div
+                          key={id}
+                          className={cn('field form-field', { 'long-input': type === 'input' })}
+                        >
                           {type === 'input' && (
-                            <Text
-                              id={`article.${help}`}
-                              render={placeholder => (
-                                <TextField
-                                  id={id}
-                                  field={id}
-                                  className={cn('input', { 'is-danger': hasError })}
-                                  placeholder={placeholder}
-                                />
-                              )}
-                            />
-                          )}
-                          {hasError && (
-                            <p className="help is-danger">
-                              <Text id={fieldError} />
-                            </p>
+                            <>
+                              <Text
+                                id={`article.${help}`}
+                                render={placeholder => (
+                                  <TextField
+                                    id={id}
+                                    field={id}
+                                    className={cn('input', { 'is-danger': hasError })}
+                                    placeholder={placeholder}
+                                  />
+                                )}
+                              />
+                              {hasError && errorBlock}
+                            </>
                           )}
                           <p className="help">
-                            <Text id={`article.${id}`} />
+                            <Text id={`article.${label || id}`} />
                           </p>
-                          {options && (
-                            <Select
-                              size={size}
-                              value={formApi.values[id]}
-                              options={options}
-                              onChange={formApi.setValue.bind(null, id)}
-                            />
-                          )}
+                          {type === 'select' &&
+                            controlProps.options && (
+                              <Select
+                                value={formApi.values[id]}
+                                onChange={formApi.setValue.bind(null, id)}
+                                {...controlProps}
+                              />
+                            )}
+                          {type === 'custom' &&
+                            render({
+                              className: cn('input', { 'is-danger': hasError }),
+                              value: formApi.values[id],
+                              onChange: value => {
+                                formApi.setValue(id, value);
+                                formApi.setTouched(id, true);
+                              },
+                              errorBlock,
+                            })}
                         </div>
                       );
                     })}
