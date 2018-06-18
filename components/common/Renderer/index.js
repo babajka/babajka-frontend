@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import redraft from 'redraft';
@@ -10,7 +10,7 @@ const Renderer = ({ content }) => {
     return null;
   }
   return (
-    <Fragment>
+    <>
       <Head>
         <link rel="stylesheet" href="/static/Dante2/DanteStyles.css" />
       </Head>
@@ -33,7 +33,7 @@ const Renderer = ({ content }) => {
           </div>
         </div>
       </div>
-    </Fragment>
+    </>
   );
 };
 

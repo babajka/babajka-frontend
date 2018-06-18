@@ -12,3 +12,4 @@ cp -R "${MARKUP_DIST}/static/." "static/"
 cp -R "${MARKUP_DIST}/stubs/." "static/stubs/"
 
 cp -R node_modules/Dante2/dist/ static/Dante2
+cp -R node_modules/react-datetime/css/ static/react-datetime
