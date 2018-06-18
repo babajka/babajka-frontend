@@ -9,13 +9,14 @@ import omit from 'lodash/omit';
 
 import { actions, selectors } from 'redux/ducks/articles';
 import { AuthorsArray, BrandsArray, CollectionsArray, LangType } from 'utils/customPropTypes';
-import { required, isUrl } from 'utils/validators';
+import { required, isUrl, validDate } from 'utils/validators';
 import { Router, ROUTES_NAMES } from 'routes';
 import { LANGS } from 'constants';
 
 import Text, { localize } from 'components/common/Text';
 import Select from 'components/common/Select';
 import Clickable from 'components/common/Clickable';
+import DateTimePicker from 'components/common/DateTimePicker';
 import EditLocaleForm, { localesValidator } from './EditLocaleForm';
 import Author from './Author';
 
@@ -42,9 +43,7 @@ const initArticle = {
   locales: {},
 };
 
-const initLocale = {
-  text: 'type something...',
-};
+const initLocale = {};
 
 const getFields = ({ authors, collections, lang }) => [
   {
@@ -66,6 +65,7 @@ const getFields = ({ authors, collections, lang }) => [
   },
   {
     id: 'authorEmail',
+    label: 'author',
     type: 'select',
     controlProps: {
       // TODO: mb add `idField` to Select
@@ -79,6 +79,7 @@ const getFields = ({ authors, collections, lang }) => [
   },
   // {
   //   id: 'brandSlug',
+  //   label: 'brand',
   //   type: 'select',
   //   controlProps: {
   //     options: brands && brands.map(({ slug: id, name: label }) => ({ id, label })),
@@ -87,6 +88,7 @@ const getFields = ({ authors, collections, lang }) => [
   // },
   {
     id: 'collectionSlug',
+    label: 'collection',
     type: 'select',
     controlProps: {
       options: collections && collections.map(({ slug: id, name: label }) => ({ id, label })),
@@ -95,7 +97,16 @@ const getFields = ({ authors, collections, lang }) => [
     },
   },
   {
-    id: 'publicationDate',
+    id: 'publishAt',
+    label: 'publicationDate',
+    type: 'custom',
+    render: ({ errorBlock, ...props }) => (
+      <>
+        <DateTimePicker {...props} placeholder={localize('article.not-scheduled', lang)} />
+        {errorBlock}
+      </>
+    ),
+    validator: ({ publishAt }) => publishAt !== null && validDate(publishAt),
   },
   {
     id: 'imagePreviewUrl',
@@ -218,36 +229,42 @@ class EditArticleForm extends Component {
                     <Text id="article.common" />
                   </div>
                   <div className="inputs">
-                    {fields.map(({ id, type, help, hide, controlProps }) => {
+                    {fields.map(({ id, label, type, help, hide, controlProps, render }) => {
                       if (hide && hide(formApi.values)) {
                         return null;
                       }
                       const fieldError = formApi.errors[id];
                       const touched = !!formApi.touched[id];
                       const hasError = !pending && touched && !!fieldError;
+                      const errorBlock = (
+                        <p className="help is-danger">
+                          <Text id={fieldError} />
+                        </p>
+                      );
 
                       return (
-                        <div key={id} className={cn('field', { 'long-input': type === 'input' })}>
+                        <div
+                          key={id}
+                          className={cn('field form-field', { 'long-input': type === 'input' })}
+                        >
                           {type === 'input' && (
-                            <Text
-                              id={`article.${help}`}
-                              render={placeholder => (
-                                <TextField
-                                  id={id}
-                                  field={id}
-                                  className={cn('input', { 'is-danger': hasError })}
-                                  placeholder={placeholder}
-                                />
-                              )}
-                            />
-                          )}
-                          {hasError && (
-                            <p className="help is-danger">
-                              <Text id={fieldError} />
-                            </p>
+                            <>
+                              <Text
+                                id={`article.${help}`}
+                                render={placeholder => (
+                                  <TextField
+                                    id={id}
+                                    field={id}
+                                    className={cn('input', { 'is-danger': hasError })}
+                                    placeholder={placeholder}
+                                  />
+                                )}
+                              />
+                              {hasError && errorBlock}
+                            </>
                           )}
                           <p className="help">
-                            <Text id={`article.${id}`} />
+                            <Text id={`article.${label || id}`} />
                           </p>
                           {type === 'select' &&
                             controlProps.options && (
@@ -257,6 +274,16 @@ class EditArticleForm extends Component {
                                 {...controlProps}
                               />
                             )}
+                          {type === 'custom' &&
+                            render({
+                              className: cn('input', { 'is-danger': hasError }),
+                              value: formApi.values[id],
+                              onChange: value => {
+                                formApi.setValue(id, value);
+                                formApi.setTouched(id, true);
+                              },
+                              errorBlock,
+                            })}
                         </div>
                       );
                     })}
