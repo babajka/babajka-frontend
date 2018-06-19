@@ -17,6 +17,8 @@ import Text, { localize } from 'components/common/Text';
 import Select from 'components/common/Select';
 import Clickable from 'components/common/Clickable';
 import DateTimePicker from 'components/common/DateTimePicker';
+import { defaultContent } from 'components/common/Editor';
+
 import EditLocaleForm, { localesValidator } from './EditLocaleForm';
 import Author from './Author';
 
@@ -43,7 +45,9 @@ const initArticle = {
   locales: {},
 };
 
-const initLocale = {};
+const initLocale = {
+  content: defaultContent,
+};
 
 const getFields = ({ authors, collections, lang }) => [
   {
@@ -204,7 +208,7 @@ class EditArticleForm extends Component {
     };
 
     return (
-      <div className="page-content article-page-edit">
+      <div className="article-page-edit">
         <div className="title">
           <Text id="article.editor" />
         </div>
@@ -236,7 +240,7 @@ class EditArticleForm extends Component {
                       const fieldError = formApi.errors[id];
                       const touched = !!formApi.touched[id];
                       const hasError = !pending && touched && !!fieldError;
-                      const errorBlock = (
+                      const errorBlock = fieldError && (
                         <p className="help is-danger">
                           <Text id={fieldError} />
                         </p>

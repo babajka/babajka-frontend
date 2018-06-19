@@ -95,7 +95,7 @@ export default class AuthorBlock extends Component {
                   <div className="media-content">
                     <p className="article__author-name is-size-6">{displayName}</p>
                     {/* TODO(andemerie): think about what info it might be */}
-                    <p>Якая-небудзь інфа пра аўтара</p>
+                    {/* <p>Якая-небудзь інфа пра аўтара</p> */}
                   </div>
                 </div>
                 <div className="content">{bio}</div>

@@ -58,7 +58,9 @@ class EditArticlePage extends Component {
 
     return (
       <PageLayout url={url} title="header.createArticle">
-        <EditArticleForm lang={url.query.lang} articleLocale={articleLocale} mode={mode} />
+        <div className="page-content">
+          <EditArticleForm lang={url.query.lang} articleLocale={articleLocale} mode={mode} />
+        </div>
       </PageLayout>
     );
   }

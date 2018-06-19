@@ -113,6 +113,7 @@ const EditLocaleForm = ({ article, prefix, formApi, onRemove, pending, errors })
       </div>
       <div className="field editor">
         <Editor
+          key={prefix}
           content={get(formApi.values, `${prefix}.content`)}
           onChange={content => formApi.setValue(`${prefix}.content`, content)}
         />
