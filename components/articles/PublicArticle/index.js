@@ -5,6 +5,7 @@ import Icon from 'components/common/Icon';
 import Link from 'components/common/Link';
 import Text from 'components/common/Text';
 import Renderer from 'components/common/Renderer';
+import VideoPlayer from 'components/common/VideoPlayer';
 
 import { selectors } from 'redux/ducks/articles';
 import { selectors as authSelectors } from 'redux/ducks/auth';
@@ -101,24 +102,8 @@ const PublicArticle = ({
               <Text id="article.article-image" render={t => <img src={imageFolderUrl} alt={t} />} />
             </figure>
           )}
-        {type === 'video' && (
-          <Text
-            id="article.article-image"
-            render={t => (
-              <div className="article__playerwrapper">
-                <iframe
-                  id="ytplayer"
-                  className="article__player"
-                  title={t}
-                  type="text/html"
-                  src={`https://www.youtube.com/embed/${videoId}`}
-                  frameBorder="0"
-                  allowFullScreen
-                />
-              </div>
-            )}
-          />
-        )}
+
+        {type === 'video' && <VideoPlayer videoId={videoId} />}
 
         <div className="is-size-5 article__text">
           <Renderer content={content} />
