@@ -40,7 +40,7 @@ const PublicArticle = ({
   content,
   publishAt,
   type,
-  videoId,
+  video,
   published,
 }) => (
   <div className="article-container container">
@@ -103,7 +103,7 @@ const PublicArticle = ({
             </figure>
           )}
 
-        {type === 'video' && <VideoPlayer videoId={videoId} />}
+        {type === 'video' && <VideoPlayer videoId={video.videoId} />}
 
         <div className="is-size-5 article__text">
           <Renderer content={content} />

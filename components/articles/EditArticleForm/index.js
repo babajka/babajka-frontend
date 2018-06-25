@@ -188,11 +188,12 @@ class EditArticleForm extends Component {
   render() {
     const { mode, article, lang, authors, brands, collections, pending, serverErrors } = this.props;
     const { currentLocale } = this.state;
-    const { brand, collection, _id: slug } = article || {};
+    const { brand, collection, _id: slug, video } = article || {};
     const formattedArticle = {
-      ...omit(article, ['collection', 'brand']),
+      ...omit(article, ['collection', 'brand', 'video']),
       brandSlug: brand && brand.slug,
       collectionSlug: collection && collection.slug,
+      videoUrl: video && video.videoUrl,
     };
     const defaultValues = mode === 'create' ? initArticle : formattedArticle;
     const fields = getFields({ brands, authors, collections, lang });
