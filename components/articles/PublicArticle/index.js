@@ -128,12 +128,12 @@ const PublicArticle = ({
             {EXPORT_TO_NETWORKS.map(name => <ShareToButton key={`actions-${name}`} name={name} />)}
           </div>
         </div>
-        <hr className="article__line" />
+        {/* <hr className="article__line" /> */}
         <div className="article__more has-text-centered">
-          <span className="article__more-text is-uppercase ">
+          {/* TODO(andemerie): to uncomment once article cards are ready */}
+          {/* <span className="article__more-text is-uppercase ">
             <Text id="article.read-also" />:
-          </span>
-          {/* TODO(andemerie): add article cards here */}
+          </span> */}
         </div>
       </div>
 

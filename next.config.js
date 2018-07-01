@@ -22,7 +22,7 @@ module.exports = withBundleAnalyzer({
           __STAGING__: ENV === 'staging',
           __DEV__: ENV === 'development',
           __TESTING__: ENV === 'testing',
-          __DEBUG_STYLES__: ARGS.debug_styles,
+          __DEBUG_STYLES__: process.env.DEBUG_STYLES === 'true',
         }),
       ]
     );

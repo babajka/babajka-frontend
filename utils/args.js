@@ -4,7 +4,6 @@ const optionDefinitions = [
   { name: 'env', type: String },
   { name: 'backend_url', type: String },
   { name: 'port', type: Number },
-  { name: 'debug_styles', type: Number },
 ];
 
 module.exports = () => commandLineArgs(optionDefinitions);

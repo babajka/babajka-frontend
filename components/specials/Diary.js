@@ -8,7 +8,6 @@ import Text, { localize } from 'components/common/Text';
 import TextWithBr from 'components/common/TextWithBr';
 import Clickable from 'components/common/Clickable';
 import Icon from 'components/common/Icon';
-import Button from 'components/common/Button';
 
 import { actions as diaryActions, selectors as diarySelectors } from 'redux/ducks/diary';
 import { isSameDay } from 'utils/validators';
@@ -98,8 +97,9 @@ class Diary extends Component {
     return (
       <div className="tile is-parent">
         <div className="card tile is-child diary-wrapper">
-          <article className="diary-article">
-            <h1 className="title has-text-primary">
+          {/* eslint-disable-next-line */}
+          <article className="diary-article" onClick={this.toggleModal}>
+            <h1 className="title">
               <Text id="diary.title" />
             </h1>
 
@@ -122,13 +122,10 @@ class Diary extends Component {
               </div>
             )}
 
-            <div className="control">
-              <span className="subtitle author">{author}</span>
-              {text && (
-                <Button className="button is-light read-btn" onClick={this.toggleModal}>
-                  <Text id="diary.read" />
-                </Button>
-              )}
+            <span className="author">{author}</span>
+
+            <div className="hover-read-more">
+              <Text id="diary.read" />
             </div>
           </article>
 
