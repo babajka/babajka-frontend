@@ -10,10 +10,14 @@ const { DEFAULT_LOCALE } = require('./constants');
 const getArgs = require('./utils/args');
 
 const ARGS = getArgs();
-
 const port = ARGS.port || 3000;
-const dev = ARGS.env !== 'production' && ARGS.env !== 'staging';
+
+// This is a workaround as __ENV__ defined in next.config.js is not visible here.
+const ENV = process.env.WIR_ENV || process.env.NODE_ENV || 'not-set';
+
+const dev = ENV !== 'production' && ENV !== 'staging';
 const app = next({ dev });
+
 const handle = routes.getRequestHandler(app);
 
 process.on('uncaughtException', err => {
@@ -43,12 +47,14 @@ app.prepare().then(() => {
 
   server.listen(port, err => {
     if (err) throw err;
+    console.log(`> Environment is:\t${ENV}`);
     console.log(`> Using Backend on\t${BACKEND_URL}`);
-    if (ARGS.debug_styles) {
+    if (process.env.DEBUG_STYLES === 'true') {
       console.log(`> Using Markup on\t${MARKUP_URL}`);
     }
     console.log(`> Ready on\t\thttp://localhost:${port}`);
-    console.log(`> And you can use\thttp://local.wir.by:${port}`);
-    console.log(`> For cookies support add '127.0.0.1 local.wir.by' in your hosts file`);
+    console.log(
+      `> To support cookies add '127.0.0.1 local.wir.by' into your hosts file and access on http://local.wir.by:${port}`
+    );
   });
 });

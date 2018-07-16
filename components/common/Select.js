@@ -43,7 +43,7 @@ const Select = ({
       selectedItem: selected,
       reset,
     }) => (
-      <div className="field has-addons">
+      <div className={cn('field', { 'has-addons': clerable })}>
         <div className="control is-expanded">
           <div
             className={cn(

@@ -80,7 +80,12 @@ const ArticlePreview = ({
             <div className="level tile-footer is-mobile">
               <div className="level-left">{author && <Author {...author} />}</div>
               {!published && (
-                <div className="level-right article-date">
+                <div
+                  className={cn('level-right', {
+                    'publication-scheduled': publishAt,
+                    'publication-not-scheduled': !publishAt,
+                  })}
+                >
                   {publishAt
                     ? moment(publishAt).fromNow()
                     : localize('article.publication-not-scheduled', lang)}

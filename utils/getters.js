@@ -64,6 +64,7 @@ export const getLocalizedArticle = (article, lang) => {
     imageFolderUrl,
     collection,
     publishAt,
+    video,
   } = article;
   return {
     ...localize(locales, lang),
@@ -75,6 +76,7 @@ export const getLocalizedArticle = (article, lang) => {
     type,
     publishAt,
     published: publishAt && moment(publishAt).isBefore(moment()),
+    video,
   };
 };
 

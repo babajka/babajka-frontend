@@ -48,7 +48,7 @@ class AboutPage extends Component {
 
     return (
       <PageLayout url={url} title="header.about">
-        <div className="about-container">
+        <div className="page-content about-container">
           <div className="title">Wir.by</div>
           <div className="goal">
             <Text id="about.goal" />

@@ -4,11 +4,10 @@ const webpack = require('webpack');
 
 const packageJson = require('./package.json');
 const { LOCALES } = require('./constants');
-const getArgs = require('./utils/args');
 
 const langs = Object.keys(LOCALES).join('|');
-const ARGS = getArgs();
-const ENV = ARGS.env;
+
+const ENV = process.env.WIR_ENV || process.env.NODE_ENV || 'not-set';
 
 module.exports = withBundleAnalyzer({
   webpack(config) {
@@ -22,7 +21,7 @@ module.exports = withBundleAnalyzer({
           __STAGING__: ENV === 'staging',
           __DEV__: ENV === 'development',
           __TESTING__: ENV === 'testing',
-          __DEBUG_STYLES__: ARGS.debug_styles,
+          __DEBUG_STYLES__: process.env.DEBUG_STYLES === 'true',
         }),
       ]
     );

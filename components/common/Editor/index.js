@@ -3,10 +3,24 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { DanteEditor } from 'Dante2/lib';
 
-import defaultContent from './content.json';
 import widgets from './widgets';
 import tooltips from './tooltips';
 import { defaultWrappers, continuousBlocks, keyCommands, characterConvertMapping } from './config';
+
+export const defaultContent = {
+  entityMap: {},
+  blocks: [
+    {
+      key: '761n6',
+      text: 'Write you story',
+      type: 'unstyled',
+      depth: 0,
+      inlineStyleRanges: [],
+      entityRanges: [],
+      data: {},
+    },
+  ],
+};
 
 const config = {
   el: 'dante2-editor',
@@ -14,7 +28,7 @@ const config = {
   spellcheck: false,
   debug: false,
   title_placeholder: 'Title',
-  body_placeholder: 'Write your story',
+  body_placeholder: '',
   widgets,
   tooltips,
   default_wrappers: defaultWrappers,
@@ -35,7 +49,10 @@ const Editor = ({ content, onChange }) => (
 );
 
 Editor.propTypes = {
-  content: PropTypes.shape({}),
+  content: PropTypes.shape({
+    entityMap: PropTypes.shape({}),
+    blocks: PropTypes.array,
+  }),
   onChange: PropTypes.func.isRequired,
 };
 

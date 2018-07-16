@@ -31,6 +31,8 @@ export const NETWORKS = [
 
 export const EXPORT_TO_NETWORKS = ['facebook', 'vk', 'twitter'];
 
+export const YOUTUBE_EMBED_PREFIX = 'https://www.youtube.com/embed';
+
 const FACEBOOK_APP_ID = '332376853960377';
 
 export const NETWORKS_URLS = {

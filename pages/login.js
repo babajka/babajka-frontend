@@ -54,7 +54,7 @@ class LoginPage extends Component {
     const { pending, errors, url } = this.props;
     return (
       <PageLayout title="auth.signIn" url={url}>
-        <div className="container login">
+        <div className="page-content container login">
           <LoginForm
             allowSignUp={url.query.invite === 'beta-test-sign-up'}
             onSubmit={this.handleSubmit}
