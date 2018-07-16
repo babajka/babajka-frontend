@@ -97,8 +97,7 @@ class Diary extends Component {
     return (
       <div className="tile is-parent">
         <div className="card tile is-child diary-wrapper">
-          {/* eslint-disable-next-line */}
-          <article className="diary-article" onClick={this.toggleModal}>
+          <Clickable tag="article" className="diary-article" onClick={this.toggleModal}>
             <h1 className="title">
               <Text id="diary.title" />
             </h1>
@@ -127,7 +126,7 @@ class Diary extends Component {
             <div className="hover-read-more">
               <Text id="diary.read" />
             </div>
-          </article>
+          </Clickable>
 
           {this.renderNavigationButton(getPrev, NAV_BUTTONS.prev)}
           {!isSameDay(date) && this.renderNavigationButton(getNext, NAV_BUTTONS.next)}
