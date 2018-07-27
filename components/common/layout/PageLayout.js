@@ -5,14 +5,13 @@ import Header from './Header';
 import CoreLayout from './CoreLayout';
 import LocaleContext from '../LocaleContext';
 
-export default ({ children, title, url }) => (
+export default ({ className, children, title, url }) => (
   <LocaleContext.Provider value={url.query.lang}>
     <CoreLayout title={title} lang={url.query.lang}>
       <div className="babajka-root">
         <div className="babajka-content">
           <Header />
-          {/* possible issues with article page due to `page-content` */}
-          <div>{children}</div>
+          <div className={className}>{children}</div>
           <Footer />
         </div>
       </div>
