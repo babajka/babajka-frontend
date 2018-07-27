@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import withRedux from 'next-redux-wrapper';
 import chunk from 'lodash/chunk';
+import cn from 'classnames';
 
 import Text from 'components/common/Text';
+import Icon from 'components/common/Icon';
 import Clickable from 'components/common/Clickable';
+import OutsideClickable from 'components/common/OutsideClickable';
 import PageLayout from 'components/common/layout/PageLayout';
 import TeamRow, { ROW_SIZE } from 'components/about/TeamRow';
 
@@ -62,26 +65,32 @@ class AboutPage extends Component {
                     <Text id="about.join-us" />
                   </div>
                   <Text id="about.looking-for" />
-                  <div className="positions is-centered">
-                    {vacancies.map(vacancy => (
-                      <Clickable
-                        key={vacancy.id}
-                        tag="div"
-                        className="position"
-                        onClick={this.handleVacancyToggle.bind(null, vacancy)}
-                      >
-                        {vacancy.title}
-                      </Clickable>
-                    ))}
-                  </div>
-                  {openedVacancy && (
-                    <div id="position-description" className="position-description">
-                      <div className="name">{openedVacancy.title}</div>
-                      {openedVacancy.description}
-                      <br />
-                      <MailLink />
+                  <OutsideClickable onClick={() => this.setState({ openedVacancy: null })}>
+                    <div className="positions is-centered">
+                      {vacancies.map(vacancy => {
+                        const active = openedVacancy && openedVacancy.id === vacancy.id;
+                        return (
+                          <Clickable
+                            key={vacancy.id}
+                            tag="div"
+                            className={cn('position', { 'is-active': active })}
+                            onClick={this.handleVacancyToggle.bind(null, vacancy)}
+                          >
+                            {vacancy.title}{' '}
+                            <Icon name={`chevron-circle-${active ? 'up' : 'down'}`} />
+                          </Clickable>
+                        );
+                      })}
                     </div>
-                  )}
+                    {openedVacancy && (
+                      <div id="position-description" className="position-description">
+                        <div className="name">{openedVacancy.title}</div>
+                        {openedVacancy.description}
+                        <br />
+                        <MailLink />
+                      </div>
+                    )}
+                  </OutsideClickable>
                 </div>
                 <hr />
               </>
