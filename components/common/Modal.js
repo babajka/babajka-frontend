@@ -6,10 +6,10 @@ import Clickable from 'components/common/Clickable';
 import Button from 'components/common/Button';
 import Icon from 'components/common/Icon';
 
-const Modal = ({ renderBody, renderFooter, toggle, title, isActive }) => (
+const Modal = ({ renderBody, renderFooter, footerClassName, toggle, title, isActive, small }) => (
   <div className={cn('modal', { 'is-active': isActive })}>
     <Clickable tag="div" className="modal-background" onClick={toggle} />
-    <div className="modal-card">
+    <div className={cn('modal-card', { 'size-small': small })}>
       <header className="modal-card-head">
         <p className="modal-card-title has-text-primary">{title}</p>
         <Icon
@@ -20,23 +20,30 @@ const Modal = ({ renderBody, renderFooter, toggle, title, isActive }) => (
           onClick={toggle}
         />
       </header>
-      <div className="modal-card-body">{renderBody()}</div>
-      {renderFooter && <footer className="modal-card-foot">{renderFooter()}</footer>}
+      {renderBody && <div className="modal-card-body">{renderBody()}</div>}
+      {renderFooter && (
+        <footer className={cn('modal-card-foot', footerClassName)}>{renderFooter()}</footer>
+      )}
     </div>
     <Button className="modal-close is-large is-hidden-mobile" aria-label="close" onClick={toggle} />
   </div>
 );
 
 Modal.propTypes = {
-  renderBody: PropTypes.func.isRequired,
-  renderFooter: PropTypes.func,
   isActive: PropTypes.bool.isRequired,
   toggle: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.node.isRequired,
+  renderBody: PropTypes.func,
+  renderFooter: PropTypes.func,
+  footerClassName: PropTypes.string,
+  small: PropTypes.bool,
 };
 
 Modal.defaultProps = {
+  small: false,
+  renderBody: null,
   renderFooter: null,
+  footerClassName: '',
 };
 
 export default Modal;
