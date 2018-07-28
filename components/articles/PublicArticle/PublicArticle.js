@@ -3,13 +3,16 @@ import { connect } from 'react-redux';
 
 import Icon from 'components/common/Icon';
 import Link from 'components/common/Link';
-import Text from 'components/common/Text';
+import Text, { localize } from 'components/common/Text';
+import Clickable from 'components/common/Clickable';
+import ActionWithConfirm from 'components/common/ActionWithConfirm';
 import Renderer from 'components/common/Renderer';
 import VideoPlayer from 'components/common/VideoPlayer';
+import LocaleContext from 'components/common/LocaleContext';
 
-import { selectors } from 'redux/ducks/articles';
+import { actions, selectors } from 'redux/ducks/articles';
 import { selectors as authSelectors } from 'redux/ducks/auth';
-import { ROUTES_NAMES } from 'routes';
+import { Router, ROUTES_NAMES } from 'routes';
 import { LOCALES } from 'constants';
 import { EXPORT_TO_NETWORKS } from 'constants/social';
 import { ArticleModel } from 'utils/customPropTypes';
@@ -42,6 +45,8 @@ const PublicArticle = ({
   type,
   video,
   published,
+  // from LocaleContext:
+  lang,
 }) => (
   <div className="article-container container">
     <div className="columns">
@@ -67,15 +72,13 @@ const PublicArticle = ({
             {author && <AuthorBlock data={author} />}
             {/* TODO(andemerie): uncomment the following lines, when partners functionality is implemented */}
             {/* {brand && (
-              <Text
-                id="article.open-partner-details"
-                render={t => (
-                  <a className="article__info-item article__info-item--clickable" title={t}>
-                    <InfoIcon name="handshake-o" />
-                    <span className="article__info-link">{brand.name}</span>
-                  </a>
-                )}
-              />
+              <a
+                className="article__info-item article__info-item--clickable"
+                title={localize('article.open-partner-details', lang)}
+              >
+                <InfoIcon name="handshake-o" />
+                <span className="article__info-link">{brand.name}</span>
+              </a>
             )} */}
             <PublishInfo publishAt={publishAt} published={published} />
           </div>
@@ -99,7 +102,7 @@ const PublicArticle = ({
         {type === 'text' &&
           imageFolderUrl && (
             <figure className="article__imagewrapper image">
-              <Text id="article.article-image" render={t => <img src={imageFolderUrl} alt={t} />} />
+              <img src={imageFolderUrl} alt={localize('article.article-image', lang)} />
             </figure>
           )}
 
@@ -154,14 +157,22 @@ const PublicArticle = ({
                   </EditLink>
                 </li>
                 <li>
-                  <a
-                    className="article-side__button article-side__button--remove icon-button button"
-                    title="Выдаліць артыкул"
-                  >
-                    <span className="icon-button__usual-icon icon">
-                      <Icon name="trash" size="lg" />
-                    </span>
-                  </a>
+                  <ActionWithConfirm
+                    action={actions.remove.bind(null, articleId)}
+                    successCallback={() => Router.replaceRoute(ROUTES_NAMES.home, { lang })}
+                    render={({ onClick }) => (
+                      <Clickable
+                        tag="a"
+                        onClick={onClick}
+                        className="article-side__button article-side__button--remove icon-button button"
+                        title={localize('article.remove', lang)}
+                      >
+                        <span className="icon-button__usual-icon icon">
+                          <Icon name="trash" size="lg" />
+                        </span>
+                      </Clickable>
+                    )}
+                  />
                 </li>
               </>
             )}
@@ -172,16 +183,15 @@ const PublicArticle = ({
             ))}
           </ul>
           <div className="article-side__bottom">
-            <Text
-              id="article.go-to-top"
-              render={t => (
-                <a className="article-side__button icon-button button" href="#top" title={t}>
-                  <span className="icon-button__usual-icon icon">
-                    <Icon name="chevron-up" size="lg" />
-                  </span>
-                </a>
-              )}
-            />
+            <a
+              className="article-side__button icon-button button"
+              href="#top"
+              title={localize('article.go-to-top', lang)}
+            >
+              <span className="icon-button__usual-icon icon">
+                <Icon name="chevron-up" size="lg" />
+              </span>
+            </a>
           </div>
         </div>
       </div>
@@ -191,4 +201,8 @@ const PublicArticle = ({
 
 PublicArticle.propTypes = ArticleModel;
 
-export default connect(mapStateToProps)(PublicArticle);
+export default connect(mapStateToProps)(props => (
+  <LocaleContext.Consumer>
+    {lang => <PublicArticle {...props} lang={lang} />}
+  </LocaleContext.Consumer>
+));

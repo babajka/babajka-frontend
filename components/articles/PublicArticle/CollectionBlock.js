@@ -31,9 +31,9 @@ export default class CollectionBlock extends Component {
             <Text
               id="article.open-collection-articles"
               render={t => (
-                <a className="article__collection is-uppercase" title={t}>
+                <span className="article__collection is-uppercase" title={t}>
                   {name}
-                </a>
+                </span>
               )}
             />
           </div>

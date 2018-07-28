@@ -75,7 +75,7 @@ export const getLocalizedArticle = (article, lang) => {
     imageFolderUrl,
     type,
     publishAt,
-    published: publishAt && moment(publishAt).isBefore(moment()),
+    published: !!publishAt && moment(publishAt).isBefore(moment()),
     video,
   };
 };

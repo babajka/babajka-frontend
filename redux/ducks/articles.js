@@ -26,6 +26,7 @@ const FETCH_AUTHORS = `${duck}/FETCH_AUTHORS`;
 const FETCH_COLLECTIONS = `${duck}/FETCH_COLLECTIONS`;
 const CREATE = `${duck}/CREATE`;
 const UPDATE = `${duck}/UPDATE`;
+const REMOVE = `${duck}/REMOVE`;
 
 // reducer
 const initialState = {
@@ -134,6 +135,10 @@ export const actions = {
   update: article => ({
     type: UPDATE,
     payload: request.fetch(api.articles.update(article._id), 'PUT', article),
+  }),
+  remove: articleId => ({
+    type: REMOVE,
+    payload: request.fetch(api.articles.remove(articleId), 'DELETE'),
   }),
 };
 
