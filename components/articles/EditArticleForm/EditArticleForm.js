@@ -117,12 +117,14 @@ const getFields = ({ authors, collections, lang }) => [
     type: 'input',
     help: 'image-preview-help',
     validator: ({ imagePreviewUrl }) => required(imagePreviewUrl) || isUrl(imagePreviewUrl),
+    autoComplete: 'off',
   },
   {
     id: 'imageFolderUrl',
     type: 'input',
     help: 'image-folder-help',
     validator: ({ imageFolderUrl = '' }) => isUrl(imageFolderUrl),
+    autoComplete: 'off',
   },
   {
     id: 'videoUrl',
@@ -130,6 +132,7 @@ const getFields = ({ authors, collections, lang }) => [
     help: 'video-help',
     hide: ({ type }) => type !== 'video',
     validator: ({ type, videoUrl }) => type === 'video' && (required(videoUrl) || isUrl(videoUrl)),
+    autoComplete: 'off',
   },
 ];
 
@@ -234,64 +237,67 @@ class EditArticleForm extends Component {
                     <Text id="article.common" />
                   </div>
                   <div className="inputs">
-                    {fields.map(({ id, label, type, help, hide, controlProps, render }) => {
-                      if (hide && hide(formApi.values)) {
-                        return null;
-                      }
-                      const fieldError = formApi.errors[id];
-                      const touched = !!formApi.touched[id];
-                      const hasError = !pending && touched && !!fieldError;
-                      const errorBlock = fieldError && (
-                        <p className="help is-danger">
-                          <Text id={fieldError} />
-                        </p>
-                      );
-
-                      return (
-                        <div
-                          key={id}
-                          className={cn('field form-field', { 'long-input': type === 'input' })}
-                        >
-                          {type === 'input' && (
-                            <>
-                              <Text
-                                id={`article.${help}`}
-                                render={placeholder => (
-                                  <TextField
-                                    id={id}
-                                    field={id}
-                                    className={cn('input', { 'is-danger': hasError })}
-                                    placeholder={placeholder}
-                                  />
-                                )}
-                              />
-                              {hasError && errorBlock}
-                            </>
-                          )}
-                          <p className="help">
-                            <Text id={`article.${label || id}`} />
+                    {fields.map(
+                      ({ id, label, type, help, hide, controlProps, render, autoComplete }) => {
+                        if (hide && hide(formApi.values)) {
+                          return null;
+                        }
+                        const fieldError = formApi.errors[id];
+                        const touched = !!formApi.touched[id];
+                        const hasError = !pending && touched && !!fieldError;
+                        const errorBlock = fieldError && (
+                          <p className="help is-danger">
+                            <Text id={fieldError} />
                           </p>
-                          {type === 'select' &&
-                            controlProps.options && (
-                              <Select
-                                value={formApi.values[id]}
-                                onChange={formApi.setValue.bind(null, id)}
-                                {...controlProps}
-                              />
+                        );
+
+                        return (
+                          <div
+                            key={id}
+                            className={cn('field form-field', { 'long-input': type === 'input' })}
+                          >
+                            {type === 'input' && (
+                              <>
+                                <Text
+                                  id={`article.${help}`}
+                                  render={placeholder => (
+                                    <TextField
+                                      id={id}
+                                      field={id}
+                                      className={cn('input', { 'is-danger': hasError })}
+                                      placeholder={placeholder}
+                                      autoComplete={autoComplete}
+                                    />
+                                  )}
+                                />
+                                {hasError && errorBlock}
+                              </>
                             )}
-                          {type === 'custom' &&
-                            render({
-                              className: cn('input', { 'is-danger': hasError }),
-                              value: formApi.values[id],
-                              onChange: value => {
-                                formApi.setValue(id, value);
-                                formApi.setTouched(id, true);
-                              },
-                              errorBlock,
-                            })}
-                        </div>
-                      );
-                    })}
+                            <p className="help">
+                              <Text id={`article.${label || id}`} />
+                            </p>
+                            {type === 'select' &&
+                              controlProps.options && (
+                                <Select
+                                  value={formApi.values[id]}
+                                  onChange={formApi.setValue.bind(null, id)}
+                                  {...controlProps}
+                                />
+                              )}
+                            {type === 'custom' &&
+                              render({
+                                className: cn('input', { 'is-danger': hasError }),
+                                value: formApi.values[id],
+                                onChange: value => {
+                                  formApi.setValue(id, value);
+                                  formApi.setTouched(id, true);
+                                },
+                                errorBlock,
+                              })}
+                          </div>
+                        );
+                      }
+                    )}
                   </div>
                 </div>
                 <div className="localized-data">
