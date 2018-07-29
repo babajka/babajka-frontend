@@ -3,10 +3,9 @@ import React from 'react';
 import Icon from 'components/common/Icon';
 import Link from 'components/common/Link';
 import Text from 'components/common/Text';
-import ExternalLink from 'components/common/ExternalLink';
+import SocialList from 'components/common/SocialList';
 
 import { ROUTES_NAMES } from 'routes';
-import { NETWORKS } from 'constants/social';
 
 const Footer = () => (
   <footer className="app-footer">
@@ -25,15 +24,7 @@ const Footer = () => (
       </div>
       <div className="column social">
         <Text id="footer.followSocialLinks" />
-        <div className="links">
-          {NETWORKS.map(({ name, link }) => (
-            <ExternalLink key={name} href={link} className={`button is-medium is-rounded ${name}`}>
-              <span className="icon is-medium">
-                <Icon name={name} />
-              </span>
-            </ExternalLink>
-          ))}
-        </div>
+        <SocialList className="links" rounded />
       </div>
     </div>
   </footer>

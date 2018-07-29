@@ -6,6 +6,7 @@ import cn from 'classnames';
 import Text from 'components/common/Text';
 import Icon from 'components/common/Icon';
 import Clickable from 'components/common/Clickable';
+import MailLink from 'components/common/MailLink';
 import OutsideClickable from 'components/common/OutsideClickable';
 import PageLayout from 'components/common/layout/PageLayout';
 import TeamRow, { ROW_SIZE } from 'components/about/TeamRow';
@@ -16,12 +17,6 @@ import request from 'utils/request';
 import { getLocalizedTeam, getLocalizedVacancies } from 'utils/getters';
 import rawTeam from 'data/team.json';
 import rawVacancies from 'data/vacancies.json';
-
-const MailLink = ({ to = 'development' }) => (
-  <a href={`mailto:wir.${to}@gmail.com`} target="_top">
-    <u>wir.{to}@gmail.com</u>
-  </a>
-);
 
 class AboutPage extends Component {
   static getInitialProps(ctx) {

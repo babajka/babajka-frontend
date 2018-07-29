@@ -212,7 +212,7 @@ class EditArticleForm extends Component {
     };
 
     return (
-      <div className="page-content article-page-edit">
+      <div className="article-page-edit">
         <div className="title">
           <Text id="article.editor" />
         </div>
