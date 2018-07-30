@@ -6,6 +6,7 @@ import get from 'lodash/get';
 import set from 'lodash/set';
 
 import { required, hasErrors, isSlug } from 'utils/validators';
+import { replaceSpaceAndUnderscoreToDash } from 'utils/formatters';
 import { ROUTES_NAMES } from 'routes';
 
 import Link from 'components/common/Link';
@@ -33,19 +34,17 @@ const localeFields = [
 // FIXME: it's very ugly & difficult method, has no ideas how to fix it
 // mb use NestedForm, but there are another bugs with it
 // TODO: migrate on react-form@3 & check NestedForms
-export const localesValidator = locales => {
-  const localesErrors = {};
-  const localesHasErrors = !!Object.keys(locales)
-    .map(loc => {
-      localeFields.forEach(({ field, validator }) => {
-        const path = `${loc}.${field}`;
-        set(localesErrors, path, validator(get(locales, path)));
-      });
-      return Object.values(localesErrors[loc]).some(Boolean);
-    })
-    .filter(Boolean).length;
-  return localesHasErrors ? localesErrors : null;
-};
+export const localesValidator = locales =>
+  Object.keys(locales).reduce((errors, loc) => {
+    localeFields.forEach(({ field, validator }) => {
+      const path = `${loc}.${field}`;
+      const validationError = validator(get(locales, path));
+
+      set(errors, path, validationError);
+    });
+
+    return errors;
+  }, {});
 
 // TODO: consider to extract to common component & merge with `auth/FormField`
 const Field = ({ formApi, Component = TextField, withHelp, pending, errors, ...props }) => {
@@ -92,6 +91,9 @@ const EditLocaleForm = ({ article, prefix, formApi, onRemove, pending, errors })
           formApi={formApi}
           id={`${prefix}.slug`}
           field={`${prefix}.slug`}
+          onChange={slugValue =>
+            formApi.setValue(`${prefix}.slug`, replaceSpaceAndUnderscoreToDash(slugValue))
+          }
           withHelp
           placeholder="belaruskae-kino"
           pending={pending}
