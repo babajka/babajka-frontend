@@ -6,7 +6,7 @@ import get from 'lodash/get';
 import set from 'lodash/set';
 
 import { required, hasErrors, isSlug } from 'utils/validators';
-import { replaceSpaceAndUnderscoreToDash } from 'utils/formatters';
+import { replaceToDash } from 'utils/formatters';
 import { ROUTES_NAMES } from 'routes';
 
 import Link from 'components/common/Link';
@@ -91,9 +91,7 @@ const EditLocaleForm = ({ article, prefix, formApi, onRemove, pending, errors })
           formApi={formApi}
           id={`${prefix}.slug`}
           field={`${prefix}.slug`}
-          onChange={slugValue =>
-            formApi.setValue(`${prefix}.slug`, replaceSpaceAndUnderscoreToDash(slugValue))
-          }
+          onChange={slugValue => formApi.setValue(`${prefix}.slug`, replaceToDash(slugValue))}
           withHelp
           placeholder="belaruskae-kino"
           pending={pending}

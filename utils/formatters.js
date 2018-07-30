@@ -6,5 +6,4 @@ export const formatDate = (date, format = DATE_FORMAT) => moment(date).format(fo
 
 export const stub = 1;
 
-export const replaceSpaceAndUnderscoreToDash = string =>
-  string.replace(/[_ ]+/g, '-').replace(/-+/g, '-');
+export const replaceToDash = string => string.replace(/[_ \\/]+/g, '-').replace(/-+/g, '-');
