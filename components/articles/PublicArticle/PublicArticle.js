@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import Icon from 'components/common/Icon';
 import Link from 'components/common/Link';
@@ -9,6 +10,7 @@ import ActionWithConfirm from 'components/common/ActionWithConfirm';
 import Renderer from 'components/common/Renderer';
 import VideoPlayer from 'components/common/VideoPlayer';
 import LocaleContext from 'components/common/LocaleContext';
+import Button from 'components/common/Button';
 
 import { actions, selectors } from 'redux/ducks/articles';
 import { selectors as authSelectors } from 'redux/ducks/auth';
@@ -29,8 +31,13 @@ const mapStateToProps = (state, { articleLocale }) => ({
   canEditArticle: authSelectors.getPermissions(state).canManageArticles,
 });
 
+const mapDispatchToProps = {
+  updateArticle: actions.update,
+};
+
 // TODO(andemerie): finish styles for this page
 const PublicArticle = ({
+  updateArticle,
   collection,
   canEditArticle,
   title,
@@ -69,18 +76,32 @@ const PublicArticle = ({
             )}
           </div>
           <div className="article__info">
-            {author && <AuthorBlock data={author} />}
-            {/* TODO(andemerie): uncomment the following lines, when partners functionality is implemented */}
-            {/* {brand && (
-              <a
-                className="article__info-item article__info-item--clickable"
-                title={localize('article.open-partner-details', lang)}
-              >
-                <InfoIcon name="handshake-o" />
-                <span className="article__info-link">{brand.name}</span>
-              </a>
-            )} */}
-            <PublishInfo publishAt={publishAt} published={published} />
+            <div className="article__info-left">
+              {author && <AuthorBlock data={author} />}
+              {/* TODO(andemerie): uncomment the following lines, when partners functionality is implemented */}
+              {/* {brand && (
+                <a
+                  className="article__info-item article__info-item--clickable"
+                  title={localize('article.open-partner-details', lang)}
+                >
+                  <InfoIcon name="handshake-o" />
+                  <span className="article__info-link">{brand.name}</span>
+                </a>
+              )} */}
+              <PublishInfo publishAt={publishAt} published={published} />
+            </div>
+            {canEditArticle &&
+              !published && (
+                <Button
+                  className="article__info-now button is-small is-primary"
+                  onClick={updateArticle.bind(null, {
+                    _id: articleId,
+                    publishAt: Date.now(),
+                  })}
+                >
+                  <Text id="article.publish-now" />
+                </Button>
+              )}
           </div>
           {otherLocales &&
             !!otherLocales.length && (
@@ -201,7 +222,7 @@ const PublicArticle = ({
 
 PublicArticle.propTypes = ArticleModel;
 
-export default connect(mapStateToProps)(props => (
+export default connect(mapStateToProps, mapDispatchToProps)(props => (
   <LocaleContext.Consumer>
     {lang => <PublicArticle {...props} lang={lang} />}
   </LocaleContext.Consumer>

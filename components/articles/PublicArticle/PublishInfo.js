@@ -11,7 +11,7 @@ import InfoIcon from './InfoIcon';
 const PublishInfo = ({ published, publishAt }) => {
   if (!publishAt) {
     return (
-      <span className="article__info-item tag is-warning is-uppercase">
+      <span className="article__info-item has-text-primary">
         <Text id="article.publication-not-scheduled" />
       </span>
     );
@@ -27,7 +27,7 @@ const PublishInfo = ({ published, publishAt }) => {
   }
 
   return (
-    <span className="article__info-item article__info-planned tag is-uppercase">
+    <span className="article__info-item article__info-planned has-text-primary">
       <Text id="article.will-be-published" /> {moment(publishAt).fromNow()}
     </span>
   );
