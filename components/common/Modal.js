@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
@@ -46,4 +47,31 @@ Modal.defaultProps = {
   footerClassName: '',
 };
 
-export default Modal;
+export default class ModalPortal extends Component {
+  constructor(props) {
+    super(props);
+    if (typeof window !== 'undefined') {
+      this.el = document.createElement('div');
+    }
+  }
+
+  componentDidMount() {
+    this.modalRoot = document.getElementById('modal-root');
+    this.modalRoot.appendChild(this.el);
+  }
+
+  componentWillUnmount() {
+    this.modalRoot.removeChild(this.el);
+  }
+
+  render() {
+    const modal = <Modal {...this.props} />;
+
+    // there is no this.el on server
+    if (typeof window === 'undefined') {
+      return modal;
+    }
+
+    return ReactDOM.createPortal(modal, this.el);
+  }
+}
