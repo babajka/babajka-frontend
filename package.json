@@ -28,7 +28,8 @@
     "analyze:client": "BUNDLE_ANALYZE=browser npm run build",
     "postinstall": "npm run copy-static && npm run update-dict && npm run update-team",
     "semantic-release": "semantic-release",
-    "commitmsg": "commitlint -E GIT_PARAMS"
+    "commitmsg": "commitlint -E GIT_PARAMS",
+    "travis-deploy-once": "travis-deploy-once"
   },
   "lint-staged": {
     "**/*.js": [
