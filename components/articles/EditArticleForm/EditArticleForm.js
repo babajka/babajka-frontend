@@ -9,7 +9,7 @@ import omit from 'lodash/omit';
 
 import { actions, selectors } from 'redux/ducks/articles';
 import { AuthorsArray, BrandsArray, CollectionsArray, LangType } from 'utils/customPropTypes';
-import { required, isUrl, validDate } from 'utils/validators';
+import { required, secureUrl, validDate } from 'utils/validators';
 import { Router, ROUTES_NAMES } from 'routes';
 import { LANGS } from 'constants';
 
@@ -116,14 +116,14 @@ const getFields = ({ authors, collections, lang }) => [
     id: 'imagePreviewUrl',
     type: 'input',
     help: 'image-preview-help',
-    validator: ({ imagePreviewUrl }) => required(imagePreviewUrl) || isUrl(imagePreviewUrl),
+    validator: ({ imagePreviewUrl }) => required(imagePreviewUrl) || secureUrl(imagePreviewUrl),
     autoComplete: 'off',
   },
   {
     id: 'imageFolderUrl',
     type: 'input',
     help: 'image-folder-help',
-    validator: ({ imageFolderUrl = '' }) => isUrl(imageFolderUrl),
+    validator: ({ imageFolderUrl = '' }) => secureUrl(imageFolderUrl),
     autoComplete: 'off',
   },
   {
@@ -131,7 +131,8 @@ const getFields = ({ authors, collections, lang }) => [
     type: 'input',
     help: 'video-help',
     hide: ({ type }) => type !== 'video',
-    validator: ({ type, videoUrl }) => type === 'video' && (required(videoUrl) || isUrl(videoUrl)),
+    validator: ({ type, videoUrl }) =>
+      type === 'video' && (required(videoUrl) || secureUrl(videoUrl)),
     autoComplete: 'off',
   },
 ];
