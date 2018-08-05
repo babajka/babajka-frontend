@@ -1,12 +1,14 @@
 language: node_js
 node_js:
-- '10'
+  - '10'
 script:
-- npm run lint
-- npm run build
+  - npm run lint
+  - npm run build
+after_success:
+  - npm run travis-deploy-once "npm run semantic-release"
 cache:
   directories:
-  - node_modules
+    - node_modules
 notifications:
   slack:
     rooms:
