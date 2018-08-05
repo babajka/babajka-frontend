@@ -4,6 +4,7 @@ import { Text as TextField, TextArea } from 'react-form';
 import cn from 'classnames';
 import get from 'lodash/get';
 import set from 'lodash/set';
+import merge from 'lodash/merge';
 
 import { required, hasErrors, isSlug } from 'utils/validators';
 import { replaceToDash } from 'utils/formatters';
@@ -31,6 +32,11 @@ const localeFields = [
   },
 ];
 
+export const localeObject = localeFields.reduce(
+  (locales, { field }) => ({ ...locales, [field]: true }),
+  {}
+);
+
 // FIXME: it's very ugly & difficult method, has no ideas how to fix it
 // mb use NestedForm, but there are another bugs with it
 // TODO: migrate on react-form@3 & check NestedForms
@@ -49,7 +55,7 @@ export const localesValidator = locales =>
 // TODO: consider to extract to common component & merge with `auth/FormField`
 const Field = ({ formApi, Component = TextField, withHelp, pending, errors, ...props }) => {
   const { id, field, className = 'input' } = props;
-  const error = get({ ...formApi.errors, ...errors }, field);
+  const error = get(merge(formApi.errors, errors), field);
   const touched = !!get(formApi.touched, field);
   const hasError = !pending && touched && !!error;
   const fieldName = field.split('.').pop();

@@ -39,4 +39,4 @@ export const isUrl = (url, messageId = 'article.valide-url') =>
   url === '' || url.match(urlRegexp) ? null : messageId;
 
 export const secureUrl = (url, messageId = 'article.https-url') =>
-  isUrl(url) || (url.startsWith('https://') ? null : messageId);
+  isUrl(url) || (url === '' || url.startsWith('https://') ? null : messageId);
