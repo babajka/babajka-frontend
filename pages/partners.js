@@ -15,10 +15,8 @@ class PartnersPage extends Component {
   render() {
     const { url } = this.props;
     return (
-      <PageLayout url={url} title="header.partners">
-        <div className="page-content">
-          <h1>TODO: Partners Page</h1>
-        </div>
+      <PageLayout className="page-content" url={url} title="header.partners">
+        <h1>TODO: Partners Page</h1>
       </PageLayout>
     );
   }

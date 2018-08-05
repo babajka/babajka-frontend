@@ -19,6 +19,7 @@ export default {
     getColletions: `${API_URL}/articles/collections`,
     create: `${API_URL}/articles`,
     update: id => `${API_URL}/articles/${id}`,
+    remove: id => `${API_URL}/articles/${id}`,
     addLocale: id => `${API_URL}/articles/localize/${id}`,
   },
   users: {

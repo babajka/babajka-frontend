@@ -13,6 +13,7 @@ import {
   getShortLocale,
 } from 'utils/getters';
 import { PAGE_SIZE, MAIN_PAGE_SIZE } from 'constants/articles';
+import { LOCALES } from 'constants';
 
 const duck = 'articles';
 
@@ -26,6 +27,7 @@ const FETCH_AUTHORS = `${duck}/FETCH_AUTHORS`;
 const FETCH_COLLECTIONS = `${duck}/FETCH_COLLECTIONS`;
 const CREATE = `${duck}/CREATE`;
 const UPDATE = `${duck}/UPDATE`;
+const REMOVE = `${duck}/REMOVE`;
 
 // reducer
 const initialState = {
@@ -135,6 +137,10 @@ export const actions = {
     type: UPDATE,
     payload: request.fetch(api.articles.update(article._id), 'PUT', article),
   }),
+  remove: articleId => ({
+    type: REMOVE,
+    payload: request.fetch(api.articles.remove(articleId), 'DELETE'),
+  }),
 };
 
 // selectors
@@ -153,6 +159,7 @@ const getRawCurrent = state => getState(state).current;
 const getLocaleBySlug = (state, slug) => getState(state).localeBySlug[slug];
 const getOtherLocales = (state, currentLocale) =>
   Object.entries(getRawCurrent(state).locales)
+    .filter(([locale]) => LOCALES[locale]) // TODO(drapegnik): add logging here
     .filter(([locale]) => locale !== currentLocale)
     .map(([_, locale]) => locale)
     .map(getShortLocale);

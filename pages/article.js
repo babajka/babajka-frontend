@@ -30,7 +30,7 @@ class ArticlePage extends Component {
   render() {
     const { article, url, articleLocale } = this.props;
     return (
-      <PageLayout url={url} title="header.home">
+      <PageLayout className="article-content" url={url} title="header.home">
         <PublicArticle {...article} articleLocale={articleLocale} />
       </PageLayout>
     );

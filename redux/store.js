@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import thunkMiddleware from 'redux-thunk';
 import promiseMiddleware from 'redux-promise-middleware';
 
@@ -14,9 +14,4 @@ const middlewares = [
 ].filter(Boolean);
 
 export default (initialState = {}) =>
-  createStore(
-    reducer,
-    initialState,
-    // TODO(@drapegnik): disable dev tools in production
-    composeWithDevTools(applyMiddleware(...middlewares))
-  );
+  createStore(reducer, initialState, composeWithDevTools(applyMiddleware(...middlewares)));

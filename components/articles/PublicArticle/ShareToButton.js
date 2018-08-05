@@ -33,7 +33,9 @@ const ShareToButton = ({ name, title, side, router }) => (
 ShareToButton.propTypes = {
   name: PropTypes.oneOf(EXPORT_TO_NETWORKS).isRequired,
   side: PropTypes.bool,
-  router: PropTypes.isRequired,
+  router: PropTypes.shape({
+    asPath: PropTypes.string.isRequired,
+  }).isRequired,
   title: PropTypes.string,
 };
 

@@ -46,21 +46,17 @@ class EditArticlePage extends Component {
 
     if (mode === 'create' && !permissions.canCreateArticle) {
       return (
-        <PageLayout url={url} title="header.home">
-          <div className="page-content">
-            <p className="text is-size-5 has-text-primary">
-              <Text id="common.forbidden" />
-            </p>
-          </div>
+        <PageLayout className="page-content" url={url} title="header.home">
+          <p className="text is-size-5 has-text-primary">
+            <Text id="common.forbidden" />
+          </p>
         </PageLayout>
       );
     }
 
     return (
-      <PageLayout url={url} title="header.createArticle">
-        <div className="page-content">
-          <EditArticleForm lang={url.query.lang} articleLocale={articleLocale} mode={mode} />
-        </div>
+      <PageLayout className="page-content" url={url} title="header.createArticle">
+        <EditArticleForm lang={url.query.lang} articleLocale={articleLocale} mode={mode} />
       </PageLayout>
     );
   }

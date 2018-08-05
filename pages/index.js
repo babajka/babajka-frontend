@@ -79,23 +79,21 @@ class HomePage extends Component {
     const [firstRow, secondRow, ...remainRows] = articlesRows;
 
     return (
-      <PageLayout url={url} title="header.home">
-        <div className="page-content main-page page-container">
-          {firstRow && <ArticlesRow articles={firstRow} className="first-line is-ancestor" />}
-          {secondRow && (
-            <ArticlesComplexRow articles={secondRow} renderDiary={() => <Diary lang={lang} />} />
-          )}
-          {remainRows.map(data => (
-            <ArticlesRow key={data[0]._id} articles={data} className="first-line is-ancestor" />
-          ))}
-          {nextPage && (
-            <div className="load-more" align="center">
-              <Button className="button" pending={articlesPending} onClick={this.handleLoadMore}>
-                <Text id="home.loadMore" />
-              </Button>
-            </div>
-          )}
-        </div>
+      <PageLayout className="page-content main-page page-container" url={url} title="header.home">
+        {firstRow && <ArticlesRow articles={firstRow} className="first-line is-ancestor" />}
+        {secondRow && (
+          <ArticlesComplexRow articles={secondRow} renderDiary={() => <Diary lang={lang} />} />
+        )}
+        {remainRows.map(data => (
+          <ArticlesRow key={data[0]._id} articles={data} className="first-line is-ancestor" />
+        ))}
+        {nextPage && (
+          <div className="load-more" align="center">
+            <Button className="button" pending={articlesPending} onClick={this.handleLoadMore}>
+              <Text id="home.loadMore" />
+            </Button>
+          </div>
+        )}
       </PageLayout>
     );
   }
