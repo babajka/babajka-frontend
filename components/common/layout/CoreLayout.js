@@ -18,7 +18,7 @@ class CoreLayout extends Component {
   static defaultProps = { title: '' };
 
   componentDidMount() {
-    if (__PROD__ || __STAGING__) {
+    if ((__PROD__ || __STAGING__) && !window.ga) {
       ReactGA.initialize(getGoogleAnalyticsID(__PROD__), {
         debug: false,
       });
