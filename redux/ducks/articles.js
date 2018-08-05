@@ -13,6 +13,7 @@ import {
   getShortLocale,
 } from 'utils/getters';
 import { PAGE_SIZE, MAIN_PAGE_SIZE } from 'constants/articles';
+import { LOCALES } from 'constants';
 
 const duck = 'articles';
 
@@ -158,6 +159,7 @@ const getRawCurrent = state => getState(state).current;
 const getLocaleBySlug = (state, slug) => getState(state).localeBySlug[slug];
 const getOtherLocales = (state, currentLocale) =>
   Object.entries(getRawCurrent(state).locales)
+    .filter(([locale]) => LOCALES[locale]) // TODO(drapegnik): add logging here
     .filter(([locale]) => locale !== currentLocale)
     .map(([_, locale]) => locale)
     .map(getShortLocale);
