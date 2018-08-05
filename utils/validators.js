@@ -37,3 +37,6 @@ export const isSlug = (slug, messageId = 'article.slug-req') =>
 const urlRegexp = /[-a-zA-Z0-9@:%_+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_+.~#?&//=]*)?/gi;
 export const isUrl = (url, messageId = 'article.valide-url') =>
   url === '' || url.match(urlRegexp) ? null : messageId;
+
+export const secureUrl = (url, messageId = 'article.https-url') =>
+  isUrl(url) || (url === '' || url.startsWith('https://') ? null : messageId);

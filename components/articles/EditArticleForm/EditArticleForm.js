@@ -9,7 +9,7 @@ import omit from 'lodash/omit';
 
 import { actions, selectors } from 'redux/ducks/articles';
 import { AuthorsArray, BrandsArray, CollectionsArray, LangType } from 'utils/customPropTypes';
-import { required, isUrl, validDate } from 'utils/validators';
+import { required, secureUrl, validDate, hasErrors } from 'utils/validators';
 import { Router, ROUTES_NAMES } from 'routes';
 import { LANGS } from 'constants';
 
@@ -19,7 +19,7 @@ import Clickable from 'components/common/Clickable';
 import DateTimePicker from 'components/common/DateTimePicker';
 import { defaultContent } from 'components/common/Editor';
 
-import EditLocaleForm, { localesValidator } from './EditLocaleForm';
+import EditLocaleForm, { localesValidator, localeObject } from './EditLocaleForm';
 import Author from './Author';
 
 const mapStateToProps = state => ({
@@ -116,14 +116,14 @@ const getFields = ({ authors, collections, lang }) => [
     id: 'imagePreviewUrl',
     type: 'input',
     help: 'image-preview-help',
-    validator: ({ imagePreviewUrl }) => required(imagePreviewUrl) || isUrl(imagePreviewUrl),
+    validator: ({ imagePreviewUrl }) => required(imagePreviewUrl) || secureUrl(imagePreviewUrl),
     autoComplete: 'off',
   },
   {
     id: 'imageFolderUrl',
     type: 'input',
     help: 'image-folder-help',
-    validator: ({ imageFolderUrl = '' }) => isUrl(imageFolderUrl),
+    validator: ({ imageFolderUrl = '' }) => secureUrl(imageFolderUrl),
     autoComplete: 'off',
   },
   {
@@ -131,10 +131,14 @@ const getFields = ({ authors, collections, lang }) => [
     type: 'input',
     help: 'video-help',
     hide: ({ type }) => type !== 'video',
-    validator: ({ type, videoUrl }) => type === 'video' && (required(videoUrl) || isUrl(videoUrl)),
+    validator: ({ type, videoUrl }) =>
+      type === 'video' && (required(videoUrl) || secureUrl(videoUrl)),
     autoComplete: 'off',
   },
 ];
+
+const checkLocaleErrors = (errors, touched, l) =>
+  hasErrors(get(errors, `locales.${l}`), get(touched, `locales.${l}`) || {});
 
 class EditArticleForm extends Component {
   static propTypes = {
@@ -227,8 +231,9 @@ class EditArticleForm extends Component {
             const keys = Object.keys(locales).filter(key => locales[key]);
             const availableLocales = LANGS.filter(({ id }) => !keys.includes(id));
             const addedLocales = LANGS.filter(({ id }) => keys.includes(id));
-            const localeTouched = l => get(formApi.touched, `locales.${l}`);
-            const localeHasError = l => localeTouched(l) && get(formApi.errors, `locales.${l}`);
+            const localeHasError = l =>
+              checkLocaleErrors(formApi.errors, formApi.touched, l) ||
+              checkLocaleErrors(serverErrors, formApi.touched, l);
 
             return (
               <form onSubmit={formApi.submitForm}>
@@ -318,6 +323,9 @@ class EditArticleForm extends Component {
                               ...locales,
                               [locale]: { ...initLocale, locale },
                             });
+                            if (currentLocale) {
+                              formApi.setTouched(`locales.${currentLocale}`, localeObject);
+                            }
                             this.setState({ currentLocale: locale });
                           }}
                         />
@@ -336,8 +344,10 @@ class EditArticleForm extends Component {
                           <Clickable tag="a" onClick={() => this.setState({ currentLocale: id })}>
                             <span
                               className={cn({
-                                'has-text-danger': id !== currentLocale && localeHasError(id),
+                                'badge is-badge-danger is-badge-left':
+                                  id !== currentLocale && localeHasError(id),
                               })}
+                              data-badge=""
                             >
                               {id.toUpperCase()} - {label}
                             </span>
