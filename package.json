@@ -41,7 +41,7 @@
     "@storybook/addon-knobs": "^3.2.19",
     "@storybook/react": "^3.2.19",
     "Dante2": "git+https://github.com/babajka/dante2.git",
-    "babajka-markup": "^0.8.15",
+    "babajka-markup": "^0.8.16",
     "classnames": "^2.2.5",
     "command-line-args": "^5.0.2",
     "cookie-parser": "^1.4.3",
