@@ -21,6 +21,8 @@ module.exports = {
     'react/jsx-no-bind': 'off',
     // we use only .js extension
     'react/jsx-filename-extension': ['error', { extensions: ['.js'] }],
+    // wierd rule
+    'react/jsx-one-expression-per-line': 'off',
     // allow create components without prop-types check
     'react/prop-types': ['error', { skipUndeclared: true }],
     // allow console.error & console.warning
