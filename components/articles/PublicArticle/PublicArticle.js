@@ -106,7 +106,8 @@ const PublicArticle = ({
             !!otherLocales.length && (
               <div className="article__info-langs">
                 <span>
-                  <Text id="article.read-in" />:{' '}
+                  <Text id="article.read-in" />
+                  {': '}
                   {otherLocales.map(({ locale, slug, title: linkTitle }) => (
                     <Link key={locale} route={ROUTES_NAMES.article} params={{ slug }}>
                       <a className="article__info-lang tag" title={linkTitle}>
@@ -142,13 +143,16 @@ const PublicArticle = ({
               .filter(Boolean)
               .map(({ name, value }) => (
                 <span key={name} className="article__bottom-item">
-                  <Text id={`article.${name}`} />:{' '}
+                  <Text id={`article.${name}`} />
+                  {': '}
                   <span className="article__bottom-text">{value}</span>
                 </span>
               ))}
           </div>
           <div className="article__actions">
-            {EXPORT_TO_NETWORKS.map(name => <ShareToButton key={`actions-${name}`} name={name} />)}
+            {EXPORT_TO_NETWORKS.map(name => (
+              <ShareToButton key={`actions-${name}`} name={name} />
+            ))}
           </div>
         </div>
         {/* <hr className="article__line" /> */}
@@ -221,7 +225,10 @@ const PublicArticle = ({
 
 PublicArticle.propTypes = ArticleModel;
 
-export default connect(mapStateToProps, mapDispatchToProps)(props => (
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(props => (
   <LocaleContext.Consumer>
     {lang => <PublicArticle {...props} lang={lang} />}
   </LocaleContext.Consumer>

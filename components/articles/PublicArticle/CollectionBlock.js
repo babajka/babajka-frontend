@@ -16,7 +16,9 @@ export default class CollectionBlock extends Component {
   setActiveArrow = activeArrowName => this.setState({ activeArrowName });
 
   render() {
-    const { data: { name, prev = {}, next = {} } } = this.props;
+    const {
+      data: { name, prev = {}, next = {} },
+    } = this.props;
     const { activeArrowName } = this.state;
 
     return (

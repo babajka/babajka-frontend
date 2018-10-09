@@ -349,7 +349,9 @@ class EditArticleForm extends Component {
                               })}
                               data-badge=""
                             >
-                              {id.toUpperCase()} - {label}
+                              {id.toUpperCase()}
+                              {' - '}
+                              {label}
                             </span>
                           </Clickable>
                         </li>
@@ -387,4 +389,7 @@ class EditArticleForm extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditArticleForm);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditArticleForm);

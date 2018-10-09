@@ -20,7 +20,9 @@ const TeamCol = ({ data }) => (
   <div className="column">
     <div className="columns">
       <CompleteRow className="column is-4" requiredSize={COL_SIZE}>
-        {data.map(user => <Teammate key={user.id} {...user} />)}
+        {data.map(user => (
+          <Teammate key={user.id} {...user} />
+        ))}
       </CompleteRow>
     </div>
   </div>
@@ -28,8 +30,10 @@ const TeamCol = ({ data }) => (
 
 const TeamRow = ({ data }) => (
   <div className="columns is-centered is-desktop">
-    {/* eslint-disable-next-line react/no-array-index-key */}
-    {chunk(data, COL_SIZE).map((colData, index) => <TeamCol key={index} data={colData} />)}
+    {chunk(data, COL_SIZE).map((colData, index) => (
+      // eslint-disable-next-line react/no-array-index-key
+      <TeamCol key={index} data={colData} />
+    ))}
   </div>
 );
 

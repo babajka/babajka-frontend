@@ -16,6 +16,7 @@ export default class OutsideClickable extends Component {
     event.stopPropagation();
   }
 
+  /* eslint-disable react/destructuring-assignment */
   componentDidMount() {
     window.addEventListener('click', this.props.onClick);
   }
@@ -28,6 +29,7 @@ export default class OutsideClickable extends Component {
   componentWillUnmount() {
     window.removeEventListener('click', this.props.onClick);
   }
+  /* eslint-enable react/destructuring-assignment */
 
   render() {
     const { tag, children } = this.props;

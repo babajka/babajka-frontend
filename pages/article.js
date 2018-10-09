@@ -20,7 +20,9 @@ const mapStateToProps = (state, { url: { query } }) => ({
 
 class ArticlePage extends Component {
   static getInitialProps(ctx) {
-    const { query: { slug } } = ctx;
+    const {
+      query: { slug },
+    } = ctx;
     return request.populate(
       ctx,
       [auth.getCurrentUser, slug && articlesActions.fetchBySlug.bind(null, slug)].filter(Boolean)

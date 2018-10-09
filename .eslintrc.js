@@ -1,6 +1,6 @@
 module.exports = {
   parser: 'babel-eslint',
-  extends: ['airbnb', 'prettier'],
+  extends: ['airbnb', 'prettier', 'prettier/react'],
   plugins: ['prettier'],
   globals: {
     __ENV__: false,
@@ -40,6 +40,14 @@ module.exports = {
         aspects: ['invalidHref', 'preferButton'],
       },
     ],
+    'jsx-a11y/label-has-associated-control': [
+      'error',
+      {
+        controlComponents: ['Checkbox'],
+      },
+    ],
+    // this rule was deprecated in `v6.1.0` and will no longer be maintained
+    'jsx-a11y/label-has-for': 'off',
   },
   settings: {
     'import/resolver': {

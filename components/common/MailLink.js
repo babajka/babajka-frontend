@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const MailLink = ({ to }) => (
   <a href={`mailto:wir.${to}@gmail.com`} target="_top">
-    <u>wir.{to}@gmail.com</u>
+    <u>{`wir.${to}@gmail.com`}</u>
   </a>
 );
 

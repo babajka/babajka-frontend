@@ -39,7 +39,9 @@ class AboutPage extends Component {
   render() {
     const { openedVacancy } = this.state;
     const { url } = this.props;
-    const { query: { lang } } = url;
+    const {
+      query: { lang },
+    } = url;
     const vacancies = getLocalizedVacancies(rawVacancies, lang);
     const team = getLocalizedTeam(rawTeam, lang);
     const teamChunks = chunk(team, ROW_SIZE);
@@ -95,8 +97,10 @@ class AboutPage extends Component {
                 <div className="title">
                   <Text id="about.team" />
                 </div>
-                {/* eslint-disable-next-line react/no-array-index-key */}
-                {teamChunks.map((data, index) => <TeamRow key={index} data={data} />)}
+                {teamChunks.map((data, index) => (
+                  // eslint-disable-next-line react/no-array-index-key
+                  <TeamRow key={index} data={data} />
+                ))}
                 <div className="thanks">
                   <Text id="about.thanks-beginning" />{' '}
                   <b>

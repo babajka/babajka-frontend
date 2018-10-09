@@ -73,7 +73,9 @@ class HomePage extends Component {
   render() {
     const { articles, articlesPending, nextPage, url } = this.props;
 
-    const { query: { lang } } = url;
+    const {
+      query: { lang },
+    } = url;
 
     const articlesRows = getMainArticlesRows(articles, ROW_SIZE, COMPLEX_ROW_SIZE);
     const [firstRow, secondRow, ...remainRows] = articlesRows;

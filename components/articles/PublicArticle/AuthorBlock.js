@@ -47,7 +47,9 @@ export default class AuthorBlock extends Component {
   onToggle = () => this.setState(({ opened }) => ({ opened: !opened }));
 
   render() {
-    const { data: { bio, imageUrl, displayName } } = this.props;
+    const {
+      data: { bio, imageUrl, displayName },
+    } = this.props;
     const { opened } = this.state;
 
     return (

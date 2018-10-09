@@ -22,7 +22,9 @@ const mapStateToProps = (state, { url: { query } }) => ({
 
 class EditArticlePage extends Component {
   static getInitialProps(ctx) {
-    const { query: { slug } } = ctx;
+    const {
+      query: { slug },
+    } = ctx;
     return request.populate(
       ctx,
       [auth.getCurrentUser, slug && articlesActions.fetchBySlug.bind(null, slug)].filter(Boolean)
@@ -32,7 +34,9 @@ class EditArticlePage extends Component {
   // FIXME: find better way to close routes
   componentDidMount() {
     const { url, permissions } = this.props;
-    const { query: { mode, lang, slug } } = url;
+    const {
+      query: { mode, lang, slug },
+    } = url;
     if (mode === 'create' && !permissions.canCreateArticle) {
       Router.replaceRoute(ROUTES_NAMES.home, { lang });
     } else if (mode === 'edit' && !permissions.canManageArticles) {
@@ -42,7 +46,9 @@ class EditArticlePage extends Component {
 
   render() {
     const { url, articleLocale, permissions } = this.props;
-    const { query: { mode } } = url;
+    const {
+      query: { mode },
+    } = url;
 
     if (mode === 'create' && !permissions.canCreateArticle) {
       return (

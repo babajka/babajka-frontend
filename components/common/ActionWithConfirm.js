@@ -72,4 +72,7 @@ class ActionWithConfirm extends Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(ActionWithConfirm);
+export default connect(
+  null,
+  mapDispatchToProps
+)(ActionWithConfirm);

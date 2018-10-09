@@ -6,7 +6,9 @@ const CompleteRow = ({ className, children, currentSize, requiredSize }) => (
     {children}
     {Array.from(
       { length: Math.max(0, requiredSize - (currentSize || children.length)) },
-      (_, i) => <div key={`empty-div-${i}`} className={className} />
+      (_, i) => (
+        <div key={`empty-div-${i}`} className={className} />
+      )
     )}
   </>
 );

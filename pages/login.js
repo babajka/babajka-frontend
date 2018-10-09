@@ -39,14 +39,24 @@ class LoginPage extends Component {
   }
 
   componentDidMount() {
-    const { user, url: { query: { lang } } } = this.props;
+    const {
+      user,
+      url: {
+        query: { lang },
+      },
+    } = this.props;
     if (user) {
       Router.replaceRoute(ROUTES_NAMES.home, { lang });
     }
   }
 
   handleSubmit = ({ signUp, ...userData }) => {
-    const { signIn, url: { query: { lang, next = `/${lang}/articles` } } } = this.props;
+    const {
+      signIn,
+      url: {
+        query: { lang, next = `/${lang}/articles` },
+      },
+    } = this.props;
     signIn({ ...userData }, signUp).then(() => Router.pushRoute(next));
   };
 

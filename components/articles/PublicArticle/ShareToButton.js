@@ -16,6 +16,7 @@ const ShareToButton = ({ name, title, side, router }) => (
         href={NETWORKS_URLS[name]({ url: router.asPath, title })}
         className={cn('icon-button button', { 'article-side__button': side })}
         title={t}
+        rel="noopener noreferrer"
         target="_blank"
       >
         <span

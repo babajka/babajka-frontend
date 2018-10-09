@@ -43,13 +43,16 @@ class Diary extends Component {
   }
 
   componentDidMount() {
-    this.props.getByDay();
+    const { getByDay } = this.props;
+    getByDay();
   }
 
   toggleModal = () => this.setState(prevState => ({ isModalActive: !prevState.isModalActive }));
 
   renderDateElement = () => {
-    const { diary: { date } } = this.props;
+    const {
+      diary: { date },
+    } = this.props;
     return (
       <div className="date">
         <div className="is-pulled-right">{formatDate(date)}</div>
@@ -71,7 +74,10 @@ class Diary extends Component {
   };
 
   renderModalElement = () => {
-    const { diary: { text, author }, lang } = this.props;
+    const {
+      diary: { text, author },
+      lang,
+    } = this.props;
     const { isModalActive } = this.state;
     return (
       <Modal
@@ -92,7 +98,11 @@ class Diary extends Component {
   };
 
   render() {
-    const { diary: { author, text, date }, getNext, getPrev } = this.props;
+    const {
+      diary: { author, text, date },
+      getNext,
+      getPrev,
+    } = this.props;
 
     return (
       <div className="tile is-parent">
@@ -152,4 +162,7 @@ Diary.propTypes = {
   getByDay: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Diary);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Diary);

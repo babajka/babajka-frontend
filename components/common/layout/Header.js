@@ -51,7 +51,11 @@ class Header extends Component {
   };
 
   render() {
-    const { user, permissions, router: { asPath } } = this.props;
+    const {
+      user,
+      permissions,
+      router: { asPath },
+    } = this.props;
     const { burgerActive } = this.state;
     const routes = NAVBAR_ROUTES.filter(({ permission: key }) => !key || permissions[key]);
 
@@ -136,4 +140,9 @@ class Header extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Header)
+);
