@@ -1,6 +1,8 @@
 # babajka-frontend
 
+[![Build Status](https://travis-ci.org/babajka/babajka-frontend.svg?branch=master)](https://travis-ci.org/babajka/babajka-frontend)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a3dbbfeb35e84d4dbbb394be08ec196a)](https://www.codacy.com/app/babajka/babajka-frontend?utm_source=github.com&utm_medium=referral&utm_content=babajka/babajka-frontend&utm_campaign=Badge_Grade)
 [![StackShare](https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/wir-by/frontend)
 
