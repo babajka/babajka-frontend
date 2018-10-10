@@ -21,7 +21,7 @@ module.exports = {
       message: '${nextRelease.version} release [skip ci]',
     },
   ],
-  publish: [],
+  publish: ['@semantic-release/github'],
   success: ['@semantic-release/github'],
   fail: ['@semantic-release/github'],
 };
