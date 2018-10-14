@@ -1,0 +1,162 @@
+import React from 'react';
+import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
+import { withInfo } from '@storybook/addon-info';
+import { text, boolean, select, object } from '@storybook/addon-knobs';
+
+import Icon from 'components/common/Icon';
+import Text from 'components/common/Text';
+import Button from 'components/common/Button';
+import Select from 'components/common/Select';
+import LocaleContext from 'components/common/LocaleContext';
+import CoreLayout from 'components/common/layout/CoreLayout';
+
+import SourceDecorator from './utils/SourceDecorator';
+
+const PREFIX = 'Common';
+const stories = storiesOf(PREFIX, module);
+
+stories.add(
+  'CoreLayout',
+  withInfo(`
+      This is the root component
+      that wraps provided components
+      and import babajka styles,
+      add page title and etc.
+  `)(() => {
+    const SomePage = () => null;
+    return (
+      <CoreLayout title="Awesome page">
+        <SomePage />
+      </CoreLayout>
+    );
+  })
+);
+
+stories.add(
+  'Icon',
+  withInfo()(() => (
+    <Icon
+      name={text('fa name', 'github-alt')}
+      size={select('fa size', ['', 'lg', '2x', '3x', '4x', '5x'], '5x')}
+    />
+  ))
+);
+
+storiesOf(`${PREFIX}/Button`, module)
+  .add(
+    'default',
+    withInfo()(() => (
+      <Button
+        className={text('className', 'button is-primary')}
+        onClick={action('onClick')}
+        disabled={boolean('disabled', false)}
+        pending={boolean('pending', false)}
+      >
+        {text('children', 'Hello Button')}
+      </Button>
+    ))
+  )
+  .addDecorator(SourceDecorator)
+  .add('colors', () => {
+    const colors = ['', 'primary', 'link', 'info', 'success', 'warning', 'danger'];
+    return (
+      <div className="column">
+        {colors.map(color => (
+          <div className="field">
+            <Button className={`button is-${color}`}>{color || 'none'}</Button>
+          </div>
+        ))}
+      </div>
+    );
+  });
+
+storiesOf(`${PREFIX}/Select`)
+  .add(
+    'default',
+    withInfo(`
+      Our custom select component
+      built with awesome [Downshift](https://github.com/paypal/downshift)!
+    `)(() => (
+      <Select
+        valueWholeObject={boolean('valueWholeObject', false)}
+        options={object('options', [
+          { id: 'apple', label: 'Apple' },
+          { id: 'orange', label: 'Orange' },
+          { id: 'carrot', label: 'Carrot' },
+        ])}
+        searchable={boolean('searchable', false)}
+        clerable={boolean('clerable', false)}
+        dropdown={boolean('dropdown', false)}
+        placeholder={text('placeholder', 'Select fruit...')}
+        size={select('size', ['xs', 's', 'm', 'l'], 's')}
+        onChange={action('Select')}
+      />
+    ))
+  )
+  .addDecorator(SourceDecorator)
+  .add('dropdown', () => (
+    <Select
+      placeholder="Locale"
+      options={[{ id: 'be', label: 'Be' }, { id: 'en', label: 'En' }, { id: 'ru', label: 'Ru' }]}
+      onChange={action('Locale')}
+      dropdown
+      size="xs"
+    />
+  ))
+  .add('custom render', () => (
+    <Select
+      placeholder="Assign task to..."
+      options={[
+        { id: 'drapegnik', name: 'Ivan' },
+        { id: 'bohdan', name: 'Ulad' },
+        { id: 'drozd', name: 'Vika' },
+        { id: 'viarcinskaja', name: 'Tonya' },
+      ]}
+      renderOption={({ id, name }) => (
+        <span className="user">
+          <figure className="user-ava image is-32x32">
+            <img
+              src={`https://res.cloudinary.com/wir-by/image/upload/v1528990359/production/team/${id}`}
+              alt={id}
+            />
+          </figure>
+          <span className="table-card-user__name">{name}</span>
+        </span>
+      )}
+      onChange={action('Assigned to')}
+    />
+  ));
+
+storiesOf(`${PREFIX}/Text`, module)
+  .addDecorator(story => {
+    const lang = select('locale', ['be', 'ru', 'en'], 'be');
+    return <LocaleContext.Provider value={lang}>{story()}</LocaleContext.Provider>;
+  })
+  .add(
+    'default',
+    withInfo(`
+      Our internationalization helper,
+      that use translations from [Google Sheet](https://docs.google.com/spreadsheets/d/1b3Or9-t_pDZq6GOL4MRUbFhoXuteVxCrRHTM17DLALg/edit?usp=sharing)
+    `)(() => <Text id={text('dict key', 'about.goal')} />)
+  )
+  .addDecorator(SourceDecorator)
+  .add('custom render', () => <Text id="about.join-us" render={t => t.toUpperCase()} />)
+  .add('with separator', () => (
+    <ol>
+      <h3 className="title is-5">
+        You can cut translation with `||` symbols, and receive it by parts:
+      </h3>
+      <Text
+        id="about.contact"
+        render={(...parts) =>
+          parts.map(t => (
+            <li key={t}>
+              {t}
+              <br />
+            </li>
+          ))
+        }
+      />
+    </ol>
+  ));

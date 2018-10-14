@@ -31,10 +31,11 @@
     "size": "npm run reset-cache && npm run build && npm run bundlesize"
   },
   "dependencies": {
-    "@storybook/addon-actions": "^3.2.19",
-    "@storybook/addon-info": "^3.2.19",
-    "@storybook/addon-knobs": "^3.2.19",
-    "@storybook/react": "^3.4.11",
+    "@storybook/addon-actions": "^4.0.0-alpha.25",
+    "@storybook/addon-info": "^4.0.0-alpha.25",
+    "@storybook/addon-knobs": "^4.0.0-alpha.25",
+    "@storybook/addon-links": "^4.0.0-alpha.25",
+    "@storybook/react": "^4.0.0-alpha.25",
     "Dante2": "git+https://github.com/babajka/dante2.git",
     "babajka-markup": "^1.0.9",
     "classnames": "^2.2.5",
@@ -88,6 +89,7 @@
     "@semantic-release/npm": "^5.0.4",
     "@zeit/next-bundle-analyzer": "^0.1.1",
     "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.4",
     "babel-plugin-module-resolver": "^3.1.1",
     "bundlesize": "^0.17.0",
     "cross-env": "^5.1.4",
