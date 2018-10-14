@@ -1,5 +1,5 @@
 {
-  "presets": ["next/babel", "stage-0"],
+  "presets": ["next/babel"],
   "plugins": [
     [
       "module-resolver",
@@ -7,5 +7,6 @@
         "root": ["./"]
       }
     ],
+    "@babel/plugin-proposal-export-default-from"
   ]
 }
