@@ -101,46 +101,48 @@ class AboutPage extends Component {
                   // eslint-disable-next-line react/no-array-index-key
                   <TeamRow key={index} data={data} />
                 ))}
-                <div className="thanks">
-                  <Text id="about.thanks-beginning" />{' '}
-                  <b>
-                    <Text id="about.thanks-hanna" />{' '}
-                  </b>
-                  <Text id="about.thanks-logo-and" />{' '}
-                  <b>
-                    <Text id="about.thanks-daniil" />{' '}
-                  </b>
-                  <Text id="about.thanks-soundtrack" />
-                </div>
+                <Text id="about.thanks">
+                  {(thanks, hanna, forLogo, daniil, forSoundtrack) => (
+                    <div className="thanks">
+                      {thanks}
+                      <b>{hanna}</b>
+                      {forLogo}
+                      <b>{daniil}</b>
+                      {forSoundtrack}
+                    </div>
+                  )}
+                </Text>
               </div>
               <hr />
             </>
           )}
-        <div className="contact">
-          <Text id="about.find-us" />
-          <br />
-          <Text id="about.mail-to-us" />
-          <br />
-          <Text id="about.mail-to-dev" /> <MailLink />
-          <br />
-          <Text id="about.mail-to-help" /> <MailLink to="help" />
-          <div className="talaka">
-            <span className="talaka-text">
-              <Text id="about.we-on" />
-            </span>{' '}
-            <a className="talaka" href="https://www.talaka.org/projects/2495/overview">
-              <img
-                className="talaka-text"
-                alt="Talaka"
-                src="/static/images/references/talaka_logo.png"
-                width="30"
-              />{' '}
-              <span className="talaka-text">
-                <Text id="about.talaka" />
-              </span>
-            </a>
-          </div>
-        </div>
+        <Text id="about.contact">
+          {(findUs, mailToUs, mailToDev, mailToHelp, weOn, talaka) => (
+            <div className="contact">
+              {findUs}
+              <br />
+              {mailToUs}
+              <br />
+              {mailToDev}
+              <MailLink />
+              <br />
+              {mailToHelp}
+              <MailLink to="help" />
+              <div className="talaka">
+                <span className="talaka-text">{weOn}</span>{' '}
+                <a className="talaka" href="https://www.talaka.org/projects/2495/overview">
+                  <img
+                    className="talaka-text"
+                    alt="Talaka"
+                    src="/static/images/references/talaka_logo.png"
+                    width="30"
+                  />{' '}
+                  <span className="talaka-text">{talaka}</span>
+                </a>
+              </div>
+            </div>
+          )}
+        </Text>
       </PageLayout>
     );
   }
