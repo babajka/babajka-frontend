@@ -5,12 +5,14 @@ import promiseMiddleware from 'redux-promise-middleware';
 
 import { LOADING, SUCCESS, ERROR } from 'constants/redux';
 import analytics from './middlewares/analytics';
+import form from './middlewares/form';
 import reducer from './ducks';
 
 const middlewares = [
   thunkMiddleware,
   promiseMiddleware({ promiseTypeSuffixes: [LOADING, SUCCESS, ERROR] }),
   (__PROD__ || __STAGING__) && analytics,
+  form,
 ].filter(Boolean);
 
 export default (initialState = {}) =>

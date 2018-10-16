@@ -27,3 +27,7 @@ export const defaultReducer = successReducer => ({
   [SUCCESS]: successReducer,
   [ERROR]: errorReducer,
 });
+
+export const isLoading = ({ type }) => type.endsWith(LOADING);
+
+export const isSuccess = ({ type }) => type.endsWith(SUCCESS);

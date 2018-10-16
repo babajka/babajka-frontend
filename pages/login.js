@@ -12,21 +12,13 @@ import request from 'utils/request';
 
 const mapStateToProps = state => ({
   user: selectors.getUser(state),
-  pending: selectors.isLoginPending(state),
-  errors: selectors.getLoginErrors(state),
 });
-
-const mapDispatchToProps = { signIn: actions.signIn };
 
 class LoginPage extends Component {
   static propTypes = {
     user: PropTypes.shape({}),
-    pending: PropTypes.bool.isRequired,
-    errors: PropTypes.shape({}).isRequired,
-    signIn: PropTypes.func.isRequired,
     url: PropTypes.shape({
       query: PropTypes.shape({
-        next: PropTypes.string,
         invite: PropTypes.string,
       }).isRequired,
     }).isRequired,
@@ -50,31 +42,21 @@ class LoginPage extends Component {
     }
   }
 
-  handleSubmit = ({ signUp, ...userData }) => {
-    const {
-      signIn,
-      url: {
-        query: { lang, next = `/${lang}/articles` },
-      },
-    } = this.props;
-    signIn({ ...userData }, signUp).then(() => Router.pushRoute(next));
-  };
-
   render() {
-    const { pending, errors, url } = this.props;
+    const { url } = this.props;
+
+    const {
+      query: { lang, next = `/${lang}/articles` },
+    } = url;
+
     return (
       <PageLayout className="page-content" title="auth.signIn" url={url}>
         <div className="container login">
-          <LoginForm
-            allowSignUp={url.query.invite === 'beta-test-sign-up'}
-            onSubmit={this.handleSubmit}
-            pending={pending}
-            errors={errors}
-          />
+          <LoginForm allowSignUp={url.query.invite === 'beta-test-sign-up'} next={next} />
         </div>
       </PageLayout>
     );
   }
 }
 
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(LoginPage);
+export default withRedux(initStore, mapStateToProps)(LoginPage);
