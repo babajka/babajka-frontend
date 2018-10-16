@@ -1,27 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
+import noop from 'lodash/noop';
 
-const Button = ({ children, className, pending, ...otherProps }) => (
-  <button type="button" className={cn(className, { 'is-loading': pending })} {...otherProps}>
-    {children}
-  </button>
+const Button = ({ className, pending, ...props }) => (
+  <button type="button" className={cn(className, { 'is-loading': pending })} {...props} />
 );
 
 Button.propTypes = {
   className: PropTypes.string,
   onClick: PropTypes.func,
-  children: PropTypes.node,
   pending: PropTypes.bool,
   disabled: PropTypes.bool,
 };
 
 Button.defaultProps = {
-  onClick: () => null,
+  onClick: noop,
   className: 'button is-success',
   pending: false,
   disabled: false,
-  children: null,
 };
 
 export default Button;

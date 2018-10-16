@@ -46,9 +46,9 @@ export const actions = {
     type: GET_CURRENT_USER,
     payload: request.fetch(api.users.getCurrent),
   }),
-  signIn: (data, signUp = false) => ({
+  signIn: ({ isSignUp = false, ...data }) => ({
     type: SIGNIN,
-    payload: signUp
+    payload: isSignUp
       ? request.fetch(api.auth.register, 'POST', data)
       : request.fetch(api.auth.login, 'POST', data),
     meta: {
@@ -68,12 +68,8 @@ const getPermissions = state => {
   const user = getUser(state);
   return user ? user.permissions : {};
 };
-const isLoginPending = state => getState(state).pending;
-const getLoginErrors = state => getState(state).errors;
 
 export const selectors = {
   getUser,
   getPermissions,
-  isLoginPending,
-  getLoginErrors,
 };

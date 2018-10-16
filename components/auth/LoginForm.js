@@ -1,23 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Text as TextField, Checkbox } from 'react-form';
 import cn from 'classnames';
+import { Form, Field } from 'formik';
+import { Router } from 'routes';
 
-import Button from 'components/common/Button';
 import { isEmail, isEqual, required, checkLength, hasErrors } from 'utils/validators';
+import FormWrapper from 'components/common/FormWrapper';
+import Button from 'components/common/Button';
 import Text from 'components/common/Text';
+
+import { actions } from 'redux/ducks/auth';
 
 import FormField from './FormField';
 
-const fields = {
+const LOGIN_INITIAL_FORM = {
+  isSignUp: false,
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  passwordAgain: '',
+};
+
+const loginFields = {
   firstName: {
+    isSignUpField: true,
     icon: 'user',
-    onlyOnSignUp: true,
-    validator: ({ signUp, firstName }) => signUp && required(firstName),
+    validator: ({ isSignUp, firstName }) => isSignUp && required(firstName),
   },
   lastName: {
+    isSignUpField: true,
     icon: 'user',
-    onlyOnSignUp: true,
   },
   email: {
     icon: 'envelope',
@@ -35,138 +48,111 @@ const fields = {
       </span>
     ),
     icon: 'unlock-alt',
-    inputType: 'password',
-    validator: ({ signUp, password }) =>
-      required(password) || (signUp && checkLength(password, 7, 'auth.badPassword')),
+    validator: ({ isSignUp, password }) =>
+      required(password) || (isSignUp && checkLength(password, 7, 'auth.badPassword')),
+    type: 'password',
   },
   passwordAgain: {
+    isSignUpField: true,
     icon: 'unlock-alt',
-    inputType: 'password',
-    onlyOnSignUp: true,
-    validator: ({ signUp, password, passwordAgain }) =>
-      signUp &&
+    validator: ({ isSignUp, password, passwordAgain }) =>
+      isSignUp &&
       (required(passwordAgain) || isEqual(password, passwordAgain, 'auth.passwordsNotEqual')),
-    successMessage: 'auth.passwordsEqual',
+    successText: 'auth.passwordsEqual',
+    type: 'password',
   },
 };
 
-const errorValidator = values => {
+const loginFieldsKeys = Object.keys(loginFields);
+
+const loginValidator = values => {
   const errors = {};
-  Object.keys(fields).forEach(key => {
-    if (fields[key] && fields[key].validator) {
-      errors[key] = fields[key].validator(values);
+  loginFieldsKeys.forEach(key => {
+    if (loginFields[key] && loginFields[key].validator) {
+      const error = loginFields[key].validator(values);
+      if (error) {
+        errors[key] = error;
+      }
     }
   });
   return errors;
 };
 
-const keys = Object.keys(fields);
-const errorsPropsTypes = {};
-keys.forEach(field => {
-  errorsPropsTypes[field] = PropTypes.string;
-});
-
-const LoginForm = ({ onSubmit, pending, errors, allowSignUp }) => {
-  let serverErrors = { ...errors };
-
-  const handleModeSwitch = (formApi, value) => {
-    const clearTouch = {};
-    formApi.setValue('signUp', value);
-    Object.keys(fields).forEach(field => {
-      if (!formApi.values[field]) {
-        clearTouch[field] = false;
-      }
-    });
-    formApi.setAllTouched(clearTouch);
-  };
-
-  return (
-    <div>
-      <h1 className="title is-size-5 has-text-centered">
-        <Text id="auth.signIn" />
-      </h1>
-      <Form onSubmit={onSubmit} validateError={errorValidator}>
-        {formApi => {
-          // FIXME(@drapegnik): find more clean way to handle server-side errors
-          if (serverErrors) {
-            Object.keys(fields).forEach(key => {
-              formApi.setError(key, serverErrors[key]);
-            });
-            serverErrors = null;
-          }
-          return (
-            <form onSubmit={formApi.submitForm}>
-              {allowSignUp && (
-                <div className="field">
-                  <div className="control has-text-centered">
-                    <label htmlFor="signUp" className="checkbox">
-                      <Checkbox
-                        id="signUp"
-                        field="signUp"
-                        onChange={handleModeSwitch.bind(null, formApi)}
-                      />
-                      <Text id="auth.noAccount" />
-                    </label>
-                  </div>
-                </div>
-              )}
-              {!allowSignUp && (
-                <div className="signup-not-available">
-                  <Text id="auth.signup-not-available" />
-                </div>
-              )}
-              {keys.filter(key => formApi.values.signUp || !fields[key].onlyOnSignUp).map(key => (
+const LoginForm = ({ next, allowSignUp }) => (
+  <div>
+    <h1 className="title is-size-5 has-text-centered">
+      <Text id="auth.signIn" />
+    </h1>
+    <FormWrapper
+      initialValues={LOGIN_INITIAL_FORM}
+      validate={loginValidator}
+      action={actions.signIn}
+      callback={() => Router.pushRoute(next)}
+    >
+      {({ values, errors, touched, isSubmitting }) => (
+        <Form>
+          {allowSignUp && (
+            <div className="field">
+              <div className="control has-text-centered">
+                <label htmlFor="isSignUp" className="checkbox">
+                  <Field id="isSignUp" name="isSignUp" type="checkbox" />
+                  <Text id="auth.noAccount" />
+                </label>
+              </div>
+            </div>
+          )}
+          {!allowSignUp && (
+            <div className="signup-not-available">
+              <Text id="auth.signup-not-available" />
+            </div>
+          )}
+          {loginFieldsKeys
+            .filter(key => values.isSignUp || !loginFields[key].isSignUpField)
+            .map(key => {
+              const { label, icon, successText, type } = loginFields[key];
+              return (
                 <FormField
                   key={key}
-                  inputId={key}
-                  label={fields[key].label}
-                  icon={fields[key].icon}
-                  pending={pending}
-                  touched={!!formApi.touched[key]}
-                  error={formApi.errors[key]}
-                  successMessage={fields[key].successMessage}
+                  id={key}
+                  label={label}
+                  icon={icon}
+                  pending={isSubmitting}
+                  touched={touched[key]}
+                  error={errors[key]}
+                  successText={successText}
                 >
                   {hasError => (
-                    <TextField
-                      className={cn('input', { 'is-danger': hasError })}
+                    <Field
                       id={key}
-                      field={key}
-                      type={fields[key].inputType || 'text'}
+                      className={cn('input', { 'is-danger': hasError })}
+                      name={key}
+                      type={type}
                     />
                   )}
                 </FormField>
-              ))}
-              <div className="field">
-                <div className="control has-text-centered">
-                  <Button
-                    disabled={hasErrors(formApi.errors, formApi.touched)}
-                    type="submit"
-                    pending={pending}
-                    onClick={formApi.submitForm}
-                    className="button is-uppercase login__button"
-                  >
-                    <Text id="auth.submit" />
-                  </Button>
-                </div>
-              </div>
-            </form>
-          );
-        }}
-      </Form>
-    </div>
-  );
-};
+              );
+            })}
+          <div className="field">
+            <div className="control has-text-centered">
+              <Button
+                className="button is-uppercase login__button"
+                type="submit"
+                disabled={hasErrors(errors, touched)}
+                pending={isSubmitting}
+              >
+                <Text id="auth.submit" />
+              </Button>
+            </div>
+          </div>
+        </Form>
+      )}
+    </FormWrapper>
+  </div>
+);
 
 LoginForm.propTypes = {
+  next: PropTypes.string.isRequired,
   allowSignUp: PropTypes.bool.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  pending: PropTypes.bool,
-  errors: PropTypes.shape(errorsPropsTypes),
-};
-
-LoginForm.defaultProps = {
-  errors: {},
-  pending: false,
 };
 
 export default LoginForm;
