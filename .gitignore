@@ -1,5 +1,6 @@
 .idea/
 .next/
+.cache/
 node_modules/
 reports/
 static/

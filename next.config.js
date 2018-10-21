@@ -2,7 +2,7 @@
 const withBundleAnalyzer = require('@zeit/next-bundle-analyzer');
 const webpack = require('webpack');
 
-const { definePlugin } = require('./webpack-plugins');
+const { definePlugin } = require('./utils/webpack-plugins');
 const { LOCALES } = require('./constants');
 
 const langs = Object.keys(LOCALES).join('|');
