@@ -10,8 +10,16 @@ const SEPARATOR = '||';
 
 const defaultRender = text => <>{text}</>;
 
+const extract = key => {
+  const translation = get(dict, key, '');
+  if (!translation && !__PROD__) {
+    console.warn('[i18n]: No translation for ', key);
+  }
+  return translation;
+};
+
 export const localize = (id, lang) =>
-  get(dict, `${id}.${lang}`) || get(dict, `${id}.${DEFAULT_LOCALE}`) || '';
+  extract(`${id}.${lang}`) || extract(`${id}.${DEFAULT_LOCALE}`);
 
 const Text = ({ id, children, render = children }) => (
   <LocaleContext.Consumer>

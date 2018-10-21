@@ -8,12 +8,10 @@ const routes = require('./routes');
 const { BACKEND_URL, MARKUP_URL } = require('./constants/server');
 const { DEFAULT_LOCALE } = require('./constants');
 const getArgs = require('./utils/args');
+const ENV = require('./utils/env');
 
 const ARGS = getArgs();
 const port = ARGS.port || 3000;
-
-// This is a workaround as __ENV__ defined in next.config.js is not visible here.
-const ENV = process.env.WIR_ENV || process.env.NODE_ENV || 'not-set';
 
 const dev = ENV !== 'production' && ENV !== 'staging';
 const app = next({ dev });

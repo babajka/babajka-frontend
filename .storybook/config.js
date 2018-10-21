@@ -1,5 +1,5 @@
 import { configure, addDecorator } from '@storybook/react';
-import { setDefaults } from '@storybook/addon-info';
+import { withInfo, setDefaults } from '@storybook/addon-info';
 import { withKnobs } from '@storybook/addon-knobs';
 
 import StoriesDecorator from 'stories/utils/StoriesDecorator';
@@ -10,6 +10,7 @@ function loadStories() {
   req.keys().forEach(req);
 }
 
+addDecorator(withInfo);
 addDecorator(withKnobs);
 addDecorator(StoriesDecorator);
 setDefaults({
