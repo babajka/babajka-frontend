@@ -132,10 +132,6 @@ class Diary extends Component {
             )}
 
             <span className="author">{author}</span>
-
-            <div className="hover-read-more">
-              <Text id="diary.read" />
-            </div>
           </Clickable>
 
           {this.renderNavigationButton(getPrev, NAV_BUTTONS.prev)}
