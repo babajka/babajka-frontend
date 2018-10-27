@@ -63,7 +63,8 @@
     "redux-devtools-extension": "^2.13.2",
     "redux-promise-middleware": "^5.0.0",
     "redux-thunk": "^2.2.0",
-    "type-to-reducer": "^1.0.4"
+    "type-to-reducer": "^1.0.4",
+    "yup": "^0.26.6"
   },
   "repository": {
     "type": "git",

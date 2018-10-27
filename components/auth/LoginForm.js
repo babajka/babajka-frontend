@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Form, Field } from 'formik';
+import * as Yup from 'yup';
 import { Router } from 'routes';
 
-import { isEmail, isEqual, required, checkLength, hasErrors } from 'utils/validators';
+import { hasErrors } from 'utils/validators';
 import FormWrapper from 'components/common/FormWrapper';
 import Button from 'components/common/Button';
 import Text from 'components/common/Text';
@@ -26,7 +27,6 @@ const loginFields = {
   firstName: {
     isSignUpField: true,
     icon: 'user',
-    validator: ({ isSignUp, firstName }) => isSignUp && required(firstName),
   },
   lastName: {
     isSignUpField: true,
@@ -34,7 +34,6 @@ const loginFields = {
   },
   email: {
     icon: 'envelope',
-    validator: ({ email }) => required(email) || isEmail(email),
   },
   password: {
     label: (
@@ -48,16 +47,11 @@ const loginFields = {
       </span>
     ),
     icon: 'unlock-alt',
-    validator: ({ isSignUp, password }) =>
-      required(password) || (isSignUp && checkLength(password, 7, 'auth.badPassword')),
     type: 'password',
   },
   passwordAgain: {
     isSignUpField: true,
     icon: 'unlock-alt',
-    validator: ({ isSignUp, password, passwordAgain }) =>
-      isSignUp &&
-      (required(passwordAgain) || isEqual(password, passwordAgain, 'auth.passwordsNotEqual')),
     successText: 'auth.passwordsEqual',
     type: 'password',
   },
@@ -65,18 +59,29 @@ const loginFields = {
 
 const loginFieldsKeys = Object.keys(loginFields);
 
-const loginValidator = values => {
-  const errors = {};
-  loginFieldsKeys.forEach(key => {
-    if (loginFields[key] && loginFields[key].validator) {
-      const error = loginFields[key].validator(values);
-      if (error) {
-        errors[key] = error;
-      }
-    }
-  });
-  return errors;
-};
+const LoginSchema = Yup.object().shape({
+  isSignUp: Yup.bool(),
+  firstName: Yup.string().when(
+    'isSignUp',
+    (isSignUp, schema) => (isSignUp ? schema.required('forms.required') : schema)
+  ),
+  email: Yup.string()
+    .required('forms.required')
+    .email('auth.badEmail'),
+  password: Yup.string()
+    .required('forms.required')
+    .when(
+      'isSignUp',
+      (isSignUp, schema) => (isSignUp ? schema.min(7, 'auth.badPassword') : schema)
+    ),
+  passwordAgain: Yup.string().when(
+    'isSignUp',
+    (isSignUp, schema) =>
+      isSignUp
+        ? schema.oneOf([Yup.required('forms.required').ref('password')], 'auth.passwordsNotEqual')
+        : schema
+  ),
+});
 
 const LoginForm = ({ next, allowSignUp }) => (
   <div>
@@ -85,7 +90,7 @@ const LoginForm = ({ next, allowSignUp }) => (
     </h1>
     <FormWrapper
       initialValues={LOGIN_INITIAL_FORM}
-      validate={loginValidator}
+      validationSchema={LoginSchema}
       action={actions.signIn}
       callback={() => Router.pushRoute(next)}
     >
