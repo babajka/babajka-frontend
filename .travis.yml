@@ -4,6 +4,7 @@ node_js:
 script:
   - npm run lint
   - npm run build
+  - npm run bundlesize
 after_success:
   - npm run travis-deploy-once "npm run semantic-release"
 cache:
