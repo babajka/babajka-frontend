@@ -67,7 +67,7 @@ class Header extends Component {
               {/* TODO: replace with div background? */}
               <img
                 className="logo-image"
-                src="/static/images/logo/turq-transparent.png"
+                src="/static/images/logo/W-coloured-transparent.png"
                 alt="Wir.by logo"
               />
             </a>
