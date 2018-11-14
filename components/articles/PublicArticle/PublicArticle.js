@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { MetaLocale } from 'components/common/layout/Metatags';
 import Icon from 'components/common/Icon';
 import Link from 'components/common/Link';
 import Text, { localize } from 'components/common/Text';
@@ -55,6 +56,7 @@ const PublicArticle = ({
   lang,
 }) => (
   <div className="article-container container">
+    <MetaLocale locale={articleLocale} altLocales={otherLocales.map(({ locale }) => locale)} />
     <div className="columns">
       <div className="article-side column is-hidden-touch" />
       <div className="article column">

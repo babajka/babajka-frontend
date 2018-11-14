@@ -81,7 +81,7 @@ class HomePage extends Component {
     const [firstRow, secondRow, ...remainRows] = articlesRows;
 
     return (
-      <PageLayout className="page-content main-page page-container" url={url} title="header.home">
+      <PageLayout className="page-content main-page page-container" url={url}>
         {firstRow && <ArticlesRow articles={firstRow} className="first-line is-ancestor" />}
         {secondRow && (
           <ArticlesComplexRow articles={secondRow} renderDiary={() => <Diary lang={lang} />} />

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
 
 import PageLayout from 'components/common/layout/PageLayout';
+import { MetaTitle, MetaDescription, MetaImage } from 'components/common/layout/Metatags';
 import PublicArticle from 'components/articles/PublicArticle';
 
 import initStore from 'redux/store';
@@ -33,6 +34,9 @@ class ArticlePage extends Component {
     const { article, url, articleLocale } = this.props;
     return (
       <PageLayout className="article-content" url={url} title="header.home">
+        <MetaTitle title={article.title} type="article" />
+        <MetaDescription description={article.subtitle} />
+        <MetaImage url={article.imagePreviewUrl} />
         <PublicArticle {...article} articleLocale={articleLocale} />
       </PageLayout>
     );

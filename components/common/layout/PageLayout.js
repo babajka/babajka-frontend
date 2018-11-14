@@ -9,7 +9,7 @@ import LocaleContext from '../LocaleContext';
 
 export default ({ className, children, title, url, hideFooter }) => (
   <LocaleContext.Provider value={url.query.lang || DEFAULT_LOCALE}>
-    <CoreLayout title={title} lang={url.query.lang}>
+    <CoreLayout title={title} lang={url.query.lang || DEFAULT_LOCALE} path={url.asPath}>
       <>
         <div className="babajka-root">
           <div className="babajka-content">
