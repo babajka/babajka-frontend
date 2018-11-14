@@ -12,7 +12,7 @@ const Renderer = ({ content }) => {
   return (
     <>
       <Head>
-        <link rel="stylesheet" href="/static/Dante2/DanteStyles.css" />
+        <link key="dante-styles" rel="stylesheet" href="/static/Dante2/DanteStyles.css" />
       </Head>
       <div className="dante2-namespace">
         <div className="postArticle">

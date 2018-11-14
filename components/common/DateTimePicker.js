@@ -26,7 +26,11 @@ const formatDate = date => {
 const DateTimePicker = ({ className, placeholder, value, onChange }) => (
   <>
     <Head>
-      <link rel="stylesheet" href="/static/react-datetime/react-datetime.css" />
+      <link
+        key="react-datetime-styles"
+        rel="stylesheet"
+        href="/static/react-datetime/react-datetime.css"
+      />
     </Head>
     <LocaleContext.Consumer>
       {lang => (

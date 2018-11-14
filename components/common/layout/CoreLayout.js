@@ -7,15 +7,21 @@ import moment from 'moment';
 import { localize } from 'components/common/Text';
 import { MARKUP_URL } from 'constants/server';
 import { getGoogleAnalyticsID } from 'constants/social';
+import { LangType } from 'utils/customPropTypes';
+
+import Metatags, { MetaTitle, MetaDescription, MetaImage, MetaLocale } from './Metatags';
 
 class CoreLayout extends Component {
   static propTypes = {
-    lang: PropTypes.string.isRequired,
+    lang: LangType.isRequired,
     title: PropTypes.string,
     children: PropTypes.node.isRequired,
+    path: PropTypes.string.isRequired,
   };
 
-  static defaultProps = { title: '' };
+  static defaultProps = {
+    title: 'meta.title',
+  };
 
   componentDidMount() {
     if ((__PROD__ || __STAGING__) && !window.ga) {
@@ -27,19 +33,18 @@ class CoreLayout extends Component {
   }
 
   render() {
-    const { lang, title, children } = this.props;
+    const { lang, title, children, path } = this.props;
     moment.locale(lang);
     return (
       <div>
+        {/* FIXME: change to `wir.by` or pass it dynamically */}
+        <Metatags url={`http://dev.wir.by${path}`} />
+        <MetaTitle title={localize('meta.title', lang)} />
+        <MetaDescription description={localize('meta.description', lang)} />
+        <MetaImage />
+        <MetaLocale locale={lang} />
         <Head>
-          <title>
-            Wir.by {title && '| '}
-            {localize(title, lang)}
-          </title>
-          <meta charSet="utf-8" />
-          <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-          <meta name="theme-color" content="#1a9582" />
+          <title>Wir.by | {localize(title, lang)}</title>
           <link rel="icon" type="image/png" href="/static/images/logo/favicon-colored.png" />
           <link
             rel="stylesheet"

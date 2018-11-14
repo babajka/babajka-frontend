@@ -23,6 +23,7 @@ const scopes = [
   'forms',
   'header',
   'home',
+  'meta',
 ];
 
 const dict = {};
