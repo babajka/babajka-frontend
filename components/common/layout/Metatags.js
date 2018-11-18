@@ -98,6 +98,7 @@ const Metatags = ({ url }) => (
     <meta name="twitter:site" content="@wir_by" />
     <meta name="twitter:creator" content="@wir_by" />
     <meta name="twitter:url" content={url} />
+    <meta property="fb:app_id" content="332376853960377" />
   </Head>
 );
 
