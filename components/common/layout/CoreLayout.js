@@ -37,7 +37,7 @@ class CoreLayout extends Component {
     moment.locale(lang);
     return (
       <div>
-        {/* FIXME: change to `wir.by` or pass it dynamically */}
+        {/* FIXME: change to `https://wir.by` or pass it dynamically */}
         <Metatags url={`http://dev.wir.by${path}`} />
         <MetaTitle title={localize('meta.title', lang)} />
         <MetaDescription description={localize('meta.description', lang)} />
