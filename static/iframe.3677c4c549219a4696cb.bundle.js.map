@@ -1,0 +1,1 @@
+{"version":3,"file":"static/iframe.3677c4c549219a4696cb.bundle.js","sources":["webpack:///./utils/env.js"],"sourcesContent":["module.exports = process.env.WIR_ENV || process.env.NODE_ENV || 'develop';\n"],"mappings":"AAAA","sourceRoot":""}
