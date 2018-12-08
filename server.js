@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 
 const routes = require('./routes');
 const { BACKEND_URL, MARKUP_URL } = require('./constants/server');
-const { DEFAULT_LOCALE } = require('./constants');
+const { DEFAULT_LOCALE, LOCALES, STATIC_PATHS } = require('./constants');
 const getArgs = require('./utils/args');
 const ENV = require('./utils/env');
 
@@ -26,6 +26,7 @@ process.on('unhandledRejection', (reason, p) => {
   console.error('Unhandled Rejection: Promise:', p, 'Reason:', reason);
 });
 
+const VALID_PATHS = [...STATIC_PATHS, ...Object.keys(LOCALES)];
 app.prepare().then(() => {
   const server = express();
   server.use(cookieParser());
@@ -36,12 +37,15 @@ app.prepare().then(() => {
   // This is useful for fully local development.
   server.use('/test', proxy({ target: BACKEND_URL, changeOrigin: true }));
 
-  // TODO: redirect on preffered lang
-  server.get('/:lang?', (req, res) => {
-    const { lang = DEFAULT_LOCALE } = req.params;
-    return res.redirect(`/${lang}/articles`);
+  server.get('/', (req, res) => res.redirect(`/${DEFAULT_LOCALE}/articles`));
+  server.get('/:startPath*', (req, res) => {
+    const { startPath } = req.params;
+    if (VALID_PATHS.includes(startPath)) {
+      return handle(req, res);
+    }
+    // missed locale, add `be` & redirect
+    return res.redirect(`/${DEFAULT_LOCALE}${req.originalUrl}`);
   });
-  server.get('*', (req, res) => handle(req, res));
 
   server.listen(port, err => {
     if (err) throw err;

@@ -19,4 +19,14 @@ const DATE_FORMAT = 'D MMMM YYYY';
 
 const DOMAIN_SECURE = 'https://wir.by';
 
-module.exports = { LOCALES, DEFAULT_LOCALE, LANGS, DATE_FORMAT, DOMAIN_SECURE, LOCALE_CODE };
+const STATIC_PATHS = ['static', '_next'];
+
+module.exports = {
+  LOCALES,
+  DEFAULT_LOCALE,
+  LANGS,
+  DATE_FORMAT,
+  DOMAIN_SECURE,
+  LOCALE_CODE,
+  STATIC_PATHS,
+};

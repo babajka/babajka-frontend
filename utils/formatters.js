@@ -7,3 +7,5 @@ export const formatDate = (date, format = DATE_FORMAT) => moment(date).format(fo
 export const stub = 1;
 
 export const replaceToDash = string => string.replace(/[_ \\/]+/g, '-').replace(/-+/g, '-');
+
+export const replaceLocale = (url, lang) => url.replace(`/${lang}`, '');

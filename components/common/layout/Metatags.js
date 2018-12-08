@@ -48,21 +48,6 @@ MetaImage.defaultProps = {
   url: 'https://res.cloudinary.com/wir-by/image/upload/v1542061416/production/meta/meta-wir.jpg',
 };
 
-export const MetaVideo = ({ url }) => (
-  <Head>
-    <meta key="meta-type-fb" property="og:type" content="video.other" />
-    <meta key="meta-video-fb" property="og:video" content={url} />
-    <meta key="meta-twi-card" name="twitter:card" content="player" />
-    <meta key="meta-video-twi" name="twitter:player" content={url} />
-    <meta key="meta-video-twi-width" name="twitter:player:width" content="480" />
-    <meta key="meta-video-twi-height" name="twitter:player:height" content="480" />
-  </Head>
-);
-
-MetaVideo.propTypes = {
-  url: PropTypes.string.isRequired,
-};
-
 export const MetaLocale = ({ locale, altLocales }) => (
   <Head>
     <meta key="meta-locale-fb" property="og:locale" content={LOCALE_CODE[locale]} />

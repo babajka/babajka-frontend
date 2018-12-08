@@ -8,6 +8,8 @@ import { localize } from 'components/common/Text';
 import { MARKUP_URL } from 'constants/server';
 import { getGoogleAnalyticsID } from 'constants/social';
 import { LangType } from 'utils/customPropTypes';
+import { replaceLocale } from 'utils/formatters';
+import host from 'utils/host';
 
 import Metatags, { MetaTitle, MetaDescription, MetaImage, MetaLocale } from './Metatags';
 
@@ -37,9 +39,8 @@ class CoreLayout extends Component {
     moment.locale(lang);
     return (
       <div>
-        {/* FIXME: change to `https://wir.by` or pass it dynamically */}
-        <Metatags url={`http://dev.wir.by${path}`} />
-        <MetaTitle title={localize('meta.title', lang)} />
+        <Metatags url={`${host}${replaceLocale(path)}`} />
+        <MetaTitle title={localize(title, lang)} />
         <MetaDescription description={localize('meta.description', lang)} />
         <MetaImage />
         <MetaLocale locale={lang} />
