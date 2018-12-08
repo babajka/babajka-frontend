@@ -6,6 +6,7 @@ module.exports = {
       'always',
       [
         '*',
+        'server',
         'core',
         'common',
         'about',
