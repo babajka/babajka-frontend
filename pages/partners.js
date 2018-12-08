@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'next/router';
 import withRedux from 'next-redux-wrapper';
 
 import PageLayout from 'components/common/layout/PageLayout';
@@ -13,13 +14,13 @@ class PartnersPage extends Component {
   }
 
   render() {
-    const { url } = this.props;
+    const { router } = this.props;
     return (
-      <PageLayout className="page-content" url={url} title="header.partners">
+      <PageLayout className="page-content" router={router} title="header.partners">
         <h1>TODO: Partners Page</h1>
       </PageLayout>
     );
   }
 }
 
-export default withRedux(initStore)(PartnersPage);
+export default withRouter(withRedux(initStore)(PartnersPage));

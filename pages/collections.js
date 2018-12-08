@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'next/router';
 import withRedux from 'next-redux-wrapper';
 
 import PageLayout from 'components/common/layout/PageLayout';
@@ -13,13 +14,13 @@ class CollectionsPage extends Component {
   }
 
   render() {
-    const { url } = this.props;
+    const { router } = this.props;
     return (
-      <PageLayout className="page-content" url={url} title="header.collections">
+      <PageLayout className="page-content" router={router} title="header.collections">
         <h1>TODO: Collections Page</h1>
       </PageLayout>
     );
   }
 }
 
-export default withRedux(initStore)(CollectionsPage);
+export default withRouter(withRedux(initStore)(CollectionsPage));

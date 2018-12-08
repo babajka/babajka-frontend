@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
 
@@ -13,7 +14,7 @@ import request from 'utils/request';
 import { LangType } from 'utils/customPropTypes';
 import { Router, ROUTES_NAMES } from 'routes';
 
-const mapStateToProps = (state, { url: { query } }) => ({
+const mapStateToProps = (state, { router: { query } }) => ({
   article: selectors.getCurrent(state, query.slug),
   articleLocale: query.articleLocale || selectors.getLocaleBySlug(state, query.slug),
   error: selectors.isError(state),
@@ -21,6 +22,20 @@ const mapStateToProps = (state, { url: { query } }) => ({
 });
 
 class EditArticlePage extends Component {
+  static propTypes = {
+    articleLocale: LangType,
+    router: PropTypes.shape({
+      query: PropTypes.shape({
+        mode: PropTypes.oneOf(['public', 'create', 'edit']),
+      }).isRequired,
+    }).isRequired,
+    permissions: PropTypes.shape().isRequired,
+  };
+
+  static defaultProps = {
+    articleLocale: null,
+  };
+
   static getInitialProps(ctx) {
     const {
       query: { slug },
@@ -33,10 +48,10 @@ class EditArticlePage extends Component {
 
   // FIXME: find better way to close routes
   componentDidMount() {
-    const { url, permissions } = this.props;
+    const { router, permissions } = this.props;
     const {
       query: { mode, lang, slug },
-    } = url;
+    } = router;
     if (mode === 'create' && !permissions.canCreateArticle) {
       Router.replaceRoute(ROUTES_NAMES.home, { lang });
     } else if (mode === 'edit' && !permissions.canManageArticles) {
@@ -45,14 +60,14 @@ class EditArticlePage extends Component {
   }
 
   render() {
-    const { url, articleLocale, permissions } = this.props;
+    const { router, articleLocale, permissions } = this.props;
     const {
       query: { mode },
-    } = url;
+    } = router;
 
     if (mode === 'create' && !permissions.canCreateArticle) {
       return (
-        <PageLayout className="page-content" url={url} title="header.home">
+        <PageLayout className="page-content" router={router} title="header.home">
           <p className="text is-size-5 has-text-primary">
             <Text id="common.forbidden" />
           </p>
@@ -61,25 +76,11 @@ class EditArticlePage extends Component {
     }
 
     return (
-      <PageLayout className="page-content" url={url} title="header.createArticle">
-        <EditArticleForm lang={url.query.lang} articleLocale={articleLocale} mode={mode} />
+      <PageLayout className="page-content" router={router} title="header.createArticle">
+        <EditArticleForm lang={router.query.lang} articleLocale={articleLocale} mode={mode} />
       </PageLayout>
     );
   }
 }
 
-EditArticlePage.propTypes = {
-  articleLocale: LangType,
-  url: PropTypes.shape({
-    query: PropTypes.shape({
-      mode: PropTypes.oneOf(['public', 'create', 'edit']),
-    }).isRequired,
-  }).isRequired,
-  permissions: PropTypes.shape({}).isRequired,
-};
-
-EditArticlePage.defaultProps = {
-  articleLocale: null,
-};
-
-export default withRedux(initStore, mapStateToProps)(EditArticlePage);
+export default withRouter(withRedux(initStore, mapStateToProps)(EditArticlePage));
