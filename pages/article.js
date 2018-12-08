@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
 
@@ -12,7 +13,7 @@ import { actions as auth, selectors as authSelectors } from 'redux/ducks/auth';
 import request from 'utils/request';
 import { ArticleShape, LangType } from 'utils/customPropTypes';
 
-const mapStateToProps = (state, { url: { query } }) => ({
+const mapStateToProps = (state, { router: { query } }) => ({
   article: selectors.getCurrent(state, query.slug),
   articleLocale: query.articleLocale || selectors.getLocaleBySlug(state, query.slug),
   error: selectors.isError(state),
@@ -20,6 +21,17 @@ const mapStateToProps = (state, { url: { query } }) => ({
 });
 
 class ArticlePage extends Component {
+  static propTypes = {
+    article: ArticleShape,
+    articleLocale: LangType,
+    router: PropTypes.shape().isRequired,
+  };
+
+  static defaultProps = {
+    article: null,
+    articleLocale: null,
+  };
+
   static getInitialProps(ctx) {
     const {
       query: { slug },
@@ -31,9 +43,9 @@ class ArticlePage extends Component {
   }
 
   render() {
-    const { article, url, articleLocale } = this.props;
+    const { article, router, articleLocale } = this.props;
     return (
-      <PageLayout className="article-content" url={url} title="header.home">
+      <PageLayout className="article-content" router={router} title="header.home">
         <MetaTitle title={article.title} type="article" />
         <MetaDescription description={article.subtitle} />
         <MetaImage url={article.imagePreviewUrl} />
@@ -43,15 +55,4 @@ class ArticlePage extends Component {
   }
 }
 
-ArticlePage.propTypes = {
-  article: ArticleShape,
-  articleLocale: LangType,
-  url: PropTypes.shape({}).isRequired,
-};
-
-ArticlePage.defaultProps = {
-  article: null,
-  articleLocale: null,
-};
-
-export default withRedux(initStore, mapStateToProps)(ArticlePage);
+export default withRouter(withRedux(initStore, mapStateToProps)(ArticlePage));

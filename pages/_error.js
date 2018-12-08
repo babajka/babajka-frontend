@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'next/router';
 import withRedux from 'next-redux-wrapper';
 
 import PageLayout from 'components/common/layout/PageLayout';
@@ -17,9 +18,9 @@ class ErrorPage extends Component {
   }
 
   render() {
-    const { statusCode, url } = this.props;
+    const { statusCode, router } = this.props;
     return (
-      <PageLayout className="page-content error-page" url={url} hideFooter>
+      <PageLayout className="page-content error-page" router={router} hideFooter>
         <img className="logo" src="/static/images/logo/turq-transparent.png" alt="wir.by logo" />
         {statusCode === 404 ? <Error404 /> : <Error500 />}
       </PageLayout>
@@ -27,4 +28,4 @@ class ErrorPage extends Component {
   }
 }
 
-export default withRedux(initStore)(ErrorPage);
+export default withRouter(withRedux(initStore)(ErrorPage));

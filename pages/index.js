@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
 
@@ -20,7 +21,7 @@ import { ROW_SIZE, COMPLEX_ROW_SIZE } from 'constants/articles';
 
 import 'styles/legacy/main-page/main-page.scss';
 
-const mapStateToProps = (state, { url: { query } }) => ({
+const mapStateToProps = (state, { router: { query } }) => ({
   articles: articlesSelectors.getAll(state, query.lang),
   articlesPending: articlesSelectors.isPending(state),
   total: articlesSelectors.getTotal(state),
@@ -35,7 +36,7 @@ const mapDispatchToProps = {
 
 class HomePage extends Component {
   static propTypes = {
-    url: PropTypes.shape({
+    router: PropTypes.shape({
       query: PropTypes.object.isRequired,
     }).isRequired,
     articles: ArticlesArray.isRequired,
@@ -69,17 +70,17 @@ class HomePage extends Component {
   };
 
   render() {
-    const { articles, articlesPending, total, url } = this.props;
+    const { articles, articlesPending, total, router } = this.props;
 
     const {
       query: { lang },
-    } = url;
+    } = router;
 
     const articlesRows = getMainArticlesRows(articles, ROW_SIZE, COMPLEX_ROW_SIZE);
     const [firstRow, secondRow, ...remainRows] = articlesRows;
 
     return (
-      <PageLayout className="page-content main-page page-container" url={url}>
+      <PageLayout className="page-content main-page page-container" router={router}>
         {firstRow && <ArticlesRow articles={firstRow} className="first-line is-ancestor" />}
         {secondRow && (
           <ArticlesComplexRow articles={secondRow} renderDiary={() => <Diary lang={lang} />} />
@@ -99,4 +100,4 @@ class HomePage extends Component {
   }
 }
 
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(HomePage);
+export default withRouter(withRedux(initStore, mapStateToProps, mapDispatchToProps)(HomePage));

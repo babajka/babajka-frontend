@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'next/router';
 import withRedux from 'next-redux-wrapper';
 import chunk from 'lodash/chunk';
 import cn from 'classnames';
@@ -40,16 +41,16 @@ class AboutPage extends Component {
 
   render() {
     const { openedVacancy } = this.state;
-    const { url } = this.props;
+    const { router } = this.props;
     const {
       query: { lang },
-    } = url;
+    } = router;
     const vacancies = getLocalizedVacancies(rawVacancies, lang);
     const team = getLocalizedTeam(rawTeam, lang);
     const teamChunks = chunk(team, ROW_SIZE);
 
     return (
-      <PageLayout className="page-content about-container" url={url} title="header.about">
+      <PageLayout className="page-content about-container" router={router} title="header.about">
         <div className="title">Wir.by</div>
         <div className="goal">
           <Text id="about.goal" />
@@ -150,4 +151,4 @@ class AboutPage extends Component {
   }
 }
 
-export default withRedux(initStore)(AboutPage);
+export default withRouter(withRedux(initStore)(AboutPage));

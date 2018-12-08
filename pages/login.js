@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
 import { Router, ROUTES_NAMES } from 'routes';
@@ -19,7 +20,7 @@ const mapStateToProps = state => ({
 class LoginPage extends Component {
   static propTypes = {
     user: PropTypes.shape({}),
-    url: PropTypes.shape({
+    router: PropTypes.shape({
       query: PropTypes.shape({
         invite: PropTypes.string,
       }).isRequired,
@@ -35,7 +36,7 @@ class LoginPage extends Component {
   componentDidMount() {
     const {
       user,
-      url: {
+      router: {
         query: { lang },
       },
     } = this.props;
@@ -45,20 +46,20 @@ class LoginPage extends Component {
   }
 
   render() {
-    const { url } = this.props;
+    const { router } = this.props;
 
     const {
       query: { lang, next = `/${lang}/articles` },
-    } = url;
+    } = router;
 
     return (
-      <PageLayout className="page-content" title="auth.signIn" url={url}>
+      <PageLayout className="page-content" title="auth.signIn" router={router}>
         <div className="container login">
-          <LoginForm allowSignUp={url.query.invite === 'beta-test-sign-up'} next={next} />
+          <LoginForm allowSignUp={router.query.invite === 'beta-test-sign-up'} next={next} />
         </div>
       </PageLayout>
     );
   }
 }
 
-export default withRedux(initStore, mapStateToProps)(LoginPage);
+export default withRouter(withRedux(initStore, mapStateToProps)(LoginPage));
