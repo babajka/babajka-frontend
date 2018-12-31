@@ -21,8 +21,8 @@ import { ROW_SIZE, COMPLEX_ROW_SIZE } from 'constants/articles';
 const mapStateToProps = (state, { url: { query } }) => ({
   articles: articlesSelectors.getAll(state, query.lang),
   articlesPending: articlesSelectors.isPending(state),
-  nextPage: articlesSelectors.getNextPage(state),
-  nextNextPage: articlesSelectors.getNextNextPage(state),
+  total: articlesSelectors.getTotal(state),
+  cachedLength: articlesSelectors.getCachedArticlesLength(state),
   error: articlesSelectors.isError(state),
 });
 
@@ -38,15 +38,10 @@ class HomePage extends Component {
     }).isRequired,
     articles: ArticlesArray.isRequired,
     articlesPending: PropTypes.bool.isRequired,
-    nextPage: PropTypes.number,
-    nextNextPage: PropTypes.number,
     getChunk: PropTypes.func.isRequired,
     mergeCached: PropTypes.func.isRequired,
-  };
-
-  static defaultProps = {
-    nextPage: null,
-    nextNextPage: null,
+    total: PropTypes.number.isRequired,
+    cachedLength: PropTypes.number.isRequired,
   };
 
   static getInitialProps(ctx) {
@@ -56,22 +51,23 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
-    const { nextPage, getChunk } = this.props;
-    if (nextPage) {
-      getChunk(nextPage);
+    const { getChunk, articles, total } = this.props;
+    if (articles.length < total) {
+      getChunk(articles.length);
     }
   }
 
   handleLoadMore = () => {
-    const { nextNextPage, getChunk, mergeCached } = this.props;
+    const { total, cachedLength, articles, getChunk, mergeCached } = this.props;
     mergeCached();
-    if (nextNextPage) {
-      getChunk(nextNextPage);
+    const skip = articles.length + cachedLength;
+    if (skip < total) {
+      getChunk(skip);
     }
   };
 
   render() {
-    const { articles, articlesPending, nextPage, url } = this.props;
+    const { articles, articlesPending, total, url } = this.props;
 
     const {
       query: { lang },
@@ -89,7 +85,7 @@ class HomePage extends Component {
         {remainRows.map(data => (
           <ArticlesRow key={data[0]._id} articles={data} className="first-line is-ancestor" />
         ))}
-        {nextPage && (
+        {articles.length < total && (
           <div className="load-more" align="center">
             <Button className="button" pending={articlesPending} onClick={this.handleLoadMore}>
               <Text id="home.loadMore" />

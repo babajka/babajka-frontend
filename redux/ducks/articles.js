@@ -35,9 +35,8 @@ const initialState = {
   error: false,
   data: [],
   nextData: [],
+  total: 0,
   current: null,
-  pagination: {},
-  nextPagination: {},
   localeBySlug: {},
   brands: null,
 };
@@ -57,23 +56,22 @@ const currentReducer = defaultReducer((state, { payload }) => ({
 
 export default createReducer(
   {
-    [INITIAL_FETCH]: defaultReducer((state, { payload: { data, next } }) => ({
+    [INITIAL_FETCH]: defaultReducer((state, { payload: { data, total } }) => ({
       ...state,
       data,
-      pagination: next,
+      total,
       ...defaultState,
     })),
-    [FETCH_CHUNK]: defaultReducer((state, { payload: { data, next } }) => ({
+    [FETCH_CHUNK]: defaultReducer((state, { payload: { data, total } }) => ({
       ...state,
       nextData: data,
-      nextPagination: next,
+      total,
       ...defaultState,
     })),
     [MERGE_CACHED]: state => ({
       ...state,
       data: [...state.data, ...state.nextData],
       nextData: [],
-      pagination: state.nextPagination,
     }),
     [FETCH_BY_SLUG]: currentReducer,
     [FETCH_BRANDS]: defaultReducer((state, { payload }) => ({
@@ -101,11 +99,11 @@ export default createReducer(
 export const actions = {
   initialFetch: () => ({
     type: INITIAL_FETCH,
-    payload: request.fetch(api.articles.getChunk({ page: 0, pageSize: MAIN_PAGE_SIZE })),
+    payload: request.fetch(api.articles.getChunk({ skip: 0, take: MAIN_PAGE_SIZE })),
   }),
-  fetchChunk: (page = 0, pageSize = PAGE_SIZE) => ({
+  fetchChunk: (skip = 0) => ({
     type: FETCH_CHUNK,
-    payload: request.fetch(api.articles.getChunk({ page, pageSize })),
+    payload: request.fetch(api.articles.getChunk({ skip, take: PAGE_SIZE })),
   }),
   mergeCached: () => ({
     type: MERGE_CACHED,
@@ -151,9 +149,8 @@ const getErrors = state => getState(state).errors;
 
 const getRawArticles = state => getState(state).data;
 const getAll = (state, lang) => getLocalizedArticles(getRawArticles(state), lang);
-
-const getNextPage = state => getState(state).pagination.page;
-const getNextNextPage = state => getState(state).nextPagination.page;
+const getTotal = state => getState(state).total;
+const getCachedArticlesLength = state => getState(state).nextData;
 
 const getRawCurrent = state => getState(state).current;
 const getLocaleBySlug = (state, slug) => getState(state).localeBySlug[slug];
@@ -177,8 +174,8 @@ const getColletions = (state, lang) => getLocalizedCollections(getRawCollections
 
 export const selectors = {
   getAll,
-  getNextPage,
-  getNextNextPage,
+  getTotal,
+  getCachedArticlesLength,
 
   getRawCurrent,
   getCurrent,
