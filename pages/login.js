@@ -10,6 +10,8 @@ import { actions, selectors } from 'redux/ducks/auth';
 import initStore from 'redux/store';
 import request from 'utils/request';
 
+import 'styles/legacy/login-page/login-page.scss';
+
 const mapStateToProps = state => ({
   user: selectors.getUser(state),
 });

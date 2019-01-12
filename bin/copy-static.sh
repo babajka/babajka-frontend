@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-MARKUP_DIST="node_modules/babajka-markup/dist"
+MARKUP_DIST="styles"
 
 rm -rf static
 mkdir static

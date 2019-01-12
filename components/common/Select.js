@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import Downshift from 'downshift';
 import cn from 'classnames';
 
+import 'styles/legacy/components/select/select.scss';
+
 import Clickable from './Clickable';
 import Button from './Button';
 import Icon from './Icon';

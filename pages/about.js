@@ -18,6 +18,8 @@ import { getLocalizedTeam, getLocalizedVacancies } from 'utils/getters';
 import rawTeam from 'data/team.json';
 import rawVacancies from 'data/vacancies.json';
 
+import 'styles/legacy/about/about.scss';
+
 class AboutPage extends Component {
   static getInitialProps(ctx) {
     return request.populate(ctx, [auth.getCurrentUser]);

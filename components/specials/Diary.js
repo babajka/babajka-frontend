@@ -13,6 +13,8 @@ import { actions as diaryActions, selectors as diarySelectors } from 'redux/duck
 import { isSameDay } from 'utils/validators';
 import { formatDate } from 'utils/formatters';
 
+import 'styles/legacy/specials/diary/diary.scss';
+
 const mapStateToProps = state => ({
   diary: diarySelectors.getCurrent(state),
 });

@@ -9,6 +9,7 @@ import Button from 'components/common/Button';
 import Select from 'components/common/Select';
 import LocaleContext from 'components/common/LocaleContext';
 import CoreLayout from 'components/common/layout/CoreLayout';
+import Author from 'components/articles/EditArticleForm/Author';
 
 import { infoSource } from './utils/params';
 
@@ -113,15 +114,10 @@ storiesOf(`${PREFIX}/Select`)
         { id: 'viarcinskaja', name: 'Tonya' },
       ]}
       renderOption={({ id, name }) => (
-        <span className="user">
-          <figure className="user-ava image is-32x32">
-            <img
-              src={`https://res.cloudinary.com/wir-by/image/upload/v1528990359/production/team/${id}`}
-              alt={id}
-            />
-          </figure>
-          <span className="table-card-user__name">{name}</span>
-        </span>
+        <Author
+          imageUrl={`https://res.cloudinary.com/wir-by/image/upload/v1528990359/production/team/${id}`}
+          name={name}
+        />
       )}
       onChange={action('Assigned to')}
     />

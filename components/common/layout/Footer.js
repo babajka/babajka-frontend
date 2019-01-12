@@ -7,6 +7,8 @@ import SocialList from 'components/common/SocialList';
 
 import { ROUTES_NAMES } from 'routes';
 
+import 'styles/legacy/footer/footer.scss';
+
 const Footer = () => (
   <footer className="app-footer">
     <div className="columns">

@@ -13,6 +13,8 @@ import Link from 'components/common/Link';
 import LocaleContext from 'components/common/LocaleContext';
 import Text from 'components/common/Text';
 
+import 'styles/legacy/navbar/navbar.scss';
+
 const mapStateToProps = state => ({
   user: selectors.getUser(state),
   permissions: selectors.getPermissions(state),
