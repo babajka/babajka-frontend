@@ -20,7 +20,7 @@ stories.add(
   () => {
     const SomePage = () => null;
     return (
-      <CoreLayout title="header.home">
+      <CoreLayout title="header.home" path="">
         <SomePage />
       </CoreLayout>
     );
