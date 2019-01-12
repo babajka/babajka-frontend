@@ -18,6 +18,8 @@ import { actions as auth } from 'redux/ducks/auth';
 import request from 'utils/request';
 import { ROW_SIZE, COMPLEX_ROW_SIZE } from 'constants/articles';
 
+import 'styles/legacy/main-page/main-page.scss';
+
 const mapStateToProps = (state, { url: { query } }) => ({
   articles: articlesSelectors.getAll(state, query.lang),
   articlesPending: articlesSelectors.isPending(state),

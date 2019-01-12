@@ -1,5 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const withBundleAnalyzer = require('@zeit/next-bundle-analyzer');
+const withPlugins = require('next-compose-plugins');
+const fonts = require('next-fonts');
+const sass = require('@zeit/next-sass');
+const bundleAnalyzer = require('@zeit/next-bundle-analyzer');
 const webpack = require('webpack');
 
 const { definePlugin } = require('./utils/webpack-plugins');
@@ -7,7 +10,7 @@ const { LOCALES } = require('./constants');
 
 const langs = Object.keys(LOCALES).join('|');
 
-module.exports = withBundleAnalyzer({
+const nextConfig = {
   webpack(config) {
     config.plugins.push(
       ...[
@@ -17,16 +20,41 @@ module.exports = withBundleAnalyzer({
     );
     return config;
   },
-  analyzeServer: ['server', 'both'].includes(process.env.BUNDLE_ANALYZE),
-  analyzeBrowser: ['browser', 'both'].includes(process.env.BUNDLE_ANALYZE),
-  bundleAnalyzerConfig: {
-    server: {
-      analyzerMode: 'static',
-      reportFilename: '../../reports/server.html',
+};
+
+const plugins = [
+  [fonts, { enableSvg: true }],
+
+  [
+    sass,
+    {
+      sassLoaderOptions: {
+        includePaths: [
+          'styles/node_modules/bulma',
+          'styles/node_modules/bulma-badge/dist/css/',
+          'styles/node_modules/font-awesome/scss',
+        ],
+      },
     },
-    browser: {
-      analyzerMode: 'static',
-      reportFilename: '../reports/client.html',
+  ],
+
+  [
+    bundleAnalyzer,
+    {
+      analyzeServer: ['server', 'both'].includes(process.env.BUNDLE_ANALYZE),
+      analyzeBrowser: ['browser', 'both'].includes(process.env.BUNDLE_ANALYZE),
+      bundleAnalyzerConfig: {
+        server: {
+          analyzerMode: 'static',
+          reportFilename: '../../reports/server.html',
+        },
+        browser: {
+          analyzerMode: 'static',
+          reportFilename: '../reports/client.html',
+        },
+      },
     },
-  },
-});
+  ],
+];
+
+module.exports = withPlugins(plugins, nextConfig);

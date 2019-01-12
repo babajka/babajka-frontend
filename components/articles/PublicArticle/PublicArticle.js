@@ -19,6 +19,8 @@ import { LOCALES } from 'constants';
 import { EXPORT_TO_NETWORKS } from 'constants/social';
 import { ArticleModel } from 'utils/customPropTypes';
 
+import 'styles/legacy/article-page/article-page.scss';
+
 import AuthorBlock from './AuthorBlock';
 import CollectionBlock from './CollectionBlock';
 import PublishInfo from './PublishInfo';

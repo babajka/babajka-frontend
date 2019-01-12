@@ -19,6 +19,8 @@ import Clickable from 'components/common/Clickable';
 import DateTimePicker from 'components/common/DateTimePicker';
 import { defaultContent } from 'components/common/Editor';
 
+import 'styles/legacy/article-page-edit/article-page-edit.scss';
+
 import EditLocaleForm, { localesValidator, localeObject } from './EditLocaleForm';
 import Author from './Author';
 

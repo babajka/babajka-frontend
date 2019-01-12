@@ -5,6 +5,8 @@ import CompleteRow from 'components/common/CompleteRow';
 
 import { USER_PIC } from 'constants/social';
 
+import 'styles/legacy/about/teammate.scss';
+
 export const ROW_SIZE = 6;
 const COL_SIZE = 3;
 

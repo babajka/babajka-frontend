@@ -5,13 +5,15 @@ import ReactGA from 'react-ga';
 import moment from 'moment';
 
 import { localize } from 'components/common/Text';
-import { MARKUP_URL } from 'constants/server';
 import { getGoogleAnalyticsID } from 'constants/social';
 import { LangType } from 'utils/customPropTypes';
 import { replaceLocale } from 'utils/formatters';
 import host from 'utils/host';
 
 import Metatags, { MetaTitle, MetaDescription, MetaImage, MetaLocale } from './Metatags';
+
+import 'styles.scss';
+import 'styles/legacy/common.scss';
 
 class CoreLayout extends Component {
   static propTypes = {
@@ -47,14 +49,6 @@ class CoreLayout extends Component {
         <Head>
           <title>Wir.by | {localize(title, lang)}</title>
           <link rel="icon" type="image/png" href="/static/images/logo/favicon-colored.png" />
-          <link
-            rel="stylesheet"
-            href={`${__DEBUG_STYLES__ ? MARKUP_URL : ''}/static/styles/bundle.min.css`}
-          />
-          <link
-            rel="stylesheet"
-            href={`${__DEBUG_STYLES__ ? MARKUP_URL : ''}/static/styles/assets.min.css`}
-          />
         </Head>
         {children}
       </div>

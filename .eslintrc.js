@@ -9,7 +9,6 @@ module.exports = {
     __STAGING__: false,
     __DEV__: false,
     __TESTING__: false,
-    __DEBUG_STYLES__: false,
   },
   env: {
     browser: true,

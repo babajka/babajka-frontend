@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import 'styles/legacy/components/select/author.scss';
+
 const Author = ({ name, imageUrl }) => (
   <span className="user">
     <figure className="user-ava image is-32x32">
