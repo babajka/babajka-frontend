@@ -1,4 +1,4 @@
-#!/usr/bin bash
+#!/usr/bin/env bash
 set -e
 
 DEPLOYMENTS_PATH="/home/wir-dev/deployed"
