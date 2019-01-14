@@ -36,7 +36,7 @@ Next.js &amp; React app
 
 ## rules
 
-- use `git submodule update --init` for fetching styles
+- use `npm run update-styles` for fetching latest styles
 - we use [`ducks convention`](https://github.com/erikras/ducks-modular-redux) for redux modules
 - we have autoversioning set up, in order to trigger new release one should follow the conventions:
 
