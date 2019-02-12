@@ -1,6 +1,7 @@
 import fetch from 'isomorphic-fetch';
 import Router from 'next/router';
 
+import api from 'constants/api';
 import { BACKEND_URL, SESSION_COOKIE } from 'constants/server';
 
 export const DEFAULT_OPTIONS = {
@@ -10,6 +11,18 @@ export const DEFAULT_OPTIONS = {
     'Content-Type': 'application/json',
   },
   credentials: 'same-origin',
+};
+
+// eslint-disable-next-line import/prefer-default-export
+export const uploadFile = file => {
+  const fd = new FormData();
+  fd.append('image', file);
+  return fetch(api.core.uploads, {
+    mode: 'cors',
+    credentials: 'same-origin',
+    method: 'POST',
+    body: fd,
+  }).then(res => res.json());
 };
 
 class Request {

@@ -20,6 +20,6 @@ module.exports = {
       ],
     ],
     'scope-empty': [2, 'never'],
-    'type-enum': [2, 'always', ['fix', 'style', 'feat', 'chore', 'task', 'major', 'merge']],
+    'type-enum': [2, 'always', ['fix', 'style', 'feat', 'chore', 'task', 'major', 'merge', 'temp']],
   },
 };
