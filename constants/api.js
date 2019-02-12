@@ -11,6 +11,9 @@ export default {
     register: `${AUTH_URL}/register`,
     logout: `${AUTH_URL}/logout`,
   },
+  core: {
+    uploads: `${API_URL}/core/uploads`,
+  },
   articles: {
     getChunk: pagination => `${API_URL}/articles${qs.stringify(pagination, queryOptions)}`,
     getBySlug: slug => `${API_URL}/articles/${slug}`,

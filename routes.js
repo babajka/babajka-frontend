@@ -39,8 +39,12 @@ const NAVBAR_ROUTES = [
   },
   {
     name: 'about',
-    label: 'Пра Нас',
     isActive,
+  },
+  {
+    name: 'upload-test',
+    isActive,
+    permission: 'canCreateArticle',
   },
 ];
 
