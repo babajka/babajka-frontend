@@ -53,7 +53,7 @@ class EditArticlePage extends Component {
       query: { mode, lang, slug },
     } = router;
     if (mode === 'create' && !permissions.canCreateArticle) {
-      Router.replaceRoute(ROUTES_NAMES.home, { lang });
+      Router.replaceRoute(ROUTES_NAMES.main, { lang });
     } else if (mode === 'edit' && !permissions.canManageArticles) {
       Router.replaceRoute(ROUTES_NAMES.article, { lang, slug });
     }
@@ -67,7 +67,7 @@ class EditArticlePage extends Component {
 
     if (mode === 'create' && !permissions.canCreateArticle) {
       return (
-        <PageLayout className="page-content" router={router} title="header.home">
+        <PageLayout className="page-content" router={router} title="header.articles">
           <p className="text is-size-5 has-text-primary">
             <Text id="common.forbidden" />
           </p>

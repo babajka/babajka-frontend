@@ -187,7 +187,7 @@ const PublicArticle = ({
                 <li>
                   <ActionWithConfirm
                     action={actions.remove.bind(null, articleId)}
-                    successCallback={() => Router.replaceRoute(ROUTES_NAMES.home, { lang })}
+                    successCallback={() => Router.replaceRoute(ROUTES_NAMES.main, { lang })}
                     render={({ onClick }) => (
                       <Clickable
                         tag="a"

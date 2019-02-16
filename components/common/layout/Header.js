@@ -49,7 +49,7 @@ class Header extends Component {
       Router.pushRoute(ROUTES_NAMES.login, { lang });
       return;
     }
-    signOut().then(() => Router.pushRoute(ROUTES_NAMES.home, { lang }));
+    signOut().then(() => Router.pushRoute(ROUTES_NAMES.main, { lang }));
   };
 
   render() {
@@ -64,7 +64,7 @@ class Header extends Component {
     return (
       <div className="navbar">
         <div className="navbar-brand">
-          <Link route={ROUTES_NAMES.home}>
+          <Link route={ROUTES_NAMES.main}>
             <a className="navbar-item">
               {/* TODO: replace with div background? */}
               <img

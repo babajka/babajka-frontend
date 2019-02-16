@@ -22,7 +22,7 @@ const scopes = [
   'footer',
   'forms',
   'header',
-  'home',
+  'main',
   'meta',
 ];
 

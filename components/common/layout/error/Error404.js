@@ -9,7 +9,7 @@ export default () => (
     <div className="title">404 Старонка адсутнічае</div>
     <div className="subtitle">Рэсурс змяніў месцазнаходжанне альбо яго ніколі не існавала</div>
     <br />
-    <Link route={ROUTES_NAMES.home}>
+    <Link route={ROUTES_NAMES.main}>
       <a className="button">Перайсці на галоўную</a>
     </Link>
     <br />
