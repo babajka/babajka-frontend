@@ -37,7 +37,7 @@ app.prepare().then(() => {
   // This is useful for fully local development.
   server.use('/test', proxy({ target: BACKEND_URL, changeOrigin: true }));
 
-  server.get('/', (req, res) => res.redirect(`/${DEFAULT_LOCALE}/articles`));
+  server.get('/', (req, res) => res.redirect(`/${DEFAULT_LOCALE}/`));
   server.get('/:startPath*', (req, res) => {
     const { startPath } = req.params;
     if (VALID_PATHS.includes(startPath)) {

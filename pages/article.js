@@ -45,7 +45,7 @@ class ArticlePage extends Component {
   render() {
     const { article, router, articleLocale } = this.props;
     return (
-      <PageLayout className="article-content" router={router} title="header.home">
+      <PageLayout className="article-content" router={router} title="header.articles">
         <MetaTitle title={article.title} type="article" />
         <MetaDescription description={article.subtitle} />
         <MetaImage url={article.imagePreviewUrl} />

@@ -9,9 +9,15 @@ const isActive = (path, name) => path.split('/').slice(-1)[0] === name;
 
 const NAVBAR_ROUTES = [
   {
-    name: 'home',
-    pattern: 'articles',
+    name: 'main',
+    pattern: '',
     page: 'index',
+    isActive,
+  },
+  {
+    name: 'articles',
+    pattern: 'articles',
+    page: 'articles',
     isActive,
   },
   // {

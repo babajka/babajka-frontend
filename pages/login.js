@@ -41,7 +41,7 @@ class LoginPage extends Component {
       },
     } = this.props;
     if (user) {
-      Router.replaceRoute(ROUTES_NAMES.home, { lang });
+      Router.replaceRoute(ROUTES_NAMES.main, { lang });
     }
   }
 
