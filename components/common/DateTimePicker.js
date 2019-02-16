@@ -64,8 +64,15 @@ const DateTimePicker = ({ className, placeholder, value, onChange }) => (
 
 DateTimePicker.propTypes = {
   className: PropTypes.string,
+  placeholder: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
+};
+
+DateTimePicker.defaultProps = {
+  className: '',
+  placeholder: '',
+  value: null,
 };
 
 export default DateTimePicker;
