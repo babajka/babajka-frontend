@@ -67,3 +67,9 @@ export const ArticleModel = {
 export const ArticleShape = PropTypes.shape(ArticleModel);
 
 export const ArticlesArray = PropTypes.arrayOf(ArticleShape);
+
+// TODO: sync
+export const PermissionsShape = PropTypes.shape({
+  canManageArticles: PropTypes.bool.isRequired,
+  canCreateArticle: PropTypes.bool.isRequired,
+});

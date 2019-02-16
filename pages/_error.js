@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-import { withRouter } from 'next/router';
-import withRedux from 'next-redux-wrapper';
 
-import PageLayout from 'components/common/layout/PageLayout';
 import { Error404, Error500 } from 'components/common/layout/error';
 
 import { actions as auth } from 'redux/ducks/auth';
-import initStore from 'redux/store';
 import request from 'utils/request';
 
 class ErrorPage extends Component {
@@ -17,15 +13,19 @@ class ErrorPage extends Component {
     return { statusCode };
   }
 
+  static layoutProps = {
+    hideFooter: true,
+  };
+
   render() {
-    const { statusCode, router } = this.props;
+    const { statusCode } = this.props;
     return (
-      <PageLayout className="page-content error-page" router={router} hideFooter>
+      <div className="page-content error-page">
         <img className="logo" src="/static/images/logo/turq-transparent.png" alt="wir.by logo" />
         {statusCode === 404 ? <Error404 /> : <Error500 />}
-      </PageLayout>
+      </div>
     );
   }
 }
 
-export default withRouter(withRedux(initStore)(ErrorPage));
+export default ErrorPage;

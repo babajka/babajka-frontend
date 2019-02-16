@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { withRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import withRedux from 'next-redux-wrapper';
+import { connect } from 'react-redux';
+import { withRouter } from 'next/router';
 import { Router, ROUTES_NAMES } from 'routes';
 
-import PageLayout from 'components/common/layout/PageLayout';
 import LoginForm from 'components/auth/LoginForm';
 
 import { actions, selectors } from 'redux/ducks/auth';
-import initStore from 'redux/store';
 import request from 'utils/request';
+import { LangType } from 'utils/customPropTypes';
 
 import 'styles/legacy/login-page/login-page.scss';
 
@@ -20,8 +19,10 @@ const mapStateToProps = state => ({
 class LoginPage extends Component {
   static propTypes = {
     user: PropTypes.shape({}),
+    lang: LangType.isRequired,
     router: PropTypes.shape({
       query: PropTypes.shape({
+        next: PropTypes.string,
         invite: PropTypes.string,
       }).isRequired,
     }).isRequired,
@@ -33,33 +34,32 @@ class LoginPage extends Component {
     return request.populate(ctx, [actions.getCurrentUser]);
   }
 
+  static layoutProps = {
+    title: 'auth.signIn',
+  };
+
   componentDidMount() {
-    const {
-      user,
-      router: {
-        query: { lang },
-      },
-    } = this.props;
+    const { user, lang } = this.props;
     if (user) {
       Router.replaceRoute(ROUTES_NAMES.main, { lang });
     }
   }
 
   render() {
-    const { router } = this.props;
+    const { router, lang } = this.props;
 
     const {
-      query: { lang, next = `/${lang}/articles` },
+      query: { next = `/${lang}/articles`, invite },
     } = router;
 
     return (
-      <PageLayout className="page-content" title="auth.signIn" router={router}>
+      <div className="page-content">
         <div className="container login">
-          <LoginForm allowSignUp={router.query.invite === 'beta-test-sign-up'} next={next} />
+          <LoginForm allowSignUp={invite === 'beta-test-sign-up'} next={next} />
         </div>
-      </PageLayout>
+      </div>
     );
   }
 }
 
-export default withRouter(withRedux(initStore, mapStateToProps)(LoginPage));
+export default withRouter(connect(mapStateToProps)(LoginPage));

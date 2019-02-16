@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 import Modal from 'components/common/Modal';
-import Text, { localize } from 'components/common/Text';
+import Text from 'components/common/Text';
 import TextWithBr from 'components/common/TextWithBr';
 import Clickable from 'components/common/Clickable';
 import Icon from 'components/common/Icon';
@@ -38,11 +38,21 @@ const NAV_BUTTONS = {
   },
 };
 
+export const DiaryModel = {
+  text: PropTypes.string.isRequired,
+  date: PropTypes.number.isRequired,
+  author: PropTypes.string.isRequired,
+};
+
 class Diary extends Component {
-  constructor() {
-    super();
-    this.state = { isModalActive: false };
-  }
+  static propTypes = {
+    diary: PropTypes.shape(DiaryModel).isRequired,
+    getNext: PropTypes.func.isRequired,
+    getPrev: PropTypes.func.isRequired,
+    getByDay: PropTypes.func.isRequired,
+  };
+
+  state = { isModalActive: false };
 
   componentDidMount() {
     const { getByDay } = this.props;
@@ -62,40 +72,44 @@ class Diary extends Component {
     );
   };
 
-  renderNavigationButton = (handleClick, { className, iconClassName, title }) => {
-    const { lang } = this.props;
-    return (
-      <Clickable
-        className={cn('icon is-small arrow', className)}
-        onClick={handleClick}
-        title={localize(title, lang)}
-      >
-        <Icon name={iconClassName} />
-      </Clickable>
-    );
-  };
+  renderNavigationButton = (handleClick, { className, iconClassName, title }) => (
+    <Text id={title}>
+      {localizedTitle => (
+        <Clickable
+          className={cn('icon is-small arrow', className)}
+          onClick={handleClick}
+          title={localizedTitle}
+        >
+          <Icon name={iconClassName} />
+        </Clickable>
+      )}
+    </Text>
+  );
 
   renderModalElement = () => {
     const {
       diary: { text, author },
-      lang,
     } = this.props;
     const { isModalActive } = this.state;
     return (
-      <Modal
-        isActive={isModalActive}
-        title={localize('diary.title', lang)}
-        toggle={this.toggleModal}
-        renderBody={() => (
-          <div>
-            <div className="diary-content">
-              <TextWithBr text={text} />
-            </div>
-            {this.renderDateElement()}
-          </div>
+      <Text id="diary.title">
+        {title => (
+          <Modal
+            isActive={isModalActive}
+            title={title}
+            toggle={this.toggleModal}
+            renderBody={() => (
+              <div>
+                <div className="diary-content">
+                  <TextWithBr text={text} />
+                </div>
+                {this.renderDateElement()}
+              </div>
+            )}
+            renderFooter={() => <span className="subtitle">{author}</span>}
+          />
         )}
-        renderFooter={() => <span className="subtitle">{author}</span>}
-      />
+      </Text>
     );
   };
 
@@ -145,20 +159,6 @@ class Diary extends Component {
     );
   }
 }
-
-export const DiaryModel = {
-  text: PropTypes.string.isRequired,
-  date: PropTypes.number.isRequired,
-  author: PropTypes.string.isRequired,
-};
-
-Diary.propTypes = {
-  diary: PropTypes.shape(DiaryModel).isRequired,
-  lang: PropTypes.string.isRequired,
-  getNext: PropTypes.func.isRequired,
-  getPrev: PropTypes.func.isRequired,
-  getByDay: PropTypes.func.isRequired,
-};
 
 export default connect(
   mapStateToProps,

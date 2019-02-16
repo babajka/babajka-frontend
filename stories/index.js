@@ -8,33 +8,12 @@ import Text from 'components/common/Text';
 import Button from 'components/common/Button';
 import Select from 'components/common/Select';
 import LocaleContext from 'components/common/LocaleContext';
-import CoreLayout from 'components/common/layout/CoreLayout';
 import Author from 'components/articles/EditArticleForm/Author';
 
 import { infoSource } from './utils/params';
 
 const PREFIX = 'Common';
 const stories = storiesOf(PREFIX, module);
-
-stories.add(
-  'CoreLayout',
-  () => {
-    const SomePage = () => null;
-    return (
-      <CoreLayout title="header.main" path="">
-        <SomePage />
-      </CoreLayout>
-    );
-  },
-  {
-    info: `
-      This is the root component
-      that wraps provided components
-      and import babajka styles,
-      add page title and etc.
-    `,
-  }
-);
 
 stories.add('Icon', () => (
   <Icon
