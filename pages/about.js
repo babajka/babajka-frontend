@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from 'next/router';
-import withRedux from 'next-redux-wrapper';
 import chunk from 'lodash/chunk';
 import cn from 'classnames';
 
@@ -9,13 +7,13 @@ import Icon from 'components/common/Icon';
 import Clickable from 'components/common/Clickable';
 import MailLink from 'components/common/MailLink';
 import OutsideClickable from 'components/common/OutsideClickable';
-import PageLayout from 'components/common/layout/PageLayout';
 import TeamRow, { ROW_SIZE } from 'components/about/TeamRow';
 
-import initStore from 'redux/store';
 import { actions as auth } from 'redux/ducks/auth';
 import request from 'utils/request';
 import { getLocalizedTeam, getLocalizedVacancies } from 'utils/getters';
+import { LangType } from 'utils/customPropTypes';
+
 import rawTeam from 'data/team.json';
 import rawVacancies from 'data/vacancies.json';
 
@@ -25,6 +23,14 @@ class AboutPage extends Component {
   static getInitialProps(ctx) {
     return request.populate(ctx, [auth.getCurrentUser]);
   }
+
+  static propTypes = {
+    lang: LangType.isRequired,
+  };
+
+  static layoutProps = {
+    title: 'header.about',
+  };
 
   state = {
     openedVacancy: null,
@@ -40,17 +46,14 @@ class AboutPage extends Component {
   };
 
   render() {
+    const { lang } = this.props;
     const { openedVacancy } = this.state;
-    const { router } = this.props;
-    const {
-      query: { lang },
-    } = router;
     const vacancies = getLocalizedVacancies(rawVacancies, lang);
     const team = getLocalizedTeam(rawTeam, lang);
     const teamChunks = chunk(team, ROW_SIZE);
 
     return (
-      <PageLayout className="page-content about-container" router={router} title="header.about">
+      <div className="page-content about-container">
         <div className="title">Wir.by</div>
         <div className="goal">
           <Text id="about.goal" />
@@ -146,9 +149,9 @@ class AboutPage extends Component {
             </div>
           )}
         </Text>
-      </PageLayout>
+      </div>
     );
   }
 }
 
-export default withRouter(withRedux(initStore)(AboutPage));
+export default AboutPage;

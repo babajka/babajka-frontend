@@ -1,59 +1,32 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import Head from 'next/head';
-import ReactGA from 'react-ga';
-import moment from 'moment';
 
-import { localize } from 'components/common/Text';
-import { getGoogleAnalyticsID } from 'constants/social';
-import { LangType } from 'utils/customPropTypes';
-import { replaceLocale } from 'utils/formatters';
-import host from 'utils/host';
-
-import Metatags, { MetaTitle, MetaDescription, MetaImage, MetaLocale } from './Metatags';
+import Footer from './Footer';
+import Header from './Header';
 
 import 'styles.scss';
 import 'styles/legacy/common.scss';
 
-class CoreLayout extends Component {
-  static propTypes = {
-    lang: LangType.isRequired,
-    title: PropTypes.string,
-    children: PropTypes.node.isRequired,
-    path: PropTypes.string.isRequired,
-  };
-
-  static defaultProps = {
-    title: 'meta.title',
-  };
-
-  componentDidMount() {
-    if ((__PROD__ || __STAGING__) && !window.ga) {
-      ReactGA.initialize(getGoogleAnalyticsID(__PROD__), {
-        debug: false,
-      });
-      ReactGA.pageview(document.location.pathname);
-    }
-  }
-
-  render() {
-    const { lang, title, children, path } = this.props;
-    moment.locale(lang);
-    return (
-      <div>
-        <Metatags url={`${host}${replaceLocale(path)}`} />
-        <MetaTitle title={localize(title, lang)} />
-        <MetaDescription description={localize('meta.description', lang)} />
-        <MetaImage />
-        <MetaLocale locale={lang} />
-        <Head>
-          <title>Wir.by | {localize(title, lang)}</title>
-          <link rel="icon" type="image/png" href="/static/images/logo/favicon-colored.png" />
-        </Head>
+const CoreLayout = ({ children, hideFooter }) => (
+  <>
+    <div className="babajka-root">
+      <div className="babajka-content">
+        <Header />
         {children}
+        {!hideFooter && <Footer />}
       </div>
-    );
-  }
-}
+    </div>
+    <div id="modal-root" />
+  </>
+);
+
+CoreLayout.propTypes = {
+  children: PropTypes.node.isRequired,
+  hideFooter: PropTypes.bool,
+};
+
+CoreLayout.defaultProps = {
+  hideFooter: false,
+};
 
 export default CoreLayout;

@@ -20,14 +20,6 @@ const NAVBAR_ROUTES = [
     page: 'articles',
     isActive,
   },
-  // {
-  //   name: 'collections',
-  //   isActive,
-  // },
-  // {
-  //   name: 'partners',
-  //   isActive,
-  // },
   {
     name: 'createArticle',
     pattern: 'articles/:mode(create)',

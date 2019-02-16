@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { withRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import withRedux from 'next-redux-wrapper';
+import { connect } from 'react-redux';
 
-import PageLayout from 'components/common/layout/PageLayout';
 import Button from 'components/common/Button';
 import Text from 'components/common/Text';
 import Diary from 'components/specials/Diary';
@@ -12,17 +10,16 @@ import ArticlesComplexRow from 'components/articles/ArticlesComplexRow';
 
 import { ArticlesArray } from 'utils/customPropTypes';
 import { getMainArticlesRows } from 'utils/getters';
+import request from 'utils/request';
 
-import initStore from 'redux/store';
+import { ROW_SIZE, COMPLEX_ROW_SIZE } from 'constants/articles';
 import { actions as articlesActions, selectors as articlesSelectors } from 'redux/ducks/articles';
 import { actions as auth } from 'redux/ducks/auth';
-import request from 'utils/request';
-import { ROW_SIZE, COMPLEX_ROW_SIZE } from 'constants/articles';
 
 import 'styles/legacy/main-page/main-page.scss';
 
-const mapStateToProps = (state, { router: { query } }) => ({
-  articles: articlesSelectors.getAll(state, query.lang),
+const mapStateToProps = (state, { lang }) => ({
+  articles: articlesSelectors.getAll(state, lang),
   articlesPending: articlesSelectors.isPending(state),
   total: articlesSelectors.getTotal(state),
   cachedLength: articlesSelectors.getCachedArticlesLength(state),
@@ -36,9 +33,6 @@ const mapDispatchToProps = {
 
 class ArticlesPage extends Component {
   static propTypes = {
-    router: PropTypes.shape({
-      query: PropTypes.object.isRequired,
-    }).isRequired,
     articles: ArticlesArray.isRequired,
     articlesPending: PropTypes.bool.isRequired,
     getChunk: PropTypes.func.isRequired,
@@ -52,6 +46,10 @@ class ArticlesPage extends Component {
     const initialRequests = [auth.getCurrentUser, articlesActions.initialFetch];
     return request.populate(ctx, initialRequests);
   }
+
+  static layoutProps = {
+    title: 'header.articles',
+  };
 
   componentDidMount() {
     const { getChunk, articles, total } = this.props;
@@ -70,25 +68,14 @@ class ArticlesPage extends Component {
   };
 
   render() {
-    const { articles, articlesPending, total, router } = this.props;
-
-    const {
-      query: { lang },
-    } = router;
-
+    const { articles, articlesPending, total } = this.props;
     const articlesRows = getMainArticlesRows(articles, ROW_SIZE, COMPLEX_ROW_SIZE);
     const [firstRow, secondRow, ...remainRows] = articlesRows;
 
     return (
-      <PageLayout
-        className="page-content main-page page-container"
-        router={router}
-        title="header.articles"
-      >
+      <div className="page-content main-page page-container">
         {firstRow && <ArticlesRow articles={firstRow} className="first-line is-ancestor" />}
-        {secondRow && (
-          <ArticlesComplexRow articles={secondRow} renderDiary={() => <Diary lang={lang} />} />
-        )}
+        {secondRow && <ArticlesComplexRow articles={secondRow} renderDiary={() => <Diary />} />}
         {remainRows.map(data => (
           <ArticlesRow key={data[0]._id} articles={data} className="first-line is-ancestor" />
         ))}
@@ -99,9 +86,12 @@ class ArticlesPage extends Component {
             </Button>
           </div>
         )}
-      </PageLayout>
+      </div>
     );
   }
 }
 
-export default withRouter(withRedux(initStore, mapStateToProps, mapDispatchToProps)(ArticlesPage));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ArticlesPage);

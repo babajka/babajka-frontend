@@ -21,6 +21,10 @@ module.exports = {
       ],
     ],
     'scope-empty': [2, 'never'],
-    'type-enum': [2, 'always', ['fix', 'style', 'feat', 'chore', 'task', 'major', 'merge', 'temp']],
+    'type-enum': [
+      2,
+      'always',
+      ['fix', 'style', 'feat', 'chore', 'task', 'major', 'merge', 'temp', 'refactor'],
+    ],
   },
 };

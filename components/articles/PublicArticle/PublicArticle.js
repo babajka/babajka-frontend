@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { MetaLocale } from 'components/common/layout/Metatags';
 import Icon from 'components/common/Icon';
 import Link from 'components/common/Link';
 import Text, { localize } from 'components/common/Text';
@@ -9,15 +8,15 @@ import Clickable from 'components/common/Clickable';
 import ActionWithConfirm from 'components/common/ActionWithConfirm';
 import Renderer from 'components/common/Renderer';
 import VideoPlayer from 'components/common/VideoPlayer';
-import LocaleContext from 'components/common/LocaleContext';
 import Button from 'components/common/Button';
+import { MetaLocale } from 'components/common/Metatags';
 
 import { actions, selectors } from 'redux/ducks/articles';
 import { selectors as authSelectors } from 'redux/ducks/auth';
 import { Router, ROUTES_NAMES } from 'routes';
 import { LOCALES } from 'constants';
 import { EXPORT_TO_NETWORKS } from 'constants/social';
-import { ArticleModel } from 'utils/customPropTypes';
+import { ArticleModel, LangType } from 'utils/customPropTypes';
 
 import 'styles/legacy/article-page/article-page.scss';
 
@@ -54,7 +53,6 @@ const PublicArticle = ({
   type,
   video,
   published,
-  // from LocaleContext:
   lang,
 }) => (
   <div className="article-container container">
@@ -227,13 +225,13 @@ const PublicArticle = ({
   </div>
 );
 
-PublicArticle.propTypes = ArticleModel;
+PublicArticle.propTypes = {
+  ...ArticleModel,
+  articleLocale: LangType.isRequired,
+  lang: LangType.isRequired,
+};
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(props => (
-  <LocaleContext.Consumer>
-    {lang => <PublicArticle {...props} lang={lang} />}
-  </LocaleContext.Consumer>
-));
+)(PublicArticle);

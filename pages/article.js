@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
-import { withRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import withRedux from 'next-redux-wrapper';
+import { connect } from 'react-redux';
 
-import PageLayout from 'components/common/layout/PageLayout';
-import { MetaTitle, MetaDescription, MetaImage } from 'components/common/layout/Metatags';
+import { MetaTitle, MetaDescription, MetaImage } from 'components/common/Metatags';
 import PublicArticle from 'components/articles/PublicArticle';
 
-import initStore from 'redux/store';
 import { actions as articlesActions, selectors } from 'redux/ducks/articles';
 import { actions as auth, selectors as authSelectors } from 'redux/ducks/auth';
 import request from 'utils/request';
 import { ArticleShape, LangType } from 'utils/customPropTypes';
 
-const mapStateToProps = (state, { router: { query } }) => ({
-  article: selectors.getCurrent(state, query.slug),
-  articleLocale: query.articleLocale || selectors.getLocaleBySlug(state, query.slug),
+const mapStateToProps = (state, { routerQuery: { slug, articleLocale } }) => ({
+  article: selectors.getCurrent(state, slug),
+  articleLocale: articleLocale || selectors.getLocaleBySlug(state, slug),
   error: selectors.isError(state),
   permissions: authSelectors.getPermissions(state),
 });
@@ -23,13 +20,20 @@ const mapStateToProps = (state, { router: { query } }) => ({
 class ArticlePage extends Component {
   static propTypes = {
     article: ArticleShape,
-    articleLocale: LangType,
-    router: PropTypes.shape().isRequired,
+    articleLocale: LangType.isRequired,
+    routerQuery: PropTypes.shape({
+      slug: PropTypes.string.isRequired,
+      articleLocale: PropTypes.string,
+    }).isRequired,
+    lang: LangType.isRequired,
   };
 
   static defaultProps = {
     article: null,
-    articleLocale: null,
+  };
+
+  static layoutProps = {
+    title: 'header.articles',
   };
 
   static getInitialProps(ctx) {
@@ -43,16 +47,16 @@ class ArticlePage extends Component {
   }
 
   render() {
-    const { article, router, articleLocale } = this.props;
+    const { article, articleLocale, lang } = this.props;
     return (
-      <PageLayout className="article-content" router={router} title="header.articles">
+      <div className="article-content">
         <MetaTitle title={article.title} type="article" />
         <MetaDescription description={article.subtitle} />
         <MetaImage url={article.imagePreviewUrl} />
-        <PublicArticle {...article} articleLocale={articleLocale} />
-      </PageLayout>
+        <PublicArticle {...article} articleLocale={articleLocale} lang={lang} />
+      </div>
     );
   }
 }
 
-export default withRouter(withRedux(initStore, mapStateToProps)(ArticlePage));
+export default connect(mapStateToProps)(ArticlePage);
