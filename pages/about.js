@@ -59,69 +59,67 @@ class AboutPage extends Component {
           <Text id="about.goal" />
         </div>
         <hr />
-        {vacancies &&
-          vacancies.length && (
-            <>
-              <div className="helpus">
-                <div className="title">
-                  <Text id="about.join-us" />
+        {vacancies && vacancies.length && (
+          <>
+            <div className="helpus">
+              <div className="title">
+                <Text id="about.join-us" />
+              </div>
+              <Text id="about.looking-for" />
+              <OutsideClickable onClick={() => this.setState({ openedVacancy: null })}>
+                <div className="positions is-centered">
+                  {vacancies.map(vacancy => {
+                    const active = openedVacancy && openedVacancy.id === vacancy.id;
+                    return (
+                      <Clickable
+                        key={vacancy.id}
+                        tag="div"
+                        className={cn('position', { 'is-active': active })}
+                        onClick={this.handleVacancyToggle.bind(null, vacancy)}
+                      >
+                        {vacancy.title} <Icon name={`chevron-circle-${active ? 'up' : 'down'}`} />
+                      </Clickable>
+                    );
+                  })}
                 </div>
-                <Text id="about.looking-for" />
-                <OutsideClickable onClick={() => this.setState({ openedVacancy: null })}>
-                  <div className="positions is-centered">
-                    {vacancies.map(vacancy => {
-                      const active = openedVacancy && openedVacancy.id === vacancy.id;
-                      return (
-                        <Clickable
-                          key={vacancy.id}
-                          tag="div"
-                          className={cn('position', { 'is-active': active })}
-                          onClick={this.handleVacancyToggle.bind(null, vacancy)}
-                        >
-                          {vacancy.title} <Icon name={`chevron-circle-${active ? 'up' : 'down'}`} />
-                        </Clickable>
-                      );
-                    })}
+                {openedVacancy && (
+                  <div id="position-description" className="position-description">
+                    <div className="name">{openedVacancy.title}</div>
+                    {openedVacancy.description}
+                    <br />
+                    <MailLink />
                   </div>
-                  {openedVacancy && (
-                    <div id="position-description" className="position-description">
-                      <div className="name">{openedVacancy.title}</div>
-                      {openedVacancy.description}
-                      <br />
-                      <MailLink />
-                    </div>
-                  )}
-                </OutsideClickable>
+                )}
+              </OutsideClickable>
+            </div>
+            <hr />
+          </>
+        )}
+        {team && team.length && (
+          <>
+            <div className="team">
+              <div className="title">
+                <Text id="about.team" />
               </div>
-              <hr />
-            </>
-          )}
-        {team &&
-          team.length && (
-            <>
-              <div className="team">
-                <div className="title">
-                  <Text id="about.team" />
-                </div>
-                {teamChunks.map((data, index) => (
-                  // eslint-disable-next-line react/no-array-index-key
-                  <TeamRow key={index} data={data} />
-                ))}
-                <Text id="about.thanks">
-                  {(thanks, hanna, forLogo, daniil, forSoundtrack) => (
-                    <div className="thanks">
-                      {thanks}
-                      <b>{hanna}</b>
-                      {forLogo}
-                      <b>{daniil}</b>
-                      {forSoundtrack}
-                    </div>
-                  )}
-                </Text>
-              </div>
-              <hr />
-            </>
-          )}
+              {teamChunks.map((data, index) => (
+                // eslint-disable-next-line react/no-array-index-key
+                <TeamRow key={index} data={data} />
+              ))}
+              <Text id="about.thanks">
+                {(thanks, hanna, forLogo, daniil, forSoundtrack) => (
+                  <div className="thanks">
+                    {thanks}
+                    <b>{hanna}</b>
+                    {forLogo}
+                    <b>{daniil}</b>
+                    {forSoundtrack}
+                  </div>
+                )}
+              </Text>
+            </div>
+            <hr />
+          </>
+        )}
         <Text id="about.contact">
           {(findUs, mailToUs, mailToDev, mailToHelp, weOn, talaka) => (
             <div className="contact">

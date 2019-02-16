@@ -91,43 +91,40 @@ const PublicArticle = ({
               )} */}
               <PublishInfo publishAt={publishAt} published={published} />
             </div>
-            {canEditArticle &&
-              !published && (
-                <Button
-                  className="article__info-now button is-small is-primary"
-                  onClick={updateArticle.bind(null, {
-                    _id: articleId,
-                    publishAt: Date.now(),
-                  })}
-                >
-                  <Text id="article.publish-now" />
-                </Button>
-              )}
-          </div>
-          {otherLocales &&
-            !!otherLocales.length && (
-              <div className="article__info-langs">
-                <span>
-                  <Text id="article.read-in" />
-                  {': '}
-                  {otherLocales.map(({ locale, slug, title: linkTitle }) => (
-                    <Link key={locale} route={ROUTES_NAMES.article} params={{ slug }}>
-                      <a className="article__info-lang tag" title={linkTitle}>
-                        {LOCALES[locale].toLowerCase()}
-                      </a>
-                    </Link>
-                  ))}
-                </span>
-              </div>
+            {canEditArticle && !published && (
+              <Button
+                className="article__info-now button is-small is-primary"
+                onClick={updateArticle.bind(null, {
+                  _id: articleId,
+                  publishAt: Date.now(),
+                })}
+              >
+                <Text id="article.publish-now" />
+              </Button>
             )}
+          </div>
+          {otherLocales && !!otherLocales.length && (
+            <div className="article__info-langs">
+              <span>
+                <Text id="article.read-in" />
+                {': '}
+                {otherLocales.map(({ locale, slug, title: linkTitle }) => (
+                  <Link key={locale} route={ROUTES_NAMES.article} params={{ slug }}>
+                    <a className="article__info-lang tag" title={linkTitle}>
+                      {LOCALES[locale].toLowerCase()}
+                    </a>
+                  </Link>
+                ))}
+              </span>
+            </div>
+          )}
         </div>
 
-        {type === 'text' &&
-          imageFolderUrl && (
-            <figure className="article__imagewrapper image">
-              <img src={imageFolderUrl} alt={localize('article.article-image', lang)} />
-            </figure>
-          )}
+        {type === 'text' && imageFolderUrl && (
+          <figure className="article__imagewrapper image">
+            <img src={imageFolderUrl} alt={localize('article.article-image', lang)} />
+          </figure>
+        )}
 
         {type === 'video' && <VideoPlayer videoId={video.videoId} />}
 

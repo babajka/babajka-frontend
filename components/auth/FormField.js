@@ -25,13 +25,11 @@ const FormField = ({ id, label, icon, children, pending, touched, error, success
           </p>
         )}
       </ErrorMessage>
-      {touched &&
-        !error &&
-        successText && (
-          <p className="help is-success">
-            <Text id={successText} />
-          </p>
-        )}
+      {touched && !error && successText && (
+        <p className="help is-success">
+          <Text id={successText} />
+        </p>
+      )}
     </div>
   );
 };

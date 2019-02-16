@@ -283,14 +283,13 @@ class EditArticleForm extends Component {
                             <p className="help">
                               <Text id={`article.${label || id}`} />
                             </p>
-                            {type === 'select' &&
-                              controlProps.options && (
-                                <Select
-                                  value={formApi.values[id]}
-                                  onChange={formApi.setValue.bind(null, id)}
-                                  {...controlProps}
-                                />
-                              )}
+                            {type === 'select' && controlProps.options && (
+                              <Select
+                                value={formApi.values[id]}
+                                onChange={formApi.setValue.bind(null, id)}
+                                {...controlProps}
+                              />
+                            )}
                             {type === 'custom' &&
                               render({
                                 className: cn('input', { 'is-danger': hasError }),
