@@ -11,8 +11,8 @@ import VideoPlayer from 'components/common/VideoPlayer';
 import Button from 'components/common/Button';
 import { MetaLocale } from 'components/common/Metatags';
 
-import { actions, selectors } from 'redux/ducks/articles';
-import { selectors as authSelectors } from 'redux/ducks/auth';
+import { articlesActions, articlesSelectors } from 'redux/ducks/articles';
+import { authSelectors } from 'redux/ducks/auth';
 import { Router, ROUTES_NAMES } from 'routes';
 import { LOCALES } from 'constants';
 import { EXPORT_TO_NETWORKS } from 'constants/social';
@@ -27,13 +27,13 @@ import ShareToButton from './ShareToButton';
 import EditLink from './EditLink';
 
 const mapStateToProps = (state, { articleLocale }) => ({
-  otherLocales: selectors.getOtherLocales(state, articleLocale),
+  otherLocales: articlesSelectors.getOtherLocales(state, articleLocale),
   // TODO(andemerie): check if the following permission works as required
   canEditArticle: authSelectors.getPermissions(state).canManageArticles,
 });
 
 const mapDispatchToProps = {
-  updateArticle: actions.update,
+  updateArticle: articlesActions.update,
 };
 
 // TODO(andemerie): finish styles for this page
@@ -181,7 +181,7 @@ const PublicArticle = ({
                 </li>
                 <li>
                   <ActionWithConfirm
-                    action={actions.remove.bind(null, articleId)}
+                    action={articlesActions.remove.bind(null, articleId)}
                     successCallback={() => Router.replaceRoute(ROUTES_NAMES.main, { lang })}
                     render={({ onClick }) => (
                       <Clickable

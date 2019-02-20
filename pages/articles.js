@@ -13,7 +13,7 @@ import { getMainArticlesRows } from 'utils/getters';
 import { populateRequest } from 'utils/request';
 
 import { ROW_SIZE, COMPLEX_ROW_SIZE } from 'constants/articles';
-import { actions as articlesActions, selectors as articlesSelectors } from 'redux/ducks/articles';
+import { articlesActions, articlesSelectors } from 'redux/ducks/articles';
 
 import 'styles/legacy/main-page/main-page.scss';
 

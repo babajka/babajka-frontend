@@ -127,7 +127,7 @@ const getAuthors = (state, lang) => getLocalizedAuthors(getRawAuthors(state), la
 const getRawCollections = state => getState(state).collections;
 const getColletions = (state, lang) => getLocalizedCollections(getRawCollections(state), lang);
 
-export const selectors = {
+export const articlesSelectors = {
   getAll,
   getTotal,
   getCachedArticlesLength,
@@ -146,7 +146,7 @@ export const selectors = {
 };
 
 // actions
-export const actions = {
+export const articlesActions = {
   initialFetch: () => ({
     type: INITIAL_FETCH,
     payload: makeRequest(api.articles.getChunk({ skip: 0, take: MAIN_PAGE_SIZE })),

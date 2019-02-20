@@ -4,7 +4,7 @@ import { withRouter } from 'next/router';
 import { connect } from 'react-redux';
 import cn from 'classnames';
 
-import { actions, selectors } from 'redux/ducks/auth';
+import { authActions, authSelectors } from 'redux/ducks/auth';
 import { Router, NAVBAR_ROUTES, ROUTES_NAMES } from 'routes';
 import { LOCALES, LANGS } from 'constants';
 
@@ -16,10 +16,12 @@ import Text from 'components/common/Text';
 import 'styles/legacy/navbar/navbar.scss';
 
 const mapStateToProps = state => ({
-  user: selectors.getUser(state),
-  permissions: selectors.getPermissions(state),
+  user: authSelectors.getUser(state),
+  permissions: authSelectors.getPermissions(state),
 });
-const mapDispatchToProps = { signOut: actions.signOut };
+const mapDispatchToProps = {
+  signOut: authActions.signOut,
+};
 
 const getLocaleSwitchUrl = (path, lang) => {
   const parts = path.split('/');

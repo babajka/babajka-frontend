@@ -8,7 +8,7 @@ import Link from 'components/common/Link';
 import Icon from 'components/common/Icon';
 import LocaleContext from 'components/common/LocaleContext';
 
-import { selectors as authSelectors } from 'redux/ducks/auth';
+import { authSelectors } from 'redux/ducks/auth';
 import { ArticleModel } from 'utils/customPropTypes';
 import { ROUTES_NAMES } from 'routes';
 

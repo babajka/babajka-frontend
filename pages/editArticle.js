@@ -6,16 +6,16 @@ import { withRouter } from 'next/router';
 import Text from 'components/common/Text';
 import EditArticleForm from 'components/articles/EditArticleForm';
 
-import { actions as articlesActions, selectors } from 'redux/ducks/articles';
-import { selectors as authSelectors } from 'redux/ducks/auth';
+import { articlesActions, articlesSelectors } from 'redux/ducks/articles';
+import { authSelectors } from 'redux/ducks/auth';
 import { populateRequest } from 'utils/request';
 import { LangType, PermissionsShape } from 'utils/customPropTypes';
 import { Router, ROUTES_NAMES } from 'routes';
 
 const mapStateToProps = (state, { routerQuery: { slug, articleLocale } }) => ({
-  article: selectors.getCurrent(state, slug),
-  articleLocale: articleLocale || selectors.getLocaleBySlug(state, slug),
-  error: selectors.isError(state),
+  article: articlesSelectors.getCurrent(state, slug),
+  articleLocale: articleLocale || articlesSelectors.getLocaleBySlug(state, slug),
+  error: articlesSelectors.isError(state),
   permissions: authSelectors.getPermissions(state),
 });
 

@@ -48,13 +48,13 @@ const getPermissions = state => {
   return user ? user.permissions : {};
 };
 
-export const selectors = {
+export const authSelectors = {
   getUser,
   getPermissions,
 };
 
 // actions
-export const actions = {
+export const authActions = {
   getCurrentUser: () => ({
     type: GET_CURRENT_USER,
     payload: makeRequest(api.users.getCurrent),
