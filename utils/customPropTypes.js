@@ -16,7 +16,7 @@ export const AuthorModel = {
   firstName: PropTypes.string.isRequired,
   lastName: PropTypes.string.isRequired,
   displayName: PropTypes.string.isRequired,
-  bio: PropTypes.string.isRequired,
+  bio: PropTypes.string,
   email: PropTypes.string.isRequired,
   role: PropTypes.string.isRequired,
   imageUrl: PropTypes.string.isRequired,
@@ -68,8 +68,23 @@ export const ArticleShape = PropTypes.shape(ArticleModel);
 
 export const ArticlesArray = PropTypes.arrayOf(ArticleShape);
 
-// TODO: sync
 export const PermissionsShape = PropTypes.shape({
-  canManageArticles: PropTypes.bool.isRequired,
   canCreateArticle: PropTypes.bool.isRequired,
+  canManageArticles: PropTypes.bool.isRequired,
+  canManageUsers: PropTypes.bool.isRequired,
+});
+
+const ROLES = ['author', 'regular'];
+
+// TODO: sync
+export const UserShape = PropTypes.shape({
+  firstName: PropTypes.string.isRequired,
+  lastName: PropTypes.string.isRequired,
+  displayName: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  role: PropTypes.oneOf(ROLES).isRequired,
+  active: PropTypes.bool.isRequired,
+  bio: PropTypes.string,
+  imageUrl: PropTypes.string,
+  permissions: PermissionsShape.isRequired,
 });

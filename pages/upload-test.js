@@ -4,25 +4,19 @@ import ImageUploader from 'components/common/ImageUploader';
 
 import api from 'constants/api';
 
-import { actions as auth } from 'redux/ducks/auth';
-import request from 'utils/request';
+import { makeRequest } from 'utils/request';
 
 class TestUploadPage extends Component {
-  static getInitialProps(ctx) {
-    return request.populate(ctx, [auth.getCurrentUser]);
-  }
-
-  static layoutProps = {
+  static getLayoutProps = () => ({
     hideFooter: true,
-  };
+  });
 
   state = {
     images: [],
   };
 
   componentDidMount() {
-    request
-      .fetch(api.core.uploads)
+    makeRequest(api.core.uploads)
       .then(({ resources }) => resources.reverse().map(({ url }) => url))
       .then(images => this.setState({ images }));
   }

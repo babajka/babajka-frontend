@@ -23,28 +23,34 @@ import { localize } from 'components/common/Text';
 import { DEFAULT_LOCALE } from 'constants';
 import { getGoogleAnalyticsID } from 'constants/social';
 
+import { populateRequest } from 'utils/request';
 import { replaceLocale } from 'utils/formatters';
-import { LangType } from 'utils/customPropTypes';
+import { LangType, UserShape } from 'utils/customPropTypes';
 import host from 'utils/host';
 import initStore from 'redux/store';
+
+import { actions as auth } from 'redux/ducks/auth';
+
+const getEmptyObject = () => ({});
 
 class Root extends App {
   static propTypes = {
     router: PropTypes.shape({
       query: PropTypes.shape({
         lang: LangType,
-      }),
+      }).isRequired,
     }).isRequired,
+    user: UserShape,
   };
 
   static async getInitialProps({ Component, ctx }) {
     let pageProps = {};
-
+    const [{ user }] = await populateRequest(ctx, auth.getCurrentUser);
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx);
     }
 
-    return { pageProps };
+    return { user, pageProps };
   }
 
   componentDidMount() {
@@ -59,10 +65,14 @@ class Root extends App {
   }
 
   render() {
-    const { Component, pageProps, store, router } = this.props;
-    const { title } = Component.layoutProps;
+    const { Component, pageProps, store, router, user } = this.props;
+    const getLayoutProps = Component.getLayoutProps || getEmptyObject;
     const { lang } = router.query;
     const locale = lang || DEFAULT_LOCALE;
+
+    const defaultPageProps = { user, lang: locale, routerQuery: router.query };
+    const { title = 'meta.title' } = getLayoutProps(defaultPageProps);
+
     return (
       <Container>
         <Provider store={store}>
@@ -77,7 +87,7 @@ class Root extends App {
               <link rel="icon" type="image/png" href="/static/images/logo/favicon-colored.png" />
             </Head>
             <CoreLayout {...Component.layoutProps}>
-              <Component {...pageProps} lang={locale} routerQuery={router.query} />
+              <Component {...defaultPageProps} {...pageProps} />
             </CoreLayout>
           </LocaleContext.Provider>
         </Provider>

@@ -3,7 +3,7 @@ import createReducer from 'type-to-reducer';
 import api from 'constants/api';
 import { DEFAULT_LOCALE } from 'constants';
 
-import request from 'utils/request';
+import { makeRequest } from 'utils/request';
 import { defaultReducer } from 'utils/redux';
 import { getDiary } from 'utils/getters';
 
@@ -37,25 +37,6 @@ export default createReducer(
   initialState
 );
 
-// actions
-export const actions = {
-  getByDay: (
-    locale = DEFAULT_LOCALE,
-    month = new Date().getMonth() + 1,
-    day = new Date().getDate()
-  ) => ({
-    type: GET_BY_DAY,
-    payload: request.fetch(api.diary.getByDay(locale, month, day)),
-  }),
-  getClosest: closest => (dispatch, getState) => {
-    const { month, day } = getState().diary[closest];
-    dispatch({
-      type: GET_BY_DAY,
-      payload: request.fetch(api.diary.getByDay(DEFAULT_LOCALE, month, day)),
-    });
-  },
-};
-
 // selectors
 const getState = state => state.diary;
 const getCurrent = state => getState(state).data;
@@ -67,4 +48,24 @@ export const selectors = {
   getState,
   isPending,
   isError,
+};
+
+// actions
+export const actions = {
+  getByDay: (
+    locale = DEFAULT_LOCALE,
+    month = new Date().getMonth() + 1,
+    day = new Date().getDate()
+  ) => ({
+    type: GET_BY_DAY,
+    payload: makeRequest(api.diary.getByDay(locale, month, day)),
+  }),
+  getClosest: closest => (dispatch, getStore) => {
+    const diary = getState(getStore());
+    const { month, day } = diary[closest];
+    dispatch({
+      type: GET_BY_DAY,
+      payload: makeRequest(api.diary.getByDay(DEFAULT_LOCALE, month, day)),
+    });
+  },
 };

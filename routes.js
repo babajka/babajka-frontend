@@ -59,6 +59,10 @@ const ROUTES = [
     name: 'editArticle',
     pattern: 'article/:slug/:mode(edit)',
   },
+  {
+    name: 'status',
+    pattern: 'status/:code(404|500)',
+  },
 ].map(({ name, pattern = name, page = name }) => ({
   name,
   pattern: `/:lang(${langs})/${pattern}`,

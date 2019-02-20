@@ -10,11 +10,10 @@ import ArticlesComplexRow from 'components/articles/ArticlesComplexRow';
 
 import { ArticlesArray } from 'utils/customPropTypes';
 import { getMainArticlesRows } from 'utils/getters';
-import request from 'utils/request';
+import { populateRequest } from 'utils/request';
 
 import { ROW_SIZE, COMPLEX_ROW_SIZE } from 'constants/articles';
 import { actions as articlesActions, selectors as articlesSelectors } from 'redux/ducks/articles';
-import { actions as auth } from 'redux/ducks/auth';
 
 import 'styles/legacy/main-page/main-page.scss';
 
@@ -22,7 +21,6 @@ const mapStateToProps = (state, { lang }) => ({
   articles: articlesSelectors.getAll(state, lang),
   articlesPending: articlesSelectors.isPending(state),
   total: articlesSelectors.getTotal(state),
-  cachedLength: articlesSelectors.getCachedArticlesLength(state),
   error: articlesSelectors.isError(state),
 });
 
@@ -38,33 +36,25 @@ class ArticlesPage extends Component {
     getChunk: PropTypes.func.isRequired,
     mergeCached: PropTypes.func.isRequired,
     total: PropTypes.number.isRequired,
-    cachedLength: PropTypes.number.isRequired,
   };
 
   static getInitialProps(ctx) {
-    // TODO: somehow extract getCurrentUser to populate method
-    const initialRequests = [auth.getCurrentUser, articlesActions.initialFetch];
-    return request.populate(ctx, initialRequests);
+    return populateRequest(ctx, articlesActions.initialFetch);
   }
 
-  static layoutProps = {
+  static getLayoutProps = () => ({
     title: 'header.articles',
-  };
+  });
 
   componentDidMount() {
-    const { getChunk, articles, total } = this.props;
-    if (articles.length < total) {
-      getChunk(articles.length);
-    }
+    const { getChunk } = this.props;
+    getChunk();
   }
 
   handleLoadMore = () => {
-    const { total, cachedLength, articles, getChunk, mergeCached } = this.props;
+    const { getChunk, mergeCached } = this.props;
     mergeCached();
-    const skip = articles.length + cachedLength;
-    if (skip < total) {
-      getChunk(skip);
-    }
+    getChunk();
   };
 
   render() {

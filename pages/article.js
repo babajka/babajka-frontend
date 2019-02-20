@@ -6,15 +6,12 @@ import { MetaTitle, MetaDescription, MetaImage } from 'components/common/Metatag
 import PublicArticle from 'components/articles/PublicArticle';
 
 import { actions as articlesActions, selectors } from 'redux/ducks/articles';
-import { actions as auth, selectors as authSelectors } from 'redux/ducks/auth';
-import request from 'utils/request';
+import { populateRequest } from 'utils/request';
 import { ArticleShape, LangType } from 'utils/customPropTypes';
 
 const mapStateToProps = (state, { routerQuery: { slug, articleLocale } }) => ({
   article: selectors.getCurrent(state, slug),
   articleLocale: articleLocale || selectors.getLocaleBySlug(state, slug),
-  error: selectors.isError(state),
-  permissions: authSelectors.getPermissions(state),
 });
 
 class ArticlePage extends Component {
@@ -32,18 +29,15 @@ class ArticlePage extends Component {
     article: null,
   };
 
-  static layoutProps = {
+  static layoutProps = () => ({
     title: 'header.articles',
-  };
+  });
 
   static getInitialProps(ctx) {
     const {
       query: { slug },
     } = ctx;
-    return request.populate(
-      ctx,
-      [auth.getCurrentUser, slug && articlesActions.fetchBySlug.bind(null, slug)].filter(Boolean)
-    );
+    return populateRequest(ctx, articlesActions.fetchBySlug.bind(null, slug));
   }
 
   render() {

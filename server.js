@@ -48,7 +48,9 @@ app.prepare().then(() => {
   });
 
   server.listen(port, err => {
-    if (err) throw err;
+    if (err) {
+      throw err;
+    }
     console.log(`> Environment is:\t${ENV}`);
     console.log(`> Using Backend on\t${BACKEND_URL}`);
     console.log(`> Ready on\t\thttp://localhost:${port}`);

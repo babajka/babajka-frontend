@@ -9,8 +9,6 @@ import MailLink from 'components/common/MailLink';
 import OutsideClickable from 'components/common/OutsideClickable';
 import TeamRow, { ROW_SIZE } from 'components/about/TeamRow';
 
-import { actions as auth } from 'redux/ducks/auth';
-import request from 'utils/request';
 import { getLocalizedTeam, getLocalizedVacancies } from 'utils/getters';
 import { LangType } from 'utils/customPropTypes';
 
@@ -20,17 +18,13 @@ import rawVacancies from 'data/vacancies.json';
 import 'styles/legacy/about/about.scss';
 
 class AboutPage extends Component {
-  static getInitialProps(ctx) {
-    return request.populate(ctx, [auth.getCurrentUser]);
-  }
-
   static propTypes = {
     lang: LangType.isRequired,
   };
 
-  static layoutProps = {
+  static getLayoutProps = () => ({
     title: 'header.about',
-  };
+  });
 
   state = {
     openedVacancy: null,
