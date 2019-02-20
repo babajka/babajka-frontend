@@ -5,13 +5,13 @@ import { connect } from 'react-redux';
 import { MetaTitle, MetaDescription, MetaImage } from 'components/common/Metatags';
 import PublicArticle from 'components/articles/PublicArticle';
 
-import { actions as articlesActions, selectors } from 'redux/ducks/articles';
+import { articlesActions, articlesSelectors } from 'redux/ducks/articles';
 import { populateRequest } from 'utils/request';
 import { ArticleShape, LangType } from 'utils/customPropTypes';
 
 const mapStateToProps = (state, { routerQuery: { slug, articleLocale } }) => ({
-  article: selectors.getCurrent(state, slug),
-  articleLocale: articleLocale || selectors.getLocaleBySlug(state, slug),
+  article: articlesSelectors.getCurrent(state, slug),
+  articleLocale: articleLocale || articlesSelectors.getLocaleBySlug(state, slug),
 });
 
 class ArticlePage extends Component {

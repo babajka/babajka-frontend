@@ -9,7 +9,7 @@ import FormWrapper from 'components/common/FormWrapper';
 import Button from 'components/common/Button';
 import Text from 'components/common/Text';
 
-import { actions } from 'redux/ducks/auth';
+import { authActions } from 'redux/ducks/auth';
 
 import FormField from './FormField';
 
@@ -86,7 +86,7 @@ const LoginForm = ({ next, allowSignUp }) => (
     <FormWrapper
       initialValues={LOGIN_INITIAL_FORM}
       validate={loginValidator}
-      action={actions.signIn}
+      action={authActions.signIn}
       callback={() => Router.pushRoute(next)}
     >
       {({ values, errors, touched, isSubmitting }) => (

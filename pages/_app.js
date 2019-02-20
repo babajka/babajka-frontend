@@ -29,7 +29,7 @@ import { LangType, UserShape } from 'utils/customPropTypes';
 import host from 'utils/host';
 import initStore from 'redux/store';
 
-import { actions as auth } from 'redux/ducks/auth';
+import { authActions } from 'redux/ducks/auth';
 
 const getEmptyObject = () => ({});
 
@@ -45,7 +45,7 @@ class Root extends App {
 
   static async getInitialProps({ Component, ctx }) {
     let pageProps = {};
-    const [{ user }] = await populateRequest(ctx, auth.getCurrentUser);
+    const [{ user }] = await populateRequest(ctx, authActions.getCurrentUser);
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx);
     }

@@ -43,7 +43,7 @@ const getCurrent = state => getState(state).data;
 const isPending = state => getState(state).pending;
 const isError = state => getState(state).error;
 
-export const selectors = {
+export const diarySelectors = {
   getCurrent,
   getState,
   isPending,
@@ -51,7 +51,7 @@ export const selectors = {
 };
 
 // actions
-export const actions = {
+export const diaryActions = {
   getByDay: (
     locale = DEFAULT_LOCALE,
     month = new Date().getMonth() + 1,

@@ -7,7 +7,7 @@ import get from 'lodash/get';
 import noop from 'lodash/noop';
 import omit from 'lodash/omit';
 
-import { actions, selectors } from 'redux/ducks/articles';
+import { articlesActions, articlesSelectors } from 'redux/ducks/articles';
 import { AuthorsArray, BrandsArray, CollectionsArray, LangType } from 'utils/customPropTypes';
 import { required, secureUrl, validDate, hasErrors } from 'utils/validators';
 import { Router, ROUTES_NAMES } from 'routes';
@@ -25,20 +25,20 @@ import EditLocaleForm, { localesValidator, localeObject } from './EditLocaleForm
 import Author from './Author';
 
 const mapStateToProps = state => ({
-  article: selectors.getRawCurrent(state),
-  brands: selectors.getBrands(state),
-  authors: selectors.getAuthors(state),
-  collections: selectors.getColletions(state),
-  pending: selectors.isPending(state),
-  serverErrors: selectors.getErrors(state) || {},
+  article: articlesSelectors.getRawCurrent(state),
+  brands: articlesSelectors.getBrands(state),
+  authors: articlesSelectors.getAuthors(state),
+  collections: articlesSelectors.getColletions(state),
+  pending: articlesSelectors.isPending(state),
+  serverErrors: articlesSelectors.getErrors(state) || {},
 });
 
 const mapDispatchToProps = {
-  fetchBrands: actions.fetchBrands,
-  fetchAuthors: actions.fetchAuthors,
-  fetchCollections: actions.fetchCollections,
-  createArticle: actions.create,
-  updateArticle: actions.update,
+  fetchBrands: articlesActions.fetchBrands,
+  fetchAuthors: articlesActions.fetchAuthors,
+  fetchCollections: articlesActions.fetchCollections,
+  createArticle: articlesActions.create,
+  updateArticle: articlesActions.update,
 };
 
 const initArticle = {

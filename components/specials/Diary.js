@@ -9,7 +9,7 @@ import TextWithBr from 'components/common/TextWithBr';
 import Clickable from 'components/common/Clickable';
 import Icon from 'components/common/Icon';
 
-import { actions as diaryActions, selectors as diarySelectors } from 'redux/ducks/diary';
+import { diaryActions, diarySelectors } from 'redux/ducks/diary';
 import { isSameDay } from 'utils/validators';
 import { formatDate } from 'utils/formatters';
 
