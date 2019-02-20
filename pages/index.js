@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 class MainPage extends Component {
   static propTypes = {};
 
-  static layoutProps = {
+  static getLayoutProps = () => ({
     title: 'header.main',
-  };
+  });
 
   componentDidMount() {}
 

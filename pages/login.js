@@ -1,42 +1,30 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { withRouter } from 'next/router';
 import { Router, ROUTES_NAMES } from 'routes';
 
 import LoginForm from 'components/auth/LoginForm';
 
-import { actions, selectors } from 'redux/ducks/auth';
-import request from 'utils/request';
-import { LangType } from 'utils/customPropTypes';
+import { LangType, UserShape } from 'utils/customPropTypes';
 
 import 'styles/legacy/login-page/login-page.scss';
 
-const mapStateToProps = state => ({
-  user: selectors.getUser(state),
-});
-
 class LoginPage extends Component {
   static propTypes = {
-    user: PropTypes.shape({}),
+    user: UserShape,
     lang: LangType.isRequired,
-    router: PropTypes.shape({
-      query: PropTypes.shape({
-        next: PropTypes.string,
-        invite: PropTypes.string,
-      }).isRequired,
+    routerQuery: PropTypes.shape({
+      next: PropTypes.string,
+      invite: PropTypes.string,
     }).isRequired,
   };
 
-  static defaultProps = { user: null };
-
-  static getInitialProps(ctx) {
-    return request.populate(ctx, [actions.getCurrentUser]);
-  }
-
-  static layoutProps = {
-    title: 'auth.signIn',
+  static defaultProps = {
+    user: null,
   };
+
+  static getLayoutProps = () => ({
+    title: 'auth.signIn',
+  });
 
   componentDidMount() {
     const { user, lang } = this.props;
@@ -46,11 +34,10 @@ class LoginPage extends Component {
   }
 
   render() {
-    const { router, lang } = this.props;
-
     const {
-      query: { next = `/${lang}/articles`, invite },
-    } = router;
+      lang,
+      routerQuery: { next = `/${lang}/articles`, invite },
+    } = this.props;
 
     return (
       <div className="page-content">
@@ -62,4 +49,4 @@ class LoginPage extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(LoginPage));
+export default LoginPage;

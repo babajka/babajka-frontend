@@ -126,7 +126,7 @@
     },
     {
       "path": ".next/static/**/editArticle.js",
-      "maxSize": "200 kB"
+      "maxSize": "230 kB"
     },
     {
       "path": ".next/static/**/about.js",

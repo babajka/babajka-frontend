@@ -2,7 +2,7 @@ import createReducer from 'type-to-reducer';
 
 import api from 'constants/api';
 import { defaultReducer } from 'utils/redux';
-import request from 'utils/request';
+import { makeRequest } from 'utils/request';
 import {
   getLocalizedArticles,
   getLocalizedArticle,
@@ -95,52 +95,6 @@ export default createReducer(
   initialState
 );
 
-// actions
-export const actions = {
-  initialFetch: () => ({
-    type: INITIAL_FETCH,
-    payload: request.fetch(api.articles.getChunk({ skip: 0, take: MAIN_PAGE_SIZE })),
-  }),
-  fetchChunk: (skip = 0) => ({
-    type: FETCH_CHUNK,
-    payload: request.fetch(api.articles.getChunk({ skip, take: PAGE_SIZE })),
-  }),
-  mergeCached: () => ({
-    type: MERGE_CACHED,
-  }),
-  fetchBySlug: slug => ({
-    type: FETCH_BY_SLUG,
-    payload: request.fetch(api.articles.getBySlug(slug)),
-  }),
-  fetchBrands: () => ({
-    type: FETCH_BRANDS,
-    payload: request.fetch(api.articles.getBrands),
-  }),
-  fetchAuthors: () => ({
-    type: FETCH_AUTHORS,
-    payload: request.fetch(api.articles.getAuthors),
-  }),
-  fetchCollections: () => ({
-    type: FETCH_COLLECTIONS,
-    payload: request.fetch(api.articles.getColletions),
-  }),
-  create: article => ({
-    type: CREATE,
-    payload: request.fetch(api.articles.create, 'POST', article),
-    meta: {
-      ga: true,
-    },
-  }),
-  update: article => ({
-    type: UPDATE,
-    payload: request.fetch(api.articles.update(article._id), 'PUT', article),
-  }),
-  remove: articleId => ({
-    type: REMOVE,
-    payload: request.fetch(api.articles.remove(articleId), 'DELETE'),
-  }),
-};
-
 // selectors
 const getState = state => state.articles;
 const isPending = state => getState(state).pending;
@@ -150,7 +104,8 @@ const getErrors = state => getState(state).errors;
 const getRawArticles = state => getState(state).data;
 const getAll = (state, lang) => getLocalizedArticles(getRawArticles(state), lang);
 const getTotal = state => getState(state).total;
-const getCachedArticlesLength = state => getState(state).nextData;
+const getCurrentArticlesLength = state => getRawArticles(state).length;
+const getCachedArticlesLength = state => getState(state).nextData.length;
 
 const getRawCurrent = state => getState(state).current;
 const getLocaleBySlug = (state, slug) => getState(state).localeBySlug[slug];
@@ -188,4 +143,61 @@ export const selectors = {
   isPending,
   isError,
   getErrors,
+};
+
+// actions
+export const actions = {
+  initialFetch: () => ({
+    type: INITIAL_FETCH,
+    payload: makeRequest(api.articles.getChunk({ skip: 0, take: MAIN_PAGE_SIZE })),
+  }),
+  fetchChunk: () => (dispatch, getStore) => {
+    const store = getStore();
+    const total = getTotal(store);
+    const currentLength = getCurrentArticlesLength(store);
+    const cachedLength = getCachedArticlesLength(store);
+
+    const skip = currentLength + cachedLength;
+    if (skip < total) {
+      return dispatch({
+        type: FETCH_CHUNK,
+        payload: makeRequest(api.articles.getChunk({ skip, take: PAGE_SIZE })),
+      });
+    }
+    return Promise.resolve();
+  },
+  mergeCached: () => ({
+    type: MERGE_CACHED,
+  }),
+  fetchBySlug: slug => ({
+    type: FETCH_BY_SLUG,
+    payload: makeRequest(api.articles.getBySlug(slug)),
+  }),
+  fetchBrands: () => ({
+    type: FETCH_BRANDS,
+    payload: makeRequest(api.articles.getBrands),
+  }),
+  fetchAuthors: () => ({
+    type: FETCH_AUTHORS,
+    payload: makeRequest(api.articles.getAuthors),
+  }),
+  fetchCollections: () => ({
+    type: FETCH_COLLECTIONS,
+    payload: makeRequest(api.articles.getColletions),
+  }),
+  create: article => ({
+    type: CREATE,
+    payload: makeRequest(api.articles.create, 'POST', article),
+    meta: {
+      ga: true,
+    },
+  }),
+  update: article => ({
+    type: UPDATE,
+    payload: makeRequest(api.articles.update(article._id), 'PUT', article),
+  }),
+  remove: articleId => ({
+    type: REMOVE,
+    payload: makeRequest(api.articles.remove(articleId), 'DELETE'),
+  }),
 };

@@ -7,8 +7,8 @@ import Text from 'components/common/Text';
 import EditArticleForm from 'components/articles/EditArticleForm';
 
 import { actions as articlesActions, selectors } from 'redux/ducks/articles';
-import { actions as auth, selectors as authSelectors } from 'redux/ducks/auth';
-import request from 'utils/request';
+import { selectors as authSelectors } from 'redux/ducks/auth';
+import { populateRequest } from 'utils/request';
 import { LangType, PermissionsShape } from 'utils/customPropTypes';
 import { Router, ROUTES_NAMES } from 'routes';
 
@@ -35,18 +35,18 @@ class EditArticlePage extends Component {
     articleLocale: null,
   };
 
-  static layoutProps = {
-    title: 'header.createArticle',
-  };
+  static getLayoutProps = ({ routerQuery: { mode } }) => ({
+    title: mode === 'create' ? 'header.createArticle' : 'header.articles',
+  });
 
   static getInitialProps(ctx) {
     const {
-      query: { slug },
+      query: { slug, mode },
     } = ctx;
-    return request.populate(
-      ctx,
-      [auth.getCurrentUser, slug && articlesActions.fetchBySlug.bind(null, slug)].filter(Boolean)
-    );
+    if (mode === 'edit') {
+      return populateRequest(ctx, articlesActions.fetchBySlug.bind(null, slug));
+    }
+    return {};
   }
 
   // FIXME: find better way to close routes

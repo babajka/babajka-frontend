@@ -51,7 +51,7 @@ const initLocale = {
   content: defaultContent,
 };
 
-const getFields = ({ authors, collections, lang }) => [
+const getFields = ({ authors, collections, lang, brands }) => [
   {
     id: 'type',
     type: 'select',
@@ -83,15 +83,15 @@ const getFields = ({ authors, collections, lang }) => [
       clerable: true,
     },
   },
-  // {
-  //   id: 'brandSlug',
-  //   label: 'brand',
-  //   type: 'select',
-  //   controlProps: {
-  //     options: brands && brands.map(({ slug: id, name: label }) => ({ id, label })),
-  //     size: 'l',
-  //   },
-  // },
+  {
+    id: 'brandSlug',
+    label: 'brand',
+    type: 'select',
+    controlProps: {
+      options: brands && brands.map(({ slug: id, name: label }) => ({ id, label })),
+      size: 'l',
+    },
+  },
   {
     id: 'collectionSlug',
     label: 'collection',
