@@ -17,7 +17,7 @@ module.exports = {
         'diary',
         'utils',
         'i18n',
-        'main',
+        'home',
       ],
     ],
     'scope-empty': [2, 'never'],

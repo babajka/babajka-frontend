@@ -42,7 +42,10 @@ class AboutPage extends Component {
   render() {
     const { lang } = this.props;
     const { openedVacancy } = this.state;
-    const vacancies = getLocalizedVacancies(rawVacancies, lang);
+    const vacancies = getLocalizedVacancies(rawVacancies, lang).map((vac, index) => ({
+      ...vac,
+      id: index,
+    }));
     const team = getLocalizedTeam(rawTeam, lang);
     const teamChunks = chunk(team, ROW_SIZE);
 
@@ -53,7 +56,7 @@ class AboutPage extends Component {
           <Text id="about.goal" />
         </div>
         <hr />
-        {vacancies && vacancies.length && (
+        {vacancies.length && (
           <>
             <div className="helpus">
               <div className="title">
@@ -89,7 +92,7 @@ class AboutPage extends Component {
             <hr />
           </>
         )}
-        {team && team.length && (
+        {team.length && (
           <>
             <div className="team">
               <div className="title">

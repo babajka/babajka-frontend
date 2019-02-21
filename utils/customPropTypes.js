@@ -1,6 +1,19 @@
 import PropTypes from 'prop-types';
 
 import { LOCALES } from 'constants';
+import { TOPICS } from 'constants/home';
+
+export const ShortUserShape = PropTypes.shape({
+  id: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+});
+
+export const MetadataShape = PropTypes.shape({
+  createdAt: PropTypes.string.isRequired,
+  updatedAt: PropTypes.string.isRequired,
+  createdBy: ShortUserShape.isRequired,
+  updatedBy: ShortUserShape.isRequired,
+});
 
 export const BrandModel = {
   slug: PropTypes.string.isRequired,
@@ -47,7 +60,6 @@ export const ArticleModel = {
   brand: BrandShape,
   collection: CollectionShape,
   content: PropTypes.shape({}).isRequired,
-  createdAt: PropTypes.string.isRequired,
   imageFolderUrl: PropTypes.string,
   imagePreviewUrl: PropTypes.string.isRequired,
   locale: LangType,
@@ -62,6 +74,7 @@ export const ArticleModel = {
     videoId: PropTypes.string,
     videoUrl: PropTypes.string,
   }),
+  metadata: MetadataShape.isRequired,
 };
 
 export const ArticleShape = PropTypes.shape(ArticleModel);
@@ -87,4 +100,15 @@ export const UserShape = PropTypes.shape({
   bio: PropTypes.string,
   imageUrl: PropTypes.string,
   permissions: PermissionsShape.isRequired,
+});
+
+export const TopicShape = PropTypes.shape({
+  id: PropTypes.string.isRequired,
+  slug: PropTypes.oneOf(TOPICS).isRequired,
+});
+
+export const TagShape = PropTypes.shape({
+  id: PropTypes.string.isRequired,
+  topic: TopicShape.isRequired,
+  content: PropTypes.object.isRequired,
 });

@@ -22,8 +22,9 @@ const TeamCol = ({ data }) => (
   <div className="column">
     <div className="columns">
       <CompleteRow className="column is-4" requiredSize={COL_SIZE}>
-        {data.map(user => (
-          <Teammate key={user.id} {...user} />
+        {data.map((member, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <Teammate key={index} {...member} />
         ))}
       </CompleteRow>
     </div>
