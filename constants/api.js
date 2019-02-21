@@ -11,6 +11,9 @@ export default {
     register: `${AUTH_URL}/register`,
     logout: `${AUTH_URL}/logout`,
   },
+  home: {
+    get: `${API_URL}/storage/main-page`,
+  },
   core: {
     uploads: `${API_URL}/core/uploads`,
   },

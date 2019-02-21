@@ -1,38 +1,28 @@
 import fromPairs from 'lodash/fromPairs';
 import chunk from 'lodash/chunk';
 import moment from 'moment';
-import { DEFAULT_LOCALE } from 'constants';
 
-// here are the rules for localization:
-// 1. requested lang
-// 2. default (be)
-// 3. any existing
-const localize = (object, lang = DEFAULT_LOCALE) =>
-  object && (object[lang] || object[DEFAULT_LOCALE] || Object.values(object)[0]);
+import { localize, localizeArray, localizeFields } from 'utils/localization';
 
-const getLocalizedArray = localizeItem => (items, lang) =>
-  items && items.map(item => localizeItem(item, lang));
+export const getDiary = ({ author = '', text = '', day, month, year } = {}) => ({
+  author,
+  text,
+  // TODO(tyndria): extract it in some func & simplify
+  date: ((month && moment({ day, month: month - 1, year })) || moment()).valueOf(),
+});
 
-export const getLocalizedAuthor = (author, lang) => {
-  if (!author) {
-    return null;
-  }
-  const localized = { ...author };
-  ['firstName', 'lastName', 'displayName', 'bio'].forEach(key => {
-    localized[key] = localize(author[key], lang);
-  });
-  return localized;
-};
+export const getLocalizedAuthor = localizeFields(['firstName', 'lastName', 'displayName', 'bio']);
 
-export const getLocalizedAuthors = getLocalizedArray(getLocalizedAuthor);
+export const getLocalizedAuthors = localizeArray(getLocalizedAuthor);
 
-export const getLocalizedBrand = ({ slug, imageUrl, names }, lang) => ({
+export const getLocalizedBrand = ({ slug, imageUrl, names, _id: id }, lang) => ({
+  id,
   slug,
   imageUrl,
   name: localize(names, lang),
 });
 
-export const getLocalizedBrands = getLocalizedArray(getLocalizedBrand);
+export const getLocalizedBrands = localizeArray(getLocalizedBrand);
 
 export const getLocalizedCollection = (
   { slug, imageUrl, name, description, prev, next },
@@ -42,11 +32,11 @@ export const getLocalizedCollection = (
   imageUrl,
   name: localize(name, lang),
   description: localize(description, lang),
-  prev: prev && getLocalizedArticle(prev), // eslint-disable-line no-use-before-define
-  next: next && getLocalizedArticle(next), // eslint-disable-line no-use-before-define
+  prev: getLocalizedArticle(prev), // eslint-disable-line no-use-before-define
+  next: getLocalizedArticle(next), // eslint-disable-line no-use-before-define
 });
 
-export const getLocalizedCollections = getLocalizedArray(getLocalizedCollection);
+export const getLocalizedCollections = localizeArray(getLocalizedCollection);
 
 export const getLocalesBySlug = ({ locales }) =>
   fromPairs(Object.entries(locales).map(([key, { slug }]) => [slug, key]));
@@ -55,32 +45,20 @@ export const getLocalizedArticle = (article, lang) => {
   if (!article) {
     return null;
   }
-  const {
-    brand,
-    type,
-    locales,
-    author,
-    imagePreviewUrl,
-    imageFolderUrl,
-    collection,
-    publishAt,
-    video,
-  } = article;
+  const { _id: id, brand, locales, author, collection, publishAt, ...rest } = article;
   return {
     ...localize(locales, lang),
+    ...rest,
+    id,
     author: author && getLocalizedAuthor(author, lang),
     brand: brand && getLocalizedBrand(brand, lang),
     collection: collection && getLocalizedCollection(collection, lang),
-    imagePreviewUrl,
-    imageFolderUrl,
-    type,
     publishAt,
     published: !!publishAt && moment(publishAt).isBefore(moment()),
-    video,
   };
 };
 
-export const getLocalizedArticles = getLocalizedArray(getLocalizedArticle);
+export const getLocalizedArticles = localizeArray(getLocalizedArticle);
 
 export const getShortLocale = ({ locale, slug, title }) => ({ locale, slug, title });
 
@@ -93,26 +71,25 @@ export const getMainArticlesRows = (articles, rowSize, complexRowSize) => {
   return [firstRow, secondRow, ...getArticlesRows(articles.slice(secondRowEnd), rowSize)];
 };
 
-export const getLocalizedTeam = (team, lang) =>
-  team &&
-  team.map(({ name, role, ...rest }, index) => ({
-    ...rest,
-    id: index,
-    name: localize(name, lang),
-    role: localize(role, lang),
-  }));
+export const getLocalizedTeam = localizeArray(localizeFields(['name', 'role']));
 
-export const getLocalizedVacancies = (vacancies, lang) =>
-  vacancies &&
-  vacancies.map(({ title, description }, index) => ({
-    id: index,
-    title: localize(title, lang),
-    description: localize(description, lang),
-  }));
+export const getLocalizedVacancies = localizeArray(localizeFields(['title', 'description']));
 
-export const getDiary = ({ author = '', text = '', day, month, year } = {}) => ({
-  author,
-  text,
-  // TODO(tyndria): extract it in some func & simplify
-  date: ((month && moment({ day, month: month - 1, year })) || moment()).valueOf(),
+const LOCALIZE_TAG_CONTENT = {
+  themes: localizeFields(['title']),
+  locations: localizeFields(['title']),
+  times: localizeFields(['title']),
+  personalities: localizeFields(['name', 'dates', 'description']),
+};
+
+export const getTopic = ({ _id: id, slug }) => ({ id, slug });
+
+export const getTopics = topics => topics.map(getTopic);
+
+export const getLocalizedTag = ({ _id: id, topic, content }, lang) => ({
+  id,
+  topic: getTopic(topic),
+  content: LOCALIZE_TAG_CONTENT[topic.slug](content, lang),
 });
+
+export const getLocalizedTags = localizeArray(getLocalizedTag);
