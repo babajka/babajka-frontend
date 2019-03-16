@@ -5,11 +5,12 @@ import keyBy from 'lodash/keyBy';
 
 import { homeActions, homeSelectors } from 'redux/ducks/home';
 import { populateRequest } from 'utils/request';
-import { ArticleShape, BrandShape, TopicShape, TagShape } from 'utils/customPropTypes';
+import { ArticleShape, TopicShape, TagShape } from 'utils/customPropTypes';
 
 const RENDER_TAG_CONTENT = {
   locations: ({ title }) => title,
   personalities: ({ name }) => name,
+  brands: ({ title }) => title,
 };
 
 const renderTag = ({ topic, content }) => RENDER_TAG_CONTENT[topic.slug](content);
@@ -55,9 +56,10 @@ const RENDER_BLOCK = {
     </div>
   ),
   banner: ({ type }) => type,
-  articlesByBrand: ({ type, brandId, articlesIds }, { brands, articles }) => (
+  articlesByBrandTag: ({ type, brandTagId, articlesIds }, { tags, articles }) => (
     <div>
-      {type}: <b>({brands[brandId].name})</b> {articlesIds.map(id => `${articles[id].title}, `)}
+      {type}: <b>({renderTag(tags[brandTagId])})</b>{' '}
+      {articlesIds.map(id => `${articles[id].title}, `)}
     </div>
   ),
 };
@@ -76,7 +78,6 @@ class MainPage extends Component {
     ).isRequired,
     data: PropTypes.shape({
       articles: PropTypes.objectOf(ArticleShape).isRequired,
-      brands: PropTypes.objectOf(BrandShape).isRequired,
       tags: PropTypes.objectOf(TagShape).isRequired,
       topics: PropTypes.objectOf(TopicShape).isRequired,
       latestArticles: PropTypes.arrayOf(ArticleShape).isRequired,

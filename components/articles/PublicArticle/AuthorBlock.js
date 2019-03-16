@@ -5,7 +5,6 @@ import cn from 'classnames';
 import Icon from 'components/common/Icon';
 import Text from 'components/common/Text';
 import Clickable from 'components/common/Clickable';
-import { AuthorShape } from 'utils/customPropTypes';
 
 import InfoIcon from './InfoIcon';
 
@@ -37,7 +36,7 @@ AuthorClickable.defaultProps = {
 // TODO(andemerie): add 'author' field to all 'article' objects on server, even if this article doesn't have author
 export default class AuthorBlock extends Component {
   static propTypes = {
-    data: AuthorShape.isRequired,
+    data: PropTypes.shape({}).isRequired,
   };
 
   state = {

@@ -8,7 +8,7 @@ import noop from 'lodash/noop';
 import omit from 'lodash/omit';
 
 import { articlesActions, articlesSelectors } from 'redux/ducks/articles';
-import { AuthorsArray, BrandsArray, CollectionsArray, LangType } from 'utils/customPropTypes';
+import { CollectionsArray, LangType } from 'utils/customPropTypes';
 import { required, secureUrl, validDate, hasErrors } from 'utils/validators';
 import { Router, ROUTES_NAMES } from 'routes';
 import { LANGS } from 'constants';
@@ -26,8 +26,6 @@ import Author from './Author';
 
 const mapStateToProps = state => ({
   article: articlesSelectors.getRawCurrent(state),
-  brands: articlesSelectors.getBrands(state),
-  authors: articlesSelectors.getAuthors(state),
   collections: articlesSelectors.getColletions(state),
   pending: articlesSelectors.isPending(state),
   serverErrors: articlesSelectors.getErrors(state) || {},
@@ -149,13 +147,9 @@ class EditArticleForm extends Component {
     article: PropTypes.shape({
       _id: PropTypes.string.isRequired,
     }),
-    brands: BrandsArray,
-    authors: AuthorsArray,
     collections: CollectionsArray,
     pending: PropTypes.bool.isRequired,
     mode: PropTypes.oneOf(['edit', 'create']).isRequired,
-    fetchBrands: PropTypes.func.isRequired,
-    fetchAuthors: PropTypes.func.isRequired,
     fetchCollections: PropTypes.func.isRequired,
     createArticle: PropTypes.func.isRequired,
     updateArticle: PropTypes.func.isRequired,
@@ -165,8 +159,6 @@ class EditArticleForm extends Component {
   static defaultProps = {
     articleLocale: null,
     article: initArticle,
-    brands: null,
-    authors: null,
     collections: null,
   };
 
@@ -176,9 +168,7 @@ class EditArticleForm extends Component {
   }
 
   componentDidMount() {
-    const { fetchBrands, fetchAuthors, fetchCollections } = this.props;
-    fetchBrands();
-    fetchAuthors();
+    const { fetchCollections } = this.props;
     fetchCollections();
   }
 
@@ -195,7 +185,7 @@ class EditArticleForm extends Component {
   };
 
   render() {
-    const { mode, article, lang, authors, brands, collections, pending, serverErrors } = this.props;
+    const { mode, article, lang, collections, pending, serverErrors } = this.props;
     const { currentLocale } = this.state;
     const { brand, collection, _id: slug, video } = article || {};
     const formattedArticle = {
@@ -205,7 +195,12 @@ class EditArticleForm extends Component {
       videoUrl: video && video.videoUrl,
     };
     const defaultValues = mode === 'create' ? initArticle : formattedArticle;
-    const fields = getFields({ brands, authors, collections, lang });
+    const fields = getFields({
+      brands: [], // FIXME
+      authors: [],
+      collections,
+      lang,
+    });
     const errorValidator = values => {
       const errors = {};
       fields.forEach(({ id, validator }) => {

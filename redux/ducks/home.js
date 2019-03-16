@@ -6,12 +6,7 @@ import api from 'constants/api';
 
 import { makeRequest } from 'utils/request';
 import { defaultReducer } from 'utils/redux';
-import {
-  getLocalizedArticles,
-  getLocalizedBrands,
-  getLocalizedTags,
-  getTopics,
-} from 'utils/getters';
+import { getLocalizedArticles, getLocalizedTags, getTopics } from 'utils/getters';
 
 const duck = 'home';
 
@@ -39,7 +34,6 @@ export default createReducer(
 
 const GETTER_BY_TYPE = {
   articles: getLocalizedArticles,
-  brands: getLocalizedBrands,
   tags: getLocalizedTags,
   topics: getTopics,
   latestArticles: getLocalizedArticles,
