@@ -5,7 +5,7 @@ const proxy = require('http-proxy-middleware');
 const cookieParser = require('cookie-parser');
 
 const routes = require('./routes');
-const { BACKEND_URL } = require('./constants/server');
+const { BACKEND_URL, LANG_COOKIE_NAME } = require('./constants/server');
 const { DEFAULT_LOCALE, LOCALES, STATIC_PATHS } = require('./constants');
 const getArgs = require('./utils/args');
 const ENV = require('./utils/env');
@@ -18,6 +18,9 @@ const app = next({ dev });
 
 const handle = routes.getRequestHandler(app);
 
+const hasLangCookie = req => req.cookies && req.cookies[LANG_COOKIE_NAME];
+const getUserLang = req => (hasLangCookie(req) ? req.cookies[LANG_COOKIE_NAME] : DEFAULT_LOCALE);
+
 process.on('uncaughtException', err => {
   console.error('Uncaught Exception: ', err);
 });
@@ -26,7 +29,8 @@ process.on('unhandledRejection', (reason, p) => {
   console.error('Unhandled Rejection: Promise:', p, 'Reason:', reason);
 });
 
-const VALID_PATHS = [...STATIC_PATHS, ...Object.keys(LOCALES)];
+const VALID_LOCALES = Object.keys(LOCALES);
+
 app.prepare().then(() => {
   const server = express();
   server.use(cookieParser());
@@ -37,14 +41,26 @@ app.prepare().then(() => {
   // This is useful for fully local development.
   server.use('/test', proxy({ target: BACKEND_URL, changeOrigin: true }));
 
-  server.get('/', (req, res) => res.redirect(`/${DEFAULT_LOCALE}/`));
+  server.get('/', (req, res) => res.redirect(`/${getUserLang(req)}/`));
+
   server.get('/:startPath*', (req, res) => {
     const { startPath } = req.params;
-    if (VALID_PATHS.includes(startPath)) {
+    const userLang = getUserLang(req);
+
+    if (STATIC_PATHS.includes(startPath)) {
       return handle(req, res);
     }
-    // missed locale, add `be` & redirect
-    return res.redirect(`/${DEFAULT_LOCALE}${req.originalUrl}`);
+
+    if (VALID_LOCALES.includes(startPath)) {
+      if (userLang === startPath || !hasLangCookie(req)) {
+        return handle(req, res);
+      }
+
+      return res.redirect(`/${userLang}${req.params['0']}`);
+    }
+
+    // missed locale, add user language & redirect
+    return res.redirect(`/${userLang}${req.originalUrl}`);
   });
 
   server.listen(port, err => {

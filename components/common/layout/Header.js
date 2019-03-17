@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'next/router';
 import { connect } from 'react-redux';
 import cn from 'classnames';
+import Cookies from 'js-cookie';
 
 import { authActions, authSelectors } from 'redux/ducks/auth';
 import { Router, NAVBAR_ROUTES, ROUTES_NAMES } from 'routes';
 import { LOCALES, LANGS } from 'constants';
+import { LANG_COOKIE_NAME } from 'constants/server';
 
 import Clickable from 'components/common/Clickable';
 import Link from 'components/common/Link';
@@ -52,6 +54,10 @@ class Header extends Component {
       return;
     }
     signOut().then(() => Router.pushRoute(ROUTES_NAMES.main, { lang }));
+  };
+
+  handleLangClick = lang => {
+    Cookies.set(LANG_COOKIE_NAME, lang);
   };
 
   render() {
@@ -126,7 +132,12 @@ class Header extends Component {
                                 route={getLocaleSwitchUrl(asPath, id)}
                                 params={{ lang: id }}
                               >
-                                <a className="dropdown-item lang">{label}</a>
+                                <Clickable
+                                  onClick={this.handleLangClick.bind(null, id)}
+                                  className="dropdown-item lang"
+                                >
+                                  {label}
+                                </Clickable>
                               </Link>
                             ))}
                           </div>
