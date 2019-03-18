@@ -18,9 +18,12 @@ const app = next({ dev });
 
 const handle = routes.getRequestHandler(app);
 
-const isValidLocaleCookie = req => VALID_LOCALES.includes(req.cookies[LOCALE_COOKIE_NAME]);
-const getUserLocale = req =>
-  isValidLocaleCookie(req) ? req.cookies[LOCALE_COOKIE_NAME] : DEFAULT_LOCALE;
+const getUserLocale = req => {
+  const lang = req.cookies[LOCALE_COOKIE_NAME];
+  return VALID_LOCALES.includes(lang) && lang;
+};
+
+const getValidLocale = loc => loc || DEFAULT_LOCALE;
 
 process.on('uncaughtException', err => {
   console.error('Uncaught Exception: ', err);
@@ -40,28 +43,27 @@ app.prepare().then(() => {
   // This is useful for fully local development.
   server.use('/test', proxy({ target: BACKEND_URL, changeOrigin: true }));
 
-  server.get('/', (req, res) => res.redirect(`/${getUserLocale(req)}/`));
+  server.get('/', (req, res) => res.redirect(`/${getValidLocale(getUserLocale(req))}/`));
 
   server.get('/:startPath*', (req, res) => {
     const { startPath } = req.params;
-    const userLocale = getUserLocale(req);
 
     if (STATIC_PATHS.includes(startPath)) {
       return handle(req, res);
     }
 
+    const userLocale = getUserLocale(req);
     if (!VALID_LOCALES.includes(startPath)) {
-      // missed locale, add user locale & redirect
-      return res.redirect(`/${userLocale}${req.originalUrl}`);
+      // missed locale, add it & redirect
+      return res.redirect(`/${getValidLocale(userLocale)}${req.originalUrl}`);
     }
 
-    if (userLocale === startPath || !isValidLocaleCookie(req)) {
-      return handle(req, res);
+    if (userLocale && startPath !== userLocale) {
+      // switch locale to user preferable
+      return res.redirect(`/${userLocale}${req.params[0]}`);
     }
 
-    // cookies contain valid locale and it differs from the one in the request,
-    // replace locale & redirect
-    return res.redirect(`/${userLocale}${req.params[0]}`);
+    return handle(req, res);
   });
 
   server.listen(port, err => {

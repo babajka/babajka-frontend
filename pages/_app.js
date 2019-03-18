@@ -34,17 +34,15 @@ import { authActions } from 'redux/ducks/auth';
 const getEmptyObject = () => ({});
 
 const getLocale = ({ asPath, query: { lang } }) => {
-  // query has 'lang' field iff it was successfully matched by the router.
+  // query has 'lang' field if it was successfully matched by the router.
   if (lang) {
     return lang;
   }
 
+  // parse locale for invalid paths (404)
   // asPath starts with '/', so we have to take [1], not [0].
   const parsedLang = asPath.split('/')[1];
-
   if (VALID_LOCALES.includes(parsedLang)) {
-    // Even in the case of an invalid path, we want to have proper localization
-    // of the interface. So if the path contains a valid locale, we use it.
     return parsedLang;
   }
 
