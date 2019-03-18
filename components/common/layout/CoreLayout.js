@@ -1,7 +1,9 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
+import ScrollToTop from 'react-scroll-up';
 
+import Icon from 'components/common/Icon';
 import Clickable from 'components/common/Clickable';
 
 import useBoolean from 'hooks/useBoolean';
@@ -44,7 +46,11 @@ const CoreLayout = ({ children, hideFooter }) => {
         long={!height || height > SIDEBAR_HEIGHT}
       />
 
-      <div className="wir-up">{/* <Icon /> */}</div>
+      <div className="wir-up">
+        <ScrollToTop showUnder={160} easing="easeInExpo" duration="500">
+          <Icon pack="r" name="arrow-alt-circle-up" className="wir-link" />
+        </ScrollToTop>
+      </div>
     </div>
   );
 };

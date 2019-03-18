@@ -21,7 +21,7 @@ const ShareButtons = () => {
             className={`wir-social-buttons__item wir-social-buttons__button wir-social-buttons__button--${id}`}
           >
             <span>
-              <Icon name={icon} />
+              <Icon pack="b" name={icon} />
             </span>
           </div>
         ))}

@@ -50,7 +50,7 @@ const Footer = () => (
               <div className="footer__header">
                 <Text id="footer.subscribe" />
               </div>
-              <Input leftIcon="envelope" />
+              <Input leftIcon="envelope" iconPack="r" />
             </div>
             <div className="footer__social">
               <div className="footer__header">

@@ -5,7 +5,7 @@ import Icon from 'components/common/Icon';
 
 import 'styles/src/kit/input/input.scss';
 
-const Input = ({ pending, leftIcon, rightIcon }) => {
+const Input = ({ pending, leftIcon, rightIcon, iconPack }) => {
   return (
     <div className="wir-input search">
       <input type="text" />
@@ -16,12 +16,12 @@ const Input = ({ pending, leftIcon, rightIcon }) => {
       )}
       {leftIcon && (
         <span className="wir-input__icon wir-input__icon-left">
-          <Icon name={leftIcon} />
+          <Icon pack={iconPack} name={leftIcon} />
         </span>
       )}
       {rightIcon && (
         <span className="wir-input__icon wir-input__icon-right">
-          <Icon name={rightIcon} />
+          <Icon pack={iconPack} name={rightIcon} />
         </span>
       )}
       <span className="wir-input__bar" />
@@ -33,6 +33,8 @@ Input.propTypes = {
   pending: PropTypes.bool,
   leftIcon: PropTypes.string,
   rightIcon: PropTypes.string,
+  // eslint-disable-next-line react/require-default-props
+  iconPack: PropTypes.string,
 };
 
 Input.defaultProps = {
