@@ -8,7 +8,7 @@ import Cookies from 'js-cookie';
 import { authActions, authSelectors } from 'redux/ducks/auth';
 import { Router, NAVBAR_ROUTES, ROUTES_NAMES } from 'routes';
 import { LOCALES, LANGS } from 'constants';
-import { LANG_COOKIE_NAME } from 'constants/server';
+import { LOCALE_COOKIE_NAME } from 'constants/server';
 
 import Clickable from 'components/common/Clickable';
 import Link from 'components/common/Link';
@@ -57,7 +57,7 @@ class Header extends Component {
   };
 
   handleLangClick = lang => {
-    Cookies.set(LANG_COOKIE_NAME, lang);
+    Cookies.set(LOCALE_COOKIE_NAME, lang);
   };
 
   render() {

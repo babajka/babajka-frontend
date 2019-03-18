@@ -4,7 +4,7 @@ const ARGS = getArgs();
 
 const BACKEND_URL = ARGS.backend_url || 'http://api.wir.by';
 
-const LANG_COOKIE_NAME = 'WIR_LANG';
+const LOCALE_COOKIE_NAME = 'WIR_LOCALE';
 
 // please use commonjs modules here for compatibility with server
-module.exports = { BACKEND_URL, LANG_COOKIE_NAME };
+module.exports = { BACKEND_URL, LOCALE_COOKIE_NAME };

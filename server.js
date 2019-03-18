@@ -5,7 +5,7 @@ const proxy = require('http-proxy-middleware');
 const cookieParser = require('cookie-parser');
 
 const routes = require('./routes');
-const { BACKEND_URL, LANG_COOKIE_NAME } = require('./constants/server');
+const { BACKEND_URL, LOCALE_COOKIE_NAME } = require('./constants/server');
 const { DEFAULT_LOCALE, STATIC_PATHS, VALID_LOCALES } = require('./constants');
 const getArgs = require('./utils/args');
 const ENV = require('./utils/env');
@@ -18,7 +18,9 @@ const app = next({ dev });
 
 const handle = routes.getRequestHandler(app);
 
-const getUserLang = req => req.cookies[LANG_COOKIE_NAME] || DEFAULT_LOCALE;
+const isValidLocaleCookie = req => VALID_LOCALES.includes(req.cookies[LOCALE_COOKIE_NAME]);
+const getUserLocale = req =>
+  isValidLocaleCookie(req) ? req.cookies[LOCALE_COOKIE_NAME] : DEFAULT_LOCALE;
 
 process.on('uncaughtException', err => {
   console.error('Uncaught Exception: ', err);
@@ -38,26 +40,28 @@ app.prepare().then(() => {
   // This is useful for fully local development.
   server.use('/test', proxy({ target: BACKEND_URL, changeOrigin: true }));
 
-  server.get('/', (req, res) => res.redirect(`/${getUserLang(req)}/`));
+  server.get('/', (req, res) => res.redirect(`/${getUserLocale(req)}/`));
 
   server.get('/:startPath*', (req, res) => {
     const { startPath } = req.params;
-    const userLang = getUserLang(req);
+    const userLocale = getUserLocale(req);
 
     if (STATIC_PATHS.includes(startPath)) {
       return handle(req, res);
     }
 
-    if (VALID_LOCALES.includes(startPath)) {
-      if (userLang === startPath || !req.cookies[LANG_COOKIE_NAME]) {
-        return handle(req, res);
-      }
-
-      return res.redirect(`/${userLang}${req.params[0]}`);
+    if (!VALID_LOCALES.includes(startPath)) {
+      // missed locale, add user locale & redirect
+      return res.redirect(`/${userLocale}${req.originalUrl}`);
     }
 
-    // missed locale, add user language & redirect
-    return res.redirect(`/${userLang}${req.originalUrl}`);
+    if (userLocale === startPath || !isValidLocaleCookie(req)) {
+      return handle(req, res);
+    }
+
+    // cookies contain valid locale and it differs from the one in the request,
+    // replace locale & redirect
+    return res.redirect(`/${userLocale}${req.params[0]}`);
   });
 
   server.listen(port, err => {
