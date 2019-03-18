@@ -1,4 +1,4 @@
 // fix fa path
-$fa-font-path: 'styles/node_modules/font-awesome/fonts';
+$fa-font-path: 'styles/node_modules/@fortawesome/fontawesome-free/webfonts';
 
-@import 'styles/legacy/index';
+@import 'styles/src/index';

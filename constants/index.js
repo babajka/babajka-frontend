@@ -1,10 +1,11 @@
 const DEFAULT_LOCALE = 'be';
 
+// maybe move labels to i18n dict
 // supported locales
 const LOCALES = {
-  be: 'Беларуская',
-  ru: 'Русский',
-  en: 'English',
+  be: 'па-беларуску',
+  ru: 'по-русски',
+  en: 'in english',
 };
 
 const LOCALE_CODE = {

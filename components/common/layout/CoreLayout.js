@@ -1,23 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Footer from './Footer';
 import Header from './Header';
+import Footer from './Footer';
+import Sidebar from './Sidebar';
 
 import 'styles.scss';
-import 'styles/legacy/common.scss';
+import 'styles/src/layout/layout.scss';
 
 const CoreLayout = ({ children, hideFooter }) => (
-  <>
-    <div className="babajka-root">
-      <div className="babajka-content">
-        <Header />
-        {children}
-        {!hideFooter && <Footer />}
-      </div>
+  <div id="wir-root" className="wir-root">
+    <div className="wir-space">
+      <Header />
+
+      <div className="wir-content">{children}</div>
+
+      {/* consider to omit this logic */}
+      {!hideFooter && <Footer />}
+
+      <div id="wir-overlay" className="wir-overlay" />
     </div>
-    <div id="modal-root" />
-  </>
+
+    <Sidebar />
+
+    <div className="wir-up">{/* <Icon /> */}</div>
+  </div>
 );
 
 CoreLayout.propTypes = {

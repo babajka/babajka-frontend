@@ -1,9 +1,18 @@
 import React from 'react';
 
-import { Link } from 'routes';
 import LocaleContext from 'components/common/LocaleContext';
+import LinkWraper from 'components/common/LinkWraper';
 
-export default ({ params = {}, lang: _, ...props }) => (
+import { Link } from 'routes';
+
+// FIXME: refactor
+export default ({
+  params = {},
+  lang: _,
+  children,
+  render = () => <LinkWraper>{children}</LinkWraper>,
+  ...props
+}) => (
   <LocaleContext.Consumer>
     {lang => (
       <Link
@@ -12,7 +21,9 @@ export default ({ params = {}, lang: _, ...props }) => (
           ...params,
           lang: params.lang || lang,
         }}
-      />
+      >
+        {render(children)}
+      </Link>
     )}
   </LocaleContext.Consumer>
 );

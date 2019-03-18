@@ -24,6 +24,8 @@ const scopes = [
   'header',
   'main',
   'meta',
+  'topic',
+  'sidebar',
 ];
 
 const dict = {};

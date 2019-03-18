@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 const Icon = ({ className, name, size, ...props }) => (
-  <i className={cn(className, `fa fa-${name} fa-${size}`)} aria-hidden="true" {...props} />
+  <i
+    className={cn(className, `fas fa-${name}`, size && `fa-${size}`)}
+    aria-hidden="true"
+    {...props}
+  />
 );
 
 Icon.propTypes = {
@@ -12,6 +16,9 @@ Icon.propTypes = {
   size: PropTypes.string,
 };
 
-Icon.defaultProps = { className: '', size: '' };
+Icon.defaultProps = {
+  className: '',
+  size: null,
+};
 
 export default Icon;

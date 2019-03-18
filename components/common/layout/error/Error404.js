@@ -1,7 +1,8 @@
 import React from 'react';
 
 import Link from 'components/common/Link';
-import SocialList from 'components/common/SocialList';
+import SocialList from 'components/social/SocialList';
+
 import { ROUTES_NAMES } from 'routes';
 
 export default () => (
@@ -9,9 +10,7 @@ export default () => (
     <div className="title">404 Старонка адсутнічае</div>
     <div className="subtitle">Рэсурс змяніў месцазнаходжанне альбо яго ніколі не існавала</div>
     <br />
-    <Link route={ROUTES_NAMES.main}>
-      <a className="button">Перайсці на галоўную</a>
-    </Link>
+    <Link route={ROUTES_NAMES.main} render={() => <a className="button">Перайсці на галоўную</a>} />
     <br />
     <br />
     <br />

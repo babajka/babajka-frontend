@@ -1,7 +1,7 @@
 import React from 'react';
 
-import MailLink from 'components/common/MailLink';
-import SocialList from 'components/common/SocialList';
+import MailLink from 'components/social/MailLink';
+import SocialList from 'components/social/SocialList';
 
 export default () => (
   <>
