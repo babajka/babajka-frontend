@@ -2,10 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'next/router';
 import Cookies from 'js-cookie';
+import cn from 'classnames';
 
 import Icon from 'components/common/Icon';
 import Link from 'components/common/Link';
 import Text from 'components/common/Text';
+import Clickable from 'components/common/Clickable';
 import LinkWraper from 'components/common/LinkWraper';
 import LocaleContext from 'components/common/LocaleContext';
 
@@ -24,7 +26,7 @@ const getLocaleSwitchUrl = (path, lang) => {
 };
 
 const SidebarSection = ({ title, data, idKey, renderItem, renderFooter }) => (
-  <section className="sidebar__section sidebar__section--long sidebar__section--visible">
+  <section className="sidebar__section">
     <ul className="sidebar__section-list">
       <li className="sidebar__section-list-item sidebar__section-title">{title}</li>
       {data.map(item => (
@@ -62,12 +64,12 @@ const FOOTER_BY_TOPIC = {
 
 const handleLangClick = Cookies.set.bind(null, LOCALE_COOKIE_NAME);
 
-const Sidebar = ({ router: { asPath } }) => (
-  <div id="wir-sidebar" className="wir-sidebar">
+const Sidebar = ({ router: { asPath }, active, toggleSidebar, long }) => (
+  <div className={cn('wir-sidebar', { 'wir-sidebar--expanded': active })}>
     <aside className="sidebar">
-      <span className="sidebar__icon-close">
+      <Clickable className="sidebar__icon-close" onClick={toggleSidebar}>
         <Icon name="times" />
-      </span>
+      </Clickable>
 
       <LocaleContext.Consumer>
         {lang => (
@@ -93,15 +95,25 @@ const Sidebar = ({ router: { asPath } }) => (
         </Link>
       </div>
 
-      {TOPICS.map(topic => (
-        <SidebarSection
-          key={topic}
-          title={<Text id={`topic.${topic}_essentials`} />}
-          data={[]}
-          renderItem={({ slug }) => <Link>{slug}</Link>}
-          renderFooter={FOOTER_BY_TOPIC[topic]}
-        />
-      ))}
+      {!long && (
+        <>
+          <SidebarSection title="Short Sidebar" data={[]} />
+        </>
+      )}
+
+      {long && (
+        <>
+          {TOPICS.map(topic => (
+            <SidebarSection
+              key={topic}
+              title={<Text id={`topic.${topic}_essentials`} />}
+              data={[]}
+              renderItem={({ slug }) => <Link>{slug}</Link>}
+              renderFooter={FOOTER_BY_TOPIC[topic]}
+            />
+          ))}
+        </>
+      )}
     </aside>
   </div>
 );
@@ -110,6 +122,9 @@ Sidebar.propTypes = {
   router: PropTypes.shape({
     asPath: PropTypes.string.isRequired,
   }).isRequired,
+  active: PropTypes.bool.isRequired,
+  toggleSidebar: PropTypes.func.isRequired,
+  long: PropTypes.bool.isRequired,
 };
 
 export default withRouter(Sidebar);

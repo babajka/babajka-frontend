@@ -1,24 +1,27 @@
 import React from 'react';
 
 import Link from 'components/common/Link';
+import Clickable from 'components/common/Clickable';
+
+import { ROUTES_NAMES } from 'routes';
 
 import Logo from 'assets/logo/Logo';
 import 'styles/src/navbar/navbar.scss';
 
-const Header = () => {
-  return (
-    <div className="navbar">
+const Header = ({ toggleSidebar }) => (
+  <div className="navbar">
+    <Link route={ROUTES_NAMES.main}>
       <Logo size={42} />
-      <div className="navbar__title">
-        <Link>Беларуская</Link>, а таксама <Link>сусветная</Link> культура і <Link>гісторыя</Link>
-      </div>
-      <div className="navbar__burger">
-        <div className="navbar__burger-item" />
-        <div className="navbar__burger-item" />
-        <div className="navbar__burger-item" />
-      </div>
+    </Link>
+    <div className="navbar__title">
+      <Link>Беларуская</Link>, а таксама <Link>сусветная</Link> культура і <Link>гісторыя</Link>
     </div>
-  );
-};
+    <Clickable tag="div" className="navbar__burger" onClick={toggleSidebar}>
+      <div className="navbar__burger-item" />
+      <div className="navbar__burger-item" />
+      <div className="navbar__burger-item" />
+    </Clickable>
+  </div>
+);
 
 export default Header;
