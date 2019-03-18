@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { LOCALES } from 'constants';
+import { VALID_LOCALES } from 'constants';
 import { TOPICS } from 'constants/home';
 
 export const ShortUserShape = PropTypes.shape({
@@ -51,7 +51,7 @@ export const CollectionShape = PropTypes.shape(CollectionModel);
 
 export const CollectionsArray = PropTypes.arrayOf(CollectionShape);
 
-export const LangType = PropTypes.oneOf(Object.keys(LOCALES));
+export const LangType = PropTypes.oneOf(VALID_LOCALES);
 
 export const ArticleModel = {
   active: PropTypes.bool.isRequired,

@@ -20,7 +20,7 @@ import Metatags, {
 } from 'components/common/Metatags';
 import { localize } from 'components/common/Text';
 
-import { DEFAULT_LOCALE } from 'constants';
+import { DEFAULT_LOCALE, VALID_LOCALES } from 'constants';
 import { getGoogleAnalyticsID } from 'constants/social';
 
 import { populateRequest } from 'utils/request';
@@ -32,6 +32,22 @@ import initStore from 'redux/store';
 import { authActions } from 'redux/ducks/auth';
 
 const getEmptyObject = () => ({});
+
+const getLocale = ({ asPath, query: { lang } }) => {
+  // query has 'lang' field if it was successfully matched by the router.
+  if (lang) {
+    return lang;
+  }
+
+  // parse locale for invalid paths (404)
+  // asPath starts with '/', so we have to take [1], not [0].
+  const parsedLang = asPath.split('/')[1];
+  if (VALID_LOCALES.includes(parsedLang)) {
+    return parsedLang;
+  }
+
+  return DEFAULT_LOCALE;
+};
 
 class Root extends App {
   static propTypes = {
@@ -67,8 +83,7 @@ class Root extends App {
   render() {
     const { Component, pageProps, store, router, user } = this.props;
     const getLayoutProps = Component.getLayoutProps || getEmptyObject;
-    const { lang } = router.query;
-    const locale = lang || DEFAULT_LOCALE;
+    const locale = getLocale(router);
 
     const defaultPageProps = { user, lang: locale, routerQuery: router.query };
     const { title = 'meta.title' } = getLayoutProps(defaultPageProps);

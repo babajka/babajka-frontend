@@ -13,6 +13,8 @@ const LOCALE_CODE = {
   en: 'en_US',
 };
 
+const VALID_LOCALES = Object.keys(LOCALES);
+
 const LANGS = Object.entries(LOCALES).map(([id, label]) => ({ id, label }));
 
 const DATE_FORMAT = 'D MMMM YYYY';
@@ -22,11 +24,12 @@ const DOMAIN_SECURE = 'https://wir.by';
 const STATIC_PATHS = ['static', '_next'];
 
 module.exports = {
-  LOCALES,
-  DEFAULT_LOCALE,
-  LANGS,
   DATE_FORMAT,
+  DEFAULT_LOCALE,
   DOMAIN_SECURE,
+  LANGS,
   LOCALE_CODE,
+  LOCALES,
   STATIC_PATHS,
+  VALID_LOCALES,
 };

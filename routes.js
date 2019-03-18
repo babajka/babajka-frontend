@@ -1,9 +1,9 @@
 const { cloneElement } = require('react');
 const routes = require('next-routes')();
 
-const { LOCALES } = require('./constants');
+const { VALID_LOCALES } = require('./constants');
 
-const langs = Object.keys(LOCALES).join('|');
+const langs = VALID_LOCALES.join('|');
 
 const isActive = (path, name) => path.split('/').slice(-1)[0] === name;
 
