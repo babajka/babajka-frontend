@@ -33,6 +33,24 @@ import { authActions } from 'redux/ducks/auth';
 
 const getEmptyObject = () => ({});
 
+const getLocale = ({ asPath, query: { lang } }) => {
+  // query has 'lang' field iff it was successfully matched by the router.
+  if (lang) {
+    return lang;
+  }
+
+  // asPath starts with '/', so we have to take [1], not [0].
+  const parsedLang = asPath.split('/')[1];
+
+  if (VALID_LOCALES.includes(parsedLang)) {
+    // Even in the case of an invalid path, we want to have proper localization
+    // of the interface. So if the path contains a valid locale, we use it.
+    return parsedLang;
+  }
+
+  return DEFAULT_LOCALE;
+};
+
 class Root extends App {
   static propTypes = {
     router: PropTypes.shape({
@@ -67,10 +85,7 @@ class Root extends App {
   render() {
     const { Component, pageProps, store, router, user } = this.props;
     const getLayoutProps = Component.getLayoutProps || getEmptyObject;
-    const { lang } = router.query;
-    // asPath starts with /, so we have to take [1], not [0]
-    const parsedLang = router.asPath.split('/')[1];
-    const locale = lang || (VALID_LOCALES.includes(parsedLang) && parsedLang) || DEFAULT_LOCALE;
+    const locale = getLocale(router);
 
     const defaultPageProps = { user, lang: locale, routerQuery: router.query };
     const { title = 'meta.title' } = getLayoutProps(defaultPageProps);
