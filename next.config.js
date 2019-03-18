@@ -5,9 +5,9 @@ const bundleAnalyzer = require('@zeit/next-bundle-analyzer');
 const webpack = require('webpack');
 
 const { definePlugin } = require('./utils/webpack-plugins');
-const { LOCALES } = require('./constants');
+const { VALID_LOCALES } = require('./constants');
 
-const langs = Object.keys(LOCALES).join('|');
+const langs = VALID_LOCALES.join('|');
 
 const nextConfig = {
   webpack(config) {

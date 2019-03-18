@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 
 const routes = require('./routes');
 const { BACKEND_URL, LANG_COOKIE_NAME } = require('./constants/server');
-const { DEFAULT_LOCALE, LOCALES, STATIC_PATHS } = require('./constants');
+const { DEFAULT_LOCALE, STATIC_PATHS, VALID_LOCALES } = require('./constants');
 const getArgs = require('./utils/args');
 const ENV = require('./utils/env');
 
@@ -18,8 +18,7 @@ const app = next({ dev });
 
 const handle = routes.getRequestHandler(app);
 
-const hasLangCookie = req => req.cookies && req.cookies[LANG_COOKIE_NAME];
-const getUserLang = req => (hasLangCookie(req) ? req.cookies[LANG_COOKIE_NAME] : DEFAULT_LOCALE);
+const getUserLang = req => req.cookies[LANG_COOKIE_NAME] || DEFAULT_LOCALE;
 
 process.on('uncaughtException', err => {
   console.error('Uncaught Exception: ', err);
@@ -28,8 +27,6 @@ process.on('uncaughtException', err => {
 process.on('unhandledRejection', (reason, p) => {
   console.error('Unhandled Rejection: Promise:', p, 'Reason:', reason);
 });
-
-const VALID_LOCALES = Object.keys(LOCALES);
 
 app.prepare().then(() => {
   const server = express();
@@ -52,11 +49,11 @@ app.prepare().then(() => {
     }
 
     if (VALID_LOCALES.includes(startPath)) {
-      if (userLang === startPath || !hasLangCookie(req)) {
+      if (userLang === startPath || !req.cookies[LANG_COOKIE_NAME]) {
         return handle(req, res);
       }
 
-      return res.redirect(`/${userLang}${req.params['0']}`);
+      return res.redirect(`/${userLang}${req.params[0]}`);
     }
 
     // missed locale, add user language & redirect
