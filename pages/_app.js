@@ -17,7 +17,7 @@ import Metatags, {
   MetaDescription,
   MetaImage,
   MetaLocale,
-} from 'components/common/Metatags';
+} from 'components/social/Metatags';
 import { localize } from 'components/common/Text';
 
 import { DEFAULT_LOCALE, VALID_LOCALES } from 'constants';

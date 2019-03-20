@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { withRouter } from 'next/router';
 
-import Icon from 'components/common/Icon';
+import Icon from 'components/common/ui/Icon';
 import Text from 'components/common/Text';
 
 import { EXPORT_TO_NETWORKS, NETWORKS_URLS } from 'constants/social';

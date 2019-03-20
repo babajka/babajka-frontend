@@ -1,7 +1,7 @@
 import React from 'react';
 
 import LocaleContext from 'components/common/LocaleContext';
-import LinkWraper from 'components/common/LinkWraper';
+import LinkWrapper from 'components/common/ui/LinkWrapper';
 
 import { Link } from 'routes';
 
@@ -10,7 +10,7 @@ export default ({
   params = {},
   lang: _,
   children,
-  render = () => <LinkWraper>{children}</LinkWraper>,
+  render = () => <LinkWrapper>{children}</LinkWrapper>,
   ...props
 }) => (
   <LocaleContext.Consumer>

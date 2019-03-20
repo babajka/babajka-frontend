@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Link from 'components/common/Link';
-import Icon from 'components/common/Icon';
+import Icon from 'components/common/ui/Icon';
 
 import { ROUTES_NAMES } from 'routes';
 

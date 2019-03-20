@@ -2,10 +2,13 @@ const path = require('path');
 
 const { definePlugin } = require('../utils/webpack-plugins');
 
-module.exports = function(storybookBaseConfig, env, defaultConfig) {
-  defaultConfig.plugins.push(definePlugin);
-  defaultConfig.module.rules.push(
-    ...[
+module.exports = ({ config }) => ({
+  ...config,
+  plugins: [...config.plugins, definePlugin],
+  module: {
+    ...config.module,
+    rules: [
+      ...config.module.rules,
       {
         test: /\.scss$/,
         loaders: [
@@ -17,14 +20,13 @@ module.exports = function(storybookBaseConfig, env, defaultConfig) {
               includePaths: [
                 'styles/node_modules/bulma',
                 'styles/node_modules/bulma-badge/dist/css/',
-                'styles/node_modules/font-awesome/scss',
+                'styles/node_modules/@fortawesome/fontawesome-free/scss/',
               ],
             },
           },
         ],
         include: path.resolve(__dirname, '../styles'),
       },
-    ]
-  );
-  return defaultConfig;
-};
+    ],
+  },
+});

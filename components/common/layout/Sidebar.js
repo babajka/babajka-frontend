@@ -4,12 +4,12 @@ import { withRouter } from 'next/router';
 import Cookies from 'js-cookie';
 import cn from 'classnames';
 
-import Icon from 'components/common/Icon';
+import Icon from 'components/common/ui/Icon';
 import Link from 'components/common/Link';
 import Text from 'components/common/Text';
 import Clickable from 'components/common/Clickable';
-import LinkWraper from 'components/common/LinkWraper';
 import LocaleContext from 'components/common/LocaleContext';
+import LinkWrapper from 'components/common/ui/LinkWrapper';
 
 import { TOPICS } from 'constants/home';
 
@@ -80,7 +80,9 @@ const Sidebar = ({ router: { asPath }, active, toggleSidebar, long }) => (
                   route={getLocaleSwitchUrl(asPath, id)}
                   params={{ lang: id }}
                   render={() => (
-                    <LinkWraper onClick={handleLangClick.bind(null, id)}>{label}</LinkWraper>
+                    <LinkWrapper onClick={handleLangClick.bind(null, id)}>
+                      <span>{label}</span>
+                    </LinkWrapper>
                   )}
                 />
               </li>

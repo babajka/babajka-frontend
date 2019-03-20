@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Icon from 'components/common/Icon';
+import Icon from 'components/common/ui/Icon';
 import Link from 'components/common/Link';
 import Text, { localize } from 'components/common/Text';
 import Clickable from 'components/common/Clickable';
@@ -9,7 +9,7 @@ import ActionWithConfirm from 'components/common/ActionWithConfirm';
 import Renderer from 'components/common/Renderer';
 import VideoPlayer from 'components/common/VideoPlayer';
 import Button from 'components/common/Button';
-import { MetaLocale } from 'components/common/Metatags';
+import { MetaLocale } from 'components/social/Metatags';
 
 import { articlesActions, articlesSelectors } from 'redux/ducks/articles';
 import { authSelectors } from 'redux/ducks/auth';

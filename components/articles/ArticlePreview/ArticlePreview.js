@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { localize } from 'components/common/Text';
 import Link from 'components/common/Link';
-import Icon from 'components/common/Icon';
+import Icon from 'components/common/ui/Icon';
 import LocaleContext from 'components/common/LocaleContext';
 
 import { authSelectors } from 'redux/ducks/auth';

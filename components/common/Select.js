@@ -5,9 +5,9 @@ import cn from 'classnames';
 
 import 'styles/legacy/components/select/select.scss';
 
-import Clickable from './Clickable';
-import Button from './Button';
-import Icon from './Icon';
+import Clickable from 'components/common/Clickable';
+import Button from 'components/common//Button';
+import Icon from 'components/common/ui/Icon';
 
 const DEFAULT_STATE = { selectedItem: null, inputValue: '', highlightedIndex: 0 };
 

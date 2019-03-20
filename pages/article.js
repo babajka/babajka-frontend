@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { MetaTitle, MetaDescription, MetaImage } from 'components/common/Metatags';
+import { MetaTitle, MetaDescription, MetaImage } from 'components/social/Metatags';
 import PublicArticle from 'components/articles/PublicArticle';
 
 import { articlesActions, articlesSelectors } from 'redux/ducks/articles';

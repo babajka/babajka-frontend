@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import ScrollToTop from 'react-scroll-up';
 
-import Icon from 'components/common/Icon';
+import Icon from 'components/common/ui/Icon';
 import Clickable from 'components/common/Clickable';
 
 import useBoolean from 'hooks/useBoolean';

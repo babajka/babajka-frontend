@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Icon from 'components/common/Icon';
+import Icon from 'components/common/ui/Icon';
 
 import 'styles/src/kit/social-buttons/social-buttons.scss';
 

@@ -2,8 +2,8 @@ import React from 'react';
 
 import Text from 'components/common/Text';
 import Link from 'components/common/Link';
-import Input from 'components/common/Input';
 import ExternalLink from 'components/common/ExternalLink';
+import Input from 'components/common/ui/Input';
 
 import MailLink from 'components/social/MailLink';
 import ShareButtons from 'components/social/ShareButtons';
@@ -50,7 +50,7 @@ const Footer = () => (
               <div className="footer__header">
                 <Text id="footer.subscribe" />
               </div>
-              <Input leftIcon="envelope" iconPack="r" />
+              <Input leftIcon={{ name: 'envelope', pack: 'r' }} />
             </div>
             <div className="footer__social">
               <div className="footer__header">

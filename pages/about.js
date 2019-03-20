@@ -3,7 +3,7 @@ import chunk from 'lodash/chunk';
 import cn from 'classnames';
 
 import Text from 'components/common/Text';
-import Icon from 'components/common/Icon';
+import Icon from 'components/common/ui/Icon';
 import Clickable from 'components/common/Clickable';
 import OutsideClickable from 'components/common/OutsideClickable';
 

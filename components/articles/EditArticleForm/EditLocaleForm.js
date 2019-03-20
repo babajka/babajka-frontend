@@ -14,7 +14,7 @@ import Link from 'components/common/Link';
 import Text from 'components/common/Text';
 import Button from 'components/common/Button';
 import Clickable from 'components/common/Clickable';
-import Icon from 'components/common/Icon';
+import Icon from 'components/common/ui/Icon';
 import Editor from 'components/common/Editor';
 
 const localeFields = [

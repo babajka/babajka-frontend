@@ -5,7 +5,7 @@ import cn from 'classnames';
 
 import Clickable from 'components/common/Clickable';
 import Button from 'components/common/Button';
-import Icon from 'components/common/Icon';
+import Icon from 'components/common/ui/Icon';
 
 const Modal = ({ renderBody, renderFooter, footerClassName, toggle, title, isActive, small }) => (
   <div className={cn('modal', { 'is-active': isActive })}>

@@ -1,38 +1,32 @@
-import { configure, addDecorator } from '@storybook/react';
-import { withInfo, setDefaults } from '@storybook/addon-info';
+import { configure, addParameters, addDecorator } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 
-import StoriesDecorator from 'stories/utils/StoriesDecorator';
+import StoriesDecorator from 'components/dev/StoriesDecorator';
 
-const req = require.context('../stories', true, /.js$/);
+import '../styles.scss';
+
+const req = require.context('../stories', true, /\.js$/);
 
 function loadStories() {
   req.keys().forEach(req);
 }
 
-addDecorator(withInfo);
-addDecorator(withKnobs);
-addDecorator(StoriesDecorator);
-setDefaults({
-  inline: true,
-  styles: {
-    header: {
-      h1: {
-        margin: 0,
-        padding: 0,
-        fontSize: '25px',
-        color: '#1a9582',
-      },
-      h2: {
-        margin: 0,
-        padding: 0,
-        fontSize: '16px',
-      },
-      body: {
-        padding: 0,
-        margin: 0,
-      },
-    },
+addParameters({
+  options: {
+    isFullScreen: false,
+    showNav: true,
+    showPanel: true,
+    panelPosition: 'bottom',
+    sortStoriesByKind: false,
+    hierarchySeparator: /\/|\./,
+    hierarchyRootSeparator: /\|/,
+    sidebarAnimations: true,
+    enableShortcuts: true,
+    theme: undefined,
   },
 });
+
+addDecorator(withKnobs);
+addDecorator(StoriesDecorator);
+
 configure(loadStories, module);

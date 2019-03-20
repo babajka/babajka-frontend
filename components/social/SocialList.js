@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import Icon from 'components/common/Icon';
+import Icon from 'components/common/ui/Icon';
 import ExternalLink from 'components/common/ExternalLink';
 
 import { NETWORKS } from 'constants/social';
