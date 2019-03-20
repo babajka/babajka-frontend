@@ -3,10 +3,11 @@ import chunk from 'lodash/chunk';
 import cn from 'classnames';
 
 import Text from 'components/common/Text';
-import Icon from 'components/common/Icon';
+import Icon from 'components/common/ui/Icon';
 import Clickable from 'components/common/Clickable';
-import MailLink from 'components/common/MailLink';
 import OutsideClickable from 'components/common/OutsideClickable';
+
+import MailLink from 'components/social/MailLink';
 import TeamRow, { ROW_SIZE } from 'components/about/TeamRow';
 
 import { getLocalizedTeam, getLocalizedVacancies } from 'utils/getters';

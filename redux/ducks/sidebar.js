@@ -6,7 +6,7 @@ import { makeRequest } from 'utils/request';
 import { defaultReducer } from 'utils/redux';
 import { localizeData } from 'utils/storage';
 
-const duck = 'home';
+const duck = 'sidebar';
 
 // constants
 const FETCH = `${duck}/FETCH`;
@@ -31,23 +31,19 @@ export default createReducer(
 );
 
 // selectors
-const getState = state => state.home;
+const getState = state => state.sidebar;
 const getBlocks = state => getState(state).blocks;
 const getData = (state, lang) => localizeData(getState(state).data, lang);
-const isPending = state => getState(state).pending;
-const isError = state => getState(state).error;
 
-export const homeSelectors = {
+export const sidebarSelectors = {
   getBlocks,
   getData,
-  isPending,
-  isError,
 };
 
 // actions
-export const homeActions = {
+export const sidebarActions = {
   fetch: () => ({
     type: FETCH,
-    payload: makeRequest(api.storage.getMainPage),
+    payload: makeRequest(api.storage.getSidebar),
   }),
 };

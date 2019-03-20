@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ErrorMessage } from 'formik';
 
-import Icon from 'components/common/Icon';
+import Icon from 'components/common/ui/Icon';
 import Text from 'components/common/Text';
 
 const FormField = ({ id, label, icon, children, pending, touched, error, successText }) => {

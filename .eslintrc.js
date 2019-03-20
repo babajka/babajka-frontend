@@ -1,7 +1,7 @@
 module.exports = {
   parser: 'babel-eslint',
   extends: ['airbnb', 'prettier', 'prettier/react'],
-  plugins: ['prettier'],
+  plugins: ['prettier', 'react-hooks'],
   globals: {
     __ENV__: false,
     __VERSION__: false,
@@ -25,6 +25,13 @@ module.exports = {
     'react/jsx-one-expression-per-line': 'off',
     // allow create components without prop-types check
     'react/prop-types': ['error', { skipUndeclared: true }],
+    'react/forbid-prop-types': 'warn',
+    'react/require-default-props': 'warn',
+
+    // react-hooks
+    'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
+    'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
+
     // allow console.error & console.warning
     'no-console': ['error', { allow: ['warn', 'error'] }],
     // backend use `_id` prop

@@ -15,31 +15,6 @@ export const MetadataShape = PropTypes.shape({
   updatedBy: ShortUserShape.isRequired,
 });
 
-export const BrandModel = {
-  slug: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  imageUrl: PropTypes.string,
-};
-
-export const BrandShape = PropTypes.shape(BrandModel);
-
-export const BrandsArray = PropTypes.arrayOf(BrandShape);
-
-export const AuthorModel = {
-  firstName: PropTypes.string.isRequired,
-  lastName: PropTypes.string.isRequired,
-  displayName: PropTypes.string.isRequired,
-  bio: PropTypes.string,
-  email: PropTypes.string.isRequired,
-  role: PropTypes.string.isRequired,
-  imageUrl: PropTypes.string.isRequired,
-  active: PropTypes.bool.isRequired,
-};
-
-export const AuthorShape = PropTypes.shape(AuthorModel);
-
-export const AuthorsArray = PropTypes.arrayOf(AuthorShape);
-
 export const CollectionModel = {
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
@@ -53,15 +28,22 @@ export const CollectionsArray = PropTypes.arrayOf(CollectionShape);
 
 export const LangType = PropTypes.oneOf(VALID_LOCALES);
 
+export const TopicShape = PropTypes.shape({
+  id: PropTypes.string.isRequired,
+  slug: PropTypes.oneOf(TOPICS).isRequired,
+});
+
+export const TagShape = PropTypes.shape({
+  id: PropTypes.string.isRequired,
+  topic: TopicShape.isRequired,
+  content: PropTypes.object.isRequired,
+});
+
 export const ArticleModel = {
   active: PropTypes.bool.isRequired,
   articleId: PropTypes.string.isRequired,
-  author: AuthorShape,
-  brand: BrandShape,
   collection: CollectionShape,
-  content: PropTypes.shape({}).isRequired,
-  imageFolderUrl: PropTypes.string,
-  imagePreviewUrl: PropTypes.string.isRequired,
+  content: PropTypes.object.isRequired,
   locale: LangType,
   publishAt: PropTypes.string,
   published: PropTypes.bool.isRequired,
@@ -69,12 +51,17 @@ export const ArticleModel = {
   subtitle: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
+  images: PropTypes.shape({
+    // FIXME
+  }),
   video: PropTypes.shape({
     platform: PropTypes.string,
     videoId: PropTypes.string,
     videoUrl: PropTypes.string,
   }),
   metadata: MetadataShape.isRequired,
+  keywords: PropTypes.arrayOf(PropTypes.string).isRequired,
+  tags: PropTypes.arrayOf(TagShape).isRequired,
 };
 
 export const ArticleShape = PropTypes.shape(ArticleModel);
@@ -100,15 +87,4 @@ export const UserShape = PropTypes.shape({
   bio: PropTypes.string,
   imageUrl: PropTypes.string,
   permissions: PermissionsShape.isRequired,
-});
-
-export const TopicShape = PropTypes.shape({
-  id: PropTypes.string.isRequired,
-  slug: PropTypes.oneOf(TOPICS).isRequired,
-});
-
-export const TagShape = PropTypes.shape({
-  id: PropTypes.string.isRequired,
-  topic: TopicShape.isRequired,
-  content: PropTypes.object.isRequired,
 });

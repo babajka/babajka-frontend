@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+// replace with
+// https://github.com/Andarist/use-onclickoutside
+// https://gist.github.com/gragland/81a678775c30edfdbb224243fc0d1ec4
 export default class OutsideClickable extends Component {
   static propTypes = {
     onClick: PropTypes.func.isRequired,

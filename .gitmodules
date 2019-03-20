@@ -1,3 +1,6 @@
 [submodule "styles"]
 	path = styles
 	url = https://github.com/babajka/babajka-markup
+[submodule "assets"]
+	path = assets
+	url = https://github.com/babajka/assets.git

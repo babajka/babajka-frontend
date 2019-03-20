@@ -7,7 +7,7 @@ import Modal from 'components/common/Modal';
 import Text from 'components/common/Text';
 import TextWithBr from 'components/common/TextWithBr';
 import Clickable from 'components/common/Clickable';
-import Icon from 'components/common/Icon';
+import Icon from 'components/common/ui/Icon';
 
 import { diaryActions, diarySelectors } from 'redux/ducks/diary';
 import { isSameDay } from 'utils/validators';

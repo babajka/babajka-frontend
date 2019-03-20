@@ -4,28 +4,34 @@ export const USER_PIC = '/static/images/placeholders/user.png';
 
 export const NETWORKS = [
   {
-    name: 'facebook',
+    id: 'facebook',
+    label: 'Facebook',
     link: 'https://facebook.com/wirdotby',
   },
   {
-    name: 'vk',
+    id: 'instagram',
+    label: 'Instagram',
+    link: 'https://instagram.com/wir_by',
+  },
+  {
+    id: 'vk',
+    label: 'ВКонтакте',
     link: 'https://vk.com/wir_by',
   },
   {
-    name: 'twitter',
-    link: 'https://twitter.com/wir_by',
-  },
-  {
-    name: 'telegram',
+    id: 'telegram',
+    label: 'Telegram',
     link: 'https://t.me/wir_by',
   },
   {
-    name: 'youtube',
-    link: 'https://www.youtube.com/channel/UCoj_6A55mEPeba8ZfBHqfCw',
+    id: 'twitter',
+    label: 'Twitter',
+    link: 'https://twitter.com/wir_by',
   },
   {
-    name: 'instagram',
-    link: 'https://instagram.com/wir_by',
+    id: 'youtube',
+    label: 'YouTube',
+    link: 'https://www.youtube.com/channel/UCoj_6A55mEPeba8ZfBHqfCw',
   },
 ];
 

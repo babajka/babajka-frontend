@@ -6,8 +6,6 @@ import { makeRequest } from 'utils/request';
 import {
   getLocalizedArticles,
   getLocalizedArticle,
-  getLocalizedBrands,
-  getLocalizedAuthors,
   getLocalizedCollections,
   getLocalesBySlug,
   getShortLocale,
@@ -22,8 +20,8 @@ const INITIAL_FETCH = `${duck}/INITIAL_FETCH`;
 const FETCH_CHUNK = `${duck}/FETCH_CHUNK`;
 const MERGE_CACHED = `${duck}/MERGE_CACHED`;
 const FETCH_BY_SLUG = `${duck}/FETCH_BY_SLUG`;
-const FETCH_BRANDS = `${duck}/FETCH_BRANDS`;
-const FETCH_AUTHORS = `${duck}/FETCH_AUTHORS`;
+// const FETCH_BRANDS = `${duck}/FETCH_BRANDS`;
+// const FETCH_AUTHORS = `${duck}/FETCH_AUTHORS`;
 const FETCH_COLLECTIONS = `${duck}/FETCH_COLLECTIONS`;
 const CREATE = `${duck}/CREATE`;
 const UPDATE = `${duck}/UPDATE`;
@@ -74,16 +72,16 @@ export default createReducer(
       nextData: [],
     }),
     [FETCH_BY_SLUG]: currentReducer,
-    [FETCH_BRANDS]: defaultReducer((state, { payload }) => ({
-      ...state,
-      brands: payload,
-      ...defaultState,
-    })),
-    [FETCH_AUTHORS]: defaultReducer((state, { payload }) => ({
-      ...state,
-      authors: payload,
-      ...defaultState,
-    })),
+    // [FETCH_BRANDS]: defaultReducer((state, { payload }) => ({
+    //   ...state,
+    //   brands: payload,
+    //   ...defaultState,
+    // })),
+    // [FETCH_AUTHORS]: defaultReducer((state, { payload }) => ({
+    //   ...state,
+    //   authors: payload,
+    //   ...defaultState,
+    // })),
     [FETCH_COLLECTIONS]: defaultReducer((state, { payload }) => ({
       ...state,
       collections: payload,
@@ -118,12 +116,6 @@ const getOtherLocales = (state, currentLocale) =>
 const getCurrent = (state, slug) =>
   getLocalizedArticle(getRawCurrent(state), getLocaleBySlug(state, slug));
 
-const getRawBrands = state => getState(state).brands;
-const getBrands = (state, lang) => getLocalizedBrands(getRawBrands(state), lang);
-
-const getRawAuthors = state => getState(state).authors;
-const getAuthors = (state, lang) => getLocalizedAuthors(getRawAuthors(state), lang);
-
 const getRawCollections = state => getState(state).collections;
 const getColletions = (state, lang) => getLocalizedCollections(getRawCollections(state), lang);
 
@@ -136,8 +128,6 @@ export const articlesSelectors = {
   getCurrent,
   getLocaleBySlug,
   getOtherLocales,
-  getBrands,
-  getAuthors,
   getColletions,
 
   isPending,
@@ -173,14 +163,15 @@ export const articlesActions = {
     type: FETCH_BY_SLUG,
     payload: makeRequest(api.articles.getBySlug(slug)),
   }),
-  fetchBrands: () => ({
-    type: FETCH_BRANDS,
-    payload: makeRequest(api.articles.getBrands),
-  }),
-  fetchAuthors: () => ({
-    type: FETCH_AUTHORS,
-    payload: makeRequest(api.articles.getAuthors),
-  }),
+  // FIXME
+  // fetchBrands: () => ({
+  //   type: FETCH_BRANDS,
+  //   payload: makeRequest(api.articles.getBrands),
+  // }),
+  // fetchAuthors: () => ({
+  //   type: FETCH_AUTHORS,
+  //   payload: makeRequest(api.articles.getAuthors),
+  // }),
   fetchCollections: () => ({
     type: FETCH_COLLECTIONS,
     payload: makeRequest(api.articles.getColletions),
