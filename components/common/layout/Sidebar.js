@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { withRouter } from 'next/router';
 import Cookies from 'js-cookie';
 import cn from 'classnames';
@@ -11,8 +12,11 @@ import Clickable from 'components/common/Clickable';
 import LocaleContext from 'components/common/LocaleContext';
 import LinkWrapper from 'components/common/ui/LinkWrapper';
 
-import { TOPICS } from 'constants/home';
+import { sidebarSelectors } from 'redux/ducks/sidebar';
+import { TagShape } from 'utils/customPropTypes';
+import { renderTag } from 'utils/tags';
 
+import { TOPICS } from 'constants/home';
 import { LOCALE_COOKIE_NAME } from 'constants/server';
 import { ROUTES_NAMES } from 'routes';
 import { LANGS } from 'constants';
@@ -48,7 +52,7 @@ SidebarSection.propTypes = {
 };
 
 SidebarSection.defaultProps = {
-  idKey: 'slug',
+  idKey: 'id',
   renderFooter: null,
 };
 
@@ -64,7 +68,12 @@ const FOOTER_BY_TOPIC = {
 
 const handleLangClick = Cookies.set.bind(null, LOCALE_COOKIE_NAME);
 
-const Sidebar = ({ router: { asPath }, active, toggleSidebar, long }) => (
+const mapStateToProps = (state, { lang }) => ({
+  blocks: sidebarSelectors.getBlocks(state),
+  data: sidebarSelectors.getData(state, lang),
+});
+
+const Sidebar = ({ blocks, data, router: { asPath }, active, toggleSidebar, long }) => (
   <div className={cn('wir-sidebar', { 'wir-sidebar--expanded': active })}>
     <aside className="sidebar">
       <Clickable className="sidebar__icon-close" onClick={toggleSidebar}>
@@ -105,12 +114,12 @@ const Sidebar = ({ router: { asPath }, active, toggleSidebar, long }) => (
 
       {long && (
         <>
-          {TOPICS.map(topic => (
+          {blocks.map(({ topic, tags }) => (
             <SidebarSection
               key={topic}
               title={<Text id={`topic.${topic}_essentials`} />}
-              data={[]}
-              renderItem={({ slug }) => <Link>{slug}</Link>}
+              data={tags.map(tagId => data.tags[tagId])}
+              renderItem={tag => <Link>{renderTag(tag)}</Link>}
               renderFooter={FOOTER_BY_TOPIC[topic]}
             />
           ))}
@@ -127,6 +136,15 @@ Sidebar.propTypes = {
   active: PropTypes.bool.isRequired,
   toggleSidebar: PropTypes.func.isRequired,
   long: PropTypes.bool.isRequired,
+  blocks: PropTypes.arrayOf(
+    PropTypes.shape({
+      topic: PropTypes.oneOf(TOPICS).isRequired,
+      tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+    })
+  ).isRequired,
+  data: PropTypes.shape({
+    tags: PropTypes.objectOf(TagShape).isRequired,
+  }).isRequired,
 };
 
-export default withRouter(Sidebar);
+export default connect(mapStateToProps)(withRouter(Sidebar));

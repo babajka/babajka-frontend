@@ -9,14 +9,14 @@ import { NETWORKS } from 'constants/social';
 
 const SocialList = ({ className, rounded }) => (
   <div className={className}>
-    {NETWORKS.map(({ name, link }) => (
+    {NETWORKS.map(({ id, link }) => (
       <ExternalLink
-        key={name}
+        key={id}
         href={link}
-        className={cn(name, rounded && 'button is-medium is-rounded')}
+        className={cn(id, rounded && 'button is-medium is-rounded')}
       >
         <span className={cn(rounded && 'icon is-medium')}>
-          <Icon name={name} />
+          <Icon name={id} />
         </span>
       </ExternalLink>
     ))}

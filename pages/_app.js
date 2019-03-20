@@ -30,6 +30,7 @@ import host from 'utils/host';
 import initStore from 'redux/store';
 
 import { authActions } from 'redux/ducks/auth';
+import { sidebarActions } from 'redux/ducks/sidebar';
 
 const getEmptyObject = () => ({});
 
@@ -62,6 +63,8 @@ class Root extends App {
   static async getInitialProps({ Component, ctx }) {
     let pageProps = {};
     const [{ user }] = await populateRequest(ctx, authActions.getCurrentUser);
+    // TODO(@drapegnik): consider is it right place for that request
+    await populateRequest(ctx, sidebarActions.fetch);
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx);
     }
@@ -101,7 +104,7 @@ class Root extends App {
               <title>Wir.by | {localize(title, locale)}</title>
               <link rel="icon" type="image/png" href="/static/images/logo/favicon-colored.png" />
             </Head>
-            <CoreLayout {...Component.layoutProps}>
+            <CoreLayout {...Component.layoutProps} lang={locale}>
               <Component {...defaultPageProps} {...pageProps} />
             </CoreLayout>
           </LocaleContext.Provider>
