@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
-import LocaleContext from 'components/common/LocaleContext';
-import { DEFAULT_LOCALE } from 'constants';
+import LocaleContext, { DEFAULT_LOCALE } from 'components/common/LocaleContext';
 import dict from 'data/i18n.json';
 
 const SEPARATOR = '||';

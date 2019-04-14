@@ -17,6 +17,7 @@ module.exports = {
         'i18n',
         'home',
         'layout',
+        'cards',
       ],
     ],
     'scope-empty': [2, 'never'],

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { VALID_LOCALES } from 'constants';
+import { VALID_LOCALES } from 'components/common/LocaleContext';
 import { TOPICS } from 'constants/home';
 
 export const ShortUserShape = PropTypes.shape({
