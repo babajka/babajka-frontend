@@ -26,8 +26,69 @@ storiesOf(PREFIX, module)
       rightIcon={object('rightIcon', { pack: 's', name: 'arrow-right' })}
     />
   ))
-  .add('LinkWrapper', () => (
-    <LinkWrapper disabled={boolean('disabled', false)} href={text('href', 'https://wir.by/')}>
-      {text('children', 'Спасылка на wir.by')}
-    </LinkWrapper>
-  ));
+  .add('LinkWrapper', () => {
+    return (
+      <LinkWrapper
+        disabled={boolean('disabled', false)}
+        dark={boolean('dark', false)}
+        href={text('href', 'https://wir.by/')}
+      >
+        {text('children', 'Спасылка на wir.by')}
+      </LinkWrapper>
+    );
+  });
+
+// storiesOf(`${PREFIX}/Select`)
+//   .add(
+//     'default',
+//     () => (
+//       <Select
+//         valueWholeObject={boolean('valueWholeObject', false)}
+//         options={object('options', [
+//           { id: 'apple', label: 'Apple' },
+//           { id: 'orange', label: 'Orange' },
+//           { id: 'carrot', label: 'Carrot' },
+//         ])}
+//         searchable={boolean('searchable', false)}
+//         clerable={boolean('clerable', false)}
+//         dropdown={boolean('dropdown', false)}
+//         placeholder={text('placeholder', 'Select fruit...')}
+//         size={select('size', ['xs', 's', 'm', 'l'], 's')}
+//         onChange={action('Select')}
+//       />
+//     ),
+//     {
+//       info: `
+//         Our custom select component
+//         built with awesome [Downshift](https://github.com/paypal/downshift)!
+//       `,
+//     }
+//   )
+//   .addParameters(infoSource)
+//   .add('dropdown', () => (
+//     <Select
+//       placeholder="Locale"
+//       options={[{ id: 'be', label: 'Be' }, { id: 'en', label: 'En' }, { id: 'ru', label: 'Ru' }]}
+//       onChange={action('Locale')}
+//       dropdown
+//       size="xs"
+//     />
+//   ))
+//   .add('custom render', () => (
+//     <Select
+//       placeholder="Assign task to..."
+//       options={[
+//         { id: 'drapegnik', name: 'Ivan' },
+//         { id: 'bohdan', name: 'Ulad' },
+//         { id: 'drozd', name: 'Vika' },
+//         { id: 'viarcinskaja', name: 'Tonya' },
+//       ]}
+//       renderOption={({ id, name }) => (
+//         <Author
+//           imageUrl={`https://res.cloudinary.com/wir-by/image/upload/v1528990359/production/team/${id}`}
+//           name={name}
+//         />
+//       )}
+//       onChange={action('Assigned to')}
+//     />
+//   ));
