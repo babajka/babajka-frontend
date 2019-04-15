@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 
 import { VALID_LOCALES } from 'components/common/LocaleContext';
 import { TOPICS } from 'constants/home';
+import { ARTICLE_TYPES } from 'constants/articles';
 
 export const ShortUserShape = PropTypes.shape({
   id: PropTypes.string.isRequired,
@@ -45,6 +46,14 @@ export const ArticleCoversShape = PropTypes.shape({
   vertical: PropTypes.string,
 });
 
+export const ArticleVideoShape = PropTypes.shape({
+  platform: PropTypes.string,
+  videoId: PropTypes.string,
+  videoUrl: PropTypes.string,
+});
+
+export const ArticleType = PropTypes.oneOf(ARTICLE_TYPES);
+
 export const ArticleModel = {
   active: PropTypes.bool.isRequired,
   articleId: PropTypes.string.isRequired,
@@ -56,13 +65,9 @@ export const ArticleModel = {
   slug: PropTypes.string.isRequired,
   subtitle: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  type: ArticleType.isRequired,
   images: ArticleCoversShape.isRequired,
-  video: PropTypes.shape({
-    platform: PropTypes.string,
-    videoId: PropTypes.string,
-    videoUrl: PropTypes.string,
-  }),
+  video: ArticleVideoShape,
   metadata: MetadataShape.isRequired,
   keywords: PropTypes.arrayOf(PropTypes.string).isRequired,
   tags: PropTypes.arrayOf(TagShape).isRequired,
