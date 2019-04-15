@@ -12,7 +12,7 @@
     "build": "cross-env NODE_ENV=production next build",
     "lint": "npm run prettify && eslint '{!(.next*|*static*|node_modules|styles*), }/**/*.js' --fix",
     "prettier": "prettier --config .prettierrc --write",
-    "prettify": "npm run prettier '{!(.next*|*static*), }/**/*.{js,md}' '*.md'",
+    "prettify": "npm run prettier '{!(.next*|*static*|styles), }/**/*.{js,md}' '*.md'",
     "update-styles": "sh bin/update-styles.sh",
     "update-dict": "node bin/fetchDict.js",
     "update-team": "node bin/fetchTeam.js",

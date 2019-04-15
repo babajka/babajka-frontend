@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cn from 'classnames';
 
 import Text from 'components/common/Text';
 import LinkWrapper from 'components/common/ui/LinkWrapper';
@@ -8,15 +7,12 @@ import ConditionalWrapper from 'components/common/ui/ConditionalWrapper';
 
 import { TagShape, CollectionShape, ArticleCoversShape, ArticleType } from 'utils/customPropTypes';
 
+import CardWrapper, { SQUARE_SIZES, SIZES } from './CardWrapper';
 import CollectionCard from './article/CollectionCard';
 import VideoCard from './article/VideoCard';
 
-import 'styles/src/cards/common.scss'; // FIXME
+import 'styles/src/cards/common.scss';
 import 'styles/src/cards/article.scss';
-
-const DEFAULT_SIZES = ['xxl', 'xl', 'l', 'm'];
-const SQUARE_SIZES = ['square-m', 'square-s'];
-export const SIZES = DEFAULT_SIZES.concat(SQUARE_SIZES);
 
 const getArticleCn = square => className => {
   if (!square) {
@@ -29,14 +25,6 @@ const getBrand = tags => {
   const brandTag = tags.find(({ topic }) => topic.slug === 'brands');
   return !!brandTag && brandTag.content;
 };
-
-const ArticleCardWrapper = ({ className, size, children, bgColor, dark }) => (
-  <div className={`size-${size}`}>
-    <div className={cn(className, { 'theme-dark': dark })} style={{ backgroundColor: bgColor }}>
-      {children}
-    </div>
-  </div>
-);
 
 const ArticleCard = props => {
   const {
@@ -59,22 +47,22 @@ const ArticleCard = props => {
 
   if (type === 'video') {
     return (
-      <ArticleCardWrapper {...wrapperProps} className="video" bgColor={null}>
+      <CardWrapper {...wrapperProps} className="video" bgColor={null}>
         <VideoCard {...props} />
-      </ArticleCardWrapper>
+      </CardWrapper>
     );
   }
 
   if (collection) {
     return (
-      <ArticleCardWrapper {...wrapperProps} className="collection">
+      <CardWrapper {...wrapperProps} className="collection">
         <CollectionCard {...props} square={square} />
-      </ArticleCardWrapper>
+      </CardWrapper>
     );
   }
 
   return (
-    <ArticleCardWrapper {...wrapperProps} className={articleCn('article')}>
+    <CardWrapper {...wrapperProps} className={articleCn('article')}>
       <div className={articleCn('article__cover-wrapper')}>
         <img
           className={articleCn('article__cover')}
@@ -110,7 +98,7 @@ const ArticleCard = props => {
           </div>
         )}
       </div>
-    </ArticleCardWrapper>
+    </CardWrapper>
   );
 };
 
