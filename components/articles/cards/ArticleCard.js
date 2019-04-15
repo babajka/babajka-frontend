@@ -5,7 +5,9 @@ import cn from 'classnames';
 import Text from 'components/common/Text';
 import ConditionalWrapper from 'components/common/ui/ConditionalWrapper';
 
-import { TagShape } from 'utils/customPropTypes';
+import { TagShape, CollectionShape, ArticleCoversShape } from 'utils/customPropTypes';
+
+import CollectionArticleCard from './CollectionArticleCard';
 
 import 'styles/src/cards/common.scss'; // FIXME
 import 'styles/src/cards/article.scss';
@@ -23,53 +25,81 @@ const getArticleCn = square => className => {
 
 const getBrand = tags => {
   const brandTag = tags.find(({ topic }) => topic.slug === 'brands');
-  return brandTag && brandTag.content;
+  return !!brandTag && brandTag.content;
 };
 
-const ArticleCard = ({ size, theme, bgColor, cover, title, author, description, tags }) => {
+const ArticleCardWrapper = ({ className, size, children, bgColor, dark }) => (
+  <div className={`size-${size}`}>
+    <div className={cn(className, { 'theme-dark': dark })} style={{ backgroundColor: bgColor }}>
+      {children}
+    </div>
+  </div>
+);
+
+const ArticleCard = props => {
+  const {
+    size,
+    theme,
+    bgColor,
+    author,
+    description,
+    tags,
+    collection,
+    covers: { horizontal, vertical },
+    title,
+  } = props;
   const square = SQUARE_SIZES.includes(size);
   const articleCn = getArticleCn(square);
   const dark = theme === 'dark';
   const brand = getBrand(tags);
+  const wrapperProps = { size, dark, bgColor };
+
+  if (collection) {
+    return (
+      <ArticleCardWrapper {...wrapperProps} className="collection">
+        <CollectionArticleCard square={square} {...props} />
+      </ArticleCardWrapper>
+    );
+  }
+
   return (
-    <div className={`size-${size}`}>
-      <div
-        className={cn(articleCn('article'), { 'theme-dark': dark })}
-        style={{ backgroundColor: bgColor }}
-      >
-        <div className={articleCn('article__cover-wrapper')}>
-          <img className={articleCn('article__cover')} src={cover} alt={title} />
-        </div>
-        {!!brand && (
-          <img
-            className={articleCn('article__brand')}
-            src={brand.image}
-            alt={brand.title}
-            title={brand.title}
-          />
-        )}
-        <div className={articleCn('article__content')}>
-          <ConditionalWrapper hide={square}>
-            <div className={articleCn('article__title')}>{title}</div>
-            <div className={articleCn('article__author')}>{author}</div>
-          </ConditionalWrapper>
-          {!square && (
-            <div className="article__content-bottom">
-              <span className="article__description">{description}</span>
-              <Text
-                id="article.read"
-                render={(read, article) => (
-                  <span className={cn('article__read', { 'theme-dark': dark })}>
-                    {read}
-                    {size === 'm' && article}
-                  </span>
-                )}
-              />
-            </div>
-          )}
-        </div>
+    <ArticleCardWrapper {...wrapperProps} className={articleCn('article')}>
+      <div className={articleCn('article__cover-wrapper')}>
+        <img
+          className={articleCn('article__cover')}
+          src={square ? horizontal : vertical}
+          alt={title}
+        />
       </div>
-    </div>
+      {brand && (
+        <img
+          className={articleCn('article__brand')}
+          src={brand.image}
+          alt={brand.title}
+          title={brand.title}
+        />
+      )}
+      <div className={articleCn('article__content')}>
+        <ConditionalWrapper hide={square}>
+          <div className={articleCn('article__title')}>{title}</div>
+          <div className={articleCn('article__author')}>{author}</div>
+        </ConditionalWrapper>
+        {!square && (
+          <div className="article__content-bottom">
+            <span className="article__description">{description}</span>
+            <Text
+              id="article.read"
+              render={(read, article) => (
+                <span className={cn('article__read', { 'theme-dark': dark })}>
+                  {read}
+                  {size === 'm' && article}
+                </span>
+              )}
+            />
+          </div>
+        )}
+      </div>
+    </ArticleCardWrapper>
   );
 };
 
@@ -80,13 +110,15 @@ ArticleCard.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   author: PropTypes.string.isRequired,
-  cover: PropTypes.string.isRequired,
+  covers: ArticleCoversShape.isRequired,
   tags: PropTypes.arrayOf(TagShape),
+  collection: CollectionShape,
 };
 
 ArticleCard.defaultProps = {
   theme: 'light',
   tags: [],
+  collection: null,
 };
 
 export default ArticleCard;

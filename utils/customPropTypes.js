@@ -39,6 +39,12 @@ export const TagShape = PropTypes.shape({
   content: PropTypes.object.isRequired,
 });
 
+export const ArticleCoversShape = PropTypes.shape({
+  page: PropTypes.string.isRequired,
+  horizontal: PropTypes.string.isRequired,
+  vertical: PropTypes.string,
+});
+
 export const ArticleModel = {
   active: PropTypes.bool.isRequired,
   articleId: PropTypes.string.isRequired,
@@ -51,9 +57,7 @@ export const ArticleModel = {
   subtitle: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  images: PropTypes.shape({
-    // FIXME
-  }),
+  images: ArticleCoversShape.isRequired,
   video: PropTypes.shape({
     platform: PropTypes.string,
     videoId: PropTypes.string,
