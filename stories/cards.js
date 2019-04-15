@@ -1,10 +1,12 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { select, color, text, boolean, object } from '@storybook/addon-knobs';
+import { select, color, text, boolean, object, radios } from '@storybook/addon-knobs';
 
-import ArticleCard, { SIZES } from 'components/articles/cards/ArticleCard';
+import { SIZES } from 'components/articles/cards/CardWrapper';
+import ArticleCard from 'components/articles/cards/ArticleCard';
+import TagCard from 'components/articles/cards/TagCard';
 
-import { article } from 'styles/src/cards/defaultData';
+import { article, person, location } from 'styles/src/cards/defaultData';
 
 const PREFIX = 'articles/cards';
 
@@ -26,27 +28,54 @@ const SAMPLE_COLLECTION = {
   imageUrl: 'https://babajka.github.io/babajka-markup/static/images/mock/persons/mickiewicz.png',
 };
 
-storiesOf(PREFIX).add('ArticleCard', () => {
-  const size = select('size', SIZES, article.size);
-  const title = text('title', article.title);
-  const description = text('description', article.description);
-  const author = text('author', article.author);
-  const covers = object('covers', {
-    page: '',
-    horizontal: getCover('horizontal'),
-    vertical: getCover('vertical'),
+storiesOf(PREFIX)
+  .add('ArticleCard', () => {
+    const size = select('size', SIZES, article.size);
+    const type = radios('type', ['text', 'video'], 'text');
+    const title = text('title', article.title);
+    const description = text('description', article.description);
+    const author = text('author', article.author);
+    const covers = object('covers', {
+      page: '',
+      horizontal: getCover('horizontal'),
+      vertical: getCover('vertical'),
+    });
+    const theme = select('theme', ['dark', 'light'], article.isDarkTheme ? 'dark' : 'light');
+    const bgColor = color('bgColor', article.backgroundColor);
+    const isBrand = boolean('add brand tag', false);
+    const inCollection = boolean('in collection', false);
+    const props = { size, title, description, author, covers, theme, bgColor, type };
+    if (inCollection) {
+      props.collection = SAMPLE_COLLECTION;
+    }
+    if (isBrand) {
+      props.tags = [BRAND_TAG];
+    }
+    return <ArticleCard {...props} />;
+  })
+  .add('TagCard', () => {
+    const size = select('size', SIZES, person.size);
+    const topicType = radios('topic', ['locations', 'personalities'], 'personalities');
+    const topic = { slug: topicType };
+
+    // location
+    const title = text('location title', location.title);
+    const image = text('location image', location.image);
+    const locationContent = { title, image };
+
+    // person
+    const name = text('person name', person.title);
+    const description = text('person description', person.description);
+    const dates = text('person dates', person.years);
+    const pColor = color('person color', person.backgroundColor);
+    const pImage = text('person image', person.image);
+    const personContent = { name, description, dates, color: pColor, image: pImage };
+
+    const props = {
+      size,
+      theme: topicType === 'locations' ? 'dark' : 'light',
+      topic,
+      content: topicType === 'locations' ? locationContent : personContent,
+    };
+    return <TagCard {...props} />;
   });
-  const theme = select('theme', ['dark', 'light'], article.isDarkTheme ? 'dark' : 'light');
-  const bgColor = color('bgColor', article.backgroundColor);
-  const isBrand = boolean('add brand tag', false);
-  const inCollection = boolean('in collection', false);
-  const type = select('type', ['text', 'video', 'text']);
-  const props = { size, title, description, author, covers, theme, bgColor, type };
-  if (inCollection) {
-    props.collection = SAMPLE_COLLECTION;
-  }
-  if (isBrand) {
-    props.tags = [BRAND_TAG];
-  }
-  return <ArticleCard {...props} />;
-});
