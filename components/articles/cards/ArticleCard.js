@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 import Text from 'components/common/Text';
+import LinkWrapper from 'components/common/ui/LinkWrapper';
 import ConditionalWrapper from 'components/common/ui/ConditionalWrapper';
 
-import { TagShape, CollectionShape, ArticleCoversShape } from 'utils/customPropTypes';
+import { TagShape, CollectionShape, ArticleCoversShape, ArticleType } from 'utils/customPropTypes';
 
-import CollectionArticleCard from './CollectionArticleCard';
+import CollectionCard from './article/CollectionCard';
+import VideoCard from './article/VideoCard';
 
 import 'styles/src/cards/common.scss'; // FIXME
 import 'styles/src/cards/article.scss';
@@ -40,13 +42,14 @@ const ArticleCard = props => {
   const {
     size,
     theme,
-    bgColor,
     author,
     description,
     tags,
     collection,
+    bgColor,
     covers: { horizontal, vertical },
     title,
+    type,
   } = props;
   const square = SQUARE_SIZES.includes(size);
   const articleCn = getArticleCn(square);
@@ -54,10 +57,18 @@ const ArticleCard = props => {
   const brand = getBrand(tags);
   const wrapperProps = { size, dark, bgColor };
 
+  if (type === 'video') {
+    return (
+      <ArticleCardWrapper {...wrapperProps} className="video" bgColor={null}>
+        <VideoCard {...props} />
+      </ArticleCardWrapper>
+    );
+  }
+
   if (collection) {
     return (
       <ArticleCardWrapper {...wrapperProps} className="collection">
-        <CollectionArticleCard square={square} {...props} />
+        <CollectionCard {...props} square={square} />
       </ArticleCardWrapper>
     );
   }
@@ -90,10 +101,10 @@ const ArticleCard = props => {
             <Text
               id="article.read"
               render={(read, article) => (
-                <span className={cn('article__read', { 'theme-dark': dark })}>
+                <LinkWrapper dark={dark}>
                   {read}
                   {size === 'm' && article}
-                </span>
+                </LinkWrapper>
               )}
             />
           </div>
@@ -113,6 +124,7 @@ ArticleCard.propTypes = {
   covers: ArticleCoversShape.isRequired,
   tags: PropTypes.arrayOf(TagShape),
   collection: CollectionShape,
+  type: ArticleType.isRequired,
 };
 
 ArticleCard.defaultProps = {

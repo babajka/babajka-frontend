@@ -12,14 +12,12 @@ const getCover = format =>
   `https://babajka.github.io/babajka-markup/static/images/mock/covers/article-${format}.png`;
 
 const BRAND_TAG = {
-  id: 'bla',
-  slug: 'kurilka',
+  slug: 'art-museum',
   content: {
-    image:
-      'https://res.cloudinary.com/wir-by/image/upload/v1541019686/dev/golden-data/references/kurilka.jpg',
-    title: 'Курылка Гутэнберга',
+    image: 'https://babajka.github.io/babajka-markup/static/images/mock/brands/art-museum.png',
+    title: 'Нацыянальны Мастацкі Музей',
   },
-  topic: { id: 'bla-bla', slug: 'brands' },
+  topic: { slug: 'brands' },
 };
 
 const SAMPLE_COLLECTION = {
@@ -41,13 +39,14 @@ storiesOf(PREFIX).add('ArticleCard', () => {
   const theme = select('theme', ['dark', 'light'], article.isDarkTheme ? 'dark' : 'light');
   const bgColor = color('bgColor', article.backgroundColor);
   const isBrand = boolean('add brand tag', false);
-  const isCollection = boolean('in collection', false);
-  const props = { size, title, description, author, covers, theme, bgColor };
+  const inCollection = boolean('in collection', false);
+  const type = select('type', ['text', 'video', 'text']);
+  const props = { size, title, description, author, covers, theme, bgColor, type };
+  if (inCollection) {
+    props.collection = SAMPLE_COLLECTION;
+  }
   if (isBrand) {
     props.tags = [BRAND_TAG];
-  }
-  if (isCollection) {
-    props.collection = SAMPLE_COLLECTION;
   }
   return <ArticleCard {...props} />;
 });

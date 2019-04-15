@@ -4,12 +4,13 @@ import Text from 'components/common/Text';
 
 import 'styles/src/cards/collection.scss';
 
-const CollectionArticleCard = ({
+const CollectionCard = ({
   square,
   covers,
   title,
   author,
   collection: { articleIndex, name, imageUrl },
+  brand,
 }) => (
   <>
     {!square && (
@@ -17,6 +18,7 @@ const CollectionArticleCard = ({
         <img className="collection__cover" src={covers.horizontal} alt={title} />
       </div>
     )}
+    {brand}
     <div className="collection__content">
       <div className="collection__content-top">
         <div className="collection__collection">
@@ -33,4 +35,4 @@ const CollectionArticleCard = ({
   </>
 );
 
-export default CollectionArticleCard;
+export default CollectionCard;
