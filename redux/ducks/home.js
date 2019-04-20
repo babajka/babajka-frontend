@@ -10,6 +10,7 @@ const duck = 'home';
 
 // constants
 const FETCH = `${duck}/FETCH`;
+const SUBSCRIBE = `${duck}/SUBSCRIBE`;
 
 // reducer
 const initialState = {
@@ -49,5 +50,12 @@ export const homeActions = {
   fetch: () => ({
     type: FETCH,
     payload: makeRequest(api.storage.getMainPage),
+  }),
+  subscribe: form => ({
+    type: SUBSCRIBE,
+    payload: makeRequest(api.core.subscribe, 'POST', form),
+    meta: {
+      ga: true,
+    },
   }),
 };
