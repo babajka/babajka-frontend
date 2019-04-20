@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Link from 'components/common/Link';
-import Clickable from 'components/common/Clickable';
+import Clickable from 'lib/components/Clickable';
 
 import { ROUTES_NAMES } from 'routes';
 

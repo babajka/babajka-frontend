@@ -8,7 +8,7 @@ import cn from 'classnames';
 import Icon from 'components/common/ui/Icon';
 import Link from 'components/common/Link';
 import Text from 'components/common/Text';
-import Clickable from 'components/common/Clickable';
+import Clickable from 'lib/components/Clickable';
 import LocaleContext from 'components/common/LocaleContext';
 import LinkWrapper from 'components/common/ui/LinkWrapper';
 

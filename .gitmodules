@@ -4,3 +4,6 @@
 [submodule "assets"]
 	path = assets
 	url = https://github.com/babajka/assets.git
+[submodule "lib"]
+	path = lib
+	url = https://github.com/babajka/lib.git
