@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
+import TextWithSeparator from 'lib/components/TextWithSeparator';
 import Modal from 'components/common/Modal';
 import Text from 'components/common/Text';
-import TextWithBr from 'components/common/TextWithBr';
-import Clickable from 'components/common/Clickable';
+import Clickable from 'lib/components/Clickable';
 import Icon from 'components/common/ui/Icon';
 
 import { diaryActions, diarySelectors } from 'redux/ducks/diary';
@@ -101,7 +101,7 @@ class Diary extends Component {
             renderBody={() => (
               <div>
                 <div className="diary-content">
-                  <TextWithBr text={text} />
+                  <TextWithSeparator text={text} symbol={'<br/>'} />
                 </div>
                 {this.renderDateElement()}
               </div>
@@ -133,7 +133,7 @@ class Diary extends Component {
             {text ? (
               <div className="diary-content">
                 <div className="text">
-                  <TextWithBr text={text} />
+                  <TextWithSeparator text={text} symbol={'<br/>'} />
                 </div>
                 <div className="ellipsis">...</div>
               </div>

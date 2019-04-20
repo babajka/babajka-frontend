@@ -23,6 +23,7 @@ import { localize } from 'components/common/Text';
 import { DEFAULT_LOCALE, VALID_LOCALES } from 'constants';
 import { getGoogleAnalyticsID } from 'constants/social';
 
+import clearUtmParams from 'lib/utils/clearUtmParams';
 import { populateRequest } from 'utils/request';
 import { replaceLocale } from 'utils/formatters';
 import { LangType, UserShape } from 'utils/customPropTypes';
@@ -78,7 +79,8 @@ class Root extends App {
       ReactGA.initialize(getGoogleAnalyticsID(__PROD__), {
         debug: false,
       });
-      ReactGA.pageview(document.location.pathname);
+      const url = document.location.pathname + document.location.search;
+      ReactGA.ga('send', 'pageview', url, { hitCallback: clearUtmParams });
     }
     moment.locale(router.query.lang);
   }

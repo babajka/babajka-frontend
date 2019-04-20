@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import Clickable from 'components/common/Clickable';
+import Clickable from 'lib/components/Clickable';
 import Button from 'components/common/Button';
 import Icon from 'components/common/ui/Icon';
 
