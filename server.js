@@ -53,10 +53,7 @@ app.prepare().then(() => {
       return handle(req, res);
     }
 
-    console.log('startPath: ', startPath, req.query, req.path, req.url, req.originalUrl);
-
     const userLocale = getUserLocale(req);
-    console.log('userLocale: ', userLocale);
     if (!VALID_LOCALES.includes(startPath)) {
       // missed locale, add it & redirect
       return res.redirect(`/${getValidLocale(userLocale)}${req.originalUrl}`);

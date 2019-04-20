@@ -8,6 +8,7 @@ module.exports = {
         '*',
         'server',
         'core',
+        'build',
         'common',
         'about',
         'article',

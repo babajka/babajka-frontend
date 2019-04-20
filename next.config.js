@@ -3,11 +3,17 @@ const fonts = require('next-fonts');
 const sass = require('@zeit/next-sass');
 const bundleAnalyzer = require('@zeit/next-bundle-analyzer');
 const webpack = require('webpack');
+const GenerateJsonPlugin = require('generate-json-webpack-plugin');
+const envCi = require('env-ci');
 
+const packageJson = require('./package.json');
 const { definePlugin } = require('./utils/webpack-plugins');
 const { VALID_LOCALES } = require('./constants');
 
 const langs = VALID_LOCALES.join('|');
+
+const { branch, commit } = envCi();
+const { version } = packageJson;
 
 const nextConfig = {
   webpack(config) {
@@ -15,6 +21,11 @@ const nextConfig = {
       ...[
         new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, new RegExp(langs)),
         definePlugin,
+        new GenerateJsonPlugin('static/info.json', {
+          version,
+          commit,
+          branch,
+        }),
       ]
     );
     return config;
