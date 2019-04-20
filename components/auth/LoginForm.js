@@ -4,8 +4,8 @@ import cn from 'classnames';
 import { Form, Field } from 'formik';
 import { Router } from 'routes';
 
-import { isEmail, isEqual, required, checkLength, hasErrors } from 'utils/validators';
-import FormWrapper from 'components/common/FormWrapper';
+import { validEmail, notEqual, required, checkLength, hasErrors } from 'utils/validators';
+import FormWrapper from 'components/common/form/FormWrapper';
 import Button from 'components/common/Button';
 import Text from 'components/common/Text';
 
@@ -34,7 +34,7 @@ const loginFields = {
   },
   email: {
     icon: 'envelope',
-    validator: ({ email }) => required(email) || isEmail(email),
+    validator: ({ email }) => required(email) || validEmail(email),
   },
   password: {
     label: (
@@ -57,7 +57,7 @@ const loginFields = {
     icon: 'unlock-alt',
     validator: ({ isSignUp, password, passwordAgain }) =>
       isSignUp &&
-      (required(passwordAgain) || isEqual(password, passwordAgain, 'auth.passwordsNotEqual')),
+      (required(passwordAgain) || notEqual(password, passwordAgain, 'auth.passwordsNotEqual')),
     successText: 'auth.passwordsEqual',
     type: 'password',
   },
@@ -87,7 +87,7 @@ const LoginForm = ({ next, allowSignUp }) => (
       initialValues={LOGIN_INITIAL_FORM}
       validate={loginValidator}
       action={authActions.signIn}
-      callback={() => Router.pushRoute(next)}
+      onSuccess={() => Router.pushRoute(next)}
     >
       {({ values, errors, touched, isSubmitting }) => (
         <Form>

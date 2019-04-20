@@ -17,6 +17,7 @@ export default {
   },
   core: {
     uploads: `${API_URL}/core/uploads`,
+    subscribe: `${API_URL}/mail`,
   },
   articles: {
     getChunk: pagination => `${API_URL}/articles${qs.stringify(pagination, queryOptions)}`,

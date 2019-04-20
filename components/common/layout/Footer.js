@@ -3,7 +3,6 @@ import React from 'react';
 import Text from 'components/common/Text';
 import Link from 'components/common/Link';
 import ExternalLink from 'components/common/ExternalLink';
-import Input from 'components/common/ui/Input';
 
 import MailLink from 'components/social/MailLink';
 import ShareButtons from 'components/social/ShareButtons';
@@ -12,6 +11,8 @@ import { TOPICS } from 'constants/home';
 import { NETWORKS } from 'constants/social';
 
 import 'styles/src/footer/footer.scss';
+
+import SubscribeForm from './footer/SubscribeForm';
 
 const Footer = () => (
   <footer className="footer footer-layout">
@@ -46,12 +47,7 @@ const Footer = () => (
 
         <div className="footer-layout__block2">
           <div className="footer__interactions">
-            <div className="footer__mailing">
-              <div className="footer__header">
-                <Text id="footer.subscribe" />
-              </div>
-              <Input leftIcon={{ name: 'envelope', pack: 'r' }} />
-            </div>
+            <SubscribeForm />
             <div className="footer__social">
               <div className="footer__header">
                 <Text id="footer.share" />

@@ -11,7 +11,8 @@ export default () => next => action => {
   const { setErrors, setSubmitting } = meta.formikActions;
 
   if (error) {
-    setErrors(payload);
+    const errors = typeof payload === 'string' ? { global: payload } : payload;
+    setErrors(errors);
   }
 
   if (!isLoading(action)) {
