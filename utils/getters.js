@@ -54,13 +54,29 @@ export const getLocalizedArticle = (article, lang) => {
   if (!article) {
     return null;
   }
-  const { _id: id, locales, collection, publishAt, tags, ...rest } = article;
-  return {
-    ...localize(locales, lang),
-    ...rest,
-    id,
-    collection: collection && getLocalizedCollection(collection, lang),
+  const {
+    _id: id,
+    locales,
+    collection,
     publishAt,
+    tags,
+    images: covers,
+    color,
+    textColorTheme: theme,
+    ...rest
+  } = article;
+  const { subtitle: description, ...localizedRest } = localize(locales, lang);
+  return {
+    ...rest,
+    ...localizedRest,
+    id,
+    publishAt,
+    description,
+    covers,
+    theme,
+    // FIXME
+    bgColor: `#${color}`,
+    collection: collection && getLocalizedCollection(collection, lang),
     published: !!publishAt && moment(publishAt).isBefore(moment()),
     tags: getLocalizedTags(tags, lang),
   };

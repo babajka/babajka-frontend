@@ -1,3 +1,5 @@
+import 'styles/src/cards/article.scss';
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -6,13 +8,13 @@ import LinkWrapper from 'components/common/ui/LinkWrapper';
 import ConditionalWrapper from 'components/common/ui/ConditionalWrapper';
 
 import { TagShape, CollectionShape, ArticleCoversShape, ArticleType } from 'utils/customPropTypes';
+import { renderTag } from 'utils/tags';
+
+import { TOPIC } from 'constants/home';
 
 import CardWrapper, { SQUARE_SIZES, SIZES } from './CardWrapper';
 import CollectionCard from './article/CollectionCard';
 import VideoCard from './article/VideoCard';
-
-import 'styles/src/cards/common.scss';
-import 'styles/src/cards/article.scss';
 
 const getArticleCn = square => className => {
   if (!square) {
@@ -26,11 +28,11 @@ const getBrand = tags => {
   return !!brandTag && brandTag.content;
 };
 
+// TODO: fix storybook
 const ArticleCard = props => {
   const {
     size,
     theme,
-    author,
     description,
     tags,
     collection,
@@ -61,6 +63,8 @@ const ArticleCard = props => {
     );
   }
 
+  const authors = tags.filter(({ topic }) => topic.slug === TOPIC.authors);
+
   return (
     <CardWrapper {...wrapperProps} className={articleCn('article')}>
       <div className={articleCn('article__cover-wrapper')}>
@@ -81,7 +85,15 @@ const ArticleCard = props => {
       <div className={articleCn('article__content')}>
         <ConditionalWrapper hide={square}>
           <div className={articleCn('article__title')}>{title}</div>
-          <div className={articleCn('article__author')}>{author}</div>
+          <div className={articleCn('article__author')}>
+            {authors.map((tag, i) => (
+              // TODO: extract to `renderList` helper
+              <span key={tag.id}>
+                {renderTag(tag)}
+                {i !== authors.length - 1 && ', '}
+              </span>
+            ))}
+          </div>
         </ConditionalWrapper>
         {!square && (
           <div className="article__content-bottom">

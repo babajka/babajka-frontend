@@ -63,14 +63,16 @@ export const ArticleModel = {
   publishAt: PropTypes.string,
   published: PropTypes.bool.isRequired,
   slug: PropTypes.string.isRequired,
-  subtitle: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   type: ArticleType.isRequired,
-  images: ArticleCoversShape.isRequired,
+  covers: ArticleCoversShape.isRequired,
   video: ArticleVideoShape,
   metadata: MetadataShape.isRequired,
   keywords: PropTypes.arrayOf(PropTypes.string).isRequired,
   tags: PropTypes.arrayOf(TagShape).isRequired,
+  theme: PropTypes.oneOf(['light', 'dark']).isRequired,
+  bgColor: PropTypes.string.isRequired,
 };
 
 export const ArticleShape = PropTypes.shape(ArticleModel);

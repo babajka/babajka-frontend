@@ -1,3 +1,12 @@
-export const TOPICS = ['themes', 'locations', 'times', 'personalities', 'authors', 'brands'];
+import createConstants from 'lib/utils/createConstants';
 
-export const stub = 1;
+export const TOPIC = createConstants(
+  'themes',
+  'locations',
+  'times',
+  'personalities',
+  'authors',
+  'brands'
+);
+
+export const TOPICS = Object.keys(TOPIC);

@@ -1,6 +1,7 @@
 const withPlugins = require('next-compose-plugins');
 const fonts = require('next-fonts');
 const sass = require('@zeit/next-sass');
+const css = require('@zeit/next-css');
 const bundleAnalyzer = require('@zeit/next-bundle-analyzer');
 const webpack = require('webpack');
 const GenerateJsonPlugin = require('generate-json-webpack-plugin');
@@ -34,6 +35,8 @@ const nextConfig = {
 
 const plugins = [
   [fonts, { enableSvg: true }],
+
+  css,
 
   [
     sass,
