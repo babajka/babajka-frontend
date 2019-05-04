@@ -1,11 +1,11 @@
+import 'styles/src/kit/form/forms.scss';
+
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import identity from 'lodash/identity';
 import noop from 'lodash/noop';
-
-import 'styles/src/kit/form/forms.scss';
 
 const FormWrapper = ({
   action,

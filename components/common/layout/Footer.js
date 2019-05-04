@@ -1,3 +1,5 @@
+import 'styles/src/footer/footer.scss';
+
 import React from 'react';
 
 import Text from 'components/common/Text';
@@ -9,8 +11,6 @@ import ShareButtons from 'components/social/ShareButtons';
 
 import { TOPICS } from 'constants/home';
 import { NETWORKS } from 'constants/social';
-
-import 'styles/src/footer/footer.scss';
 
 import SubscribeForm from './footer/SubscribeForm';
 

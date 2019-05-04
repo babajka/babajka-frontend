@@ -1,8 +1,8 @@
+import 'styles/src/cards/collection.scss';
+
 import React from 'react';
 
 import Text from 'components/common/Text';
-
-import 'styles/src/cards/collection.scss';
 
 const CollectionCard = ({
   square,

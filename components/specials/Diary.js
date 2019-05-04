@@ -1,3 +1,5 @@
+import 'styles/legacy/specials/diary/diary.scss';
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -12,8 +14,6 @@ import Icon from 'components/common/ui/Icon';
 import { diaryActions, diarySelectors } from 'redux/ducks/diary';
 import { isSameDay } from 'utils/validators';
 import { formatDate } from 'utils/formatters';
-
-import 'styles/legacy/specials/diary/diary.scss';
 
 const mapStateToProps = state => ({
   diary: diarySelectors.getCurrent(state),

@@ -1,3 +1,5 @@
+import 'styles/src/sidebar/sidebar.scss';
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -20,8 +22,6 @@ import { TOPICS } from 'constants/home';
 import { LOCALE_COOKIE_NAME } from 'constants/server';
 import { ROUTES_NAMES } from 'routes';
 import { LANGS } from 'constants';
-
-import 'styles/src/sidebar/sidebar.scss';
 
 const getLocaleSwitchUrl = (path, lang) => {
   const parts = path.split('/');

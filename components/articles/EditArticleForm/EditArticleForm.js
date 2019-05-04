@@ -1,3 +1,5 @@
+import 'styles/legacy/article-page-edit/article-page-edit.scss';
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -18,8 +20,6 @@ import Select from 'components/common/Select';
 import Clickable from 'lib/components/Clickable';
 import DateTimePicker from 'components/common/DateTimePicker';
 import { defaultContent } from 'components/common/Editor';
-
-import 'styles/legacy/article-page-edit/article-page-edit.scss';
 
 import EditLocaleForm, { localesValidator, localeObject } from './EditLocaleForm';
 import Author from './Author';

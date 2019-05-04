@@ -1,8 +1,8 @@
+import 'styles/src/cards/video.scss';
+
 import React from 'react';
 
 import Icon from 'components/common/ui/Icon';
-
-import 'styles/src/cards/video.scss';
 
 const VideoCard = ({ title, author, covers: { horizontal } }) => (
   <>

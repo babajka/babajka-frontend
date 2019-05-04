@@ -1,3 +1,5 @@
+import 'styles/legacy/about/about.scss';
+
 import React, { Component } from 'react';
 import chunk from 'lodash/chunk';
 import cn from 'classnames';
@@ -15,8 +17,6 @@ import { LangType } from 'utils/customPropTypes';
 
 import rawTeam from 'data/team.json';
 import rawVacancies from 'data/vacancies.json';
-
-import 'styles/legacy/about/about.scss';
 
 class AboutPage extends Component {
   static propTypes = {

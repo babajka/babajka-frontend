@@ -1,3 +1,5 @@
+import 'styles/legacy/article-page/article-page.scss';
+
 import React from 'react';
 import { connect } from 'react-redux';
 
@@ -17,8 +19,6 @@ import { Router, ROUTES_NAMES } from 'routes';
 import { LOCALES } from 'constants';
 import { EXPORT_TO_NETWORKS } from 'constants/social';
 import { ArticleModel, LangType } from 'utils/customPropTypes';
-
-import 'styles/legacy/article-page/article-page.scss';
 
 import AuthorBlock from './AuthorBlock';
 import CollectionBlock from './CollectionBlock';

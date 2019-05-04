@@ -1,9 +1,9 @@
+import '../styles.scss';
+
 import { configure, addParameters, addDecorator } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 
 import StoriesDecorator from 'components/dev/StoriesDecorator';
-
-import '../styles.scss';
 
 const req = require.context('../stories', true, /\.js$/);
 

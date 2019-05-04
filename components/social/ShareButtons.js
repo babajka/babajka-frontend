@@ -1,8 +1,8 @@
+import 'styles/src/kit/social-buttons/social-buttons.scss';
+
 import React from 'react';
 
 import Icon from 'components/common/ui/Icon';
-
-import 'styles/src/kit/social-buttons/social-buttons.scss';
 
 const SHARE_NETWORKS = [
   { id: 'facebook', icon: 'facebook-square' },

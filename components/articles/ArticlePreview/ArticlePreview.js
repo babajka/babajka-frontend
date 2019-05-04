@@ -1,3 +1,5 @@
+import 'styles/legacy/tiles/tile.scss';
+
 import React from 'react';
 import cn from 'classnames';
 import moment from 'moment';
@@ -11,8 +13,6 @@ import LocaleContext from 'components/common/LocaleContext';
 import { authSelectors } from 'redux/ducks/auth';
 import { ArticleModel } from 'utils/customPropTypes';
 import { ROUTES_NAMES } from 'routes';
-
-import 'styles/legacy/tiles/tile.scss';
 
 import SpecialHeading from './SpecialHeading';
 import Author from './Author';
