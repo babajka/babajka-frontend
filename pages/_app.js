@@ -59,6 +59,7 @@ class Root extends App {
       }).isRequired,
     }).isRequired,
     user: UserShape,
+    isMobile: PropTypes.bool,
   };
 
   static async getInitialProps({ Component, ctx }) {
@@ -70,11 +71,21 @@ class Root extends App {
       pageProps = await Component.getInitialProps(ctx);
     }
 
-    return { user, pageProps };
+    const userAgent = ctx.req ? ctx.req.headers['user-agent'] : '';
+    const isMobile = userAgent.includes('Mobi');
+
+    return { user, pageProps, isMobile };
+  }
+
+  constructor(props) {
+    super(props);
+    const { router } = props;
+    if (router.query) {
+      moment.locale(router.query.lang);
+    }
   }
 
   componentDidMount() {
-    const { router } = this.props;
     if ((__PROD__ || __STAGING__) && !window.ga) {
       ReactGA.initialize(getGoogleAnalyticsID(__PROD__), {
         debug: false,
@@ -82,11 +93,10 @@ class Root extends App {
       const url = document.location.pathname + document.location.search;
       ReactGA.ga('send', 'pageview', url, { hitCallback: clearUtmParams });
     }
-    moment.locale(router.query.lang);
   }
 
   render() {
-    const { Component, pageProps, store, router, user } = this.props;
+    const { Component, pageProps, store, router, user, isMobile } = this.props;
     const getLayoutProps = Component.getLayoutProps || getEmptyObject;
     const locale = getLocale(router);
 
@@ -106,7 +116,7 @@ class Root extends App {
               <title>Wir.by | {localize(title, locale)}</title>
               <link rel="icon" type="image/png" href="/static/images/logo/favicon-colored.png" />
             </Head>
-            <CoreLayout {...Component.layoutProps} lang={locale}>
+            <CoreLayout {...Component.layoutProps} lang={locale} isMobile={isMobile}>
               <Component {...defaultPageProps} {...pageProps} />
             </CoreLayout>
           </LocaleContext.Provider>
