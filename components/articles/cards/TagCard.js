@@ -1,11 +1,10 @@
+import 'styles/src/cards/location.scss';
+import 'styles/src/cards/person.scss';
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import { TopicShape } from 'utils/customPropTypes';
-
-import 'styles/src/cards/common.scss';
-import 'styles/src/cards/location.scss';
-import 'styles/src/cards/person.scss';
 
 import CardWrapper, { SIZES } from './CardWrapper';
 
@@ -16,7 +15,7 @@ const TagCard = ({ topic, content, theme, size }) => {
   if (topic.slug === 'locations') {
     const { title, image } = content;
     return (
-      <CardWrapper {...wrapperProps} bgImage={image} className="location">
+      <CardWrapper {...wrapperProps} bgImage={image} alt={title} className="location">
         <div className="location__title">{title}</div>
       </CardWrapper>
     );

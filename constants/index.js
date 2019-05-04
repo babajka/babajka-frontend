@@ -20,12 +20,15 @@ const LANGS = Object.entries(LOCALES).map(([id, label]) => ({ id, label }));
 
 const DATE_FORMAT = 'D MMMM YYYY';
 
+const SHORT_DATE_FORMAT = 'D MMMM';
+
 const DOMAIN_SECURE = 'https://wir.by';
 
 const STATIC_PATHS = ['static', '_next'];
 
 module.exports = {
   DATE_FORMAT,
+  SHORT_DATE_FORMAT,
   DEFAULT_LOCALE,
   DOMAIN_SECURE,
   LANGS,
