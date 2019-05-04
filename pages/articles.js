@@ -1,3 +1,5 @@
+import 'styles/legacy/main-page/main-page.scss';
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -14,8 +16,6 @@ import { populateRequest } from 'utils/request';
 
 import { ROW_SIZE, COMPLEX_ROW_SIZE } from 'constants/articles';
 import { articlesActions, articlesSelectors } from 'redux/ducks/articles';
-
-import 'styles/legacy/main-page/main-page.scss';
 
 const mapStateToProps = (state, { lang }) => ({
   articles: articlesSelectors.getAll(state, lang),

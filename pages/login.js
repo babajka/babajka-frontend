@@ -1,3 +1,5 @@
+import 'styles/legacy/login-page/login-page.scss';
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Router, ROUTES_NAMES } from 'routes';
@@ -5,8 +7,6 @@ import { Router, ROUTES_NAMES } from 'routes';
 import LoginForm from 'components/auth/LoginForm';
 
 import { LangType, UserShape } from 'utils/customPropTypes';
-
-import 'styles/legacy/login-page/login-page.scss';
 
 class LoginPage extends Component {
   static propTypes = {

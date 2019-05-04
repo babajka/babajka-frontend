@@ -1,9 +1,9 @@
+import 'styles/legacy/components/select/select.scss';
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import Downshift from 'downshift';
 import cn from 'classnames';
-
-import 'styles/legacy/components/select/select.scss';
 
 import Clickable from 'lib/components/Clickable';
 import Button from 'components/common//Button';

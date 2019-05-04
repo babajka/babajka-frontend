@@ -1,3 +1,5 @@
+import 'styles/src/navbar/navbar.scss';
+
 import React from 'react';
 
 import Link from 'components/common/Link';
@@ -6,7 +8,6 @@ import Clickable from 'lib/components/Clickable';
 import { ROUTES_NAMES } from 'routes';
 
 import Logo from 'assets/logo/Logo';
-import 'styles/src/navbar/navbar.scss';
 
 const Header = ({ toggleSidebar }) => (
   <div className="navbar">

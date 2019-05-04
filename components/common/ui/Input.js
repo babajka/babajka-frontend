@@ -1,10 +1,10 @@
+import 'styles/src/kit/input/input.scss';
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import Clickable from 'lib/components/Clickable';
 import Icon from 'components/common/ui/Icon';
-
-import 'styles/src/kit/input/input.scss';
 
 const getClass = (cls, err) => `${cls}${err ? ` ${cls}--error` : ''}`;
 
