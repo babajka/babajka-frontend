@@ -1,5 +1,3 @@
-import 'styles/legacy/article-page/article-page.scss';
-
 import React from 'react';
 import { connect } from 'react-redux';
 

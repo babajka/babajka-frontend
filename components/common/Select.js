@@ -1,12 +1,10 @@
-import 'styles/legacy/components/select/select.scss';
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import Downshift from 'downshift';
 import cn from 'classnames';
 
 import Clickable from 'lib/components/Clickable';
-import Button from 'components/common//Button';
+import Button from 'components/common/Button';
 import Icon from 'components/common/ui/Icon';
 
 const DEFAULT_STATE = { selectedItem: null, inputValue: '', highlightedIndex: 0 };
