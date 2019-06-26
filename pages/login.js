@@ -1,5 +1,3 @@
-import 'styles/legacy/login-page/login-page.scss';
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Router, ROUTES_NAMES } from 'routes';

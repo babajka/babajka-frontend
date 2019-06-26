@@ -1,5 +1,3 @@
-import 'styles/legacy/about/teammate.scss';
-
 import React from 'react';
 import chunk from 'lodash/chunk';
 

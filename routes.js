@@ -11,11 +11,6 @@ const ROUTES = [
     page: 'index',
   },
   {
-    name: 'articles',
-    pattern: 'articles',
-    page: 'articles',
-  },
-  {
     name: 'createArticle',
     pattern: 'articles/:mode(create)',
     page: 'editArticle',

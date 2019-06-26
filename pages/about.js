@@ -1,5 +1,3 @@
-import 'styles/legacy/about/about.scss';
-
 import React, { Component } from 'react';
 import chunk from 'lodash/chunk';
 import cn from 'classnames';

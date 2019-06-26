@@ -1,5 +1,3 @@
-import 'styles/legacy/article-page-edit/article-page-edit.scss';
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
