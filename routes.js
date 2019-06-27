@@ -4,6 +4,15 @@ const { VALID_LOCALES } = require('./constants');
 
 const langs = VALID_LOCALES.join('|');
 
+const ENV = require('./utils/env');
+
+const getMarkup = () => {
+  if (ENV === 'production') {
+    return [];
+  }
+  return ['example'].map(f => ({ name: `markup/${f}` }));
+};
+
 const ROUTES = [
   {
     name: 'main',
@@ -39,11 +48,13 @@ const ROUTES = [
     name: 'status',
     pattern: 'status/:code(404|500)',
   },
-].map(({ name, pattern = name, page = name }) => ({
-  name,
-  pattern: `/:lang(${langs})/${pattern}`,
-  page,
-}));
+]
+  .concat(getMarkup())
+  .map(({ name, pattern = name, page = name }) => ({
+    name,
+    pattern: `/:lang(${langs})/${pattern}`,
+    page,
+  }));
 
 const ROUTES_NAMES = {};
 ROUTES.forEach(route => {

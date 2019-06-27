@@ -10,7 +10,7 @@
     "local-backend": "npm run dev -- --backend_url=http://localhost:8080",
     "deploy-dev-from-local": "sh bin/dev/deploy-from-local.sh",
     "build": "cross-env NODE_ENV=production next build",
-    "lint": "npm run prettify && eslint '{!(.next*|*static*|node_modules*), }/**/*.js' --fix && stylelint '{!(.next*|*static*|node_modules*), }/**/*.scss'",
+    "lint": "npm run prettify && eslint '{!(.next*|*static*|node_modules*), }/**/*.js' --fix && stylelint '{!(.next*|*static*|node_modules*), }/**/*.scss' --fix",
     "prettier": "prettier --config .prettierrc --write",
     "prettify": "npm run prettier '{!(.next*|*static*|lib), }/**/*.{js,md}' '*.md' && npm run prettier-stylelint '{!(.next*|*static*), }/**/*.scss'",
     "prettier-stylelint": "prettier-stylelint --write -q",
