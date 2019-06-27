@@ -1,0 +1,56 @@
+@import 'variables';
+
+@mixin xxl-sizes {
+  height: 630px;
+  width: 1020px;
+}
+
+@mixin xl-sizes {
+  height: 504px;
+  width: 818px;
+}
+
+@mixin l-sizes {
+  height: 390px;
+  width: 624px;
+}
+
+@mixin m-sizes {
+  height: 300px;
+  width: 480px;
+}
+
+@mixin ms-sizes {
+  height: 194px;
+  width: 480px;
+}
+
+@mixin square-m-sizes {
+  height: 390px;
+  width: 390px;
+}
+
+@mixin square-s-sizes {
+  height: 300px;
+  width: 300px;
+}
+
+@mixin s-wide-sizes {
+  height: 194px;
+  width: 424px;
+}
+
+@mixin s-sizes {
+  height: 194px;
+  width: 390px;
+}
+
+@mixin xs-wide-sizes {
+  height: 194px;
+  width: 300px;
+}
+
+@mixin xs-sizes {
+  height: 194px;
+  width: 232px;
+}

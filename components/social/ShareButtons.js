@@ -1,4 +1,4 @@
-import 'styles/src/kit/social-buttons/social-buttons.scss';
+import './social-buttons.scss';
 
 import React from 'react';
 

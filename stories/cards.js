@@ -6,7 +6,7 @@ import { SIZES } from 'components/articles/cards/CardWrapper';
 import ArticleCard from 'components/articles/cards/ArticleCard';
 import TagCard from 'components/articles/cards/TagCard';
 
-import { article, person, location } from 'styles/src/cards/defaultData';
+import { article, person, location } from './defaultData';
 
 const PREFIX = 'articles/cards';
 

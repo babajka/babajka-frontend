@@ -1,3 +1,6 @@
+import 'normalize.css';
+import 'sass/index.scss';
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactGA from 'react-ga';

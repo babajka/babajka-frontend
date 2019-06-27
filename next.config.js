@@ -42,11 +42,7 @@ const plugins = [
     sass,
     {
       sassLoaderOptions: {
-        includePaths: [
-          'styles/node_modules/bulma',
-          'styles/node_modules/bulma-badge/dist/css/',
-          'styles/node_modules/font-awesome/scss',
-        ],
+        includePaths: ['sass', 'node_modules/font-awesome/scss'],
       },
     },
   ],

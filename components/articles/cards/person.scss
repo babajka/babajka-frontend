@@ -1,0 +1,248 @@
+@import './cards';
+
+.person {
+  background-color: #000000;
+  border-radius: 3px;
+  color: #ffffff;
+  display: flex;
+  flex-direction: row-reverse;
+  position: relative;
+
+  &.theme-dark {
+    color: #000000;
+  }
+
+  &__cover-wrapper {
+    height: 100%;
+  }
+
+  &__cover {
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  &__years {
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  &__title {
+    font-weight: bold;
+  }
+}
+
+.size-l {
+  .person {
+
+    @include l-sizes;
+
+    &__cover-wrapper {
+      width: 390px;
+    }
+
+    &__content {
+      bottom: 42px;
+      left: 30px;
+      position: absolute;
+      width: 240px;
+    }
+
+    &__title {
+      font-size: 72px;
+      line-height: 72px;
+      margin-top: 18px;
+    }
+
+    &__description {
+      font-size: 14px;
+      line-height: 21px;
+      margin-top: 19px;
+    }
+  }
+}
+
+.size-square-m {
+  .person {
+
+    @include square-m-sizes;
+
+    &__cover-wrapper {
+      width: 100%;
+    }
+
+    &__content {
+      bottom: 42px;
+      left: 30px;
+      position: absolute;
+      right: 48px;
+      width: 100%;
+    }
+
+    &__title {
+      font-size: 48px;
+      line-height: 60px;
+      margin-top: 18px;
+    }
+
+    &__description {
+      display: none;
+    }
+  }
+}
+
+.size-square-s {
+  .person {
+
+    @include square-s-sizes;
+
+    &__cover-wrapper {
+      width: 100%;
+    }
+
+    &__content {
+      bottom: 42px;
+      left: 23px;
+      position: absolute;
+      right: 37px;
+      width: 100%;
+    }
+
+    &__title {
+      font-size: 48px;
+      line-height: 60px;
+    }
+
+    &__description {
+      display: none;
+    }
+  }
+}
+
+.size-ms,
+.size-s-wide {
+  .person {
+    &__cover-wrapper {
+      width: 194px;
+    }
+
+    &__content {
+      bottom: 42px;
+      left: 30px;
+      position: absolute;
+      width: 230px;
+    }
+
+    &__title {
+      font-size: 30px;
+      line-height: 36px;
+    }
+
+    &__description {
+      display: none;
+    }
+  }
+}
+
+.size-ms {
+  .person {
+
+    @include ms-sizes;
+  }
+}
+
+.size-s-wide {
+  .person {
+
+    @include s-wide-sizes;
+  }
+}
+
+.size-s {
+  .person {
+
+    @include s-sizes;
+
+    &__cover-wrapper {
+      width: 194px;
+    }
+
+    &__content {
+      bottom: 42px;
+      left: 30px;
+      position: absolute;
+      width: 230px;
+    }
+
+    &__title {
+      font-size: 48px;
+      line-height: 60px;
+    }
+
+    &__description {
+      display: none;
+    }
+  }
+}
+
+.size-xs-wide {
+  .person {
+
+    @include xs-wide-sizes;
+
+    &__cover-wrapper {
+      width: 194px;
+    }
+
+    &__content {
+      bottom: 42px;
+      left: 30px;
+      position: absolute;
+      width: 150px;
+    }
+
+    &__title {
+      font-size: 30px;
+      line-height: 36px;
+      margin-top: 7px;
+    }
+
+    &__description {
+      display: none;
+    }
+  }
+}
+
+.size-xs {
+  .person {
+
+    @include xs-sizes;
+
+    &__cover-wrapper {
+      width: 194px;
+    }
+
+    &__content {
+      bottom: 42px;
+      left: 30px;
+      position: absolute;
+      width: 150px;
+    }
+
+    &__title {
+      font-size: 30px;
+      line-height: 36px;
+      margin-top: 7px;
+    }
+
+    &__description {
+      display: none;
+    }
+  }
+}

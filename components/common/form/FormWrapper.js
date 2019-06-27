@@ -1,4 +1,4 @@
-import 'styles/src/kit/form/forms.scss';
+import './forms.scss';
 
 import React from 'react';
 import { connect } from 'react-redux';

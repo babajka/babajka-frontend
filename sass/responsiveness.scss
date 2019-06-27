@@ -1,0 +1,56 @@
+// Breakpoints for screen sizes.
+$mobile-small: 500px;
+$mobile-large: 650px;
+$tablet: 800px;
+$desktop: 1100px;
+$desktop-with-sidebar: 1360px;
+$widescreen: 1600px;
+
+@mixin mobile {
+
+  @media screen and (max-width: $mobile-large - 1) {
+    @content;
+  }
+}
+
+@mixin tablet {
+
+  @media screen and (min-width: $mobile-large) and (max-width: $tablet - 1) {
+    @content;
+  }
+}
+
+@mixin touch {
+
+  @media screen and (min-width: $mobile-large) {
+    @content;
+  }
+}
+
+@mixin sidebar-invisible {
+
+  @media screen and (max-width: $desktop-with-sidebar - 1) {
+    @content;
+  }
+}
+
+@mixin sidebar-visible {
+
+  @media screen and (min-width: $desktop-with-sidebar) {
+    @content;
+  }
+}
+
+@mixin desktop {
+
+  @media screen and (min-width: $desktop) {
+    @content;
+  }
+}
+
+@mixin widescreen {
+
+  @media screen and (min-width: $widescreen) {
+    @content;
+  }
+}

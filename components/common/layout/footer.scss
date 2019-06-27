@@ -1,0 +1,126 @@
+@import 'responsiveness';
+@import 'variables';
+
+.footer-layout {
+  margin: 1rem 2rem 1rem 1rem;
+  padding: 2rem 0 0;
+
+  @include touch {
+    margin: 3rem 6rem 3rem 3rem;
+    padding: 3rem 0 0;
+  }
+
+  &__nested1 {
+    display: flex;
+    flex-direction: column;
+
+    @include desktop {
+      flex-direction: row;
+    }
+  }
+
+  &__nested2 {
+    display: flex;
+    flex-direction: column;
+
+    @include touch {
+      flex-direction: row;
+    }
+
+    @include desktop {
+      flex: 5;
+    }
+  }
+
+  &__block1 {
+
+    @include touch {
+      flex: 1;
+    }
+  }
+
+  &__block2 {
+
+    @include touch {
+      flex: 1;
+    }
+  }
+
+  &__block3 {
+
+    @include desktop {
+      flex: 2;
+    }
+  }
+
+  &__block4 {
+    // Bottom block.
+  }
+}
+
+.footer {
+  border-top: solid 1px $primary-grey;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.8rem;
+
+  &__header {
+    color: $primary-black;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 0.5rem 0 1rem;
+  }
+
+  &__links {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 1rem;
+  }
+
+  &__links-column {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  &__item {
+    padding: 0.5rem 0;
+  }
+
+  &__interactions {
+    padding: 1rem 0;
+
+    @include touch {
+      padding: 0;
+    }
+
+    @include desktop {
+      padding: 0 2rem;
+    }
+  }
+
+  &__mailing {
+    padding-bottom: 2rem;
+  }
+
+  &__help-us {
+    padding: 1rem 0;
+
+    @include desktop {
+      padding: 0 2rem;
+    }
+  }
+
+  &__help-text {
+    line-height: 1.7em;
+  }
+
+  &__bottom {
+    padding: 2rem 0;
+  }
+
+  &__copyright {
+    margin-right: 1rem;
+  }
+}

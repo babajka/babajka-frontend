@@ -1,6 +1,4 @@
-import 'styles/node_modules/normalize.css';
-import 'styles.scss';
-import 'styles/src/layout/layout.scss';
+import './layout.scss';
 
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';

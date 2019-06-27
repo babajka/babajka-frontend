@@ -1,0 +1,39 @@
+@import 'responsiveness';
+@import 'variables';
+
+.navbar {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  padding: 1.5rem;
+
+  &__title {
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin: 0 18px;
+    text-transform: uppercase;
+  }
+
+  &__burger {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    height: 30px;
+    justify-content: space-between;
+    margin-left: auto;
+    width: 35px;
+
+    @include sidebar-visible {
+      display: none;
+    }
+  }
+
+  &__burger-item {
+    background-color: $primary;
+    border-radius: 2px;
+    height: 5px;
+    width: 100%;
+  }
+}

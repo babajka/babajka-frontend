@@ -19,6 +19,7 @@ module.exports = {
         'home',
         'layout',
         'cards',
+        'styles',
       ],
     ],
     'scope-empty': [2, 'never'],

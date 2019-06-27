@@ -1,4 +1,4 @@
-import 'styles/src/cards/collection.scss';
+import './collection.scss';
 
 import React from 'react';
 

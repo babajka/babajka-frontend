@@ -1,4 +1,4 @@
-import 'styles/stubs/stubs.scss';
+import './stubs.scss';
 
 import Error404 from './Error404';
 import Error500 from './Error500';

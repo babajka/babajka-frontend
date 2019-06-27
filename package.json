@@ -32,6 +32,7 @@
     "size": "npm run reset-cache && npm run build && npm run bundlesize"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.9.0",
     "@storybook/addon-actions": "^5.0.7",
     "@storybook/addon-knobs": "^5.0.7",
     "@storybook/addon-links": "^5.0.3",
@@ -61,6 +62,7 @@
     "next-redux-wrapper": "^3.0.0-alpha.1",
     "next-routes": "^1.4.2",
     "node-sass": "^4.11.0",
+    "normalize.css": "^8.0.1",
     "prop-types": "^15.7.2",
     "qs": "^6.6.0",
     "react": "^16.8.2",
