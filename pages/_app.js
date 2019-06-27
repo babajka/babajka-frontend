@@ -1,5 +1,5 @@
 import 'normalize.css';
-import 'sass/index.scss';
+import 'styles/index.scss';
 
 import React from 'react';
 import PropTypes from 'prop-types';

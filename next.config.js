@@ -8,7 +8,7 @@ const GenerateJsonPlugin = require('generate-json-webpack-plugin');
 const envCi = require('env-ci');
 
 const packageJson = require('./package.json');
-const { definePlugin } = require('./utils/webpack-plugins');
+const { definePlugin, sassLoaderOptions } = require('./utils/webpack-plugins');
 const { VALID_LOCALES } = require('./constants');
 
 const langs = VALID_LOCALES.join('|');
@@ -41,9 +41,7 @@ const plugins = [
   [
     sass,
     {
-      sassLoaderOptions: {
-        includePaths: ['sass', 'node_modules/font-awesome/scss'],
-      },
+      sassLoaderOptions,
     },
   ],
 

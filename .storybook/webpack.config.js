@@ -1,6 +1,6 @@
 const path = require('path');
 
-const { definePlugin } = require('../utils/webpack-plugins');
+const { definePlugin, sassLoaderOptions } = require('../utils/webpack-plugins');
 
 module.exports = ({ config }) => ({
   ...config,
@@ -16,12 +16,10 @@ module.exports = ({ config }) => ({
           'css-loader',
           {
             loader: 'sass-loader',
-            options: {
-              includePaths: ['node_modules/@fortawesome/fontawesome-free/scss/'],
-            },
+            options: sassLoaderOptions,
           },
         ],
-        include: path.resolve(__dirname, '../sass'),
+        include: path.resolve(__dirname, '../styles'),
       },
     ],
   },
