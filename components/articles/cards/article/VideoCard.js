@@ -1,4 +1,4 @@
-import 'styles/src/cards/video.scss';
+import './video.scss';
 
 import React from 'react';
 

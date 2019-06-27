@@ -1,0 +1,130 @@
+@import './cards';
+
+.location {
+  background-size: cover;
+  border-radius: 3px;
+  box-sizing: border-box;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+
+  &.theme-dark {
+    color: #000000;
+  }
+
+  &__title {
+    font-weight: bold;
+  }
+}
+
+.size-l {
+  .location {
+
+    @include l-sizes;
+
+    padding: 0 39px 43px;
+
+    &__title {
+      font-size: 72px;
+      line-height: 72px;
+    }
+  }
+}
+
+.size-square-m {
+  .location {
+
+    @include square-m-sizes;
+
+    padding: 0 30px 42px;
+
+    &__title {
+      font-size: 48px;
+      line-height: 60px;
+    }
+  }
+}
+
+.size-square-s {
+  .location {
+
+    @include square-s-sizes;
+
+    padding: 0 30px 42px;
+
+    &__title {
+      font-size: 48px;
+      line-height: 60px;
+    }
+  }
+}
+
+.size-ms,
+.size-s-wide {
+  .location {
+    padding: 0 30px 42px;
+
+    &__title {
+      font-size: 30px;
+      line-height: 36px;
+    }
+  }
+}
+
+.size-ms {
+  .location {
+
+    @include ms-sizes;
+  }
+}
+
+.size-s-wide {
+  .location {
+
+    @include s-wide-sizes;
+  }
+}
+
+.size-s {
+  .location {
+
+    @include s-sizes;
+
+    padding: 0 30px 42px;
+
+    &__title {
+      font-size: 60px;
+      line-height: 72px;
+    }
+  }
+}
+
+.size-xs-wide {
+  .location {
+
+    @include xs-wide-sizes;
+
+    padding: 0 30px 42px;
+
+    &__title {
+      font-size: 30px;
+      line-height: 36px;
+    }
+  }
+}
+
+.size-xs {
+  .location {
+
+    @include xs-sizes;
+
+    padding: 0 30px 42px;
+
+    &__title {
+      font-size: 30px;
+      line-height: 36px;
+    }
+  }
+}

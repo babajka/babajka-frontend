@@ -1,4 +1,4 @@
-import 'styles/src/blocks/twoInRow.scss';
+import './twoInRow.scss';
 
 import React from 'react';
 import PropTypes from 'prop-types';

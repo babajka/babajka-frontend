@@ -1,4 +1,4 @@
-import 'styles/src/blocks/tagsByTopic.scss';
+import './tagsByTopic.scss';
 
 import React from 'react';
 import PropTypes from 'prop-types';

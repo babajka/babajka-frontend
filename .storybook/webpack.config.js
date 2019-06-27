@@ -17,15 +17,11 @@ module.exports = ({ config }) => ({
           {
             loader: 'sass-loader',
             options: {
-              includePaths: [
-                'styles/node_modules/bulma',
-                'styles/node_modules/bulma-badge/dist/css/',
-                'styles/node_modules/@fortawesome/fontawesome-free/scss/',
-              ],
+              includePaths: ['node_modules/@fortawesome/fontawesome-free/scss/'],
             },
           },
         ],
-        include: path.resolve(__dirname, '../styles'),
+        include: path.resolve(__dirname, '../sass'),
       },
     ],
   },

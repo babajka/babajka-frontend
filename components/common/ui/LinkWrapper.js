@@ -1,4 +1,4 @@
-import 'styles/src/kit/link/link.scss';
+import './link.scss';
 
 import React from 'react';
 import cn from 'classnames';

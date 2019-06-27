@@ -1,4 +1,4 @@
-import 'styles/src/navbar/navbar.scss';
+import './navbar.scss';
 
 import React from 'react';
 

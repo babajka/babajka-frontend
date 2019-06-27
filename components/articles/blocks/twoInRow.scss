@@ -1,0 +1,26 @@
+@import './blocks';
+
+.two-in-row {
+  display: flex;
+}
+
+.screen-desktop,
+.screen-tablet-large {
+  .two-in-row {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.screen-tablet,
+.screen-touch,
+.screen-mobile {
+  .two-in-row {
+    flex-direction: column;
+    justify-content: space-between;
+
+    &__first {
+      margin-bottom: 30px;
+    }
+  }
+}

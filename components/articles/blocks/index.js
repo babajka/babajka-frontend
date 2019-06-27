@@ -1,5 +1,3 @@
-import 'styles/src/blocks/common.scss';
-
 import FeaturedBlock from './FeaturedBlock';
 import DiaryBlock from './DiaryBlock';
 import LatestArticles from './LatestArticles';

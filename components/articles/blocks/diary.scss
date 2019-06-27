@@ -1,0 +1,186 @@
+@import './blocks';
+
+.diary {
+  margin-top: -15px;
+
+  &__content {
+    border-bottom: 1px solid $primary-grey;
+    display: flex;
+    position: relative;
+  }
+
+  &__text-content {
+    display: flex;
+  }
+
+  &__picture {
+    z-index: 1;
+
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  &__date {
+    font-weight: bold;
+  }
+
+  &__text {
+    overflow: hidden;
+  }
+
+  &__arrows {
+    background-color: $primary-white;
+    bottom: -13px;
+    display: flex;
+    flex-direction: row;
+    font-size: 24px;
+    justify-content: space-between;
+    left: 0;
+    line-height: 24px;
+    padding-right: 20px;
+    position: absolute;
+    width: 60px;
+    z-index: 1;
+  }
+}
+
+.screen-desktop,
+.screen-tablet-large {
+  .diary {
+    &__content {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    &__text-content {
+      align-items: center;
+      flex-direction: row;
+      height: 180px;
+    }
+
+    &__picture {
+      height: 180px;
+      order: 1;
+      width: 180px;
+    }
+
+    &__title {
+      font-size: 20px;
+      height: 100px;
+      line-height: 33px;
+      margin-top: 10px;
+      width: 240px;
+    }
+
+    &__text {
+      font-size: 14px;
+      height: 100px;
+      line-height: 24px;
+      margin-top: 10px;
+    }
+  }
+}
+
+.screen-desktop {
+  .diary {
+    &__text {
+      width: 570px;
+    }
+  }
+}
+
+.screen-tablet-large {
+  .diary {
+    &__text {
+      width: 384px;
+    }
+  }
+}
+
+.screen-tablet {
+  .diary {
+    &__content {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    &__text-content {
+      flex-direction: column;
+      margin-top: 50px;
+      width: 440px;
+    }
+
+    &__picture {
+      height: 180px;
+      order: 1;
+      width: 180px;
+    }
+
+    &__title {
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 21px;
+    }
+
+    &__text {
+      font-size: 14px;
+      line-height: 24px;
+      width: 400px;
+    }
+  }
+}
+
+.screen-touch,
+.screen-mobile {
+  .diary {
+    &__content {
+      flex-direction: column;
+    }
+
+    &__picture {
+      border-bottom: 1px solid $primary-grey;
+      height: 90px;
+      margin-bottom: 30px;
+      text-align: right;
+      width: 100%;
+
+      img {
+        width: 90px;
+      }
+    }
+
+    &__text-content {
+      flex-direction: column;
+      margin-bottom: 42px;
+    }
+
+    &__title {
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 21px;
+    }
+
+    &__text {
+      font-size: 14px;
+      line-height: 21px;
+    }
+  }
+}
+
+.screen-touch {
+  .diary {
+    &__text {
+      height: 63px;
+    }
+  }
+}
+
+.screen-mobile {
+  .diary {
+    &__text {
+      height: 105px;
+    }
+  }
+}

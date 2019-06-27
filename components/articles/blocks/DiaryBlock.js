@@ -1,4 +1,4 @@
-import 'styles/src/blocks/diary.scss';
+import './diary.scss';
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
