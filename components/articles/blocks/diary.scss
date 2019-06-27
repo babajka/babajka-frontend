@@ -1,4 +1,4 @@
-@import './blocks';
+@import 'variables';
 
 .diary {
   margin-top: -15px;
@@ -19,6 +19,17 @@
     img {
       height: 100%;
       width: 100%;
+    }
+  }
+
+  &__title {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+    span {
+      display: inline-block;
+      margin-right: 5px;
     }
   }
 

@@ -1,4 +1,4 @@
-@import './blocks';
+@import 'variables';
 
 .articles-by-tag-2 {
   display: flex;
@@ -102,7 +102,6 @@
 .screen-mobile {
   .articles-by-tag-2 {
     flex-direction: column;
-    padding: 0;
 
     &__labels {
       width: 100%;
