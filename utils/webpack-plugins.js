@@ -12,4 +12,8 @@ const definePlugin = new webpack.DefinePlugin({
   __TESTING__: ENV === 'testing',
 });
 
-module.exports = { definePlugin };
+const sassLoaderOptions = {
+  includePaths: ['styles', 'node_modules/@fortawesome/fontawesome-free/scss'],
+};
+
+module.exports = { definePlugin, sassLoaderOptions };

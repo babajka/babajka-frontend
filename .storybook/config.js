@@ -1,4 +1,4 @@
-import '../sass/index.scss';
+import '../styles/index.scss';
 
 import { configure, addParameters, addDecorator } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
