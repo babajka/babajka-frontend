@@ -20,34 +20,35 @@ const ROUTES = [
     page: 'index',
   },
   {
-    name: 'createArticle',
-    pattern: 'articles/:mode(create)',
-    page: 'editArticle',
-    params: {
-      mode: 'create',
-    },
-  },
-  {
-    name: 'about',
-  },
-  {
-    name: 'upload-test',
-  },
-  {
-    name: 'login',
-  },
-  {
-    name: 'article',
-    pattern: 'article/:slug',
-  },
-  {
-    name: 'editArticle',
-    pattern: 'article/:slug/:mode(edit)',
-  },
-  {
     name: 'status',
     pattern: 'status/:code(404|500)',
   },
+  // legacy pages, to refactor:
+  // {
+  //   name: 'createArticle',
+  //   pattern: 'articles/:mode(create)',
+  //   page: 'editArticle',
+  //   params: {
+  //     mode: 'create',
+  //   },
+  // },
+  // {
+  //   name: 'about',
+  // },
+  // {
+  //   name: 'upload-test',
+  // },
+  // {
+  //   name: 'login',
+  // },
+  // {
+  //   name: 'article',
+  //   pattern: 'article/:slug',
+  // },
+  // {
+  //   name: 'editArticle',
+  //   pattern: 'article/:slug/:mode(edit)',
+  // },
 ]
   .concat(getMarkup())
   .map(({ name, pattern = name, page = name }) => ({
