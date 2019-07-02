@@ -10,7 +10,8 @@ import ConditionalWrapper from 'components/common/ui/ConditionalWrapper';
 import { TagShape, CollectionShape, ArticleCoversShape, ArticleType } from 'utils/customPropTypes';
 import { renderTag } from 'utils/tags';
 
-import { TOPIC } from 'constants/home';
+import { TOPIC } from 'constants/misc';
+import { ROUTES_NAMES } from 'routes';
 
 import CardWrapper, { SQUARE_SIZES, SIZES } from './CardWrapper';
 import CollectionCard from './article/CollectionCard';
@@ -40,12 +41,18 @@ const ArticleCard = props => {
     covers: { horizontal, vertical },
     title,
     type,
+    slug,
   } = props;
   const square = SQUARE_SIZES.includes(size);
   const articleCn = getArticleCn(square);
   const dark = theme === 'dark';
   const brand = getBrand(tags);
-  const wrapperProps = { size, dark, bgColor };
+  const wrapperProps = {
+    size,
+    dark,
+    bgColor,
+    linkProps: { route: ROUTES_NAMES.article, params: { slug } },
+  };
 
   if (type === 'video') {
     return (
@@ -125,6 +132,7 @@ ArticleCard.propTypes = {
   tags: PropTypes.arrayOf(TagShape),
   collection: CollectionShape,
   type: ArticleType.isRequired,
+  slug: PropTypes.string.isRequired,
 };
 
 ArticleCard.defaultProps = {

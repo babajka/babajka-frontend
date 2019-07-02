@@ -4,12 +4,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import Text from 'components/common/Text';
 import ScreenContext from 'components/common/layout/ScreenContext';
-import LinkWrapper from 'components/common/ui/LinkWrapper';
 import TagCard from 'components/articles/cards/TagCard';
 
-import { TOPICS } from 'constants/home';
+import { getTopicLink } from 'utils/tags';
+
+import { TOPICS } from 'constants';
 import { SCREENS } from 'constants/styles';
 
 const { DESKTOP, MOBILE, TABLET, TABLET_LARGE, TOUCH } = SCREENS;
@@ -33,13 +33,10 @@ const TagsByTopic = ({ block, data }) => {
   const { topicSlug, tagsIds, style } = block;
   const { tags } = data;
   const tagsData = tagsIds.map(id => tags[id]);
+  const topicLink = getTopicLink({ topic: topicSlug });
   return (
     <div className="block block__no-background tags-by-topic">
-      <div className="tags-by-topic__title-label">
-        <LinkWrapper>
-          <Text id={`topic.${topicSlug}_all_mainPage`} />
-        </LinkWrapper>
-      </div>
+      <div className="tags-by-topic__title-label">{topicLink}</div>
       <ScreenContext.Consumer>
         {({ screen }) => (
           <div className="tags-by-topic__cards">

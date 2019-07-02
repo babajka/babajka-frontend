@@ -42,7 +42,8 @@ export const getTopic = ({ _id: id, slug }) => ({ id, slug });
 
 export const getTopics = topics => topics.map(getTopic);
 
-export const getLocalizedTag = ({ _id: id, topic, content }, lang) => ({
+export const getLocalizedTag = ({ _id: id, topic, content, ...rest }, lang) => ({
+  ...rest,
   id,
   topic: getTopic(topic),
   content: LOCALIZE_TAG_CONTENT[topic.slug](content, lang),

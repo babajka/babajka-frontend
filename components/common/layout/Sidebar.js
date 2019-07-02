@@ -12,16 +12,14 @@ import Link from 'components/common/Link';
 import Text from 'components/common/Text';
 import Clickable from 'lib/components/Clickable';
 import LocaleContext from 'components/common/LocaleContext';
-import LinkWrapper from 'components/common/ui/LinkWrapper';
 
 import { sidebarSelectors } from 'redux/ducks/sidebar';
 import { TagShape } from 'utils/customPropTypes';
-import { renderTag } from 'utils/tags';
+import { getTagLink, getTopicLink } from 'utils/tags';
 
-import { TOPICS } from 'constants/home';
+import { TOPICS, LANGS } from 'constants';
 import { LOCALE_COOKIE_NAME } from 'constants/server';
 import { ROUTES_NAMES } from 'routes';
-import { LANGS } from 'constants';
 
 const getLocaleSwitchUrl = (path, lang) => {
   const parts = path.split('/');
@@ -29,7 +27,7 @@ const getLocaleSwitchUrl = (path, lang) => {
   return parts.join('/');
 };
 
-const SidebarSection = ({ title, data, idKey, renderItem, renderFooter }) => (
+const SidebarSection = ({ title, data, idKey, renderItem, footer }) => (
   <section className="sidebar__section">
     <ul className="sidebar__section-list">
       <li className="sidebar__section-list-item sidebar__section-title">{title}</li>
@@ -39,7 +37,7 @@ const SidebarSection = ({ title, data, idKey, renderItem, renderFooter }) => (
         </li>
       ))}
     </ul>
-    {renderFooter && <span className="sidebar__section-link-to-all">{renderFooter()}</span>}
+    {footer && <span className="sidebar__section-link-to-all">{footer}</span>}
   </section>
 );
 
@@ -48,22 +46,23 @@ SidebarSection.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   idKey: PropTypes.string,
   renderItem: PropTypes.func.isRequired,
-  renderFooter: PropTypes.func,
+  footer: PropTypes.node,
 };
 
 SidebarSection.defaultProps = {
   idKey: 'id',
-  renderFooter: null,
+  footer: null,
 };
 
-const FOOTER_BY_TOPIC = {
-  authors: () => (
-    <Link>
-      <span>
+const getFooter = topic => {
+  if (topic === 'authors') {
+    return (
+      <Link route={ROUTES_NAMES.about}>
         <Text id="sidebar.all-team" />
-      </span>
-    </Link>
-  ),
+      </Link>
+    );
+  }
+  return getTopicLink({ topic });
 };
 
 const handleLangClick = Cookies.set.bind(null, LOCALE_COOKIE_NAME);
@@ -85,15 +84,11 @@ const Sidebar = ({ blocks, data, router: { asPath }, active, toggleSidebar, long
           <ul className="sidebar__langs">
             {LANGS.filter(({ id }) => id !== lang).map(({ id, label }) => (
               <li key={id} className="langs__item">
-                <Link
-                  route={getLocaleSwitchUrl(asPath, id)}
-                  params={{ lang: id }}
-                  render={() => (
-                    <LinkWrapper onClick={handleLangClick.bind(null, id)}>
-                      <span>{label}</span>
-                    </LinkWrapper>
-                  )}
-                />
+                <Link route={getLocaleSwitchUrl(asPath, id)} params={{ lang: id }}>
+                  <Clickable onClick={handleLangClick.bind(null, id)}>
+                    <span>{label}</span>
+                  </Clickable>
+                </Link>
               </li>
             ))}
           </ul>
@@ -106,25 +101,18 @@ const Sidebar = ({ blocks, data, router: { asPath }, active, toggleSidebar, long
         </Link>
       </div>
 
-      {!long && (
-        <>
-          <SidebarSection title="Short Sidebar" data={[]} />
-        </>
-      )}
+      {!long && <SidebarSection title="Short Sidebar" data={[]} />}
 
-      {long && (
-        <>
-          {blocks.map(({ topic, tags }) => (
-            <SidebarSection
-              key={topic}
-              title={<Text id={`topic.${topic}_essentials`} />}
-              data={tags.map(tagId => data.tags[tagId])}
-              renderItem={tag => <Link>{renderTag(tag)}</Link>}
-              renderFooter={FOOTER_BY_TOPIC[topic]}
-            />
-          ))}
-        </>
-      )}
+      {long &&
+        blocks.map(({ topic, tags }) => (
+          <SidebarSection
+            key={topic}
+            title={<Text id={`topic.${topic}_essentials`} />}
+            data={tags.map(tagId => data.tags[tagId])}
+            renderItem={tag => getTagLink({ tag })}
+            footer={getFooter(topic)}
+          />
+        ))}
     </aside>
   </div>
 );

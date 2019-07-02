@@ -26,6 +26,8 @@ const DOMAIN_SECURE = 'https://wir.by';
 
 const STATIC_PATHS = ['static', '_next'];
 
+const TOPICS = ['themes', 'locations', 'times', 'personalities', 'authors', 'brands'];
+
 module.exports = {
   DATE_FORMAT,
   SHORT_DATE_FORMAT,
@@ -36,4 +38,5 @@ module.exports = {
   LOCALES,
   STATIC_PATHS,
   VALID_LOCALES,
+  TOPICS,
 };

@@ -5,12 +5,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { TopicShape } from 'utils/customPropTypes';
+import { ROUTES_NAMES } from 'routes';
 
 import CardWrapper, { SIZES } from './CardWrapper';
 
-const TagCard = ({ topic, content, theme, size }) => {
+const TagCard = ({ slug, topic, content, theme, size }) => {
   const dark = theme === 'dark';
-  const wrapperProps = { size, dark };
+  const wrapperProps = {
+    size,
+    dark,
+    linkProps: {
+      route: ROUTES_NAMES.tag,
+      params: {
+        topic: topic.slug,
+        tag: slug,
+      },
+    },
+  };
 
   if (topic.slug === 'locations') {
     const { title, image } = content;
@@ -41,6 +52,7 @@ const TagCard = ({ topic, content, theme, size }) => {
 };
 
 TagCard.propTypes = {
+  slug: PropTypes.string.isRequired,
   size: PropTypes.oneOf(SIZES).isRequired,
   theme: PropTypes.oneOf(['light', 'dark']),
   topic: TopicShape.isRequired,

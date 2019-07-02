@@ -1,8 +1,9 @@
 const routes = require('next-routes')();
 
-const { VALID_LOCALES } = require('./constants');
+const { VALID_LOCALES, TOPICS } = require('./constants');
 
 const langs = VALID_LOCALES.join('|');
+const topics = TOPICS.join('|');
 
 const ENV = require('./utils/env');
 
@@ -20,6 +21,21 @@ const ROUTES = [
     page: 'index',
   },
   {
+    name: 'article',
+    pattern: 'article/:slug',
+  },
+  {
+    name: 'topic',
+    pattern: `topic/:topic(${topics})`,
+  },
+  {
+    name: 'tag',
+    pattern: `topic/:topic(${topics})/tag/:tag`,
+  },
+  {
+    name: 'about',
+  },
+  {
     name: 'status',
     pattern: 'status/:code(404|500)',
   },
@@ -33,17 +49,10 @@ const ROUTES = [
   //   },
   // },
   // {
-  //   name: 'about',
-  // },
-  // {
   //   name: 'upload-test',
   // },
   // {
   //   name: 'login',
-  // },
-  // {
-  //   name: 'article',
-  //   pattern: 'article/:slug',
   // },
   // {
   //   name: 'editArticle',

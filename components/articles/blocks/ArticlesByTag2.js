@@ -6,13 +6,12 @@ import cn from 'classnames';
 
 import Text from 'components/common/Text';
 import ScreenContext from 'components/common/layout/ScreenContext';
-import LinkWrapper from 'components/common/ui/LinkWrapper';
 import ArticleCard from 'components/articles/cards/ArticleCard';
 
-import { renderTag } from 'utils/tags';
+import { getTagLink, getTopicLink } from 'utils/tags';
 
 import { SCREENS } from 'constants/styles';
-import { TOPIC } from 'constants/home';
+import { TOPIC } from 'constants/misc';
 
 const { DESKTOP, MOBILE, TABLET, TABLET_LARGE, TOUCH } = SCREENS;
 
@@ -28,8 +27,11 @@ const ArticlesByTag2 = ({ block, data }) => {
   const { tagId, articlesIds } = block;
   const { tags, articles } = data;
   const [first, second] = articlesIds.map(id => articles[id]);
-  const { topic, content } = tags[tagId];
+  const tag = tags[tagId];
+  const { topic, content } = tag;
   const isBrand = topic.slug === TOPIC.brand;
+  const tagLink = getTagLink({ tag, dark: true });
+  const topicLink = getTopicLink({ topic: topic.slug, dark: true });
 
   return (
     <div className="block block__with-background articles-by-tag-2">
@@ -41,14 +43,11 @@ const ArticlesByTag2 = ({ block, data }) => {
         <div className="articles-by-tag-2__top-mobile-labels">
           {isBrand && <img src={content.image} alt={content.title} width="120" />}
           <div className="articles-by-tag-2__label">
-            Папулярная штука:
-            <LinkWrapper dark>{renderTag(tags[tagId])}</LinkWrapper>
+            <Text id={`topic.${topic.slug}_essentials`} />:{tagLink}
           </div>
         </div>
         <div className="articles-by-tag-2__label articles-by-tag-2__bottom-desktop-label">
-          <LinkWrapper dark>
-            <Text id={`topic.${topic.slug}_all_mainPage`} />
-          </LinkWrapper>
+          {topicLink}
         </div>
       </div>
 
@@ -68,7 +67,7 @@ const ArticlesByTag2 = ({ block, data }) => {
 
       <div className="articles-by-tag-2__bottom-labels">
         <div className="articles-by-tag-2__label articles-by-tag-2__bottom-mobile-label">
-          <LinkWrapper dark>LINK3</LinkWrapper>
+          {topicLink}
         </div>
       </div>
     </div>

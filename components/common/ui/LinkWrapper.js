@@ -8,13 +8,14 @@ import Clickable from 'lib/components/Clickable';
 export const getClass = ({ className, disabled, dark }) =>
   cn('wir-link', { 'wir-link--disabled': disabled, 'wir-link--theme-dark': dark }, className);
 
+// WARNING: DEPRECATED, to remove
 const LinkWrapper = props => {
   const { onClick } = props;
   const className = getClass(props);
   const newProps = {
     ...props,
     className,
-    dark: undefined,
+    dark: undefined, // ?
   };
   if (onClick) {
     return <Clickable {...newProps} />;
