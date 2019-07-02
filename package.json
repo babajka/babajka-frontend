@@ -136,24 +136,20 @@
       "maxSize": "150 kB"
     },
     {
-      "path": ".next/static/**/editArticle.js",
-      "maxSize": "230 kB"
+      "path": ".next/static/**/index.js",
+      "maxSize": "15 kB"
+    },
+    {
+      "path": ".next/static/**/topic.js",
+      "maxSize": "10 kB"
+    },
+    {
+      "path": ".next/static/**/tag.js",
+      "maxSize": "5 kB"
     },
     {
       "path": ".next/static/**/about.js",
       "maxSize": "5 kB"
-    },
-    {
-      "path": ".next/static/**/article.js",
-      "maxSize": "15 kB"
-    },
-    {
-      "path": ".next/static/**/index.js",
-      "maxSize": "10 kB"
-    },
-    {
-      "path": ".next/static/**/login.js",
-      "maxSize": "15 kB"
     },
     {
       "path": ".next/static/**/_error.js",

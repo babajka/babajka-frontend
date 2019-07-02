@@ -37,4 +37,7 @@ export default {
   diary: {
     getByDay: (locale, month, day) => `${API_URL}/specials/diary/${locale}/${month}/${day}`,
   },
+  topics: {
+    getArticles: topic => `${API_URL}/topics/articles/${topic}`,
+  },
 };

@@ -20,6 +20,7 @@ module.exports = {
         'layout',
         'cards',
         'styles',
+        'topics',
       ],
     ],
     'scope-empty': [2, 'never'],
