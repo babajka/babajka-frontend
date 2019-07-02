@@ -1,0 +1,64 @@
+@import 'variables';
+
+.topics {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0 60px;
+
+  &__column {
+    margin-right: 60px;
+  }
+
+  &__section-list {
+    color: $primary;
+    font-size: 14px;
+    margin: 0;
+    padding-inline-start: 0;
+  }
+
+  &__section-image {
+    padding-bottom: 10px;
+  }
+
+  &__section-list-item {
+    list-style: none;
+    padding: 10px 0;
+  }
+
+  &__section-title {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+    padding-bottom: 10px;
+    padding-top: 40px;
+  }
+}
+
+.screen-touch,
+.screen-mobile {
+  .topics {
+    margin-left: calc((100% - 300px) / 3);
+    margin-right: calc((100% - 300px) * 2 / 3);
+  }
+}
+
+.screen-tablet {
+  .topics {
+    margin: 0 50px;
+
+    &__column {
+      margin-right: 50px;
+    }
+  }
+}
+
+.screen-tablet-large {
+  .topics {
+    margin: 0 35px;
+
+    &__column {
+      margin-right: 35px;
+    }
+  }
+}
