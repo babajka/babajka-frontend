@@ -9,8 +9,9 @@ import ExternalLink from 'components/common/ExternalLink';
 import MailLink from 'components/social/MailLink';
 import ShareButtons from 'components/social/ShareButtons';
 
-import { TOPICS } from 'constants/home';
+import { TOPICS } from 'constants';
 import { NETWORKS } from 'constants/social';
+import { ROUTES_NAMES } from 'routes';
 
 import SubscribeForm from './footer/SubscribeForm';
 
@@ -25,7 +26,7 @@ const Footer = () => (
             </div>
             {TOPICS.map(topic => (
               <div key={topic} className="footer__item">
-                <Link>
+                <Link route={ROUTES_NAMES.topic} params={{ topic }}>
                   <Text id={`topic.by_${topic}`} />
                 </Link>
               </div>

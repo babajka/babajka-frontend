@@ -1,28 +1,31 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import { populateRequest } from 'utils/request';
-import { topicActions } from 'redux/ducks/topic';
-
-import './topic.scss';
-
-const mapStateToProps = state => ({
-  topic: state.topic,
-});
+import { TOPICS } from 'constants';
 
 class TopicPage extends Component {
-  static getInitialProps(ctx) {
-    return populateRequest(ctx, topicActions.fetchArticlesByTopicTags.bind(null, 'times'));
-  }
+  static propTypes = {
+    routerQuery: PropTypes.shape({
+      topic: PropTypes.oneOf(TOPICS).isRequired,
+    }).isRequired,
+  };
+
+  static getLayoutProps = ({ routerQuery: { topic } }) => ({
+    title: `topic.${topic}`,
+  });
 
   render() {
-    // console.log(this.props);
+    const {
+      routerQuery: { topic },
+    } = this.props;
     return (
-      <div className="screen-<%= locals.screen %>">
-        <div className="topics">Topics</div>
+      <div>
+        TODO Topic Page:
+        <br />
+        {topic}
       </div>
     );
   }
 }
 
-export default connect(mapStateToProps)(TopicPage);
+export default TopicPage;

@@ -2,18 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
+import Link from 'components/common/Link';
 import BgContainer from 'components/common/ui/BgContainer';
 
 export const DEFAULT_SIZES = ['xxl', 'xl', 'l', 'm'];
 export const SQUARE_SIZES = ['square-m', 'square-s'];
 export const SIZES = DEFAULT_SIZES.concat(SQUARE_SIZES);
 
-const CardWrapper = ({ className, size, children, bgColor, bgImage, dark }) => (
-  <div className={`size-${size}`}>
+const CardWrapper = ({ className, size, children, bgColor, bgImage, dark, linkProps }) => (
+  <Link className={`size-${size}`} {...linkProps}>
     <BgContainer className={cn(className, { 'theme-dark': dark })} color={bgColor} image={bgImage}>
       {children}
     </BgContainer>
-  </div>
+  </Link>
 );
 
 CardWrapper.propTypes = {
@@ -23,6 +24,7 @@ CardWrapper.propTypes = {
   bgColor: PropTypes.string,
   bgImage: PropTypes.string,
   dark: PropTypes.bool,
+  linkProps: PropTypes.shape({}).isRequired,
 };
 
 CardWrapper.defaultProps = {

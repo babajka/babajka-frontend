@@ -3,12 +3,10 @@ import './articlesByTag3.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Text from 'components/common/Text';
 import ScreenContext from 'components/common/layout/ScreenContext';
-import LinkWrapper from 'components/common/ui/LinkWrapper';
 import ArticleCard from 'components/articles/cards/ArticleCard';
 
-import { renderTag } from 'utils/tags';
+import { getTagLink, getTopicLink } from 'utils/tags';
 
 import { SCREENS } from 'constants/styles';
 
@@ -25,22 +23,18 @@ const CARD_SIZE = {
 const ArticlesByTag3 = ({ block, data }) => {
   const { tagId, articlesIds } = block;
   const { tags, articles } = data;
-  const { topic } = tags[tagId];
-  const link = <LinkWrapper>{renderTag(tags[tagId])}</LinkWrapper>;
-  const allLink = (
-    <LinkWrapper>
-      <Text id={`topic.${topic.slug}_all_mainPage`} />
-    </LinkWrapper>
-  );
+  const tag = tags[tagId];
+  const tagLink = getTagLink({ tag, dark: true });
+  const topicLink = getTopicLink({ topic: tag.topic.slug, dark: true });
 
   return (
     <div className="block block__no-background articles-by-tag-3">
       <div className="articles-by-tag-3__combined-title-line articles-by-tag-3__title">
-        {link}
-        {allLink}
+        {tagLink}
+        {topicLink}
       </div>
 
-      <div className="articles-by-tag-3__separate-header articles-by-tag-3__title">{link}</div>
+      <div className="articles-by-tag-3__separate-header articles-by-tag-3__title">{tagLink}</div>
 
       <ScreenContext.Consumer>
         {({ screen }) => (
@@ -54,7 +48,7 @@ const ArticlesByTag3 = ({ block, data }) => {
         )}
       </ScreenContext.Consumer>
 
-      <div className="articles-by-tag-3__separate-footer articles-by-tag-3__title">{allLink}</div>
+      <div className="articles-by-tag-3__separate-footer articles-by-tag-3__title">{topicLink}</div>
     </div>
   );
 };
