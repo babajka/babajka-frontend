@@ -1,3 +1,5 @@
+@import 'responsiveness';
+
 @import './cards';
 
 .article {
@@ -44,9 +46,8 @@
   }
 }
 
-.size-xxl {
+@mixin shared-size-xxl {
   .article {
-
     @include xxl-sizes;
 
     &__cover-wrapper {
@@ -81,9 +82,12 @@
   }
 }
 
-.size-xl {
-  .article {
+// .size-xxl {
+//   @include shared-size-xxl;
+// }
 
+@mixin shared-size-xl {
+  .article {
     @include xl-sizes;
 
     &__cover-wrapper {
@@ -118,9 +122,12 @@
   }
 }
 
-.size-l {
-  .article {
+// .size-xl {
+//   @include shared-size-xl;
+// }
 
+@mixin shared-size-l {
+  .article {
     @include l-sizes;
 
     &__cover-wrapper {
@@ -155,9 +162,12 @@
   }
 }
 
-.size-m {
-  .article {
+// .size-l {
+//   @include shared-size-l;
+// }
 
+@mixin shared-size-m {
+  .article {
     @include m-sizes;
 
     &__cover-wrapper {
@@ -196,55 +206,50 @@
   }
 }
 
-.square-article {
-  border-radius: 3px;
-  color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  position: relative;
+// .size-m {
+//   @include shared-size-m;
+// }
 
-  &.theme-dark {
-    color: #000000;
-  }
-
-  &__cover {
-    height: 100%;
-    object-fit: cover;
-    width: 100%;
-  }
-
-  &__brand {
-    height: 33px;
-    left: 30px;
-    position: absolute;
-    top: 30px;
-    width: 72px;
-  }
-
-  &__content {
-    bottom: 0;
-    display: flex;
+@mixin shared-square-articles {
+  .article {
     flex-direction: column;
-    position: absolute;
-    text-align: center;
-  }
 
-  &__title {
-    font-weight: bold;
-    text-align: center;
-  }
+    &__brand {
+      height: 33px;
+      left: 30px;
+      top: 30px;
+      width: 72px;
+    }
 
-  &__author {
-    font-size: 14px;
-    line-height: 21px;
-    margin-top: 5px;
-    text-align: center;
+    &__content {
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      text-align: center;
+    }
+
+    &__title {
+      text-align: center;
+    }
+
+    &__author {
+      font-size: 14px;
+      line-height: 21px;
+      margin-top: 5px;
+      text-align: center;
+    }
   }
 }
 
-.size-square-m {
-  .square-article {
+// .square-article {
+//   @include shared-square-article;
+// }
 
+@mixin shared-size-square-m {
+  @include shared-square-articles;
+
+  .article {
     @include square-m-sizes;
 
     &__cover-wrapper {
@@ -262,14 +267,18 @@
   }
 }
 
-.size-square-s {
+// .size-square-m {
+//   @include shared-size-square-m;
+// }
+
+@mixin shared-size-square-s {
+  @include shared-square-articles;
 
   @include square-s-sizes;
 
   margin: 0;
 
-  .square-article {
-
+  .article {
     @include square-s-sizes;
 
     &__cover-wrapper {
@@ -284,5 +293,72 @@
       font-size: 20px;
       line-height: 24px;
     }
+  }
+}
+
+// .size-square-s {
+//   @include shared-size-square-s;
+// }
+
+// MEDIA QUERIES FOR BLOCKS.
+
+// [DESKTOP]: 'square-m',
+// [TABLET_LARGE]: 'l',
+// [TABLET]: 'square-m',
+// [TOUCH]: 'm',
+// [MOBILE]: 'square-s',
+
+// Below is a set of rules for cards to be auto adjustable:
+.articles-by-tag-2 {
+  // Being inside of a block automatically means all cards are auto adjustable.
+
+  @include screen-desktop {
+    @include shared-size-square-m;
+  }
+
+  @include screen-tablet-large {
+    @include shared-size-l;
+  }
+
+  @include screen-tablet {
+    @include shared-size-square-m;
+  }
+
+  @include screen-touch {
+    @include shared-size-m;
+  }
+
+  @include screen-mobile {
+    @include shared-size-square-s;
+  }
+}
+
+.featured {
+  //const CARD_SIZE = {
+  //   [DESKTOP]: 'xxl',
+  //   [TABLET_LARGE]: 'xl',
+  //   [TABLET]: 'l',
+  //   [TOUCH]: 'm',
+  //   [MOBILE]: 'square-s',
+  // };
+
+  @include screen-desktop {
+    @include shared-size-xxl;
+  }
+
+  @include screen-tablet-large {
+    @include shared-size-xl;
+  }
+
+  @include screen-tablet {
+    @include shared-size-l;
+  }
+
+  @include screen-touch {
+    @include shared-size-m;
+  }
+
+  @include screen-mobile {
+    @include shared-size-square-s;
   }
 }

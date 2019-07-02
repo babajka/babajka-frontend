@@ -40,7 +40,6 @@
 
 .size-l {
   .person {
-
     @include l-sizes;
 
     &__cover-wrapper {
@@ -70,7 +69,6 @@
 
 .size-square-m {
   .person {
-
     @include square-m-sizes;
 
     &__cover-wrapper {
@@ -99,7 +97,6 @@
 
 .size-square-s {
   .person {
-
     @include square-s-sizes;
 
     &__cover-wrapper {
@@ -152,21 +149,18 @@
 
 .size-ms {
   .person {
-
     @include ms-sizes;
   }
 }
 
 .size-s-wide {
   .person {
-
     @include s-wide-sizes;
   }
 }
 
 .size-s {
   .person {
-
     @include s-sizes;
 
     &__cover-wrapper {
@@ -193,7 +187,6 @@
 
 .size-xs-wide {
   .person {
-
     @include xs-wide-sizes;
 
     &__cover-wrapper {
@@ -221,7 +214,6 @@
 
 .size-xs {
   .person {
-
     @include xs-sizes;
 
     &__cover-wrapper {

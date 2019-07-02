@@ -1,3 +1,5 @@
+@import 'responsiveness';
+
 @import '../cards';
 
 .video {
@@ -50,9 +52,8 @@
   }
 }
 
-.size-xxl {
+@mixin shared-size-xxl {
   .video {
-
     @include xxl-sizes;
 
     padding-bottom: 56px;
@@ -84,9 +85,8 @@
   }
 }
 
-.size-xl {
+@mixin shared-size-xl {
   .video {
-
     @include xl-sizes;
 
     padding-bottom: 45px;
@@ -118,9 +118,8 @@
   }
 }
 
-.size-l {
+@mixin shared-size-l {
   .video {
-
     @include l-sizes;
 
     padding-bottom: 29px;
@@ -152,9 +151,8 @@
   }
 }
 
-.size-m {
+@mixin shared-size-m {
   .video {
-
     @include m-sizes;
 
     // padding-bottom: 31px;
@@ -186,9 +184,8 @@
   }
 }
 
-.size-square-m {
+@mixin shared-size-square-m {
   .video {
-
     @include square-m-sizes;
 
     &__cover-wrapper {
@@ -220,9 +217,8 @@
   }
 }
 
-.size-square-s {
+@mixin shared-size-square-s {
   .video {
-
     @include square-s-sizes;
 
     &__cover-wrapper {
@@ -251,5 +247,57 @@
       line-height: 18px;
       margin-top: 11px;
     }
+  }
+}
+
+.articles-by-tag-2 {
+  @include screen-desktop {
+    @include shared-size-square-m;
+  }
+
+  @include screen-tablet-large {
+    @include shared-size-l;
+  }
+
+  @include screen-tablet {
+    @include shared-size-square-m;
+  }
+
+  @include screen-touch {
+    @include shared-size-m;
+  }
+
+  @include screen-mobile {
+    @include shared-size-square-s;
+  }
+}
+
+.featured {
+  //const CARD_SIZE = {
+  //   [DESKTOP]: 'xxl',
+  //   [TABLET_LARGE]: 'xl',
+  //   [TABLET]: 'l',
+  //   [TOUCH]: 'm',
+  //   [MOBILE]: 'square-s',
+  // };
+
+  @include screen-desktop {
+    @include shared-size-xxl;
+  }
+
+  @include screen-tablet-large {
+    @include shared-size-xl;
+  }
+
+  @include screen-tablet {
+    @include shared-size-l;
+  }
+
+  @include screen-touch {
+    @include shared-size-m;
+  }
+
+  @include screen-mobile {
+    @include shared-size-square-s;
   }
 }

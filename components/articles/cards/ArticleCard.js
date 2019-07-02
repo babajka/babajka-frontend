@@ -13,16 +13,9 @@ import { linkCn } from 'utils/ui';
 import { TOPIC } from 'constants/misc';
 import { ROUTES_NAMES } from 'routes';
 
-import CardWrapper, { SQUARE_SIZES, SIZES } from './CardWrapper';
+import CardWrapper, { SIZES } from './CardWrapper';
 import CollectionCard from './article/CollectionCard';
 import VideoCard from './article/VideoCard';
-
-const getArticleCn = square => className => {
-  if (!square) {
-    return className;
-  }
-  return `square-${className}`;
-};
 
 const getBrand = tags => {
   const brandTag = tags.find(({ topic }) => topic.slug === 'brands');
@@ -43,8 +36,7 @@ const ArticleCard = props => {
     type,
     slug,
   } = props;
-  const square = SQUARE_SIZES.includes(size);
-  const articleCn = getArticleCn(square);
+  const square = size.includes('square');
   const dark = theme === 'dark';
   const brand = getBrand(tags);
   const wrapperProps = {
@@ -73,26 +65,17 @@ const ArticleCard = props => {
   const authors = tags.filter(({ topic }) => topic.slug === TOPIC.authors);
 
   return (
-    <CardWrapper {...wrapperProps} className={articleCn('article')}>
-      <div className={articleCn('article__cover-wrapper')}>
-        <img
-          className={articleCn('article__cover')}
-          src={square ? horizontal : vertical}
-          alt={title}
-        />
+    <CardWrapper {...wrapperProps} className="article">
+      <div className="article__cover-wrapper">
+        <img className="article__cover" src={square ? horizontal : vertical} alt={title} />
       </div>
       {brand && (
-        <img
-          className={articleCn('article__brand')}
-          src={brand.image}
-          alt={brand.title}
-          title={brand.title}
-        />
+        <img className="article__brand" src={brand.image} alt={brand.title} title={brand.title} />
       )}
-      <div className={articleCn('article__content')}>
+      <div className="article__content">
         <ConditionalWrapper hide={square}>
-          <div className={articleCn('article__title')}>{title}</div>
-          <div className={articleCn('article__author')}>
+          <div className="article__title">{title}</div>
+          <div className="article__author">
             {authors.map((tag, i) => (
               // TODO: extract to `renderList` helper
               <span key={tag.id}>

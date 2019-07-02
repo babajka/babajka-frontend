@@ -82,6 +82,7 @@ module.exports = {
       'always',
       {
         // Allow mixins to have an empty line before
+        except: ['first-nested'],
         ignoreAtRules: ['import', 'first-nested'],
       },
     ],

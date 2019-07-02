@@ -52,7 +52,6 @@
 
 .size-xxl {
   .collection {
-
     @include xxl-sizes;
 
     &__cover-wrapper {
@@ -82,7 +81,6 @@
 
 .size-xl {
   .collection {
-
     @include xl-sizes;
 
     &__cover-wrapper {
@@ -112,7 +110,6 @@
 
 .size-l {
   .collection {
-
     @include l-sizes;
 
     &__cover-wrapper {
@@ -142,7 +139,6 @@
 
 .size-m {
   .collection {
-
     @include m-sizes;
 
     &__cover-wrapper {
@@ -172,7 +168,6 @@
 
 .size-square-m {
   .collection {
-
     @include square-m-sizes;
 
     &__content {
@@ -197,7 +192,6 @@
 
 .size-square-s {
   .collection {
-
     @include square-s-sizes;
 
     &__content {

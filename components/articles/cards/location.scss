@@ -21,7 +21,6 @@
 
 .size-l {
   .location {
-
     @include l-sizes;
 
     padding: 0 39px 43px;
@@ -35,7 +34,6 @@
 
 .size-square-m {
   .location {
-
     @include square-m-sizes;
 
     padding: 0 30px 42px;
@@ -49,7 +47,6 @@
 
 .size-square-s {
   .location {
-
     @include square-s-sizes;
 
     padding: 0 30px 42px;
@@ -75,21 +72,18 @@
 
 .size-ms {
   .location {
-
     @include ms-sizes;
   }
 }
 
 .size-s-wide {
   .location {
-
     @include s-wide-sizes;
   }
 }
 
 .size-s {
   .location {
-
     @include s-sizes;
 
     padding: 0 30px 42px;
@@ -103,7 +97,6 @@
 
 .size-xs-wide {
   .location {
-
     @include xs-wide-sizes;
 
     padding: 0 30px 42px;
@@ -117,7 +110,6 @@
 
 .size-xs {
   .location {
-
     @include xs-sizes;
 
     padding: 0 30px 42px;
