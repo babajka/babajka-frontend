@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 // import { connect } from 'react-redux';
 
+import Button from 'components/common/Button';
+import Text from 'components/common/Text';
+import ButtonGroup from 'components/common/ButtonGroup/ButtonGroup';
 import { TOPICS } from 'constants';
 
 // const mapStateToProps = (state, { routerQuery: { slug } }) => ({
@@ -36,6 +39,20 @@ class TagPage extends Component {
         TODO Tag Page:
         <br />
         {topic} {tag}
+        <ButtonGroup>
+          <Button>
+            <Text id="common.load15More" />
+          </Button>
+          <Button>
+            <Text id="common.load30More" />
+          </Button>
+          <Button>
+            <Text id="common.load60More" />
+          </Button>
+          <Button>
+            <Text id="common.loadAll" />
+          </Button>
+        </ButtonGroup>
       </div>
     );
   }

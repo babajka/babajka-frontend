@@ -4,7 +4,11 @@ import cn from 'classnames';
 import noop from 'lodash/noop';
 
 const Button = ({ className, pending, ...props }) => (
-  <button type="button" className={cn(className, { 'is-loading': pending })} {...props} />
+  <button
+    type="button"
+    className={cn('wir-button', className, { 'is-loading': pending })}
+    {...props}
+  />
 );
 
 Button.propTypes = {
