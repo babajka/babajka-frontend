@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-npm run build
+WIR_ENV=staging npm run build
 
 FRONTEND_REMOTE_SWAP_PATH="/home/wir-dev/deployed/swap-frontend/babajka-frontend/"
 ssh wir-dev@dev.wir.by "mkdir -p \"${FRONTEND_REMOTE_SWAP_PATH}\""
