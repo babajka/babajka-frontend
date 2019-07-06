@@ -1,14 +1,12 @@
 @import 'variables';
 
 .wir-button-group {
+  display: flex;
   font-size: 0.8rem;
   position: relative;
 
-  &__icon {
-    display: flex;
-  }
-
   .wir-button {
+    background-color: $primary-white;
     border: 1px solid $primary-grey;
     border-left: 0;
     float: left;
@@ -37,11 +35,5 @@
       border-bottom-right-radius: 5px;
       border-top-right-radius: 5px;
     }
-  }
-
-  &::after {
-    clear: both;
-    content: '';
-    display: table;
   }
 }
