@@ -1,16 +1,26 @@
 @import 'variables';
 
 .wir-button-group {
+  font-size: 0.8rem;
   position: relative;
+
+  &__icon {
+    display: flex;
+  }
 
   .wir-button {
     border: 1px solid $primary-grey;
     border-left: 0;
     float: left;
-    font-size: 1rem;
     outline: none;
-    padding: 0.8rem 1rem;
+    padding: 0.6rem 0.8rem;
     text-align: center;
+
+    &__icon {
+      flex-basis: auto;
+      flex-grow: 1;
+      padding: 0.3rem;
+    }
 
     &:hover {
       box-shadow: inset 0 0 1px $primary-grey;
