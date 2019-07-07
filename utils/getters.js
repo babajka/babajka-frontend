@@ -99,3 +99,15 @@ export const getMainArticlesRows = (articles, rowSize, complexRowSize) => {
 export const getLocalizedTeam = localizeArray(localizeFields(['name', 'role']));
 
 export const getLocalizedVacancies = localizeArray(localizeFields(['title', 'description']));
+
+export const getTagBlock = block => ({
+  asymmetricalBlock: block.slice(0, 2),
+  threeBlock1: block.slice(2, 5),
+  symmetricalBlock: block.slice(5, 7),
+  threeBlock2: block.slice(7, 10),
+});
+
+export const getTagArticles = articles => {
+  const blocks = chunk(articles, 10);
+  return blocks.map(getTagBlock);
+};
