@@ -34,7 +34,7 @@ const BUTTONS = [
   { id: 'loadAll' },
 ];
 
-const TagArticlesBlock = ({ articles, invert = false }) => {
+const TagArticlesBlock = ({ articles, invert }) => {
   const [asymmetricalBlock, threeBlock1, symmetricalBlock, threeBlock2] = articles;
 
   return (
@@ -97,6 +97,15 @@ const TagArticlesBlock = ({ articles, invert = false }) => {
       }
     </ScreenContext.Consumer>
   );
+};
+
+TagArticlesBlock.propTypes = {
+  articles: PropTypes.arrayOf(ArticlesArray).isRequired,
+  invert: PropTypes.bool,
+};
+
+TagArticlesBlock.defaultProps = {
+  invert: false,
 };
 
 const mapStateToProps = (state, { lang }) => tagsSelectors.getData(state, lang);

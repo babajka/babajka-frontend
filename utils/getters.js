@@ -105,7 +105,7 @@ export const getTagBlock = block => {
   return TAG_BLOCKS_INTERVALS.map(([start, end]) => block.slice(start, end));
 };
 
-export const getTagArticles = articles => {
+export const getTagBlocks = articles => {
   const blocks = chunk(articles, TAG_BLOCK_SIZE);
   return blocks.map(getTagBlock);
 };
