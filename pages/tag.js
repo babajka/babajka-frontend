@@ -26,6 +26,13 @@ const CARD_SIZE = {
   [MOBILE]: 'square-s',
 };
 
+const buttons = [
+  { textId: 'common.load15More' },
+  { textId: 'common.load30More' },
+  { textId: 'common.load60More' },
+  { textId: 'common.loadAll' },
+];
+
 const mapStateToProps = (state, { lang }) => tagsSelectors.getData(state, lang);
 
 class TagPage extends Component {
@@ -89,18 +96,11 @@ class TagPage extends Component {
           )}
         </ScreenContext.Consumer>
         <ButtonGroup>
-          <Button>
-            <Text id="common.load15More" />
-          </Button>
-          <Button>
-            <Text id="common.load30More" />
-          </Button>
-          <Button>
-            <Text id="common.load60More" />
-          </Button>
-          <Button>
-            <Text id="common.loadAll" />
-          </Button>
+          {buttons.map(({ textId }) => (
+            <Button key={textId}>
+              <Text id={textId} />
+            </Button>
+          ))}
         </ButtonGroup>
       </div>
     );
