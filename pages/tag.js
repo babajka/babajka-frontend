@@ -108,7 +108,7 @@ class TagPage extends Component {
       tag: PropTypes.string.isRequired,
     }).isRequired,
     tag: TagShape.isRequired,
-    blocks: PropTypes.arrayOf(ArticlesArray).isRequired,
+    blocks: PropTypes.arrayOf(PropTypes.arrayOf(ArticlesArray)).isRequired,
   };
 
   static getLayoutProps = ({ routerQuery: { topic } }) => ({
