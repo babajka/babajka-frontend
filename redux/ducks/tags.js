@@ -32,26 +32,17 @@ export default createReducer(
 const getState = state => state.tags;
 const getData = (state, lang) => {
   const { tag, articles } = getState(state);
+  const localizedArticles = getLocalizedArticles(articles, lang);
 
   return {
-    articles: getLocalizedArticles(articles, lang),
+    blocks: getTagArticles(localizedArticles),
     tag: getLocalizedTag(tag),
-  };
-};
-
-const getByBlocks = (state, lang) => {
-  const { tag, articles } = getData(state, lang);
-
-  return {
-    blocks: getTagArticles(articles),
-    tag,
   };
 };
 
 // selectors
 export const tagsSelectors = {
   getData,
-  getByBlocks,
 };
 
 // actions

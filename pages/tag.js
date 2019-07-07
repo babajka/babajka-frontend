@@ -1,6 +1,6 @@
 import 'styles/pages/tag.scss';
 
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import chunk from 'lodash/chunk';
@@ -35,54 +35,71 @@ const BUTTONS = [
 ];
 
 const TagArticlesBlock = ({ articles, invert = false }) => {
-  const { asymmetricalBlock, threeBlock1, symmetricalBlock, threeBlock2 } = articles;
+  const [asymmetricalBlock, threeBlock1, symmetricalBlock, threeBlock2] = articles;
 
   return (
     <ScreenContext.Consumer>
-      {({ screen }) => (
-        <>
-          <div className="tag-page__two-asymmetrical">
-            <div className="tag-page__card tag-page__card--first">
+      {({ screen }) =>
+        asymmetricalBlock.length === 1 ? (
+          <div className="tag-page__one">
+            <div className="tag-page__card">
               <ArticleCard
                 {...asymmetricalBlock[0]}
-                size={{ ...CARD_SIZE, [DESKTOP]: invert ? 'square-m' : 'l' }[screen]}
-              />
-            </div>
-            <div className="tag-page__card tag-page__card--second">
-              <ArticleCard
-                {...asymmetricalBlock[1]}
-                size={{ ...CARD_SIZE, [DESKTOP]: invert ? 'l' : 'square-m' }[screen]}
+                size={{ ...CARD_SIZE, [DESKTOP]: 'xxl' }[screen]}
               />
             </div>
           </div>
-          <div className="tag-page__three">
-            {threeBlock1.map(article => (
-              <div key={article.id} className="tag-page__card">
-                <ArticleCard {...article} size={{ ...CARD_SIZE, [DESKTOP]: 'square-s' }[screen]} />
+        ) : (
+          <>
+            <div className="tag-page__two-asymmetrical">
+              <div className="tag-page__card tag-page__card--first">
+                <ArticleCard
+                  {...asymmetricalBlock[0]}
+                  size={{ ...CARD_SIZE, [DESKTOP]: invert ? 'square-m' : 'l' }[screen]}
+                />
               </div>
-            ))}
-          </div>
-          <div className="tag-page__two-symmetrical">
-            {symmetricalBlock.map(article => (
-              <div key={article.id} className="tag-page__card">
-                <ArticleCard {...article} size={{ ...CARD_SIZE, [DESKTOP]: 'm' }[screen]} />
+              <div className="tag-page__card tag-page__card--second">
+                <ArticleCard
+                  {...asymmetricalBlock[1]}
+                  size={{ ...CARD_SIZE, [DESKTOP]: invert ? 'l' : 'square-m' }[screen]}
+                />
               </div>
-            ))}
-          </div>
-          <div className="tag-page__three">
-            {threeBlock2.map(article => (
-              <div key={article.id} className="tag-page__card">
-                <ArticleCard {...article} size={{ ...CARD_SIZE, [DESKTOP]: 'square-s' }[screen]} />
-              </div>
-            ))}
-          </div>
-        </>
-      )}
+            </div>
+            <div className="tag-page__three">
+              {threeBlock1.map(article => (
+                <div key={article.id} className="tag-page__card">
+                  <ArticleCard
+                    {...article}
+                    size={{ ...CARD_SIZE, [DESKTOP]: 'square-s' }[screen]}
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="tag-page__two-symmetrical">
+              {symmetricalBlock.map(article => (
+                <div key={article.id} className="tag-page__card">
+                  <ArticleCard {...article} size={{ ...CARD_SIZE, [DESKTOP]: 'm' }[screen]} />
+                </div>
+              ))}
+            </div>
+            <div className="tag-page__three">
+              {threeBlock2.map(article => (
+                <div key={article.id} className="tag-page__card">
+                  <ArticleCard
+                    {...article}
+                    size={{ ...CARD_SIZE, [DESKTOP]: 'square-s' }[screen]}
+                  />
+                </div>
+              ))}
+            </div>
+          </>
+        )
+      }
     </ScreenContext.Consumer>
   );
 };
 
-const mapStateToProps = (state, { lang }) => tagsSelectors.getByBlocks(state, lang);
+const mapStateToProps = (state, { lang }) => tagsSelectors.getData(state, lang);
 
 class TagPage extends Component {
   static propTypes = {
@@ -121,10 +138,10 @@ class TagPage extends Component {
           </div>
         </div>
         {chunk(blocks, 2).map(([first, second]) => (
-          <>
+          <Fragment key={first[0][0].id}>
             <TagArticlesBlock articles={first} />
             {second && <TagArticlesBlock articles={second} invert />}
-          </>
+          </Fragment>
         ))}
         <ButtonGroup>
           {BUTTONS.map(({ id }) => (
