@@ -1,3 +1,4 @@
+const set = require('lodash/set');
 const routes = require('next-routes')();
 
 const { VALID_LOCALES, TOPICS } = require('./constants');
@@ -13,6 +14,22 @@ const getMarkup = () => {
   }
   return ['example'].map(f => ({ name: `markup/${f}` }));
 };
+
+const ADMIN_ROUTES = [
+  {
+    name: 'dashboard',
+  },
+  {
+    name: 'articles',
+  },
+  {
+    name: 'login',
+  },
+].map(({ name, pattern = name, page = name }) => ({
+  name: `admin.${name}`,
+  pattern: `admin/${pattern}`,
+  page: `admin/${page}`,
+}));
 
 const ROUTES = [
   {
@@ -59,6 +76,7 @@ const ROUTES = [
   //   pattern: 'article/:slug/:mode(edit)',
   // },
 ]
+  .concat(ADMIN_ROUTES)
   .concat(getMarkup())
   .map(({ name, pattern = name, page = name }) => ({
     name,
@@ -68,7 +86,7 @@ const ROUTES = [
 
 const ROUTES_NAMES = {};
 ROUTES.forEach(route => {
-  ROUTES_NAMES[route.name] = route.name;
+  set(ROUTES_NAMES, route.name, route.name);
   routes.add(route);
 });
 

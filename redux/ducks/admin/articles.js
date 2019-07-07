@@ -5,7 +5,7 @@ import { defaultReducer } from 'utils/redux';
 import { makeRequest } from 'utils/request';
 import { getLocalizedArticle } from 'utils/getters';
 
-const duck = 'articles';
+const duck = 'admin/articles';
 
 // constants
 const FETCH_BY_SLUG = `${duck}/FETCH_BY_SLUG`;
@@ -39,7 +39,7 @@ const getLocaleBySlug = (state, slug) => getState(state).localeBySlug[slug];
 const getCurrent = (state, slug) =>
   getLocalizedArticle(getRawCurrent(state), getLocaleBySlug(state, slug));
 
-export const articlesSelectors = {
+export const adminArticlesSelectors = {
   getCurrent,
 
   isPending,
@@ -48,7 +48,7 @@ export const articlesSelectors = {
 };
 
 // actions
-export const articlesActions = {
+export const adminArticlesActions = {
   fetchBySlug: slug => ({
     type: FETCH_BY_SLUG,
     payload: makeRequest(api.articles.getBySlug(slug)),

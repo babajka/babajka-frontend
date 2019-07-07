@@ -67,7 +67,7 @@ class Root extends App {
 
   static async getInitialProps({ Component, ctx }) {
     let pageProps = {};
-    const [{ user }] = await populateRequest(ctx, authActions.getCurrentUser);
+    await populateRequest(ctx, authActions.getCurrentUser);
     // TODO(@drapegnik): consider is it right place for that request
     await populateRequest(ctx, sidebarActions.fetch);
     if (Component.getInitialProps) {
@@ -77,7 +77,7 @@ class Root extends App {
     const userAgent = ctx.req ? ctx.req.headers['user-agent'] : '';
     const isMobile = userAgent.includes('Mobi');
 
-    return { user, pageProps, isMobile };
+    return { pageProps, isMobile };
   }
 
   constructor(props) {
@@ -104,7 +104,7 @@ class Root extends App {
     const locale = getLocale(router);
 
     const defaultPageProps = { user, lang: locale, routerQuery: router.query };
-    const { title = 'meta.title' } = getLayoutProps(defaultPageProps);
+    const { title = 'meta.title', hideSidebar, hideFooter } = getLayoutProps(defaultPageProps);
 
     return (
       <Container>
@@ -119,7 +119,13 @@ class Root extends App {
               <title>Wir.by | {localize(title, locale)}</title>
               <link rel="icon" type="image/png" href="/static/images/logo/favicon-colored.png" />
             </Head>
-            <CoreLayout {...Component.layoutProps} lang={locale} isMobile={isMobile}>
+            <CoreLayout
+              user={user}
+              lang={locale}
+              isMobile={isMobile}
+              hideFooter={hideFooter}
+              hideSidebar={hideSidebar}
+            >
               <Component {...defaultPageProps} {...pageProps} />
             </CoreLayout>
           </LocaleContext.Provider>

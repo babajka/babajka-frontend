@@ -1,0 +1,23 @@
+@import 'variables';
+
+.login-page {
+  &-container {
+    align-items: center;
+    background: $primary-concrete;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    min-height: 80vh;
+    padding: 15px;
+    width: 100%;
+  }
+
+  &-wrap {
+    background: $primary-white;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 77px 55px 33px;
+    width: 390px;
+  }
+}
