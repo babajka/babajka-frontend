@@ -3,7 +3,7 @@ import './social-buttons.scss';
 import React from 'react';
 
 import Icon from 'components/common/ui/Icon';
-import ButtonGroup from 'components/common/ButtonGroup/ButtonGroup';
+import ButtonGroup from 'components/common/ButtonGroup';
 import Button from 'components/common/Button';
 
 const SHARE_NETWORKS = [
