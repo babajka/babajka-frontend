@@ -22,6 +22,7 @@ module.exports = {
         'styles',
         'topics',
         'kit',
+        'admin',
       ],
     ],
     'scope-empty': [2, 'never'],

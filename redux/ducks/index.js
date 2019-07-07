@@ -8,6 +8,8 @@ import sidebar from './sidebar';
 import topics from './topics';
 import tags from './tags';
 
+import admin from './admin';
+
 export default combineReducers({
   home,
   articles,
@@ -16,4 +18,6 @@ export default combineReducers({
   sidebar,
   topics,
   tags,
+
+  admin,
 });

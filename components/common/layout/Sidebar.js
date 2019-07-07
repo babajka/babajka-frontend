@@ -13,8 +13,9 @@ import Text from 'components/common/Text';
 import Clickable from 'lib/components/Clickable';
 import LocaleContext from 'components/common/LocaleContext';
 
+import { authActions, authSelectors } from 'redux/ducks/auth';
 import { sidebarSelectors } from 'redux/ducks/sidebar';
-import { TagShape } from 'utils/customPropTypes';
+import { TagShape, UserShape } from 'utils/customPropTypes';
 import { getTagLink, getTopicLink } from 'utils/tags';
 
 import { TOPICS, LANGS } from 'constants';
@@ -68,11 +69,25 @@ const getFooter = topic => {
 const handleLangClick = Cookies.set.bind(null, LOCALE_COOKIE_NAME);
 
 const mapStateToProps = (state, { lang }) => ({
+  user: authSelectors.getUser(state),
   blocks: sidebarSelectors.getBlocks(state),
   data: sidebarSelectors.getData(state, lang),
 });
 
-const Sidebar = ({ blocks, data, router: { asPath }, active, toggleSidebar, long }) => (
+const mapDispatchToProps = {
+  logout: authActions.signOut,
+};
+
+const Sidebar = ({
+  blocks,
+  data,
+  router: { asPath },
+  active,
+  toggleSidebar,
+  long,
+  user,
+  logout,
+}) => (
   <div className={cn('wir-sidebar', { 'wir-sidebar--expanded': active })}>
     <aside className="sidebar">
       <Clickable className="sidebar__icon-close" onClick={toggleSidebar}>
@@ -100,6 +115,15 @@ const Sidebar = ({ blocks, data, router: { asPath }, active, toggleSidebar, long
           <Text id="sidebar.about" />
         </Link>
       </div>
+
+      {user && (
+        // FIXME
+        <div className="sidebar__about-label">
+          <Clickable className="wir-link" onClick={logout}>
+            <Text id="auth.signOut" />
+          </Clickable>
+        </div>
+      )}
 
       {!long && <SidebarSection title="Short Sidebar" data={[]} />}
 
@@ -133,6 +157,15 @@ Sidebar.propTypes = {
   data: PropTypes.shape({
     tags: PropTypes.objectOf(TagShape).isRequired,
   }).isRequired,
+  user: UserShape,
+  logout: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(withRouter(Sidebar));
+Sidebar.defaultProps = {
+  user: null,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Sidebar));

@@ -5,31 +5,26 @@ import { ErrorMessage } from 'formik';
 import Icon from 'components/common/ui/Icon';
 import Text from 'components/common/Text';
 
-const FormField = ({ id, label, icon, children, pending, touched, error, successText }) => {
+const FormField = ({ id, label, icon, children, pending, touched, error }) => {
   const hasError = !pending && touched && error;
   return (
-    <div className="field">
-      <label className="label login__input-text" htmlFor={id}>
-        {label || <Text id={`auth.${id}`} />}
+    <div className="login-form__input-wrap">
+      <label className="login-form__input-label" htmlFor={id}>
+        <Icon name={icon} /> {label || <Text id={`auth.${id}`} />}
       </label>
-      <div className="control has-icons-left">
-        <span className="icon is-small">
-          <Icon name={icon} />
-        </span>
-        {children(hasError)}
-      </div>
+      {children(hasError)}
       <ErrorMessage name={id}>
         {message => (
-          <p className="help is-danger">
+          <p className="login-form__input-error-message">
             <Text id={message} />
           </p>
         )}
       </ErrorMessage>
-      {touched && !error && successText && (
-        <p className="help is-success">
+      {/* {touched && !error && successText && (
+        <p className="">
           <Text id={successText} />
         </p>
-      )}
+      )} */}
     </div>
   );
 };
@@ -42,7 +37,7 @@ FormField.propTypes = {
   pending: PropTypes.bool,
   touched: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  successText: PropTypes.string,
+  // successText: PropTypes.string,
 };
 
 FormField.defaultProps = {
@@ -50,7 +45,7 @@ FormField.defaultProps = {
   pending: false,
   touched: false,
   error: false,
-  successText: '',
+  // successText: '',
 };
 
 export default FormField;

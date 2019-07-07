@@ -20,7 +20,7 @@ import Sidebar from './Sidebar';
 
 // const SIDEBAR_HEIGHT = 3300;
 
-const CoreLayout = ({ children, hideFooter, lang, isMobile }) => {
+const CoreLayout = ({ children, hideFooter, hideSidebar, lang, isMobile }) => {
   const [sidebarActive, toggleSidebar] = useBoolean(false);
   const rootEl = useRef(null);
   const { width /* , height */ } = useComponentSize(rootEl, children);
@@ -36,7 +36,6 @@ const CoreLayout = ({ children, hideFooter, lang, isMobile }) => {
             <div className={`screen-${screen}`}>{children}</div>
           </div>
 
-          {/* consider to omit this logic */}
           {!hideFooter && <Footer />}
 
           <Clickable
@@ -46,14 +45,16 @@ const CoreLayout = ({ children, hideFooter, lang, isMobile }) => {
           />
         </div>
 
-        <Sidebar
-          active={sidebarActive}
-          toggleSidebar={toggleSidebar}
-          // FIXME
-          // long={!height || height > SIDEBAR_HEIGHT}
-          long
-          lang={lang}
-        />
+        {(!hideSidebar || sidebarActive) && (
+          <Sidebar
+            active={sidebarActive}
+            toggleSidebar={toggleSidebar}
+            // FIXME
+            // long={!height || height > SIDEBAR_HEIGHT}
+            long
+            lang={lang}
+          />
+        )}
 
         <div className="wir-up">
           <ScrollToTop showUnder={160} easing="easeInExpo" duration={500}>
@@ -69,12 +70,14 @@ const CoreLayout = ({ children, hideFooter, lang, isMobile }) => {
 CoreLayout.propTypes = {
   children: PropTypes.node.isRequired,
   hideFooter: PropTypes.bool,
+  hideSidebar: PropTypes.bool,
   lang: PropTypes.oneOf(VALID_LOCALES).isRequired,
   isMobile: PropTypes.bool, // temp
 };
 
 CoreLayout.defaultProps = {
   hideFooter: false,
+  hideSidebar: false,
   isMobile: false,
 };
 

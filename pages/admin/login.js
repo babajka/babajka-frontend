@@ -1,10 +1,18 @@
+import 'styles/pages/login.scss';
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Router, ROUTES_NAMES } from 'routes';
+import { connect } from 'react-redux';
 
 import LoginForm from 'components/auth/LoginForm';
 
+import { authSelectors } from 'redux/ducks/auth';
 import { LangType, UserShape } from 'utils/customPropTypes';
+
+const mapStateToProps = state => ({
+  user: authSelectors.getUser(state),
+});
 
 class LoginPage extends Component {
   static propTypes = {
@@ -12,7 +20,6 @@ class LoginPage extends Component {
     lang: LangType.isRequired,
     routerQuery: PropTypes.shape({
       next: PropTypes.string,
-      invite: PropTypes.string,
     }).isRequired,
   };
 
@@ -22,29 +29,32 @@ class LoginPage extends Component {
 
   static getLayoutProps = () => ({
     title: 'auth.signIn',
+    hideSidebar: true,
+    hideFooter: true,
   });
 
   componentDidMount() {
     const { user, lang } = this.props;
+
     if (user) {
-      Router.replaceRoute(ROUTES_NAMES.main, { lang });
+      Router.replaceRoute(ROUTES_NAMES.admin.dashboard, { lang });
     }
   }
 
   render() {
     const {
       lang,
-      routerQuery: { next = `/${lang}/articles`, invite },
+      routerQuery: { next = `/${lang}/admin/dashboard` },
     } = this.props;
 
     return (
-      <div className="page-content">
-        <div className="container login">
-          <LoginForm allowSignUp={invite === 'beta-test-sign-up'} next={next} />
+      <div className="login-page-container">
+        <div className="login-page-wrap">
+          <LoginForm next={next} />
         </div>
       </div>
     );
   }
 }
 
-export default LoginPage;
+export default connect(mapStateToProps)(LoginPage);

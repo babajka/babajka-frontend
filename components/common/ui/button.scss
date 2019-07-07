@@ -1,0 +1,13 @@
+@import 'variables';
+
+.wir-button {
+  background-color: $primary;
+
+  &:hover {
+    background-color: $primary-caribbean-green;
+  }
+
+  &__loading {
+    //TODO
+  }
+}
