@@ -3,7 +3,7 @@ import createReducer from 'type-to-reducer';
 import api from 'constants/api';
 import { defaultReducer } from 'utils/redux';
 import { makeRequest } from 'utils/request';
-import { getLocalizedTag, getLocalizedArticles } from 'utils/getters';
+import { getLocalizedTag, getLocalizedArticles, getTagBlocks } from 'utils/getters';
 
 const duck = 'tags';
 
@@ -32,9 +32,10 @@ export default createReducer(
 const getState = state => state.tags;
 const getData = (state, lang) => {
   const { tag, articles } = getState(state);
+  const localizedArticles = getLocalizedArticles(articles, lang);
 
   return {
-    articles: getLocalizedArticles(articles, lang),
+    blocks: getTagBlocks(localizedArticles),
     tag: getLocalizedTag(tag),
   };
 };

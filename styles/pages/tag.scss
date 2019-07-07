@@ -4,18 +4,14 @@
 .tag-page {
   padding: 3rem 6rem 3rem 3rem;
 
-  &__other {
+  &__level-a,
+  &__level-b,
+  &__level-c,
+  &__level-d {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     padding-bottom: 2rem;
-  }
-
-  &__headline {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding-bottom: 5rem;
   }
 
   &__topic {
@@ -44,8 +40,8 @@
 .screen-tablet,
 .screen-tablet-large {
   .tag-page {
-    &__other,
-    &__headline {
+    &__level-b,
+    &__level-c {
       padding-bottom: 0;
     }
 

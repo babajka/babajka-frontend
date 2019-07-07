@@ -2,6 +2,7 @@ import moment from 'moment';
 import fromPairs from 'lodash/fromPairs';
 import chunk from 'lodash/chunk';
 
+import { TAG_BLOCK_SIZE, TAG_LEVELS_SIZES } from 'constants/misc';
 import { localize, localizeArray, localizeFields } from 'utils/localization';
 
 export const getDiary = ({ author = '', text = '', day, month, year } = {}) => ({
@@ -99,3 +100,15 @@ export const getMainArticlesRows = (articles, rowSize, complexRowSize) => {
 export const getLocalizedTeam = localizeArray(localizeFields(['name', 'role']));
 
 export const getLocalizedVacancies = localizeArray(localizeFields(['title', 'description']));
+
+export const getTagBlockLevels = articles =>
+  TAG_LEVELS_SIZES.reduce(
+    ({ start, result }, levelSize) => {
+      const end = start + levelSize;
+      result.push(articles.slice(start, end));
+      return { result, start: end };
+    },
+    { start: 0, result: [] }
+  ).result;
+
+export const getTagBlocks = articles => chunk(articles, TAG_BLOCK_SIZE).map(getTagBlockLevels);
