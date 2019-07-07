@@ -6,6 +6,7 @@ import diary from './diary';
 import home from './home';
 import sidebar from './sidebar';
 import topics from './topics';
+import tags from './tags';
 
 export default combineReducers({
   home,
@@ -14,4 +15,5 @@ export default combineReducers({
   diary,
   sidebar,
   topics,
+  tags,
 });
