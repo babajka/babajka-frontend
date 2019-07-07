@@ -21,6 +21,7 @@ module.exports = {
         'cards',
         'styles',
         'topics',
+        'kit',
       ],
     ],
     'scope-empty': [2, 'never'],

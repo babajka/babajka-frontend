@@ -6,6 +6,9 @@ import { connect } from 'react-redux';
 
 import ScreenContext from 'components/common/layout/ScreenContext';
 import ArticleCard from 'components/articles/cards/ArticleCard';
+import Button from 'components/common/Button';
+import Text from 'components/common/Text';
+import ButtonGroup from 'components/common/ButtonGroup';
 
 import { tagsActions, tagsSelectors } from 'redux/ducks/tags';
 import { ArticlesArray, TagShape } from 'utils/customPropTypes';
@@ -22,6 +25,13 @@ const CARD_SIZE = {
   [TOUCH]: 'm',
   [MOBILE]: 'square-s',
 };
+
+const BUTTONS = [
+  { id: 'load15More' },
+  { id: 'load30More' },
+  { id: 'load60More' },
+  { id: 'loadAll' },
+];
 
 const mapStateToProps = (state, { lang }) => tagsSelectors.getData(state, lang);
 
@@ -85,6 +95,13 @@ class TagPage extends Component {
             </>
           )}
         </ScreenContext.Consumer>
+        <ButtonGroup>
+          {BUTTONS.map(({ id }) => (
+            <Button key={id}>
+              <Text id={`common.${id}`} />
+            </Button>
+          ))}
+        </ButtonGroup>
       </div>
     );
   }
