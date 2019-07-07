@@ -4,10 +4,10 @@
 .tag-page {
   padding: 3rem 6rem 3rem 3rem;
 
-  &__one,
-  &__three,
-  &__two-asymmetrical,
-  &__two-symmetrical {
+  &__level-a,
+  &__level-b,
+  &__level-c,
+  &__level-d {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -40,8 +40,8 @@
 .screen-tablet,
 .screen-tablet-large {
   .tag-page {
-    &__three,
-    &__two-asymmetrical {
+    &__level-b,
+    &__level-c {
       padding-bottom: 0;
     }
 

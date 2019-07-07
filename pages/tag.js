@@ -7,14 +7,12 @@ import chunk from 'lodash/chunk';
 
 import ScreenContext from 'components/common/layout/ScreenContext';
 import ArticleCard from 'components/articles/cards/ArticleCard';
-import Button from 'components/common/Button';
-import Text from 'components/common/Text';
-import ButtonGroup from 'components/common/ButtonGroup';
 
 import { tagsActions, tagsSelectors } from 'redux/ducks/tags';
 import { ArticlesArray, TagShape } from 'utils/customPropTypes';
 import { populateRequest } from 'utils/request';
 import { renderTag, getTopicLink } from 'utils/tags';
+
 import { TOPICS } from 'constants';
 import { SCREENS } from 'constants/styles';
 
@@ -27,80 +25,84 @@ const CARD_SIZE = {
   [MOBILE]: 'square-s',
 };
 
-const BUTTONS = [
-  { id: 'load15More' },
-  { id: 'load30More' },
-  { id: 'load60More' },
-  { id: 'loadAll' },
-];
+// const BUTTONS = [
+//   { id: 'load15More' },
+//   { id: 'load30More' },
+//   { id: 'load60More' },
+//   { id: 'loadAll' },
+// ];
 
-const TagArticlesBlock = ({ articles, invert }) => {
-  const [asymmetricalBlock, threeBlock1, symmetricalBlock, threeBlock2] = articles;
+const LEVEL_SIZES = {
+  c: 3,
+  d: 2,
+};
 
+const LEVEL_DESKTOP_CARD_SIZES = {
+  c: 'square-s',
+  d: 'm',
+};
+
+const TagLevel = ({ articles, screen, type }) => {
+  const size = { ...CARD_SIZE, [DESKTOP]: LEVEL_DESKTOP_CARD_SIZES[type] }[screen];
+  const incomplete = articles.length < LEVEL_SIZES[type];
   return (
-    <ScreenContext.Consumer>
-      {({ screen }) =>
-        asymmetricalBlock.length === 1 ? (
-          <div className="tag-page__one">
-            <div className="tag-page__card">
-              <ArticleCard
-                {...asymmetricalBlock[0]}
-                size={{ ...CARD_SIZE, [DESKTOP]: 'xxl' }[screen]}
-              />
-            </div>
-          </div>
-        ) : (
-          <>
-            <div className="tag-page__two-asymmetrical">
-              <div className="tag-page__card tag-page__card--first">
-                <ArticleCard
-                  {...asymmetricalBlock[0]}
-                  size={{ ...CARD_SIZE, [DESKTOP]: invert ? 'square-m' : 'l' }[screen]}
-                />
-              </div>
-              <div className="tag-page__card tag-page__card--second">
-                <ArticleCard
-                  {...asymmetricalBlock[1]}
-                  size={{ ...CARD_SIZE, [DESKTOP]: invert ? 'l' : 'square-m' }[screen]}
-                />
-              </div>
-            </div>
-            <div className="tag-page__three">
-              {threeBlock1.map(article => (
-                <div key={article.id} className="tag-page__card">
-                  <ArticleCard
-                    {...article}
-                    size={{ ...CARD_SIZE, [DESKTOP]: 'square-s' }[screen]}
-                  />
-                </div>
-              ))}
-            </div>
-            <div className="tag-page__two-symmetrical">
-              {symmetricalBlock.map(article => (
-                <div key={article.id} className="tag-page__card">
-                  <ArticleCard {...article} size={{ ...CARD_SIZE, [DESKTOP]: 'm' }[screen]} />
-                </div>
-              ))}
-            </div>
-            <div className="tag-page__three">
-              {threeBlock2.map(article => (
-                <div key={article.id} className="tag-page__card">
-                  <ArticleCard
-                    {...article}
-                    size={{ ...CARD_SIZE, [DESKTOP]: 'square-s' }[screen]}
-                  />
-                </div>
-              ))}
-            </div>
-          </>
-        )
-      }
-    </ScreenContext.Consumer>
+    <div className={`tag-page__level-${type}`}>
+      {articles.map(article => (
+        <div key={article.id} className="tag-page__card">
+          <ArticleCard {...article} size={size} />
+        </div>
+      ))}
+      {incomplete && (
+        <div className="tag-page__card">
+          <div className={`size-${size}`} />
+        </div>
+      )}
+    </div>
   );
 };
 
+const TagArticlesBlock = ({ block, invert, screen }) => {
+  const [levelB, levelC1, levelD, levelC2] = block;
+
+  if (levelB.length < 2) {
+    const [levelA] = levelB;
+    return (
+      <div className="tag-page__level-a">
+        <div className="tag-page__card">
+          <ArticleCard {...levelA} size={{ ...CARD_SIZE, [DESKTOP]: 'xxl' }[screen]} />
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <div className="tag-page__level-b">
+        <div className="tag-page__card tag-page__card--first">
+          <ArticleCard
+            {...levelB[0]}
+            size={{ ...CARD_SIZE, [DESKTOP]: invert ? 'square-m' : 'l' }[screen]}
+          />
+        </div>
+        <div className="tag-page__card tag-page__card--second">
+          <ArticleCard
+            {...levelB[1]}
+            size={{ ...CARD_SIZE, [DESKTOP]: invert ? 'l' : 'square-m' }[screen]}
+          />
+        </div>
+      </div>
+      <TagLevel type="c" articles={levelC1} screen={screen} />
+      <TagLevel type="d" articles={levelD} screen={screen} />
+      <TagLevel type="c" articles={levelC2} screen={screen} />
+    </>
+  );
+};
+
+const BlockShape = PropTypes.arrayOf(ArticlesArray);
+
 TagArticlesBlock.propTypes = {
-  articles: PropTypes.arrayOf(ArticlesArray).isRequired,
+  block: BlockShape.isRequired,
+  screen: PropTypes.oneOf(Object.values(SCREENS)).isRequired,
   invert: PropTypes.bool,
 };
 
@@ -117,7 +119,7 @@ class TagPage extends Component {
       tag: PropTypes.string.isRequired,
     }).isRequired,
     tag: TagShape.isRequired,
-    blocks: PropTypes.arrayOf(PropTypes.arrayOf(ArticlesArray)).isRequired,
+    blocks: PropTypes.arrayOf(BlockShape).isRequired,
   };
 
   static getLayoutProps = ({ routerQuery: { topic } }) => ({
@@ -146,19 +148,25 @@ class TagPage extends Component {
             <div className="tag-page__title">{renderTag(tag)}</div>
           </div>
         </div>
-        {chunk(blocks, 2).map(([first, second]) => (
-          <Fragment key={first[0][0].id}>
-            <TagArticlesBlock articles={first} />
-            {second && <TagArticlesBlock articles={second} invert />}
-          </Fragment>
-        ))}
-        <ButtonGroup>
+        <ScreenContext.Consumer>
+          {({ screen }) =>
+            chunk(blocks, 2).map(([first, second], index) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <Fragment key={index}>
+                <TagArticlesBlock block={first} screen={screen} />
+                {second && <TagArticlesBlock block={second} screen={screen} invert />}
+              </Fragment>
+            ))
+          }
+        </ScreenContext.Consumer>
+        {/* FIXME */}
+        {/* <ButtonGroup>
           {BUTTONS.map(({ id }) => (
             <Button key={id}>
               <Text id={`common.${id}`} />
             </Button>
           ))}
-        </ButtonGroup>
+        </ButtonGroup> */}
       </div>
     );
   }
