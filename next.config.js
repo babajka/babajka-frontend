@@ -10,6 +10,7 @@ const envCi = require('env-ci');
 const packageJson = require('./package.json');
 const { definePlugin, sassLoaderOptions } = require('./utils/webpack-plugins');
 const { VALID_LOCALES } = require('./constants');
+const ENV = require('./utils/env');
 
 const langs = VALID_LOCALES.join('|');
 
@@ -23,6 +24,7 @@ const nextConfig = {
         new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, new RegExp(langs)),
         definePlugin,
         new GenerateJsonPlugin('static/info.json', {
+          env: ENV,
           version,
           commit,
           branch,

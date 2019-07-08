@@ -3,7 +3,7 @@ node_js:
 - '10'
 script:
 - npm run lint
-- npm run build # FIXME: `WIR_ENV=staging` must be set for `dev.wir.by`
+- WIR_ENV=staging npm run build
 - npm run bundlesize
 after_success:
 - npm run travis-deploy-once "npm run semantic-release"
