@@ -18,12 +18,12 @@ import Header from './Header';
 import Footer from './Footer';
 import Sidebar from './Sidebar';
 
-const SIDEBAR_HEIGHT = 3300;
+// const SIDEBAR_HEIGHT = 3300;
 
 const CoreLayout = ({ children, hideFooter, lang, isMobile }) => {
   const [sidebarActive, toggleSidebar] = useBoolean(false);
   const rootEl = useRef(null);
-  const { width, height } = useComponentSize(rootEl, children);
+  const { width /* , height */ } = useComponentSize(rootEl, children);
   const screen = getScreen(width, isMobile);
 
   return (
@@ -49,7 +49,9 @@ const CoreLayout = ({ children, hideFooter, lang, isMobile }) => {
         <Sidebar
           active={sidebarActive}
           toggleSidebar={toggleSidebar}
-          long={!height || height > SIDEBAR_HEIGHT}
+          // FIXME
+          // long={!height || height > SIDEBAR_HEIGHT}
+          long
           lang={lang}
         />
 
