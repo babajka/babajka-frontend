@@ -127,7 +127,6 @@ ArticleCard.propTypes = {
   theme: PropTypes.oneOf(['light', 'dark']),
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired,
   covers: ArticleCoversShape.isRequired,
   tags: PropTypes.arrayOf(TagShape),
   collection: CollectionShape,

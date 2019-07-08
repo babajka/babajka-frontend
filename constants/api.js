@@ -40,4 +40,7 @@ export default {
   topics: {
     getArticles: topic => `${API_URL}/topics/articles/${topic}`,
   },
+  tags: {
+    getArticles: tag => `${API_URL}/tags/articles/${tag}`,
+  },
 };

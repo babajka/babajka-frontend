@@ -18,9 +18,9 @@ const RENDER_TAG_CONTENT = {
 
 export const renderTag = ({ topic: { slug }, content }) => RENDER_TAG_CONTENT[slug](content);
 
-export const getTopicLink = ({ topic, dark }) => (
+export const getTopicLink = ({ topic, dark, postfix = 'all_mainPage' }) => (
   <Link route={ROUTES_NAMES.topic} params={{ topic }} dark={dark}>
-    <Text id={`topic.${topic}_all_mainPage`} />
+    <Text id={`topic.${topic}_${postfix}`} />
   </Link>
 );
 
