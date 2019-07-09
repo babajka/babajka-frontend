@@ -1,0 +1,111 @@
+@import 'variables';
+
+.article-page-margins {
+  margin: 0 120px 0 60px;
+}
+
+.article-page {
+  font-size: 20px;
+  line-height: 36px;
+
+  &__cover {
+    height: 500px;
+    margin-top: 72px;
+    object-fit: cover;
+    object-position: 50% 0;
+    width: 100%;
+  }
+
+  &__header {
+    margin-top: 72px;
+  }
+
+  &__tags {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 24px;
+  }
+
+  &__tag-image-link {
+    &:hover {
+      opacity: 0.75;
+    }
+
+    &:not(:first-child) {
+      margin-left: 12px;
+    }
+  }
+
+  &__tag-image {
+    border-radius: 2px;
+    height: 48px;
+  }
+
+  &__tag-titles {
+    display: flex;
+    flex-direction: column;
+    margin-left: 12px;
+  }
+
+  &__title {
+    font-size: 60px;
+    font-weight: bold;
+    line-height: 72px;
+  }
+
+  &__authors {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    margin: 70px 0 24px;
+  }
+
+  &__author-image {
+    border-radius: 3px;
+    margin-right: 10px;
+  }
+
+  &__authors-names {
+    font-size: 14px;
+    line-height: 21px;
+  }
+
+  &__block {
+    margin-top: 72px;
+  }
+
+  &__paragraph {
+    margin: 0;
+
+    &:not(:first-child) {
+      margin-top: 24px;
+    }
+  }
+
+  &__right-element {
+    float: right;
+    margin: 0;
+    margin-left: 30px;
+  }
+
+  &__share {
+    margin-top: 72px;
+    width: 200px;
+  }
+
+  &__other-tags {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 72px;
+  }
+
+  &__other-tag {
+    margin-bottom: 4px;
+
+    &:not(:last-child) {
+      margin-right: 12px;
+    }
+  }
+}
