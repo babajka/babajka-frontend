@@ -1,14 +1,12 @@
-import 'components/common/ui/link.scss';
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import cn from 'classnames';
 
 import LocaleContext from 'components/common/LocaleContext';
 
+import { linkCn } from 'utils/ui';
 import { Link as NextLink } from 'routes';
 
-const Link = ({ className, params = {}, children, disabled, dark, ...props }) => (
+const Link = ({ tag, className, params = {}, children, disabled, dark, ...props }) => (
   <LocaleContext.Consumer>
     {lang => (
       <NextLink
@@ -18,30 +16,33 @@ const Link = ({ className, params = {}, children, disabled, dark, ...props }) =>
           lang: params.lang || lang,
         }}
       >
-        <a
-          className={cn(className, {
-            'wir-link--disabled': disabled,
-            'wir-link--theme-dark': dark,
-          })}
-        >
-          {children}
-        </a>
+        {React.createElement(
+          tag,
+          {
+            className: linkCn({ className, disabled, dark }),
+          },
+          children
+        )}
       </NextLink>
     )}
   </LocaleContext.Consumer>
 );
 
 Link.propTypes = {
-  className: PropTypes.string,
+  tag: PropTypes.node,
   children: PropTypes.node.isRequired,
   params: PropTypes.shape({}),
+
+  // ui props
+  className: PropTypes.string,
   disabled: PropTypes.bool,
   dark: PropTypes.bool,
 };
 
 Link.defaultProps = {
-  className: 'wir-link',
+  tag: 'a',
   params: {},
+  className: '',
   disabled: false,
   dark: false,
 };

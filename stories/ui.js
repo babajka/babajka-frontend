@@ -4,7 +4,6 @@ import { text, boolean, select, optionsKnob as options, object } from '@storyboo
 
 import Icon from 'components/common/ui/Icon';
 import Input from 'components/common/ui/Input';
-import LinkWrapper from 'components/common/ui/LinkWrapper';
 
 const PREFIX = 'common/ui';
 
@@ -25,18 +24,7 @@ storiesOf(PREFIX, module)
       leftIcon={object('leftIcon', { pack: 's', name: 'envelope' })}
       rightIcon={object('rightIcon', { pack: 's', name: 'arrow-right' })}
     />
-  ))
-  .add('LinkWrapper', () => {
-    return (
-      <LinkWrapper
-        disabled={boolean('disabled', false)}
-        dark={boolean('dark', false)}
-        href={text('href', 'https://wir.by/')}
-      >
-        {text('children', 'Спасылка на wir.by')}
-      </LinkWrapper>
-    );
-  });
+  ));
 
 // storiesOf(`${PREFIX}/Select`)
 //   .add(

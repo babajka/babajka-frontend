@@ -3,7 +3,7 @@ import './input.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Clickable from 'lib/components/Clickable';
+import Clickable from 'components/common/Clickable';
 import Icon from 'components/common/ui/Icon';
 
 const getClass = (cls, err) => `${cls}${err ? ` ${cls}--error` : ''}`;

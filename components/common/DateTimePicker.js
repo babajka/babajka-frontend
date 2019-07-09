@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Datetime from 'react-datetime';
 import moment from 'moment';
 
-import Clickable from 'lib/components/Clickable';
+import Clickable from 'components/common/Clickable';
 import LocaleContext from 'components/common/LocaleContext';
 
 const yesterday = moment().subtract(1, 'day');

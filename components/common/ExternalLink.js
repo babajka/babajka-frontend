@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import LinkWrapper from 'components/common/ui/LinkWrapper';
+import { linkCn } from 'utils/ui';
 
 const ExternalLink = ({ href, children, ...props }) => (
-  <LinkWrapper href={href} rel="noopener noreferrer" target="_blank" {...props}>
+  <a href={href} rel="noopener noreferrer" target="_blank" {...props} className={linkCn(props)}>
     {children}
-  </LinkWrapper>
+  </a>
 );
 
 ExternalLink.propTypes = {

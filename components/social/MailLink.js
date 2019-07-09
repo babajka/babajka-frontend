@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import LinkWrapper from 'components/common/ui/LinkWrapper';
+import { linkCn } from 'utils/ui';
 
 const MailLink = ({ to, children = `${to}@wir.by` }) => (
-  <LinkWrapper href={`mailto:wir.${to}@wir.by`} target="_top">
+  <a href={`mailto:wir.${to}@wir.by`} target="_top" className={linkCn()}>
     {children}
-  </LinkWrapper>
+  </a>
 );
 
 MailLink.propTypes = {

@@ -4,7 +4,7 @@ import cn from 'classnames';
 
 import Icon from 'components/common/ui/Icon';
 import Text from 'components/common/Text';
-import Clickable from 'lib/components/Clickable';
+import Clickable from 'components/common/Clickable';
 
 import InfoIcon from './InfoIcon';
 

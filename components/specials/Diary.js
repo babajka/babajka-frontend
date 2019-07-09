@@ -6,7 +6,7 @@ import cn from 'classnames';
 import TextWithSeparator from 'lib/components/TextWithSeparator';
 import Modal from 'components/common/Modal';
 import Text from 'components/common/Text';
-import Clickable from 'lib/components/Clickable';
+import Clickable from 'components/common/Clickable';
 import Icon from 'components/common/ui/Icon';
 
 import { diaryActions, diarySelectors } from 'redux/ducks/diary';
