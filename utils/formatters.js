@@ -17,12 +17,12 @@ export const replaceToDash = string => string.replace(/[_ \\/]+/g, '-').replace(
 
 export const replaceLocale = (url, lang) => url.replace(`/${lang}`, '');
 
-export const renderNodeList = (nodes, delimiter = ', ') =>
-  !!nodes.length && nodes.reduce((acc, node) => [acc, delimiter, node]);
-
 export const toTitleCase = str =>
   str
     .toLowerCase()
     .split(' ')
     .map(s => `${s[0].toUpperCase()}${s.slice(1)}`)
     .join(' ');
+
+export const renderNodeList = (nodes, delimiter = ', ') =>
+  !!nodes.length && nodes.reduce((acc, node) => [acc, delimiter, node]);

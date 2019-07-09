@@ -6,8 +6,9 @@ import Link from 'components/common/Link';
 import BgContainer from 'components/common/ui/BgContainer';
 
 export const DEFAULT_SIZES = ['xxl', 'xl', 'l', 'm'];
+export const TAG_SIZES = ['s', 'xs'];
 export const SQUARE_SIZES = ['square-m', 'square-s'];
-export const SIZES = DEFAULT_SIZES.concat(SQUARE_SIZES);
+export const SIZES = DEFAULT_SIZES.concat(SQUARE_SIZES, TAG_SIZES);
 
 const CardWrapper = ({ className, size, children, bgColor, bgImage, dark, linkProps }) => (
   <Link className={`size-${size}`} {...linkProps}>
