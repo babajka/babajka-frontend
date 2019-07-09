@@ -6,7 +6,7 @@ import cn from 'classnames';
 import ScrollToTop from 'react-scroll-up';
 
 import Icon from 'components/common/ui/Icon';
-import Clickable from 'lib/components/Clickable';
+import Clickable from 'components/common/Clickable';
 
 import useBoolean from 'hooks/useBoolean';
 import useComponentSize from 'hooks/useComponentSize';

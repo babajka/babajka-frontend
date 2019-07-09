@@ -4,11 +4,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Text from 'components/common/Text';
-import LinkWrapper from 'components/common/ui/LinkWrapper';
 import ConditionalWrapper from 'components/common/ui/ConditionalWrapper';
 
 import { TagShape, CollectionShape, ArticleCoversShape, ArticleType } from 'utils/customPropTypes';
 import { renderTag } from 'utils/tags';
+import { linkCn } from 'utils/ui';
 
 import { TOPIC } from 'constants/misc';
 import { ROUTES_NAMES } from 'routes';
@@ -108,10 +108,10 @@ const ArticleCard = props => {
             <Text
               id="article.read"
               render={(read, article) => (
-                <LinkWrapper dark={dark}>
+                <span className={linkCn({ dark })}>
                   {read}
                   {size === 'm' && article}
-                </LinkWrapper>
+                </span>
               )}
             />
           </div>

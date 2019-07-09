@@ -15,7 +15,7 @@ import { LANGS } from 'constants';
 
 import Text, { localize } from 'components/common/Text';
 import Select from 'components/common/Select';
-import Clickable from 'lib/components/Clickable';
+import Clickable from 'components/common/Clickable';
 import DateTimePicker from 'components/common/DateTimePicker';
 import { defaultContent } from 'components/common/Editor';
 

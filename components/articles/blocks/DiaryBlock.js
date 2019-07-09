@@ -4,9 +4,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import Clickable from 'components/common/Clickable';
 import TextWithSeparator from 'lib/components/TextWithSeparator';
 import Icon from 'components/common/ui/Icon';
-import LinkWrapper from 'components/common/ui/LinkWrapper';
 
 import { diaryActions, diarySelectors } from 'redux/ducks/diary';
 import { isSameDay } from 'utils/validators';
@@ -23,8 +23,7 @@ const mapDispatchToProps = {
   getPrev: () => diaryActions.getClosest('prev'),
 };
 
-const IMAGE_MOCK =
-  'https://babajka.github.io/babajka-markup/static/images/mock/diary/karatkievich.png';
+const IMAGE_MOCK = 'https://babajka.github.io/babajka-markup/static/images/mock/covers/person.png';
 
 export const DiaryModel = {
   text: PropTypes.string.isRequired,
@@ -71,17 +70,17 @@ class DiaryBlock extends Component {
             </div>
             <div className="diary__text">
               <TextWithSeparator text={text} symbol={'<br/>'} />
-              <LinkWrapper>Цалкам</LinkWrapper>
+              <Clickable linkStyle>Цалкам</Clickable>
             </div>
           </div>
 
           <div className="diary__arrows">
-            <LinkWrapper onClick={getPrev}>
+            <Clickable onClick={getPrev} linkStyle>
               <Icon name="long-arrow-alt-left" />
-            </LinkWrapper>
-            <LinkWrapper disabled={isSameDay(date)} onClick={getNext}>
+            </Clickable>
+            <Clickable disabled={isSameDay(date)} onClick={getNext} linkStyle>
               <Icon name="long-arrow-alt-right" />
-            </LinkWrapper>
+            </Clickable>
           </div>
         </div>
       </div>

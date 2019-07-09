@@ -154,6 +154,14 @@
     {
       "path": ".next/static/**/_error.js",
       "maxSize": "5 kB"
+    },
+    {
+      "path": ".next/static/css/commons*.css",
+      "maxSize": "1 kB"
+    },
+    {
+      "path": ".next/static/css/styles*.css",
+      "maxSize": "22 kB"
     }
   ]
 }

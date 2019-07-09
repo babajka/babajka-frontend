@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form } from 'formik';
 
-import Clickable from 'lib/components/Clickable';
+import Clickable from 'components/common/Clickable';
 import Text from 'components/common/Text';
 import LocaleContext from 'components/common/LocaleContext';
 import FormWrapper from 'components/common/form/FormWrapper';
