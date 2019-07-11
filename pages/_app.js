@@ -13,6 +13,7 @@ import App, { Container } from 'next/app';
 import Head from 'next/head';
 import { withRouter } from 'next/router';
 
+import Guard from 'components/auth/Guard';
 import CoreLayout from 'components/common/layout/CoreLayout';
 import LocaleContext from 'components/common/LocaleContext';
 import Metatags, {
@@ -100,7 +101,7 @@ class Root extends App {
 
   render() {
     const { Component, pageProps, store, router, user, isMobile } = this.props;
-    const getLayoutProps = Component.getLayoutProps || getEmptyObject;
+    const { permissions = [], getLayoutProps = getEmptyObject } = Component;
     const locale = getLocale(router);
 
     const defaultPageProps = { user, lang: locale, routerQuery: router.query };
@@ -126,7 +127,9 @@ class Root extends App {
               hideFooter={hideFooter}
               hideSidebar={hideSidebar}
             >
-              <Component {...defaultPageProps} {...pageProps} />
+              <Guard permissions={permissions}>
+                <Component {...defaultPageProps} {...pageProps} />
+              </Guard>
             </CoreLayout>
           </LocaleContext.Provider>
         </Provider>

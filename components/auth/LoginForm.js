@@ -1,10 +1,8 @@
 import './login-form.scss';
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Form, Field } from 'formik';
-import { Router } from 'routes';
 
 import { validEmail, required, checkLength, hasErrors } from 'utils/validators';
 import FormWrapper from 'components/common/form/FormWrapper';
@@ -79,7 +77,7 @@ const loginValidator = values =>
     return acc;
   }, {});
 
-const LoginForm = ({ next }) => (
+const LoginForm = () => (
   <div className="login-form">
     <h2 className="login-form__title">
       <Text id="auth.signIn" />
@@ -91,7 +89,6 @@ const LoginForm = ({ next }) => (
       initialValues={LOGIN_INITIAL_FORM}
       validate={loginValidator}
       action={authActions.signIn}
-      onSuccess={() => Router.pushRoute(next)}
     >
       {({ errors, touched, isSubmitting }) => (
         <Form>
@@ -143,9 +140,5 @@ const LoginForm = ({ next }) => (
     </FormWrapper>
   </div>
 );
-
-LoginForm.propTypes = {
-  next: PropTypes.string.isRequired,
-};
 
 export default LoginForm;

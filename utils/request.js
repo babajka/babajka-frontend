@@ -5,6 +5,7 @@ import castArray from 'lodash/castArray';
 import { Router, ROUTES_NAMES } from 'routes';
 import api from 'constants/api';
 import { BACKEND_URL } from 'constants/server';
+import { DEFAULT_LOCALE } from 'constants';
 
 const NOT_FOUND = 'Not Found';
 
@@ -61,7 +62,7 @@ export const makeRequest = (url, method = 'GET', rawBody = null) =>
         const contentType = response.headers.get('content-type');
 
         if (!isServer && response.status === 404) {
-          Router.replaceRoute(ROUTES_NAMES.status, { code: '404' });
+          Router.pushRoute(ROUTES_NAMES.status, { code: '404', lang: DEFAULT_LOCALE });
         }
 
         if (contentType && contentType.includes('application/json')) {
@@ -89,21 +90,15 @@ export const makeRequest = (url, method = 'GET', rawBody = null) =>
 export const populateRequest = (ctx, actions) => {
   const { store, res } = ctx;
   cookie = nextCookie(ctx);
+  const isServer = !process.browser;
 
-  const handleNotFound = err => {
-    if (err === NOT_FOUND) {
+  const promises = castArray(actions).map(action => store.dispatch(action()));
+
+  return Promise.all(promises).catch(err => {
+    if (isServer && err === NOT_FOUND) {
       res.writeHead(302, { Location: '/status/404' });
       res.end();
       res.finished = true;
     }
-    return err;
-  };
-
-  const promises = castArray(actions).map(action => {
-    const promise = store.dispatch(action());
-    promise.catch(handleNotFound);
-    return promise;
   });
-
-  return Promise.all(promises);
 };

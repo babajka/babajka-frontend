@@ -79,12 +79,16 @@ export const ArticleShape = PropTypes.shape(ArticleModel);
 
 export const ArticlesArray = PropTypes.arrayOf(ArticleShape);
 
-export const PermissionsShape = PropTypes.shape({
+const PermissionsModel = {
   adminAccess: PropTypes.bool.isRequired,
   canCreateArticle: PropTypes.bool.isRequired,
   canManageArticles: PropTypes.bool.isRequired,
   canManageUsers: PropTypes.bool.isRequired,
-});
+};
+
+export const PermissionsList = PropTypes.arrayOf(PropTypes.oneOf(Object.keys(PermissionsModel)));
+
+export const PermissionsShape = PropTypes.shape(PermissionsModel);
 
 const ROLES = ['author', 'regular'];
 
