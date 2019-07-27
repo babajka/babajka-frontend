@@ -1,3 +1,5 @@
+@import 'responsiveness';
+
 @import './cards';
 
 .location {
@@ -19,7 +21,7 @@
   }
 }
 
-.size-l {
+@mixin shared-size-l {
   .location {
     @include l-sizes;
 
@@ -32,7 +34,7 @@
   }
 }
 
-.size-square-m {
+@mixin shared-size-square-m {
   .location {
     @include square-m-sizes;
 
@@ -45,7 +47,7 @@
   }
 }
 
-.size-square-s {
+@mixin shared-size-square-s {
   .location {
     @include square-s-sizes;
 
@@ -58,8 +60,7 @@
   }
 }
 
-.size-ms,
-.size-s-wide {
+@mixin shared-sizes-ms-s-wide {
   .location {
     padding: 0 30px 42px;
 
@@ -70,19 +71,23 @@
   }
 }
 
-.size-ms {
+@mixin shared-size-ms {
+  @include shared-sizes-ms-s-wide;
+
   .location {
     @include ms-sizes;
   }
 }
 
-.size-s-wide {
+@mixin shared-size-s-wide {
+  @include shared-sizes-ms-s-wide;
+
   .location {
     @include s-wide-sizes;
   }
 }
 
-.size-s {
+@mixin shared-size-s {
   .location {
     @include s-sizes;
 
@@ -95,7 +100,7 @@
   }
 }
 
-.size-xs-wide {
+@mixin shared-size-xs-wide {
   .location {
     @include xs-wide-sizes;
 
@@ -108,7 +113,7 @@
   }
 }
 
-.size-xs {
+@mixin shared-size-xs {
   .location {
     @include xs-sizes;
 
@@ -117,6 +122,48 @@
     &__title {
       font-size: 30px;
       line-height: 36px;
+    }
+  }
+}
+
+.tags-by-topic {
+  &__1 {
+    @include screen-desktop {
+      @include shared-size-l;
+    }
+
+    @include screen-tablet-large {
+      @include shared-size-square-m;
+    }
+
+    @include screen-tablet {
+      @include shared-size-square-m;
+    }
+
+    @include screen-mobile {
+      @include shared-size-l;
+    }
+  }
+
+  &__2 {
+    @include screen-desktop {
+      @include shared-size-s;
+    }
+
+    @include screen-tablet-large {
+      @include shared-size-s-wide;
+    }
+
+    @include screen-tablet {
+      @include shared-size-xs;
+    }
+
+    @include screen-touch {
+      @include shared-size-ms;
+    }
+
+    @include screen-mobile {
+      @include shared-size-xs-wide;
     }
   }
 }

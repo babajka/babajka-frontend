@@ -3,23 +3,10 @@ import './articlesByTag3.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ScreenContext from 'components/common/layout/ScreenContext';
 import ArticleCard from 'components/articles/cards/ArticleCard';
 
 import { IdsArray } from 'utils/customPropTypes';
 import { getTagLink, getTopicLink } from 'utils/tags';
-
-import { SCREENS } from 'constants/styles';
-
-const { DESKTOP, MOBILE, TABLET, TABLET_LARGE, TOUCH } = SCREENS;
-
-const CARD_SIZE = {
-  [DESKTOP]: 'square-s',
-  [TABLET_LARGE]: 'square-m',
-  [TABLET]: 'square-s',
-  [TOUCH]: 'm',
-  [MOBILE]: 'square-s',
-};
 
 const ArticlesByTag3 = ({ block, data }) => {
   const { tagId, articlesIds } = block;
@@ -37,17 +24,13 @@ const ArticlesByTag3 = ({ block, data }) => {
 
       <div className="articles-by-tag-3__separate-header articles-by-tag-3__title">{tagLink}</div>
 
-      <ScreenContext.Consumer>
-        {({ screen }) => (
-          <div className="articles-by-tag-3__cards">
-            {articlesIds.map((id, index) => (
-              <div key={id} className={`articles-by-tag-3__card-${index + 1}`}>
-                <ArticleCard {...articles[id]} size={CARD_SIZE[screen]} />
-              </div>
-            ))}
+      <div className="articles-by-tag-3__cards">
+        {articlesIds.map((id, index) => (
+          <div key={id} className={`articles-by-tag-3__card-${index + 1}`}>
+            <ArticleCard {...articles[id]} />
           </div>
-        )}
-      </ScreenContext.Consumer>
+        ))}
+      </div>
 
       <div className="articles-by-tag-3__separate-footer articles-by-tag-3__title">{topicLink}</div>
     </div>

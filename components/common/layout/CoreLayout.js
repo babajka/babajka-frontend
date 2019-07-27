@@ -32,9 +32,7 @@ const CoreLayout = ({ children, hideFooter, hideSidebar, lang, isMobile }) => {
         <div className="wir-space">
           <Header toggleSidebar={toggleSidebar} />
 
-          <div className="wir-content">
-            <div className={`screen-${screen}`}>{children}</div>
-          </div>
+          <div className="wir-content">{children}</div>
 
           {!hideFooter && <Footer />}
 

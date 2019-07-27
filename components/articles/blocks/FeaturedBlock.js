@@ -9,7 +9,7 @@ const FeaturedBlock = ({ block, data }) => {
   const articleData = frozen ? articles[articleId] : latestArticles[0];
   return (
     <div className="block block__no-background featured">
-      <ArticleCard {...articleData} size="media-query" />
+      <ArticleCard {...articleData} />
     </div>
   );
 };

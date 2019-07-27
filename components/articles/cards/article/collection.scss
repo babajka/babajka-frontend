@@ -1,3 +1,5 @@
+@import 'responsiveness';
+
 @import '../cards';
 
 .collection {
@@ -50,7 +52,7 @@
   }
 }
 
-.size-xxl {
+@mixin shared-size-xxl {
   .collection {
     @include xxl-sizes;
 
@@ -79,7 +81,7 @@
   }
 }
 
-.size-xl {
+@mixin shared-size-xl {
   .collection {
     @include xl-sizes;
 
@@ -108,7 +110,7 @@
   }
 }
 
-.size-l {
+@mixin shared-size-l {
   .collection {
     @include l-sizes;
 
@@ -137,7 +139,7 @@
   }
 }
 
-.size-m {
+@mixin shared-size-m {
   .collection {
     @include m-sizes;
 
@@ -166,7 +168,7 @@
   }
 }
 
-.size-square-m {
+@mixin shared-size-square-m {
   .collection {
     @include square-m-sizes;
 
@@ -190,7 +192,7 @@
   }
 }
 
-.size-square-s {
+@mixin shared-size-square-s {
   .collection {
     @include square-s-sizes;
 
@@ -211,5 +213,73 @@
     &__author {
       margin-top: 12px;
     }
+  }
+}
+
+// DUPLICATES BELOW. HOW TO AVOID ?
+
+.articles-by-tag-2 {
+  @include screen-desktop {
+    @include shared-size-square-m;
+  }
+
+  @include screen-tablet-large {
+    @include shared-size-l;
+  }
+
+  @include screen-tablet {
+    @include shared-size-square-m;
+  }
+
+  @include screen-touch {
+    @include shared-size-m;
+  }
+
+  @include screen-mobile {
+    @include shared-size-square-s;
+  }
+}
+
+.featured {
+  @include screen-desktop {
+    @include shared-size-xxl;
+  }
+
+  @include screen-tablet-large {
+    @include shared-size-xl;
+  }
+
+  @include screen-tablet {
+    @include shared-size-l;
+  }
+
+  @include screen-touch {
+    @include shared-size-m;
+  }
+
+  @include screen-mobile {
+    @include shared-size-square-s;
+  }
+}
+
+.articles-by-tag-3 {
+  @include screen-desktop {
+    @include shared-size-square-s;
+  }
+
+  @include screen-tablet-large {
+    @include shared-size-square-m;
+  }
+
+  @include screen-tablet {
+    @include shared-size-square-s;
+  }
+
+  @include screen-touch {
+    @include shared-size-m;
+  }
+
+  @include screen-mobile {
+    @include shared-size-square-s;
   }
 }

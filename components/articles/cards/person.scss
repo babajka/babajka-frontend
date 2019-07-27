@@ -1,3 +1,5 @@
+@import 'responsiveness';
+
 @import './cards';
 
 .person {
@@ -38,7 +40,7 @@
   }
 }
 
-.size-l {
+@mixin shared-size-l {
   .person {
     @include l-sizes;
 
@@ -67,7 +69,7 @@
   }
 }
 
-.size-square-m {
+@mixin shared-size-square-m {
   .person {
     @include square-m-sizes;
 
@@ -95,7 +97,7 @@
   }
 }
 
-.size-square-s {
+@mixin shared-size-square-s {
   .person {
     @include square-s-sizes;
 
@@ -122,8 +124,7 @@
   }
 }
 
-.size-ms,
-.size-s-wide {
+@mixin shared-sizes-ms-s-wide {
   .person {
     &__cover-wrapper {
       width: 194px;
@@ -147,19 +148,23 @@
   }
 }
 
-.size-ms {
+@mixin shared-size-ms {
+  @include shared-sizes-ms-s-wide;
+
   .person {
     @include ms-sizes;
   }
 }
 
-.size-s-wide {
+@mixin shared-size-s-wide {
+  @include shared-sizes-ms-s-wide;
+
   .person {
     @include s-wide-sizes;
   }
 }
 
-.size-s {
+@mixin shared-size-s {
   .person {
     @include s-sizes;
 
@@ -185,7 +190,7 @@
   }
 }
 
-.size-xs-wide {
+@mixin shared-size-xs-wide {
   .person {
     @include xs-wide-sizes;
 
@@ -212,7 +217,7 @@
   }
 }
 
-.size-xs {
+@mixin shared-size-xs {
   .person {
     @include xs-sizes;
 
@@ -235,6 +240,48 @@
 
     &__description {
       display: none;
+    }
+  }
+}
+
+.tags-by-topic {
+  &__1 {
+    @include screen-desktop {
+      @include shared-size-l;
+    }
+
+    @include screen-tablet-large {
+      @include shared-size-square-m;
+    }
+
+    @include screen-tablet {
+      @include shared-size-square-m;
+    }
+
+    @include screen-mobile {
+      @include shared-size-l;
+    }
+  }
+
+  &__2 {
+    @include screen-desktop {
+      @include shared-size-s;
+    }
+
+    @include screen-tablet-large {
+      @include shared-size-s-wide;
+    }
+
+    @include screen-tablet {
+      @include shared-size-xs;
+    }
+
+    @include screen-touch {
+      @include shared-size-ms;
+    }
+
+    @include screen-mobile {
+      @include shared-size-xs-wide;
     }
   }
 }

@@ -273,14 +273,6 @@
 }
 
 .featured {
-  //const CARD_SIZE = {
-  //   [DESKTOP]: 'xxl',
-  //   [TABLET_LARGE]: 'xl',
-  //   [TABLET]: 'l',
-  //   [TOUCH]: 'm',
-  //   [MOBILE]: 'square-s',
-  // };
-
   @include screen-desktop {
     @include shared-size-xxl;
   }
@@ -291,6 +283,30 @@
 
   @include screen-tablet {
     @include shared-size-l;
+  }
+
+  @include screen-touch {
+    @include shared-size-m;
+  }
+
+  @include screen-mobile {
+    @include shared-size-square-s;
+  }
+}
+
+.articles-by-tag-3 {
+  // DUPLICATION !!! HOW TO AVOID ???
+
+  @include screen-desktop {
+    @include shared-size-square-s;
+  }
+
+  @include screen-tablet-large {
+    @include shared-size-square-m;
+  }
+
+  @include screen-tablet {
+    @include shared-size-square-s;
   }
 
   @include screen-touch {

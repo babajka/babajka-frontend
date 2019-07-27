@@ -1,3 +1,4 @@
+@import 'responsiveness';
 @import 'variables';
 
 .block {
@@ -12,35 +13,35 @@
   }
 }
 
-.screen-desktop {
+@include screen-desktop {
   .block {
     padding-left: calc((100% - 1020px) / 3);
     padding-right: calc((100% - 1020px) * 2 / 3);
   }
 }
 
-.screen-tablet-large {
+@include screen-tablet-large {
   .block {
     padding-left: calc((100% - 818px) / 3);
     padding-right: calc((100% - 818px) * 2 / 3);
   }
 }
 
-.screen-tablet {
+@include screen-tablet {
   .block {
     padding-left: calc((100% - 624px) / 3);
     padding-right: calc((100% - 624px) * 2 / 3);
   }
 }
 
-.screen-touch {
+@include screen-touch {
   .block {
     padding-left: calc((100% - 480px) / 3);
     padding-right: calc((100% - 480px) * 2 / 3);
   }
 }
 
-.screen-mobile {
+@include screen-mobile {
   .block {
     padding-left: calc((100% - 300px) / 3);
     padding-right: calc((100% - 300px) * 2 / 3);

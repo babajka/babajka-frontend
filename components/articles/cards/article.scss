@@ -206,10 +206,6 @@
   }
 }
 
-// .size-m {
-//   @include shared-size-m;
-// }
-
 @mixin shared-square-articles {
   .article {
     flex-direction: column;
@@ -242,10 +238,6 @@
   }
 }
 
-// .square-article {
-//   @include shared-square-article;
-// }
-
 @mixin shared-size-square-m {
   @include shared-square-articles;
 
@@ -267,16 +259,8 @@
   }
 }
 
-// .size-square-m {
-//   @include shared-size-square-m;
-// }
-
 @mixin shared-size-square-s {
   @include shared-square-articles;
-
-  @include square-s-sizes;
-
-  margin: 0;
 
   .article {
     @include square-s-sizes;
@@ -296,22 +280,10 @@
   }
 }
 
-// .size-square-s {
-//   @include shared-size-square-s;
-// }
-
 // MEDIA QUERIES FOR BLOCKS.
-
-// [DESKTOP]: 'square-m',
-// [TABLET_LARGE]: 'l',
-// [TABLET]: 'square-m',
-// [TOUCH]: 'm',
-// [MOBILE]: 'square-s',
-
 // Below is a set of rules for cards to be auto adjustable:
-.articles-by-tag-2 {
-  // Being inside of a block automatically means all cards are auto adjustable.
 
+.articles-by-tag-2 {
   @include screen-desktop {
     @include shared-size-square-m;
   }
@@ -334,14 +306,6 @@
 }
 
 .featured {
-  //const CARD_SIZE = {
-  //   [DESKTOP]: 'xxl',
-  //   [TABLET_LARGE]: 'xl',
-  //   [TABLET]: 'l',
-  //   [TOUCH]: 'm',
-  //   [MOBILE]: 'square-s',
-  // };
-
   @include screen-desktop {
     @include shared-size-xxl;
   }
@@ -352,6 +316,58 @@
 
   @include screen-tablet {
     @include shared-size-l;
+  }
+
+  @include screen-touch {
+    @include shared-size-m;
+  }
+
+  @include screen-mobile {
+    @include shared-size-square-s;
+  }
+}
+
+.two-in-row {
+  @include screen-desktop {
+    @include shared-size-m;
+  }
+
+  @include screen-tablet {
+    @include shared-size-l;
+  }
+
+  @include screen-touch {
+    @include shared-size-m;
+  }
+
+  @include screen-mobile {
+    @include shared-size-square-s;
+  }
+
+  &__first {
+    @include screen-tablet-large {
+      @include shared-size-m;
+    }
+  }
+
+  &__second {
+    @include screen-tablet-large {
+      @include shared-size-square-s;
+    }
+  }
+}
+
+.articles-by-tag-3 {
+  @include screen-desktop {
+    @include shared-size-square-s;
+  }
+
+  @include screen-tablet-large {
+    @include shared-size-square-m;
+  }
+
+  @include screen-tablet {
+    @include shared-size-square-s;
   }
 
   @include screen-touch {

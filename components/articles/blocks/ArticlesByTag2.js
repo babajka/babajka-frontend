@@ -12,16 +12,6 @@ import { getTagLink, getTopicLink } from 'utils/tags';
 
 import { TOPIC } from 'constants/misc';
 
-// const { DESKTOP, MOBILE, TABLET, TABLET_LARGE, TOUCH } = SCREENS;
-
-// const CARD_SIZE = {
-//   [DESKTOP]: 'square-m',
-//   [TABLET_LARGE]: 'l',
-//   [TABLET]: 'square-m',
-//   [TOUCH]: 'm',
-//   [MOBILE]: 'square-s',
-// };
-
 const ArticlesByTag2 = ({ block, data }) => {
   const { tagId, articlesIds } = block;
   const { tags, articles } = data;

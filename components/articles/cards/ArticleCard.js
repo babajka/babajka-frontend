@@ -36,7 +36,7 @@ const ArticleCard = props => {
     type,
     slug,
   } = props;
-  const square = size.includes('square');
+  const square = size ? size.includes('square') : true;
   const dark = theme === 'dark';
   const brand = getBrand(tags);
   const wrapperProps = {
