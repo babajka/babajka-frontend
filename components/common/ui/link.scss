@@ -40,4 +40,11 @@
     opacity: 0.2;
     pointer-events: none;
   }
+
+  // FIXME: add proper active styles, solve `important` (problem with :link)
+  &--active {
+    // stylelint-disable-next-line declaration-no-important
+    color: #45565b !important;
+    font-weight: bold;
+  }
 }

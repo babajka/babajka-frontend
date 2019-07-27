@@ -23,6 +23,12 @@ const ADMIN_ROUTES = [
     name: 'articles',
   },
   {
+    name: 'main',
+  },
+  {
+    name: 'sidebar',
+  },
+  {
     name: 'login',
   },
 ].map(({ name, pattern = name, page = name }) => ({
@@ -90,5 +96,6 @@ ROUTES.forEach(route => {
   routes.add(route);
 });
 
+routes.ADMIN_ROUTES = ADMIN_ROUTES;
 routes.ROUTES_NAMES = ROUTES_NAMES;
 module.exports = routes;

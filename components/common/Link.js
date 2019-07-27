@@ -6,7 +6,7 @@ import LocaleContext from 'components/common/LocaleContext';
 import { linkCn } from 'utils/ui';
 import { Link as NextLink } from 'routes';
 
-const Link = ({ tag, className, params = {}, children, disabled, dark, ...props }) => (
+const Link = ({ tag, className, params = {}, children, disabled, dark, active, ...props }) => (
   <LocaleContext.Consumer>
     {lang => (
       <NextLink
@@ -19,7 +19,7 @@ const Link = ({ tag, className, params = {}, children, disabled, dark, ...props 
         {React.createElement(
           tag,
           {
-            className: linkCn({ className, disabled, dark }),
+            className: linkCn({ className, disabled, dark, active }),
           },
           children
         )}
@@ -37,6 +37,7 @@ Link.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   dark: PropTypes.bool,
+  active: PropTypes.bool,
 };
 
 Link.defaultProps = {
@@ -44,6 +45,7 @@ Link.defaultProps = {
   params: {},
   className: '',
   disabled: false,
+  active: false,
   dark: false,
 };
 
