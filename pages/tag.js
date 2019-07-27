@@ -126,12 +126,8 @@ class TagPage extends Component {
     title: `topic.${topic}`,
   });
 
-  static getInitialProps(ctx) {
-    const {
-      query: { tag },
-    } = ctx;
-    return populateRequest(ctx, tagsActions.fetchArticles.bind(null, tag));
-  }
+  static getInitialProps = ctx =>
+    populateRequest(ctx, ({ query: { tag } }) => tagsActions.fetchArticles(tag));
 
   render() {
     const {

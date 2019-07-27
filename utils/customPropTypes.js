@@ -4,6 +4,8 @@ import { TOPICS } from 'constants';
 import { VALID_LOCALES } from 'components/common/LocaleContext';
 import { ARTICLE_TYPES } from 'constants/articles';
 
+export const IdsArray = PropTypes.arrayOf(PropTypes.string);
+
 export const ShortUserShape = PropTypes.shape({
   id: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
@@ -34,11 +36,17 @@ export const TopicShape = PropTypes.shape({
   slug: PropTypes.oneOf(TOPICS).isRequired,
 });
 
+// export const TopicsArray = PropTypes.arrayOf(TopicShape);
+export const TopicsById = PropTypes.objectOf(TopicShape);
+
 export const TagShape = PropTypes.shape({
   id: PropTypes.string.isRequired,
   topic: TopicShape.isRequired,
   content: PropTypes.object.isRequired,
 });
+
+export const TagsArray = PropTypes.arrayOf(TagShape);
+export const TagsById = PropTypes.objectOf(TagShape);
 
 export const ArticleCoversShape = PropTypes.shape({
   page: PropTypes.string.isRequired,
@@ -70,14 +78,14 @@ export const ArticleModel = {
   video: ArticleVideoShape,
   metadata: MetadataShape.isRequired,
   keywords: PropTypes.arrayOf(PropTypes.string).isRequired,
-  tags: PropTypes.arrayOf(TagShape).isRequired,
+  tags: TagsArray.isRequired,
   theme: PropTypes.oneOf(['light', 'dark']).isRequired,
   bgColor: PropTypes.string.isRequired,
 };
 
 export const ArticleShape = PropTypes.shape(ArticleModel);
-
 export const ArticlesArray = PropTypes.arrayOf(ArticleShape);
+export const ArticlesById = PropTypes.objectOf(ArticleShape);
 
 const PermissionsModel = {
   adminAccess: PropTypes.bool.isRequired,

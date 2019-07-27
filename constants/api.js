@@ -19,19 +19,23 @@ export default {
     uploads: `${API_URL}/core/uploads`,
     subscribe: `${API_URL}/mail`,
   },
-  articles: {
-    getChunk: pagination => `${API_URL}/articles${qs.stringify(pagination, queryOptions)}`,
+  publicArticle: {
     getBySlug: slug => `${API_URL}/articles/${slug}`,
-    getBrands: `${API_URL}/articles/brands`,
-    getAuthors: `${API_URL}/articles/authors`,
-    getColletions: `${API_URL}/articles/collections`,
-    create: `${API_URL}/articles`,
-    update: id => `${API_URL}/articles/${id}`,
-    remove: id => `${API_URL}/articles/${id}`,
-    addLocale: id => `${API_URL}/articles/localize/${id}`,
+  },
+  articles: {
+    getChunk: (pagination = { skip: 0 }) =>
+      `${API_URL}/articles${qs.stringify(pagination, queryOptions)}`,
+    // legacy
+    // getBrands: `${API_URL}/articles/brands`,
+    // getAuthors: `${API_URL}/articles/authors`,
+    // getColletions: `${API_URL}/articles/collections`,
+    // create: `${API_URL}/articles`,
+    // update: id => `${API_URL}/articles/${id}`,
+    // remove: id => `${API_URL}/articles/${id}`,
+    // addLocale: id => `${API_URL}/articles/localize/${id}`,
   },
   users: {
-    getAll: `${API_URL}/users`,
+    // getAll: `${API_URL}/users`,
     getCurrent: `${API_URL}/users/current`,
   },
   diary: {

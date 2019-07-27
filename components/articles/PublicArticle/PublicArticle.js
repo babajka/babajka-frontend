@@ -11,7 +11,7 @@ import VideoPlayer from 'components/common/VideoPlayer';
 import Button from 'components/common/Button';
 import { MetaLocale } from 'components/social/Metatags';
 
-import { articlesActions, articlesSelectors } from 'redux/ducks/articles';
+import { articlesActions, articlesSelectors } from 'redux/ducks/legacy/articles';
 import { authSelectors } from 'redux/ducks/auth';
 import { Router, ROUTES_NAMES } from 'routes';
 import { LOCALES } from 'constants';

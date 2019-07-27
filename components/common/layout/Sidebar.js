@@ -15,7 +15,7 @@ import LocaleContext from 'components/common/LocaleContext';
 
 import { authActions, authSelectors } from 'redux/ducks/auth';
 import { sidebarSelectors } from 'redux/ducks/sidebar';
-import { TagShape, UserShape } from 'utils/customPropTypes';
+import { TagsById, UserShape, IdsArray } from 'utils/customPropTypes';
 import { getTagLink, getTopicLink } from 'utils/tags';
 
 import { TOPICS, LANGS } from 'constants';
@@ -151,11 +151,11 @@ Sidebar.propTypes = {
   blocks: PropTypes.arrayOf(
     PropTypes.shape({
       topic: PropTypes.oneOf(TOPICS).isRequired,
-      tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+      tags: IdsArray.isRequired,
     })
   ).isRequired,
   data: PropTypes.shape({
-    tags: PropTypes.objectOf(TagShape).isRequired,
+    tags: TagsById.isRequired,
   }).isRequired,
   user: UserShape,
   logout: PropTypes.func.isRequired,

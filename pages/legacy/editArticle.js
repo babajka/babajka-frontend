@@ -6,7 +6,7 @@ import { withRouter } from 'next/router';
 import Text from 'components/common/Text';
 import EditArticleForm from 'components/articles/EditArticleForm';
 
-import { articlesActions, articlesSelectors } from 'redux/ducks/articles';
+import { articlesActions, articlesSelectors } from 'redux/ducks/legacy/articles';
 import { authSelectors } from 'redux/ducks/auth';
 import { populateRequest } from 'utils/request';
 import { LangType, PermissionsShape } from 'utils/customPropTypes';

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Text from 'components/common/Text';
 import ConditionalWrapper from 'components/common/ui/ConditionalWrapper';
 
-import { TagShape, CollectionShape, ArticleCoversShape, ArticleType } from 'utils/customPropTypes';
+import { TagsArray, CollectionShape, ArticleCoversShape, ArticleType } from 'utils/customPropTypes';
 import { renderTag } from 'utils/tags';
 import { linkCn } from 'utils/ui';
 
@@ -128,7 +128,7 @@ ArticleCard.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   covers: ArticleCoversShape.isRequired,
-  tags: PropTypes.arrayOf(TagShape),
+  tags: TagsArray,
   collection: CollectionShape,
   type: ArticleType.isRequired,
   slug: PropTypes.string.isRequired,

@@ -92,7 +92,7 @@ export const populateRequest = (ctx, actions) => {
   cookie = nextCookie(ctx);
   const isServer = !process.browser;
 
-  const promises = castArray(actions).map(action => store.dispatch(action()));
+  const promises = castArray(actions).map(action => store.dispatch(action(ctx)));
 
   return Promise.all(promises).catch(err => {
     if (isServer && err === NOT_FOUND) {

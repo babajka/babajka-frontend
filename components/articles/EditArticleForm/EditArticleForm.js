@@ -7,7 +7,7 @@ import get from 'lodash/get';
 import noop from 'lodash/noop';
 import omit from 'lodash/omit';
 
-import { articlesActions, articlesSelectors } from 'redux/ducks/articles';
+import { articlesActions, articlesSelectors } from 'redux/ducks/legacy/articles';
 import { CollectionsArray, LangType } from 'utils/customPropTypes';
 import { required, secureUrl, validDate, hasErrors } from 'utils/validators';
 import { Router, ROUTES_NAMES } from 'routes';

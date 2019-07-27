@@ -1,5 +1,4 @@
 import moment from 'moment';
-import fromPairs from 'lodash/fromPairs';
 import chunk from 'lodash/chunk';
 
 import { TAG_BLOCK_SIZE, TAG_LEVELS_SIZES } from 'constants/misc';
@@ -28,7 +27,10 @@ export const getLocalizedCollection = (
 export const getLocalizedCollections = localizeArray(getLocalizedCollection);
 
 export const getLocalesBySlug = ({ locales }) =>
-  fromPairs(Object.entries(locales).map(([key, { slug }]) => [slug, key]));
+  Object.entries(locales).reduce((acc, [key, { slug }]) => {
+    acc[slug] = key;
+    return acc;
+  }, {});
 
 const LOCALIZE_TAG_CONTENT = {
   themes: localizeFields(['title']),

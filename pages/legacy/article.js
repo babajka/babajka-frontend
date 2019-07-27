@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { MetaTitle, MetaDescription, MetaImage } from 'components/social/Metatags';
 import PublicArticle from 'components/articles/PublicArticle';
 
-import { articlesActions, articlesSelectors } from 'redux/ducks/articles';
+import { articlesActions, articlesSelectors } from 'redux/ducks/legacy/articles';
 import { populateRequest } from 'utils/request';
 import { ArticleShape, LangType } from 'utils/customPropTypes';
 

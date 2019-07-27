@@ -3,9 +3,9 @@ import createReducer from 'type-to-reducer';
 import api from 'constants/api';
 import { defaultReducer } from 'utils/redux';
 import { makeRequest } from 'utils/request';
-import { getLocalizedArticle } from 'utils/getters';
+import { getLocalizedArticle, getLocalesBySlug } from 'utils/getters';
 
-const duck = 'articles';
+const duck = 'publicArticle';
 
 // constants
 const FETCH_BY_SLUG = `${duck}/FETCH_BY_SLUG`;
@@ -13,8 +13,8 @@ const FETCH_BY_SLUG = `${duck}/FETCH_BY_SLUG`;
 // reducer
 const initialState = {
   pending: false,
-  error: false,
   current: null,
+  localeBySlug: {},
 };
 
 export default createReducer(
@@ -23,34 +23,31 @@ export default createReducer(
       ...state,
       pending: false,
       current: payload,
+      localeBySlug: getLocalesBySlug(payload),
     })),
   },
   initialState
 );
 
 // selectors
-const getState = state => state.articles;
+const getState = state => state.publicArticle;
 const isPending = state => getState(state).pending;
-const isError = state => getState(state).error;
-const getErrors = state => getState(state).errors;
 
 const getRawCurrent = state => getState(state).current;
 const getLocaleBySlug = (state, slug) => getState(state).localeBySlug[slug];
 const getCurrent = (state, slug) =>
   getLocalizedArticle(getRawCurrent(state), getLocaleBySlug(state, slug));
 
-export const articlesSelectors = {
+export const publicArticleSelectors = {
   getCurrent,
 
   isPending,
-  isError,
-  getErrors,
 };
 
 // actions
-export const articlesActions = {
+export const publicArticleActions = {
   fetchBySlug: slug => ({
     type: FETCH_BY_SLUG,
-    payload: makeRequest(api.articles.getBySlug(slug)),
+    payload: makeRequest(api.publicArticle.getBySlug(slug)),
   }),
 };
