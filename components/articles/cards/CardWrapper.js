@@ -11,7 +11,7 @@ export const SQUARE_SIZES = ['square-m', 'square-s'];
 export const SIZES = DEFAULT_SIZES.concat(SQUARE_SIZES, TAG_SIZES);
 
 const CardWrapper = ({ className, size, children, bgColor, bgImage, dark, linkProps }) => (
-  <Link className={size ? `size-${size}` : ''} {...linkProps}>
+  <Link className={`size-${size}`} {...linkProps}>
     <BgContainer className={cn(className, { 'theme-dark': dark })} color={bgColor} image={bgImage}>
       {children}
     </BgContainer>

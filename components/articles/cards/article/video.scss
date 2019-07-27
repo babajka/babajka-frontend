@@ -85,6 +85,10 @@
   }
 }
 
+.size-xxl {
+  @include shared-size-xxl;
+}
+
 @mixin shared-size-xl {
   .video {
     @include xl-sizes;
@@ -116,6 +120,10 @@
       margin-top: 24px;
     }
   }
+}
+
+.size-xl {
+  @include shared-size-xl;
 }
 
 @mixin shared-size-l {
@@ -151,6 +159,10 @@
   }
 }
 
+.size-l {
+  @include shared-size-l;
+}
+
 @mixin shared-size-m {
   .video {
     @include m-sizes;
@@ -182,6 +194,10 @@
       margin-top: 12px;
     }
   }
+}
+
+.size-m {
+  @include shared-size-m;
 }
 
 @mixin shared-size-square-m {
@@ -217,6 +233,10 @@
   }
 }
 
+.size-square-m {
+  @include shared-size-square-m;
+}
+
 @mixin shared-size-square-s {
   .video {
     @include square-s-sizes;
@@ -248,6 +268,10 @@
       margin-top: 11px;
     }
   }
+}
+
+.size-square-s {
+  @include shared-size-square-s;
 }
 
 .articles-by-tag-2 {

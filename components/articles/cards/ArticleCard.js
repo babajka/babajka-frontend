@@ -36,7 +36,7 @@ const ArticleCard = props => {
     type,
     slug,
   } = props;
-  const square = size ? size.includes('square') : true;
+  const square = size.includes('square');
   const dark = theme === 'dark';
   const brand = getBrand(tags);
   const wrapperProps = {
@@ -105,7 +105,7 @@ const ArticleCard = props => {
 };
 
 ArticleCard.propTypes = {
-  size: PropTypes.oneOf(SIZES).isRequired,
+  size: PropTypes.oneOf(SIZES),
   bgColor: PropTypes.string.isRequired,
   theme: PropTypes.oneOf(['light', 'dark']),
   title: PropTypes.string.isRequired,
@@ -118,6 +118,7 @@ ArticleCard.propTypes = {
 };
 
 ArticleCard.defaultProps = {
+  size: 'media-query',
   theme: 'light',
   tags: [],
   collection: null,
