@@ -46,6 +46,8 @@ app.prepare().then(() => {
 
   server.get('/', (req, res) => res.redirect(`/${getValidLocale(getUserLocale(req))}${req.url}`));
 
+  server.get('/:lang/admin', (req, res) => res.redirect(`/${req.params.lang}/admin/dashboard`));
+
   server.get('/:startPath*', (req, res) => {
     const { startPath } = req.params;
 

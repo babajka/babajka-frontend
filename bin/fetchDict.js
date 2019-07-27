@@ -26,6 +26,7 @@ const scopes = [
   'meta',
   'topic',
   'sidebar',
+  'admin',
 ];
 
 const dict = {};

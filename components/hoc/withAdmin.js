@@ -1,13 +1,24 @@
+import React from 'react';
+
+import AdminLayout from 'components/admin/AdminLayout';
+
 const withAdmin = ComposedComponent => {
   const { permissions = [], getLayoutProps = () => ({}) } = ComposedComponent;
-  /* eslint-disable no-param-reassign */
-  ComposedComponent.permissions = permissions.concat(['adminAccess']);
-  ComposedComponent.getLayoutProps = (...params) => {
+
+  const AdminWrapper = (...props) => (
+    <AdminLayout>
+      <ComposedComponent {...props} />
+    </AdminLayout>
+  );
+
+  AdminWrapper.permissions = permissions.concat(['adminAccess']);
+
+  AdminWrapper.getLayoutProps = (...params) => {
     const lProps = getLayoutProps(...params);
     return { hideSidebar: true, ...lProps };
   };
-  /* eslint-enable */
-  return ComposedComponent;
+
+  return AdminWrapper;
 };
 
 export default withAdmin;
