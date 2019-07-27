@@ -30,7 +30,7 @@ import { getGoogleAnalyticsID } from 'constants/social';
 import clearUtmParams from 'lib/utils/clearUtmParams';
 import { populateRequest } from 'utils/request';
 import { replaceLocale } from 'utils/formatters';
-import { LangType, UserShape } from 'utils/customPropTypes';
+import { LangType } from 'utils/customPropTypes';
 import host from 'utils/host';
 import initStore from 'redux/store';
 
@@ -62,23 +62,23 @@ class Root extends App {
         lang: LangType,
       }).isRequired,
     }).isRequired,
-    user: UserShape,
     isMobile: PropTypes.bool,
   };
 
   static async getInitialProps({ Component, ctx }) {
-    let pageProps = {};
     await populateRequest(ctx, authActions.getCurrentUser);
     // TODO(@drapegnik): consider is it right place for that request
-    await populateRequest(ctx, sidebarActions.fetch);
+    if (!Component.disableSidebarFetch) {
+      await populateRequest(ctx, sidebarActions.fetch);
+    }
     if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx);
+      await Component.getInitialProps(ctx);
     }
 
     const userAgent = ctx.req ? ctx.req.headers['user-agent'] : '';
     const isMobile = userAgent.includes('Mobi');
 
-    return { pageProps, isMobile };
+    return { isMobile };
   }
 
   constructor(props) {
@@ -100,12 +100,12 @@ class Root extends App {
   }
 
   render() {
-    const { Component, pageProps, store, router, user, isMobile } = this.props;
+    const { Component, store, router, isMobile } = this.props;
     const { permissions = [], getLayoutProps = getEmptyObject } = Component;
     const locale = getLocale(router);
 
-    const defaultPageProps = { user, lang: locale, routerQuery: router.query };
-    const { title = 'meta.title', hideSidebar, hideFooter } = getLayoutProps(defaultPageProps);
+    const pageProps = { lang: locale, routerQuery: router.query };
+    const { title = 'common.project-type', hideSidebar, hideFooter } = getLayoutProps(pageProps);
 
     return (
       <Container>
@@ -113,7 +113,7 @@ class Root extends App {
           <LocaleContext.Provider value={locale}>
             <Metatags url={`${host}${replaceLocale(router.asPath)}`} />
             <MetaTitle title={localize(title, locale)} />
-            <MetaDescription description={localize('meta.description', locale)} />
+            <MetaDescription description={localize('common.project-description', locale)} />
             <MetaImage />
             <MetaLocale locale={locale} />
             <Head>
@@ -121,14 +121,13 @@ class Root extends App {
               <link rel="icon" type="image/png" href="/static/images/logo/favicon-colored.png" />
             </Head>
             <CoreLayout
-              user={user}
               lang={locale}
               isMobile={isMobile}
               hideFooter={hideFooter}
               hideSidebar={hideSidebar}
             >
               <Guard permissions={permissions}>
-                <Component {...defaultPageProps} {...pageProps} />
+                <Component {...pageProps} />
               </Guard>
             </CoreLayout>
           </LocaleContext.Provider>

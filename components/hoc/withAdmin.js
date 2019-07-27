@@ -11,12 +11,16 @@ const withAdmin = ComposedComponent => {
     </AdminLayout>
   );
 
+  AdminWrapper.getInitialProps = ComposedComponent.getInitialProps;
+
   AdminWrapper.permissions = permissions.concat(['adminAccess']);
 
   AdminWrapper.getLayoutProps = (...params) => {
     const lProps = getLayoutProps(...params);
     return { hideSidebar: true, ...lProps };
   };
+
+  AdminWrapper.disableSidebarFetch = true;
 
   return AdminWrapper;
 };

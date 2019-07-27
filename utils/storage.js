@@ -1,4 +1,3 @@
-import fromPairs from 'lodash/fromPairs';
 import keyBy from 'lodash/keyBy';
 
 import { getLocalizedArticles, getLocalizedTags, getTopics } from 'utils/getters';
@@ -13,14 +12,10 @@ const GETTER_BY_TYPE = {
 const SKIP_MAP_BY_ID = ['latestArticles'];
 
 export const localizeData = (data, lang) =>
-  fromPairs(
-    Object.entries(data).map(([type, list]) => {
-      const localizedList = GETTER_BY_TYPE[type](list, lang);
-      if (SKIP_MAP_BY_ID.includes(type)) {
-        return [type, localizedList];
-      }
-      return [type, keyBy(localizedList, 'id')];
-    })
-  );
+  Object.entries(data).reduce((acc, [type, list]) => {
+    const localizedList = GETTER_BY_TYPE[type](list, lang);
+    acc[type] = SKIP_MAP_BY_ID.includes(type) ? localizedList : keyBy(localizedList, 'id');
+    return acc;
+  }, {});
 
 export const a = 1;

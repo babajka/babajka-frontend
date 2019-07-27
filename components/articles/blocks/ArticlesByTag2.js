@@ -8,6 +8,7 @@ import Text from 'components/common/Text';
 import ScreenContext from 'components/common/layout/ScreenContext';
 import ArticleCard from 'components/articles/cards/ArticleCard';
 
+import { IdsArray } from 'utils/customPropTypes';
 import { getTagLink, getTopicLink } from 'utils/tags';
 
 import { SCREENS } from 'constants/styles';
@@ -77,7 +78,7 @@ const ArticlesByTag2 = ({ block, data }) => {
 ArticlesByTag2.propTypes = {
   block: PropTypes.shape({
     tagId: PropTypes.string.isRequired,
-    articlesIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+    articlesIds: IdsArray.isRequired,
   }).isRequired,
   data: PropTypes.shape({}).isRequired,
 };

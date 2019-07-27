@@ -9,7 +9,7 @@ import Link from 'components/common/Link';
 import ArticleCard from 'components/articles/cards/ArticleCard';
 
 import { topicsActions, topicsSelectors } from 'redux/ducks/topics';
-import { ArticleShape, TagShape } from 'utils/customPropTypes';
+import { ArticlesById, TagShape, TagsArray, ArticlesArray, IdsArray } from 'utils/customPropTypes';
 import { populateRequest } from 'utils/request';
 import { renderTag } from 'utils/tags';
 import { TOPICS } from 'constants';
@@ -40,27 +40,23 @@ const TopicSection = ({ tag, articles }) => {
 
 TopicSection.propTypes = {
   tag: TagShape.isRequired,
-  articles: PropTypes.arrayOf(ArticleShape).isRequired,
+  articles: ArticlesArray.isRequired,
 };
 
 const mapStateToProps = (state, { lang }) => topicsSelectors.getData(state, lang);
 
 class TopicPage extends Component {
   static propTypes = {
-    tags: PropTypes.arrayOf(TagShape).isRequired,
-    articlesByTag: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
-    articleById: PropTypes.objectOf(ArticleShape).isRequired,
+    tags: TagsArray.isRequired,
+    articlesByTag: PropTypes.objectOf(IdsArray).isRequired,
+    articleById: ArticlesById.isRequired,
     routerQuery: PropTypes.shape({
       topic: PropTypes.oneOf(TOPICS).isRequired,
     }).isRequired,
   };
 
-  static getInitialProps(ctx) {
-    const {
-      query: { topic },
-    } = ctx;
-    return populateRequest(ctx, topicsActions.fetchArticles.bind(null, topic));
-  }
+  static getInitialProps = ctx =>
+    populateRequest(ctx, ({ query: { topic } }) => topicsActions.fetchArticles(topic));
 
   static getLayoutProps = ({ routerQuery: { topic } }) => ({
     title: `topic.${topic}`,

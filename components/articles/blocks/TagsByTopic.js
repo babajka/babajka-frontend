@@ -7,6 +7,7 @@ import cn from 'classnames';
 import ScreenContext from 'components/common/layout/ScreenContext';
 import TagCard from 'components/articles/cards/TagCard';
 
+import { IdsArray } from 'utils/customPropTypes';
 import { getTopicLink } from 'utils/tags';
 
 import { TOPICS } from 'constants';
@@ -65,7 +66,7 @@ const TagsByTopic = ({ block, data }) => {
 TagsByTopic.propTypes = {
   block: PropTypes.shape({
     topicSlug: PropTypes.oneOf(TOPICS).isRequired,
-    tagsIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+    tagsIds: IdsArray.isRequired,
     style: PropTypes.oneOf(['1-2', '2-1']).isRequired,
   }).isRequired,
   data: PropTypes.shape({}).isRequired,

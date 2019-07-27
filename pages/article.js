@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 
 import { MetaTitle, MetaDescription, MetaImage } from 'components/social/Metatags';
 
-import { articlesActions, articlesSelectors } from 'redux/ducks/articles';
+import { publicArticleActions, publicArticleSelectors } from 'redux/ducks/publicArticle';
 import { populateRequest } from 'utils/request';
 import { ArticleShape } from 'utils/customPropTypes';
 
 const mapStateToProps = (state, { routerQuery: { slug } }) => ({
-  article: articlesSelectors.getCurrent(state, slug),
+  article: publicArticleSelectors.getCurrent(state, slug),
 });
 
 class ArticlePage extends Component {
@@ -28,12 +28,8 @@ class ArticlePage extends Component {
     title: 'header.articles',
   });
 
-  static getInitialProps(ctx) {
-    const {
-      query: { slug },
-    } = ctx;
-    return populateRequest(ctx, articlesActions.fetchBySlug.bind(null, slug));
-  }
+  static getInitialProps = ctx =>
+    populateRequest(ctx, ({ query: { slug } }) => publicArticleActions.fetchBySlug(slug));
 
   render() {
     const { article } = this.props;

@@ -7,7 +7,7 @@ import BLOCKS_BY_TYPE from 'components/articles/blocks';
 
 import { homeActions, homeSelectors } from 'redux/ducks/home';
 import { populateRequest } from 'utils/request';
-import { ArticleShape, TopicShape, TagShape } from 'utils/customPropTypes';
+import { ArticlesArray, ArticlesById, TopicsById, TagsById } from 'utils/customPropTypes';
 
 const mapStateToProps = (state, { lang }) => ({
   blocks: homeSelectors.getBlocks(state),
@@ -22,16 +22,14 @@ class MainPage extends Component {
       })
     ).isRequired,
     data: PropTypes.shape({
-      articles: PropTypes.objectOf(ArticleShape).isRequired,
-      tags: PropTypes.objectOf(TagShape).isRequired,
-      topics: PropTypes.objectOf(TopicShape).isRequired,
-      latestArticles: PropTypes.arrayOf(ArticleShape).isRequired,
+      articles: ArticlesById.isRequired,
+      tags: TagsById.isRequired,
+      topics: TopicsById.isRequired,
+      latestArticles: ArticlesArray.isRequired,
     }).isRequired,
   };
 
-  static getInitialProps(ctx) {
-    return populateRequest(ctx, homeActions.fetch);
-  }
+  static getInitialProps = ctx => populateRequest(ctx, homeActions.fetch);
 
   static getLayoutProps = () => ({
     title: 'header.main',
