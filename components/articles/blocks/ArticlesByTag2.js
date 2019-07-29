@@ -18,7 +18,7 @@ const ArticlesByTag2 = ({ block, data }) => {
   const [first, second] = articlesIds.map(id => articles[id]);
   const tag = tags[tagId];
   const { topic, content } = tag;
-  const isBrand = topic.slug === TOPIC.brand;
+  const isBrand = topic.slug === TOPIC.brands;
   const tagLink = getTagLink({ tag, dark: true });
   const topicLink = getTopicLink({ topic: topic.slug, dark: true });
 
@@ -32,7 +32,7 @@ const ArticlesByTag2 = ({ block, data }) => {
         <div className="articles-by-tag-2__top-mobile-labels">
           {isBrand && <img src={content.image} alt={content.title} width="120" />}
           <div className="articles-by-tag-2__label">
-            <Text id={`topic.${topic.slug}_essentials`} />:{tagLink}
+            <Text id={`topic.${topic.slug}_essentials`} />: {tagLink}
           </div>
         </div>
         <div className="articles-by-tag-2__label articles-by-tag-2__bottom-desktop-label">
@@ -42,11 +42,11 @@ const ArticlesByTag2 = ({ block, data }) => {
 
       <div className="articles-by-tag-2__cards">
         <div className="articles-by-tag-2__card-1">
-          <ArticleCard {...first} size="media-query" />
+          <ArticleCard {...first} />
         </div>
 
         <div className="articles-by-tag-2__card-2">
-          <ArticleCard {...second} size="media-query" />
+          <ArticleCard {...second} />
         </div>
       </div>
 

@@ -1,8 +1,8 @@
 import createConstants from 'lib/utils/createConstants';
 
-import TOPICS from 'constants';
+import { TOPICS } from 'constants';
 
-export const TOPIC = createConstants(TOPICS);
+export const TOPIC = createConstants(...TOPICS);
 
 export const TAG_BLOCK_SIZE = 10;
 
