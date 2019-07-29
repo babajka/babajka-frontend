@@ -118,7 +118,7 @@ ArticleCard.propTypes = {
 };
 
 ArticleCard.defaultProps = {
-  size: 'media-query',
+  size: 'auto',
   theme: 'light',
   tags: [],
   collection: null,

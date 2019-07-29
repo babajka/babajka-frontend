@@ -292,30 +292,9 @@
   @include shared-size-square-s;
 }
 
-// MEDIA QUERIES FOR BLOCKS.
-// Below is a set of rules for cards to be auto adjustable:
-
-.articles-by-tag-2 {
-  @include screen-desktop {
-    @include shared-size-square-m;
-  }
-
-  @include screen-tablet-large {
-    @include shared-size-l;
-  }
-
-  @include screen-tablet {
-    @include shared-size-square-m;
-  }
-
-  @include screen-touch {
-    @include shared-size-m;
-  }
-
-  @include screen-mobile {
-    @include shared-size-square-s;
-  }
-}
+// Below are the rules for cards to be auto adjustable.
+// Same rules are applied for Collection and Video card modifications.
+// TODO: to avoid duplication of these rules between 3 .scss files.
 
 .featured {
   @include screen-desktop {
@@ -366,6 +345,28 @@
     @include screen-tablet-large {
       @include shared-size-square-s;
     }
+  }
+}
+
+.articles-by-tag-2 {
+  @include screen-desktop {
+    @include shared-size-square-m;
+  }
+
+  @include screen-tablet-large {
+    @include shared-size-l;
+  }
+
+  @include screen-tablet {
+    @include shared-size-square-m;
+  }
+
+  @include screen-touch {
+    @include shared-size-m;
+  }
+
+  @include screen-mobile {
+    @include shared-size-square-s;
   }
 }
 

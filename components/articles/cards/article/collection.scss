@@ -240,29 +240,7 @@
   @include shared-size-square-s;
 }
 
-// DUPLICATES BELOW. HOW TO AVOID ?
-
-.articles-by-tag-2 {
-  @include screen-desktop {
-    @include shared-size-square-m;
-  }
-
-  @include screen-tablet-large {
-    @include shared-size-l;
-  }
-
-  @include screen-tablet {
-    @include shared-size-square-m;
-  }
-
-  @include screen-touch {
-    @include shared-size-m;
-  }
-
-  @include screen-mobile {
-    @include shared-size-square-s;
-  }
-}
+// Rules below are duplicated from article.scss
 
 .featured {
   @include screen-desktop {
@@ -275,6 +253,58 @@
 
   @include screen-tablet {
     @include shared-size-l;
+  }
+
+  @include screen-touch {
+    @include shared-size-m;
+  }
+
+  @include screen-mobile {
+    @include shared-size-square-s;
+  }
+}
+
+.two-in-row {
+  @include screen-desktop {
+    @include shared-size-m;
+  }
+
+  @include screen-tablet {
+    @include shared-size-l;
+  }
+
+  @include screen-touch {
+    @include shared-size-m;
+  }
+
+  @include screen-mobile {
+    @include shared-size-square-s;
+  }
+
+  &__first {
+    @include screen-tablet-large {
+      @include shared-size-m;
+    }
+  }
+
+  &__second {
+    @include screen-tablet-large {
+      @include shared-size-square-s;
+    }
+  }
+}
+
+.articles-by-tag-2 {
+  @include screen-desktop {
+    @include shared-size-square-m;
+  }
+
+  @include screen-tablet-large {
+    @include shared-size-l;
+  }
+
+  @include screen-tablet {
+    @include shared-size-square-m;
   }
 
   @include screen-touch {

@@ -34,6 +34,10 @@
   }
 }
 
+.size-l {
+  @include shared-size-l;
+}
+
 @mixin shared-size-square-m {
   .location {
     @include square-m-sizes;
@@ -47,6 +51,10 @@
   }
 }
 
+.size-square-m {
+  @include shared-size-square-m;
+}
+
 @mixin shared-size-square-s {
   .location {
     @include square-s-sizes;
@@ -58,6 +66,10 @@
       line-height: 60px;
     }
   }
+}
+
+.size-square-s {
+  @include shared-size-square-s;
 }
 
 @mixin shared-sizes-ms-s-wide {
@@ -79,12 +91,20 @@
   }
 }
 
+.size-ms {
+  @include shared-size-ms;
+}
+
 @mixin shared-size-s-wide {
   @include shared-sizes-ms-s-wide;
 
   .location {
     @include s-wide-sizes;
   }
+}
+
+.size-s-wide {
+  @include shared-size-s-wide;
 }
 
 @mixin shared-size-s {
@@ -100,6 +120,10 @@
   }
 }
 
+.size-s {
+  @include shared-size-s;
+}
+
 @mixin shared-size-xs-wide {
   .location {
     @include xs-wide-sizes;
@@ -111,6 +135,10 @@
       line-height: 36px;
     }
   }
+}
+
+.size-xs-wide {
+  @include shared-size-xs-wide;
 }
 
 @mixin shared-size-xs {
@@ -125,6 +153,12 @@
     }
   }
 }
+
+.size-xs {
+  @include shared-size-xs;
+}
+
+// Below are 'auto' rules.
 
 .tags-by-topic {
   &__1 {

@@ -274,27 +274,7 @@
   @include shared-size-square-s;
 }
 
-.articles-by-tag-2 {
-  @include screen-desktop {
-    @include shared-size-square-m;
-  }
-
-  @include screen-tablet-large {
-    @include shared-size-l;
-  }
-
-  @include screen-tablet {
-    @include shared-size-square-m;
-  }
-
-  @include screen-touch {
-    @include shared-size-m;
-  }
-
-  @include screen-mobile {
-    @include shared-size-square-s;
-  }
-}
+// Rules below are duplicated from article.scss
 
 .featured {
   @include screen-desktop {
@@ -318,9 +298,59 @@
   }
 }
 
-.articles-by-tag-3 {
-  // DUPLICATION !!! HOW TO AVOID ???
+.two-in-row {
+  @include screen-desktop {
+    @include shared-size-m;
+  }
 
+  @include screen-tablet {
+    @include shared-size-l;
+  }
+
+  @include screen-touch {
+    @include shared-size-m;
+  }
+
+  @include screen-mobile {
+    @include shared-size-square-s;
+  }
+
+  &__first {
+    @include screen-tablet-large {
+      @include shared-size-m;
+    }
+  }
+
+  &__second {
+    @include screen-tablet-large {
+      @include shared-size-square-s;
+    }
+  }
+}
+
+.articles-by-tag-2 {
+  @include screen-desktop {
+    @include shared-size-square-m;
+  }
+
+  @include screen-tablet-large {
+    @include shared-size-l;
+  }
+
+  @include screen-tablet {
+    @include shared-size-square-m;
+  }
+
+  @include screen-touch {
+    @include shared-size-m;
+  }
+
+  @include screen-mobile {
+    @include shared-size-square-s;
+  }
+}
+
+.articles-by-tag-3 {
   @include screen-desktop {
     @include shared-size-square-s;
   }
