@@ -3,6 +3,7 @@ import 'styles/pages/article.scss';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'next/router';
 
 import { MetaTitle, MetaDescription, MetaImage } from 'components/social/Metatags';
 import Link from 'components/common/Link';
@@ -26,6 +27,9 @@ class ArticlePage extends Component {
     routerQuery: PropTypes.shape({
       slug: PropTypes.string.isRequired,
     }).isRequired,
+    router: PropTypes.shape({
+      asPath: PropTypes.string.isRequired,
+    }).isRequired,
   };
 
   static defaultProps = {
@@ -40,8 +44,10 @@ class ArticlePage extends Component {
     populateRequest(ctx, ({ query: { slug } }) => publicArticleActions.fetchBySlug(slug));
 
   render() {
-    const { article } = this.props;
-    const { description, covers, tags, title, subtitle, imagePreviewUrl } = article;
+    const {
+      article: { description, covers, tags, title, subtitle, imagePreviewUrl },
+      router,
+    } = this.props;
 
     // TODO: think about implementing this logic at backend
     const tagsByTopic = tags.reduce((acc, tag) => {
@@ -88,7 +94,7 @@ class ArticlePage extends Component {
         <div className="article-page-margins">
           <div>There should be content from editor</div>
           <div className="article-page__share">
-            <ShareButtons />
+            <ShareButtons url={router.asPath} title={title} />
           </div>
           <div className="article-page__other-tags">
             {Object.values(tagLists).map(tagList =>
@@ -105,4 +111,4 @@ class ArticlePage extends Component {
   }
 }
 
-export default connect(mapStateToProps)(ArticlePage);
+export default withRouter(connect(mapStateToProps)(ArticlePage));
