@@ -91,9 +91,9 @@ const TagArticlesBlock = ({ block, invert, screen }) => {
           />
         </div>
       </div>
-      <TagLevel type="c" articles={levelC1} screen={screen} />
-      <TagLevel type="d" articles={levelD} screen={screen} />
-      <TagLevel type="c" articles={levelC2} screen={screen} />
+      {levelC1.length > 0 && <TagLevel type="c" articles={levelC1} screen={screen} />}
+      {levelD.length > 0 && <TagLevel type="d" articles={levelD} screen={screen} />}
+      {levelC2.length > 0 && <TagLevel type="c" articles={levelC2} screen={screen} />}
     </>
   );
 };
