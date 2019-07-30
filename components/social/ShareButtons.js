@@ -1,32 +1,45 @@
 import './social-buttons.scss';
 
 import React from 'react';
+import PropTypes from 'prop-types';
+import qs from 'qs';
 
+import Text from 'components/common/Text';
 import Icon from 'components/common/ui/Icon';
 import ButtonGroup from 'components/common/ButtonGroup';
-import Button from 'components/common/Button';
 
-const SHARE_NETWORKS = [
-  { id: 'facebook', icon: 'facebook-square' },
-  { id: 'vk' },
-  { id: 'twitter' },
-  { id: 'odnoklassniki' },
-];
+import { SHARE_NETWORKS } from 'constants/social';
+import { DOMAIN_SECURE } from 'constants';
 
-const ShareButtons = () => {
-  return (
-    <ButtonGroup className="wir-social-buttons" icon>
-      {SHARE_NETWORKS.map(({ id, icon = id }) => (
-        <Button
-          key={id}
-          className={`wir-social-buttons__button wir-social-buttons__button--${id}`}
-          icon
-        >
-          <Icon pack="b" name={icon} />
-        </Button>
-      ))}
-    </ButtonGroup>
-  );
+const ShareButtons = ({ urlPath, title }) => (
+  <ButtonGroup className="wir-social-buttons" icon>
+    {SHARE_NETWORKS.map(({ id, icon = id, baseUrl, getParams }) => (
+      <Text
+        id={`common.share-${id}`}
+        render={t => (
+          <a
+            key={id}
+            className={`wir-button wir-button__icon wir-social-buttons__button wir-social-buttons__button--${id}`}
+            href={`${baseUrl}?${qs.stringify(getParams(`${DOMAIN_SECURE}${urlPath}`, title))}`}
+            rel="noopener noreferrer"
+            target="_blank"
+            title={t}
+          >
+            <Icon pack="b" name={icon} />
+          </a>
+        )}
+      />
+    ))}
+  </ButtonGroup>
+);
+
+ShareButtons.propTypes = {
+  urlPath: PropTypes.string,
+  title: PropTypes.string.isRequired,
+};
+
+ShareButtons.defaultProps = {
+  urlPath: '',
 };
 
 export default ShareButtons;

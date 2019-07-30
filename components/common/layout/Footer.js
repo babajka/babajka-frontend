@@ -53,7 +53,7 @@ const Footer = () => (
               <div className="footer__header">
                 <Text id="footer.share" />
               </div>
-              <ShareButtons />
+              <Text id="common.project-description">{t => <ShareButtons title={t} />}</Text>
             </div>
           </div>
         </div>
