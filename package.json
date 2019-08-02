@@ -140,6 +140,10 @@
       "maxSize": "15 kB"
     },
     {
+      "path": ".next/static/**/article.js",
+      "maxSize": "10 kB"
+    },
+    {
       "path": ".next/static/**/topic.js",
       "maxSize": "10 kB"
     },
