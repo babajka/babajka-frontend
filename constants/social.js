@@ -58,7 +58,6 @@ export const SHARE_NETWORKS = [
   },
   {
     id: 'odnoklassniki',
-    icon: 'odnoklassniki',
     baseUrl: 'https://connect.ok.ru/offer',
     getParams: (url, title) => ({ url, title }),
   },

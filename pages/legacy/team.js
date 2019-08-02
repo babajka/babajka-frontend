@@ -16,7 +16,7 @@ import { LangType } from 'utils/customPropTypes';
 import rawTeam from 'data/team.json';
 import rawVacancies from 'data/vacancies.json';
 
-class AboutPage extends Component {
+class TeamPage extends Component {
   static propTypes = {
     lang: LangType.isRequired,
   };
@@ -148,4 +148,4 @@ class AboutPage extends Component {
   }
 }
 
-export default AboutPage;
+export default TeamPage;
