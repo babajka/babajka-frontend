@@ -4,7 +4,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Text from 'components/common/Text';
-import ConditionalWrapper from 'components/common/ui/ConditionalWrapper';
 
 import { TagsArray, CollectionShape, ArticleCoversShape, ArticleType } from 'utils/customPropTypes';
 import { renderTag } from 'utils/tags';
@@ -36,7 +35,6 @@ const ArticleCard = props => {
     type,
     slug,
   } = props;
-  const square = size.includes('square');
   const dark = theme === 'dark';
   const brand = getBrand(tags);
   const wrapperProps = {
@@ -57,7 +55,7 @@ const ArticleCard = props => {
   if (collection) {
     return (
       <CardWrapper {...wrapperProps} className="collection">
-        <CollectionCard {...props} square={square} />
+        <CollectionCard {...props} />
       </CardWrapper>
     );
   }
@@ -67,13 +65,14 @@ const ArticleCard = props => {
   return (
     <CardWrapper {...wrapperProps} className="article">
       <div className="article__cover-wrapper">
-        <img className="article__cover" src={square ? horizontal : vertical} alt={title} />
+        <img className="article__cover article__cover--vertical" src={vertical} alt={title} />
+        <img className="article__cover article__cover--horizontal" src={horizontal} alt={title} />
       </div>
       {brand && (
         <img className="article__brand" src={brand.image} alt={brand.title} title={brand.title} />
       )}
       <div className="article__content">
-        <ConditionalWrapper hide={square}>
+        <div>
           <div className="article__title">{title}</div>
           <div className="article__author">
             {authors.map((tag, i) => (
@@ -84,21 +83,18 @@ const ArticleCard = props => {
               </span>
             ))}
           </div>
-        </ConditionalWrapper>
-        {!square && (
-          <div className="article__content-bottom">
-            <span className="article__description">{description}</span>
-            <Text
-              id="article.read"
-              render={(read, article) => (
-                <span className={linkCn({ dark })}>
-                  {read}
-                  {size === 'm' && article}
-                </span>
-              )}
-            />
-          </div>
-        )}
+        </div>
+        <div className="article__content-bottom">
+          <span className="article__description">{description}</span>
+          <span className={`article__label-read ${linkCn({ dark })}`}>
+            <Text id="article.read" />
+          </span>
+          <span className="article__label-read-article">
+            <span className={linkCn({ dark })}>
+              <Text id="article.read-article" />
+            </span>
+          </span>
+        </div>
       </div>
     </CardWrapper>
   );

@@ -188,6 +188,10 @@
   .collection {
     @include square-m-sizes;
 
+    &__cover-wrapper {
+      display: none;
+    }
+
     &__content {
       padding: 25px 50px 42px 39px;
     }
@@ -215,6 +219,10 @@
 @mixin shared-size-square-s {
   .collection {
     @include square-s-sizes;
+
+    &__cover-wrapper {
+      display: none;
+    }
 
     &__content {
       padding: 19px 29px 42px 30px;

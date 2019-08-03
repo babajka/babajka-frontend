@@ -1,3 +1,4 @@
+@import 'responsiveness';
 @import 'variables';
 
 .topics {
@@ -35,15 +36,17 @@
   }
 }
 
-.screen-touch,
-.screen-mobile {
+@include screen-tablet-large {
   .topics {
-    margin-left: calc((100% - 300px) / 3);
-    margin-right: calc((100% - 300px) * 2 / 3);
+    margin: 0 35px;
+
+    &__column {
+      margin-right: 35px;
+    }
   }
 }
 
-.screen-tablet {
+@include screen-tablet {
   .topics {
     margin: 0 50px;
 
@@ -53,12 +56,16 @@
   }
 }
 
-.screen-tablet-large {
+@include screen-touch {
   .topics {
-    margin: 0 35px;
+    margin-left: calc((100% - 480px) / 3);
+    margin-right: calc((100% - 480px) * 2 / 3);
+  }
+}
 
-    &__column {
-      margin-right: 35px;
-    }
+@include screen-mobile {
+  .topics {
+    margin-left: calc((100% - 300px) / 3);
+    margin-right: calc((100% - 300px) * 2 / 3);
   }
 }
