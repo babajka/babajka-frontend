@@ -4,31 +4,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-// import ScreenContext from 'components/common/layout/ScreenContext';
 import TagCard from 'components/articles/cards/TagCard';
 
 import { IdsArray } from 'utils/customPropTypes';
 import { getTopicLink } from 'utils/tags';
 
 import { TOPICS } from 'constants';
-// import { SCREENS } from 'constants/styles';
-
-// const { DESKTOP, MOBILE, TABLET, TABLET_LARGE, TOUCH } = SCREENS;
-
-// const CARD_SIZE_1 = {
-//   [DESKTOP]: 'l',
-//   [TABLET_LARGE]: 'square-m',
-//   [TABLET]: 'square-m',
-//   [MOBILE]: 'l',
-// };
-//
-// const CARD_SIZE_2 = {
-//   [DESKTOP]: 's',
-//   [TABLET_LARGE]: 's-wide',
-//   [TABLET]: 'xs',
-//   [TOUCH]: 'ms',
-//   [MOBILE]: 'xs-wide',
-// };
 
 const TagsByTopic = ({ block, data }) => {
   const { topicSlug, tagsIds, style } = block;

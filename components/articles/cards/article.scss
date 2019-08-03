@@ -433,3 +433,49 @@
     @include shared-size-square-s;
   }
 }
+
+.tag-page-block-b {
+  .large-card {
+    @include screen-desktop {
+      @include shared-size-l;
+    }
+
+    @include screen-tablet-large {
+      @include shared-size-m;
+    }
+
+    @include screen-tablet {
+      @include shared-size-l;
+    }
+
+    @include screen-touch {
+      @include shared-size-m;
+    }
+
+    @include screen-mobile {
+      @include shared-size-square-s;
+    }
+  }
+
+  .small-card {
+    @include screen-desktop {
+      @include shared-size-square-m;
+    }
+
+    @include screen-tablet-large {
+      @include shared-size-square-s;
+    }
+
+    @include screen-tablet {
+      @include shared-size-l;
+    }
+
+    @include screen-touch {
+      @include shared-size-m;
+    }
+
+    @include screen-mobile {
+      @include shared-size-square-s;
+    }
+  }
+}

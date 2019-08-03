@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import ArticleCard from 'components/articles/cards/ArticleCard';
 
 const FeaturedBlock = ({ block, data }) => {
+  // Another usage for FeaturedBlock is a Block A on Topic page.
   const { articleId, frozen } = block;
   const { articles, latestArticles } = data;
   const articleData = frozen ? articles[articleId] : latestArticles[0];
