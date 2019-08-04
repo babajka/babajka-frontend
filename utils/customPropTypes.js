@@ -51,7 +51,7 @@ export const TagsById = PropTypes.objectOf(TagShape);
 export const ArticleCoversShape = PropTypes.shape({
   page: PropTypes.string.isRequired,
   horizontal: PropTypes.string.isRequired,
-  vertical: PropTypes.string,
+  vertical: PropTypes.string.isRequired,
 });
 
 export const ArticleVideoShape = PropTypes.shape({
@@ -77,7 +77,7 @@ export const ArticleModel = {
   covers: ArticleCoversShape.isRequired,
   video: ArticleVideoShape,
   metadata: MetadataShape.isRequired,
-  keywords: PropTypes.arrayOf(PropTypes.string).isRequired,
+  keywords: PropTypes.string.isRequired,
   tags: TagsArray.isRequired,
   theme: PropTypes.oneOf(['light', 'dark']).isRequired,
   bgColor: PropTypes.string.isRequired,

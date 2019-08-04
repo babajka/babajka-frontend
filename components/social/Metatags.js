@@ -71,6 +71,16 @@ MetaLocale.defaultProps = {
   altLocales: [],
 };
 
+export const MetaKeywords = ({ keywords }) => (
+  <Head>
+    <meta key="keywords" content={keywords} />
+  </Head>
+);
+
+MetaKeywords.propTypes = {
+  keywords: PropTypes.string.isRequired,
+};
+
 const Metatags = ({ url }) => (
   <Head>
     {/* Basic metatags */}

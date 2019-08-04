@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'next/router';
 
-import { MetaTitle, MetaDescription, MetaImage } from 'components/social/Metatags';
+import { MetaTitle, MetaDescription, MetaImage, MetaKeywords } from 'components/social/Metatags';
 import Link from 'components/common/Link';
 import ShareButtons from 'components/social/ShareButtons';
 
@@ -45,7 +45,7 @@ class ArticlePage extends Component {
 
   render() {
     const {
-      article: { description, covers, tags, title, subtitle, imagePreviewUrl },
+      article: { description, covers, tags, title, subtitle, imagePreviewUrl, keywords },
       router,
     } = this.props;
 
@@ -65,6 +65,7 @@ class ArticlePage extends Component {
         <MetaTitle title={title} type="article" />
         <MetaDescription description={subtitle} />
         <MetaImage url={imagePreviewUrl} />
+        <MetaKeywords keywords={keywords} />
         <div className="article-page">
           <div className="article-page-margins">{description}</div>
           <img className="article-page__cover" src={covers.page} alt={title} />
