@@ -2,7 +2,11 @@ export default {
   block: {
     type: 'articlesByTag2',
     tagId: '5c92b19dbaca6967c5cb2dd0',
-    articlesIds: ['5c92b19cbaca6967c5cb2d74', '5c92b19cbaca6967c5cb2d82'],
+    articlesIds: [
+      '5c92b19cbaca6967c5cb2d74',
+      '5c92b19cbaca6967c5cb2d82',
+      '5c92b19cbaca6967c5cb2d49',
+    ],
   },
   data: {
     topics: {

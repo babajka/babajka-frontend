@@ -1,32 +1,30 @@
 @import 'responsiveness';
 
-.tag-page-block-b {
+.tag-page-block-cd {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
 
-  &__style-large-left {
-    .small-card {
-      order: 1;
-    }
-  }
+@include screen-tablet-large {
+  .tag-page-block-cd {
+    &__style-row-of-three {
+      flex-direction: column;
 
-  &__style-large-right {
-    .large-card {
-      order: 1;
+      .tag-page-block-cd {
+        &__card {
+          padding: 10px 0;
+        }
+      }
     }
   }
 }
 
 @mixin shared-screen-tablet-touch-mobile {
-  .tag-page-block-b {
+  .tag-page-block-cd {
     flex-direction: column;
 
-    .large-card {
-      padding: 10px 0;
-    }
-
-    .small-card {
+    &__card {
       padding: 10px 0;
     }
   }

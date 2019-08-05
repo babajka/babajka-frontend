@@ -479,3 +479,49 @@
     }
   }
 }
+
+.tag-page-block-cd {
+  &__style-row-of-two {
+    @include screen-desktop {
+      @include shared-size-m;
+    }
+
+    @include screen-tablet-large {
+      @include shared-size-square-m;
+    }
+
+    @include screen-tablet {
+      @include shared-size-l;
+    }
+
+    @include screen-touch {
+      @include shared-size-m;
+    }
+
+    @include screen-mobile {
+      @include shared-size-square-s;
+    }
+  }
+
+  &__style-row-of-three {
+    @include screen-desktop {
+      @include shared-size-square-s;
+    }
+
+    @include screen-tablet-large {
+      @include shared-size-l;
+    }
+
+    @include screen-tablet {
+      @include shared-size-l;
+    }
+
+    @include screen-touch {
+      @include shared-size-m;
+    }
+
+    @include screen-mobile {
+      @include shared-size-square-s;
+    }
+  }
+}

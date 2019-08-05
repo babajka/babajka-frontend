@@ -14,15 +14,17 @@ const TagPageBlockB = ({ block, data, style }) => {
   return (
     <div
       className={`block block__no-background tag-page-block-b ${
-        style === 'B1' ? 'tag-page-block-b__style-b1' : 'tag-page-block-b__style-b2'
+        style === 'large-left'
+          ? 'tag-page-block-b__style-large-left'
+          : 'tag-page-block-b__style-large-right'
       }`}
     >
       <div className="large-card">
-        <ArticleCard {...articles[articlesIds[style === 'B1' ? 0 : 1]]} />
+        <ArticleCard {...articles[articlesIds[style === 'large-left' ? 0 : 1]]} />
       </div>
 
       <div className="small-card">
-        <ArticleCard {...articles[articlesIds[style === 'B1' ? 1 : 0]]} />
+        <ArticleCard {...articles[articlesIds[style === 'large-left' ? 1 : 0]]} />
       </div>
     </div>
   );
@@ -33,7 +35,7 @@ TagPageBlockB.propTypes = {
     articlesIds: IdsArray.isRequired,
   }).isRequired,
   data: PropTypes.shape({}).isRequired,
-  style: PropTypes.oneOf(['B1', 'B2']).isRequired,
+  style: PropTypes.oneOf(['large-left', 'large-right']).isRequired,
 };
 
 export default TagPageBlockB;
