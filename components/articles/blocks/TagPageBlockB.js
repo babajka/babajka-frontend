@@ -5,23 +5,25 @@ import PropTypes from 'prop-types';
 
 import ArticleCard from 'components/articles/cards/ArticleCard';
 
-const TagPageBlockB = ({ articles, layout }) => (
-  <div
-    className={`block block__no-background tag-page-block-b ${
-      layout === 'large-left'
-        ? 'tag-page-block-b__style-large-left'
-        : 'tag-page-block-b__style-large-right'
-    }`}
-  >
-    <div className="large-card">
-      <ArticleCard {...articles[layout === 'large-left' ? 0 : 1]} />
-    </div>
+const TagPageBlockB = ({ articles, layout }) => {
+  const [first, second] =
+    layout === 'large-left' ? articles.slice(0, 2) : articles.slice(0, 2).reverse();
+  return (
+    <div
+      className={`block block__no-background tag-page-block-b tag-page-block-b__style-large-${
+        layout === 'large-left' ? 'left' : 'right'
+      }`}
+    >
+      <div className="large-card">
+        <ArticleCard {...first} />
+      </div>
 
-    <div className="small-card">
-      <ArticleCard {...articles[layout === 'large-left' ? 1 : 0]} />
+      <div className="small-card">
+        <ArticleCard {...second} />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 TagPageBlockB.propTypes = {
   articles: PropTypes.shape({}).isRequired,

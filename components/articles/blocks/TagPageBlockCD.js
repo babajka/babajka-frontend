@@ -5,15 +5,16 @@ import PropTypes from 'prop-types';
 
 import ArticleCard from 'components/articles/cards/ArticleCard';
 
+const SIZE_BY_LAYOUT = {
+  'row-of-two': 2,
+  'row-of-three': 3,
+};
+
 const TagPageBlockCD = ({ articles, layout }) => (
   <div
-    className={`block block__no-background tag-page-block-cd ${
-      layout === 'row-of-two'
-        ? 'tag-page-block-cd__style-row-of-two'
-        : 'tag-page-block-cd__style-row-of-three'
-    }`}
+    className={`block block__no-background tag-page-block-cd tag-page-block-cd__style-${layout}`}
   >
-    {articles.slice(0, layout === 'row-of-two' ? 2 : 3).map(article => (
+    {articles.slice(0, SIZE_BY_LAYOUT[layout]).map(article => (
       <div className="tag-page-block-cd__card">
         <ArticleCard {...article} />
       </div>

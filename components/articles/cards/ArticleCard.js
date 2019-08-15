@@ -86,7 +86,7 @@ const ArticleCard = props => {
         </div>
         <div className="article__content-bottom">
           <span className="article__description">{description}</span>
-          <span className={`article__label-read ${linkCn({ dark })}`}>
+          <span className={linkCn({ className: 'article__label-read', dark })}>
             <Text id="article.read" />
           </span>
           <span className="article__label-read-article">

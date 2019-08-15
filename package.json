@@ -165,7 +165,7 @@
     },
     {
       "path": ".next/static/css/styles*.css",
-      "maxSize": "22 kB"
+      "maxSize": "26 kB"
     }
   ]
 }

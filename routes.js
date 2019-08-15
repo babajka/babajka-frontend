@@ -12,7 +12,7 @@ const getMarkup = () => {
   if (ENV === 'production') {
     return [];
   }
-  return ['example', 'example2'].map(f => ({ name: `markup/${f}` }));
+  return ['example'].map(f => ({ name: `markup/${f}` }));
 };
 
 const ADMIN_ROUTES = [

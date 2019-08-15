@@ -19,8 +19,22 @@ const BlockShape = PropTypes.arrayOf(ArticlesArray);
 
 const PAGE_LEVEL_ORDER = ['B1', 'C', 'D', 'C', 'B2', 'C', 'D', 'C'];
 
+const BLOCK_BY_LEVEL = {
+  B1: TagPageBlockB,
+  B2: TagPageBlockB,
+  C: TagPageBlockCD,
+  D: TagPageBlockCD,
+};
+
+const LAYOUT_BY_LEVEL = {
+  B1: 'large-left',
+  B2: 'large-right',
+  C: 'row-of-three',
+  D: 'row-of-two',
+};
+
 const TagArticles = ({ blocks }) => {
-  const data = blocks[0];
+  const [data] = blocks;
 
   // TODO: To verify this conditional statement is correct.
   if (data[1].length === 0) {
@@ -41,12 +55,8 @@ const TagArticles = ({ blocks }) => {
     <>
       {data.map((_, index) => {
         const levelName = PAGE_LEVEL_ORDER[index % PAGE_LEVEL_ORDER.length];
-        return {
-          B1: <TagPageBlockB articles={data[index]} layout="large-left" />,
-          B2: <TagPageBlockB articles={data[index]} layout="large-right" />,
-          C: <TagPageBlockCD articles={data[index]} layout="row-of-three" />,
-          D: <TagPageBlockCD articles={data[index]} layout="row-of-two" />,
-        }[levelName];
+        const Block = BLOCK_BY_LEVEL[levelName];
+        return <Block articles={data[index]} layout={LAYOUT_BY_LEVEL[levelName]} />;
       })}
     </>
   );
