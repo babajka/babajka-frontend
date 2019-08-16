@@ -1,3 +1,4 @@
+@import 'responsiveness';
 @import 'variables';
 
 .articles-by-tag-3 {
@@ -34,7 +35,7 @@
   }
 }
 
-.screen-desktop {
+@include screen-desktop {
   .articles-by-tag-3 {
     &__separate-header {
       display: none;
@@ -50,8 +51,7 @@
   }
 }
 
-.screen-tablet-large,
-.screen-tablet {
+@mixin shared-tablets {
   .articles-by-tag-3 {
     &__separate-header {
       display: none;
@@ -71,8 +71,15 @@
   }
 }
 
-.screen-touch,
-.screen-mobile {
+@include screen-tablet-large {
+  @include shared-tablets;
+}
+
+@include screen-tablet {
+  @include shared-tablets;
+}
+
+@mixin shared-touch-mobile {
   .articles-by-tag-3 {
     &__combined-title-line {
       display: none;
@@ -86,4 +93,12 @@
       display: none;
     }
   }
+}
+
+@include screen-touch {
+  @include shared-touch-mobile;
+}
+
+@include screen-mobile {
+  @include shared-touch-mobile;
 }

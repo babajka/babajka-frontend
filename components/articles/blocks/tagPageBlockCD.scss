@@ -1,0 +1,43 @@
+@import 'responsiveness';
+
+.tag-page-block-cd {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+@include screen-tablet-large {
+  .tag-page-block-cd {
+    &__style-row-of-three {
+      flex-direction: column;
+
+      .tag-page-block-cd {
+        &__card {
+          padding: 10px 0;
+        }
+      }
+    }
+  }
+}
+
+@mixin shared-screen-tablet-touch-mobile {
+  .tag-page-block-cd {
+    flex-direction: column;
+
+    &__card {
+      padding: 10px 0;
+    }
+  }
+}
+
+@include screen-tablet {
+  @include shared-screen-tablet-touch-mobile;
+}
+
+@include screen-touch {
+  @include shared-screen-tablet-touch-mobile;
+}
+
+@include screen-mobile {
+  @include shared-screen-tablet-touch-mobile;
+}

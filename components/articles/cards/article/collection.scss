@@ -1,3 +1,5 @@
+@import 'responsiveness';
+
 @import '../cards';
 
 .collection {
@@ -50,9 +52,8 @@
   }
 }
 
-.size-xxl {
+@mixin shared-size-xxl {
   .collection {
-
     @include xxl-sizes;
 
     &__cover-wrapper {
@@ -80,9 +81,12 @@
   }
 }
 
-.size-xl {
-  .collection {
+.size-xxl {
+  @include shared-size-xxl;
+}
 
+@mixin shared-size-xl {
+  .collection {
     @include xl-sizes;
 
     &__cover-wrapper {
@@ -110,9 +114,12 @@
   }
 }
 
-.size-l {
-  .collection {
+.size-xl {
+  @include shared-size-xl;
+}
 
+@mixin shared-size-l {
+  .collection {
     @include l-sizes;
 
     &__cover-wrapper {
@@ -140,9 +147,12 @@
   }
 }
 
-.size-m {
-  .collection {
+.size-l {
+  @include shared-size-l;
+}
 
+@mixin shared-size-m {
+  .collection {
     @include m-sizes;
 
     &__cover-wrapper {
@@ -170,10 +180,17 @@
   }
 }
 
-.size-square-m {
-  .collection {
+.size-m {
+  @include shared-size-m;
+}
 
+@mixin shared-size-square-m {
+  .collection {
     @include square-m-sizes;
+
+    &__cover-wrapper {
+      display: none;
+    }
 
     &__content {
       padding: 25px 50px 42px 39px;
@@ -195,10 +212,17 @@
   }
 }
 
-.size-square-s {
-  .collection {
+.size-square-m {
+  @include shared-size-square-m;
+}
 
+@mixin shared-size-square-s {
+  .collection {
     @include square-s-sizes;
+
+    &__cover-wrapper {
+      display: none;
+    }
 
     &__content {
       padding: 19px 29px 42px 30px;
@@ -216,6 +240,200 @@
 
     &__author {
       margin-top: 12px;
+    }
+  }
+}
+
+.size-square-s {
+  @include shared-size-square-s;
+}
+
+// Rules below are duplicated from article.scss
+
+.featured {
+  @include screen-desktop {
+    @include shared-size-xxl;
+  }
+
+  @include screen-tablet-large {
+    @include shared-size-xl;
+  }
+
+  @include screen-tablet {
+    @include shared-size-l;
+  }
+
+  @include screen-touch {
+    @include shared-size-m;
+  }
+
+  @include screen-mobile {
+    @include shared-size-square-s;
+  }
+}
+
+.two-in-row {
+  @include screen-desktop {
+    @include shared-size-m;
+  }
+
+  @include screen-tablet {
+    @include shared-size-l;
+  }
+
+  @include screen-touch {
+    @include shared-size-m;
+  }
+
+  @include screen-mobile {
+    @include shared-size-square-s;
+  }
+
+  &__first {
+    @include screen-tablet-large {
+      @include shared-size-m;
+    }
+  }
+
+  &__second {
+    @include screen-tablet-large {
+      @include shared-size-square-s;
+    }
+  }
+}
+
+.articles-by-tag-2 {
+  @include screen-desktop {
+    @include shared-size-square-m;
+  }
+
+  @include screen-tablet-large {
+    @include shared-size-l;
+  }
+
+  @include screen-tablet {
+    @include shared-size-square-m;
+  }
+
+  @include screen-touch {
+    @include shared-size-m;
+  }
+
+  @include screen-mobile {
+    @include shared-size-square-s;
+  }
+}
+
+.articles-by-tag-3 {
+  @include screen-desktop {
+    @include shared-size-square-s;
+  }
+
+  @include screen-tablet-large {
+    @include shared-size-square-m;
+  }
+
+  @include screen-tablet {
+    @include shared-size-square-s;
+  }
+
+  @include screen-touch {
+    @include shared-size-m;
+  }
+
+  @include screen-mobile {
+    @include shared-size-square-s;
+  }
+}
+
+.tag-page-block-b {
+  .large-card {
+    @include screen-desktop {
+      @include shared-size-l;
+    }
+
+    @include screen-tablet-large {
+      @include shared-size-m;
+    }
+
+    @include screen-tablet {
+      @include shared-size-l;
+    }
+
+    @include screen-touch {
+      @include shared-size-m;
+    }
+
+    @include screen-mobile {
+      @include shared-size-square-s;
+    }
+  }
+
+  .small-card {
+    @include screen-desktop {
+      @include shared-size-square-m;
+    }
+
+    @include screen-tablet-large {
+      @include shared-size-square-s;
+    }
+
+    @include screen-tablet {
+      @include shared-size-l;
+    }
+
+    @include screen-touch {
+      @include shared-size-m;
+    }
+
+    @include screen-mobile {
+      @include shared-size-square-s;
+    }
+  }
+}
+
+.tag-page-block-cd {
+  &__style-row-of-two {
+    @include screen-desktop {
+      @include shared-size-m;
+    }
+
+    @include screen-tablet-large {
+      @include shared-size-square-m;
+    }
+
+    @include screen-tablet {
+      @include shared-size-l;
+    }
+
+    @include screen-touch {
+      @include shared-size-m;
+    }
+
+    @include screen-mobile {
+      @include shared-size-square-s;
+    }
+  }
+
+  &__style-row-of-three {
+    @include screen-desktop {
+      @include shared-size-square-s;
+    }
+
+    @include screen-tablet-large {
+      @include shared-size-l;
+    }
+
+    @include screen-tablet {
+      @include shared-size-l;
+    }
+
+    @include screen-touch {
+      @include shared-size-m;
+    }
+
+    @include screen-mobile {
+      @include shared-size-square-s;
     }
   }
 }

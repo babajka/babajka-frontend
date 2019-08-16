@@ -5,24 +5,12 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 import Text from 'components/common/Text';
-import ScreenContext from 'components/common/layout/ScreenContext';
 import ArticleCard from 'components/articles/cards/ArticleCard';
 
 import { IdsArray } from 'utils/customPropTypes';
 import { getTagLink, getTopicLink } from 'utils/tags';
 
-import { SCREENS } from 'constants/styles';
 import { TOPIC } from 'constants/misc';
-
-const { DESKTOP, MOBILE, TABLET, TABLET_LARGE, TOUCH } = SCREENS;
-
-const CARD_SIZE = {
-  [DESKTOP]: 'square-m',
-  [TABLET_LARGE]: 'l',
-  [TABLET]: 'square-m',
-  [TOUCH]: 'm',
-  [MOBILE]: 'square-s',
-};
 
 const ArticlesByTag2 = ({ block, data }) => {
   const { tagId, articlesIds } = block;
@@ -30,7 +18,7 @@ const ArticlesByTag2 = ({ block, data }) => {
   const [first, second] = articlesIds.map(id => articles[id]);
   const tag = tags[tagId];
   const { topic, content } = tag;
-  const isBrand = topic.slug === TOPIC.brand;
+  const isBrand = topic.slug === TOPIC.brands;
   const tagLink = getTagLink({ tag, dark: true });
   const topicLink = getTopicLink({ topic: topic.slug, dark: true });
 
@@ -44,7 +32,7 @@ const ArticlesByTag2 = ({ block, data }) => {
         <div className="articles-by-tag-2__top-mobile-labels">
           {isBrand && <img src={content.image} alt={content.title} width="120" />}
           <div className="articles-by-tag-2__label">
-            <Text id={`topic.${topic.slug}_essentials`} />:{tagLink}
+            <Text id={`topic.${topic.slug}_essentials`} />: {tagLink}
           </div>
         </div>
         <div className="articles-by-tag-2__label articles-by-tag-2__bottom-desktop-label">
@@ -53,16 +41,12 @@ const ArticlesByTag2 = ({ block, data }) => {
       </div>
 
       <div className="articles-by-tag-2__cards">
-        <ScreenContext.Consumer>
-          {({ screen }) => (
-            <div className="articles-by-tag-2__card-1">
-              <ArticleCard {...first} size={CARD_SIZE[screen]} />
-            </div>
-          )}
-        </ScreenContext.Consumer>
+        <div className="articles-by-tag-2__card-1">
+          <ArticleCard {...first} />
+        </div>
 
         <div className="articles-by-tag-2__card-2">
-          <ArticleCard {...second} size="square-m" />
+          <ArticleCard {...second} />
         </div>
       </div>
 

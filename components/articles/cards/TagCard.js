@@ -53,7 +53,7 @@ const TagCard = ({ slug, topic, content, theme, size }) => {
 
 TagCard.propTypes = {
   slug: PropTypes.string.isRequired,
-  size: PropTypes.oneOf(SIZES).isRequired,
+  size: PropTypes.oneOf(SIZES),
   theme: PropTypes.oneOf(['light', 'dark']),
   topic: TopicShape.isRequired,
   content: PropTypes.shape({
@@ -65,6 +65,7 @@ TagCard.propTypes = {
 };
 
 TagCard.defaultProps = {
+  size: 'auto',
   theme: 'light',
 };
 

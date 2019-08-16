@@ -5,7 +5,6 @@ import React from 'react';
 import Text from 'components/common/Text';
 
 const CollectionCard = ({
-  square,
   covers,
   title,
   author,
@@ -13,11 +12,9 @@ const CollectionCard = ({
   brand,
 }) => (
   <>
-    {!square && (
-      <div className="collection__cover-wrapper">
-        <img className="collection__cover" src={covers.horizontal} alt={title} />
-      </div>
-    )}
+    <div className="collection__cover-wrapper">
+      <img className="collection__cover" src={covers.horizontal} alt={title} />
+    </div>
     {brand}
     <div className="collection__content">
       <div className="collection__content-top">

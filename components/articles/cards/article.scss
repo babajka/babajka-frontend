@@ -1,3 +1,5 @@
+@import 'responsiveness';
+
 @import './cards';
 
 .article {
@@ -12,6 +14,7 @@
   }
 
   &__cover {
+    display: none;
     height: 100%;
     object-fit: cover;
     width: 100%;
@@ -42,16 +45,23 @@
     flex-direction: column;
     justify-content: flex-end;
   }
+
+  &__label-read-article {
+    display: none;
+  }
 }
 
-.size-xxl {
+@mixin shared-size-xxl {
   .article {
-
     @include xxl-sizes;
 
     &__cover-wrapper {
       max-width: 390px;
       min-width: 390px;
+    }
+
+    &__cover--vertical {
+      display: unset;
     }
 
     &__brand {
@@ -81,14 +91,21 @@
   }
 }
 
-.size-xl {
-  .article {
+.size-xxl {
+  @include shared-size-xxl;
+}
 
+@mixin shared-size-xl {
+  .article {
     @include xl-sizes;
 
     &__cover-wrapper {
       max-width: 313px;
       min-width: 313px;
+    }
+
+    &__cover--vertical {
+      display: unset;
     }
 
     &__brand {
@@ -118,14 +135,21 @@
   }
 }
 
-.size-l {
-  .article {
+.size-xl {
+  @include shared-size-xl;
+}
 
+@mixin shared-size-l {
+  .article {
     @include l-sizes;
 
     &__cover-wrapper {
       max-width: 240px;
       min-width: 240px;
+    }
+
+    &__cover--vertical {
+      display: unset;
     }
 
     &__brand {
@@ -155,14 +179,21 @@
   }
 }
 
-.size-m {
-  .article {
+.size-l {
+  @include shared-size-l;
+}
 
+@mixin shared-size-m {
+  .article {
     @include m-sizes;
 
     &__cover-wrapper {
       max-width: 186px;
       min-width: 186px;
+    }
+
+    &__cover--vertical {
+      display: unset;
     }
 
     &__brand {
@@ -193,58 +224,70 @@
     &__description {
       display: none;
     }
+
+    &__label-read {
+      display: none;
+    }
+
+    &__label-read-article {
+      display: unset;
+    }
   }
 }
 
-.square-article {
-  border-radius: 3px;
-  color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  position: relative;
+.size-m {
+  @include shared-size-m;
+}
 
-  &.theme-dark {
-    color: #000000;
-  }
-
-  &__cover {
-    height: 100%;
-    object-fit: cover;
-    width: 100%;
-  }
-
-  &__brand {
-    height: 33px;
-    left: 30px;
-    position: absolute;
-    top: 30px;
-    width: 72px;
-  }
-
-  &__content {
-    bottom: 0;
-    display: flex;
+@mixin shared-square-articles {
+  .article {
     flex-direction: column;
-    position: absolute;
-    text-align: center;
-  }
 
-  &__title {
-    font-weight: bold;
-    text-align: center;
-  }
+    &__brand {
+      height: 33px;
+      left: 30px;
+      top: 30px;
+      width: 72px;
+    }
 
-  &__author {
-    font-size: 14px;
-    line-height: 21px;
-    margin-top: 5px;
-    text-align: center;
+    &__content {
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      text-align: center;
+      width: 100%;
+    }
+
+    &__content-bottom {
+      display: none;
+    }
+
+    &__cover--horizontal {
+      display: unset;
+    }
+
+    &__title {
+      text-align: center;
+    }
+
+    &__author {
+      font-size: 14px;
+      line-height: 21px;
+      margin-top: 5px;
+      text-align: center;
+    }
+
+    &__label-read {
+      display: none;
+    }
   }
 }
 
-.size-square-m {
-  .square-article {
+@mixin shared-size-square-m {
+  @include shared-square-articles;
 
+  .article {
     @include square-m-sizes;
 
     &__cover-wrapper {
@@ -252,7 +295,7 @@
     }
 
     &__content {
-      padding: 0 39px 42px;
+      padding: 39px 0 42px;
     }
 
     &__title {
@@ -262,14 +305,14 @@
   }
 }
 
-.size-square-s {
+.size-square-m {
+  @include shared-size-square-m;
+}
 
-  @include square-s-sizes;
+@mixin shared-size-square-s {
+  @include shared-square-articles;
 
-  margin: 0;
-
-  .square-article {
-
+  .article {
     @include square-s-sizes;
 
     &__cover-wrapper {
@@ -277,12 +320,208 @@
     }
 
     &__content {
-      padding: 0 10px 42px;
+      padding: 10px 0 42px;
     }
 
     &__title {
       font-size: 20px;
       line-height: 24px;
+    }
+  }
+}
+
+.size-square-s {
+  @include shared-size-square-s;
+}
+
+// Below are the rules for cards to be auto adjustable.
+// Same rules are applied for Collection and Video card modifications.
+// TODO: to avoid duplication of these rules between 3 .scss files.
+
+.featured {
+  @include screen-desktop {
+    @include shared-size-xxl;
+  }
+
+  @include screen-tablet-large {
+    @include shared-size-xl;
+  }
+
+  @include screen-tablet {
+    @include shared-size-l;
+  }
+
+  @include screen-touch {
+    @include shared-size-m;
+  }
+
+  @include screen-mobile {
+    @include shared-size-square-s;
+  }
+}
+
+.two-in-row {
+  @include screen-desktop {
+    @include shared-size-m;
+  }
+
+  @include screen-tablet {
+    @include shared-size-l;
+  }
+
+  @include screen-touch {
+    @include shared-size-m;
+  }
+
+  @include screen-mobile {
+    @include shared-size-square-s;
+  }
+
+  &__first {
+    @include screen-tablet-large {
+      @include shared-size-m;
+    }
+  }
+
+  &__second {
+    @include screen-tablet-large {
+      @include shared-size-square-s;
+    }
+  }
+}
+
+.articles-by-tag-2 {
+  @include screen-desktop {
+    @include shared-size-square-m;
+  }
+
+  @include screen-tablet-large {
+    @include shared-size-l;
+  }
+
+  @include screen-tablet {
+    @include shared-size-square-m;
+  }
+
+  @include screen-touch {
+    @include shared-size-m;
+  }
+
+  @include screen-mobile {
+    @include shared-size-square-s;
+  }
+}
+
+.articles-by-tag-3 {
+  @include screen-desktop {
+    @include shared-size-square-s;
+  }
+
+  @include screen-tablet-large {
+    @include shared-size-square-m;
+  }
+
+  @include screen-tablet {
+    @include shared-size-square-s;
+  }
+
+  @include screen-touch {
+    @include shared-size-m;
+  }
+
+  @include screen-mobile {
+    @include shared-size-square-s;
+  }
+}
+
+.tag-page-block-b {
+  .large-card {
+    @include screen-desktop {
+      @include shared-size-l;
+    }
+
+    @include screen-tablet-large {
+      @include shared-size-m;
+    }
+
+    @include screen-tablet {
+      @include shared-size-l;
+    }
+
+    @include screen-touch {
+      @include shared-size-m;
+    }
+
+    @include screen-mobile {
+      @include shared-size-square-s;
+    }
+  }
+
+  .small-card {
+    @include screen-desktop {
+      @include shared-size-square-m;
+    }
+
+    @include screen-tablet-large {
+      @include shared-size-square-s;
+    }
+
+    @include screen-tablet {
+      @include shared-size-l;
+    }
+
+    @include screen-touch {
+      @include shared-size-m;
+    }
+
+    @include screen-mobile {
+      @include shared-size-square-s;
+    }
+  }
+}
+
+.tag-page-block-cd {
+  &__style-row-of-two {
+    @include screen-desktop {
+      @include shared-size-m;
+    }
+
+    @include screen-tablet-large {
+      @include shared-size-square-m;
+    }
+
+    @include screen-tablet {
+      @include shared-size-l;
+    }
+
+    @include screen-touch {
+      @include shared-size-m;
+    }
+
+    @include screen-mobile {
+      @include shared-size-square-s;
+    }
+  }
+
+  &__style-row-of-three {
+    @include screen-desktop {
+      @include shared-size-square-s;
+    }
+
+    @include screen-tablet-large {
+      @include shared-size-l;
+    }
+
+    @include screen-tablet {
+      @include shared-size-l;
+    }
+
+    @include screen-touch {
+      @include shared-size-m;
+    }
+
+    @include screen-mobile {
+      @include shared-size-square-s;
     }
   }
 }

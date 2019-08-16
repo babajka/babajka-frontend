@@ -6,9 +6,9 @@ import Link from 'components/common/Link';
 import BgContainer from 'components/common/ui/BgContainer';
 
 export const DEFAULT_SIZES = ['xxl', 'xl', 'l', 'm'];
-export const TAG_SIZES = ['s', 'xs'];
+export const TAG_SIZES = ['s', 'xs', 'ms', 's-wide', 'xs-wide'];
 export const SQUARE_SIZES = ['square-m', 'square-s'];
-export const SIZES = DEFAULT_SIZES.concat(SQUARE_SIZES, TAG_SIZES);
+export const SIZES = DEFAULT_SIZES.concat(SQUARE_SIZES, TAG_SIZES, 'auto');
 
 const CardWrapper = ({ className, size, children, bgColor, bgImage, dark, linkProps }) => (
   <Link className={`size-${size}`} {...linkProps}>
@@ -20,7 +20,7 @@ const CardWrapper = ({ className, size, children, bgColor, bgImage, dark, linkPr
 
 CardWrapper.propTypes = {
   className: PropTypes.string,
-  size: PropTypes.oneOf(SIZES).isRequired,
+  size: PropTypes.oneOf(SIZES),
   children: PropTypes.node.isRequired,
   bgColor: PropTypes.string,
   bgImage: PropTypes.string,
@@ -30,6 +30,7 @@ CardWrapper.propTypes = {
 
 CardWrapper.defaultProps = {
   className: '',
+  size: 'auto',
   bgColor: null,
   bgImage: null,
   dark: false,

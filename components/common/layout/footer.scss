@@ -33,21 +33,18 @@
   }
 
   &__block1 {
-
     @include touch {
       flex: 1;
     }
   }
 
   &__block2 {
-
     @include touch {
       flex: 1;
     }
   }
 
   &__block3 {
-
     @include desktop {
       flex: 2;
     }

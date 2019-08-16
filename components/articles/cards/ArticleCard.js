@@ -4,7 +4,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Text from 'components/common/Text';
-import ConditionalWrapper from 'components/common/ui/ConditionalWrapper';
 
 import { TagsArray, CollectionShape, ArticleCoversShape, ArticleType } from 'utils/customPropTypes';
 import { renderTag } from 'utils/tags';
@@ -13,16 +12,9 @@ import { linkCn } from 'utils/ui';
 import { TOPIC } from 'constants/misc';
 import { ROUTES_NAMES } from 'routes';
 
-import CardWrapper, { SQUARE_SIZES, SIZES } from './CardWrapper';
+import CardWrapper, { SIZES } from './CardWrapper';
 import CollectionCard from './article/CollectionCard';
 import VideoCard from './article/VideoCard';
-
-const getArticleCn = square => className => {
-  if (!square) {
-    return className;
-  }
-  return `square-${className}`;
-};
 
 const getBrand = tags => {
   const brandTag = tags.find(({ topic }) => topic.slug === 'brands');
@@ -43,8 +35,6 @@ const ArticleCard = props => {
     type,
     slug,
   } = props;
-  const square = SQUARE_SIZES.includes(size);
-  const articleCn = getArticleCn(square);
   const dark = theme === 'dark';
   const brand = getBrand(tags);
   const wrapperProps = {
@@ -65,7 +55,7 @@ const ArticleCard = props => {
   if (collection) {
     return (
       <CardWrapper {...wrapperProps} className="collection">
-        <CollectionCard {...props} square={square} />
+        <CollectionCard {...props} />
       </CardWrapper>
     );
   }
@@ -73,26 +63,18 @@ const ArticleCard = props => {
   const authors = tags.filter(({ topic }) => topic.slug === TOPIC.authors);
 
   return (
-    <CardWrapper {...wrapperProps} className={articleCn('article')}>
-      <div className={articleCn('article__cover-wrapper')}>
-        <img
-          className={articleCn('article__cover')}
-          src={square ? horizontal : vertical}
-          alt={title}
-        />
+    <CardWrapper {...wrapperProps} className="article">
+      <div className="article__cover-wrapper">
+        <img className="article__cover article__cover--vertical" src={vertical} alt={title} />
+        <img className="article__cover article__cover--horizontal" src={horizontal} alt={title} />
       </div>
       {brand && (
-        <img
-          className={articleCn('article__brand')}
-          src={brand.image}
-          alt={brand.title}
-          title={brand.title}
-        />
+        <img className="article__brand" src={brand.image} alt={brand.title} title={brand.title} />
       )}
-      <div className={articleCn('article__content')}>
-        <ConditionalWrapper hide={square}>
-          <div className={articleCn('article__title')}>{title}</div>
-          <div className={articleCn('article__author')}>
+      <div className="article__content">
+        <div>
+          <div className="article__title">{title}</div>
+          <div className="article__author">
             {authors.map((tag, i) => (
               // TODO: extract to `renderList` helper
               <span key={tag.id}>
@@ -101,28 +83,25 @@ const ArticleCard = props => {
               </span>
             ))}
           </div>
-        </ConditionalWrapper>
-        {!square && (
-          <div className="article__content-bottom">
-            <span className="article__description">{description}</span>
-            <Text
-              id="article.read"
-              render={(read, article) => (
-                <span className={linkCn({ dark })}>
-                  {read}
-                  {size === 'm' && article}
-                </span>
-              )}
-            />
-          </div>
-        )}
+        </div>
+        <div className="article__content-bottom">
+          <span className="article__description">{description}</span>
+          <span className={linkCn({ className: 'article__label-read', dark })}>
+            <Text id="article.read" />
+          </span>
+          <span className="article__label-read-article">
+            <span className={linkCn({ dark })}>
+              <Text id="article.read-article" />
+            </span>
+          </span>
+        </div>
       </div>
     </CardWrapper>
   );
 };
 
 ArticleCard.propTypes = {
-  size: PropTypes.oneOf(SIZES).isRequired,
+  size: PropTypes.oneOf(SIZES),
   bgColor: PropTypes.string.isRequired,
   theme: PropTypes.oneOf(['light', 'dark']),
   title: PropTypes.string.isRequired,
@@ -135,6 +114,7 @@ ArticleCard.propTypes = {
 };
 
 ArticleCard.defaultProps = {
+  size: 'auto',
   theme: 'light',
   tags: [],
   collection: null,
