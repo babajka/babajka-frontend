@@ -12,15 +12,16 @@ export const getDiary = ({ author = '', text = '', day, month, year } = {}) => (
 });
 
 export const getLocalizedCollection = (
-  { slug, imageUrl, name, description, prev, next, articleIndex },
+  { slug, imageUrl, name, description, /* prev, next, */ articleIndex },
   lang
 ) => ({
   slug,
   imageUrl,
   name: localize(name, lang),
   description: localize(description, lang),
-  prev: getLocalizedArticle(prev), // eslint-disable-line no-use-before-define
-  next: getLocalizedArticle(next), // eslint-disable-line no-use-before-define
+  // FIXME: for now prev & next articles aren't showing on article page
+  // prev: getLocalizedArticle(prev), // eslint-disable-line no-use-before-define
+  // next: getLocalizedArticle(next), // eslint-disable-line no-use-before-define
   articleIndex, // TODO: sync with back
 });
 
@@ -69,7 +70,7 @@ export const getLocalizedArticle = (article, lang) => {
     textColorTheme: theme,
     ...rest
   } = article;
-  const { subtitle: description, ...localizedRest } = localize(locales, lang);
+  const { subtitle: description, keywords, ...localizedRest } = localize(locales, lang);
   return {
     ...rest,
     ...localizedRest,
@@ -78,7 +79,9 @@ export const getLocalizedArticle = (article, lang) => {
     description,
     covers,
     theme,
-    // FIXME
+    // TEMP: `keywords` should be string in db
+    keywords: keywords.join(' '),
+    // FIXME: save hash in db
     bgColor: `#${color}`,
     collection: collection && getLocalizedCollection(collection, lang),
     published: !!publishAt && moment(publishAt).isBefore(moment()),

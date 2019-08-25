@@ -16,10 +16,10 @@ const ShareButtons = ({ urlPath, title }) => (
   <ButtonGroup className="wir-social-buttons" icon>
     {SHARE_NETWORKS.map(({ id, icon = id, baseUrl, getParams }) => (
       <Text
+        key={id}
         id={`common.share-${id}`}
         render={t => (
           <ExternalLink
-            key={id}
             className={`wir-button wir-button__icon wir-social-buttons__button wir-social-buttons__button--${id}`}
             href={`${baseUrl}?${qs.stringify(getParams(`${DOMAIN_SECURE}${urlPath}`, title))}`}
             title={t}
