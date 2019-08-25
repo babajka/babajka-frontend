@@ -70,7 +70,7 @@ export const getLocalizedArticle = (article, lang) => {
     textColorTheme: theme,
     ...rest
   } = article;
-  const { subtitle: description, keywords, ...localizedRest } = localize(locales, lang);
+  const { subtitle: description, keywords, content, ...localizedRest } = localize(locales, lang);
   return {
     ...rest,
     ...localizedRest,
@@ -79,6 +79,8 @@ export const getLocalizedArticle = (article, lang) => {
     description,
     covers,
     theme,
+    // FIXME: rename on backend
+    text: content,
     // TEMP: `keywords` should be string in db
     keywords: keywords.join(' '),
     // FIXME: save hash in db

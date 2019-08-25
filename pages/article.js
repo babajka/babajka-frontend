@@ -14,6 +14,7 @@ import { populateRequest } from 'utils/request';
 import { ArticleShape } from 'utils/customPropTypes';
 import { getTagLink } from 'utils/tags';
 import { renderNodeList } from 'utils/formatters';
+import fiberyRenderer from 'utils/fibery/renderer';
 
 import { ROUTES_NAMES } from 'routes';
 
@@ -45,7 +46,7 @@ class ArticlePage extends Component {
 
   render() {
     const {
-      article: { description, covers, tags, title, subtitle, imagePreviewUrl, keywords },
+      article: { description, covers, tags, title, subtitle, imagePreviewUrl, keywords, text },
       router,
     } = this.props;
 
@@ -93,7 +94,7 @@ class ArticlePage extends Component {
           <div className="article-page__title">{title}</div>
         </div>
         <div className="article-page-margins">
-          <div>There should be content from editor</div>
+          <div>{fiberyRenderer(text.content)}</div>
           <div className="article-page__share">
             <ShareButtons url={router.asPath} title={title} />
           </div>
