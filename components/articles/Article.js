@@ -6,6 +6,8 @@ import { withRouter } from 'next/router';
 
 import { MetaTitle, MetaDescription, MetaImage, MetaKeywords } from 'components/social/Metatags';
 import Link from 'components/common/Link';
+import AudioPlayer from 'components/common/AudioPlayer';
+import VideoPlayer from 'components/common/VideoPlayer';
 import ShareButtons from 'components/social/ShareButtons';
 
 import { ArticleShape } from 'utils/customPropTypes';
@@ -60,6 +62,11 @@ const Article = ({ router, data: { images, tags, title, subtitle, keywords, text
         )}
         <div className="article-page__title">{title}</div>
       </div>
+      {/* FIXME(@andemerie) */}
+      {/* audio.trackId */}
+      <AudioPlayer trackId={592430019} />
+      {/* video.videoId */}
+      <VideoPlayer videoId="eSwyzKaIGcg" />
       <div className="article-page-margins">
         <div className="article-page-content">{fiberyRenderer(text.content)}</div>
         <div className="article-page__share">
