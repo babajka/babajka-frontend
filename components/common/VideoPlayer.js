@@ -8,7 +8,7 @@ const VideoPlayer = ({ videoId }) => (
   <Text
     id="article.article-image"
     render={t => (
-      <div className="article__playerwrapper">
+      <span className="article__playerwrapper">
         <iframe
           id="ytplayer"
           className="article__player"
@@ -18,7 +18,7 @@ const VideoPlayer = ({ videoId }) => (
           frameBorder="0"
           allowFullScreen
         />
-      </div>
+      </span>
     )}
   />
 );
