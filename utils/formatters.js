@@ -1,3 +1,4 @@
+import { cloneElement } from 'react';
 import moment from 'moment';
 import identity from 'lodash/identity';
 
@@ -25,4 +26,4 @@ export const toTitleCase = str =>
     .join(' ');
 
 export const renderNodeList = (nodes, delimiter = ', ') =>
-  !!nodes.length && nodes.reduce((acc, node) => [acc, delimiter, node]);
+  !!nodes.length && nodes.reduce((acc, node, key) => [acc, cloneElement(delimiter, { key }), node]);

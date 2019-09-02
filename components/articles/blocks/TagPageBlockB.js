@@ -4,6 +4,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ArticleCard from 'components/articles/cards/ArticleCard';
+import { ArticlesArray } from 'utils/customPropTypes';
+
+const CLASS_BY_LAYOUT = {
+  'large-left': 'left',
+  'large-right': 'right',
+};
 
 const TagPageBlockB = ({ articles, layout }) => {
   const [first, second] =
@@ -11,7 +17,7 @@ const TagPageBlockB = ({ articles, layout }) => {
   return (
     <div
       className={`block block__no-background tag-page-block-b tag-page-block-b__style-large-${
-        layout === 'large-left' ? 'left' : 'right'
+        CLASS_BY_LAYOUT[layout]
       }`}
     >
       <div className="large-card">
@@ -26,8 +32,8 @@ const TagPageBlockB = ({ articles, layout }) => {
 };
 
 TagPageBlockB.propTypes = {
-  articles: PropTypes.shape({}).isRequired,
-  layout: PropTypes.oneOf(['large-left', 'large-right']).isRequired,
+  articles: ArticlesArray.isRequired,
+  layout: PropTypes.oneOf(Object.keys(CLASS_BY_LAYOUT)).isRequired,
 };
 
 export default TagPageBlockB;

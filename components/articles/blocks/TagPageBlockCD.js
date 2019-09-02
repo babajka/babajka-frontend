@@ -4,6 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ArticleCard from 'components/articles/cards/ArticleCard';
+import { ArticlesArray } from 'utils/customPropTypes';
 
 const SIZE_BY_LAYOUT = {
   'row-of-two': 2,
@@ -15,7 +16,7 @@ const TagPageBlockCD = ({ articles, layout }) => (
     className={`block block__no-background tag-page-block-cd tag-page-block-cd__style-${layout}`}
   >
     {articles.slice(0, SIZE_BY_LAYOUT[layout]).map(article => (
-      <div className="tag-page-block-cd__card">
+      <div key={article.articleId} className="tag-page-block-cd__card">
         <ArticleCard {...article} />
       </div>
     ))}
@@ -23,8 +24,8 @@ const TagPageBlockCD = ({ articles, layout }) => (
 );
 
 TagPageBlockCD.propTypes = {
-  articles: PropTypes.shape({}).isRequired,
-  layout: PropTypes.oneOf(['row-of-two', 'row-of-three']).isRequired,
+  articles: ArticlesArray.isRequired,
+  layout: PropTypes.oneOf(Object.keys(SIZE_BY_LAYOUT)).isRequired,
 };
 
 export default TagPageBlockCD;
