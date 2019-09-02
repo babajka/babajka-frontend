@@ -61,7 +61,7 @@ const Article = ({ router, data: { images, tags, title, subtitle, keywords, text
         <div className="article-page__title">{title}</div>
       </div>
       <div className="article-page-margins">
-        <div>{fiberyRenderer(text.content)}</div>
+        <div className="article-page-content">{fiberyRenderer(text.content)}</div>
         <div className="article-page__share">
           <ShareButtons url={router.asPath} title={title} />
         </div>
