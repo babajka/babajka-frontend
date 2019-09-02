@@ -15,7 +15,7 @@ const mapStateToProps = state => ({
   user: authSelectors.getUser(state),
 });
 
-const LoginPage = ({ user, routerQuery: { next = ROUTES_NAMES.admin.dashboard } }) => {
+const LoginPage = ({ user, routerQuery: { next = ROUTES_NAMES.admin.articles } }) => {
   if (user) {
     return <Redirect to={next} />;
   }

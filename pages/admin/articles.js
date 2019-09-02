@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import Link from 'components/common/Link';
@@ -30,7 +30,7 @@ const ARTICLE_COLS = [
     id: 'type',
   },
   {
-    id: 'description',
+    id: 'subtitle',
     formatter: text => `${text.slice(0, 100)}...`,
   },
   {
@@ -53,11 +53,33 @@ const ARTICLE_COLS = [
   },
 ];
 
-const AdminArticlesPage = ({ articles }) => (
-  <div>
-    <Table rows={articles} cols={ARTICLE_COLS} />
-  </div>
-);
+const AdminArticlesPage = ({ articles }) => {
+  const [previewUrl, setUrl] = useState('');
+  return (
+    <div>
+      <div>
+        <input
+          placeholder="Paste Fibery Url"
+          type="text"
+          value={previewUrl}
+          onChange={({ target }) => setUrl(target.value)}
+        />{' '}
+        {previewUrl && (
+          <Link
+            className="button"
+            route={ROUTES_NAMES.admin.preview}
+            params={{ url: encodeURIComponent(previewUrl) }}
+            target="_blank"
+          >
+            Open Preview
+          </Link>
+        )}
+      </div>
+      <br />
+      <Table rows={articles} cols={ARTICLE_COLS} />
+    </div>
+  );
+};
 
 AdminArticlesPage.propTypes = {
   articles: ArticlesArray.isRequired,

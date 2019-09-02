@@ -3,12 +3,13 @@ import createReducer from 'type-to-reducer';
 import api from 'constants/api';
 import { defaultReducer } from 'utils/redux';
 import { makeRequest } from 'utils/request';
-import { getLocalizedArticles } from 'utils/getters';
+import { getLocalizedArticles, getLocalizedArticle } from 'utils/getters';
 
 const duck = 'admin/articles';
 
 // constants
 const FETCH_ALL = `${duck}/FETCH_ALL`;
+const FIBERY_PREVIEW = `${duck}/FIBERY_PREVIEW`;
 
 // reducer
 const defaultState = {
@@ -19,6 +20,7 @@ const defaultState = {
 const initialState = {
   data: [],
   total: 0,
+  preview: null,
   ...defaultState,
 };
 
@@ -30,6 +32,11 @@ export default createReducer(
       total,
       ...defaultState,
     })),
+    [FIBERY_PREVIEW]: defaultReducer((state, { payload: { article } }) => ({
+      ...state,
+      preview: article,
+      ...defaultState,
+    })),
   },
   initialState
 );
@@ -37,14 +44,16 @@ export default createReducer(
 // selectors
 const getState = state => state.admin.articles;
 const isPending = state => getState(state).pending;
-const isError = state => getState(state).error;
+const getError = state => getState(state).error;
 const getRawArticles = state => getState(state).data;
 const getAll = (state, lang) => getLocalizedArticles(getRawArticles(state), lang);
+const getPreview = (state, locale) => getLocalizedArticle(getState(state).preview, locale);
 
 export const adminArticlesSelectors = {
   isPending,
-  isError,
+  getError,
   getAll,
+  getPreview,
 };
 
 // actions
@@ -52,5 +61,9 @@ export const adminArticlesActions = {
   fetchAll: () => ({
     type: FETCH_ALL,
     payload: makeRequest(api.articles.getChunk()),
+  }),
+  fiberyPreview: url => ({
+    type: FIBERY_PREVIEW,
+    payload: makeRequest(api.articles.fiberyPreview, 'POST', { url }),
   }),
 };
