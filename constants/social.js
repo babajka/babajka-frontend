@@ -37,6 +37,8 @@ export const EXPORT_TO_NETWORKS = ['facebook', 'vk', 'twitter'];
 
 export const YOUTUBE_EMBED_PREFIX = 'https://www.youtube.com/embed';
 
+export const SOUNDCLOUD_EMBED_PREFIX = 'https://w.soundcloud.com/player';
+
 const FACEBOOK_APP_ID = '332376853960377';
 
 export const SHARE_NETWORKS = [
