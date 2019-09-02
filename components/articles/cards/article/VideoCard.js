@@ -4,10 +4,10 @@ import React from 'react';
 
 import Icon from 'components/common/ui/Icon';
 
-const VideoCard = ({ title, author, covers: { horizontal } }) => (
+const VideoCard = ({ title, author, images }) => (
   <>
     <div className="video__cover-wrapper">
-      <img className="video__cover" src={horizontal} alt={title} />
+      <img className="video__cover" src={images.horizontal} alt={title} />
       <div className="video__cover-gradient" />
     </div>
     <Icon className="video__icon" name="play" />

@@ -66,21 +66,21 @@ export const ArticleModel = {
   active: PropTypes.bool.isRequired,
   articleId: PropTypes.string.isRequired,
   collection: CollectionShape,
-  content: PropTypes.object.isRequired,
+  text: PropTypes.object.isRequired,
   locale: LangType,
   publishAt: PropTypes.string,
   published: PropTypes.bool.isRequired,
   slug: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  subtitle: PropTypes.string.isRequired,
   type: ArticleType.isRequired,
-  covers: ArticleCoversShape.isRequired,
+  images: ArticleCoversShape.isRequired,
   video: ArticleVideoShape,
   metadata: MetadataShape.isRequired,
   keywords: PropTypes.string.isRequired,
   tags: TagsArray.isRequired,
   theme: PropTypes.oneOf(['light', 'dark']).isRequired,
-  bgColor: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
 };
 
 export const ArticleShape = PropTypes.shape(ArticleModel);
@@ -98,17 +98,12 @@ export const PermissionsList = PropTypes.arrayOf(PropTypes.oneOf(Object.keys(Per
 
 export const PermissionsShape = PropTypes.shape(PermissionsModel);
 
-const ROLES = ['author', 'regular'];
-
-// TODO: sync
 export const UserShape = PropTypes.shape({
   firstName: PropTypes.string.isRequired,
   lastName: PropTypes.string.isRequired,
   displayName: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
-  role: PropTypes.oneOf(ROLES).isRequired,
   active: PropTypes.bool.isRequired,
-  bio: PropTypes.string,
   imageUrl: PropTypes.string,
   permissions: PermissionsShape.isRequired,
 });

@@ -37,7 +37,7 @@ const LOCALIZE_TAG_CONTENT = {
   themes: localizeFields(['title']),
   locations: localizeFields(['title']),
   times: localizeFields(['title']),
-  personalities: localizeFields(['name', 'dates', 'description']),
+  personalities: localizeFields(['name', 'subtitle', 'description']),
   brands: localizeFields(['title']),
   authors: localizeFields(['firstName', 'lastName', 'bio']),
 };
@@ -65,26 +65,18 @@ export const getLocalizedArticle = (article, lang) => {
     collection,
     publishAt,
     tags,
-    images: covers,
-    color,
-    textColorTheme: theme,
+    // FIXME
+    keywords = '',
     ...rest
   } = article;
-  const { subtitle: description, keywords, content, ...localizedRest } = localize(locales, lang);
+  const { text, ...localized } = localize(locales, lang);
   return {
     ...rest,
-    ...localizedRest,
+    ...localized,
+    text: text || {},
     id,
     publishAt,
-    description,
-    covers,
-    theme,
-    // FIXME: rename on backend
-    text: content,
-    // TEMP: `keywords` should be string in db
-    keywords: keywords.join(' '),
-    // FIXME: save hash in db
-    bgColor: `#${color}`,
+    keywords,
     collection: collection && getLocalizedCollection(collection, lang),
     published: !!publishAt && moment(publishAt).isBefore(moment()),
     tags: getLocalizedTags(tags, lang),

@@ -51,15 +51,12 @@ const TagArticles = ({ blocks }) => {
     );
   }
 
-  return (
-    <>
-      {data.map((_, index) => {
-        const levelName = PAGE_LEVEL_ORDER[index % PAGE_LEVEL_ORDER.length];
-        const Block = BLOCK_BY_LEVEL[levelName];
-        return <Block articles={data[index]} layout={LAYOUT_BY_LEVEL[levelName]} />;
-      })}
-    </>
-  );
+  return data.map((_, index) => {
+    const levelName = PAGE_LEVEL_ORDER[index % PAGE_LEVEL_ORDER.length];
+    const Block = BLOCK_BY_LEVEL[levelName];
+    // eslint-disable-next-line react/no-array-index-key
+    return <Block key={index} articles={data[index]} layout={LAYOUT_BY_LEVEL[levelName]} />;
+  });
 };
 
 const mapStateToProps = (state, { lang }) => tagsSelectors.getData(state, lang);

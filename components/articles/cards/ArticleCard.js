@@ -26,11 +26,11 @@ const ArticleCard = props => {
   const {
     size,
     theme,
-    description,
+    subtitle,
     tags,
     collection,
-    bgColor,
-    covers: { horizontal, vertical },
+    color,
+    images: { horizontal, vertical },
     title,
     type,
     slug,
@@ -40,13 +40,13 @@ const ArticleCard = props => {
   const wrapperProps = {
     size,
     dark,
-    bgColor,
+    color,
     linkProps: { route: ROUTES_NAMES.article, params: { slug } },
   };
 
   if (type === 'video') {
     return (
-      <CardWrapper {...wrapperProps} className="video" bgColor={null}>
+      <CardWrapper {...wrapperProps} className="video" color={null}>
         <VideoCard {...props} />
       </CardWrapper>
     );
@@ -85,7 +85,7 @@ const ArticleCard = props => {
           </div>
         </div>
         <div className="article__content-bottom">
-          <span className="article__description">{description}</span>
+          <span className="article__description">{subtitle}</span>
           <span className={linkCn({ className: 'article__label-read', dark })}>
             <Text id="article.read" />
           </span>
@@ -102,11 +102,11 @@ const ArticleCard = props => {
 
 ArticleCard.propTypes = {
   size: PropTypes.oneOf(SIZES),
-  bgColor: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
   theme: PropTypes.oneOf(['light', 'dark']),
   title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  covers: ArticleCoversShape.isRequired,
+  subtitle: PropTypes.string.isRequired,
+  images: ArticleCoversShape.isRequired,
   tags: TagsArray,
   collection: CollectionShape,
   type: ArticleType.isRequired,

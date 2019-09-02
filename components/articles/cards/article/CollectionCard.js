@@ -5,7 +5,7 @@ import React from 'react';
 import Text from 'components/common/Text';
 
 const CollectionCard = ({
-  covers,
+  images,
   title,
   author,
   collection: { articleIndex, name, imageUrl },
@@ -13,7 +13,7 @@ const CollectionCard = ({
 }) => (
   <>
     <div className="collection__cover-wrapper">
-      <img className="collection__cover" src={covers.horizontal} alt={title} />
+      <img className="collection__cover" src={images.horizontal} alt={title} />
     </div>
     {brand}
     <div className="collection__content">

@@ -26,22 +26,22 @@ const TagCard = ({ slug, topic, content, theme, size }) => {
   if (topic.slug === 'locations') {
     const { title, image } = content;
     return (
-      <CardWrapper {...wrapperProps} bgImage={image} alt={title} className="location">
+      <CardWrapper {...wrapperProps} image={image} alt={title} className="location">
         <div className="location__title">{title}</div>
       </CardWrapper>
     );
   }
 
   if (topic.slug === 'personalities') {
-    const { name, description, dates, color, image } = content;
+    const { name, description, subtitle, color, image } = content;
     return (
-      <CardWrapper {...wrapperProps} bgColor={color} className="person">
+      <CardWrapper {...wrapperProps} color={color} className="person">
         {' '}
         <div className="person__cover-wrapper">
           <img className="person__cover" src={image} alt={name} title={name} />
         </div>
         <div className="person__content">
-          <div className="person__years">{dates}</div>
+          <div className="person__subtitle">{subtitle}</div>
           <div className="person__title">{name}</div>
           <div className="person__description">{description}</div>
         </div>
@@ -58,7 +58,9 @@ TagCard.propTypes = {
   topic: TopicShape.isRequired,
   content: PropTypes.shape({
     title: PropTypes.string,
+    subtitle: PropTypes.string,
     name: PropTypes.string,
+    description: PropTypes.string,
     image: PropTypes.string.isRequired,
     color: PropTypes.string,
   }).isRequired,
