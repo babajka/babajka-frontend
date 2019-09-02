@@ -16,18 +16,22 @@ const getMarkup = () => {
 };
 
 const ADMIN_ROUTES = [
-  {
-    name: 'dashboard',
-  },
+  // {
+  //   name: 'dashboard',
+  // },
   {
     name: 'articles',
   },
   {
-    name: 'main',
+    name: 'preview',
+    pattern: 'preview/:url',
   },
-  {
-    name: 'sidebar',
-  },
+  // {
+  //   name: 'main',
+  // },
+  // {
+  //   name: 'sidebar',
+  // },
   {
     name: 'login',
   },

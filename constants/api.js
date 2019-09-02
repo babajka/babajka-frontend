@@ -25,6 +25,7 @@ export default {
   articles: {
     getChunk: (pagination = { skip: 0 }) =>
       `${API_URL}/articles${qs.stringify(pagination, queryOptions)}`,
+    fiberyPreview: `${API_URL}/articles/fibery/preview`,
     // legacy
     // getBrands: `${API_URL}/articles/brands`,
     // getAuthors: `${API_URL}/articles/authors`,

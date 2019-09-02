@@ -11,7 +11,7 @@ import Dispatcher from 'lib/components/Dispatcher';
 import { authActions } from 'redux/ducks/auth';
 import { ADMIN_ROUTES, ROUTES_NAMES } from 'routes';
 
-const IGNORE_ROUTES = [ROUTES_NAMES.admin.login];
+const IGNORE_ROUTES = ['login', 'preview'].map(page => ROUTES_NAMES.admin[page]);
 
 const AdminSidebar = ({ router }) => (
   <div className="admin-sidebar">
