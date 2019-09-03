@@ -58,8 +58,8 @@ AudioPlayer.propTypes = {
 
 AudioPlayer.defaultProps = {
   width: '100%',
-  height: '600',
-  type: 'big',
+  height: '165',
+  type: 'small',
   color: '',
 };
 
