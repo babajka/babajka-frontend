@@ -1,5 +1,3 @@
-export const USER_PIC = '/static/images/placeholders/user.png';
-
 export const NETWORKS = [
   {
     id: 'facebook',
