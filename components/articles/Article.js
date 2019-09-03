@@ -17,7 +17,10 @@ import fiberyRenderer from 'utils/fibery/renderer';
 
 import { ROUTES_NAMES } from 'routes';
 
-const Article = ({ router, data: { images, tags, title, subtitle, keywords, text } }) => {
+const Article = ({
+  router,
+  data: { images, tags, title, subtitle, keywords, text, type, audio, video },
+}) => {
   // TODO: think about implementing this logic at backend
   const tagsByTopic = tags.reduce((acc, tag) => {
     const {
@@ -38,7 +41,7 @@ const Article = ({ router, data: { images, tags, title, subtitle, keywords, text
       <MetaKeywords keywords={keywords} />
       <div className="article-page">
         <div className="article-page-margins">{subtitle}</div>
-        <img className="article-page__cover" src={images.page} alt={title} />
+        {type === 'text' && <img className="article-page__cover" src={images.page} alt={title} />}
       </div>
       <div className="article-page-margins article-page__header">
         {/* TODO: hover corresponding image and title simulteneously */}
@@ -62,13 +65,15 @@ const Article = ({ router, data: { images, tags, title, subtitle, keywords, text
         )}
         <div className="article-page__title">{title}</div>
       </div>
-      {/* FIXME(@andemerie) */}
-      {/* audio.trackId */}
-      <AudioPlayer trackId={592430019} />
-      {/* video.videoId */}
-      <VideoPlayer videoId="eSwyzKaIGcg" />
+
       <div className="article-page-margins">
-        <div className="article-page-content">{fiberyRenderer(text.content)}</div>
+        <div className="article-page-content">
+          <div className="article-page-interactive">
+            {type === 'audio' && <AudioPlayer trackId={audio.trackId} />}
+            {type === 'video' && <VideoPlayer videoId={video.videoId} />}
+          </div>
+          {fiberyRenderer(text.content)}
+        </div>
         <div className="article-page__share">
           <ShareButtons url={router.asPath} title={title} />
         </div>
