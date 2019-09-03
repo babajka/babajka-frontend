@@ -1,0 +1,152 @@
+@import 'responsiveness';
+@import 'variables';
+
+.about-page {
+  font-weight: 300;
+  padding-bottom: 3rem;
+  padding-top: 4rem;
+
+  &__header {
+    font-size: 1.5rem;
+    font-weight: 300;
+    line-height: 1.4em;
+    margin: 2rem 0 4rem;
+  }
+
+  &__description-block {
+    margin: 2.5rem 0;
+  }
+
+  &__description-header {
+    font-size: 1.6rem;
+    line-height: 1.35em;
+    margin-bottom: 1.5rem;
+  }
+
+  &__description-text {
+    line-height: 1.42em;
+
+    ul {
+      list-style-position: outside;
+      padding-left: 1.5em;
+    }
+  }
+
+  &__partners {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    margin-left: 1rem;
+  }
+
+  &__partner-logo {
+    margin: 0 1rem;
+  }
+}
+
+@include screen-desktop {
+  .about-page {
+    padding-left: calc((100% - 1020px) / 3);
+    padding-right: calc((100% - 1020px) * 2 / 3);
+
+    &__partner-logo {
+      img {
+        width: 4rem;
+      }
+
+      &--small {
+        img {
+          width: 5.5rem;
+        }
+      }
+
+      &--smallest {
+        img {
+          width: 7rem;
+        }
+      }
+    }
+  }
+}
+
+@include screen-tablet-large {
+  .about-page {
+    padding-left: calc((100% - 818px) / 3);
+    padding-right: calc((100% - 818px) * 2 / 3);
+
+    &__partner-logo {
+      img {
+        width: 4rem;
+      }
+
+      &--small {
+        img {
+          width: 5.5rem;
+        }
+      }
+
+      &--smallest {
+        img {
+          width: 7rem;
+        }
+      }
+    }
+  }
+}
+
+@include screen-tablet {
+  .about-page {
+    padding-left: calc((100% - 624px) / 3);
+    padding-right: calc((100% - 624px) * 2 / 3);
+
+    &__partner-logo {
+      img {
+        width: 3.5rem;
+      }
+
+      &--small {
+        img {
+          width: 4.5rem;
+        }
+      }
+
+      &--smallest {
+        img {
+          width: 6rem;
+        }
+      }
+    }
+  }
+}
+
+@include screen-touch {
+  .about-page {
+    padding-left: calc((100% - 480px) / 3);
+    padding-right: calc((100% - 480px) * 2 / 3);
+
+    &__partner-logo {
+      img {
+        width: 3rem;
+      }
+    }
+  }
+}
+
+@include screen-mobile {
+  .about-page {
+    padding-left: calc((100% - 300px) / 3);
+    padding-right: calc((100% - 300px) * 2 / 3);
+
+    &__partners {
+      margin: 0;
+    }
+
+    &__partner-logo {
+      margin: 0 0.2rem;
+
+      img {
+        width: 3rem;
+      }
+    }
+  }
+}
