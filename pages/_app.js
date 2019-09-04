@@ -27,6 +27,7 @@ import { localize } from 'components/common/Text';
 
 import { DEFAULT_LOCALE, VALID_LOCALES } from 'constants';
 import { getGoogleAnalyticsID } from 'constants/social';
+import { FAVICON_URL } from 'constants/assets';
 
 import clearUtmParams from 'lib/utils/clearUtmParams';
 import { populateRequest } from 'utils/request';
@@ -120,7 +121,7 @@ class Root extends App {
             <MetaKeywords />
             <Head>
               <title>Wir.by | {localize(title, locale)}</title>
-              <link rel="icon" type="image/png" href="/static/images/logo/favicon-colored.png" />
+              <link rel="icon" type="image/png" href={FAVICON_URL} />
             </Head>
             <CoreLayout
               lang={locale}
