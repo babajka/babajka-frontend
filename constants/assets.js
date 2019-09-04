@@ -1,3 +1,7 @@
-// eslint-disable-next-line import/prefer-default-export
 export const FAVICON_URL =
   'https://res.cloudinary.com/wir-by/image/upload/v1567534508/production/favicon/favicon.png';
+
+export const getAppleTouchIcon = isProd =>
+  isProd
+    ? 'https://res.cloudinary.com/wir-by/image/upload/v1567587889/production/favicon/apple-touch-icon.png'
+    : 'https://res.cloudinary.com/wir-by/image/upload/v1567588308/production/favicon/apple-touch-icon-dev.png';
