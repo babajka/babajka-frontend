@@ -3,13 +3,14 @@ import 'styles/pages/about.scss';
 import React from 'react';
 
 import ExternalLink from 'components/common/ExternalLink';
-import Text from 'components/common/Text';
+import Text, { localize } from 'components/common/Text';
+import LocaleContext from 'components/common/LocaleContext';
 
 const buildLogoLink = imgName =>
   `https://res.cloudinary.com/wir-by/image/upload/c_scale,w_250,f_auto,q_auto/v1546529671/production/partners-logos/${imgName}`;
 
-const PartnerLogo = ({ classNames, externalUrl, imgName, altText }) => (
-  <div className={`about-page__partner-logo ${classNames}`}>
+const PartnerLogo = ({ className, externalUrl, imgName, altText }) => (
+  <div className={`about-page__partner-logo ${className || ''}`}>
     <ExternalLink href={externalUrl}>
       <img src={buildLogoLink(imgName)} alt={altText} />
     </ExternalLink>
@@ -67,38 +68,52 @@ const AboutPage = () => (
         <Text id="about.section4-header" />
       </div>
       <div className="about-page__description-text about-page__partners">
-        <PartnerLogo
-          externalUrl="http://shafa-minsk.by/"
-          imgName="shafa_logo.jpg"
-          altText="Лагатып Кніжнай Шафы"
-        />
-        <PartnerLogo
-          externalUrl="http://minsklingfest.by/"
-          imgName="festyval_mou_logo.jpg"
-          altText="Лагатып Фестываля Моў у Мінску"
-        />
-        <PartnerLogo
-          externalUrl="https://vk.com/massaraksh_minsk"
-          imgName="masaraksh_logo.jpg"
-          altText="Лагатып суполкі Масаракш Мінск"
-        />
-        <PartnerLogo
-          classNames="about-page__partner-logo--smallest"
-          externalUrl="https://ethno.by"
-          imgName="ethno_logo.jpg"
-          altText="Лагатып Этнаўсё"
-        />
-        <PartnerLogo
-          classNames="about-page__partner-logo--small"
-          externalUrl="https://libra-gallery.by"
-          imgName="libra_logo.png"
-          altText="Лагатып галерэі Libra"
-        />
-        <PartnerLogo
-          externalUrl="http://brouka.museum.by/"
-          imgName="museum_brouka_logo.jpg"
-          altText="Лагатып Літаратурнага музея Пятруся Броўкі"
-        />
+        {[
+          {
+            id: 'logo-shafa',
+            img: 'shafa_logo.jpg',
+            url: 'http://shafa-minsk.by/',
+          },
+          {
+            id: 'logo-festyval-mou',
+            img: 'festyval_mou_logo.jpg',
+            url: 'http://minsklingfest.by/',
+          },
+          {
+            id: 'logo-masaraksh',
+            img: 'masaraksh_logo.jpg',
+            url: 'https://vk.com/massaraksh_minsk',
+          },
+          {
+            id: 'logo-ethno',
+            img: 'ethno_logo.jpg',
+            url: 'https://ethno.by',
+            className: 'about-page__partner-logo--smallest',
+          },
+          {
+            id: 'logo-libra',
+            img: 'libra_logo.png',
+            url: 'https://libra-gallery.by',
+            className: 'about-page__partner-logo--small',
+          },
+          {
+            id: 'logo-museum-brouka',
+            img: 'museum_brouka_logo.jpg',
+            url: 'http://brouka.museum.by/',
+          },
+        ].map(({ id, img, url, className }) => (
+          <LocaleContext.Consumer>
+            {lang => (
+              <PartnerLogo
+                className={className}
+                id={id}
+                externalUrl={url}
+                imgName={img}
+                altText={localize(`about.${id}`, lang)}
+              />
+            )}
+          </LocaleContext.Consumer>
+        ))}
       </div>
     </div>
   </div>

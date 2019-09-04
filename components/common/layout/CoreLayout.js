@@ -15,8 +15,6 @@ import Header from './Header';
 import Footer from './Footer';
 import Sidebar from './Sidebar';
 
-// const SIDEBAR_HEIGHT = 3300;
-
 const CoreLayout = ({ children, hideFooter, hideSidebar, lang }) => {
   const [sidebarActive, toggleSidebar, setState] = useBoolean(false);
   const rootEl = useRef(null);
@@ -39,15 +37,9 @@ const CoreLayout = ({ children, hideFooter, hideSidebar, lang }) => {
         </div>
 
         {(!hideSidebar || sidebarActive) && (
-          <Sidebar
-            active={sidebarActive}
-            toggleSidebar={toggleSidebar}
-            close={() => setState(false)}
-            // FIXME
-            // long={!height || height > SIDEBAR_HEIGHT}
-            long
-            lang={lang}
-          />
+          <nav className={cn('wir-sidebar', { 'wir-sidebar--expanded': sidebarActive })}>
+            <Sidebar toggleSidebar={toggleSidebar} close={() => setState(false)} lang={lang} />
+          </nav>
         )}
 
         <div className="wir-up">

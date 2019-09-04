@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'next/router';
 import Cookies from 'js-cookie';
-import cn from 'classnames';
 
 import Icon from 'components/common/ui/Icon';
 import Link from 'components/common/Link';
@@ -79,78 +78,61 @@ const mapDispatchToProps = {
   logout: authActions.signOut,
 };
 
-const Sidebar = ({
-  blocks,
-  data,
-  router: { asPath },
-  active,
-  toggleSidebar,
-  close,
-  long,
-  user,
-  logout,
-}) => (
-  <nav className={cn('wir-sidebar', { 'wir-sidebar--expanded': active })}>
-    <aside className="sidebar">
-      <Clickable className="sidebar__icon-close" onClick={toggleSidebar}>
-        <Icon name="times" />
-      </Clickable>
+const Sidebar = ({ blocks, data, router: { asPath }, toggleSidebar, close, user, logout }) => (
+  <aside className="sidebar">
+    <Clickable className="sidebar__icon-close" onClick={toggleSidebar}>
+      <Icon name="times" />
+    </Clickable>
 
-      <LocaleContext.Consumer>
-        {lang => (
-          <ul className="sidebar__langs">
-            {LANGS.filter(({ id }) => id !== lang).map(({ id, label }) => (
-              <li key={id} className="langs__item">
-                <Link route={getLocaleSwitchUrl(asPath, id)} params={{ lang: id }}>
-                  <Clickable onClick={handleLangClick.bind(null, id)}>
-                    <span>{label}</span>
-                  </Clickable>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
-      </LocaleContext.Consumer>
-
-      <div className="sidebar__about-label">
-        <Link route={ROUTES_NAMES.about} onMouseUp={close}>
-          <Text id="sidebar.about" />
-        </Link>
-      </div>
-
-      {user && (
-        // FIXME
-        <div className="sidebar__about-label">
-          <Clickable className="wir-link" onClick={logout}>
-            <Text id="auth.signOut" />
-          </Clickable>
-        </div>
+    <LocaleContext.Consumer>
+      {lang => (
+        <ul className="sidebar__langs">
+          {LANGS.filter(({ id }) => id !== lang).map(({ id, label }) => (
+            <li key={id} className="langs__item">
+              <Link route={getLocaleSwitchUrl(asPath, id)} params={{ lang: id }}>
+                <Clickable onClick={handleLangClick.bind(null, id)}>
+                  <span>{label}</span>
+                </Clickable>
+              </Link>
+            </li>
+          ))}
+        </ul>
       )}
+    </LocaleContext.Consumer>
 
-      {!long && <SidebarSection title="Short Sidebar" data={[]} />}
+    <div className="sidebar__about-label">
+      <Link route={ROUTES_NAMES.about} onMouseUp={close}>
+        <Text id="sidebar.about" />
+      </Link>
+    </div>
 
-      {long &&
-        blocks.map(({ topic, tags }) => (
-          <SidebarSection
-            key={topic}
-            title={<Text id={`topic.${topic}_essentials`} />}
-            data={tags.map(tagId => data.tags[tagId])}
-            renderItem={tag => getTagLink({ tag, onMouseUp: close })}
-            footer={getFooter(topic, { onMouseUp: close })}
-          />
-        ))}
-    </aside>
-  </nav>
+    {user && (
+      // FIXME
+      <div className="sidebar__about-label">
+        <Clickable className="wir-link" onClick={logout}>
+          <Text id="auth.signOut" />
+        </Clickable>
+      </div>
+    )}
+
+    {blocks.map(({ topic, tags }) => (
+      <SidebarSection
+        key={topic}
+        title={<Text id={`topic.${topic}_essentials`} />}
+        data={tags.map(tagId => data.tags[tagId])}
+        renderItem={tag => getTagLink({ tag, onMouseUp: close })}
+        footer={getFooter(topic, { onMouseUp: close })}
+      />
+    ))}
+  </aside>
 );
 
 Sidebar.propTypes = {
   router: PropTypes.shape({
     asPath: PropTypes.string.isRequired,
   }).isRequired,
-  active: PropTypes.bool.isRequired,
   toggleSidebar: PropTypes.func.isRequired,
   close: PropTypes.func.isRequired,
-  long: PropTypes.bool.isRequired,
   blocks: PropTypes.arrayOf(
     PropTypes.shape({
       topic: PropTypes.oneOf(TOPICS).isRequired,

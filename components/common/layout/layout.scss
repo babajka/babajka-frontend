@@ -71,10 +71,12 @@ footer {
 }
 
 .wir-sidebar {
+  bottom: 0;
   flex-shrink: 0;
   min-height: 100vh;
   overflow-x: hidden;
-  position: absolute;
+  overflow-y: scroll;
+  position: fixed;
   right: -240px;
   top: 0;
   transition: 0.5s right;
