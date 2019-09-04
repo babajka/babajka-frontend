@@ -6,6 +6,8 @@ import { LangType } from 'utils/customPropTypes';
 import { LOCALE_CODE } from 'constants';
 import { DEFAULT_KEYWORDS } from 'constants/social';
 
+import { getAppleTouchIcon } from 'constants/assets';
+
 export const MetaTitle = ({ title, type }) => (
   <Head>
     <meta key="meta-title" name="title" content={title} />
@@ -84,6 +86,13 @@ MetaKeywords.propTypes = {
 MetaKeywords.defaultProps = {
   keywords: DEFAULT_KEYWORDS,
 };
+
+export const MetaAppleTouchDevices = ({ title }) => (
+  <Head>
+    <link rel="apple-touch-icon" href={getAppleTouchIcon(__PROD__)} />
+    <meta name="apple-mobile-web-app-title" content={title} />
+  </Head>
+);
 
 const Metatags = ({ url }) => (
   <Head>

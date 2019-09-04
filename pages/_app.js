@@ -22,12 +22,13 @@ import Metatags, {
   MetaImage,
   MetaLocale,
   MetaKeywords,
+  MetaAppleTouchDevices,
 } from 'components/social/Metatags';
 import { localize } from 'components/common/Text';
 
 import { DEFAULT_LOCALE, VALID_LOCALES } from 'constants';
 import { getGoogleAnalyticsID } from 'constants/social';
-import { FAVICON_URL, getAppleTouchIcon } from 'constants/assets';
+import { FAVICON_URL } from 'constants/assets';
 
 import clearUtmParams from 'lib/utils/clearUtmParams';
 import { populateRequest } from 'utils/request';
@@ -107,7 +108,12 @@ class Root extends App {
     const locale = getLocale(router);
 
     const pageProps = { lang: locale, routerQuery: router.query };
-    const { title = 'common.project-type', hideSidebar, hideFooter } = getLayoutProps(pageProps);
+    const {
+      title = 'common.project-type',
+      titleApple = 'common.project-apple-title',
+      hideSidebar,
+      hideFooter,
+    } = getLayoutProps(pageProps);
 
     return (
       <Container>
@@ -119,10 +125,10 @@ class Root extends App {
             <MetaImage />
             <MetaLocale locale={locale} />
             <MetaKeywords />
+            <MetaAppleTouchDevices title={localize(titleApple, locale)} />
             <Head>
               <title>Wir.by | {localize(title, locale)}</title>
               <link rel="icon" type="image/png" href={FAVICON_URL} />
-              <link rel="apple-touch-icon" href={getAppleTouchIcon(__PROD__)} />
             </Head>
             <CoreLayout
               lang={locale}
