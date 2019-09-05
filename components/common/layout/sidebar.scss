@@ -9,8 +9,12 @@
   max-width: 400px;
   min-height: 100vh;
   min-width: 240px;
-  padding: 21px 24px 60px;
+  padding: 21px 24px 120px;
   width: calc(240px + (100vw - #{$desktop-with-sidebar}) * 2 / 3);
+
+  @include sidebar-visible {
+    height: 100%;
+  }
 
   &__langs {
     color: $primary;
