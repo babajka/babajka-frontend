@@ -1,23 +1,36 @@
 import 'styles/pages/about.scss';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import ExternalLink from 'components/common/ExternalLink';
 import Text, { localize } from 'components/common/Text';
-import LocaleContext from 'components/common/LocaleContext';
+
+import { PARTNERS } from 'constants/partners';
 
 const buildLogoLink = imgName =>
   `https://res.cloudinary.com/wir-by/image/upload/c_scale,w_250,f_auto,q_auto/v1546529671/production/partners-logos/${imgName}`;
 
 const PartnerLogo = ({ className, externalUrl, imgName, altText }) => (
-  <div className={`about-page__partner-logo ${className || ''}`}>
+  <div className={`about-page__partner-logo ${className}`}>
     <ExternalLink href={externalUrl}>
       <img src={buildLogoLink(imgName)} alt={altText} />
     </ExternalLink>
   </div>
 );
 
-const AboutPage = () => (
+PartnerLogo.propTypes = {
+  className: PropTypes.string,
+  externalUrl: PropTypes.string.isRequired,
+  imgName: PropTypes.string.isRequired,
+  altText: PropTypes.string.isRequired,
+};
+
+PartnerLogo.defaultProps = {
+  className: '',
+};
+
+const AboutPage = ({ lang }) => (
   <div className="about-page">
     <div className="about-page__header">
       <Text id="about.general-description" />
@@ -68,51 +81,15 @@ const AboutPage = () => (
         <Text id="about.section4-header" />
       </div>
       <div className="about-page__description-text about-page__partners">
-        {[
-          {
-            id: 'logo-shafa',
-            img: 'shafa_logo.jpg',
-            url: 'http://shafa-minsk.by/',
-          },
-          {
-            id: 'logo-festyval-mou',
-            img: 'festyval_mou_logo.jpg',
-            url: 'http://minsklingfest.by/',
-          },
-          {
-            id: 'logo-masaraksh',
-            img: 'masaraksh_logo.jpg',
-            url: 'https://vk.com/massaraksh_minsk',
-          },
-          {
-            id: 'logo-ethno',
-            img: 'ethno_logo.jpg',
-            url: 'https://ethno.by',
-            className: 'about-page__partner-logo--smallest',
-          },
-          {
-            id: 'logo-libra',
-            img: 'libra_logo.png',
-            url: 'https://libra-gallery.by',
-            className: 'about-page__partner-logo--small',
-          },
-          {
-            id: 'logo-museum-brouka',
-            img: 'museum_brouka_logo.jpg',
-            url: 'http://brouka.museum.by/',
-          },
-        ].map(({ id, img, url, className }) => (
-          <LocaleContext.Consumer>
-            {lang => (
-              <PartnerLogo
-                className={className}
-                id={id}
-                externalUrl={url}
-                imgName={img}
-                altText={localize(`about.${id}`, lang)}
-              />
-            )}
-          </LocaleContext.Consumer>
+        {PARTNERS.map(({ id, img, url, className }) => (
+          <PartnerLogo
+            className={className}
+            id={id}
+            key={id}
+            externalUrl={url}
+            imgName={img}
+            altText={localize(`about.${id}`, lang)}
+          />
         ))}
       </div>
     </div>
