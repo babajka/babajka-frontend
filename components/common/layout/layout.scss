@@ -36,6 +36,12 @@ footer {
     display: flex;
     flex-direction: row;
   }
+
+  &--sidebar-expanded {
+    overflow: hidden;
+    overflow-x: unset;
+    position: fixed;
+  }
 }
 
 .wir-space {
@@ -59,7 +65,6 @@ footer {
   height: 100%;
   left: 0;
   opacity: 0.5;
-  position: absolute;
   right: 0;
   top: 0;
   width: 100%;
@@ -67,6 +72,8 @@ footer {
 
   &--active {
     display: block;
+    overflow-y: scroll;
+    position: fixed;
   }
 }
 
