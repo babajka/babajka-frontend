@@ -21,7 +21,11 @@ const CoreLayout = ({ children, hideFooter, hideSidebar, lang }) => {
 
   return (
     <>
-      <div id="wir-root" className="wir-root" ref={rootEl}>
+      <div
+        id="wir-root"
+        className={cn('wir-root', { 'wir-root--sidebar-expanded': sidebarActive })}
+        ref={rootEl}
+      >
         <div className="wir-space">
           <Header toggleSidebar={toggleSidebar} />
 
