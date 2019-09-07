@@ -32,17 +32,14 @@ const CoreLayout = ({ children, hideFooter, hideSidebar, lang }) => {
           <main className="wir-content">{children}</main>
 
           {!hideFooter && <Footer />}
-
-          <Clickable
-            tag="div"
-            className={cn('wir-overlay', { 'wir-overlay--active': sidebarActive })}
-            onClick={toggleSidebar}
-          />
         </div>
 
         {(!hideSidebar || sidebarActive) && (
           <nav className={cn('wir-sidebar', { 'wir-sidebar--expanded': sidebarActive })}>
-            <Sidebar toggleSidebar={toggleSidebar} close={() => setState(false)} lang={lang} />
+            <div className="wir-sidebar__container">
+              <Sidebar toggleSidebar={toggleSidebar} close={() => setState(false)} lang={lang} />
+              <Clickable tag="div" className="wir-sidebar__shadowed-area" onClick={toggleSidebar} />
+            </div>
           </nav>
         )}
 
