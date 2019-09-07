@@ -4,6 +4,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ArticleCard from 'components/articles/cards/ArticleCard';
+import PlaceholderCard from 'components/articles/cards/PlaceholderCard';
+
 import { ArticlesArray } from 'utils/customPropTypes';
 
 const SIZE_BY_LAYOUT = {
@@ -20,6 +22,11 @@ const TagPageBlockCD = ({ articles, layout }) => (
         <ArticleCard {...article} />
       </div>
     ))}
+    {articles.length === 2 && layout === 'row-of-three' && (
+      <div className="tag-page-block-cd__card">
+        <PlaceholderCard />
+      </div>
+    )}
   </div>
 );
 
