@@ -6,4 +6,4 @@ export const ROW_SIZE = 4;
 
 export const COMPLEX_ROW_SIZE = 5;
 
-export const ARTICLE_TYPES = ['text', 'video'];
+export const ARTICLE_TYPES = ['text', 'video', 'audio'];

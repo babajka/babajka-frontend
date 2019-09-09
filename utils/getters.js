@@ -12,11 +12,11 @@ export const getDiary = ({ author = '', text = '', day, month, year } = {}) => (
 });
 
 export const getLocalizedCollection = (
-  { slug, imageUrl, name, description, /* prev, next, */ articleIndex },
+  { slug, cover, name, description, /* prev, next, */ articleIndex },
   lang
 ) => ({
   slug,
-  imageUrl,
+  cover,
   name: localize(name, lang),
   description: localize(description, lang),
   // FIXME: for now prev & next articles aren't showing on article page

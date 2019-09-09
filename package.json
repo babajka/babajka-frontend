@@ -91,7 +91,7 @@
   "main": "index.js",
   "devDependencies": {
     "@babel/plugin-proposal-export-default-from": "^7.2.0",
-    "@commitlint/cli": "^7.5.2",
+    "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^7.5.0",
     "@semantic-release/changelog": "^3.0.2",
     "@semantic-release/exec": "^3.3.2",

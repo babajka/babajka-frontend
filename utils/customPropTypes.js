@@ -22,7 +22,7 @@ export const CollectionModel = {
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
-  imageUrl: PropTypes.string,
+  cover: PropTypes.string.isRequired,
 };
 
 export const CollectionShape = PropTypes.shape(CollectionModel);
@@ -54,10 +54,10 @@ export const ArticleCoversShape = PropTypes.shape({
   vertical: PropTypes.string.isRequired,
 });
 
-export const ArticleVideoShape = PropTypes.shape({
+export const ArticleMediaShape = PropTypes.shape({
   platform: PropTypes.string,
-  videoId: PropTypes.string,
-  videoUrl: PropTypes.string,
+  id: PropTypes.string,
+  url: PropTypes.string,
 });
 
 export const ArticleType = PropTypes.oneOf(ARTICLE_TYPES);
@@ -75,7 +75,8 @@ export const ArticleModel = {
   subtitle: PropTypes.string.isRequired,
   type: ArticleType.isRequired,
   images: ArticleCoversShape.isRequired,
-  video: ArticleVideoShape,
+  video: ArticleMediaShape,
+  audio: ArticleMediaShape,
   metadata: MetadataShape.isRequired,
   keywords: PropTypes.string.isRequired,
   tags: TagsArray.isRequired,
