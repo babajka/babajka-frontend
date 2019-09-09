@@ -69,8 +69,8 @@ const Article = ({
       <div className="article-page-margins">
         <div className="article-page-content">
           <div className="article-page-interactive">
-            {type === 'audio' && <AudioPlayer trackId={audio.trackId} />}
-            {type === 'video' && <VideoPlayer videoId={video.videoId} />}
+            {type === 'audio' && <AudioPlayer trackId={audio.id} />}
+            {type === 'video' && <VideoPlayer videoId={video.id} />}
           </div>
           {fiberyRenderer(text.content)}
         </div>

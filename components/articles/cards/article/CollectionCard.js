@@ -8,7 +8,7 @@ const CollectionCard = ({
   images,
   title,
   author,
-  collection: { articleIndex, name, imageUrl },
+  collection: { articleIndex, name, cover },
   brand,
 }) => (
   <>
@@ -22,7 +22,7 @@ const CollectionCard = ({
           {articleIndex + 1} <Text id="article.collection-part" />
           <div className="collection__collection-name">{name}</div>
         </div>
-        <img className="collection__aux-image" src={imageUrl} alt={name} title={name} />
+        <img className="collection__aux-image" src={cover} alt={name} title={name} />
       </div>
       <div className="collection__content-bottom">
         <div className="collection__title">{title}</div>
