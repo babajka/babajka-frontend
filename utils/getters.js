@@ -59,16 +59,7 @@ export const getLocalizedArticle = (article, lang) => {
   if (!article) {
     return null;
   }
-  const {
-    _id: id,
-    locales,
-    collection,
-    publishAt,
-    tags,
-    // FIXME
-    keywords = '',
-    ...rest
-  } = article;
+  const { _id: id, locales, collection, publishAt, tags, ...rest } = article;
   const { text, ...localized } = localize(locales, lang);
   return {
     ...rest,
@@ -76,7 +67,6 @@ export const getLocalizedArticle = (article, lang) => {
     text: text || {},
     id,
     publishAt,
-    keywords,
     collection: collection && getLocalizedCollection(collection, lang),
     published: !!publishAt && moment(publishAt).isBefore(moment()),
     tags: getLocalizedTags(tags, lang),
