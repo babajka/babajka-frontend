@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import Head from 'next/head';
 
 import { LangType } from 'utils/customPropTypes';
 import { LOCALE_CODE } from 'constants';
+import { DEFAULT_KEYWORDS } from 'constants/social';
 
 export const MetaTitle = ({ title, type }) => (
   <Head>
@@ -73,12 +73,16 @@ MetaLocale.defaultProps = {
 
 export const MetaKeywords = ({ keywords }) => (
   <Head>
-    <meta key="keywords" content={keywords} />
+    <meta key="keywords" name="keywords" content={keywords} />
   </Head>
 );
 
 MetaKeywords.propTypes = {
-  keywords: PropTypes.string.isRequired,
+  keywords: PropTypes.string,
+};
+
+MetaKeywords.defaultProps = {
+  keywords: DEFAULT_KEYWORDS,
 };
 
 const Metatags = ({ url }) => (

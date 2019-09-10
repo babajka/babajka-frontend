@@ -66,3 +66,47 @@ export const SHARE_NETWORKS = [
 ];
 
 export const getGoogleAnalyticsID = isProd => (isProd ? 'UA-117143376-2' : 'UA-117143376-1');
+
+export const DEFAULT_KEYWORDS = [
+  // common
+  'wir',
+  'wirby',
+  'vir',
+  'virby',
+  'вір',
+  'вірбай',
+  'вир',
+  'вирбай',
+  // be
+  'культура',
+  'беларуская культура',
+  'беларуская мова',
+  'гуманітарныя навукі',
+  'сусветная культура',
+  'мастацтва',
+  'кіно',
+  'літаратура',
+  'паэзія',
+  'музыка',
+  // ru
+  'культура',
+  'беларусская культура',
+  'белорусская культура',
+  'гуманитарные науки',
+  'всемирная культура',
+  'искусство',
+  'кино',
+  'литература',
+  'поэзия',
+  'музыка',
+  // en
+  'culture',
+  'belarusian culture',
+  'humanities',
+  'world culture',
+  'art',
+  'cinema',
+  'literature',
+  'poetry',
+  'music',
+].join(', ');

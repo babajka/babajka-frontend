@@ -21,6 +21,7 @@ import Metatags, {
   MetaDescription,
   MetaImage,
   MetaLocale,
+  MetaKeywords,
 } from 'components/social/Metatags';
 import { localize } from 'components/common/Text';
 
@@ -116,6 +117,7 @@ class Root extends App {
             <MetaDescription description={localize('common.project-description', locale)} />
             <MetaImage />
             <MetaLocale locale={locale} />
+            <MetaKeywords />
             <Head>
               <title>Wir.by | {localize(title, locale)}</title>
               <link rel="icon" type="image/png" href="/static/images/logo/favicon-colored.png" />
