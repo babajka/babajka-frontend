@@ -58,14 +58,33 @@ footer {
   flex: 1 0 auto;
 }
 
+.wir-overlay {
+  background-color: $primary-black;
+  bottom: 0;
+  display: none;
+  height: 100%;
+  left: 0;
+  opacity: 0.5;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+
+  &--active {
+    display: block;
+    overflow-y: scroll;
+    position: fixed;
+  }
+}
+
 .wir-sidebar {
+  background-color: $primary-concrete;
   bottom: 0;
   flex-shrink: 0;
   min-height: 100vh;
   -webkit-overflow-scrolling: touch;
   overflow-x: hidden;
   overflow-y: scroll;
-  padding-left: 0;
   position: fixed;
   right: -240px;
   top: 0;
@@ -83,33 +102,11 @@ footer {
     // This represents the state when sidebar is positioned on top of other content.
     // This happens when one toggles burger button.
     // This only possible on screens which are less than $desktop-with-sidebar.
-    padding-left: 100vw;
 
     @include sidebar-invisible {
       height: 100%;
       right: 0;
       transition: 0.5s right;
-    }
-  }
-
-  &__container {
-    display: block;
-    position: relative;
-  }
-
-  &__shadowed-area {
-    background-color: $primary-black;
-    height: 100%;
-    opacity: 0.5;
-    overflow: hidden;
-    position: absolute;
-    right: 240px;
-    top: 0;
-    width: 100vw;
-    z-index: 100;
-
-    @include sidebar-visible {
-      display: none;
     }
   }
 }
