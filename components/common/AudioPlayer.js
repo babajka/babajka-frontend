@@ -49,7 +49,7 @@ const AudioPlayer = ({ trackId, type, width, height, color }) => (
 );
 
 AudioPlayer.propTypes = {
-  trackId: PropTypes.number.isRequired,
+  trackId: PropTypes.string.isRequired,
   width: PropTypes.string,
   height: PropTypes.string,
   color: PropTypes.string,

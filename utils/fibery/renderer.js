@@ -7,8 +7,6 @@ import ExternalLink from 'components/common/ExternalLink';
 import VideoPlayer from 'components/common/VideoPlayer';
 import parseYoutubeUrl from 'lib/utils/parseYoutubeUrl';
 
-import { getUrl } from './utils';
-
 const returnNull = () => null;
 
 const renderContent = content => {
@@ -71,7 +69,7 @@ const RENDERERS = {
     createElement(`h${level}`, { key }, renderContent(content)),
   image: ({ key, attrs: { alt, src, title } }) => (
     <span key={key} className="article-image article-page-content__right-element">
-      <img className="article-image__image" alt={alt} src={getUrl(src)} />
+      <img className="article-image__image" alt={alt} src={src} />
       <span className="article-image__caption">{title}</span>
     </span>
   ),

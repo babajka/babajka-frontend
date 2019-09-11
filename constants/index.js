@@ -28,8 +28,6 @@ const STATIC_PATHS = ['static', '_next'];
 
 const TOPICS = ['themes', 'locations', 'times', 'personalities', 'authors', 'brands'];
 
-const FIBERY_HOST = 'https://wir.fibery.io';
-
 module.exports = {
   DATE_FORMAT,
   SHORT_DATE_FORMAT,
@@ -41,5 +39,4 @@ module.exports = {
   STATIC_PATHS,
   VALID_LOCALES,
   TOPICS,
-  FIBERY_HOST,
 };
