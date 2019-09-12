@@ -15,8 +15,6 @@ import { renderTag, getTopicLink } from 'utils/tags';
 
 import { TOPICS } from 'constants';
 
-const BlockShape = PropTypes.arrayOf(ArticlesArray);
-
 const PAGE_LEVEL_ORDER = ['B1', 'C', 'D', 'C', 'B2', 'C', 'D', 'C'];
 
 const BLOCK_BY_LEVEL = {
@@ -33,29 +31,24 @@ const LAYOUT_BY_LEVEL = {
   D: 'row-of-two',
 };
 
-const TagArticles = ({ blocks }) => {
-  const [data] = blocks;
-
-  // TODO: To verify this conditional statement is correct.
-  if (data[1].length === 0) {
-    const articleData = data[0][0];
-    const { articleId } = articleData;
+const ArticlesBlocks = ({ articlesCount, blocks }) => {
+  if (articlesCount === 1) {
+    const [article] = blocks[0];
+    const { articleId } = article;
     return (
-      <>
-        <FeaturedBlock
-          // This is a workaround in order to use FeaturedBlock as it is.
-          block={{ frozen: true, articleId }}
-          data={{ articles: { [articleId]: articleData } }}
-        />
-      </>
+      <FeaturedBlock
+        // This is a workaround in order to use FeaturedBlock as it is.
+        block={{ frozen: true, articleId }}
+        data={{ articles: { [articleId]: article } }}
+      />
     );
   }
 
-  return data.map((_, index) => {
+  return blocks.map((block, index) => {
     const levelName = PAGE_LEVEL_ORDER[index % PAGE_LEVEL_ORDER.length];
     const Block = BLOCK_BY_LEVEL[levelName];
     // eslint-disable-next-line react/no-array-index-key
-    return <Block key={index} articles={data[index]} layout={LAYOUT_BY_LEVEL[levelName]} />;
+    return <Block key={index} articles={block} layout={LAYOUT_BY_LEVEL[levelName]} />;
   });
 };
 
@@ -68,7 +61,8 @@ class TagPage extends Component {
       tag: PropTypes.string.isRequired,
     }).isRequired,
     tag: TagShape.isRequired,
-    blocks: PropTypes.arrayOf(BlockShape).isRequired,
+    blocks: PropTypes.arrayOf(ArticlesArray).isRequired,
+    articlesCount: PropTypes.number.isRequired,
   };
 
   static getLayoutProps = ({ routerQuery: { topic } }) => ({
@@ -83,6 +77,7 @@ class TagPage extends Component {
       routerQuery: { topic },
       tag,
       blocks,
+      articlesCount,
     } = this.props;
 
     return (
@@ -93,7 +88,7 @@ class TagPage extends Component {
             <div className="tag-page__title">{renderTag(tag)}</div>
           </div>
         </div>
-        <TagArticles blocks={blocks} />
+        <ArticlesBlocks articlesCount={articlesCount} blocks={blocks} />
       </div>
     );
   }
