@@ -24,8 +24,14 @@ export const getTopicLink = ({ topic, dark, postfix = 'all_mainPage' }) => (
   </Link>
 );
 
-export const getTagLink = ({ tag, tag: { topicSlug, slug }, dark }) => (
-  <Link key={slug} route={ROUTES_NAMES.tag} params={{ topic: topicSlug, tag: slug }} dark={dark}>
-    {renderTag(tag)}
+export const TagLink = ({ topic, tag, children, ...props }) => (
+  <Link route={ROUTES_NAMES.tag} params={{ topic, tag }} {...props}>
+    {children}
   </Link>
+);
+
+export const getTagLink = ({ tag, tag: { topicSlug, slug }, dark }) => (
+  <TagLink key={slug} topic={topicSlug} tag={slug} dark={dark}>
+    {renderTag(tag)}
+  </TagLink>
 );

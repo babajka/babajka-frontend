@@ -8,10 +8,26 @@ import Icon from 'components/common/ui/Icon';
 
 const getClass = (cls, err) => `${cls}${err ? ` ${cls}--error` : ''}`;
 
-const Input = ({ pending, leftIcon, rightIcon, disabled, error, onRightClick, ...props }) => (
+const Input = ({
+  pending,
+  leftIcon,
+  rightIcon,
+  disabled,
+  error,
+  onRightClick,
+  placeholder,
+  ...props
+}) => (
   <>
     <div className="wir-input">
-      <input className="wir-input__input" type="text" disabled={disabled} {...props} />
+      <input
+        className="wir-input__input"
+        type="text"
+        disabled={disabled}
+        placeholder={placeholder}
+        aria-label={placeholder}
+        {...props}
+      />
       {pending && (
         <span className="wir-input__icon wir-input__icon--left wir-input__icon--loading">
           <Icon name="circle-notch" />
@@ -45,6 +61,7 @@ Input.propTypes = {
   iconPack: PropTypes.string,
   error: PropTypes.node,
   onRightClick: PropTypes.func,
+  placeholder: PropTypes.string,
   /* eslint-enable */
 };
 
