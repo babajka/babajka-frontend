@@ -31,9 +31,10 @@ export const CollectionsArray = PropTypes.arrayOf(CollectionShape);
 
 export const LangType = PropTypes.oneOf(VALID_LOCALES);
 
+export const TopicSlug = PropTypes.oneOf(TOPICS);
 export const TopicShape = PropTypes.shape({
   id: PropTypes.string.isRequired,
-  slug: PropTypes.oneOf(TOPICS).isRequired,
+  slug: TopicSlug.isRequired,
 });
 
 // export const TopicsArray = PropTypes.arrayOf(TopicShape);
@@ -41,7 +42,7 @@ export const TopicsById = PropTypes.objectOf(TopicShape);
 
 export const TagShape = PropTypes.shape({
   id: PropTypes.string.isRequired,
-  topic: TopicShape.isRequired,
+  topicSlug: TopicSlug.isRequired,
   content: PropTypes.object.isRequired,
 });
 
@@ -79,7 +80,7 @@ export const ArticleModel = {
   audio: ArticleMediaShape,
   metadata: MetadataShape.isRequired,
   keywords: PropTypes.string.isRequired,
-  tags: TagsArray.isRequired,
+  tagsByTopic: PropTypes.objectOf(TagsArray).isRequired,
   theme: PropTypes.oneOf(['light', 'dark']).isRequired,
   color: PropTypes.string.isRequired,
 };

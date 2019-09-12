@@ -19,6 +19,7 @@ import { TagsById, UserShape, IdsArray } from 'utils/customPropTypes';
 import { getTagLink, getTopicLink } from 'utils/tags';
 
 import { TOPICS, LANGS } from 'constants';
+import { TOPIC } from 'constants/misc';
 import { LOCALE_COOKIE_NAME } from 'constants/server';
 import { ROUTES_NAMES } from 'routes';
 
@@ -56,7 +57,7 @@ SidebarSection.defaultProps = {
 };
 
 const getFooter = topic => {
-  if (topic === 'authors') {
+  if (topic === TOPIC.authors) {
     return (
       <Link route={ROUTES_NAMES.about}>
         <Text id="sidebar.all-team" />

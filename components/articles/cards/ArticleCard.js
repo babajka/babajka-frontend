@@ -6,20 +6,15 @@ import PropTypes from 'prop-types';
 import Text from 'components/common/Text';
 
 import { TagsArray, CollectionShape, ArticleCoversShape, ArticleType } from 'utils/customPropTypes';
+import { renderNodeList } from 'utils/formatters';
 import { renderTag } from 'utils/tags';
 import { linkCn } from 'utils/ui';
 
-import { TOPIC } from 'constants/misc';
 import { ROUTES_NAMES } from 'routes';
 
 import CardWrapper, { SIZES } from './CardWrapper';
 import CollectionCard from './article/CollectionCard';
 import VideoCard from './article/VideoCard';
-
-const getBrand = tags => {
-  const brandTag = tags.find(({ topic }) => topic.slug === 'brands');
-  return !!brandTag && brandTag.content;
-};
 
 // TODO: fix storybook
 const ArticleCard = props => {
@@ -27,16 +22,19 @@ const ArticleCard = props => {
     size,
     theme,
     subtitle,
-    tags,
     collection,
     color,
     images: { horizontal, vertical },
     title,
     type,
     slug,
+    tagsByTopic,
   } = props;
   const dark = theme === 'dark';
-  const brand = getBrand(tags);
+  const {
+    brands: [brand],
+    authors,
+  } = tagsByTopic;
   const wrapperProps = {
     size,
     dark,
@@ -60,8 +58,6 @@ const ArticleCard = props => {
     );
   }
 
-  const authors = tags.filter(({ topic }) => topic.slug === TOPIC.authors);
-
   return (
     <CardWrapper {...wrapperProps} className="article">
       <div className="article__cover-wrapper">
@@ -74,15 +70,7 @@ const ArticleCard = props => {
       <div className="article__content">
         <div>
           <div className="article__title">{title}</div>
-          <div className="article__author">
-            {authors.map((tag, i) => (
-              // TODO: extract to `renderList` helper
-              <span key={tag.id}>
-                {renderTag(tag)}
-                {i !== authors.length - 1 && ', '}
-              </span>
-            ))}
-          </div>
+          <div className="article__author">{renderNodeList(authors.map(renderTag))}</div>
         </div>
         <div className="article__content-bottom">
           <span className="article__description">{subtitle}</span>
@@ -107,7 +95,7 @@ ArticleCard.propTypes = {
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string.isRequired,
   images: ArticleCoversShape.isRequired,
-  tags: TagsArray,
+  tagsByTopic: PropTypes.objectOf(TagsArray).isRequired,
   collection: CollectionShape,
   type: ArticleType.isRequired,
   slug: PropTypes.string.isRequired,
@@ -116,7 +104,6 @@ ArticleCard.propTypes = {
 ArticleCard.defaultProps = {
   size: 'auto',
   theme: 'light',
-  tags: [],
   collection: null,
 };
 

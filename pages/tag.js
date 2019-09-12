@@ -93,17 +93,7 @@ class TagPage extends Component {
             <div className="tag-page__title">{renderTag(tag)}</div>
           </div>
         </div>
-
         <TagArticles blocks={blocks} />
-
-        {/* FIXME */}
-        {/* <ButtonGroup>
-          {BUTTONS.map(({ id }) => (
-            <Button key={id}>
-              <Text id={`common.${id}`} />
-            </Button>
-          ))}
-        </ButtonGroup> */}
       </div>
     );
   }

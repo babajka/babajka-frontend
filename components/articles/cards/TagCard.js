@@ -4,12 +4,13 @@ import './person.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { TopicShape } from 'utils/customPropTypes';
+import { TopicSlug } from 'utils/customPropTypes';
 import { ROUTES_NAMES } from 'routes';
+import { TOPIC } from 'constants/misc';
 
 import CardWrapper, { SIZES } from './CardWrapper';
 
-const TagCard = ({ slug, topic, content, theme, size }) => {
+const TagCard = ({ slug, topicSlug, content, theme, size }) => {
   const dark = theme === 'dark';
   const wrapperProps = {
     size,
@@ -17,13 +18,13 @@ const TagCard = ({ slug, topic, content, theme, size }) => {
     linkProps: {
       route: ROUTES_NAMES.tag,
       params: {
-        topic: topic.slug,
+        topic: topicSlug,
         tag: slug,
       },
     },
   };
 
-  if (topic.slug === 'locations') {
+  if (topicSlug === TOPIC.locations) {
     const { title, image } = content;
     return (
       <CardWrapper {...wrapperProps} image={image} alt={title} className="location">
@@ -32,7 +33,7 @@ const TagCard = ({ slug, topic, content, theme, size }) => {
     );
   }
 
-  if (topic.slug === 'personalities') {
+  if (topicSlug === TOPIC.personalities) {
     const { name, description, subtitle, color, image } = content;
     return (
       <CardWrapper {...wrapperProps} color={color} className="person">
@@ -55,7 +56,7 @@ TagCard.propTypes = {
   slug: PropTypes.string.isRequired,
   size: PropTypes.oneOf(SIZES),
   theme: PropTypes.oneOf(['light', 'dark']),
-  topic: TopicShape.isRequired,
+  topicSlug: TopicSlug.isRequired,
   content: PropTypes.shape({
     title: PropTypes.string,
     subtitle: PropTypes.string,
