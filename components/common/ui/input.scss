@@ -19,7 +19,8 @@
     }
 
     &--loading {
-      animation: spin 1.3s linear infinite;
+      animation: spin 1s linear infinite;
+      height: 26px;
     }
   }
 
