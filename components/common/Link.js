@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import noop from 'lodash/noop';
 
 import { useLocalization, useLocaleContext } from 'components/common/Text';
 
@@ -17,6 +18,7 @@ const Link = ({
   target,
   titleId,
   title,
+  onMouseUp,
   ...props
 }) => {
   const lang = useLocaleContext();
@@ -34,6 +36,7 @@ const Link = ({
           className: linkCn({ className, disabled, dark, active }),
           target,
           title: useLocalization(titleId) || title,
+          onMouseUp,
         },
         children
       )}
@@ -50,6 +53,7 @@ Link.propTypes = {
   // a props
   titleId: PropTypes.string,
   title: PropTypes.string,
+  onMouseUp: PropTypes.func,
 
   // ui props
   className: PropTypes.string,
@@ -69,6 +73,7 @@ Link.defaultProps = {
 
   titleId: '',
   title: '',
+  onMouseUp: noop,
 };
 
 export default Link;

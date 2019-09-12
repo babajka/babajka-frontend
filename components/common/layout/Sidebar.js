@@ -56,15 +56,15 @@ SidebarSection.defaultProps = {
   footer: null,
 };
 
-const getFooter = topic => {
+const getFooter = (topic, linkProps) => {
   if (topic === TOPIC.authors) {
     return (
-      <Link route={ROUTES_NAMES.about}>
+      <Link route={ROUTES_NAMES.about} {...linkProps}>
         <Text id="sidebar.all-team" />
       </Link>
     );
   }
-  return getTopicLink({ topic });
+  return getTopicLink({ topic, ...linkProps });
 };
 
 const handleLangClick = Cookies.set.bind(null, LOCALE_COOKIE_NAME);
@@ -85,6 +85,7 @@ const Sidebar = ({
   router: { asPath },
   active,
   toggleSidebar,
+  close,
   long,
   user,
   logout,
@@ -112,7 +113,7 @@ const Sidebar = ({
       </LocaleContext.Consumer>
 
       <div className="sidebar__about-label">
-        <Link route={ROUTES_NAMES.about}>
+        <Link route={ROUTES_NAMES.about} onMouseUp={close}>
           <Text id="sidebar.about" />
         </Link>
       </div>
@@ -134,8 +135,8 @@ const Sidebar = ({
             key={topic}
             title={<Text id={`topic.${topic}_essentials`} />}
             data={tags.map(tagId => data.tags[tagId])}
-            renderItem={tag => getTagLink({ tag })}
-            footer={getFooter(topic)}
+            renderItem={tag => getTagLink({ tag, onMouseUp: close })}
+            footer={getFooter(topic, { onMouseUp: close })}
           />
         ))}
     </aside>
@@ -148,6 +149,7 @@ Sidebar.propTypes = {
   }).isRequired,
   active: PropTypes.bool.isRequired,
   toggleSidebar: PropTypes.func.isRequired,
+  close: PropTypes.func.isRequired,
   long: PropTypes.bool.isRequired,
   blocks: PropTypes.arrayOf(
     PropTypes.shape({
