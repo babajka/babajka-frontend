@@ -2,7 +2,6 @@ import moment from 'moment';
 import chunk from 'lodash/chunk';
 
 import { TOPICS } from 'constants';
-import { TAG_BLOCK_SIZE, TAG_LEVELS_SIZES } from 'constants/misc';
 import { localize, localizeArray, localizeFields } from 'utils/localization';
 
 export const getDiary = ({ author = '', text = '', day, month, year } = {}) => ({
@@ -102,14 +101,10 @@ export const getLocalizedTeam = localizeArray(localizeFields(['name', 'role']));
 
 export const getLocalizedVacancies = localizeArray(localizeFields(['title', 'description']));
 
-export const getTagBlockLevels = articles =>
-  TAG_LEVELS_SIZES.reduce(
-    ({ start, result }, levelSize) => {
-      const end = start + levelSize;
-      result.push(articles.slice(start, end));
-      return { result, start: end };
-    },
-    { start: 0, result: [] }
-  ).result;
-
-export const getTagBlocks = articles => chunk(articles, TAG_BLOCK_SIZE).map(getTagBlockLevels);
+// returns list of articles coupled by 2 or 3
+// 5 articles = 2 blocks (2 + 3)
+export const getArticlesBlocks = articles =>
+  chunk(articles, 5).reduce(
+    (blocks, blockOf5) => blocks.concat([blockOf5.slice(0, 2), blockOf5.slice(2)]),
+    []
+  );
