@@ -89,7 +89,7 @@ const Sidebar = ({
   user,
   logout,
 }) => (
-  <div className={cn('wir-sidebar', { 'wir-sidebar--expanded': active })}>
+  <nav className={cn('wir-sidebar', { 'wir-sidebar--expanded': active })}>
     <aside className="sidebar">
       <Clickable className="sidebar__icon-close" onClick={toggleSidebar}>
         <Icon name="times" />
@@ -139,7 +139,7 @@ const Sidebar = ({
           />
         ))}
     </aside>
-  </div>
+  </nav>
 );
 
 Sidebar.propTypes = {

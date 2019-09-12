@@ -1,9 +1,10 @@
 import './diary.scss';
 
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
+import Text from 'components/common/Text';
 import Clickable from 'components/common/Clickable';
 import TextWithSeparator from 'lib/components/TextWithSeparator';
 import Icon from 'components/common/ui/Icon';
@@ -23,6 +24,7 @@ const mapDispatchToProps = {
   getPrev: () => diaryActions.getClosest('prev'),
 };
 
+// FIXME
 const IMAGE_MOCK = 'https://babajka.github.io/babajka-markup/static/images/mock/covers/person.png';
 
 export const DiaryModel = {
@@ -31,6 +33,7 @@ export const DiaryModel = {
   author: PropTypes.string.isRequired,
 };
 
+// TODO: refactor with hooks
 class DiaryBlock extends Component {
   static propTypes = {
     diary: PropTypes.shape(DiaryModel).isRequired,
@@ -48,7 +51,7 @@ class DiaryBlock extends Component {
 
   render() {
     const {
-      diary: { author, text, date /* year - optional */ },
+      diary: { author, text, date },
       getNext,
       getPrev,
     } = this.props;
@@ -65,20 +68,18 @@ class DiaryBlock extends Component {
               <span className="diary__date">{formatDate(date, SHORT_DATE_FORMAT)}</span>
               <span className="diary__year">{getYear(date)}</span>
               <span className="diary__name">{author}</span>
-              {/* FIXME */}
-              <span>занатаваў у дзённіку: </span>
+              <Text id="diary.wrote" />
             </div>
             <div className="diary__text">
               <TextWithSeparator text={text} symbol={'<br/>'} />
-              <Clickable linkStyle>Цалкам</Clickable>
+              {/* <Clickable linkStyle>Цалкам</Clickable> */}
             </div>
           </div>
-
           <div className="diary__arrows">
-            <Clickable onClick={getPrev} linkStyle>
+            <Clickable onClick={getPrev} linkStyle titleId="diary.previous">
               <Icon name="long-arrow-alt-left" />
             </Clickable>
-            <Clickable disabled={isSameDay(date)} onClick={getNext} linkStyle>
+            <Clickable disabled={isSameDay(date)} onClick={getNext} linkStyle titleId="diary.next">
               <Icon name="long-arrow-alt-right" />
             </Clickable>
           </div>

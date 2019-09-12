@@ -72,6 +72,7 @@ class TopicPage extends Component {
           <div key={i} className="topics__column">
             {col.map(tag => (
               <TopicSection
+                key={tag.id}
                 tag={tag}
                 articles={articlesByTag[tag.slug].map(id => articleById[id])}
               />
