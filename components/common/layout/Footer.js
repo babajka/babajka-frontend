@@ -2,7 +2,7 @@ import './footer.scss';
 
 import React from 'react';
 
-import Text from 'components/common/Text';
+import Text, { useLocalization } from 'components/common/Text';
 import Link from 'components/common/Link';
 import ExternalLink from 'components/common/ExternalLink';
 
@@ -53,7 +53,7 @@ const Footer = () => (
               <div className="footer__header">
                 <Text id="footer.share" />
               </div>
-              <Text id="common.project-description">{t => <ShareButtons title={t} />}</Text>
+              <ShareButtons title={useLocalization('common.project-description')} />
             </div>
           </div>
         </div>

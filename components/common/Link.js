@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import LocaleContext from 'components/common/LocaleContext';
+import { useLocalization, useLocaleContext } from 'components/common/Text';
 
 import { linkCn } from 'utils/ui';
 import { Link as NextLink } from 'routes';
@@ -15,35 +15,41 @@ const Link = ({
   dark,
   active,
   target,
+  titleId,
+  title,
   ...props
-}) => (
-  <LocaleContext.Consumer>
-    {lang => (
-      <NextLink
-        {...props}
-        params={{
-          ...params,
-          lang: params.lang || lang,
-        }}
-      >
-        {React.createElement(
-          tag,
-          {
-            className: linkCn({ className, disabled, dark, active }),
-            target,
-          },
-          children
-        )}
-      </NextLink>
-    )}
-  </LocaleContext.Consumer>
-);
+}) => {
+  const lang = useLocaleContext();
+  return (
+    <NextLink
+      {...props}
+      params={{
+        ...params,
+        lang: params.lang || lang,
+      }}
+    >
+      {React.createElement(
+        tag,
+        {
+          className: linkCn({ className, disabled, dark, active }),
+          target,
+          title: useLocalization(titleId) || title,
+        },
+        children
+      )}
+    </NextLink>
+  );
+};
 
 Link.propTypes = {
   tag: PropTypes.node,
   children: PropTypes.node.isRequired,
   params: PropTypes.shape({}),
   target: PropTypes.oneOf(['', '_blank']),
+
+  // a props
+  titleId: PropTypes.string,
+  title: PropTypes.string,
 
   // ui props
   className: PropTypes.string,
@@ -60,6 +66,9 @@ Link.defaultProps = {
   disabled: false,
   active: false,
   dark: false,
+
+  titleId: '',
+  title: '',
 };
 
 export default Link;

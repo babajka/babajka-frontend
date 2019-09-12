@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
@@ -20,11 +20,18 @@ const extract = key => {
 export const localize = (id, lang) =>
   extract(`${id}.${lang}`) || extract(`${id}.${DEFAULT_LOCALE}`);
 
-const Text = ({ id, children, render = children }) => (
-  <LocaleContext.Consumer>
-    {lang => render(...localize(id, lang).split(SEPARATOR))}
-  </LocaleContext.Consumer>
-);
+export const useLocaleContext = () => useContext(LocaleContext);
+
+export const useLocalization = id => {
+  const lang = useLocaleContext();
+  if (!id) {
+    return id;
+  }
+  return localize(id, lang);
+};
+
+const Text = ({ id, children, render = children }) =>
+  render(...useLocalization(id).split(SEPARATOR));
 
 Text.propTypes = {
   /** translation key in our i18n dict */
