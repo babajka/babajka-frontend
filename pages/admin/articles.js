@@ -38,8 +38,12 @@ const ARTICLE_COLS = [
     formatter: optional(({ name }) => name, ''),
   },
   {
-    id: 'tags',
-    formatter: tags => renderNodeList(tags.map(tag => getTagLink({ tag })), <br />),
+    id: 'tagsByTopic',
+    title: 'Tags',
+    formatter: tagsByTopic => {
+      const tags = Object.values(tagsByTopic).reduce((acc, cur) => acc.concat(cur), []);
+      return renderNodeList(tags.map(tag => getTagLink({ tag })), <br />);
+    },
   },
   {
     id: 'status',

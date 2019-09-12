@@ -19,7 +19,7 @@ import Sidebar from './Sidebar';
 // const SIDEBAR_HEIGHT = 3300;
 
 const CoreLayout = ({ children, hideFooter, hideSidebar, lang }) => {
-  const [sidebarActive, toggleSidebar] = useBoolean(false);
+  const [sidebarActive, toggleSidebar, setState] = useBoolean(false);
   const rootEl = useRef(null);
 
   return (
@@ -43,6 +43,7 @@ const CoreLayout = ({ children, hideFooter, hideSidebar, lang }) => {
           <Sidebar
             active={sidebarActive}
             toggleSidebar={toggleSidebar}
+            close={() => setState(false)}
             // FIXME
             // long={!height || height > SIDEBAR_HEIGHT}
             long
