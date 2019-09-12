@@ -16,7 +16,7 @@ const RENDER_TAG_CONTENT = {
   times: renderTitle,
 };
 
-export const renderTag = ({ topic: { slug }, content }) => RENDER_TAG_CONTENT[slug](content);
+export const renderTag = ({ topicSlug, content }) => RENDER_TAG_CONTENT[topicSlug](content);
 
 export const getTopicLink = ({ topic, dark, postfix = 'all_mainPage' }) => (
   <Link key={topic} route={ROUTES_NAMES.topic} params={{ topic }} dark={dark}>
@@ -24,8 +24,8 @@ export const getTopicLink = ({ topic, dark, postfix = 'all_mainPage' }) => (
   </Link>
 );
 
-export const getTagLink = ({ tag, tag: { topic, slug }, dark }) => (
-  <Link key={slug} route={ROUTES_NAMES.tag} params={{ topic: topic.slug, tag: slug }} dark={dark}>
+export const getTagLink = ({ tag, tag: { topicSlug, slug }, dark }) => (
+  <Link key={slug} route={ROUTES_NAMES.tag} params={{ topic: topicSlug, tag: slug }} dark={dark}>
     {renderTag(tag)}
   </Link>
 );

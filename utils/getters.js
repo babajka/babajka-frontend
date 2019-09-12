@@ -1,6 +1,7 @@
 import moment from 'moment';
 import chunk from 'lodash/chunk';
 
+import { TOPICS } from 'constants';
 import { TAG_BLOCK_SIZE, TAG_LEVELS_SIZES } from 'constants/misc';
 import { localize, localizeArray, localizeFields } from 'utils/localization';
 
@@ -17,12 +18,12 @@ export const getLocalizedCollection = (
 ) => ({
   slug,
   cover,
+  articleIndex,
   name: localize(name, lang),
   description: localize(description, lang),
   // FIXME: for now prev & next articles aren't showing on article page
   // prev: getLocalizedArticle(prev), // eslint-disable-line no-use-before-define
   // next: getLocalizedArticle(next), // eslint-disable-line no-use-before-define
-  articleIndex, // TODO: sync with back
 });
 
 export const getLocalizedCollections = localizeArray(getLocalizedCollection);
@@ -46,14 +47,18 @@ export const getTopic = ({ _id: id, slug }) => ({ id, slug });
 
 export const getTopics = topics => topics.map(getTopic);
 
-export const getLocalizedTag = ({ _id: id, topic, content, ...rest }, lang) => ({
+// WARNING: filter `topic`
+// TODO: remove `topic` on back, replace with `topicSlug`
+export const getLocalizedTag = ({ _id: id, topicSlug, content, topic: _, ...rest }, lang) => ({
   ...rest,
   id,
-  topic: getTopic(topic),
-  content: LOCALIZE_TAG_CONTENT[topic.slug](content, lang),
+  topicSlug,
+  content: LOCALIZE_TAG_CONTENT[topicSlug](content, lang),
 });
 
 export const getLocalizedTags = localizeArray(getLocalizedTag);
+
+const getInitTagsByTopic = () => TOPICS.reduce((acc, topic) => ({ ...acc, [topic]: [] }), {});
 
 export const getLocalizedArticle = (article, lang) => {
   if (!article) {
@@ -61,6 +66,13 @@ export const getLocalizedArticle = (article, lang) => {
   }
   const { _id: id, locales, collection, publishAt, tags, ...rest } = article;
   const { text, ...localized } = localize(locales, lang);
+
+  // TODO: think about implementing this logic at backend
+  const tagsByTopic = getLocalizedTags(tags, lang).reduce((acc, tag) => {
+    acc[tag.topicSlug].push(tag);
+    return acc;
+  }, getInitTagsByTopic());
+
   return {
     ...rest,
     ...localized,
@@ -69,7 +81,7 @@ export const getLocalizedArticle = (article, lang) => {
     publishAt,
     collection: collection && getLocalizedCollection(collection, lang),
     published: !!publishAt && moment(publishAt).isBefore(moment()),
-    tags: getLocalizedTags(tags, lang),
+    tagsByTopic,
   };
 };
 

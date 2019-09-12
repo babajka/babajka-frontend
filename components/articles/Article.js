@@ -19,24 +19,15 @@ import { ROUTES_NAMES } from 'routes';
 
 const Article = ({
   router,
-  data: { images, tags, title, subtitle, keywords, text, type, audio, video },
+  data: { images, title, subtitle, keywords, text, type, audio, video, tagsByTopic },
 }) => {
-  // TODO: think about implementing this logic at backend
-  const tagsByTopic = tags.reduce((acc, tag) => {
-    const {
-      topic: { slug },
-    } = tag;
-    acc[slug] = acc[slug] || [];
-    acc[slug].push(tag);
-    return acc;
-  }, {});
-  const { brands = [], authors = [], ...tagLists } = tagsByTopic;
+  const { brands, authors, ...tags } = tagsByTopic;
 
   return (
     <div>
       <MetaTitle title={title} type="article" />
       <MetaDescription description={subtitle} />
-      {/* FIXME */}
+      {/* FIXME: proper social preview image */}
       <MetaImage url={images.page} />
       <MetaKeywords keywords={keywords} />
       <div className="article-page">
@@ -44,15 +35,15 @@ const Article = ({
         {type === 'text' && <img className="article-page__cover" src={images.page} alt={title} />}
       </div>
       <div className="article-page-margins article-page__header">
-        {/* TODO: hover corresponding image and title simulteneously */}
+        {/* TODO: hover corresponding image and title simultaneously */}
         {(!!brands.length || !!authors.length) && (
           <div className="article-page__tags">
-            {brands.concat(authors).map(({ topic, slug, content }) => (
+            {brands.concat(authors).map(({ topicSlug, slug, content }) => (
               <Link
                 key={slug}
                 className="article-page__tag-image-link"
                 route={ROUTES_NAMES.tag}
-                params={{ topic: topic.slug, tag: slug }}
+                params={{ topic: topicSlug, tag: slug }}
               >
                 <img className="article-page__tag-image" src={content.image} alt={slug} />
               </Link>
@@ -78,7 +69,8 @@ const Article = ({
           <ShareButtons url={router.asPath} title={title} />
         </div>
         <div className="article-page__other-tags">
-          {Object.values(tagLists).map(tagList =>
+          {/* flatMap or flatten? */}
+          {Object.values(tags).map(tagList =>
             tagList.map(tag => (
               <div key={tag.slug} className="article-page__other-tag">
                 {getTagLink({ tag })}

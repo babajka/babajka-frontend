@@ -13,7 +13,7 @@ const ArticlesByTag3 = ({ block, data }) => {
   const { tags, articles } = data;
   const tag = tags[tagId];
   const tagLink = getTagLink({ tag, dark: true });
-  const topicLink = getTopicLink({ topic: tag.topic.slug, dark: true });
+  const topicLink = getTopicLink({ topic: tag.topicSlug, dark: true });
 
   return (
     <div className="block block__no-background articles-by-tag-3">
