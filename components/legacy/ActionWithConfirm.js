@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Text from 'components/common/Text';
-import Modal from 'components/common/Modal';
 import Button from 'components/common/Button';
+import Modal from 'components/legacy/Modal';
 
 const mapDispatchToProps = (dispatch, { action }) => ({
   confirmAction: () => dispatch(action()),

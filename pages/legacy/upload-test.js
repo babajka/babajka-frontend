@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import ImageUploader from 'components/common/ImageUploader';
+import ImageUploader from 'components/legacy/ImageUploader';
 
 import api from 'constants/api';
 
