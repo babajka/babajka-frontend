@@ -6,16 +6,17 @@ import { connect } from 'react-redux';
 
 import Text from 'components/common/Text';
 import Clickable from 'components/common/Clickable';
-import TextWithSeparator from 'lib/components/TextWithSeparator';
 import Icon from 'components/common/ui/Icon';
 
 import { diaryActions, diarySelectors } from 'redux/ducks/diary';
 import { isSameDay } from 'utils/validators';
 import { formatDate, getYear } from 'utils/formatters';
+import fiberyRenderer from 'utils/fibery/renderer';
+
 import { SHORT_DATE_FORMAT } from 'constants';
 
-const mapStateToProps = state => ({
-  diary: diarySelectors.getCurrent(state),
+const mapStateToProps = (state, { lang }) => ({
+  diary: diarySelectors.getCurrent(state, lang),
 });
 
 const mapDispatchToProps = {
@@ -24,13 +25,13 @@ const mapDispatchToProps = {
   getPrev: () => diaryActions.getClosest('prev'),
 };
 
-// FIXME
-const IMAGE_MOCK = 'https://babajka.github.io/babajka-markup/static/images/mock/covers/person.png';
-
 export const DiaryModel = {
-  text: PropTypes.string.isRequired,
+  text: PropTypes.object.isRequired,
   date: PropTypes.number.isRequired,
-  author: PropTypes.string.isRequired,
+  author: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    diaryImage: PropTypes.string.isRequired,
+  }),
 };
 
 // TODO: refactor with hooks
@@ -50,28 +51,33 @@ class DiaryBlock extends Component {
   }
 
   render() {
+    const { diary, getNext, getPrev } = this.props;
+
+    if (!diary) {
+      return null;
+    }
     const {
-      diary: { author, text, date },
-      getNext,
-      getPrev,
-    } = this.props;
+      author: { name, diaryImage },
+      date,
+      text,
+    } = diary;
 
     return (
       <div className="block block__no-background diary">
         <div className="diary__content">
           <div className="diary__picture">
-            <img src={IMAGE_MOCK} alt={author} />
+            <img src={diaryImage} alt={name} />
           </div>
 
           <div className="diary__text-content">
             <div className="diary__title">
               <span className="diary__date">{formatDate(date, SHORT_DATE_FORMAT)}</span>
               <span className="diary__year">{getYear(date)}</span>
-              <span className="diary__name">{author}</span>
+              <span className="diary__name">{name}</span>
               <Text id="diary.wrote" />
             </div>
             <div className="diary__text">
-              <TextWithSeparator text={text} symbol={'<br/>'} />
+              {fiberyRenderer(text.content)}
               {/* <Clickable linkStyle>Цалкам</Clickable> */}
             </div>
           </div>

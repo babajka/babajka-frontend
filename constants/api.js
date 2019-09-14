@@ -40,7 +40,7 @@ export default {
     getCurrent: `${API_URL}/users/current`,
   },
   diary: {
-    getByDay: (locale, month, day) => `${API_URL}/specials/diary/${locale}/${month}/${day}`,
+    getByDay: (month, day) => `${API_URL}/specials/diary/get/${month}/${day}`,
   },
   topics: {
     getArticles: topic => `${API_URL}/topics/articles/${topic}`,

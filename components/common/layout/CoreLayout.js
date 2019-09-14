@@ -9,8 +9,7 @@ import Icon from 'components/common/ui/Icon';
 import Clickable from 'components/common/Clickable';
 
 import useBoolean from 'hooks/useBoolean';
-
-import { VALID_LOCALES } from 'constants';
+import { LangType } from 'utils/customPropTypes';
 
 import Header from './Header';
 import Footer from './Footer';
@@ -66,7 +65,7 @@ CoreLayout.propTypes = {
   children: PropTypes.node.isRequired,
   hideFooter: PropTypes.bool,
   hideSidebar: PropTypes.bool,
-  lang: PropTypes.oneOf(VALID_LOCALES).isRequired,
+  lang: LangType.isRequired,
 };
 
 CoreLayout.defaultProps = {

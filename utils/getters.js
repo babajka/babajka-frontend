@@ -4,7 +4,7 @@ import chunk from 'lodash/chunk';
 import { TOPICS } from 'constants';
 import { localize, localizeArray, localizeFields } from 'utils/localization';
 
-export const getDiary = ({ author = '', text = '', day, month, year } = {}) => ({
+export const getDiary = ({ author, text, day, month, year }) => ({
   author,
   text,
   // TODO(tyndria): extract it in some func & simplify
