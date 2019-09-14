@@ -1,14 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Error404, Error500 } from 'components/common/layout/error';
+import ErrorMessage from 'components/common/layout/error/ErrorMessage';
 
-export const Status = ({ code }) => (
-  <div className="page-content error-page">
-    <img className="logo" src="/static/images/logo/turq-transparent.png" alt="wir.by logo" />
-    {code === '404' ? <Error404 /> : <Error500 />}
-  </div>
-);
+export const Status = ({ code }) => <ErrorMessage code={code} />;
 
 Status.propTypes = {
   code: PropTypes.oneOf(['404', '500']).isRequired,
