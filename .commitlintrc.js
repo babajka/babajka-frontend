@@ -23,6 +23,7 @@ module.exports = {
         'topics',
         'kit',
         'admin',
+        'diary',
       ],
     ],
     'scope-empty': [2, 'never'],

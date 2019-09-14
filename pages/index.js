@@ -7,7 +7,7 @@ import BLOCKS_BY_TYPE from 'components/articles/blocks';
 
 import { homeActions, homeSelectors } from 'redux/ducks/home';
 import { populateRequest } from 'utils/request';
-import { ArticlesArray, ArticlesById, TopicsById, TagsById } from 'utils/customPropTypes';
+import { ArticlesArray, ArticlesById, TopicsById, TagsById, LangType } from 'utils/customPropTypes';
 
 const mapStateToProps = (state, { lang }) => ({
   blocks: homeSelectors.getBlocks(state),
@@ -27,6 +27,7 @@ class MainPage extends Component {
       topics: TopicsById.isRequired,
       latestArticles: ArticlesArray.isRequired,
     }).isRequired,
+    lang: LangType.isRequired,
   };
 
   static getInitialProps = ctx => populateRequest(ctx, homeActions.fetch);
@@ -36,14 +37,16 @@ class MainPage extends Component {
   });
 
   render() {
-    const { blocks, data } = this.props;
+    const { blocks, data, lang } = this.props;
     return blocks.map((block, index) => {
       const Block = BLOCKS_BY_TYPE[block.type];
       if (!Block) {
         return null;
       }
-      // eslint-disable-next-line react/no-array-index-key
-      return <Block key={index} block={block} data={data} blocks={keyBy(blocks, 'type')} />;
+      return (
+        // eslint-disable-next-line react/no-array-index-key
+        <Block key={index} block={block} data={data} blocks={keyBy(blocks, 'type')} lang={lang} />
+      );
     });
   }
 }
