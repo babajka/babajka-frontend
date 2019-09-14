@@ -19,6 +19,7 @@ const scopes = [
   'article',
   'sidebar',
   'admin',
+  'banners',
   // legacy, to check:
   'about',
   'auth',
