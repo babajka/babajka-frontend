@@ -3,6 +3,7 @@ import './diary.scss';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import ContentLoader from 'react-content-loader';
 
 import Text from 'components/common/Text';
 import Clickable from 'components/common/Clickable';
@@ -34,13 +35,32 @@ export const DiaryModel = {
   }),
 };
 
+const DiaryLoader = () => (
+  <ContentLoader height={120} width={700} speed={2} primaryColor="#f3f3f3" secondaryColor="#ecebeb">
+    <rect x="14" y="50" rx="4" ry="4" width="117" height="10" />
+    <rect x="14" y="75" rx="3" ry="3" width="123" height="9" />
+    <rect x="14" y="90" rx="3" ry="3" width="123" height="9" />
+
+    <rect x="171" y="60" rx="3" ry="3" width="350" height="6" />
+    <rect x="171" y="75" rx="3" ry="3" width="350" height="6" />
+    <rect x="171" y="90" rx="3" ry="3" width="201" height="6" />
+
+    <circle cx="624" cy="70" r="56" />
+    <rect x="16" y="128" rx="4" ry="4" width="541" height="6" />
+  </ContentLoader>
+);
+
 // TODO: refactor with hooks
 class DiaryBlock extends Component {
   static propTypes = {
-    diary: PropTypes.shape(DiaryModel).isRequired,
+    diary: PropTypes.shape(DiaryModel),
     getNext: PropTypes.func.isRequired,
     getPrev: PropTypes.func.isRequired,
     fetchData: PropTypes.func.isRequired,
+  };
+
+  static defaultProps = {
+    diary: null,
   };
 
   // state = { opened: false };
@@ -54,7 +74,7 @@ class DiaryBlock extends Component {
     const { diary, getNext, getPrev } = this.props;
 
     if (!diary) {
-      return null;
+      return <DiaryLoader />;
     }
     const {
       author: { name, diaryImage },
