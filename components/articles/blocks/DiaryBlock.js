@@ -3,6 +3,7 @@ import './diary.scss';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { createSkeletonProvider, createSkeletonElement } from '@trainline/react-skeletor';
 
 import Text from 'components/common/Text';
 import Clickable from 'components/common/Clickable';
@@ -34,6 +35,8 @@ export const DiaryModel = {
   }),
 };
 
+const Div = createSkeletonElement('div');
+
 // TODO: refactor with hooks
 class DiaryBlock extends Component {
   static propTypes = {
@@ -53,9 +56,9 @@ class DiaryBlock extends Component {
   render() {
     const { diary, getNext, getPrev } = this.props;
 
-    if (!diary) {
-      return null;
-    }
+    // if (!diary) {
+    //   return null;
+    // }
     const {
       author: { name, diaryImage },
       date,
@@ -70,12 +73,12 @@ class DiaryBlock extends Component {
           </div>
 
           <div className="diary__text-content">
-            <div className="diary__title">
+            <Div className="diary__title">
               <span className="diary__date">{formatDate(date, SHORT_DATE_FORMAT)}</span>
               <span className="diary__year">{getYear(date)}</span>
               <span className="diary__name">{name}</span>
               <Text id="diary.wrote" />
-            </div>
+            </Div>
             <div className="diary__text">
               {fiberyRenderer(text.content)}
               {/* <Clickable linkStyle>Цалкам</Clickable> */}
@@ -95,7 +98,23 @@ class DiaryBlock extends Component {
   }
 }
 
+const dummyData = {
+  diary: {
+    author: { name: '____________________' },
+    date: Date.now(),
+    text: { content: '____________________' },
+  },
+};
+
+const pendingPredicate = ({ diary }) => !diary;
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DiaryBlock);
+)(
+  createSkeletonProvider(dummyData, pendingPredicate, {
+    backgroundColor: 'grey',
+    color: 'grey',
+    borderColor: 'grey',
+  })(DiaryBlock)
+);
