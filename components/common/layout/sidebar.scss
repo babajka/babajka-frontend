@@ -12,6 +12,10 @@
   padding: 21px 24px 120px;
   width: calc(240px + (100vw - #{$desktop-with-sidebar}) * 2 / 3);
 
+  @include mobile {
+    width: 100vw;
+  }
+
   @include sidebar-visible {
     height: 100%;
   }

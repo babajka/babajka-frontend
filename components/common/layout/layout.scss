@@ -92,6 +92,10 @@ footer {
   transition: 0.5s right;
   z-index: 200;
 
+  @include mobile {
+    right: -100vw;
+  }
+
   @include sidebar-visible {
     background-color: $primary-concrete;
     position: unset;
