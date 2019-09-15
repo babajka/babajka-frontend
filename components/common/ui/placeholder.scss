@@ -1,0 +1,54 @@
+$mystic-gray-color: #dbe6e8;
+$base-radius: 4px;
+
+@keyframes placeholderloading {
+  0% {
+    background-position: -650px 0;
+  }
+
+  100% {
+    background-position: 650px 0;
+  }
+}
+
+@mixin placeholderloader {
+  animation-duration: 1.7s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeholderloading;
+  animation-timing-function: linear;
+  /* stylelint-disable */
+  background: $mystic-gray-color !important; // Fallback
+  background: linear-gradient(
+    to right,
+    #ebf1f2 2%,
+    lighten(#f1f7f8, 10%) 18%,
+    #ebf1f2 33%
+  ) !important;
+  background-size: 1300px !important; // Animation Area
+  /* stylelint-enable */
+}
+
+.placeholder {
+  &-rect {
+    @include placeholderloader;
+
+    border-radius: $base-radius;
+    pointer-events: none;
+
+    & + & {
+      margin-top: 16px;
+    }
+  }
+
+  &-round {
+    @include placeholderloader;
+
+    border-radius: 50%;
+    pointer-events: none;
+
+    & + & {
+      margin-top: 16px;
+    }
+  }
+}

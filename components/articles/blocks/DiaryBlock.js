@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import Text from 'components/common/Text';
 import Clickable from 'components/common/Clickable';
 import Icon from 'components/common/ui/Icon';
+import Placeholder from 'components/common/ui/Placeholder';
 
 import { diaryActions, diarySelectors } from 'redux/ducks/diary';
 import { isSameDay } from 'utils/validators';
@@ -54,7 +55,27 @@ class DiaryBlock extends Component {
     const { diary, getNext, getPrev } = this.props;
 
     if (!diary) {
-      return null;
+      return (
+        <div className="block block__no-background diary">
+          <div className="diary__content">
+            <div className="diary__picture">
+              <Placeholder width={160} height={160} />
+            </div>
+            <div className="diary__text-content">
+              <div className="diary__title">
+                <Placeholder width={180} height={20} />
+                <Placeholder width={160} height={20} />
+                <Placeholder width={180} height={18} />
+              </div>
+              <div className="diary__text">
+                <Placeholder width={480} height={10} />
+                <Placeholder width={480} height={10} />
+                <Placeholder width={430} height={10} />
+              </div>
+            </div>
+          </div>
+        </div>
+      );
     }
     const {
       author: { name, diaryImage },
