@@ -24,14 +24,16 @@ const Article = ({
   const { brands, authors, ...tags } = tagsByTopic;
 
   return (
-    <div>
+    <>
       <MetaTitle title={title} type="article" />
       <MetaDescription description={subtitle} />
       {/* FIXME: proper social preview image */}
       <MetaImage url={images.page} />
       <MetaKeywords keywords={keywords} />
       <div className="article-page">
-        <div className="article-page-margins">{subtitle}</div>
+        <div className="article-page-margins article-page-content">
+          <div className="article-page__subtitle">{subtitle}</div>
+        </div>
         {type === 'text' && <img className="article-page__cover" src={images.page} alt={title} />}
       </div>
       <div className="article-page-margins article-page__header">
@@ -59,10 +61,8 @@ const Article = ({
 
       <div className="article-page-margins">
         <div className="article-page-content">
-          <div className="article-page-interactive">
-            {type === 'audio' && <AudioPlayer trackId={audio.id} />}
-            {type === 'video' && <VideoPlayer videoId={video.id} />}
-          </div>
+          {type === 'audio' && <AudioPlayer trackId={audio.id} />}
+          {type === 'video' && <VideoPlayer videoId={video.id} />}
           {fiberyRenderer(text.content)}
         </div>
         <div className="article-page__share">
@@ -79,7 +79,7 @@ const Article = ({
           )}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
