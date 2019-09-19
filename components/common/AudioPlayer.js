@@ -30,22 +30,24 @@ const getUrl = ({
 /* eslint-enable */
 
 const AudioPlayer = ({ trackId, type, width, height, color }) => (
-  <span className="article__playerwrapper">
-    <iframe
-      className="article__player"
-      title="AudioPlayer"
-      width={width}
-      height={height}
-      scrolling="no"
-      frameBorder="no"
-      allow="autoplay"
-      src={getUrl({
-        url: `https://api.soundcloud.com/tracks/${trackId}`,
-        color,
-        visual: type === 'big',
-      })}
-    />
-  </span>
+  <div className="article-page-interactive">
+    <span className="article__playerwrapper">
+      <iframe
+        className="article__player"
+        title="AudioPlayer"
+        width={width}
+        height={height}
+        scrolling="no"
+        frameBorder="no"
+        allow="autoplay"
+        src={getUrl({
+          url: `https://api.soundcloud.com/tracks/${trackId}`,
+          color,
+          visual: type === 'big',
+        })}
+      />
+    </span>
+  </div>
 );
 
 AudioPlayer.propTypes = {
