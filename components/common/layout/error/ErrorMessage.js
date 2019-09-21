@@ -32,7 +32,7 @@ export default ({ code }) => (
     </div>
     <div className="error-message__contact-us">
       <Text id="errors.contact-us" />
-      <span>: </span>
+      {': '}
       <ExternalLink href="mailto:dev@wir.by">dev@wir.by</ExternalLink>
     </div>
   </div>

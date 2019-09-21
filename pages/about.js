@@ -1,34 +1,14 @@
 import 'styles/pages/about.scss';
 
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import ExternalLink from 'components/common/ExternalLink';
 import Text, { localize } from 'components/common/Text';
 
 import { PARTNERS } from 'constants/partners';
 
-const buildLogoLink = imgName =>
-  `https://res.cloudinary.com/wir-by/image/upload/c_scale,w_250,f_auto,q_auto/v1546529671/production/partners-logos/${imgName}`;
-
-const PartnerLogo = ({ className, externalUrl, imgName, altText }) => (
-  <div className={`about-page__partner-logo ${className}`}>
-    <ExternalLink href={externalUrl}>
-      <img src={buildLogoLink(imgName)} alt={altText} />
-    </ExternalLink>
-  </div>
-);
-
-PartnerLogo.propTypes = {
-  className: PropTypes.string,
-  externalUrl: PropTypes.string.isRequired,
-  imgName: PropTypes.string.isRequired,
-  altText: PropTypes.string.isRequired,
-};
-
-PartnerLogo.defaultProps = {
-  className: '',
-};
+const getLogoUrl = name =>
+  `https://res.cloudinary.com/wir-by/image/upload/c_scale,w_250,f_auto,q_auto/v1546529671/production/partners-logos/${name}`;
 
 const AboutPage = ({ lang }) => (
   <div className="about-page">
@@ -82,14 +62,11 @@ const AboutPage = ({ lang }) => (
       </div>
       <div className="about-page__description-text about-page__partners">
         {PARTNERS.map(({ id, img, url, className }) => (
-          <PartnerLogo
-            className={className}
-            id={id}
-            key={id}
-            externalUrl={url}
-            imgName={img}
-            altText={localize(`about.${id}`, lang)}
-          />
+          <div key={id} className={`about-page__partner-logo ${className}`}>
+            <ExternalLink href={url}>
+              <img src={getLogoUrl(img)} alt={localize(`about.${id}`, lang)} />
+            </ExternalLink>
+          </div>
         ))}
       </div>
     </div>
