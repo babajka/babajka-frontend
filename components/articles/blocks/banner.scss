@@ -2,7 +2,6 @@
 @import 'variables';
 
 .banner {
-  display: none;
   position: relative;
 
   img {
@@ -17,36 +16,6 @@
     font-weight: bold;
     line-height: 36px;
     position: absolute;
-  }
-
-  &--size-desktop {
-    @include screen-desktop {
-      display: block;
-    }
-  }
-
-  &--size-tablet-large {
-    @include screen-tablet-large {
-      display: block;
-    }
-  }
-
-  &--size-tablet {
-    @include screen-tablet {
-      display: block;
-    }
-  }
-
-  &--size-touch {
-    @include screen-touch {
-      display: block;
-    }
-  }
-
-  &--size-mobile {
-    @include screen-mobile {
-      display: block;
-    }
   }
 }
 
