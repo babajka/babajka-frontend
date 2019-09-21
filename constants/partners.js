@@ -3,12 +3,12 @@ export const PARTNERS = [
   {
     id: 'logo-shafa',
     img: 'shafa_logo.jpg',
-    url: 'http://shafa-minsk.by/',
+    url: 'http://shafa-minsk.by',
   },
   {
     id: 'logo-festyval-mou',
     img: 'festyval_mou_logo.jpg',
-    url: 'http://minsklingfest.by/',
+    url: 'http://minsklingfest.by',
   },
   {
     id: 'logo-masaraksh',
@@ -30,6 +30,6 @@ export const PARTNERS = [
   {
     id: 'logo-museum-brouka',
     img: 'museum_brouka_logo.jpg',
-    url: 'http://brouka.museum.by/',
+    url: 'http://brouka.museum.by',
   },
 ];

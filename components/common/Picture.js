@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 // checkout `styles/responsiveness.scss`
 const BREAKPOINTS = {
-  mobile: { max: 649 },
-  touch: { min: 650 },
+  mobile: { max: 499 },
+  touch: { min: 500, max: 649 },
   tablet: { min: 650, max: 799 },
   'tablet-large': { min: 800, max: 1099 },
   desktop: { min: 1100 },

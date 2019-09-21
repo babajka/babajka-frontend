@@ -1,6 +1,6 @@
 import './layout.scss';
 
-import React, { useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import ScrollToTop from 'react-scroll-up';
@@ -17,14 +17,11 @@ import Sidebar from './Sidebar';
 
 const CoreLayout = ({ children, hideFooter, hideSidebar, lang }) => {
   const [sidebarActive, toggleSidebar, setState] = useBoolean(false);
-  const rootEl = useRef(null);
-
   return (
     <>
       <div
         id="wir-root"
         className={cn('wir-root', { 'wir-root--sidebar-expanded': sidebarActive })}
-        ref={rootEl}
       >
         <div className="wir-space">
           <Header toggleSidebar={toggleSidebar} />

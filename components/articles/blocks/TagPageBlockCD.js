@@ -17,16 +17,12 @@ const TagPageBlockCD = ({ articles, layout }) => (
   <div
     className={`block block__no-background tag-page-block-cd tag-page-block-cd__style-${layout}`}
   >
-    {articles.slice(0, SIZE_BY_LAYOUT[layout]).map(article => (
-      <div key={article.articleId} className="tag-page-block-cd__card">
-        <ArticleCard {...article} />
+    {Array.from({ length: SIZE_BY_LAYOUT[layout] }).map((_, i) => (
+      // eslint-disable-next-line react/no-array-index-key
+      <div key={i} className="tag-page-block-cd__card">
+        {articles[i] ? <ArticleCard {...articles[i]} /> : <PlaceholderCard />}
       </div>
     ))}
-    {articles.length === 2 && layout === 'row-of-three' && (
-      <div className="tag-page-block-cd__card">
-        <PlaceholderCard />
-      </div>
-    )}
   </div>
 );
 

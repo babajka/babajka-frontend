@@ -68,13 +68,13 @@ const RENDERERS = {
   heading: ({ key, attrs: { level }, content }) =>
     createElement(`h${level}`, { key }, renderContent(content)),
   image: ({ key, attrs: { alt, src, title } }) => (
-    <>
-      <span key={key} className="article-image article-page-content__right-element">
+    <Fragment key={key}>
+      <span className="article-image article-page-content__right-element">
         <img className="article-image__image" alt={alt} src={src} />
         <span className="article-image__caption">{title}</span>
       </span>
       <br />
-    </>
+    </Fragment>
   ),
   paragraph: ({ key, attrs = {}, content }) => {
     return <p key={attrs.guid || key}>{renderContent(content)}</p>;
