@@ -12,6 +12,7 @@
 
   &__text-content {
     display: flex;
+    margin-bottom: 12px;
   }
 
   &__picture {
@@ -38,6 +39,10 @@
     font-weight: bold;
   }
 
+  &__text-wrap {
+    letter-spacing: 1px;
+  }
+
   &__text {
     overflow: hidden;
   }
@@ -61,14 +66,16 @@
 @mixin shared-desktop-tablet-large {
   .diary {
     &__content {
+      align-items: flex-end;
       flex-direction: row;
+      height: 180px;
       justify-content: space-between;
     }
 
     &__text-content {
-      align-items: center;
+      align-items: flex-start;
       flex-direction: row;
-      height: 180px;
+      height: 120px;
     }
 
     &__picture {
@@ -81,15 +88,21 @@
       font-size: 20px;
       height: 100px;
       line-height: 33px;
-      margin-top: 10px;
       width: 240px;
     }
 
-    &__text {
+    &__text-wrap {
       font-size: 14px;
-      height: 100px;
       line-height: 24px;
-      margin-top: 10px;
+    }
+
+    &__text {
+      /* stylelint-disable */
+      -webkit-box-orient: vertical;
+      display: -webkit-box;
+      height: 96px;
+      -webkit-line-clamp: 4;
+      /* stylelint-enable */
     }
   }
 }

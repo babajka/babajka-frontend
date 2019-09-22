@@ -72,9 +72,11 @@ class DiaryBlock extends Component {
               <Text id="diary.wrote" />
             </div>
             {text && (
-              <div className="diary__text">
-                {fiberyToString(text.content)}
-                {/* <Clickable linkStyle>Цалкам</Clickable> */}
+              <div className="diary__text-wrap">
+                <div className="diary__text">{fiberyToString(text.content)}</div>
+                <Clickable linkStyle>
+                  <Text id="diary.more" />
+                </Clickable>
               </div>
             )}
           </div>
