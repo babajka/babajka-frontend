@@ -11,7 +11,7 @@ import Icon from 'components/common/ui/Icon';
 import { diaryActions, diarySelectors } from 'redux/ducks/diary';
 import { isSameDay } from 'utils/validators';
 import { formatDate, getYear } from 'utils/formatters';
-import fiberyRenderer from 'utils/fibery/renderer';
+import fiberyToString from 'utils/fibery/toString';
 
 import { SHORT_DATE_FORMAT } from 'constants';
 
@@ -73,7 +73,7 @@ class DiaryBlock extends Component {
             </div>
             {text && (
               <div className="diary__text">
-                {fiberyRenderer(text.content)}
+                {fiberyToString(text.content)}
                 {/* <Clickable linkStyle>Цалкам</Clickable> */}
               </div>
             )}
