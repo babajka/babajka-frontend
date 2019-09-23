@@ -30,7 +30,7 @@ module.exports = {
     'type-enum': [
       2,
       'always',
-      ['fix', 'style', 'feat', 'chore', 'task', 'major', 'merge', 'temp', 'refactor'],
+      ['fix', 'style', 'feat', 'chore', 'task', 'major', 'merge', 'temp', 'refactor', 'perf'],
     ],
   },
 };
