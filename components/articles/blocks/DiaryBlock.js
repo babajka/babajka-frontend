@@ -53,21 +53,16 @@ class DiaryBlock extends Component {
   render() {
     const { diary, getNext, getPrev } = this.props;
 
-    if (!diary) {
-      return null;
-    }
-    const {
-      author: { name, diaryImage },
-      date,
-      text,
-    } = diary;
+    const { author: { name, diaryImage } = {}, date, text } = diary;
 
     return (
       <div className="block block__no-background diary">
         <div className="diary__content">
-          <div className="diary__picture">
-            <img src={diaryImage} alt={name} />
-          </div>
+          {diaryImage && (
+            <div className="diary__picture">
+              <img src={diaryImage} alt={name} />
+            </div>
+          )}
 
           <div className="diary__text-content">
             <div className="diary__title">
@@ -76,10 +71,12 @@ class DiaryBlock extends Component {
               <span className="diary__name">{name}</span>
               <Text id="diary.wrote" />
             </div>
-            <div className="diary__text">
-              {fiberyRenderer(text.content)}
-              {/* <Clickable linkStyle>Цалкам</Clickable> */}
-            </div>
+            {text && (
+              <div className="diary__text">
+                {fiberyRenderer(text.content)}
+                {/* <Clickable linkStyle>Цалкам</Clickable> */}
+              </div>
+            )}
           </div>
           <div className="diary__arrows">
             <Clickable onClick={getPrev} linkStyle titleId="diary.previous">
