@@ -105,25 +105,27 @@ class Root extends App {
 
     const pageProps = { lang: locale, routerQuery: router.query, ...initial };
     const {
-      title = 'common.project-type',
+      noLocTitle,
+      title: titleId = 'common.project-type',
       titleApple = 'common.project-apple-title',
       hideSidebar,
       hideFooter,
     } = getLayoutProps(pageProps);
+    const title = noLocTitle || localize(titleId, locale);
 
     return (
       <Container>
         <Provider store={store}>
           <LocaleContext.Provider value={locale}>
             <Metatags url={`${host}${replaceLocale(router.asPath)}`} />
-            <MetaTitle title={localize(title, locale)} />
+            <MetaTitle title={title} />
             <MetaDescription description={localize('common.project-description', locale)} />
             <MetaImage />
             <MetaLocale locale={locale} />
             <MetaKeywords />
             <MetaAppleTouchDevices title={localize(titleApple, locale)} />
             <Head>
-              <title>Wir.by | {localize(title, locale)}</title>
+              <title>Wir.by | {title}</title>
               <link rel="icon" type="image/png" href={FAVICON_URL} />
             </Head>
             <CoreLayout lang={locale} hideFooter={hideFooter} hideSidebar={hideSidebar}>

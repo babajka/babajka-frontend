@@ -12,6 +12,7 @@ import { tagsActions, tagsSelectors } from 'redux/ducks/tags';
 import { ArticlesArray, TagShape } from 'utils/customPropTypes';
 import { populateRequest } from 'utils/request';
 import { renderTag, getTopicLink } from 'utils/tags';
+import { toTitleCase } from 'utils/formatters';
 
 import { TOPICS } from 'constants';
 
@@ -76,8 +77,8 @@ TagPage.propTypes = {
   articlesCount: PropTypes.number.isRequired,
 };
 
-TagPage.getLayoutProps = ({ routerQuery: { topic } }) => ({
-  title: `topic.${topic}`,
+TagPage.getLayoutProps = ({ routerQuery: { tag } }) => ({
+  noLocTitle: toTitleCase(tag),
 });
 
 TagPage.getInitialProps = ctx =>
