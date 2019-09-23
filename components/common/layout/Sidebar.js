@@ -80,7 +80,7 @@ const mapDispatchToProps = {
 
 const Sidebar = ({ blocks, data, router: { asPath }, toggleSidebar, close, user, logout }) => (
   <aside className="sidebar">
-    <Clickable className="sidebar__icon-close" onClick={toggleSidebar}>
+    <Clickable className="sidebar__icon-close" titleId="sidebar.close" onClick={toggleSidebar}>
       <Icon name="times" />
     </Clickable>
 
