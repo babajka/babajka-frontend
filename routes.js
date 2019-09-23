@@ -16,9 +16,6 @@ const getMarkup = () => {
 };
 
 const ADMIN_ROUTES = [
-  // {
-  //   name: 'dashboard',
-  // },
   {
     name: 'articles',
   },
@@ -26,12 +23,6 @@ const ADMIN_ROUTES = [
     name: 'preview',
     pattern: 'preview/:url',
   },
-  // {
-  //   name: 'main',
-  // },
-  // {
-  //   name: 'sidebar',
-  // },
   {
     name: 'login',
   },
@@ -66,25 +57,6 @@ const ROUTES = [
     name: 'status',
     pattern: 'status/:code(404|500)',
   },
-  // legacy pages, to refactor:
-  // {
-  //   name: 'createArticle',
-  //   pattern: 'articles/:mode(create)',
-  //   page: 'editArticle',
-  //   params: {
-  //     mode: 'create',
-  //   },
-  // },
-  // {
-  //   name: 'upload-test',
-  // },
-  // {
-  //   name: 'login',
-  // },
-  // {
-  //   name: 'editArticle',
-  //   pattern: 'article/:slug/:mode(edit)',
-  // },
 ]
   .concat(ADMIN_ROUTES)
   .concat(getMarkup())
