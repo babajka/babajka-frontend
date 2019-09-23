@@ -17,7 +17,7 @@ const SubscribeForm = () => {
   const [email, setEmail] = useState(null);
   return (
     <div className="footer__mailing">
-      <div className="footer__header">
+      <div id="footer-subscribe" className="footer__header">
         <Text id="footer.subscribe" />
       </div>
       {email && (
@@ -59,6 +59,7 @@ const SubscribeForm = () => {
               {({ isSubmitting, isValid, handleSubmit, errors }) => (
                 <Form>
                   <InputField
+                    aria-labelledby="footer-subscribe"
                     name="emailAddress"
                     leftIcon={!isSubmitting && { name: 'envelope', pack: 'r' }}
                     rightIcon={isValid && { name: 'arrow-right', pack: 's' }}

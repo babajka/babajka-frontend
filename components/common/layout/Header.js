@@ -50,7 +50,7 @@ const Header = ({ toggleSidebar, router: { route } }) => (
         </Link>
       )}
     </div>
-    <Clickable tag="div" className="navbar__burger" onClick={toggleSidebar}>
+    <Clickable tag="div" titleId="sidebar.open" className="navbar__burger" onClick={toggleSidebar}>
       <div className="navbar__burger-item" />
       <div className="navbar__burger-item" />
       <div className="navbar__burger-item" />
