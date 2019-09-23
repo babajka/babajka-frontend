@@ -24,6 +24,7 @@ const Footer = () => (
             <div className="footer__header">
               <Text id="footer.materials" />
             </div>
+            {/* `themes` should be first */}
             {TOPICS.map(topic => (
               <div key={topic} className="footer__item">
                 <Link route={ROUTES_NAMES.topic} params={{ topic }}>

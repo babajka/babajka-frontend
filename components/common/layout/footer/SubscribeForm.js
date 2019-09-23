@@ -60,7 +60,6 @@ const SubscribeForm = () => {
                 <Form>
                   <InputField
                     name="emailAddress"
-                    placeholder="email"
                     leftIcon={!isSubmitting && { name: 'envelope', pack: 'r' }}
                     rightIcon={isValid && { name: 'arrow-right', pack: 's' }}
                     onRightClick={handleSubmit}

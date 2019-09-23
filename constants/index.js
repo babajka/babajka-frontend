@@ -26,6 +26,7 @@ const DOMAIN_SECURE = 'https://wir.by';
 
 const STATIC_PATHS = ['static', '_next'];
 
+// `themes` should be first (check out Footer)
 const TOPICS = ['themes', 'locations', 'times', 'personalities', 'authors', 'brands'];
 
 module.exports = {
