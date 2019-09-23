@@ -1,6 +1,6 @@
 import 'styles/pages/topic.scss';
 
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import chunk from 'lodash/chunk';
@@ -45,43 +45,40 @@ TopicSection.propTypes = {
 
 const mapStateToProps = (state, { lang }) => topicsSelectors.getData(state, lang);
 
-class TopicPage extends Component {
-  static propTypes = {
-    tags: TagsArray.isRequired,
-    articlesByTag: PropTypes.objectOf(IdsArray).isRequired,
-    articleById: ArticlesById.isRequired,
-    routerQuery: PropTypes.shape({
-      topic: PropTypes.oneOf(TOPICS).isRequired,
-    }).isRequired,
-  };
+const TopicPage = ({ tags, articlesByTag, articleById }) => {
+  const chunkSize = Math.ceil(tags.length / COLS_COUNT);
+  return (
+    <div className="topics">
+      {chunk(tags, chunkSize).map((col, i) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <div key={i} className="topics__column">
+          {col.map(tag => (
+            <TopicSection
+              key={tag.id}
+              tag={tag}
+              articles={articlesByTag[tag.slug].map(id => articleById[id])}
+            />
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+};
 
-  static getInitialProps = ctx =>
-    populateRequest(ctx, ({ query: { topic } }) => topicsActions.fetchArticles(topic));
+TopicPage.propTypes = {
+  tags: TagsArray.isRequired,
+  articlesByTag: PropTypes.objectOf(IdsArray).isRequired,
+  articleById: ArticlesById.isRequired,
+  routerQuery: PropTypes.shape({
+    topic: PropTypes.oneOf(TOPICS).isRequired,
+  }).isRequired,
+};
 
-  static getLayoutProps = ({ routerQuery: { topic } }) => ({
-    title: `topic.${topic}`,
-  });
+TopicPage.getInitialProps = ctx =>
+  populateRequest(ctx, ({ query: { topic } }) => topicsActions.fetchArticles(topic));
 
-  render() {
-    const { tags, articlesByTag, articleById } = this.props;
-    const chunkSize = Math.ceil(tags.length / COLS_COUNT);
-    return (
-      <div className="topics">
-        {chunk(tags, chunkSize).map((col, i) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <div key={i} className="topics__column">
-            {col.map(tag => (
-              <TopicSection
-                key={tag.id}
-                tag={tag}
-                articles={articlesByTag[tag.slug].map(id => articleById[id])}
-              />
-            ))}
-          </div>
-        ))}
-      </div>
-    );
-  }
-}
+TopicPage.getLayoutProps = ({ routerQuery: { topic } }) => ({
+  title: `topic.${topic}`,
+});
 
 export default connect(mapStateToProps)(TopicPage);

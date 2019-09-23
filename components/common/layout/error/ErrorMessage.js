@@ -10,7 +10,7 @@ import ExternalLink from 'components/common/ExternalLink';
 import { ROUTES_NAMES } from 'routes';
 import { NETWORKS } from 'constants/social';
 
-export default ({ code }) => (
+const ErrorMessage = ({ code }) => (
   <div className="error-message">
     <div className="error-message__title">
       <span className="error-message__code">{code}</span> <Text id={`errors.${code}-title`} />
@@ -37,3 +37,5 @@ export default ({ code }) => (
     </div>
   </div>
 );
+
+export default ErrorMessage;

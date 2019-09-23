@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -13,38 +13,35 @@ const mapStateToProps = (state, { lang }) => ({
   error: adminArticlesSelectors.getError(state),
 });
 
-class ArticlePreview extends Component {
-  static propTypes = {
-    article: ArticleShape,
-    error: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
-  };
-
-  static defaultProps = {
-    article: null,
-  };
-
-  static layoutProps = () => ({
-    title: 'header.articles',
-  });
-
-  static getInitialProps = ctx =>
-    populateRequest(ctx, ({ query: { url } }) =>
-      adminArticlesActions.fiberyPreview(decodeURIComponent(url))
+const ArticlePreview = ({ article, error }) => {
+  if (!article || error) {
+    return (
+      <div>
+        <h1>Error</h1>
+        <p>{error}</p>
+      </div>
     );
-
-  render() {
-    const { article, error } = this.props;
-    if (!article || error) {
-      return (
-        <div>
-          <h1>Error</h1>
-          <p>{error}</p>
-        </div>
-      );
-    }
-    return <Article data={article} />;
   }
-}
+  return <Article data={article} />;
+};
+
+ArticlePreview.getInitialProps = ctx =>
+  populateRequest(ctx, ({ query: { url } }) =>
+    adminArticlesActions.fiberyPreview(decodeURIComponent(url))
+  );
+
+ArticlePreview.propTypes = {
+  article: ArticleShape,
+  error: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
+};
+
+ArticlePreview.defaultProps = {
+  article: null,
+};
+
+ArticlePreview.layoutProps = () => ({
+  title: 'header.articles',
+});
 
 ArticlePreview.permissions = ['adminAccess'];
 

@@ -65,7 +65,6 @@ class Root extends App {
         lang: LangType,
       }).isRequired,
     }).isRequired,
-    isMobile: PropTypes.bool,
   };
 
   static async getInitialProps({ Component, ctx }) {
@@ -74,14 +73,11 @@ class Root extends App {
     if (!Component.disableSidebarFetch) {
       await populateRequest(ctx, sidebarActions.fetch);
     }
+    const props = {};
     if (Component.getInitialProps) {
-      await Component.getInitialProps(ctx);
+      props.initial = await Component.getInitialProps(ctx);
     }
-
-    const userAgent = ctx.req ? ctx.req.headers['user-agent'] : '';
-    const isMobile = userAgent.includes('Mobi');
-
-    return { isMobile };
+    return props;
   }
 
   constructor(props) {
@@ -103,11 +99,11 @@ class Root extends App {
   }
 
   render() {
-    const { Component, store, router, isMobile } = this.props;
+    const { Component, store, router, initial } = this.props;
     const { permissions = [], getLayoutProps = getEmptyObject } = Component;
     const locale = getLocale(router);
 
-    const pageProps = { lang: locale, routerQuery: router.query };
+    const pageProps = { lang: locale, routerQuery: router.query, ...initial };
     const {
       title = 'common.project-type',
       titleApple = 'common.project-apple-title',
@@ -130,12 +126,7 @@ class Root extends App {
               <title>Wir.by | {localize(title, locale)}</title>
               <link rel="icon" type="image/png" href={FAVICON_URL} />
             </Head>
-            <CoreLayout
-              lang={locale}
-              isMobile={isMobile}
-              hideFooter={hideFooter}
-              hideSidebar={hideSidebar}
-            >
+            <CoreLayout lang={locale} hideFooter={hideFooter} hideSidebar={hideSidebar}>
               <Guard permissions={permissions}>
                 <Component {...pageProps} />
               </Guard>

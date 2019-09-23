@@ -130,35 +130,35 @@
   "bundlesize": [
     {
       "path": ".next/static/**/commons.*.js",
-      "maxSize": "150 kB"
+      "maxSize": "125 kB"
     },
     {
       "path": ".next/static/**/index.js",
-      "maxSize": "15 kB"
+      "maxSize": "12 kB"
     },
     {
       "path": ".next/static/**/article.js",
-      "maxSize": "10 kB"
+      "maxSize": "6 kB"
     },
     {
       "path": ".next/static/**/topic.js",
-      "maxSize": "10 kB"
+      "maxSize": "7 kB"
     },
     {
       "path": ".next/static/**/tag.js",
-      "maxSize": "5 kB"
+      "maxSize": "3 kB"
     },
     {
       "path": ".next/static/**/about.js",
-      "maxSize": "5 kB"
+      "maxSize": "800 B"
     },
     {
       "path": ".next/static/**/_error.js",
-      "maxSize": "5 kB"
+      "maxSize": "2 kB"
     },
     {
       "path": ".next/static/css/commons*.css",
-      "maxSize": "1 kB"
+      "maxSize": "300 B"
     },
     {
       "path": ".next/static/css/styles*.css",
