@@ -127,6 +127,7 @@ class Root extends App {
             <Head>
               <title>Wir.by | {title}</title>
               <link rel="icon" type="image/png" href={FAVICON_URL} />
+              <link rel="preconnect" href="https://www.google-analytics.com" />
             </Head>
             <CoreLayout lang={locale} hideFooter={hideFooter} hideSidebar={hideSidebar}>
               <Guard permissions={permissions}>
