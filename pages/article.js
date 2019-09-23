@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -12,29 +12,24 @@ const mapStateToProps = (state, { routerQuery: { slug } }) => ({
   article: publicArticleSelectors.getCurrent(state, slug),
 });
 
-class ArticlePage extends Component {
-  static propTypes = {
-    article: ArticleShape,
-    routerQuery: PropTypes.shape({
-      slug: PropTypes.string.isRequired,
-    }).isRequired,
-  };
+const ArticlePage = ({ article }) => <Article data={article} />;
 
-  static defaultProps = {
-    article: null,
-  };
+ArticlePage.propTypes = {
+  article: ArticleShape,
+  routerQuery: PropTypes.shape({
+    slug: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
-  static layoutProps = () => ({
-    title: 'header.articles',
-  });
+ArticlePage.defaultProps = {
+  article: null,
+};
 
-  static getInitialProps = ctx =>
-    populateRequest(ctx, ({ query: { slug } }) => publicArticleActions.fetchBySlug(slug));
+ArticlePage.layoutProps = () => ({
+  title: 'header.articles',
+});
 
-  render() {
-    const { article } = this.props;
-    return <Article data={article} />;
-  }
-}
+ArticlePage.getInitialProps = ctx =>
+  populateRequest(ctx, ({ query: { slug } }) => publicArticleActions.fetchBySlug(slug));
 
 export default connect(mapStateToProps)(ArticlePage);

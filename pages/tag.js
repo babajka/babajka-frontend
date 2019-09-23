@@ -1,6 +1,6 @@
 import 'styles/pages/tag.scss';
 
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -54,44 +54,33 @@ const ArticlesBlocks = ({ articlesCount, blocks }) => {
 
 const mapStateToProps = (state, { lang }) => tagsSelectors.getData(state, lang);
 
-class TagPage extends Component {
-  static propTypes = {
-    routerQuery: PropTypes.shape({
-      topic: PropTypes.oneOf(TOPICS).isRequired,
-      tag: PropTypes.string.isRequired,
-    }).isRequired,
-    tag: TagShape.isRequired,
-    blocks: PropTypes.arrayOf(ArticlesArray).isRequired,
-    articlesCount: PropTypes.number.isRequired,
-  };
-
-  static getLayoutProps = ({ routerQuery: { topic } }) => ({
-    title: `topic.${topic}`,
-  });
-
-  static getInitialProps = ctx =>
-    populateRequest(ctx, ({ query: { tag } }) => tagsActions.fetchArticles(tag));
-
-  render() {
-    const {
-      routerQuery: { topic },
-      tag,
-      blocks,
-      articlesCount,
-    } = this.props;
-
-    return (
-      <div className="tag-page">
-        <div className="tag-page__header">
-          <div className="tag-page__topic">{getTopicLink({ topic, postfix: 'one' })}</div>
-          <div>
-            <div className="tag-page__title">{renderTag(tag)}</div>
-          </div>
-        </div>
-        <ArticlesBlocks articlesCount={articlesCount} blocks={blocks} />
+const TagPage = ({ routerQuery: { topic }, tag, blocks, articlesCount }) => (
+  <div className="tag-page">
+    <div className="tag-page__header">
+      <div className="tag-page__topic">{getTopicLink({ topic, postfix: 'one' })}</div>
+      <div>
+        <div className="tag-page__title">{renderTag(tag)}</div>
       </div>
-    );
-  }
-}
+    </div>
+    <ArticlesBlocks articlesCount={articlesCount} blocks={blocks} />
+  </div>
+);
+
+TagPage.propTypes = {
+  routerQuery: PropTypes.shape({
+    topic: PropTypes.oneOf(TOPICS).isRequired,
+    tag: PropTypes.string.isRequired,
+  }).isRequired,
+  tag: TagShape.isRequired,
+  blocks: PropTypes.arrayOf(ArticlesArray).isRequired,
+  articlesCount: PropTypes.number.isRequired,
+};
+
+TagPage.getLayoutProps = ({ routerQuery: { topic } }) => ({
+  title: `topic.${topic}`,
+});
+
+TagPage.getInitialProps = ctx =>
+  populateRequest(ctx, ({ query: { tag } }) => tagsActions.fetchArticles(tag));
 
 export default connect(mapStateToProps)(TagPage);

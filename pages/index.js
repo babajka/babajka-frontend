@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import keyBy from 'lodash/keyBy';
@@ -14,41 +14,37 @@ const mapStateToProps = (state, { lang }) => ({
   data: homeSelectors.getData(state, lang),
 });
 
-class MainPage extends Component {
-  static propTypes = {
-    blocks: PropTypes.arrayOf(
-      PropTypes.shape({
-        type: PropTypes.oneOf(Object.keys(BLOCKS_BY_TYPE)).isRequired,
-      })
-    ).isRequired,
-    data: PropTypes.shape({
-      articles: ArticlesById.isRequired,
-      tags: TagsById.isRequired,
-      topics: TopicsById.isRequired,
-      latestArticles: ArticlesArray.isRequired,
-    }).isRequired,
-    lang: LangType.isRequired,
-  };
-
-  static getInitialProps = ctx => populateRequest(ctx, homeActions.fetch);
-
-  static getLayoutProps = () => ({
-    title: 'header.main',
+const MainPage = ({ blocks, data, lang }) =>
+  blocks.map((block, index) => {
+    const Block = BLOCKS_BY_TYPE[block.type];
+    if (!Block) {
+      return null;
+    }
+    return (
+      // eslint-disable-next-line react/no-array-index-key
+      <Block key={index} block={block} data={data} blocks={keyBy(blocks, 'type')} lang={lang} />
+    );
   });
 
-  render() {
-    const { blocks, data, lang } = this.props;
-    return blocks.map((block, index) => {
-      const Block = BLOCKS_BY_TYPE[block.type];
-      if (!Block) {
-        return null;
-      }
-      return (
-        // eslint-disable-next-line react/no-array-index-key
-        <Block key={index} block={block} data={data} blocks={keyBy(blocks, 'type')} lang={lang} />
-      );
-    });
-  }
-}
+MainPage.propTypes = {
+  blocks: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.oneOf(Object.keys(BLOCKS_BY_TYPE)).isRequired,
+    })
+  ).isRequired,
+  data: PropTypes.shape({
+    articles: ArticlesById.isRequired,
+    tags: TagsById.isRequired,
+    topics: TopicsById.isRequired,
+    latestArticles: ArticlesArray.isRequired,
+  }).isRequired,
+  lang: LangType.isRequired,
+};
+
+MainPage.getInitialProps = ctx => populateRequest(ctx, homeActions.fetch);
+
+MainPage.getLayoutProps = () => ({
+  title: 'header.main',
+});
 
 export default connect(mapStateToProps)(MainPage);

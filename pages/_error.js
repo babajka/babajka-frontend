@@ -1,22 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import { Status } from './status';
+import ErrorMessage from 'components/common/layout/error/ErrorMessage';
 
-class ErrorPage extends Component {
-  static async getInitialProps(ctx) {
-    const { res, err } = ctx;
-    const { statusCode = null } = res || err;
-    return { statusCode };
-  }
+const ErrorPage = ({ statusCode }) => <ErrorMessage code={statusCode} />;
 
-  static getLayoutProps = () => ({
-    hideFooter: true,
-  });
+ErrorPage.getInitialProps = ({ res, err }) => {
+  const { statusCode = 404 } = res || err || {};
+  return { statusCode };
+};
 
-  render() {
-    const { statusCode } = this.props;
-    return <Status code={`${statusCode}`} />;
-  }
-}
+ErrorPage.getLayoutProps = () => ({
+  hideFooter: true,
+});
 
 export default ErrorPage;
