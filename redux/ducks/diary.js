@@ -14,7 +14,7 @@ const GET_BY_DAY = `${duck}/GET_BY_DAY`;
 const initialState = {
   pending: false,
   error: false,
-  data: null,
+  data: {},
   next: null,
   prev: null,
 };
@@ -41,7 +41,7 @@ const getCurrent = (state, lang) => {
     return data;
   }
   const { author } = data;
-  return { ...data, author: getLocalizedTag(author, lang).content };
+  return { ...data, author: author && getLocalizedTag(author, lang).content };
 };
 const isPending = state => getState(state).pending;
 const isError = state => getState(state).error;
