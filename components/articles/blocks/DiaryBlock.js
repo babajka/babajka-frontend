@@ -47,7 +47,7 @@ class DiaryBlock extends Component {
 
   componentDidMount() {
     const { fetchData } = this.props;
-    fetchData(9, 23);
+    fetchData();
   }
 
   render() {
