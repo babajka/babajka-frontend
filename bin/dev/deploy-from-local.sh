@@ -3,11 +3,7 @@ set -e
 
 # load env
 export $(cat .env | xargs)
-
-echo 'Create deployment status'
-sha=$(git rev-parse HEAD)
-npm run gds -- --token $GITHUB_TOKEN -a create -e dev -r $sha
-npm run gds -- --token $GITHUB_TOKEN -a in_progress -e dev -r $sha
+sh bin/dev/before-deploy.sh dev
 
 echo 'Building...'
 WIR_ENV=staging npm run build
@@ -24,4 +20,4 @@ echo 'Dependencies are installed'
 ssh wir-dev@dev.wir.by 'bash -s' < bin/dev/postdeploy.sh
 echo 'Deployed'
 
-npm run gds -- --token $GITHUB_TOKEN -a success -e dev -r $sha -l http://dev.wir.by
+sh bin/dev/after-deploy.sh dev
