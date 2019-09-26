@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 set -e
 
+# load env
+export $(cat .env | xargs)
+
+echo 'Create deployment status'
+sha=$(git rev-parse HEAD)
+npm run gds -- --token $GITHUB_TOKEN -a create -e dev -r $sha
+npm run gds -- --token $GITHUB_TOKEN -a in_progress -e dev -r $sha
+
+echo 'Building...'
 WIR_ENV=staging npm run build
 
 FRONTEND_REMOTE_SWAP_PATH="/home/wir-dev/deployed/swap-frontend/babajka-frontend/"
@@ -14,3 +23,5 @@ echo 'Dependencies are installed'
 
 ssh wir-dev@dev.wir.by 'bash -s' < bin/dev/postdeploy.sh
 echo 'Deployed'
+
+npm run gds -- --token $GITHUB_TOKEN -a success -e dev -r $sha -l http://dev.wir.by
