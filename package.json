@@ -28,7 +28,8 @@
     "semantic-release": "semantic-release",
     "travis-deploy-once": "travis-deploy-once",
     "bundlesize": "bundlesize",
-    "size": "npm run reset-cache && npm run build && npm run bundlesize"
+    "size": "npm run reset-cache && npm run build && npm run bundlesize",
+    "gds": "github-deploy-status -u babajka -p babajka-frontend"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.9.0",
@@ -111,6 +112,7 @@
     "eslint-plugin-react": "^7.12.4",
     "eslint-plugin-react-hooks": "^1.5.1",
     "gh-pages": "^2.0.1",
+    "github-deploy-status": "^1.4.1",
     "glob": "^7.1.3",
     "husky": "^1.3.1",
     "lint-staged": "^8.1.5",
