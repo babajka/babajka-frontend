@@ -67,6 +67,7 @@ class Root extends App {
     }).isRequired,
   };
 
+  // https://err.sh/next.js/opt-out-automatic-prerendering
   static async getInitialProps({ Component, ctx }) {
     await populateRequest(ctx, authActions.getCurrentUser);
     // TODO(@drapegnik): consider is it right place for that request

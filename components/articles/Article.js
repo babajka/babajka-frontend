@@ -1,8 +1,7 @@
 import 'styles/pages/article.scss';
 
 import React from 'react';
-import PropTypes from 'prop-types';
-import { withRouter } from 'next/router';
+import { useRouter } from 'next/router';
 
 import { MetaTitle, MetaDescription, MetaImage, MetaKeywords } from 'components/social/Metatags';
 import Link from 'components/common/Link';
@@ -18,9 +17,9 @@ import fiberyRenderer from 'utils/fibery/renderer';
 import { ROUTES_NAMES } from 'routes';
 
 const Article = ({
-  router,
   data: { images, title, subtitle, keywords, text, type, audio, video, tagsByTopic },
 }) => {
+  const router = useRouter();
   const { brands, authors, ...tags } = tagsByTopic;
 
   return (
@@ -85,9 +84,6 @@ const Article = ({
 
 Article.propTypes = {
   data: ArticleShape.isRequired,
-  router: PropTypes.shape({
-    asPath: PropTypes.string.isRequired,
-  }).isRequired,
 };
 
-export default withRouter(Article);
+export default Article;

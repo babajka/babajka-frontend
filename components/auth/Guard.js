@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'next/router';
+import { useRouter } from 'next/router';
 
 import Redirect from 'components/common/Redirect';
 
@@ -14,7 +14,8 @@ const mapStateToProps = state => ({
   user: authSelectors.getUser(state),
 });
 
-const Guard = ({ permissions, children, user, router }) => {
+const Guard = ({ permissions, children, user }) => {
+  const router = useRouter();
   if (!permissions.length) {
     return children;
   }
@@ -31,11 +32,10 @@ Guard.propTypes = {
   permissions: PermissionsList.isRequired,
   children: PropTypes.node.isRequired,
   user: UserShape,
-  router: PropTypes.shape({ asPath: PropTypes.string.isRequired }).isRequired,
 };
 
 Guard.defaultProps = {
   user: null,
 };
 
-export default connect(mapStateToProps)(withRouter(Guard));
+export default connect(mapStateToProps)(Guard);
