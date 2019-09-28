@@ -12,8 +12,8 @@ export const ShortUserShape = PropTypes.shape({
 });
 
 export const MetadataShape = PropTypes.shape({
-  createdAt: PropTypes.string.isRequired,
-  updatedAt: PropTypes.string.isRequired,
+  createdAt: PropTypes.number.isRequired,
+  updatedAt: PropTypes.number.isRequired,
   createdBy: ShortUserShape.isRequired,
   updatedBy: ShortUserShape.isRequired,
 });

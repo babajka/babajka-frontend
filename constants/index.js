@@ -20,6 +20,8 @@ const LANGS = Object.entries(LOCALES).map(([id, label]) => ({ id, label }));
 
 const DATE_FORMAT = 'D MMMM YYYY';
 
+const DATETIME_FORMAT = 'DD/MM/YY HH:mm';
+
 const SHORT_DATE_FORMAT = 'D MMMM';
 
 const DOMAIN_SECURE = 'https://wir.by';
@@ -31,6 +33,7 @@ const TOPICS = ['themes', 'locations', 'times', 'personalities', 'authors', 'bra
 
 module.exports = {
   DATE_FORMAT,
+  DATETIME_FORMAT,
   SHORT_DATE_FORMAT,
   DEFAULT_LOCALE,
   DOMAIN_SECURE,

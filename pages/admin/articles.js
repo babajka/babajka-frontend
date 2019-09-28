@@ -3,14 +3,20 @@ import { connect } from 'react-redux';
 
 import Link from 'components/common/Link';
 import Table from 'components/common/Table';
+import Clickable from 'components/common/Clickable';
+import ExternalLink from 'components/common/ExternalLink';
 import withAdmin from 'components/hoc/withAdmin';
+import Dispatcher from 'lib/components/Dispatcher';
 
 import { ArticlesArray } from 'utils/customPropTypes';
 import { adminArticlesActions, adminArticlesSelectors } from 'redux/ducks/admin/articles';
 import { populateRequest } from 'utils/request';
 import { formatDate, optional, renderNodeList } from 'utils/formatters';
 import { getTagLink } from 'utils/tags';
+import { getArticleBaseUrl } from 'utils/fibery';
+
 import { ROUTES_NAMES } from 'routes';
+import { DATETIME_FORMAT } from 'constants';
 
 const mapStateToProps = (state, { lang }) => ({
   articles: adminArticlesSelectors.getAll(state, lang),
@@ -34,10 +40,6 @@ const ARTICLE_COLS = [
     formatter: text => `${text.slice(0, 100)}...`,
   },
   {
-    id: 'collection',
-    formatter: optional(({ name }) => name, ''),
-  },
-  {
     id: 'tagsByTopic',
     title: 'Tags',
     formatter: tagsByTopic => {
@@ -54,6 +56,33 @@ const ARTICLE_COLS = [
     id: 'publishAt',
     title: 'Publication Date',
     formatter: optional(formatDate, 'Not Planned'),
+  },
+  {
+    id: 'metadata.updatedAt',
+    title: 'Updated At',
+    formatter: v => formatDate(v, DATETIME_FORMAT),
+  },
+  {
+    id: 'actions',
+    render: ({ row: { fiberyPublicId }, index }) => {
+      const url = getArticleBaseUrl(fiberyPublicId);
+      return (
+        <>
+          <div>
+            <ExternalLink href={url}>Edit</ExternalLink>
+          </div>
+          <div>
+            <Dispatcher action={adminArticlesActions.updateArticle}>
+              {({ onDispatch, pending }) => (
+                <Clickable linkStyle onClick={() => onDispatch(url, index)} disabled={pending}>
+                  {pending ? '...' : 'Update'}
+                </Clickable>
+              )}
+            </Dispatcher>
+          </div>
+        </>
+      );
+    },
   },
 ];
 

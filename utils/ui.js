@@ -8,5 +8,3 @@ export const linkCn = ({ className, disabled, dark, active } = {}) =>
     { 'wir-link--disabled': disabled, 'wir-link--theme-dark': dark, 'wir-link--active': active },
     className
   );
-
-export const stub = 1;

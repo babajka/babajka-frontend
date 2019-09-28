@@ -26,17 +26,9 @@ export default {
     getChunk: (pagination = { skip: 0 }) =>
       `${API_URL}/articles${qs.stringify(pagination, queryOptions)}`,
     fiberyPreview: `${API_URL}/articles/fibery/preview`,
-    // legacy
-    // getBrands: `${API_URL}/articles/brands`,
-    // getAuthors: `${API_URL}/articles/authors`,
-    // getColletions: `${API_URL}/articles/collections`,
-    // create: `${API_URL}/articles`,
-    // update: id => `${API_URL}/articles/${id}`,
-    // remove: id => `${API_URL}/articles/${id}`,
-    // addLocale: id => `${API_URL}/articles/localize/${id}`,
+    fiberyImport: `${API_URL}/articles/fibery/import`,
   },
   users: {
-    // getAll: `${API_URL}/users`,
     getCurrent: `${API_URL}/users/current`,
   },
   diary: {
