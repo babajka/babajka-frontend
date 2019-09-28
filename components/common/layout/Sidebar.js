@@ -3,7 +3,7 @@ import './sidebar.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
 
 import Icon from 'components/common/ui/Icon';
@@ -78,59 +78,59 @@ const mapDispatchToProps = {
   logout: authActions.signOut,
 };
 
-const Sidebar = ({ blocks, data, router: { asPath }, toggleSidebar, close, user, logout }) => (
-  <aside className="sidebar">
-    <Clickable className="sidebar__icon-close" titleId="sidebar.close" onClick={toggleSidebar}>
-      <Icon name="times" />
-    </Clickable>
+const Sidebar = ({ blocks, data, toggleSidebar, close, user, logout }) => {
+  const router = useRouter();
+  return (
+    <aside className="sidebar">
+      <Clickable className="sidebar__icon-close" titleId="sidebar.close" onClick={toggleSidebar}>
+        <Icon name="times" />
+      </Clickable>
 
-    <LocaleContext.Consumer>
-      {lang => (
-        <ul className="sidebar__langs">
-          {LANGS.filter(({ id }) => id !== lang).map(({ id, label }) => (
-            <li key={id} className="langs__item">
-              <Link route={getLocaleSwitchUrl(asPath, id)} params={{ lang: id }}>
-                <Clickable onClick={handleLangClick.bind(null, id)}>
-                  <span>{label}</span>
-                </Clickable>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
-    </LocaleContext.Consumer>
+      <LocaleContext.Consumer>
+        {lang => (
+          <ul className="sidebar__langs">
+            {LANGS.filter(({ id }) => id !== lang).map(({ id, label }) => (
+              <li key={id} className="langs__item">
+                <Link route={getLocaleSwitchUrl(router.asPath, id)} params={{ lang: id }}>
+                  <Clickable onClick={handleLangClick.bind(null, id)}>
+                    <span>{label}</span>
+                  </Clickable>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </LocaleContext.Consumer>
 
-    <div className="sidebar__about-label">
-      <Link route={ROUTES_NAMES.about} onMouseUp={close}>
-        <Text id="sidebar.about" />
-      </Link>
-    </div>
-
-    {user && (
-      // FIXME
       <div className="sidebar__about-label">
-        <Clickable className="wir-link" onClick={logout}>
-          <Text id="auth.signOut" />
-        </Clickable>
+        <Link route={ROUTES_NAMES.about} onMouseUp={close}>
+          <Text id="sidebar.about" />
+        </Link>
       </div>
-    )}
 
-    {blocks.map(({ topic, tags }) => (
-      <SidebarSection
-        key={topic}
-        title={<Text id={`topic.${topic}_essentials`} />}
-        data={tags.map(tagId => data.tags[tagId])}
-        renderItem={tag => getTagLink({ tag, onMouseUp: close })}
-        footer={getFooter(topic, { onMouseUp: close })}
-      />
-    ))}
-  </aside>
-);
+      {user && (
+        // FIXME
+        <div className="sidebar__about-label">
+          <Clickable className="wir-link" onClick={logout}>
+            <Text id="auth.signOut" />
+          </Clickable>
+        </div>
+      )}
+
+      {blocks.map(({ topic, tags }) => (
+        <SidebarSection
+          key={topic}
+          title={<Text id={`topic.${topic}_essentials`} />}
+          data={tags.map(tagId => data.tags[tagId])}
+          renderItem={tag => getTagLink({ tag, onMouseUp: close })}
+          footer={getFooter(topic, { onMouseUp: close })}
+        />
+      ))}
+    </aside>
+  );
+};
 
 Sidebar.propTypes = {
-  router: PropTypes.shape({
-    asPath: PropTypes.string.isRequired,
-  }).isRequired,
   toggleSidebar: PropTypes.func.isRequired,
   close: PropTypes.func.isRequired,
   blocks: PropTypes.arrayOf(
@@ -153,4 +153,4 @@ Sidebar.defaultProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(Sidebar));
+)(Sidebar);
