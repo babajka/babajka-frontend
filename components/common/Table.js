@@ -3,6 +3,7 @@ import './ui/table.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import identity from 'lodash/identity';
+import get from 'lodash/get';
 import cn from 'classnames';
 
 import { toTitleCase } from 'utils/formatters';
@@ -32,7 +33,7 @@ const Table = ({ className, cols, rows, getRowClass }) => (
             } = col;
             return (
               <td key={id} className={cn(col.className, { nowrap: nowrap(row) })}>
-                {render({ value: formatter(row[prop]), index, col, row })}
+                {render({ value: formatter(get(row, prop)), index, col, row })}
               </td>
             );
           })}

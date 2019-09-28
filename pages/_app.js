@@ -9,7 +9,7 @@ import moment from 'moment';
 import { Provider } from 'react-redux';
 import withRedux from 'next-redux-wrapper';
 
-import App, { Container } from 'next/app';
+import App from 'next/app';
 import Head from 'next/head';
 import { withRouter } from 'next/router';
 
@@ -115,29 +115,27 @@ class Root extends App {
     const title = noLocTitle || localize(titleId, locale);
 
     return (
-      <Container>
-        <Provider store={store}>
-          <LocaleContext.Provider value={locale}>
-            <Metatags url={`${host}${replaceLocale(router.asPath)}`} />
-            <MetaTitle title={title} />
-            <MetaDescription description={localize('common.project-description', locale)} />
-            <MetaImage />
-            <MetaLocale locale={locale} />
-            <MetaKeywords />
-            <MetaAppleTouchDevices title={localize(titleApple, locale)} />
-            <Head>
-              <title>Wir.by | {title}</title>
-              <link rel="icon" type="image/png" href={FAVICON_URL} />
-              <link rel="preconnect" href="https://www.google-analytics.com" />
-            </Head>
-            <CoreLayout lang={locale} hideFooter={hideFooter} hideSidebar={hideSidebar}>
-              <Guard permissions={permissions}>
-                <Component {...pageProps} />
-              </Guard>
-            </CoreLayout>
-          </LocaleContext.Provider>
-        </Provider>
-      </Container>
+      <Provider store={store}>
+        <LocaleContext.Provider value={locale}>
+          <Metatags url={`${host}${replaceLocale(router.asPath)}`} />
+          <MetaTitle title={title} />
+          <MetaDescription description={localize('common.project-description', locale)} />
+          <MetaImage />
+          <MetaLocale locale={locale} />
+          <MetaKeywords />
+          <MetaAppleTouchDevices title={localize(titleApple, locale)} />
+          <Head>
+            <title>Wir.by | {title}</title>
+            <link rel="icon" type="image/png" href={FAVICON_URL} />
+            <link rel="preconnect" href="https://www.google-analytics.com" />
+          </Head>
+          <CoreLayout lang={locale} hideFooter={hideFooter} hideSidebar={hideSidebar}>
+            <Guard permissions={permissions}>
+              <Component {...pageProps} />
+            </Guard>
+          </CoreLayout>
+        </LocaleContext.Provider>
+      </Provider>
     );
   }
 }

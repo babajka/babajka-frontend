@@ -30,7 +30,7 @@ const AdminSidebar = () => {
         <li>
           <Dispatcher action={authActions.signOut}>
             {({ onDispatch }) => (
-              <Clickable className="wir-link" onClick={onDispatch}>
+              <Clickable linkStyle onClick={onDispatch}>
                 <Text id="auth.signOut" />
               </Clickable>
             )}

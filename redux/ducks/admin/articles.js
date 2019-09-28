@@ -1,6 +1,7 @@
 import createReducer from 'type-to-reducer';
 
 import api from 'constants/api';
+import { SUCCESS } from 'constants/redux';
 import { defaultReducer } from 'utils/redux';
 import { makeRequest } from 'utils/request';
 import { getLocalizedArticles, getLocalizedArticle } from 'utils/getters';
@@ -10,6 +11,7 @@ const duck = 'admin/articles';
 // constants
 const FETCH_ALL = `${duck}/FETCH_ALL`;
 const FIBERY_PREVIEW = `${duck}/FIBERY_PREVIEW`;
+const UPDATE_ARTICLE = `${duck}/UPDATE_ARTICLE`;
 
 // reducer
 const defaultState = {
@@ -37,6 +39,17 @@ export default createReducer(
       preview: article,
       ...defaultState,
     })),
+    [UPDATE_ARTICLE]: {
+      [SUCCESS]: (state, { payload: article, meta: { index } }) => ({
+        ...state,
+        data: state.data.map((a, i) => {
+          if (i === index) {
+            return article;
+          }
+          return a;
+        }),
+      }),
+    },
   },
   initialState
 );
@@ -65,5 +78,10 @@ export const adminArticlesActions = {
   fiberyPreview: url => ({
     type: FIBERY_PREVIEW,
     payload: makeRequest(api.articles.fiberyPreview, 'POST', { url }),
+  }),
+  updateArticle: (url, index) => ({
+    type: UPDATE_ARTICLE,
+    payload: makeRequest(api.articles.fiberyImport, 'POST', { url }),
+    meta: { index },
   }),
 };

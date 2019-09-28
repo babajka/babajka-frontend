@@ -17,5 +17,3 @@ export const localizeData = (data, lang) =>
     acc[type] = SKIP_MAP_BY_ID.includes(type) ? localizedList : keyBy(localizedList, 'id');
     return acc;
   }, {});
-
-export const a = 1;

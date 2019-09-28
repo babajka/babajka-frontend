@@ -17,6 +17,9 @@ module.exports = {
     // prettier overrides
     'prettier/prettier': 'error',
 
+    // we use named export in utils
+    'import/prefer-default-export': 'off',
+
     // we use bind
     'react/jsx-no-bind': 'off',
     // we use only .js extension
