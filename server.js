@@ -6,13 +6,9 @@ const cookieParser = require('cookie-parser');
 const qs = require('querystring');
 
 const routes = require('./routes');
-const { BACKEND_URL, LOCALE_COOKIE_NAME } = require('./constants/server');
+const { PORT, BACKEND_URL, LOCALE_COOKIE_NAME } = require('./constants/server');
 const { DEFAULT_LOCALE, STATIC_PATHS, VALID_LOCALES } = require('./constants');
-const getArgs = require('./utils/args');
 const ENV = require('./utils/env');
-
-const ARGS = getArgs();
-const port = ARGS.port || 3000;
 
 const dev = ENV !== 'production' && ENV !== 'staging';
 const app = next({ dev });
@@ -79,15 +75,15 @@ app.prepare().then(() => {
     return handle(req, res);
   });
 
-  server.listen(port, err => {
+  server.listen(PORT, err => {
     if (err) {
       throw err;
     }
     console.log(`> Environment is:\t${ENV}`);
     console.log(`> Using Backend on\t${BACKEND_URL}`);
-    console.log(`> Ready on\t\thttp://localhost:${port}`);
+    console.log(`> Ready on\t\thttp://localhost:${PORT}`);
     console.log(
-      `> To support cookies add '127.0.0.1 local.wir.by' into your hosts file and access on http://local.wir.by:${port}`
+      `> To support cookies add '127.0.0.1 local.wir.by' into your hosts file and access on http://local.wir.by:${PORT}`
     );
   });
 });

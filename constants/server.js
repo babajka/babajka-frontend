@@ -1,10 +1,10 @@
-const getArgs = require('../utils/args');
-
-const ARGS = getArgs();
+const ARGS = require('../utils/args');
 
 const BACKEND_URL = ARGS.backend_url || 'http://api.wir.by';
+
+const PORT = ARGS.port || 3000;
 
 const LOCALE_COOKIE_NAME = 'WIR_LOCALE';
 
 // please use commonjs modules here for compatibility with server
-module.exports = { BACKEND_URL, LOCALE_COOKIE_NAME };
+module.exports = { BACKEND_URL, LOCALE_COOKIE_NAME, PORT };

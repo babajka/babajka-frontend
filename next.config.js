@@ -3,6 +3,7 @@ const fonts = require('next-fonts');
 const sass = require('@zeit/next-sass');
 const css = require('@zeit/next-css');
 const bundleAnalyzer = require('@zeit/next-bundle-analyzer');
+// eslint-disable-next-line import/no-extraneous-dependencies
 const webpack = require('webpack');
 const GenerateJsonPlugin = require('generate-json-webpack-plugin');
 const envCi = require('env-ci');
