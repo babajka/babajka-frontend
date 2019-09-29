@@ -3,6 +3,7 @@
 import React, { Fragment, createElement } from 'react';
 import identity from 'lodash/identity';
 
+import Image from 'components/common/Image';
 import ExternalLink from 'components/common/ExternalLink';
 import VideoPlayer from 'components/common/VideoPlayer';
 import parseYoutubeUrl from 'lib/utils/parseYoutubeUrl';
@@ -58,6 +59,9 @@ const addMarks = (text, marks) => {
   }, text);
 };
 
+// https://regex101.com/r/7eFFHP/2
+const IMAGE_URL_REGEX = /(.+)#align=(.+)$/;
+
 const RENDERERS = {
   // debug: (...params) => {
   //   console.log(params)
@@ -67,15 +71,25 @@ const RENDERERS = {
   hard_break: ({ key }) => <span key={key} className="article-page-content__hard" />,
   heading: ({ key, attrs: { level }, content }) =>
     createElement(`h${level}`, { key }, renderContent(content)),
-  image: ({ key, attrs: { alt, src, title } }) => (
-    <Fragment key={key}>
-      <span className="article-image article-page-content__right-element">
-        <img className="article-image__image" alt={alt} src={src} />
-        <span className="article-image__caption">{title}</span>
-      </span>
-      <br />
-    </Fragment>
-  ),
+  image: ({ key, attrs: { alt, src, title } }) => {
+    // FIXME:
+    const [_, url /* align */] = src.match(IMAGE_URL_REGEX);
+    return (
+      <ExternalLink key={key} href={url}>
+        <span className="article-image article-page-content__right-element">
+          <Image
+            className="article-image__image"
+            alt={alt}
+            sourceSizes={[240]}
+            baseUrl={url}
+            mode="x"
+          />
+          <span className="article-image__caption">{title}</span>
+        </span>
+        <br />
+      </ExternalLink>
+    );
+  },
   paragraph: ({ key, attrs = {}, content }) => {
     return <p key={attrs.guid || key}>{renderContent(content)}</p>;
   },
