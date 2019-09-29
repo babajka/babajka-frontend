@@ -7,6 +7,7 @@ import { MetaTitle, MetaDescription, MetaImage, MetaKeywords } from 'components/
 import Link from 'components/common/Link';
 import AudioPlayer from 'components/common/AudioPlayer';
 import VideoPlayer from 'components/common/VideoPlayer';
+import Image from 'components/common/Image';
 import ShareButtons from 'components/social/ShareButtons';
 
 import { ArticleShape } from 'utils/customPropTypes';
@@ -15,6 +16,8 @@ import { renderNodeList } from 'utils/formatters';
 import fiberyRenderer from 'utils/fibery/renderer';
 
 import { ROUTES_NAMES } from 'routes';
+
+const COVER_SIZES = [1200, 1000, 770, 640, 360];
 
 const Article = ({
   data: { images, title, subtitle, keywords, text, type, audio, video, tagsByTopic },
@@ -26,14 +29,21 @@ const Article = ({
     <>
       <MetaTitle title={title} type="article" />
       <MetaDescription description={subtitle} />
-      {/* FIXME: proper social preview image */}
+      {/* FIXME: proper social preview image (size) */}
       <MetaImage url={images.page} />
       <MetaKeywords keywords={keywords} />
       <div className="article-page">
         <div className="article-page-margins article-page-content">
           <div className="article-page__subtitle">{subtitle}</div>
         </div>
-        {type === 'text' && <img className="article-page__cover" src={images.page} alt={title} />}
+        {type === 'text' && (
+          <Image
+            className="article-page__cover"
+            alt={title}
+            sourceSizes={COVER_SIZES}
+            baseUrl={images.page}
+          />
+        )}
       </div>
       <div className="article-page-margins article-page__header">
         {/* TODO: hover corresponding image and title simultaneously */}
