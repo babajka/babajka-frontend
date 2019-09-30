@@ -65,7 +65,7 @@ const SubscribeForm = () => {
                     rightIcon={isValid && { name: 'arrow-right', pack: 's' }}
                     onRightClick={handleSubmit}
                     pending={isSubmitting}
-                    showError={errors.global}
+                    showError={!!errors.global}
                   />
                 </Form>
               )}
