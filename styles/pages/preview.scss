@@ -1,0 +1,15 @@
+.preview-page {
+  &__switch {
+    padding-left: 50px;
+    text-decoration: underline;
+  }
+
+  &__cards {
+    padding: 50px;
+    padding-bottom: 100px;
+  }
+
+  &__card {
+    margin-bottom: 50px;
+  }
+}

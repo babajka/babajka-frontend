@@ -2,8 +2,10 @@ import './article.scss';
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 
 import Text from 'components/common/Text';
+import Icon from 'components/common/ui/Icon';
 
 import { TagsArray, CollectionShape, ArticleCoversShape, ArticleType } from 'utils/customPropTypes';
 import { renderNodeList } from 'utils/formatters';
@@ -13,8 +15,6 @@ import { linkCn } from 'utils/ui';
 import { ROUTES_NAMES } from 'routes';
 
 import CardWrapper, { SIZES } from './CardWrapper';
-import CollectionCard from './article/CollectionCard';
-import VideoCard from './article/VideoCard';
 
 // TODO: fix storybook
 const ArticleCard = props => {
@@ -42,46 +42,91 @@ const ArticleCard = props => {
     linkProps: { route: ROUTES_NAMES.article, params: { slug } },
   };
 
-  if (type === 'video') {
-    return (
-      <CardWrapper {...wrapperProps} className="video" color={null}>
-        <VideoCard {...props} />
-      </CardWrapper>
-    );
-  }
-
-  if (collection) {
-    return (
-      <CardWrapper {...wrapperProps} className="collection">
-        <CollectionCard {...props} />
-      </CardWrapper>
-    );
-  }
-
   return (
-    <CardWrapper {...wrapperProps} className="article">
-      <div className="article__cover-wrapper">
-        <img className="article__cover article__cover--vertical" src={vertical} alt={title} />
-        <img className="article__cover article__cover--horizontal" src={horizontal} alt={title} />
+    <CardWrapper
+      {...wrapperProps}
+      className={cn('article-card', {
+        'article-card--type-video': type === 'video',
+        'article-card--type-audio': type === 'audio',
+        'article-card--with-collection': collection,
+        'article-card--with-brand': brand,
+      })}
+    >
+      <div
+        className={cn('article-card__cover-container', {
+          'article-card__cover-container--with-collection': collection,
+        })}
+      >
+        {/* TODO: proper image handling */}
+        <img
+          className="article-card__cover article-card__cover--vertical"
+          src={vertical}
+          alt="lol"
+        />
+        <img
+          className="article-card__cover article-card__cover--horizontal"
+          src={horizontal}
+          alt="lol"
+        />
       </div>
-      {brand && (
-        <img className="article__brand" src={brand.image} alt={brand.title} title={brand.title} />
-      )}
-      <div className="article__content">
-        <div>
-          <div className="article__title">{title}</div>
-          <div className="article__author">{renderNodeList(authors.map(renderTag))}</div>
+      <div className="article-card__content">
+        {collection && (
+          <div className="article-card__collection-container">
+            <div className="article-card__collection-content">
+              <div className="article-card__collection-order">
+                {collection.articleIndex + 1} <Text id="article.collection-part" />
+              </div>
+              <div className="article-card__collection-name">{collection.name}</div>
+            </div>
+            <img className="article-card__collection-cover" src={collection.cover} alt="lol" />
+          </div>
+        )}
+        {collection && <div className="article-card__filler1" />}
+        <div className="article-card__title">
+          {type === 'video' && (
+            <Icon className="article-card__interactive-icon" pack="b" name="youtube" />
+          )}
+          {type === 'audio' && (
+            <Icon className="article-card__interactive-icon" pack="s" name="volume-up" />
+          )}
+          {title}
         </div>
-        <div className="article__content-bottom">
-          <span className="article__description">{subtitle}</span>
-          <span className={linkCn({ className: 'article__label-read', dark })}>
-            <Text id="article.read" />
-          </span>
-          <span className="article__label-read-article">
+        {!collection && (
+          <div className="article-card__description-container">
+            <div className="article-card__description">{subtitle}</div>
+            <div className={linkCn({ className: 'article-card__label-read', dark })}>
+              {type === 'text' && <Text id="article.read" />}
+              {type === 'audio' && <Text id="article.listen" />}
+              {type === 'video' && <Text id="article.watch" />}
+            </div>
+          </div>
+        )}
+        <div className="article-card__author article-card__author--placed-middle">
+          {renderNodeList(authors.map(renderTag))}
+        </div>
+        {!collection && <div className="article-card__filler2" />}
+        <div
+          className={cn('article-card__content-bottom', {
+            'article-card__content-bottom--with-brand': brand,
+          })}
+        >
+          {brand && (
+            <img
+              className="article-card__brand"
+              src={brand.content.image}
+              alt={brand.content.title}
+            />
+          )}
+          <div className="article-card__author article-card__author--placed-bottom">
+            {renderNodeList(authors.map(renderTag))}
+          </div>
+          <div className="article-card__label-read-full">
             <span className={linkCn({ dark })}>
-              <Text id="article.read-article" />
+              {type === 'text' && <Text id="article.read-article" />}
+              {type === 'audio' && <Text id="article.listen-podcast" />}
+              {type === 'video' && <Text id="article.watch-video" />}
             </span>
-          </span>
+          </div>
         </div>
       </div>
     </CardWrapper>

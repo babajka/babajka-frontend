@@ -1,355 +1,461 @@
 @import 'responsiveness';
+@import 'variables';
 
 @import './cards';
 
-.article {
-  border-radius: 3px;
-  color: #ffffff;
+$theme-dark-border-width: 1px;
+$hover-border-width: 6px;
+
+.article-card {
+  color: $primary-white;
   display: flex;
-  flex-direction: row;
-  position: relative;
 
   &.theme-dark {
-    color: #000000;
+    box-shadow: inset $theme-dark-border-width $theme-dark-border-width $primary-black,
+      inset (-$theme-dark-border-width) (-$theme-dark-border-width) $primary-black;
+    color: $primary-black;
+  }
+
+  &:hover {
+    box-shadow: inset $hover-border-width $hover-border-width $primary,
+      inset (-$hover-border-width) (-$hover-border-width) $primary;
+  }
+
+  &__cover-container {
+    flex-shrink: 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  &.theme-dark > &__cover-container {
+    margin-left: $theme-dark-border-width;
+    margin-top: $theme-dark-border-width;
+  }
+
+  &:hover > &__cover-container {
+    margin-left: $hover-border-width;
+    margin-top: $hover-border-width;
   }
 
   &__cover {
-    display: none;
-    height: 100%;
-    object-fit: cover;
-    width: 100%;
+    display: inline-block;
+    position: absolute; // or vertical only ?
+
+    &--horizontal {
+      display: none;
+    }
+
+    &--vertical {
+      display: none;
+      // height: 100%;
+      // width: 100%;
+    }
   }
 
-  &__brand {
-    position: absolute;
+  &.theme-dark > &__cover-container > &__cover {
+    left: -($theme-dark-border-width);
+    top: -($theme-dark-border-width);
+  }
+
+  &:hover > &__cover-container > &__cover {
+    left: -($hover-border-width);
+    top: -($hover-border-width);
   }
 
   &__content {
+    bottom: 0;
     display: flex;
     flex-direction: column;
+    max-height: 100%;
+  }
+
+  &__collection-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__collection-content {
     flex-grow: 1;
-    justify-content: space-between;
+  }
+
+  &__collection-name {
+    font-weight: bold;
+  }
+
+  &__collection-cover {
+    border-radius: 50%;
   }
 
   &__title {
     font-weight: bold;
   }
 
-  &__author {
-    font-size: 14px;
-    line-height: 21px;
+  &__description-container {
+    overflow: hidden;
+    position: relative;
+  }
+
+  &__description {
+    overflow: hidden;
+  }
+
+  &__label-read {
+    //
+  }
+
+  &__interactive-icon {
+    margin-right: 1rem;
+  }
+
+  &__filler1 {
+    flex-grow: 1;
+  }
+
+  &__filler2 {
+    flex-grow: 1;
   }
 
   &__content-bottom {
+    align-items: center;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+    flex-direction: row;
+    justify-content: flex-start;
   }
 
-  &__label-read-article {
+  &__brand {
+    max-height: 48px;
+    width: 48px;
+  }
+
+  &__author {
+    &--placed-middle {
+      display: none;
+    }
+  }
+
+  &__label-read-full {
     display: none;
   }
 }
 
 @mixin shared-size-xxl {
-  .article {
+  .article-card {
     @include xxl-sizes;
 
-    &__cover-wrapper {
-      max-width: 390px;
-      min-width: 390px;
+    flex-direction: row;
+
+    &__cover-container {
+      height: 630px;
+      width: 390px;
     }
 
-    &__cover--vertical {
-      display: unset;
-    }
+    &__cover {
+      height: 630px;
+      width: 390px;
 
-    &__brand {
-      height: 53px;
-      left: 49px;
-      top: 32px;
-      width: 118px;
+      &--vertical {
+        display: unset;
+      }
     }
 
     &__content {
-      padding: 30px 60px 66px 30px;
+      padding: 0 60px 0 30px;
     }
 
-    &__title {
-      font-size: 60px;
-      line-height: 72px;
-    }
-
-    &__author {
+    &__collection-container {
       margin-top: 24px;
     }
 
-    &__content-bottom {
+    &__collection-order {
       font-size: 20px;
       line-height: 36px;
     }
-  }
-}
 
-.size-xxl {
-  @include shared-size-xxl;
-}
-
-@mixin shared-size-xl {
-  .article {
-    @include xl-sizes;
-
-    &__cover-wrapper {
-      max-width: 313px;
-      min-width: 313px;
+    &__collection-name {
+      font-size: 20px;
+      line-height: 27px;
     }
 
-    &__cover--vertical {
-      display: unset;
-    }
-
-    &__brand {
-      height: 42px;
-      left: 39px;
-      top: 26px;
-      width: 94px;
-    }
-
-    &__content {
-      padding: 24px 62px 48px 23px;
+    &__collection-cover {
+      height: 70px;
+      width: 70px;
     }
 
     &__title {
       font-size: 60px;
-      line-height: 72px;
-    }
-
-    &__author {
+      line-height: 66px;
+      margin-bottom: 30px;
       margin-top: 24px;
     }
 
-    &__content-bottom {
-      font-size: 14px;
-      line-height: 21px;
-    }
-  }
-}
-
-.size-xl {
-  @include shared-size-xl;
-}
-
-@mixin shared-size-l {
-  .article {
-    @include l-sizes;
-
-    &__cover-wrapper {
-      max-width: 240px;
-      min-width: 240px;
-    }
-
-    &__cover--vertical {
-      display: unset;
-    }
-
-    &__brand {
-      height: 33px;
-      left: 30px;
-      top: 36px;
-      width: 72px;
-    }
-
-    &__content {
-      padding: 28px 42px 42px 30px;
-    }
-
-    &__title {
-      font-size: 30px;
+    &__description-container {
+      font-size: 20px;
       line-height: 36px;
-    }
-
-    &__author {
-      margin-top: 18px;
-    }
-
-    &__content-bottom {
-      font-size: 14px;
-      line-height: 21px;
-    }
-  }
-}
-
-.size-l {
-  @include shared-size-l;
-}
-
-@mixin shared-size-m {
-  .article {
-    @include m-sizes;
-
-    &__cover-wrapper {
-      max-width: 186px;
-      min-width: 186px;
-    }
-
-    &__cover--vertical {
-      display: unset;
-    }
-
-    &__brand {
-      height: 33px;
-      left: 30px;
-      top: 28px;
-      width: 72px;
-    }
-
-    &__content {
-      padding: 30px 30px 42px 24px;
-    }
-
-    &__title {
-      font-size: 30px;
-      line-height: 36px;
-    }
-
-    &__author {
-      margin-top: 12px;
-    }
-
-    &__content-bottom {
-      font-size: 14px;
-      line-height: 21px;
     }
 
     &__description {
-      display: none;
+      max-height: 216px; // 6 rows
     }
 
     &__label-read {
-      display: none;
-    }
-
-    &__label-read-article {
-      display: unset;
-    }
-  }
-}
-
-.size-m {
-  @include shared-size-m;
-}
-
-@mixin shared-square-articles {
-  .article {
-    flex-direction: column;
-
-    &__brand {
-      height: 33px;
-      left: 30px;
-      top: 30px;
-      width: 72px;
-    }
-
-    &__content {
-      bottom: 0;
-      display: flex;
-      flex-direction: column;
-      position: absolute;
-      text-align: center;
-      width: 100%;
+      //
     }
 
     &__content-bottom {
-      display: none;
+      margin-bottom: 60px;
+
+      &--with-brand {
+        margin-bottom: 48px;
+      }
     }
 
-    &__cover--horizontal {
-      display: unset;
-    }
-
-    &__title {
-      text-align: center;
+    &__brand {
+      margin-right: 20px;
     }
 
     &__author {
       font-size: 14px;
-      line-height: 21px;
-      margin-top: 5px;
-      text-align: center;
+      line-height: 24px;
     }
+  }
 
-    &__label-read {
-      display: none;
-    }
+  // For some reason, rules below do not get applied when embedded into .article-card {}.
+  // Same for mixins below.
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card.theme-dark > .article-card__cover-container {
+    height: calc(630px - 2 * #{$theme-dark-border-width});
+    width: calc(390px - #{$theme-dark-border-width});
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card:hover > .article-card__cover-container {
+    height: calc(630px - 2 * #{$hover-border-width});
+    width: calc(390px - #{$hover-border-width});
   }
 }
 
-@mixin shared-size-square-m {
-  @include shared-square-articles;
+.card-size-xxl {
+  @include shared-size-xxl;
+}
 
-  .article {
-    @include square-m-sizes;
+@mixin shared-size-m {
+  .article-card {
+    @include m-sizes;
 
-    &__cover-wrapper {
-      height: 240px;
+    flex-direction: row;
+
+    &__cover-container {
+      height: 300px;
+      width: 184px;
+    }
+
+    &__cover {
+      height: 300px;
+      width: 184px;
+
+      &--vertical {
+        display: unset;
+      }
     }
 
     &__content {
-      padding: 39px 0 42px;
+      padding: 0 30px 0 11px;
+    }
+
+    &__collection-container {
+      margin-top: 24px;
+    }
+
+    &__collection-order {
+      font-size: 14px;
+      line-height: 21px;
+    }
+
+    &__collection-name {
+      font-size: 14px;
+      line-height: 21px;
+    }
+
+    &__collection-cover {
+      height: 70px;
+      width: 70px;
     }
 
     &__title {
       font-size: 30px;
       line-height: 36px;
+      margin-bottom: 24px; // 12 with collection
+      margin-top: 24px;
     }
+
+    &__description-container {
+      display: none;
+    }
+
+    &__label-read {
+      display: none; // obsolete ?
+    }
+
+    &__content-bottom {
+      margin-bottom: 36px;
+    }
+
+    &__brand {
+      margin-right: 18px;
+    }
+
+    &__author {
+      font-size: 14px;
+      line-height: 24px;
+
+      &--placed-middle {
+        display: none;
+      }
+
+      &--placed-bottom {
+        display: unset;
+      }
+    }
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card.theme-dark > .article-card__cover-container {
+    height: calc(300px - 2 * #{$theme-dark-border-width});
+    width: calc(184px - #{$theme-dark-border-width});
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card:hover > .article-card__cover-container {
+    height: calc(300px - 2 * #{$hover-border-width});
+    width: calc(184px - #{$hover-border-width});
   }
 }
 
-.size-square-m {
-  @include shared-size-square-m;
+.card-size-m {
+  @include shared-size-m;
 }
 
 @mixin shared-size-square-s {
-  @include shared-square-articles;
-
-  .article {
+  .article-card {
     @include square-s-sizes;
 
-    &__cover-wrapper {
-      height: 186px;
+    flex-direction: column;
+
+    &__cover-container {
+      flex-basis: 168px;
+      flex-shrink: 1;
+      max-height: 168px;
+      min-height: 96px;
+      width: 300px;
+
+      &--with-collection {
+        display: none;
+      }
+    }
+
+    &__cover {
+      // max-height: 100%;
+      // min-height: 100%;
+      height: 168px;
+      object-fit: cover;
+      position: absolute;
+      width: 300px;
+
+      &--horizontal {
+        display: unset;
+      }
     }
 
     &__content {
-      padding: 10px 0 42px;
+      flex-grow: 1;
+      flex-shrink: 0;
+      // max-height: 300px;
+      justify-content: flex-end;
+      padding: 0 30px 0 24px;
+    }
+
+    &__collection-container {
+      margin-top: 19px;
+    }
+
+    &__collection-order {
+      font-size: 14px;
+      line-height: 24px;
+    }
+
+    &__collection-name {
+      font-size: 14px;
+      line-height: 21px;
+    }
+
+    &__collection-cover {
+      height: 70px;
+      width: 70px;
     }
 
     &__title {
-      font-size: 20px;
+      font-size: 30px;
+      line-height: 36px;
+      margin-bottom: 20px;
+      margin-top: 10px; // to verify.
+    }
+
+    &__description-container {
+      display: none;
+    }
+
+    &__filler2 {
+      display: none;
+    }
+
+    &__content-bottom {
+      margin-bottom: 36px;
+    }
+
+    &__brand {
+      margin-right: 12px;
+    }
+
+    &__author {
+      font-size: 14px;
       line-height: 24px;
     }
   }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card.theme-dark > .article-card__cover-container {
+    width: calc(300px - 2 * #{$theme-dark-border-width});
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card:hover > .article-card__cover-container {
+    width: calc(300px - 2 * #{$hover-border-width});
+  }
 }
 
-.size-square-s {
+.card-size-square-s {
   @include shared-size-square-s;
 }
 
 // Below are the rules for cards to be auto adjustable.
 // Same rules are applied for Collection and Video card modifications.
 // TODO: to avoid duplication of these rules between 3 .scss files.
+// TODO: to wrap with .card-size-auto class. ?
+// TODO: to implement missing sizes.
 
 .featured {
   @include screen-desktop {
     @include shared-size-xxl;
   }
 
-  @include screen-tablet-large {
-    @include shared-size-xl;
-  }
+  // @include screen-tablet-large {
+  //   @include shared-size-xl;
+  // }
 
-  @include screen-tablet {
-    @include shared-size-l;
-  }
+  // @include screen-tablet {
+  //   @include shared-size-l;
+  // }
 
   @include screen-touch {
     @include shared-size-m;
@@ -365,9 +471,9 @@
     @include shared-size-m;
   }
 
-  @include screen-tablet {
-    @include shared-size-l;
-  }
+  // @include screen-tablet {
+  //   @include shared-size-l;
+  // }
 
   @include screen-touch {
     @include shared-size-m;
@@ -391,17 +497,17 @@
 }
 
 .articles-by-tag-2 {
-  @include screen-desktop {
-    @include shared-size-square-m;
-  }
+  // @include screen-desktop {
+  //   @include shared-size-square-m;
+  // }
 
-  @include screen-tablet-large {
-    @include shared-size-l;
-  }
+  // @include screen-tablet-large {
+  //   @include shared-size-l;
+  // }
 
-  @include screen-tablet {
-    @include shared-size-square-m;
-  }
+  // @include screen-tablet {
+  //   @include shared-size-square-m;
+  // }
 
   @include screen-touch {
     @include shared-size-m;
@@ -417,9 +523,9 @@
     @include shared-size-square-s;
   }
 
-  @include screen-tablet-large {
-    @include shared-size-square-m;
-  }
+  // @include screen-tablet-large {
+  //   @include shared-size-square-m;
+  // }
 
   @include screen-tablet {
     @include shared-size-square-s;
@@ -436,17 +542,17 @@
 
 .tag-page-block-b {
   .large-card {
-    @include screen-desktop {
-      @include shared-size-l;
-    }
+    // @include screen-desktop {
+    //   @include shared-size-l;
+    // }
 
     @include screen-tablet-large {
       @include shared-size-m;
     }
 
-    @include screen-tablet {
-      @include shared-size-l;
-    }
+    // @include screen-tablet {
+    //   @include shared-size-l;
+    // }
 
     @include screen-touch {
       @include shared-size-m;
@@ -458,17 +564,17 @@
   }
 
   .small-card {
-    @include screen-desktop {
-      @include shared-size-square-m;
-    }
+    // @include screen-desktop {
+    //   @include shared-size-square-m;
+    // }
 
     @include screen-tablet-large {
       @include shared-size-square-s;
     }
 
-    @include screen-tablet {
-      @include shared-size-l;
-    }
+    // @include screen-tablet {
+    //   @include shared-size-l;
+    // }
 
     @include screen-touch {
       @include shared-size-m;
@@ -486,13 +592,13 @@
       @include shared-size-m;
     }
 
-    @include screen-tablet-large {
-      @include shared-size-square-m;
-    }
+    // @include screen-tablet-large {
+    //   @include shared-size-square-m;
+    // }
 
-    @include screen-tablet {
-      @include shared-size-l;
-    }
+    // @include screen-tablet {
+    //   @include shared-size-l;
+    // }
 
     @include screen-touch {
       @include shared-size-m;
@@ -508,13 +614,13 @@
       @include shared-size-square-s;
     }
 
-    @include screen-tablet-large {
-      @include shared-size-l;
-    }
+    // @include screen-tablet-large {
+    //   @include shared-size-l;
+    // }
 
-    @include screen-tablet {
-      @include shared-size-l;
-    }
+    // @include screen-tablet {
+    //   @include shared-size-l;
+    // }
 
     @include screen-touch {
       @include shared-size-m;
