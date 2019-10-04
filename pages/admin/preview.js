@@ -1,12 +1,17 @@
+import 'styles/pages/preview.scss';
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Article from 'components/articles/Article';
+import ArticleCard from 'components/articles/cards/ArticleCard';
 
 import { adminArticlesActions, adminArticlesSelectors } from 'redux/ducks/admin/articles';
 import { populateRequest } from 'utils/request';
 import { ArticleShape } from 'utils/customPropTypes';
+
+import useBoolean from 'hooks/useBoolean';
 
 const mapStateToProps = (state, { lang }) => ({
   article: adminArticlesSelectors.getPreview(state, lang),
@@ -14,6 +19,7 @@ const mapStateToProps = (state, { lang }) => ({
 });
 
 const ArticlePreview = ({ article, error }) => {
+  const [cardsPreview, togglePreview, _] = useBoolean(true);
   if (!article || error) {
     return (
       <div>
@@ -22,7 +28,25 @@ const ArticlePreview = ({ article, error }) => {
       </div>
     );
   }
-  return <Article data={article} />;
+  return (
+    <>
+      <div className="preview-page__switch">
+        <input type="checkbox" checked={cardsPreview} onChange={togglePreview} />
+        {'  '}
+        <span>Preview Cards instead of the Article</span>
+      </div>
+      {cardsPreview && (
+        <div className="preview-page__cards" style={{ margin: '50px' }}>
+          {['xxl', 'm', 'square-s'].map(size => (
+            <div className="preview-page__card">
+              <ArticleCard {...article} size={size} />
+            </div>
+          ))}
+        </div>
+      )}
+      {!cardsPreview && <Article data={article} />}
+    </>
+  );
 };
 
 ArticlePreview.getInitialProps = ctx =>
