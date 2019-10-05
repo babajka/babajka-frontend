@@ -37,7 +37,7 @@ const ArticlePreview = ({ article, error }) => {
       </div>
       {cardsPreview && (
         <div className="preview-page__cards" style={{ margin: '50px' }}>
-          {['xxl', 'm', 'square-m', 'square-s'].map(size => (
+          {['xxl', 'xl', 'l', 'm', 'square-m', 'square-s'].map(size => (
             <div className="preview-page__card">
               <ArticleCard {...article} size={size} />
             </div>

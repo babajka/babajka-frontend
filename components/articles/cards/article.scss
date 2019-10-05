@@ -39,7 +39,7 @@ $hover-border-width: 6px;
 
   &__cover {
     display: inline-block;
-    position: absolute; // or vertical only ?
+    position: absolute;
 
     &--horizontal {
       display: none;
@@ -136,28 +136,14 @@ $hover-border-width: 6px;
   }
 }
 
-@mixin shared-size-xxl {
+@mixin shared-sizes-xxl-xl-l {
   .article-card {
-    @include xxl-sizes;
-
     flex-direction: row;
 
-    &__cover-container {
-      height: 630px;
-      width: 390px;
-    }
-
     &__cover {
-      height: 630px;
-      width: 390px;
-
       &--vertical {
         display: unset;
       }
-    }
-
-    &__content {
-      padding: 0 60px 0 30px;
     }
 
     &__collection-container {
@@ -179,6 +165,44 @@ $hover-border-width: 6px;
       width: 70px;
     }
 
+    &__filler--middle {
+      display: unset;
+    }
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card--with-collection > .article-card__content > .article-card__filler--middle {
+    display: none;
+  }
+}
+
+@mixin shared-size-xxl {
+  // TODO: to consider extracting more values into variables.
+  $card-height: 630px;
+  $card-width: 1020px;
+  $cover-height: $card-height;
+  $cover-width: 390px;
+
+  @include shared-sizes-xxl-xl-l;
+
+  .article-card {
+    height: $card-height;
+    width: $card-width;
+
+    &__cover-container {
+      height: $cover-height;
+      width: $cover-width;
+    }
+
+    &__cover {
+      height: $cover-height;
+      width: $cover-width;
+    }
+
+    &__content {
+      padding: 0 60px 0 30px;
+    }
+
     &__title {
       font-size: 60px;
       line-height: 66px;
@@ -194,10 +218,6 @@ $hover-border-width: 6px;
 
     &__description {
       max-height: 36px * 6;
-    }
-
-    &__filler--middle {
-      display: unset;
     }
 
     &__author-brand {
@@ -217,19 +237,14 @@ $hover-border-width: 6px;
 
   /* stylelint-disable-next-line selector-class-pattern */
   .article-card.theme-dark > .article-card__cover-container {
-    height: 630px - 2 * $theme-dark-border-width;
-    width: 390px - $theme-dark-border-width;
+    height: $cover-height - 2 * $theme-dark-border-width;
+    width: $cover-width - $theme-dark-border-width;
   }
 
   /* stylelint-disable-next-line selector-class-pattern */
   .article-card:hover > .article-card__cover-container {
-    height: 630px - 2 * $hover-border-width;
-    width: 390px - $hover-border-width;
-  }
-
-  /* stylelint-disable-next-line selector-class-pattern */
-  .article-card--with-collection > .article-card__content > .article-card__filler--middle {
-    display: none;
+    height: $cover-height - 2 * $hover-border-width;
+    width: $cover-width - $hover-border-width;
   }
 
   /* stylelint-disable-next-line selector-class-pattern */
@@ -240,6 +255,158 @@ $hover-border-width: 6px;
 
 .card-size-xxl {
   @include shared-size-xxl;
+}
+
+@mixin shared-size-xl {
+  $card-height: 504px;
+  $card-width: 818px;
+  $cover-height: $card-height;
+  $cover-width: 313px;
+
+  @include shared-sizes-xxl-xl-l;
+
+  .article-card {
+    height: $card-height;
+    width: $card-width;
+
+    &__cover-container {
+      height: $cover-height;
+      width: $cover-width;
+    }
+
+    &__cover {
+      height: $cover-height;
+      width: $cover-width;
+    }
+
+    &__content {
+      padding: 0 62px 0 24px;
+    }
+
+    &__title {
+      font-size: 48px;
+      line-height: 60px;
+      margin-bottom: 30px;
+      margin-top: 24px;
+      max-height: 60px * 3;
+    }
+
+    &__description-container {
+      font-size: 14px;
+      line-height: 24px;
+    }
+
+    &__description {
+      max-height: 36px * 7;
+    }
+
+    &__author-brand {
+      font-size: 14px;
+      line-height: 24px;
+      margin-bottom: 48px;
+    }
+
+    &__brand {
+      margin-right: 15px;
+    }
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card.theme-dark > .article-card__cover-container {
+    height: $cover-height - 2 * $theme-dark-border-width;
+    width: $cover-width - $theme-dark-border-width;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card:hover > .article-card__cover-container {
+    height: $cover-height - 2 * $hover-border-width;
+    width: $cover-width - $hover-border-width;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card--with-brand > .article-card__content > .article-card__author-brand {
+    margin-bottom: 36px;
+  }
+}
+
+.card-size-xl {
+  @include shared-size-xl;
+}
+
+@mixin shared-size-l {
+  $card-height: 390px;
+  $card-width: 624px;
+  $cover-height: $card-height;
+  $cover-width: 240px;
+
+  @include shared-sizes-xxl-xl-l;
+
+  .article-card {
+    height: $card-height;
+    width: $card-width;
+
+    &__cover-container {
+      height: $cover-height;
+      width: $cover-width;
+    }
+
+    &__cover {
+      height: $cover-height;
+      width: $cover-width;
+    }
+
+    &__content {
+      padding: 0 42px 0 30px;
+    }
+
+    &__title {
+      font-size: 30px;
+      line-height: 36px;
+      margin-bottom: 24px;
+      margin-top: 24px;
+      max-height: 36px * 3;
+    }
+
+    &__description-container {
+      font-size: 14px;
+      line-height: 24px;
+    }
+
+    &__description {
+      max-height: 24px * 5; // TEMP. There should be 7 rows here. There is no enough space on 3-row titles.
+    }
+
+    &__author-brand {
+      font-size: 14px;
+      line-height: 24px;
+      margin-bottom: 48px;
+    }
+
+    &__brand {
+      margin-right: 18px;
+    }
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card.theme-dark > .article-card__cover-container {
+    height: $cover-height - 2 * $theme-dark-border-width;
+    width: $cover-width - $theme-dark-border-width;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card:hover > .article-card__cover-container {
+    height: $cover-height - 2 * $hover-border-width;
+    width: $cover-width - $hover-border-width;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card--with-brand > .article-card__content > .article-card__author-brand {
+    margin-bottom: 36px;
+  }
+}
+
+.card-size-l {
+  @include shared-size-l;
 }
 
 @mixin shared-size-m {
@@ -288,7 +455,7 @@ $hover-border-width: 6px;
     &__title {
       font-size: 30px;
       line-height: 36px;
-      margin-bottom: 24px; // 12 with collection
+      margin-bottom: 24px;
       margin-top: 24px;
       max-height: 36px * 3;
     }
@@ -528,22 +695,20 @@ $hover-border-width: 6px;
 }
 
 // Below are the rules for cards to be auto adjustable.
-// Same rules are applied for Collection and Video card modifications.
-// TODO: to wrap with .card-size-auto class. ?
-// TODO: to implement missing sizes.
+// TODO(?): to wrap with .card-size-auto class.
 
 .featured {
   @include screen-desktop {
     @include shared-size-xxl;
   }
 
-  // @include screen-tablet-large {
-  //   @include shared-size-xl;
-  // }
+  @include screen-tablet-large {
+    @include shared-size-xl;
+  }
 
-  // @include screen-tablet {
-  //   @include shared-size-l;
-  // }
+  @include screen-tablet {
+    @include shared-size-l;
+  }
 
   @include screen-touch {
     @include shared-size-m;
@@ -559,9 +724,9 @@ $hover-border-width: 6px;
     @include shared-size-m;
   }
 
-  // @include screen-tablet {
-  //   @include shared-size-l;
-  // }
+  @include screen-tablet {
+    @include shared-size-l;
+  }
 
   @include screen-touch {
     @include shared-size-m;
@@ -589,9 +754,9 @@ $hover-border-width: 6px;
     @include shared-size-square-m;
   }
 
-  // @include screen-tablet-large {
-  //   @include shared-size-l;
-  // }
+  @include screen-tablet-large {
+    @include shared-size-l;
+  }
 
   @include screen-tablet {
     @include shared-size-square-m;
@@ -630,17 +795,17 @@ $hover-border-width: 6px;
 
 .tag-page-block-b {
   .large-card {
-    // @include screen-desktop {
-    //   @include shared-size-l;
-    // }
+    @include screen-desktop {
+      @include shared-size-l;
+    }
 
     @include screen-tablet-large {
       @include shared-size-m;
     }
 
-    // @include screen-tablet {
-    //   @include shared-size-l;
-    // }
+    @include screen-tablet {
+      @include shared-size-l;
+    }
 
     @include screen-touch {
       @include shared-size-m;
@@ -660,9 +825,9 @@ $hover-border-width: 6px;
       @include shared-size-square-s;
     }
 
-    // @include screen-tablet {
-    //   @include shared-size-l;
-    // }
+    @include screen-tablet {
+      @include shared-size-l;
+    }
 
     @include screen-touch {
       @include shared-size-m;
@@ -684,9 +849,9 @@ $hover-border-width: 6px;
       @include shared-size-square-m;
     }
 
-    // @include screen-tablet {
-    //   @include shared-size-l;
-    // }
+    @include screen-tablet {
+      @include shared-size-l;
+    }
 
     @include screen-touch {
       @include shared-size-m;
@@ -702,13 +867,13 @@ $hover-border-width: 6px;
       @include shared-size-square-s;
     }
 
-    // @include screen-tablet-large {
-    //   @include shared-size-l;
-    // }
+    @include screen-tablet-large {
+      @include shared-size-l;
+    }
 
-    // @include screen-tablet {
-    //   @include shared-size-l;
-    // }
+    @include screen-tablet {
+      @include shared-size-l;
+    }
 
     @include screen-touch {
       @include shared-size-m;
