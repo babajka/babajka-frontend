@@ -47,8 +47,6 @@ $hover-border-width: 6px;
 
     &--vertical {
       display: none;
-      // height: 100%;
-      // width: 100%;
     }
   }
 
@@ -88,6 +86,7 @@ $hover-border-width: 6px;
 
   &__title {
     font-weight: bold;
+    overflow: hidden;
   }
 
   &__description-container {
@@ -99,38 +98,37 @@ $hover-border-width: 6px;
     overflow: hidden;
   }
 
-  &__label-read {
-    //
-  }
-
   &__interactive-icon {
     margin-right: 1rem;
   }
 
-  &__filler1 {
+  &__filler {
+    display: none;
     flex-grow: 1;
   }
 
-  &__filler2 {
-    flex-grow: 1;
+  &--with-collection > &__content > &__filler--top {
+    display: unset;
   }
 
-  &__content-bottom {
+  &__author-brand {
     align-items: center;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+
+    &--placed-middle {
+      display: none;
+    }
+
+    &--placed-bottom {
+      display: none;
+    }
   }
 
   &__brand {
     max-height: 48px;
     width: 48px;
-  }
-
-  &__author {
-    &--placed-middle {
-      display: none;
-    }
   }
 
   &__label-read-full {
@@ -186,6 +184,7 @@ $hover-border-width: 6px;
       line-height: 66px;
       margin-bottom: 30px;
       margin-top: 24px;
+      max-height: 66px * 3;
     }
 
     &__description-container {
@@ -194,44 +193,48 @@ $hover-border-width: 6px;
     }
 
     &__description {
-      max-height: 216px; // 6 rows
+      max-height: 36px * 6;
     }
 
-    &__label-read {
-      //
+    &__filler--middle {
+      display: unset;
     }
 
-    &__content-bottom {
+    &__author-brand {
+      font-size: 14px;
+      line-height: 24px;
       margin-bottom: 60px;
-
-      &--with-brand {
-        margin-bottom: 48px;
-      }
     }
 
     &__brand {
       margin-right: 20px;
     }
-
-    &__author {
-      font-size: 14px;
-      line-height: 24px;
-    }
   }
 
-  // For some reason, rules below do not get applied when embedded into .article-card {}.
-  // Same for mixins below.
+  // Rules below do not get applied when embedded into .article-card {}.
+  // This is due to inclusion of .card-size-X class through &.
+  // The may be fixed using @at-root. Same applies for mixins below.
 
   /* stylelint-disable-next-line selector-class-pattern */
   .article-card.theme-dark > .article-card__cover-container {
-    height: calc(630px - 2 * #{$theme-dark-border-width});
-    width: calc(390px - #{$theme-dark-border-width});
+    height: 630px - 2 * $theme-dark-border-width;
+    width: 390px - $theme-dark-border-width;
   }
 
   /* stylelint-disable-next-line selector-class-pattern */
   .article-card:hover > .article-card__cover-container {
-    height: calc(630px - 2 * #{$hover-border-width});
-    width: calc(390px - #{$hover-border-width});
+    height: 630px - 2 * $hover-border-width;
+    width: 390px - $hover-border-width;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card--with-collection > .article-card__content > .article-card__filler--middle {
+    display: none;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card--with-brand > .article-card__content > .article-card__author-brand {
+    margin-bottom: 48px;
   }
 }
 
@@ -287,48 +290,64 @@ $hover-border-width: 6px;
       line-height: 36px;
       margin-bottom: 24px; // 12 with collection
       margin-top: 24px;
+      max-height: 36px * 3;
     }
 
     &__description-container {
       display: none;
     }
 
-    &__label-read {
-      display: none; // obsolete ?
-    }
-
-    &__content-bottom {
-      margin-bottom: 36px;
+    &__author-brand {
+      font-size: 14px;
+      line-height: 24px;
     }
 
     &__brand {
       margin-right: 18px;
     }
 
-    &__author {
+    &__filler--bottom {
+      display: unset;
+    }
+
+    &__label-read-full {
+      display: unset;
       font-size: 14px;
       line-height: 24px;
-
-      &--placed-middle {
-        display: none;
-      }
-
-      &--placed-bottom {
-        display: unset;
-      }
+      margin-bottom: 36px;
     }
   }
 
   /* stylelint-disable-next-line selector-class-pattern */
   .article-card.theme-dark > .article-card__cover-container {
-    height: calc(300px - 2 * #{$theme-dark-border-width});
-    width: calc(184px - #{$theme-dark-border-width});
+    height: 300px - 2 * $theme-dark-border-width;
+    width: 184px - $theme-dark-border-width;
   }
 
   /* stylelint-disable-next-line selector-class-pattern */
   .article-card:hover > .article-card__cover-container {
-    height: calc(300px - 2 * #{$hover-border-width});
-    width: calc(184px - #{$hover-border-width});
+    height: 300px - 2 * $hover-border-width;
+    width: 184px - $hover-border-width;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card--with-collection > .article-card__content > .article-card__title {
+    margin-bottom: 12px;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card--with-collection > .article-card__content > .article-card__author-brand {
+    margin-bottom: 36px;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card--with-collection > .article-card__content > .article-card__filler--bottom {
+    display: none;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card--with-collection > .article-card__content > .article-card__label-read-full {
+    display: none;
   }
 }
 
@@ -368,10 +387,6 @@ $hover-border-width: 6px;
       display: none;
     }
 
-    &__filler2 {
-      display: none;
-    }
-
     &__collection-container {
       margin-top: 19px;
     }
@@ -396,15 +411,16 @@ $hover-border-width: 6px;
       line-height: 36px;
       margin-bottom: 20px; // ?
       margin-top: 10px; // ?
+      max-height: 36px * 3;
+    }
+
+    &__author-brand {
+      font-size: 14px;
+      line-height: 24px;
     }
 
     &__brand {
       margin-right: 12px;
-    }
-
-    &__author {
-      font-size: 14px;
-      line-height: 24px;
     }
   }
 }
@@ -431,19 +447,28 @@ $hover-border-width: 6px;
       padding: 0 39px;
     }
 
-    &__content-bottom {
+    &__author-brand {
       margin-bottom: 48px;
     }
   }
 
   /* stylelint-disable-next-line selector-class-pattern */
   .article-card.theme-dark > .article-card__cover-container {
-    width: calc(390px - 2 * #{$theme-dark-border-width});
+    max-height: 240px - $theme-dark-border-width;
+    min-height: 168px - $theme-dark-border-width;
+    width: 390px - 2 * $theme-dark-border-width;
   }
 
   /* stylelint-disable-next-line selector-class-pattern */
   .article-card:hover > .article-card__cover-container {
-    width: calc(390px - 2 * #{$hover-border-width});
+    max-height: 240px - $hover-border-width;
+    min-height: 168px - $hover-border-width;
+    width: 390px - 2 * $hover-border-width;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card--with-brand > .article-card__content > .article-card__author-brand {
+    margin-bottom: 36px;
   }
 }
 
@@ -473,19 +498,28 @@ $hover-border-width: 6px;
       padding: 0 24px;
     }
 
-    &__content-bottom {
+    &__author-brand {
       margin-bottom: 36px;
     }
   }
 
   /* stylelint-disable-next-line selector-class-pattern */
   .article-card.theme-dark > .article-card__cover-container {
-    width: calc(300px - 2 * #{$theme-dark-border-width});
+    max-height: 168px - $theme-dark-border-width;
+    min-height: 96px - $theme-dark-border-width;
+    width: 300px - 2 * $theme-dark-border-width;
   }
 
   /* stylelint-disable-next-line selector-class-pattern */
   .article-card:hover > .article-card__cover-container {
-    width: calc(300px - 2 * #{$hover-border-width});
+    max-height: 168px - $hover-border-width;
+    min-height: 96px - $hover-border-width;
+    width: 300px - 2 * $hover-border-width;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card--with-brand > .article-card__content > .article-card__author-brand {
+    margin-bottom: 24px;
   }
 }
 
