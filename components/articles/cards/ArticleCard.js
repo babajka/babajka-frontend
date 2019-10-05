@@ -46,8 +46,6 @@ const ArticleCard = props => {
     <CardWrapper
       {...wrapperProps}
       className={cn('article-card', {
-        'article-card--type-video': type === 'video',
-        'article-card--type-audio': type === 'audio',
         'article-card--with-collection': collection,
         'article-card--with-brand': brand,
       })}
@@ -81,7 +79,7 @@ const ArticleCard = props => {
             <img className="article-card__collection-cover" src={collection.cover} alt="lol" />
           </div>
         )}
-        {collection && <div className="article-card__filler1" />}
+        <div className="article-card__filler article-card__filler--top" />
         <div className="article-card__title">
           {type === 'video' && (
             <Icon className="article-card__interactive-icon" pack="b" name="youtube" />
@@ -101,15 +99,8 @@ const ArticleCard = props => {
             </div>
           </div>
         )}
-        <div className="article-card__author article-card__author--placed-middle">
-          {renderNodeList(authors.map(renderTag))}
-        </div>
-        {!collection && <div className="article-card__filler2" />}
-        <div
-          className={cn('article-card__content-bottom', {
-            'article-card__content-bottom--with-brand': brand,
-          })}
-        >
+        <div className="article-card__filler article-card__filler--middle" />
+        <div className="article-card__author-brand">
           {brand && (
             <img
               className="article-card__brand"
@@ -117,16 +108,15 @@ const ArticleCard = props => {
               alt={brand.content.title}
             />
           )}
-          <div className="article-card__author article-card__author--placed-bottom">
-            {renderNodeList(authors.map(renderTag))}
-          </div>
-          <div className="article-card__label-read-full">
-            <span className={linkCn({ dark })}>
-              {type === 'text' && <Text id="article.read-article" />}
-              {type === 'audio' && <Text id="article.listen-podcast" />}
-              {type === 'video' && <Text id="article.watch-video" />}
-            </span>
-          </div>
+          {renderNodeList(authors.map(renderTag))}
+        </div>
+        <div className="article-card__filler article-card__filler--bottom" />
+        <div className="article-card__label-read-full">
+          <span className={linkCn({ dark })}>
+            {type === 'text' && <Text id="article.read-article" />}
+            {type === 'audio' && <Text id="article.listen-podcast" />}
+            {type === 'video' && <Text id="article.watch-video" />}
+          </span>
         </div>
       </div>
     </CardWrapper>
