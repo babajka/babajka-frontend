@@ -122,16 +122,49 @@
   }
 }
 
-@mixin shared-sizes-xxl-xl-l {
+@mixin shared-vertical-cover($cover-height, $cover-width) {
+  // Hovering the cards (as well as border for "light" cards) require some non-trivial
+  // adjustments to work properly. These adjustments, common for all card sizes but
+  // dependent on card sizes are extracted into this mixin.
+  // Also check 'shared-horizontal-cover' mixin for cards with different layout.
+
   .article-card {
     flex-direction: row;
 
+    &__cover-container {
+      height: $cover-height;
+      width: $cover-width;
+    }
+
     &__cover {
+      height: $cover-height;
+      width: $cover-width;
+
       &--vertical {
         display: unset;
       }
     }
+  }
 
+  // Rules below do not get applied when embedded into .article-card {}.
+  // This is due to inclusion of .card-size-X class through &.
+  // The may be fixed using @at-root. Same applies for mixins below.
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card.theme-dark > .article-card__cover-container {
+    height: $cover-height - 2 * $theme-dark-border-width;
+    width: $cover-width - $theme-dark-border-width;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card:hover > .article-card__cover-container {
+    height: $cover-height - 2 * $hover-border-width;
+    width: $cover-width - $hover-border-width;
+  }
+}
+
+@mixin shared-sizes-xxl-xl-l {
+  .article-card {
     &__collection-container {
       margin-top: 24px;
     }
@@ -171,19 +204,11 @@
 
   @include shared-sizes-xxl-xl-l;
 
+  @include shared-vertical-cover($cover-height, $cover-width);
+
   .article-card {
     height: $card-height;
     width: $card-width;
-
-    &__cover-container {
-      height: $cover-height;
-      width: $cover-width;
-    }
-
-    &__cover {
-      height: $cover-height;
-      width: $cover-width;
-    }
 
     &__content {
       padding: 0 60px 0 30px;
@@ -217,22 +242,6 @@
     }
   }
 
-  // Rules below do not get applied when embedded into .article-card {}.
-  // This is due to inclusion of .card-size-X class through &.
-  // The may be fixed using @at-root. Same applies for mixins below.
-
-  /* stylelint-disable-next-line selector-class-pattern */
-  .article-card.theme-dark > .article-card__cover-container {
-    height: $cover-height - 2 * $theme-dark-border-width;
-    width: $cover-width - $theme-dark-border-width;
-  }
-
-  /* stylelint-disable-next-line selector-class-pattern */
-  .article-card:hover > .article-card__cover-container {
-    height: $cover-height - 2 * $hover-border-width;
-    width: $cover-width - $hover-border-width;
-  }
-
   /* stylelint-disable-next-line selector-class-pattern */
   .article-card--with-brand > .article-card__content > .article-card__author-brand {
     margin-bottom: 48px;
@@ -251,19 +260,11 @@
 
   @include shared-sizes-xxl-xl-l;
 
+  @include shared-vertical-cover($cover-height, $cover-width);
+
   .article-card {
     height: $card-height;
     width: $card-width;
-
-    &__cover-container {
-      height: $cover-height;
-      width: $cover-width;
-    }
-
-    &__cover {
-      height: $cover-height;
-      width: $cover-width;
-    }
 
     &__content {
       padding: 0 62px 0 24px;
@@ -298,18 +299,6 @@
   }
 
   /* stylelint-disable-next-line selector-class-pattern */
-  .article-card.theme-dark > .article-card__cover-container {
-    height: $cover-height - 2 * $theme-dark-border-width;
-    width: $cover-width - $theme-dark-border-width;
-  }
-
-  /* stylelint-disable-next-line selector-class-pattern */
-  .article-card:hover > .article-card__cover-container {
-    height: $cover-height - 2 * $hover-border-width;
-    width: $cover-width - $hover-border-width;
-  }
-
-  /* stylelint-disable-next-line selector-class-pattern */
   .article-card--with-brand > .article-card__content > .article-card__author-brand {
     margin-bottom: 36px;
   }
@@ -327,19 +316,11 @@
 
   @include shared-sizes-xxl-xl-l;
 
+  @include shared-vertical-cover($cover-height, $cover-width);
+
   .article-card {
     height: $card-height;
     width: $card-width;
-
-    &__cover-container {
-      height: $cover-height;
-      width: $cover-width;
-    }
-
-    &__cover {
-      height: $cover-height;
-      width: $cover-width;
-    }
 
     &__content {
       padding: 0 42px 0 30px;
@@ -374,18 +355,6 @@
   }
 
   /* stylelint-disable-next-line selector-class-pattern */
-  .article-card.theme-dark > .article-card__cover-container {
-    height: $cover-height - 2 * $theme-dark-border-width;
-    width: $cover-width - $theme-dark-border-width;
-  }
-
-  /* stylelint-disable-next-line selector-class-pattern */
-  .article-card:hover > .article-card__cover-container {
-    height: $cover-height - 2 * $hover-border-width;
-    width: $cover-width - $hover-border-width;
-  }
-
-  /* stylelint-disable-next-line selector-class-pattern */
   .article-card--with-brand > .article-card__content > .article-card__author-brand {
     margin-bottom: 36px;
   }
@@ -396,24 +365,16 @@
 }
 
 @mixin shared-size-m {
+  $card-height: 300px;
+  $card-width: 480px;
+  $cover-height: $card-height;
+  $cover-width: 184px;
+
+  @include shared-vertical-cover($cover-height, $cover-width);
+
   .article-card {
-    @include m-sizes;
-
-    flex-direction: row;
-
-    &__cover-container {
-      height: 300px;
-      width: 184px;
-    }
-
-    &__cover {
-      height: 300px;
-      width: 184px;
-
-      &--vertical {
-        display: unset;
-      }
-    }
+    height: $card-height;
+    width: $card-width;
 
     &__content {
       padding: 0 30px 0 11px;
@@ -469,18 +430,6 @@
       line-height: 24px;
       margin-bottom: 36px;
     }
-  }
-
-  /* stylelint-disable-next-line selector-class-pattern */
-  .article-card.theme-dark > .article-card__cover-container {
-    height: 300px - 2 * $theme-dark-border-width;
-    width: 184px - $theme-dark-border-width;
-  }
-
-  /* stylelint-disable-next-line selector-class-pattern */
-  .article-card:hover > .article-card__cover-container {
-    height: 300px - 2 * $hover-border-width;
-    width: 184px - $hover-border-width;
   }
 
   /* stylelint-disable-next-line selector-class-pattern */
@@ -578,23 +527,51 @@
   }
 }
 
-@mixin shared-size-square-m {
-  @include shared-sizes-square-s-square-m;
+@mixin shared-horizontal-cover($cover-max-height, $cover-width) {
+  $cover-min-height: $cover-max-height - 36px * 2; // 36px is a title line-height.
 
   .article-card {
-    @include square-m-sizes;
-
     &__cover-container {
-      flex-basis: 240px;
-      max-height: 240px;
-      min-height: 168px;
-      width: 390px;
+      flex-basis: $cover-max-height;
+      max-height: $cover-max-height;
+      min-height: $cover-min-height;
+      width: $cover-width;
     }
 
     &__cover {
-      height: 240px;
-      width: 390px;
+      height: $cover-max-height;
+      width: $cover-width;
     }
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card.theme-dark > .article-card__cover-container {
+    max-height: $cover-max-height - $theme-dark-border-width;
+    min-height: $cover-min-height - $theme-dark-border-width;
+    width: $cover-width - 2 * $theme-dark-border-width;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card:hover > .article-card__cover-container {
+    max-height: $cover-max-height - $hover-border-width;
+    min-height: $cover-min-height - $hover-border-width;
+    width: $cover-width - 2 * $hover-border-width;
+  }
+}
+
+@mixin shared-size-square-m {
+  $card-height: 390px;
+  $card-width: $card-height;
+  $cover-max-height: 240px;
+  $cover-width: $card-width;
+
+  @include shared-sizes-square-s-square-m;
+
+  @include shared-horizontal-cover($cover-max-height, $cover-width);
+
+  .article-card {
+    height: $card-height;
+    width: $card-width;
 
     &__content {
       padding: 0 39px;
@@ -603,20 +580,6 @@
     &__author-brand {
       margin-bottom: 48px;
     }
-  }
-
-  /* stylelint-disable-next-line selector-class-pattern */
-  .article-card.theme-dark > .article-card__cover-container {
-    max-height: 240px - $theme-dark-border-width;
-    min-height: 168px - $theme-dark-border-width;
-    width: 390px - 2 * $theme-dark-border-width;
-  }
-
-  /* stylelint-disable-next-line selector-class-pattern */
-  .article-card:hover > .article-card__cover-container {
-    max-height: 240px - $hover-border-width;
-    min-height: 168px - $hover-border-width;
-    width: 390px - 2 * $hover-border-width;
   }
 
   /* stylelint-disable-next-line selector-class-pattern */
@@ -630,22 +593,18 @@
 }
 
 @mixin shared-size-square-s {
+  $card-height: 300px;
+  $card-width: $card-height;
+  $cover-max-height: 168px;
+  $cover-width: $card-width;
+
   @include shared-sizes-square-s-square-m;
 
+  @include shared-horizontal-cover($cover-max-height, $cover-width);
+
   .article-card {
-    @include square-s-sizes;
-
-    &__cover-container {
-      flex-basis: 168px;
-      max-height: 168px;
-      min-height: 96px;
-      width: 300px;
-    }
-
-    &__cover {
-      height: 168px;
-      width: 300px;
-    }
+    height: $card-height;
+    width: $card-width;
 
     &__content {
       padding: 0 24px;
@@ -654,20 +613,6 @@
     &__author-brand {
       margin-bottom: 36px;
     }
-  }
-
-  /* stylelint-disable-next-line selector-class-pattern */
-  .article-card.theme-dark > .article-card__cover-container {
-    max-height: 168px - $theme-dark-border-width;
-    min-height: 96px - $theme-dark-border-width;
-    width: 300px - 2 * $theme-dark-border-width;
-  }
-
-  /* stylelint-disable-next-line selector-class-pattern */
-  .article-card:hover > .article-card__cover-container {
-    max-height: 168px - $hover-border-width;
-    min-height: 96px - $hover-border-width;
-    width: 300px - 2 * $hover-border-width;
   }
 
   /* stylelint-disable-next-line selector-class-pattern */
