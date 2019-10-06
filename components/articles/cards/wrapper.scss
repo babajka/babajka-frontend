@@ -1,0 +1,16 @@
+@import 'variables';
+
+@import './cards';
+
+.wir-card-wrapper {
+  &.theme-dark {
+    box-shadow: inset $theme-dark-border-width $theme-dark-border-width $primary-black,
+      inset (-$theme-dark-border-width) (-$theme-dark-border-width) $primary-black;
+    color: $primary-black;
+  }
+
+  &:hover {
+    box-shadow: inset $hover-border-width $hover-border-width $primary,
+      inset (-$hover-border-width) (-$hover-border-width) $primary;
+  }
+}

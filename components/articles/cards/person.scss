@@ -1,4 +1,5 @@
 @import 'responsiveness';
+@import 'variables';
 
 @import './cards';
 
@@ -10,18 +11,37 @@
   flex-direction: row-reverse;
   position: relative;
 
-  &.theme-dark {
-    color: #000000;
+  &__cover-container {
+    height: 100%;
+    overflow: hidden;
+    position: relative;
   }
 
-  &__cover-wrapper {
-    height: 100%;
+  &.theme-dark > &__cover-container {
+    margin-right: $theme-dark-border-width;
+    margin-top: $theme-dark-border-width;
+  }
+
+  &:hover > &__cover-container {
+    margin-right: $hover-border-width;
+    margin-top: $hover-border-width;
   }
 
   &__cover {
     height: 100%;
     object-fit: cover;
+    position: absolute;
     width: 100%;
+  }
+
+  &.theme-dark > &__cover-container > &__cover {
+    right: -($theme-dark-border-width);
+    top: -($theme-dark-border-width);
+  }
+
+  &:hover > &__cover-container > &__cover {
+    right: -($hover-border-width);
+    top: -($hover-border-width);
   }
 
   &__content {
@@ -40,13 +60,37 @@
   }
 }
 
+@mixin shared-cover-rules($cover-size) {
+  .person {
+    &__cover-container {
+      height: $cover-size;
+      width: $cover-size;
+    }
+
+    &__cover {
+      height: $cover-size;
+      width: $cover-size;
+    }
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .person.theme-dark > .person__cover-container {
+    height: $cover-size - 2 * $theme-dark-border-width;
+    width: $cover-size - $theme-dark-border-width;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .person:hover > .person__cover-container {
+    height: $cover-size - 2 * $hover-border-width;
+    width: $cover-size - $hover-border-width;
+  }
+}
+
 @mixin shared-size-l {
+  @include shared-cover-rules(390px);
+
   .person {
     @include l-sizes;
-
-    &__cover-wrapper {
-      width: 390px;
-    }
 
     &__content {
       bottom: 42px;
@@ -74,12 +118,10 @@
 }
 
 @mixin shared-size-square-m {
+  @include shared-cover-rules(390px);
+
   .person {
     @include square-m-sizes;
-
-    &__cover-wrapper {
-      width: 100%;
-    }
 
     &__content {
       bottom: 42px;
@@ -106,12 +148,10 @@
 }
 
 @mixin shared-size-square-s {
+  @include shared-cover-rules(300px);
+
   .person {
     @include square-s-sizes;
-
-    &__cover-wrapper {
-      width: 100%;
-    }
 
     &__content {
       bottom: 42px;
@@ -137,11 +177,9 @@
 }
 
 @mixin shared-sizes-ms-s-wide {
-  .person {
-    &__cover-wrapper {
-      width: 194px;
-    }
+  @include shared-cover-rules(194px);
 
+  .person {
     &__content {
       bottom: 42px;
       left: 30px;
@@ -185,12 +223,10 @@
 }
 
 @mixin shared-size-s {
+  @include shared-cover-rules(194px);
+
   .person {
     @include s-sizes;
-
-    &__cover-wrapper {
-      width: 194px;
-    }
 
     &__content {
       bottom: 42px;
@@ -214,14 +250,10 @@
   @include shared-size-s;
 }
 
-@mixin shared-size-xs-wide {
+@mixin shared-sizes-xs-wide-xs {
+  @include shared-cover-rules(194px);
+
   .person {
-    @include xs-wide-sizes;
-
-    &__cover-wrapper {
-      width: 194px;
-    }
-
     &__content {
       bottom: 42px;
       left: 30px;
@@ -241,34 +273,23 @@
   }
 }
 
+@mixin shared-size-xs-wide {
+  @include shared-sizes-xs-wide-xs;
+
+  .person {
+    @include xs-wide-sizes;
+  }
+}
+
 .size-xs-wide {
   @include shared-size-xs-wide;
 }
 
 @mixin shared-size-xs {
+  @include shared-sizes-xs-wide-xs;
+
   .person {
     @include xs-sizes;
-
-    &__cover-wrapper {
-      width: 194px;
-    }
-
-    &__content {
-      bottom: 42px;
-      left: 30px;
-      position: absolute;
-      width: 150px;
-    }
-
-    &__title {
-      font-size: 30px;
-      line-height: 36px;
-      margin-top: 7px;
-    }
-
-    &__description {
-      display: none;
-    }
   }
 }
 

@@ -11,7 +11,7 @@ import { TOPIC } from 'constants/misc';
 import CardWrapper, { SIZES } from './CardWrapper';
 
 const TagCard = ({ slug, topicSlug, content, theme, size }) => {
-  const dark = theme === 'dark';
+  const dark = theme === 'dark' || slug === 'bssr' || slug === 'dali';
   const wrapperProps = {
     size,
     dark,
@@ -38,7 +38,7 @@ const TagCard = ({ slug, topicSlug, content, theme, size }) => {
     return (
       <CardWrapper {...wrapperProps} color={color} className="person">
         {' '}
-        <div className="person__cover-wrapper">
+        <div className="person__cover-container">
           <img className="person__cover" src={image} alt={name} title={name} />
         </div>
         <div className="person__content">

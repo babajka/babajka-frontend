@@ -1,3 +1,5 @@
+import './wrapper.scss';
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
@@ -12,7 +14,11 @@ export const SIZES = DEFAULT_SIZES.concat(SQUARE_SIZES, TAG_SIZES, 'auto');
 
 const CardWrapper = ({ className, size, children, color, image, dark, linkProps }) => (
   <Link className={`card-size-${size}`} {...linkProps}>
-    <BgContainer className={cn(className, { 'theme-dark': dark })} color={color} image={image}>
+    <BgContainer
+      className={cn('wir-card-wrapper', className, { 'theme-dark': dark })}
+      color={color}
+      image={image}
+    >
       {children}
     </BgContainer>
   </Link>
