@@ -60,7 +60,10 @@ const Article = ({
               </Link>
             ))}
             <div className="article-page__tag-titles">
-              <span>{renderNodeList(brands.map(tag => getTagLink({ tag })))}</span>
+              <span>
+                {renderNodeList(brands.map(tag => getTagLink({ tag })))}
+                {!!brands.length && ','}
+              </span>
               <span>{renderNodeList(authors.map(tag => getTagLink({ tag })))}</span>
             </div>
           </div>
