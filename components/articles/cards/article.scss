@@ -7,24 +7,6 @@
   color: $primary-white;
   display: flex;
 
-  /* stylelint-disable-next-line */
-
-  @include screen-desktop {
-    &:hover > &__cover-container {
-      margin-left: $hover-border-width;
-      margin-top: $hover-border-width;
-    }
-  }
-
-  /* stylelint-disable-next-line */
-
-  @include screen-desktop {
-    &:hover > &__cover-container > &__cover {
-      left: -($hover-border-width);
-      top: -($hover-border-width);
-    }
-  }
-
   &__cover-container {
     flex-shrink: 0;
     overflow: hidden;
@@ -34,6 +16,13 @@
   &.theme-dark > &__cover-container {
     margin-left: $theme-dark-border-width;
     margin-top: $theme-dark-border-width;
+  }
+
+  &:hover > &__cover-container {
+    @include screen-desktop {
+      margin-left: $hover-border-width;
+      margin-top: $hover-border-width;
+    }
   }
 
   &__cover {
@@ -52,6 +41,13 @@
   &.theme-dark > &__cover-container > &__cover {
     left: -($theme-dark-border-width);
     top: -($theme-dark-border-width);
+  }
+
+  &:hover > &__cover-container > &__cover {
+    @include screen-desktop {
+      left: -($hover-border-width);
+      top: -($hover-border-width);
+    }
   }
 
   &__content {
@@ -131,16 +127,6 @@
 }
 
 @mixin shared-vertical-cover($cover-height, $cover-width) {
-
-  /* stylelint-disable-next-line */
-
-  @include screen-desktop {
-    /* stylelint-disable-next-line selector-class-pattern */
-    .article-card:hover > .article-card__cover-container {
-      height: $cover-height - 2 * $hover-border-width;
-      width: $cover-width - $hover-border-width;
-    }
-  }
   // Hovering the cards (as well as border for "light" cards) require some non-trivial
   // adjustments to work properly. These adjustments, common for all card sizes but
   // dependent on card sizes are extracted into this mixin.
@@ -172,6 +158,14 @@
   .article-card.theme-dark > .article-card__cover-container {
     height: $cover-height - 2 * $theme-dark-border-width;
     width: $cover-width - $theme-dark-border-width;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card:hover > .article-card__cover-container {
+    @include screen-desktop {
+      height: $cover-height - 2 * $hover-border-width;
+      width: $cover-width - $hover-border-width;
+    }
   }
 }
 
@@ -542,17 +536,6 @@
 @mixin shared-horizontal-cover($cover-max-height, $cover-width) {
   $cover-min-height: $cover-max-height - 36px * 2; // 36px is a title line-height.
 
-  /* stylelint-disable-next-line */
-
-  @include screen-desktop {
-    /* stylelint-disable-next-line selector-class-pattern */
-    .article-card:hover > .article-card__cover-container {
-      max-height: $cover-max-height - $hover-border-width;
-      min-height: $cover-min-height - $hover-border-width;
-      width: $cover-width - 2 * $hover-border-width;
-    }
-  }
-
   .article-card {
     &__cover-container {
       flex-basis: $cover-max-height;
@@ -572,6 +555,15 @@
     max-height: $cover-max-height - $theme-dark-border-width;
     min-height: $cover-min-height - $theme-dark-border-width;
     width: $cover-width - 2 * $theme-dark-border-width;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card:hover > .article-card__cover-container {
+    @include screen-desktop {
+      max-height: $cover-max-height - $hover-border-width;
+      min-height: $cover-min-height - $hover-border-width;
+      width: $cover-width - 2 * $hover-border-width;
+    }
   }
 }
 

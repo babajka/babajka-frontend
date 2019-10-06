@@ -11,24 +11,6 @@
   flex-direction: row-reverse;
   position: relative;
 
-  /* stylelint-disable-next-line */
-
-  @include screen-desktop {
-    &:hover > &__cover-container {
-      margin-right: $hover-border-width;
-      margin-top: $hover-border-width;
-    }
-  }
-
-  /* stylelint-disable-next-line */
-
-  @include screen-desktop {
-    &:hover > &__cover-container > &__cover {
-      right: -($hover-border-width);
-      top: -($hover-border-width);
-    }
-  }
-
   &__cover-container {
     height: 100%;
     overflow: hidden;
@@ -38,6 +20,13 @@
   &.theme-dark > &__cover-container {
     margin-right: $theme-dark-border-width;
     margin-top: $theme-dark-border-width;
+  }
+
+  &:hover > &__cover-container {
+    @include screen-desktop {
+      margin-right: $hover-border-width;
+      margin-top: $hover-border-width;
+    }
   }
 
   &__cover {
@@ -50,6 +39,13 @@
   &.theme-dark > &__cover-container > &__cover {
     right: -($theme-dark-border-width);
     top: -($theme-dark-border-width);
+  }
+
+  &:hover > &__cover-container > &__cover {
+    @include screen-desktop {
+      right: -($hover-border-width);
+      top: -($hover-border-width);
+    }
   }
 
   &__content {
@@ -69,17 +65,6 @@
 }
 
 @mixin shared-cover-rules($cover-size) {
-
-  /* stylelint-disable-next-line */
-
-  @include screen-desktop {
-    /* stylelint-disable-next-line selector-class-pattern */
-    .person:hover > .person__cover-container {
-      height: $cover-size - 2 * $hover-border-width;
-      width: $cover-size - $hover-border-width;
-    }
-  }
-
   .person {
     &__cover-container {
       height: $cover-size;
@@ -96,6 +81,14 @@
   .person.theme-dark > .person__cover-container {
     height: $cover-size - 2 * $theme-dark-border-width;
     width: $cover-size - $theme-dark-border-width;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .person:hover > .person__cover-container {
+    @include screen-desktop {
+      height: $cover-size - 2 * $hover-border-width;
+      width: $cover-size - $hover-border-width;
+    }
   }
 }
 
