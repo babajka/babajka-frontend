@@ -114,7 +114,19 @@
   }
 
   &__bottom {
-    padding: 2rem 0;
+    padding: 60px 0 90px;
+
+    @include screen-tablet {
+      padding: 60px 0 120px;
+    }
+
+    @include screen-tablet-large {
+      padding: 50px 0 120px;
+    }
+
+    @include screen-desktop {
+      padding: 110px 0 120px;
+    }
   }
 
   &__copyright {
