@@ -23,10 +23,10 @@ const LatestArticles = ({ block, data, blocks }) => {
   return (
     <div className="block block__no-background two-in-row">
       <div className="two-in-row__first">
-        <ArticleCard {...firstData} />
+        <ArticleCard {...firstData} context={['two-in-row', 'first']} />
       </div>
       <div className="two-in-row__second">
-        <ArticleCard {...secondData} />
+        <ArticleCard {...secondData} context={['two-in-row', 'second']} />
       </div>
     </div>
   );

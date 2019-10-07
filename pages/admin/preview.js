@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 
 import Article from 'components/articles/Article';
 import ArticleCard from 'components/articles/cards/ArticleCard';
+import { DEFAULT_SIZES, SQUARE_SIZES } from 'components/articles/cards/CardWrapper';
 
 import { adminArticlesActions, adminArticlesSelectors } from 'redux/ducks/admin/articles';
 import { populateRequest } from 'utils/request';
@@ -19,7 +20,7 @@ const mapStateToProps = (state, { lang }) => ({
 });
 
 const ArticlePreview = ({ article, error }) => {
-  const [cardsPreview, togglePreview, _] = useBoolean(true);
+  const [cardsPreview, togglePreview] = useBoolean(true);
   if (!article || error) {
     return (
       <div>
@@ -37,9 +38,9 @@ const ArticlePreview = ({ article, error }) => {
       </div>
       {cardsPreview && (
         <div className="preview-page__cards" style={{ margin: '50px' }}>
-          {['xxl', 'xl', 'l', 'm', 'square-m', 'square-s'].map(size => (
-            <div className="preview-page__card">
-              <ArticleCard {...article} size={size} />
+          {DEFAULT_SIZES.concat(SQUARE_SIZES).map(size => (
+            <div key={size} className="preview-page__card">
+              <ArticleCard {...article} size={size} context="no" />
             </div>
           ))}
         </div>

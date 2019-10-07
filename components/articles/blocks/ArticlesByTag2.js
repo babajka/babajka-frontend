@@ -42,11 +42,11 @@ const ArticlesByTag2 = ({ block, data }) => {
 
       <div className="articles-by-tag-2__cards">
         <div className="articles-by-tag-2__card-1">
-          <ArticleCard {...first} />
+          <ArticleCard {...first} context={['articles-by-tag-2']} />
         </div>
 
         <div className="articles-by-tag-2__card-2">
-          <ArticleCard {...second} />
+          <ArticleCard {...second} context={['articles-by-tag-2']} />
         </div>
       </div>
 

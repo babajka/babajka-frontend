@@ -20,7 +20,11 @@ const TagPageBlockCD = ({ articles, layout }) => (
     {Array.from({ length: SIZE_BY_LAYOUT[layout] }).map((_, i) => (
       // eslint-disable-next-line react/no-array-index-key
       <div key={i} className="tag-page-block-cd__card">
-        {articles[i] ? <ArticleCard {...articles[i]} /> : <PlaceholderCard />}
+        {articles[i] ? (
+          <ArticleCard {...articles[i]} context={['tag-page-block-cd', layout]} />
+        ) : (
+          <PlaceholderCard />
+        )}
       </div>
     ))}
   </div>

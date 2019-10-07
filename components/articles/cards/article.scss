@@ -28,14 +28,6 @@
   &__cover {
     display: inline-block;
     position: absolute;
-
-    &--horizontal {
-      display: none;
-    }
-
-    &--vertical {
-      display: none;
-    }
   }
 
   &.theme-dark > &__cover-container > &__cover {
@@ -143,10 +135,6 @@
     &__cover {
       height: $cover-height;
       width: $cover-width;
-
-      &--vertical {
-        display: unset;
-      }
     }
   }
 
@@ -479,10 +467,6 @@
     &__cover {
       object-fit: cover;
       position: absolute;
-
-      &--horizontal {
-        display: unset;
-      }
     }
 
     &__content {

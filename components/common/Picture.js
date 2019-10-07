@@ -1,3 +1,5 @@
+import './picture.scss';
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -13,8 +15,8 @@ const BREAKPOINTS = {
 const getMedia = ({ min, max }) =>
   [min && `(min-width: ${min}px)`, max && `(max-width: ${max}px)`].filter(Boolean).join(' and ');
 
-const Picture = ({ sources, alt }) => (
-  <picture>
+const Picture = ({ className, sources, alt }) => (
+  <picture className={className}>
     {Object.entries(sources).map(([screen, src]) => (
       <source key={screen} media={getMedia(BREAKPOINTS[screen])} srcSet={src} />
     ))}
@@ -24,8 +26,13 @@ const Picture = ({ sources, alt }) => (
 
 Picture.propTypes = {
   // screen: src map
+  className: PropTypes.string,
   sources: PropTypes.objectOf(PropTypes.string).isRequired,
   alt: PropTypes.string.isRequired,
+};
+
+Picture.defaultProps = {
+  className: '',
 };
 
 export default Picture;
