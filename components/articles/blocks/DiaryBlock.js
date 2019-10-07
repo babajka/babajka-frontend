@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 
 import Text from 'components/common/Text';
 import Clickable from 'components/common/Clickable';
+import Image from 'components/common/Image';
 import Icon from 'components/common/ui/Icon';
 
 import { diaryActions, diarySelectors } from 'redux/ducks/diary';
@@ -34,6 +35,8 @@ export const DiaryModel = {
   }),
 };
 
+const DIARY_PICTURE_WIDTH = 180;
+
 // TODO: refactor with hooks
 class DiaryBlock extends Component {
   static propTypes = {
@@ -60,7 +63,7 @@ class DiaryBlock extends Component {
         <div className="diary__content">
           {diaryImage && (
             <div className="diary__picture">
-              <img src={diaryImage} alt={name} />
+              <Image alt={name} sourceSizes={[DIARY_PICTURE_WIDTH]} baseUrl={diaryImage} mode="x" />
             </div>
           )}
 

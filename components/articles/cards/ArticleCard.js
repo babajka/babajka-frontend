@@ -10,6 +10,7 @@ import zip from 'lodash/zip';
 import Text from 'components/common/Text';
 import Icon from 'components/common/ui/Icon';
 import Link from 'components/common/Link';
+import Image from 'components/common/Image';
 import Picture from 'components/common/Picture';
 
 import { TagsArray, CollectionShape, ArticleCoversShape, ArticleType } from 'utils/customPropTypes';
@@ -109,7 +110,13 @@ const ArticleCard = props => {
             alt={title}
           />
         ) : (
-          <img className="article-card__cover" src={getCoverLink(images, size)} alt={title} />
+          <Image
+            className="article-card__cover"
+            alt={title}
+            sourceSizes={[COVER_BY_CARD_SIZE[size].width]}
+            baseUrl={images[COVER_BY_CARD_SIZE[size].type]}
+            mode="x"
+          />
         )}
       </div>
       <div className="article-card__content">
@@ -121,10 +128,12 @@ const ArticleCard = props => {
               </div>
               <div className="article-card__collection-name">{collection.name}</div>
             </div>
-            <img
+            <Image
               className="article-card__collection-cover"
-              src={`${collection.cover}?w=${COLLECTION_LOGO_WIDTH}`}
               alt={collection.name}
+              sourceSizes={[COLLECTION_LOGO_WIDTH]}
+              baseUrl={collection.cover}
+              mode="x"
             />
           </div>
         )}
@@ -151,10 +160,12 @@ const ArticleCard = props => {
               route={ROUTES_NAMES.tag}
               params={{ topic: brand.topicSlug, tag: brand.slug }}
             >
-              <img
+              <Image
                 className="article-card__brand"
-                src={`${brand.content.image}?w=${BRAND_LOGO_WIDTH}`}
                 alt={brand.content.title}
+                sourceSizes={[BRAND_LOGO_WIDTH]}
+                baseUrl={brand.content.image}
+                mode="x"
               />
             </Link>
           )}
