@@ -19,6 +19,8 @@ import { ROUTES_NAMES } from 'routes';
 
 const COVER_SIZES = [1200, 1000, 770, 640, 360];
 
+const AUTHOR_BRAND_THUMBNAIL_WIDTH = 100;
+
 const Article = ({
   data: { images, title, subtitle, keywords, text, type, audio, video, tagsByTopic },
 }) => {
@@ -56,7 +58,13 @@ const Article = ({
                 route={ROUTES_NAMES.tag}
                 params={{ topic: topicSlug, tag: slug }}
               >
-                <img className="article-page__tag-image" src={content.image} alt={slug} />
+                <Image
+                  className="article-page__tag-image"
+                  alt={slug}
+                  sourceSizes={[AUTHOR_BRAND_THUMBNAIL_WIDTH]}
+                  baseUrl={content.image}
+                  mode="x"
+                />
               </Link>
             ))}
             <div className="article-page__tag-titles">

@@ -6,11 +6,14 @@ import cn from 'classnames';
 
 import Text from 'components/common/Text';
 import ArticleCard from 'components/articles/cards/ArticleCard';
+import Image from 'components/common/Image';
 
 import { IdsArray } from 'utils/customPropTypes';
 import { getTagLink, getTopicLink } from 'utils/tags';
 
 import { TOPIC } from 'constants/misc';
+
+const BRAND_THUMBNAIL_WIDTH = 125;
 
 const ArticlesByTag2 = ({ block, data }) => {
   const { tagId, articlesIds } = block;
@@ -30,7 +33,15 @@ const ArticlesByTag2 = ({ block, data }) => {
         })}
       >
         <div className="articles-by-tag-2__top-mobile-labels">
-          {isBrand && <img src={content.image} alt={content.title} width="120" />}
+          {isBrand && (
+            <Image
+              className="articles-by-tag-2__logo"
+              alt={content.title}
+              sourceSizes={[BRAND_THUMBNAIL_WIDTH]}
+              baseUrl={content.image}
+              mode="x"
+            />
+          )}
           <div className="articles-by-tag-2__label">
             <Text id={`topic.${topicSlug}_essentials`} />: {tagLink}
           </div>
