@@ -14,11 +14,11 @@ const TagPageBlockB = ({ articles, layout }) => {
       className={`block block__no-background tag-page-block-b tag-page-block-b__style-${layout}`}
     >
       <div className="large-card">
-        <ArticleCard {...first} />
+        <ArticleCard {...first} context={['tag-page-block-b', 'large-card']} />
       </div>
 
       <div className="small-card">
-        <ArticleCard {...second} />
+        <ArticleCard {...second} context={['tag-page-block-b', 'small-card']} />
       </div>
     </div>
   );

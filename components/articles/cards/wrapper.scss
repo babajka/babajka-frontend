@@ -5,8 +5,9 @@
 
 .wir-card-wrapper {
   &.theme-dark {
-    box-shadow: inset $theme-dark-border-width $theme-dark-border-width $primary-black,
-      inset (-$theme-dark-border-width) (-$theme-dark-border-width) $primary-black;
+    box-shadow: inset $theme-dark-border-width $theme-dark-border-width
+      $primary-widescreen-background,
+      inset (-$theme-dark-border-width) (-$theme-dark-border-width) $primary-widescreen-background;
     color: $primary-black;
   }
 

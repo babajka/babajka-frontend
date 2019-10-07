@@ -27,7 +27,7 @@ const ArticlesByTag3 = ({ block, data }) => {
       <div className="articles-by-tag-3__cards">
         {articlesIds.map((id, index) => (
           <div key={id} className={`articles-by-tag-3__card-${index + 1}`}>
-            <ArticleCard {...articles[id]} />
+            <ArticleCard {...articles[id]} context={['articles-by-tag-3']} />
           </div>
         ))}
       </div>

@@ -62,7 +62,7 @@ const Article = ({
             <div className="article-page__tag-titles">
               <span>
                 {renderNodeList(brands.map(tag => getTagLink({ tag })))}
-                {!!brands.length && ','}
+                {!!brands.length && !!authors.length && ','}
               </span>
               <span>{renderNodeList(authors.map(tag => getTagLink({ tag })))}</span>
             </div>
