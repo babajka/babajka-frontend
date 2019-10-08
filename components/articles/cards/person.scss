@@ -17,7 +17,7 @@
     position: relative;
   }
 
-  &.theme-dark > &__cover-container {
+  &.theme-light > &__cover-container {
     margin-right: $theme-dark-border-width;
     margin-top: $theme-dark-border-width;
   }
@@ -36,7 +36,7 @@
     width: 100%;
   }
 
-  &.theme-dark > &__cover-container > &__cover {
+  &.theme-light > &__cover-container > &__cover {
     right: -($theme-dark-border-width);
     top: -($theme-dark-border-width);
   }
@@ -78,7 +78,7 @@
   }
 
   /* stylelint-disable-next-line selector-class-pattern */
-  .person.theme-dark > .person__cover-container {
+  .person.theme-light > .person__cover-container {
     height: $cover-size - 2 * $theme-dark-border-width;
     width: $cover-size - $theme-dark-border-width;
   }

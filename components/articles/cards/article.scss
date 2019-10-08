@@ -13,7 +13,7 @@
     position: relative;
   }
 
-  &.theme-dark > &__cover-container {
+  &.theme-light > &__cover-container {
     margin-left: $theme-dark-border-width;
     margin-top: $theme-dark-border-width;
   }
@@ -30,7 +30,7 @@
     position: absolute;
   }
 
-  &.theme-dark > &__cover-container > &__cover {
+  &.theme-light > &__cover-container > &__cover {
     left: -($theme-dark-border-width);
     top: -($theme-dark-border-width);
   }
@@ -143,7 +143,7 @@
   // The may be fixed using @at-root. Same applies for mixins below.
 
   /* stylelint-disable-next-line selector-class-pattern */
-  .article-card.theme-dark > .article-card__cover-container {
+  .article-card.theme-light > .article-card__cover-container {
     height: $cover-height - 2 * $theme-dark-border-width;
     width: $cover-width - $theme-dark-border-width;
   }
@@ -535,7 +535,7 @@
   }
 
   /* stylelint-disable-next-line selector-class-pattern */
-  .article-card.theme-dark > .article-card__cover-container {
+  .article-card.theme-light > .article-card__cover-container {
     max-height: $cover-max-height - $theme-dark-border-width;
     min-height: $cover-min-height - $theme-dark-border-width;
     width: $cover-width - 2 * $theme-dark-border-width;
