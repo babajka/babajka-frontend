@@ -53,9 +53,11 @@ const COVER_BY_CARD_SIZE = {
   'square-s': { type: 'horizontal', width: 300 },
 };
 
-// Q: How do I ensure width is a number here?
-const getCoverLink = (images, cardSize) =>
-  `${images[COVER_BY_CARD_SIZE[cardSize].type]}?w=${COVER_BY_CARD_SIZE[cardSize].width * 2}`;
+const getCoverLink = (images, cardSize) => {
+  // TODO: to support 1x and 2x images.
+  const { type, width } = COVER_BY_CARD_SIZE[cardSize];
+  return `${images[type]}?w=${+width * 2}`;
+};
 
 const BRAND_LOGO_WIDTH = 100;
 const COLLECTION_LOGO_WIDTH = 150;
@@ -76,10 +78,7 @@ const ArticleCard = props => {
     tagsByTopic,
   } = props;
   const dark = theme === 'dark';
-  const {
-    brands: [brand], // Q: what about multiple brands.
-    authors,
-  } = tagsByTopic;
+  const { brands, authors } = tagsByTopic;
 
   return (
     <CardWrapper
@@ -89,7 +88,7 @@ const ArticleCard = props => {
       linkProps={{ route: ROUTES_NAMES.article, params: { slug } }}
       className={cn('article-card', {
         'article-card--with-collection': collection,
-        'article-card--with-brand': brand,
+        'article-card--with-brand': brands,
       })}
     >
       <div
@@ -154,21 +153,22 @@ const ArticleCard = props => {
         )}
         <div className="article-card__filler article-card__filler--middle" />
         <div className="article-card__author-brand">
-          {brand && (
-            <Link
-              key={brand.slug}
-              route={ROUTES_NAMES.tag}
-              params={{ topic: brand.topicSlug, tag: brand.slug }}
-            >
-              <Image
-                className="article-card__brand"
-                alt={brand.content.title}
-                sourceSizes={[BRAND_LOGO_WIDTH]}
-                baseUrl={brand.content.image}
-                mode="x"
-              />
-            </Link>
-          )}
+          {brands &&
+            brands.map(brand => (
+              <Link
+                key={brand.slug}
+                route={ROUTES_NAMES.tag}
+                params={{ topic: brand.topicSlug, tag: brand.slug }}
+              >
+                <Image
+                  className="article-card__brand"
+                  alt={brand.content.title}
+                  sourceSizes={[BRAND_LOGO_WIDTH]}
+                  baseUrl={brand.content.image}
+                  mode="x"
+                />
+              </Link>
+            ))}
           {renderNodeList(authors.map(renderTag))}
         </div>
         <div className="article-card__filler article-card__filler--bottom" />
@@ -184,13 +184,9 @@ const ArticleCard = props => {
 
 ArticleCard.propTypes = {
   size: PropTypes.oneOf(SIZES),
-  // Q: I an not sure if the 'context' works as required.
-  context: PropTypes.oneOfType([
-    // In case card size is set explicitly, no context needs to be provided.
-    PropTypes.oneOf(['no']),
-    // In case card size is 'auto', the context (e.g. the block and position) must be provided.
-    PropTypes.arrayOf(PropTypes.string),
-  ]).isRequired,
+  // In case card size is set explicitly, no context needs to be provided.
+  // In case card size is 'auto', the context (e.g. the block and position) must be provided.
+  context: PropTypes.arrayOf(PropTypes.string),
   color: PropTypes.string.isRequired,
   theme: PropTypes.oneOf(['light', 'dark']),
   title: PropTypes.string.isRequired,
@@ -204,6 +200,7 @@ ArticleCard.propTypes = {
 
 ArticleCard.defaultProps = {
   size: 'auto',
+  context: [],
   theme: 'light',
   collection: null,
 };

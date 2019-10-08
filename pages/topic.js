@@ -24,7 +24,7 @@ const TopicSection = ({ tag, articles }) => {
       <div className="topics__section-title">{renderTag(tag)}</div>
       {showCard && (
         <div className="topics__section-image">
-          <ArticleCard {...first} size="square-s" context="no" />
+          <ArticleCard {...first} size="square-s" />
         </div>
       )}
       <ul className="topics__section-list">

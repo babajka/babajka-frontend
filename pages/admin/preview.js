@@ -40,7 +40,7 @@ const ArticlePreview = ({ article, error }) => {
         <div className="preview-page__cards" style={{ margin: '50px' }}>
           {DEFAULT_SIZES.concat(SQUARE_SIZES).map(size => (
             <div key={size} className="preview-page__card">
-              <ArticleCard {...article} size={size} context="no" />
+              <ArticleCard {...article} size={size} />
             </div>
           ))}
         </div>

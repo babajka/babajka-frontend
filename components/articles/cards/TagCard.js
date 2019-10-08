@@ -11,7 +11,7 @@ import { TOPIC } from 'constants/misc';
 import CardWrapper, { SIZES } from './CardWrapper';
 
 const TagCard = ({ slug, topicSlug, content, theme, size }) => {
-  const dark = theme === 'dark' || slug === 'bssr' || slug === 'dali'; // TEMP.
+  const dark = theme === 'dark';
   const wrapperProps = {
     size,
     dark,

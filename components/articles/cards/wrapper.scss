@@ -4,7 +4,7 @@
 @import './cards';
 
 .wir-card-wrapper {
-  &.theme-dark {
+  &.theme-light {
     box-shadow: inset $theme-dark-border-width $theme-dark-border-width
       $primary-widescreen-background,
       inset (-$theme-dark-border-width) (-$theme-dark-border-width) $primary-widescreen-background;
