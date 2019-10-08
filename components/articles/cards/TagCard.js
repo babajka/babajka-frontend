@@ -8,6 +8,8 @@ import { TopicSlug } from 'utils/customPropTypes';
 import { ROUTES_NAMES } from 'routes';
 import { TOPIC } from 'constants/misc';
 
+import Image from 'components/common/Image';
+
 import CardWrapper, { SIZES } from './CardWrapper';
 
 const TagCard = ({ slug, topicSlug, content, theme, size }) => {
@@ -39,7 +41,14 @@ const TagCard = ({ slug, topicSlug, content, theme, size }) => {
       <CardWrapper {...wrapperProps} color={color} className="person">
         {' '}
         <div className="person__cover-container">
-          <img className="person__cover" src={image} alt={name} title={name} />
+          <Image
+            className="person__cover"
+            alt={name}
+            title={name}
+            sourceSizes={[390]}
+            baseUrl={image}
+            mode="x"
+          />
         </div>
         <div className="person__content">
           <div className="person__subtitle">{subtitle}</div>
