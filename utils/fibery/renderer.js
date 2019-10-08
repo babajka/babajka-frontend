@@ -30,7 +30,7 @@ const renderContent = content => {
 const MARKS = {
   link: (node, { attrs: { href, title } }) => {
     const videoId = parseYoutubeUrl(href);
-    if (videoId) {
+    if (videoId && href === node) {
       return <VideoPlayer videoId={videoId} />;
     }
 
