@@ -4,7 +4,7 @@ import './person.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { TopicSlug } from 'utils/customPropTypes';
+import { TopicSlug, ThemeType } from 'utils/customPropTypes';
 import { ROUTES_NAMES } from 'routes';
 import { TOPIC } from 'constants/misc';
 
@@ -12,11 +12,9 @@ import Image from 'components/common/Image';
 
 import CardWrapper, { SIZES } from './CardWrapper';
 
-const TagCard = ({ slug, topicSlug, content, theme, size }) => {
-  const dark = theme === 'dark';
+const TagCard = ({ slug, topicSlug, content, size }) => {
   const wrapperProps = {
     size,
-    dark,
     linkProps: {
       route: ROUTES_NAMES.tag,
       params: {
@@ -27,18 +25,25 @@ const TagCard = ({ slug, topicSlug, content, theme, size }) => {
   };
 
   if (topicSlug === TOPIC.locations) {
-    const { title, image } = content;
+    const { title, image, theme, color } = content;
     return (
-      <CardWrapper {...wrapperProps} image={image} alt={title} className="location">
+      <CardWrapper
+        {...wrapperProps}
+        image={image}
+        theme={theme}
+        color={color}
+        alt={title}
+        className="location"
+      >
         <div className="location__title">{title}</div>
       </CardWrapper>
     );
   }
 
   if (topicSlug === TOPIC.personalities) {
-    const { name, description, subtitle, color, image } = content;
+    const { name, description, subtitle, image, theme, color } = content;
     return (
-      <CardWrapper {...wrapperProps} color={color} className="person">
+      <CardWrapper {...wrapperProps} theme={theme} color={color} className="person">
         {' '}
         <div className="person__cover-container">
           <Image
@@ -64,7 +69,6 @@ const TagCard = ({ slug, topicSlug, content, theme, size }) => {
 TagCard.propTypes = {
   slug: PropTypes.string.isRequired,
   size: PropTypes.oneOf(SIZES),
-  theme: PropTypes.oneOf(['light', 'dark']),
   topicSlug: TopicSlug.isRequired,
   content: PropTypes.shape({
     title: PropTypes.string,
@@ -73,12 +77,12 @@ TagCard.propTypes = {
     description: PropTypes.string,
     image: PropTypes.string.isRequired,
     color: PropTypes.string,
+    theme: ThemeType,
   }).isRequired,
 };
 
 TagCard.defaultProps = {
   size: 'auto',
-  theme: 'light',
 };
 
 export default TagCard;

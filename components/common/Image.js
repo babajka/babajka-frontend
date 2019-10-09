@@ -1,10 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Image = ({ className, sourceSizes, baseUrl, alt, title, sizes, mode }) => {
-  const getSource = (w, x = 1) => `${baseUrl}?w=${w * x} ${mode === 'w' ? `${w * x}w` : `${x}x`},`;
+const Image = ({ className, sourceSizes, baseUrl, alt, title, sizes, mode, dimension }) => {
+  const getSource = (size, x = 1) =>
+    `${baseUrl}?${dimension}=${size * x} ${mode === 'w' ? `${size * x}w` : `${x}x`},`;
 
-  const srcSet = sourceSizes.reduce((acc, w) => `${acc}${getSource(w)}${getSource(w, 2)}`, '');
+  const srcSet = sourceSizes.reduce(
+    (acc, size) => `${acc}${getSource(size)}${getSource(size, 2)}`,
+    ''
+  );
   return <img className={className} srcSet={srcSet} alt={alt} title={title} sizes={sizes} />;
 };
 
@@ -16,6 +20,7 @@ Image.propTypes = {
   title: PropTypes.string,
   sizes: PropTypes.string,
   mode: PropTypes.oneOf(['w', 'x']),
+  dimension: PropTypes.oneOf(['w', 'h']),
 };
 
 Image.defaultProps = {
@@ -23,6 +28,7 @@ Image.defaultProps = {
   sizes: '',
   mode: 'w',
   title: '',
+  dimension: 'w',
 };
 
 export default Image;

@@ -50,10 +50,12 @@ export const TagsArray = PropTypes.arrayOf(TagShape);
 export const TagsById = PropTypes.objectOf(TagShape);
 
 export const ArticleCoversShape = PropTypes.shape({
-  page: PropTypes.string.isRequired,
+  page: PropTypes.string,
   horizontal: PropTypes.string.isRequired,
   vertical: PropTypes.string.isRequired,
 });
+
+export const ThemeType = PropTypes.oneOf(['light', 'dark']);
 
 export const ArticleMediaShape = PropTypes.shape({
   platform: PropTypes.string,
@@ -81,7 +83,7 @@ export const ArticleModel = {
   metadata: MetadataShape.isRequired,
   keywords: PropTypes.string.isRequired,
   tagsByTopic: PropTypes.objectOf(TagsArray).isRequired,
-  theme: PropTypes.oneOf(['light', 'dark']).isRequired,
+  theme: ThemeType.isRequired,
   color: PropTypes.string.isRequired,
 };
 
