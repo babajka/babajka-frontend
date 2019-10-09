@@ -8,14 +8,19 @@ import get from 'lodash/get';
 import zip from 'lodash/zip';
 
 import Text from 'components/common/Text';
-import Icon from 'components/common/ui/Icon';
-import Link from 'components/common/Link';
 import Image from 'components/common/Image';
 import Picture from 'components/common/Picture';
+import Icon from 'components/common/ui/Icon';
 
-import { TagsArray, CollectionShape, ArticleCoversShape, ArticleType } from 'utils/customPropTypes';
+import {
+  TagsArray,
+  CollectionShape,
+  ArticleCoversShape,
+  ArticleType,
+  ThemeType,
+} from 'utils/customPropTypes';
 import { renderNodeList } from 'utils/formatters';
-import { renderTag } from 'utils/tags';
+import { renderTag, getTagImageRenderer } from 'utils/tags';
 import { linkCn } from 'utils/ui';
 
 import { ROUTES_NAMES } from 'routes';
@@ -59,8 +64,7 @@ const getCoverLink = (images, cardSize) => {
   return `${images[type]}?w=${+width * 2}`;
 };
 
-const BRAND_LOGO_WIDTH = 100;
-const COLLECTION_LOGO_WIDTH = 150;
+const COLLECTION_LOGO_WIDTH = 70;
 
 // TODO: fix storybook
 const ArticleCard = props => {
@@ -77,18 +81,18 @@ const ArticleCard = props => {
     slug,
     tagsByTopic,
   } = props;
-  const dark = theme === 'dark';
-  const { brands, authors } = tagsByTopic;
+  const { brands = [], authors = [] } = tagsByTopic;
+  const { short, full } = ACTION_BY_TYPE[type];
 
   return (
     <CardWrapper
       size={size}
-      dark={dark}
+      theme={theme}
       color={color}
       linkProps={{ route: ROUTES_NAMES.article, params: { slug } }}
       className={cn('article-card', {
         'article-card--with-collection': collection,
-        'article-card--with-brand': brands,
+        'article-card--with-brand': !!brands.length,
       })}
     >
       <div
@@ -146,35 +150,27 @@ const ArticleCard = props => {
         {!collection && (
           <div className="article-card__description-container">
             <div className="article-card__description">{subtitle}</div>
-            <div className={linkCn({ className: 'article-card__label-read', dark })}>
-              <Text id={`article.${ACTION_BY_TYPE[type].short}`} />
+            <div
+              className={linkCn({ className: 'article-card__label-read', dark: theme === 'light' })}
+            >
+              <Text id={`article.${short}`} />
             </div>
           </div>
         )}
         <div className="article-card__filler article-card__filler--middle" />
         <div className="article-card__author-brand">
-          {brands &&
-            brands.map(brand => (
-              <Link
-                key={brand.slug}
-                route={ROUTES_NAMES.tag}
-                params={{ topic: brand.topicSlug, tag: brand.slug }}
-              >
-                <Image
-                  className="article-card__brand"
-                  alt={brand.content.title}
-                  sourceSizes={[BRAND_LOGO_WIDTH]}
-                  baseUrl={brand.content.image}
-                  mode="x"
-                />
-              </Link>
-            ))}
+          {brands.map(
+            getTagImageRenderer({
+              className: 'article-card__brand',
+              theme,
+            })
+          )}
           {renderNodeList(authors.map(renderTag))}
         </div>
         <div className="article-card__filler article-card__filler--bottom" />
         <div className="article-card__label-read-full">
-          <span className={linkCn({ dark })}>
-            <Text id={`article.${ACTION_BY_TYPE[type].full}`} />
+          <span className={linkCn({ dark: theme === 'light' })}>
+            <Text id={`article.${full}`} />
           </span>
         </div>
       </div>
@@ -188,7 +184,7 @@ ArticleCard.propTypes = {
   // In case card size is 'auto', the context (e.g. the block and position) must be provided.
   context: PropTypes.arrayOf(PropTypes.string),
   color: PropTypes.string.isRequired,
-  theme: PropTypes.oneOf(['light', 'dark']),
+  theme: ThemeType,
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string.isRequired,
   images: ArticleCoversShape.isRequired,

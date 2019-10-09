@@ -2,6 +2,7 @@ import React from 'react';
 
 import Link from 'components/common/Link';
 import Text from 'components/common/Text';
+import Image from 'components/common/Image';
 
 import { ROUTES_NAMES } from 'routes';
 
@@ -30,8 +31,44 @@ export const TagLink = ({ topic, tag, children, ...props }) => (
   </Link>
 );
 
-export const getTagLink = ({ tag, tag: { topicSlug, slug }, dark, ...props }) => (
+export const getTagLink = ({
+  tag,
+  tag: { topicSlug, slug },
+  dark,
+  render = renderTag,
+  ...props
+}) => (
   <TagLink key={slug} topic={topicSlug} tag={slug} dark={dark} {...props}>
-    {renderTag(tag)}
+    {render(tag)}
   </TagLink>
+);
+
+const TAG_IMAGE_HEIGHT = 48;
+const BRAND_LOGO_BY_THEME = {
+  dark: 'white',
+  light: 'black',
+};
+
+const getTagImageUrl = ({ topicSlug, content: { image, images }, theme }) => {
+  if (topicSlug !== 'brands') {
+    return image;
+  }
+  return images[BRAND_LOGO_BY_THEME[theme]];
+};
+
+export const getTagImageRenderer = ({ className, theme = 'light' }) => ({
+  slug,
+  topicSlug,
+  content: { title },
+  content,
+}) => (
+  <Image
+    key={slug}
+    className={className}
+    alt={title}
+    sourceSizes={[TAG_IMAGE_HEIGHT]}
+    baseUrl={getTagImageUrl({ topicSlug, content, theme })}
+    mode="x"
+    dimension="h"
+  />
 );

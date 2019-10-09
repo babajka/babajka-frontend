@@ -6,14 +6,13 @@ import cn from 'classnames';
 
 import TagCard from 'components/articles/cards/TagCard';
 
-import { IdsArray } from 'utils/customPropTypes';
+import { IdsArray, TagsById } from 'utils/customPropTypes';
 import { getTopicLink } from 'utils/tags';
 
 import { TOPICS } from 'constants';
 
-const TagsByTopic = ({ block, data }) => {
+const TagsByTopic = ({ block, data: { tags } }) => {
   const { topicSlug, tagsIds, style } = block;
-  const { tags } = data;
   const tagsData = tagsIds.map(id => tags[id]);
   const topicLink = getTopicLink({ topic: topicSlug });
   return (
@@ -46,7 +45,9 @@ TagsByTopic.propTypes = {
     tagsIds: IdsArray.isRequired,
     style: PropTypes.oneOf(['1-2', '2-1']).isRequired,
   }).isRequired,
-  data: PropTypes.shape({}).isRequired,
+  data: PropTypes.shape({
+    tags: TagsById.isRequired,
+  }).isRequired,
 };
 
 TagsByTopic.defaultProps = {};

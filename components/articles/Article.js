@@ -4,28 +4,24 @@ import React from 'react';
 import { useRouter } from 'next/router';
 
 import { MetaTitle, MetaDescription, MetaImage, MetaKeywords } from 'components/social/Metatags';
-import Link from 'components/common/Link';
 import AudioPlayer from 'components/common/AudioPlayer';
 import VideoPlayer from 'components/common/VideoPlayer';
 import Image from 'components/common/Image';
 import ShareButtons from 'components/social/ShareButtons';
 
 import { ArticleShape } from 'utils/customPropTypes';
-import { getTagLink } from 'utils/tags';
+import { getTagLink, getTagImageRenderer } from 'utils/tags';
 import { renderNodeList } from 'utils/formatters';
 import fiberyRenderer from 'utils/fibery/renderer';
 
-import { ROUTES_NAMES } from 'routes';
-
 const COVER_SIZES = [1200, 1000, 770, 640, 360];
-
-const AUTHOR_BRAND_THUMBNAIL_WIDTH = 100;
 
 const Article = ({
   data: { images, title, subtitle, keywords, text, type, audio, video, tagsByTopic },
 }) => {
   const router = useRouter();
   const { brands, authors, ...tags } = tagsByTopic;
+  const renderTagImage = getTagImageRenderer({ className: 'article-page__tag-image' });
 
   return (
     <>
@@ -51,22 +47,13 @@ const Article = ({
         {/* TODO: hover corresponding image and title simultaneously */}
         {(!!brands.length || !!authors.length) && (
           <div className="article-page__tags">
-            {brands.concat(authors).map(({ topicSlug, slug, content }) => (
-              <Link
-                key={slug}
-                className="article-page__tag-image-link"
-                route={ROUTES_NAMES.tag}
-                params={{ topic: topicSlug, tag: slug }}
-              >
-                <Image
-                  className="article-page__tag-image"
-                  alt={slug}
-                  sourceSizes={[AUTHOR_BRAND_THUMBNAIL_WIDTH]}
-                  baseUrl={content.image}
-                  mode="x"
-                />
-              </Link>
-            ))}
+            {brands.concat(authors).map(tag =>
+              getTagLink({
+                className: 'article-page__tag-image-link',
+                render: renderTagImage,
+                tag,
+              })
+            )}
             <div className="article-page__tag-titles">
               <span>
                 {renderNodeList(brands.map(tag => getTagLink({ tag })))}
