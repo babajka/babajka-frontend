@@ -46,14 +46,16 @@ const TagCard = ({ slug, topicSlug, content, size }) => {
       <CardWrapper {...wrapperProps} theme={theme} color={color} className="person">
         {' '}
         <div className="person__cover-container">
-          <Image
-            className="person__cover"
-            alt={name}
-            title={name}
-            sourceSizes={[390]}
-            baseUrl={image}
-            mode="x"
-          />
+          {image && (
+            <Image
+              className="person__cover"
+              alt={name}
+              title={name}
+              sourceSizes={[390]}
+              baseUrl={image}
+              mode="x"
+            />
+          )}
         </div>
         <div className="person__content">
           <div className="person__subtitle">{subtitle}</div>
