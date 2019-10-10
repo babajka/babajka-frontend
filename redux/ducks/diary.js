@@ -1,4 +1,5 @@
 import createReducer from 'type-to-reducer';
+import moment from 'moment';
 
 import api from 'constants/api';
 
@@ -36,21 +37,29 @@ export default createReducer(
 const getState = state => state.diary;
 const getData = state => getState(state).data;
 const getCurrent = (state, lang) => {
-  const data = getData(state);
-  if (!data) {
-    return data;
-  }
-  const { author } = data;
-  return { ...data, author: author && getLocalizedTag(author, lang).content };
+  const { author, ...rest } = getData(state);
+  return { ...rest, author: author && getLocalizedTag(author, lang).content };
 };
 const isPending = state => getState(state).pending;
 const isError = state => getState(state).error;
+const isNextAvailable = state => {
+  const { next } = getState(state);
+  if (!next) {
+    return false;
+  }
+  const now = moment();
+  const { month, day } = next;
+  const nowHash = (now.month() + 1) * 100 + now.date();
+  const nextHash = +month * 100 + +day;
+  return nextHash <= nowHash;
+};
 
 export const diarySelectors = {
   getCurrent,
   getState,
   isPending,
   isError,
+  isNextAvailable,
 };
 
 // actions
