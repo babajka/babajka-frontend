@@ -59,13 +59,12 @@ const getTagImageUrl = ({ topicSlug, content: { image, images }, theme }) => {
 export const getTagImageRenderer = ({ className, theme = 'light' }) => ({
   slug,
   topicSlug,
-  content: { title },
   content,
 }) => (
   <Image
     key={slug}
     className={className}
-    alt={title}
+    alt={slug}
     sourceSizes={[TAG_IMAGE_HEIGHT]}
     baseUrl={getTagImageUrl({ topicSlug, content, theme })}
     mode="x"

@@ -125,7 +125,6 @@ class Root extends App {
           <MetaKeywords />
           <MetaAppleTouchDevices title={localize(titleApple, locale)} />
           <Head>
-            <title>Wir.by | {title}</title>
             <link rel="icon" type="image/png" href={FAVICON_URL} />
             <link rel="preconnect" href="https://www.google-analytics.com" />
           </Head>

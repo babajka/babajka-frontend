@@ -137,7 +137,7 @@
     },
     {
       "path": ".next/static/**/article.js",
-      "maxSize": "6 kB"
+      "maxSize": "7 kB"
     },
     {
       "path": ".next/static/**/topic.js",

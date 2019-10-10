@@ -1,6 +1,6 @@
 import './layout.scss';
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import ScrollToTop from 'react-scroll-up';
@@ -14,6 +14,7 @@ import { LangType } from 'utils/customPropTypes';
 import Header from './Header';
 import Footer from './Footer';
 import Sidebar from './Sidebar';
+import { HeaderLinksContext, INITIAL_LINKS } from './HeaderLinks';
 
 const CoreLayout = ({ children, hideFooter, hideSidebar, lang }) => {
   const [sidebarActive, toggleSidebar, setState] = useBoolean(false);
@@ -23,19 +24,21 @@ const CoreLayout = ({ children, hideFooter, hideSidebar, lang }) => {
         id="wir-root"
         className={cn('wir-root', { 'wir-root--sidebar-expanded': sidebarActive })}
       >
-        <div className="wir-space">
-          <Header toggleSidebar={toggleSidebar} />
+        <HeaderLinksContext.Provider value={useState(INITIAL_LINKS)}>
+          <div className="wir-space">
+            <Header toggleSidebar={toggleSidebar} />
 
-          <main className="wir-content">{children}</main>
+            <main className="wir-content">{children}</main>
 
-          {!hideFooter && <Footer />}
+            {!hideFooter && <Footer />}
 
-          <Clickable
-            tag="div"
-            className={cn('wir-overlay', { 'wir-overlay--active': sidebarActive })}
-            onClick={toggleSidebar}
-          />
-        </div>
+            <Clickable
+              tag="div"
+              className={cn('wir-overlay', { 'wir-overlay--active': sidebarActive })}
+              onClick={toggleSidebar}
+            />
+          </div>
+        </HeaderLinksContext.Provider>
 
         {(!hideSidebar || sidebarActive) && (
           <nav className={cn('wir-sidebar', { 'wir-sidebar--expanded': sidebarActive })}>

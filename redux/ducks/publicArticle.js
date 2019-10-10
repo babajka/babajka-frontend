@@ -37,9 +37,15 @@ const getRawCurrent = state => getState(state).current;
 const getLocaleBySlug = (state, slug) => getState(state).localeBySlug[slug];
 const getCurrent = (state, slug) =>
   getLocalizedArticle(getRawCurrent(state), getLocaleBySlug(state, slug));
+const getOtherLocales = (state, slug) => {
+  const currentLocale = getLocaleBySlug(state, slug);
+  const { locales } = getRawCurrent(state);
+  return Object.values(locales).filter(({ locale }) => locale !== currentLocale);
+};
 
 export const publicArticleSelectors = {
   getCurrent,
+  getOtherLocales,
 
   isPending,
 };
