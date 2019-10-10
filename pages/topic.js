@@ -49,22 +49,25 @@ const COLS_COUNT = 3;
 
 const mapStateToProps = (state, { lang }) => topicsSelectors.getData(state, lang);
 
-const TopicPage = ({ tags, articlesByTag, articleById }) => (
-  <div className="wir-content-padding topics">
-    {chunk(tags, Math.ceil(tags.length / COLS_COUNT)).map((col, i) => (
-      // eslint-disable-next-line react/no-array-index-key
-      <div key={i} className="topics__column">
-        {col.map(tag => (
-          <TopicSection
-            key={tag.id}
-            tag={tag}
-            articles={articlesByTag[tag.slug].map(id => articleById[id])}
-          />
-        ))}
-      </div>
-    ))}
-  </div>
-);
+const TopicPage = ({ tags, articlesByTag, articleById }) => {
+  const filteredTags = tags.filter(({ slug }) => articlesByTag[slug] && articlesByTag[slug].length);
+  return (
+    <div className="wir-content-padding topics">
+      {chunk(filteredTags, Math.ceil(filteredTags.length / COLS_COUNT)).map((col, i) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <div key={i} className="topics__column">
+          {col.map(tag => (
+            <TopicSection
+              key={tag.id}
+              tag={tag}
+              articles={articlesByTag[tag.slug].map(id => articleById[id])}
+            />
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+};
 
 TopicPage.propTypes = {
   tags: TagsArray.isRequired,
