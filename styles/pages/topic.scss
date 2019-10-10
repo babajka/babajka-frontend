@@ -5,10 +5,10 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin: 0 60px;
+  justify-content: space-between;
 
   &__column {
-    margin-right: 60px;
+    max-width: 300px;
   }
 
   &__section-list {
@@ -33,39 +33,5 @@
     line-height: 24px;
     padding-bottom: 10px;
     padding-top: 40px;
-  }
-}
-
-@include screen-tablet-large {
-  .topics {
-    margin: 0 35px;
-
-    &__column {
-      margin-right: 35px;
-    }
-  }
-}
-
-@include screen-tablet {
-  .topics {
-    margin: 0 50px;
-
-    &__column {
-      margin-right: 50px;
-    }
-  }
-}
-
-@include screen-touch {
-  .topics {
-    margin-left: calc((100% - 480px) / 3);
-    margin-right: calc((100% - 480px) * 2 / 3);
-  }
-}
-
-@include screen-mobile {
-  .topics {
-    margin-left: calc((100% - 300px) / 3);
-    margin-right: calc((100% - 300px) * 2 / 3);
   }
 }

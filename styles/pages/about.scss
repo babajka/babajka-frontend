@@ -46,9 +46,6 @@
 
 @include screen-desktop {
   .about-page {
-    padding-left: calc((100% - 1020px) / 3);
-    padding-right: calc((100% - 1020px) * 2 / 3);
-
     &__partner-logo {
       img {
         width: 4rem;
@@ -71,9 +68,6 @@
 
 @include screen-tablet-large {
   .about-page {
-    padding-left: calc((100% - 818px) / 3);
-    padding-right: calc((100% - 818px) * 2 / 3);
-
     &__partner-logo {
       img {
         width: 4rem;
@@ -96,9 +90,6 @@
 
 @include screen-tablet {
   .about-page {
-    padding-left: calc((100% - 624px) / 3);
-    padding-right: calc((100% - 624px) * 2 / 3);
-
     &__partner-logo {
       img {
         width: 3.5rem;
@@ -121,9 +112,6 @@
 
 @include screen-touch {
   .about-page {
-    padding-left: calc((100% - 480px) / 3);
-    padding-right: calc((100% - 480px) * 2 / 3);
-
     &__partner-logo {
       img {
         width: 3rem;
@@ -134,9 +122,6 @@
 
 @include screen-mobile {
   .about-page {
-    padding-left: calc((100% - 300px) / 3);
-    padding-right: calc((100% - 300px) * 2 / 3);
-
     &__partners {
       margin: 0;
     }

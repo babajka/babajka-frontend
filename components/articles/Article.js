@@ -31,7 +31,7 @@ const Article = ({
       <MetaImage url={images.page} />
       <MetaKeywords keywords={keywords} />
       <div className="article-page">
-        <div className="article-page-margins article-page-content">
+        <div className="wir-content-padding article-page-content">
           <div className="article-page__subtitle">{subtitle}</div>
         </div>
         {type === 'text' && (
@@ -43,7 +43,7 @@ const Article = ({
           />
         )}
       </div>
-      <div className="article-page-margins article-page__header">
+      <div className="wir-content-padding article-page__header">
         {/* TODO: hover corresponding image and title simultaneously */}
         {(!!brands.length || !!authors.length) && (
           <div className="article-page__tags">
@@ -66,7 +66,7 @@ const Article = ({
         <div className="article-page__title">{title}</div>
       </div>
 
-      <div className="article-page-margins">
+      <div className="wir-content-padding">
         <div className="article-page-content">
           {type === 'audio' && <AudioPlayer trackId={audio.id} />}
           {type === 'video' && <VideoPlayer videoId={video.id} />}

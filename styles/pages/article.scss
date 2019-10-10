@@ -1,32 +1,6 @@
 @import 'responsiveness';
 @import 'variables';
 
-.article-page-margins {
-  margin: 0;
-  margin-left: calc((100% - 300px) / 3);
-  margin-right: calc((100% - 300px) * 2 / 3);
-
-  @include screen-touch {
-    margin-left: calc((100% - 480px) / 3);
-    margin-right: calc((100% - 480px) * 2 / 3);
-  }
-
-  @include screen-tablet {
-    margin-left: calc((100% - 624px) / 3);
-    margin-right: calc((100% - 624px) * 2 / 3);
-  }
-
-  @include screen-tablet-large {
-    margin-left: calc((100% - 818px) / 3);
-    margin-right: calc((100% - 818px) * 2 / 3);
-  }
-
-  @include screen-desktop {
-    margin-left: calc((100% - 1020px) / 3);
-    margin-right: calc((100% - 1020px) * 2 / 3);
-  }
-}
-
 .article-page {
   &__subtitle {
     margin-top: 10px;
@@ -348,7 +322,6 @@
 
 .article-image {
   &__image {
-    // object-fit: cover;
     object-position: 50% 0;
     width: 100%;
   }

@@ -11,12 +11,14 @@ import { getTopicLink } from 'utils/tags';
 
 import { TOPICS } from 'constants';
 
+import BlockWrapper from './BlockWrapper';
+
 const TagsByTopic = ({ block, data: { tags } }) => {
   const { topicSlug, tagsIds, style } = block;
   const tagsData = tagsIds.map(id => tags[id]);
   const topicLink = getTopicLink({ topic: topicSlug });
   return (
-    <div className="block block__no-background tags-by-topic">
+    <BlockWrapper className="tags-by-topic">
       <div className="tags-by-topic__title-label">{topicLink}</div>
       <div className="tags-by-topic__cards">
         <div
@@ -35,7 +37,7 @@ const TagsByTopic = ({ block, data: { tags } }) => {
           <TagCard {...tagsData[2]} />
         </div>
       </div>
-    </div>
+    </BlockWrapper>
   );
 };
 

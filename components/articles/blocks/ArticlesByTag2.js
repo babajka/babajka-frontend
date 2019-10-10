@@ -12,6 +12,8 @@ import { getTagLink, getTopicLink, getTagImageRenderer } from 'utils/tags';
 
 import { TOPIC } from 'constants/misc';
 
+import BlockWrapper from './BlockWrapper';
+
 const ArticlesByTag2 = ({ block, data }) => {
   const { tagId, articlesIds } = block;
   const { tags, articles } = data;
@@ -23,7 +25,7 @@ const ArticlesByTag2 = ({ block, data }) => {
   const topicLink = getTopicLink({ topic: topicSlug, dark: true });
 
   return (
-    <div className="block block__with-background articles-by-tag-2">
+    <BlockWrapper className="articles-by-tag-2" withBackground>
       <div
         className={cn('articles-by-tag-2__labels', {
           'articles-by-tag-2__labels--right': isBrand,
@@ -59,7 +61,7 @@ const ArticlesByTag2 = ({ block, data }) => {
           {topicLink}
         </div>
       </div>
-    </div>
+    </BlockWrapper>
   );
 };
 

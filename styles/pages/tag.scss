@@ -2,7 +2,8 @@
 @import 'variables';
 
 .tag-page {
-  padding: 3rem 6rem 3rem 3rem;
+  padding-bottom: 3rem;
+  padding-top: 3rem;
 
   &__level-a,
   &__level-b,
@@ -28,17 +29,6 @@
   }
 }
 
-@mixin shared-desktop {
-  .tag-page {
-    padding-left: calc((100% - 1020px) / 3);
-    padding-right: calc((100% - 1020px) * 2 / 3);
-  }
-}
-
-@include screen-desktop {
-  @include shared-desktop;
-}
-
 @mixin screens-below-desktop {
   .tag-page {
     &__level-b,
@@ -54,44 +44,24 @@
 
 @include screen-touch {
   @include screens-below-desktop;
-
-  .tag-page {
-    padding-left: calc((100% - 480px) / 3);
-    padding-right: calc((100% - 480px) * 2 / 3);
-  }
 }
 
 @include screen-mobile {
   @include screens-below-desktop;
-
-  .tag-page {
-    padding-left: calc((100% - 300px) / 3);
-    padding-right: calc((100% - 300px) * 2 / 3);
-  }
 }
 
 @include screen-tablet {
   @include screens-below-desktop;
-
-  .tag-page {
-    padding-left: calc((100% - 624px) / 3);
-    padding-right: calc((100% - 624px) * 2 / 3);
-  }
 }
 
 @include screen-tablet-large {
   @include screens-below-desktop;
-
-  .tag-page {
-    padding-left: calc((100% - 624px) / 3);
-    padding-right: calc((100% - 624px) * 2 / 3);
-  }
 }
 
 // Sizes below should be shared across the project and not copied.
 // TODO: to refactor.
 
-@include desktop {
+@include screen-desktop {
   // This is only applied for desktop as these classes are used to produce
   // fake (placeholder) cards. We only do that on desktop.
   .size-l {

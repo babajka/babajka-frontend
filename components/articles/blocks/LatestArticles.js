@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 
 import ArticleCard from 'components/articles/cards/ArticleCard';
 
+import BlockWrapper from './BlockWrapper';
+
 const getData = ({ articles, latestArticles }, id, index) => {
   if (id) {
     return articles[id];
@@ -21,14 +23,14 @@ const LatestArticles = ({ block, data, blocks }) => {
   const secondIndex = first.frozen ? firstIndex : firstIndex + 1;
   const secondData = getData(data, second.id, secondIndex);
   return (
-    <div className="block block__no-background two-in-row">
+    <BlockWrapper className="two-in-row">
       <div className="two-in-row__first">
         <ArticleCard {...firstData} context={['two-in-row', 'first']} />
       </div>
       <div className="two-in-row__second">
         <ArticleCard {...secondData} context={['two-in-row', 'second']} />
       </div>
-    </div>
+    </BlockWrapper>
   );
 };
 

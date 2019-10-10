@@ -7,6 +7,8 @@ import Picture from 'components/common/Picture';
 import ExternalLink from 'components/common/ExternalLink';
 import { useLocalization } from 'components/common/Text';
 
+import BlockWrapper from './BlockWrapper';
+
 const LINK = 'https://map.wir.by?utm_source=wirby-main-page';
 
 const getLink = (width, name) =>
@@ -26,14 +28,14 @@ const BANNERS = Object.entries({
 const BannerBlock = ({ block: { banner } }) => {
   const title = useLocalization('banners.mapa-title');
   return (
-    <div className="block block__no-background">
+    <BlockWrapper>
       <div className={`banner banner-${banner}`}>
         <Picture sources={BANNERS} alt={title} />
         <ExternalLink href={LINK}>
           <div className={`banner__title banner-${banner}__title`}>{title}</div>
         </ExternalLink>
       </div>
-    </div>
+    </BlockWrapper>
   );
 };
 
