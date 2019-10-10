@@ -133,7 +133,7 @@
     },
     {
       "path": ".next/static/**/index.js",
-      "maxSize": "10 kB"
+      "maxSize": "11 kB"
     },
     {
       "path": ".next/static/**/article.js",
@@ -141,11 +141,11 @@
     },
     {
       "path": ".next/static/**/topic.js",
-      "maxSize": "7 kB"
+      "maxSize": "8 kB"
     },
     {
       "path": ".next/static/**/tag.js",
-      "maxSize": "3 kB"
+      "maxSize": "4 kB"
     },
     {
       "path": ".next/static/**/about.js",
@@ -153,7 +153,7 @@
     },
     {
       "path": ".next/static/**/_error.js",
-      "maxSize": "2 kB"
+      "maxSize": "1.5 kB"
     },
     {
       "path": ".next/static/**/commons*.css",

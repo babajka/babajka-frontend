@@ -100,27 +100,28 @@ const ArticleCard = props => {
           'article-card__cover-container--with-collection': collection,
         })}
       >
-        {size === 'auto' ? (
-          <Picture
-            className="article-card__cover"
-            sources={zip(SCREENS, get(ARTICLE_CARD_SIZES_BY_CONTEXT, context)).reduce(
-              (acc, [screenName, cardSize]) => {
-                acc[screenName] = getCoverLink(images, cardSize);
-                return acc;
-              },
-              {}
-            )}
-            alt={title}
-          />
-        ) : (
-          <Image
-            className="article-card__cover"
-            alt={title}
-            sourceSizes={[COVER_BY_CARD_SIZE[size].width]}
-            baseUrl={images[COVER_BY_CARD_SIZE[size].type]}
-            mode="x"
-          />
-        )}
+        {(images.horizontal || images.vertical) &&
+          (size === 'auto' ? (
+            <Picture
+              className="article-card__cover"
+              sources={zip(SCREENS, get(ARTICLE_CARD_SIZES_BY_CONTEXT, context)).reduce(
+                (acc, [screenName, cardSize]) => {
+                  acc[screenName] = getCoverLink(images, cardSize);
+                  return acc;
+                },
+                {}
+              )}
+              alt={title}
+            />
+          ) : (
+            <Image
+              className="article-card__cover"
+              alt={title}
+              sourceSizes={[COVER_BY_CARD_SIZE[size].width]}
+              baseUrl={images[COVER_BY_CARD_SIZE[size].type]}
+              mode="x"
+            />
+          ))}
       </div>
       <div className="article-card__content">
         {collection && (
@@ -131,13 +132,15 @@ const ArticleCard = props => {
               </div>
               <div className="article-card__collection-name">{collection.name}</div>
             </div>
-            <Image
-              className="article-card__collection-cover"
-              alt={collection.name}
-              sourceSizes={[COLLECTION_LOGO_WIDTH]}
-              baseUrl={collection.cover}
-              mode="x"
-            />
+            {collection.cover && (
+              <Image
+                className="article-card__collection-cover"
+                alt={collection.name}
+                sourceSizes={[COLLECTION_LOGO_WIDTH]}
+                baseUrl={collection.cover}
+                mode="x"
+              />
+            )}
           </div>
         )}
         <div className="article-card__filler article-card__filler--top" />
