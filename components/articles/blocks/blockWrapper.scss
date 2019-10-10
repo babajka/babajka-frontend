@@ -1,0 +1,13 @@
+@import 'variables';
+
+.block {
+  &__no-background {
+    margin-top: 60px;
+  }
+
+  &__with-background {
+    background-color: $primary-black;
+    margin-bottom: 20px;
+    margin-top: 80px;
+  }
+}

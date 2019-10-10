@@ -16,6 +16,8 @@ import fiberyToString from 'utils/fibery/toString';
 
 import { SHORT_DATE_FORMAT } from 'constants';
 
+import BlockWrapper from './BlockWrapper';
+
 const mapStateToProps = (state, { lang }) => ({
   diary: diarySelectors.getCurrent(state, lang),
 });
@@ -59,7 +61,7 @@ class DiaryBlock extends Component {
     const { author: { name, diaryImage } = {}, date, text } = diary;
 
     return (
-      <div className="block block__no-background diary">
+      <BlockWrapper className="diary">
         <div className="diary__content">
           {diaryImage && (
             <div className="diary__picture">
@@ -92,7 +94,7 @@ class DiaryBlock extends Component {
             </Clickable>
           </div>
         </div>
-      </div>
+      </BlockWrapper>
     );
   }
 }

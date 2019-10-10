@@ -123,3 +123,30 @@ footer {
   right: 30px;
   z-index: 400;
 }
+
+.wir-content-padding {
+  @include screen-desktop {
+    padding-left: calc((100% - 1020px) / 3);
+    padding-right: calc((100% - 1020px) * 2 / 3);
+  }
+
+  @include screen-tablet-large {
+    padding-left: calc((100% - 818px) / 3);
+    padding-right: calc((100% - 818px) * 2 / 3);
+  }
+
+  @include screen-tablet {
+    padding-left: calc((100% - 624px) / 3);
+    padding-right: calc((100% - 624px) * 2 / 3);
+  }
+
+  @include screen-touch {
+    padding-left: calc((100% - 480px) / 3);
+    padding-right: calc((100% - 480px) * 2 / 3);
+  }
+
+  @include screen-mobile {
+    padding-left: calc((100% - 300px) / 3);
+    padding-right: calc((100% - 300px) * 2 / 3);
+  }
+}

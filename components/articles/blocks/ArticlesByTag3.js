@@ -8,6 +8,8 @@ import ArticleCard from 'components/articles/cards/ArticleCard';
 import { IdsArray } from 'utils/customPropTypes';
 import { getTagLink, getTopicLink } from 'utils/tags';
 
+import BlockWrapper from './BlockWrapper';
+
 const ArticlesByTag3 = ({ block, data }) => {
   const { tagId, articlesIds } = block;
   const { tags, articles } = data;
@@ -16,7 +18,7 @@ const ArticlesByTag3 = ({ block, data }) => {
   const topicLink = getTopicLink({ topic: tag.topicSlug, dark: true });
 
   return (
-    <div className="block block__no-background articles-by-tag-3">
+    <BlockWrapper className="articles-by-tag-3">
       <div className="articles-by-tag-3__combined-title-line articles-by-tag-3__title">
         {tagLink}
         {topicLink}
@@ -33,7 +35,7 @@ const ArticlesByTag3 = ({ block, data }) => {
       </div>
 
       <div className="articles-by-tag-3__separate-footer articles-by-tag-3__title">{topicLink}</div>
-    </div>
+    </BlockWrapper>
   );
 };
 

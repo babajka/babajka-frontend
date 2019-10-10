@@ -3,15 +3,17 @@ import PropTypes from 'prop-types';
 
 import ArticleCard from 'components/articles/cards/ArticleCard';
 
+import BlockWrapper from './BlockWrapper';
+
 const FeaturedBlock = ({ block, data }) => {
   // Another usage for FeaturedBlock is a Block A on Topic page.
   const { articleId, frozen } = block;
   const { articles, latestArticles } = data;
   const articleData = frozen ? articles[articleId] : latestArticles[0];
   return (
-    <div className="block block__no-background featured">
+    <BlockWrapper className="featured">
       <ArticleCard {...articleData} context={['featured']} />
-    </div>
+    </BlockWrapper>
   );
 };
 

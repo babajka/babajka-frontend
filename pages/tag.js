@@ -57,7 +57,7 @@ const mapStateToProps = (state, { lang }) => tagsSelectors.getData(state, lang);
 
 const TagPage = ({ routerQuery: { topic }, tag, blocks, articlesCount }) => (
   <div className="tag-page">
-    <div className="tag-page__header">
+    <div className="wir-content-padding tag-page__header">
       <div className="tag-page__topic">{getTopicLink({ topic, postfix: 'one' })}</div>
       <div>
         <div className="tag-page__title">{renderTag(tag)}</div>

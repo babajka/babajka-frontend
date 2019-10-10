@@ -11,7 +11,7 @@ const getLogoUrl = name =>
   `https://res.cloudinary.com/wir-by/image/upload/c_scale,w_250,f_auto,q_auto/v1546529671/production/partners-logos/${name}`;
 
 const AboutPage = ({ lang }) => (
-  <div className="about-page">
+  <div className="wir-content-padding about-page">
     <div className="about-page__header">
       <Text id="about.general-description" />
     </div>
