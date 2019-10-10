@@ -109,6 +109,8 @@
       font-size: 72px;
       line-height: 72px;
       margin-top: 18px;
+      max-height: 72px * 2;
+      max-width: 420px;
     }
 
     &__description {
@@ -141,6 +143,8 @@
       font-size: 48px;
       line-height: 60px;
       margin-top: 18px;
+      max-height: 60px * 2;
+      max-width: 312px;
     }
 
     &__description {
@@ -168,8 +172,10 @@
     }
 
     &__title {
-      font-size: 48px;
-      line-height: 60px;
+      font-size: 30px;
+      line-height: 36px;
+      max-height: 36px * 2;
+      max-width: 240px;
     }
 
     &__description {
@@ -196,6 +202,7 @@
     &__title {
       font-size: 30px;
       line-height: 36px;
+      max-height: 36px * 2;
     }
 
     &__description {
@@ -209,6 +216,10 @@
 
   .person {
     @include ms-sizes;
+
+    &__title {
+      max-width: 400px;
+    }
   }
 }
 
@@ -221,6 +232,10 @@
 
   .person {
     @include s-wide-sizes;
+
+    &__title {
+      max-width: 320px;
+    }
   }
 }
 
@@ -242,8 +257,10 @@
     }
 
     &__title {
-      font-size: 48px;
-      line-height: 60px;
+      font-size: 30px;
+      line-height: 36px;
+      max-height: 36px * 2;
+      max-width: 270px;
     }
 
     &__description {
@@ -271,6 +288,7 @@
       font-size: 30px;
       line-height: 36px;
       margin-top: 7px;
+      max-height: 36px * 2;
     }
 
     &__description {
@@ -284,6 +302,10 @@
 
   .person {
     @include xs-wide-sizes;
+
+    &__title {
+      max-width: 240px;
+    }
   }
 }
 
@@ -296,6 +318,10 @@
 
   .person {
     @include xs-sizes;
+
+    &__title {
+      max-width: 174px;
+    }
   }
 }
 
