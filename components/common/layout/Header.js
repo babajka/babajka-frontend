@@ -6,12 +6,14 @@ import { useRouter } from 'next/router';
 import Text from 'components/common/Text';
 import Link from 'components/common/Link';
 import Clickable from 'components/common/Clickable';
+
 import { TagLink } from 'utils/tags';
 
 import { ROUTES_NAMES } from 'routes';
 import { TOPIC } from 'constants/misc';
 
 import Logo from 'assets/logo/Logo';
+import { useHeaderLinksContext } from './HeaderLinks';
 
 const Motto = () => (
   <Text id="common.motto">
@@ -38,6 +40,7 @@ const Motto = () => (
 
 const Header = ({ toggleSidebar }) => {
   const router = useRouter();
+  const [links] = useHeaderLinksContext();
   return (
     <header className="navbar">
       <Link route={ROUTES_NAMES.main} titleId="header.to-main">
@@ -51,6 +54,13 @@ const Header = ({ toggleSidebar }) => {
             <Text id="header.to-main" />
           </Link>
         )}
+      </div>
+      <div className="navbar__title">
+        {links.map(({ key, route, params, title }) => (
+          <Link key={key} route={route} params={params}>
+            {title}
+          </Link>
+        ))}
       </div>
       <Clickable
         tag="div"
