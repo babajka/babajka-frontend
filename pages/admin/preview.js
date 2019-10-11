@@ -20,7 +20,7 @@ const mapStateToProps = (state, { lang }) => ({
 });
 
 const ArticlePreview = ({ article, error }) => {
-  const [cardsPreview, togglePreview] = useBoolean(true);
+  const [cardsPreview, togglePreview] = useBoolean(false);
   if (!article || error) {
     return (
       <div>
