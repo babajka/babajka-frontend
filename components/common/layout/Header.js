@@ -16,26 +16,40 @@ import Logo from 'assets/logo/Logo';
 import { useHeaderLinksContext } from './HeaderLinks';
 
 const Motto = () => (
-  <Text id="common.motto">
-    {(bel, asWell, world, culture, and, history) => (
-      <>
-        <TagLink topic={TOPIC.locations} tag="belarus">
-          {bel}
-        </TagLink>
-        {asWell}
-        <TagLink topic={TOPIC.locations} tag="europe">
-          {world}
-        </TagLink>
-        <TagLink topic={TOPIC.themes} tag="art">
-          {culture}
-        </TagLink>
-        {and}
-        <TagLink topic={TOPIC.themes} tag="history">
-          {history}
-        </TagLink>
-      </>
-    )}
-  </Text>
+  <>
+    <span className="navbar__title--screen-wide">
+      <Text id="common.motto">
+        {(bel, asWell, world, culture, and, history) => (
+          <>
+            <TagLink topic={TOPIC.locations} tag="belarus">
+              {bel}
+            </TagLink>
+            {asWell}
+            <TagLink topic={TOPIC.locations} tag="europe">
+              {world}
+            </TagLink>
+            <TagLink topic={TOPIC.themes} tag="art">
+              {culture}
+            </TagLink>
+            {and}
+            <TagLink topic={TOPIC.themes} tag="history">
+              {history}
+            </TagLink>
+          </>
+        )}
+      </Text>
+    </span>
+    <span className="navbar__title--screen-narrow">
+      <Text id="common.motto-short">
+        {(edu, wir) => (
+          <>
+            {edu}
+            <Link route={ROUTES_NAMES.about}>{wir}</Link>
+          </>
+        )}
+      </Text>
+    </span>
+  </>
 );
 
 const Header = ({ toggleSidebar }) => {
@@ -46,18 +60,18 @@ const Header = ({ toggleSidebar }) => {
       <Link route={ROUTES_NAMES.main} titleId="header.to-main">
         <Logo size={42} />
       </Link>
-      <div className="navbar__title">
-        {router.route === '/' ? (
-          <Motto />
-        ) : (
-          <Link route={ROUTES_NAMES.main}>
-            <Text id="header.to-main" />
-          </Link>
-        )}
-      </div>
-      <div className="navbar__title">
+      <div className="navbar__title-container">
+        <div className="navbar__title">
+          {router.route === '/' ? (
+            <Motto />
+          ) : (
+            <Link route={ROUTES_NAMES.main}>
+              <Text id="header.to-main" />
+            </Link>
+          )}
+        </div>
         {links.map(({ key, route, params, title }) => (
-          <Link key={key} route={route} params={params}>
+          <Link className="navbar__title" key={key} route={route} params={params}>
             {title}
           </Link>
         ))}
