@@ -46,6 +46,10 @@ const ArticlesBlocks = ({ articlesCount, blocks }) => {
   }
 
   return blocks.map((block, index) => {
+    if (!block.length) {
+      // Q: How's that happening last block always contains no articles?
+      return <></>;
+    }
     const levelName = PAGE_LEVEL_ORDER[index % PAGE_LEVEL_ORDER.length];
     const Block = BLOCK_BY_LEVEL[levelName];
     // eslint-disable-next-line react/no-array-index-key
@@ -59,9 +63,7 @@ const TagPage = ({ routerQuery: { topic }, tag, blocks, articlesCount }) => (
   <div className="tag-page">
     <div className="wir-content-padding tag-page__header">
       <div className="tag-page__topic">{getTopicLink({ topic, postfix: 'one' })}</div>
-      <div>
-        <div className="tag-page__title">{renderTag(tag)}</div>
-      </div>
+      <div className="tag-page__title">{renderTag(tag)}</div>
     </div>
     <ArticlesBlocks articlesCount={articlesCount} blocks={blocks} />
   </div>
