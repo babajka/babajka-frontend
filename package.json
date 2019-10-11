@@ -41,6 +41,7 @@
     "@zeit/next-bundle-analyzer": "^0.1.2",
     "@zeit/next-css": "^0.2.1-canary.4",
     "@zeit/next-sass": "^0.2.1-canary.4",
+    "bulma": "^0.7.5",
     "classnames": "^2.2.6",
     "command-line-args": "^4.0.7",
     "cookie-parser": "^1.4.4",
@@ -138,7 +139,7 @@
     },
     {
       "path": ".next/static/**/index.js",
-      "maxSize": "5 kB"
+      "maxSize": "6 kB"
     },
     {
       "path": ".next/static/**/article.js",

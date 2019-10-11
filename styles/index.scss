@@ -9,3 +9,7 @@ $fa-font-display: swap;
 @import '../node_modules/@fortawesome/fontawesome-free/scss/brands';
 @import '../node_modules/@fortawesome/fontawesome-free/scss/regular';
 @import '../node_modules/@fortawesome/fontawesome-free/scss/solid';
+
+// stylelint-disable scss/at-import-no-partial-leading-underscore
+@import '../node_modules/bulma/sass/utilities/_all.sass';
+@import '../node_modules/bulma/sass/components/modal.sass';
