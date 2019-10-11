@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { localize } from 'components/common/Text';
 import Article from 'components/articles/Article';
-import HeaderLinks from 'components/common/layout/HeaderLinks';
+import HeaderLinks from 'components/common/layout/header/HeaderLinks';
 
 import { ROUTES_NAMES } from 'routes';
 
@@ -20,7 +20,6 @@ const mapStateToProps = (state, { routerQuery: { slug } }) => ({
 const ArticlePage = ({ article, otherLocales }) => (
   <>
     <HeaderLinks
-      key={article.locale}
       links={otherLocales.map(({ locale, slug }) => ({
         key: locale,
         route: ROUTES_NAMES.article,

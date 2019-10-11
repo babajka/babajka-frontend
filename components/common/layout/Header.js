@@ -7,60 +7,20 @@ import Text from 'components/common/Text';
 import Link from 'components/common/Link';
 import Clickable from 'components/common/Clickable';
 
-import { TagLink } from 'utils/tags';
-
 import { ROUTES_NAMES } from 'routes';
-import { TOPIC } from 'constants/misc';
 
 import Logo from 'assets/logo/Logo';
-import { useHeaderLinksContext } from './HeaderLinks';
-
-const Motto = () => (
-  <>
-    <span className="navbar__title--screen-wide">
-      <Text id="common.motto">
-        {(bel, asWell, world, culture, and, history) => (
-          <>
-            <TagLink topic={TOPIC.locations} tag="belarus">
-              {bel}
-            </TagLink>
-            {asWell}
-            <TagLink topic={TOPIC.locations} tag="europe">
-              {world}
-            </TagLink>
-            <TagLink topic={TOPIC.themes} tag="art">
-              {culture}
-            </TagLink>
-            {and}
-            <TagLink topic={TOPIC.themes} tag="history">
-              {history}
-            </TagLink>
-          </>
-        )}
-      </Text>
-    </span>
-    <span className="navbar__title--screen-narrow">
-      <Text id="common.motto-short">
-        {(edu, wir) => (
-          <>
-            {edu}
-            <Link route={ROUTES_NAMES.about}>{wir}</Link>
-          </>
-        )}
-      </Text>
-    </span>
-  </>
-);
+import Motto from './header/Motto';
+import { HEADER_LINKS_ID } from './header/HeaderLinks';
 
 const Header = ({ toggleSidebar }) => {
   const router = useRouter();
-  const [links] = useHeaderLinksContext();
   return (
     <header className="navbar">
       <Link route={ROUTES_NAMES.main} titleId="header.to-main">
         <Logo size={42} />
       </Link>
-      <div className="navbar__title-container">
+      <div id={HEADER_LINKS_ID} className="navbar__title-container">
         <div className="navbar__title">
           {router.route === '/' ? (
             <Motto />
@@ -70,11 +30,6 @@ const Header = ({ toggleSidebar }) => {
             </Link>
           )}
         </div>
-        {links.map(({ key, route, params, title }) => (
-          <Link className="navbar__title" key={key} route={route} params={params}>
-            {title}
-          </Link>
-        ))}
       </div>
       <Clickable
         tag="div"
