@@ -12,7 +12,7 @@
   }
 
   &:hover {
-    @include screen-desktop {
+    @media (hover: hover) {
       box-shadow: inset $hover-border-width $hover-border-width $primary,
         inset (-$hover-border-width) (-$hover-border-width) $primary;
     }

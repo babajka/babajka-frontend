@@ -23,7 +23,7 @@
   }
 
   &:hover > &__cover-container {
-    @include screen-desktop {
+    @media (hover: hover) {
       margin-right: $hover-border-width;
       margin-top: $hover-border-width;
     }
@@ -42,7 +42,7 @@
   }
 
   &:hover > &__cover-container > &__cover {
-    @include screen-desktop {
+    @media (hover: hover) {
       right: -($hover-border-width);
       top: -($hover-border-width);
     }
@@ -85,7 +85,7 @@
 
   /* stylelint-disable-next-line selector-class-pattern */
   .person:hover > .person__cover-container {
-    @include screen-desktop {
+    @media (hover: hover) {
       height: $cover-size - 2 * $hover-border-width;
       width: $cover-size - $hover-border-width;
     }
