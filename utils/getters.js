@@ -101,10 +101,11 @@ export const getLocalizedTeam = localizeArray(localizeFields(['name', 'role']));
 
 export const getLocalizedVacancies = localizeArray(localizeFields(['title', 'description']));
 
-// returns list of articles coupled by 2 or 3
+// returns a list of articles coupled by 2 or 3
 // 5 articles = 2 blocks (2 + 3)
 export const getArticlesBlocks = articles =>
   chunk(articles, 5).reduce(
-    (blocks, blockOf5) => blocks.concat([blockOf5.slice(0, 2), blockOf5.slice(2)]),
+    (blocks, blockOf5) =>
+      blocks.concat([blockOf5.slice(0, 2), blockOf5.slice(2)]).filter(b => b.length),
     []
   );

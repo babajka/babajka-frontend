@@ -46,10 +46,6 @@ const ArticlesBlocks = ({ articlesCount, blocks }) => {
   }
 
   return blocks.map((block, index) => {
-    if (!block.length) {
-      // Q: How's that happening last block always contains no articles?
-      return <></>;
-    }
     const levelName = PAGE_LEVEL_ORDER[index % PAGE_LEVEL_ORDER.length];
     const Block = BLOCK_BY_LEVEL[levelName];
     // eslint-disable-next-line react/no-array-index-key
