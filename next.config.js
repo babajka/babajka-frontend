@@ -19,6 +19,10 @@ const { branch, commit } = envCi();
 const { version } = packageJson;
 
 const nextConfig = {
+  experimental: {
+    // https://github.com/zeit/next.js/issues/7949#issuecomment-524929448
+    granularChunks: true,
+  },
   webpack(config) {
     config.plugins.push(
       ...[
