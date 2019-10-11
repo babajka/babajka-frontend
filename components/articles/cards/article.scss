@@ -19,7 +19,7 @@
   }
 
   &:hover > &__cover-container {
-    @include screen-desktop {
+    @media (hover: hover) {
       margin-left: $hover-border-width;
       margin-top: $hover-border-width;
     }
@@ -36,7 +36,7 @@
   }
 
   &:hover > &__cover-container > &__cover {
-    @include screen-desktop {
+    @media (hover: hover) {
       left: -($hover-border-width);
       top: -($hover-border-width);
     }
@@ -149,7 +149,7 @@
 
   /* stylelint-disable-next-line selector-class-pattern */
   .article-card:hover > .article-card__cover-container {
-    @include screen-desktop {
+    @media (hover: hover) {
       height: $cover-height - 2 * $hover-border-width;
       width: $cover-width - $hover-border-width;
     }
@@ -542,7 +542,7 @@
 
   /* stylelint-disable-next-line selector-class-pattern */
   .article-card:hover > .article-card__cover-container {
-    @include screen-desktop {
+    @media (hover: hover) {
       max-height: $cover-max-height - $hover-border-width;
       min-height: $cover-min-height - $hover-border-width;
       width: $cover-width - 2 * $hover-border-width;
