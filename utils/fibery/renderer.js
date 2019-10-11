@@ -8,6 +8,9 @@ import ExternalLink from 'components/common/ExternalLink';
 import VideoPlayer from 'components/common/VideoPlayer';
 import parseYoutubeUrl from 'lib/utils/parseYoutubeUrl';
 
+import toString from './toString';
+import { parseQuote, parseImage } from './utils';
+
 const returnNull = () => null;
 
 const renderContent = content => {
@@ -59,21 +62,26 @@ const addMarks = (text, marks) => {
   }, text);
 };
 
-// https://regex101.com/r/7eFFHP/2
-const IMAGE_URL_REGEX = /(.+)#align=(.+)$/;
-
 const RENDERERS = {
   // debug: (...params) => {
   //   console.log(params)
   //   return null;
   // },
-  blockquote: ({ key, content }) => <blockquote key={key}>{renderContent(content)}</blockquote>,
+  blockquote: ({ key, content }) => {
+    const { quote, author } = parseQuote(toString(content));
+    return (
+      <blockquote key={key} className="article-quote">
+        <div className="article-quote__text">{quote}</div>
+        {author && <span className="article-quote__caption">{author}</span>}
+      </blockquote>
+    );
+  },
   hard_break: ({ key }) => <span key={key} className="article-page-content__hard" />,
   heading: ({ key, attrs: { level }, content }) =>
     createElement(`h${level}`, { key }, renderContent(content)),
   image: ({ key, attrs: { alt, src, title } }) => {
-    // FIXME:
-    const [_, url /* align */] = src.match(IMAGE_URL_REGEX);
+    const { url } = parseImage(src);
+    // FIXME: use `allign`
     return (
       <ExternalLink key={key} href={url}>
         <span className="article-image article-page-content__right-element">
