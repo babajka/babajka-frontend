@@ -8,7 +8,7 @@ const BlockWrapper = ({ className, withBackground, children }) => (
   <div
     className={cn(
       'wir-content-padding block',
-      { 'block__with-background': withBackground, 'block__no-background': !withBackground },
+      `block__${withBackground ? 'with' : 'no'}-background`,
       className
     )}
   >
