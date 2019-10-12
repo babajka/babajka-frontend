@@ -2,6 +2,7 @@
 
 import React, { Fragment, createElement } from 'react';
 import identity from 'lodash/identity';
+import cn from 'classnames';
 
 import Image from 'components/common/Image';
 import ExternalLink from 'components/common/ExternalLink';
@@ -9,7 +10,10 @@ import VideoPlayer from 'components/common/VideoPlayer';
 import parseYoutubeUrl from 'lib/utils/parseYoutubeUrl';
 
 import toString from './toString';
+import getMeta, { TYPES } from './parseTableMeta';
 import { parseQuote, parseImage } from './utils';
+
+const { TABLE, TABLE_RIGHT, NOTE } = TYPES;
 
 const returnNull = () => null;
 
@@ -62,11 +66,21 @@ const addMarks = (text, marks) => {
   }, text);
 };
 
+const CUSTOM_BLOCKS = {
+  [NOTE]: c => <span className="article-note right-element">{renderContent(c)}</span>,
+};
+
 const RENDERERS = {
   // debug: (...params) => {
   //   console.log(params)
   //   return null;
   // },
+  entity: ({ attrs: { id, typeId } }) => (
+    <span key={id} className="right-element">
+      <span>TODO: Entiny Element</span>
+      {id}, {typeId}
+    </span>
+  ),
   blockquote: ({ key, content }) => {
     const { quote, author } = parseQuote(toString(content));
     return (
@@ -80,22 +94,31 @@ const RENDERERS = {
   heading: ({ key, attrs: { level }, content }) =>
     createElement(`h${level}`, { key }, renderContent(content)),
   image: ({ key, attrs: { alt, src, title } }) => {
-    const { url } = parseImage(src);
-    // FIXME: use `allign`
-    return (
-      <ExternalLink key={key} href={url}>
-        <span className="article-image article-page-content__right-element">
-          <Image
-            className="article-image__image"
-            alt={alt}
-            sourceSizes={[240]}
-            baseUrl={url}
-            mode="x"
-          />
+    const { url, align } = parseImage(src);
+    const right = align === 'right';
+    if (right) {
+      return (
+        <span key={key} className="article-image right-element">
+          {right && (
+            <ExternalLink href={url}>
+              <Image
+                className="article-image__image"
+                alt={alt}
+                sourceSizes={[240]}
+                baseUrl={url}
+                mode="x"
+              />
+            </ExternalLink>
+          )}
           <span className="article-image__caption">{title}</span>
         </span>
-        <br />
-      </ExternalLink>
+      );
+    }
+    return (
+      <span key={key} className="article-image">
+        <img className="article-image__image" src={url} alt={alt} />
+        <span className="article-image__caption">{title}</span>
+      </span>
     );
   },
   paragraph: ({ key, attrs = {}, content }) => {
@@ -103,17 +126,35 @@ const RENDERERS = {
   },
   text: ({ key, text, marks }) => <Fragment key={key}>{addMarks(text, marks)}</Fragment>,
 
-  table: ({ key, content }) => (
-    <table className="article-table" key={key}>
-      <tbody>{renderContent(content)}</tbody>
-    </table>
-  ),
-  table_row: ({ key, content }) => <tr key={key}>{renderContent(content)}</tr>,
-  table_cell: ({ key, content, attrs: { colspan, rowspan, colwidth /* background */ } }) => {
+  table: ({ key, content }) => {
+    const [type, parsed] = getMeta(content);
+    if (!type.startsWith(TABLE)) {
+      const render = CUSTOM_BLOCKS[type];
+      if (!__PROD__ && !render) {
+        // eslint-disable-next-line no-console
+        console.log('Missed custom renderer: ', type);
+        return null;
+      }
+      return render(parsed);
+    }
     return (
-      <td key={key} colSpan={colspan} rowSpan={rowspan} colwidth={colwidth}>
-        {renderContent(content)}
-      </td>
+      <table
+        className={cn('article-table', {
+          'right-element': type === TABLE_RIGHT,
+        })}
+        key={key}
+      >
+        <tbody>{renderContent(parsed)}</tbody>
+      </table>
+    );
+  },
+  table_row: ({ key, content }) => <tr key={key}>{renderContent(content)}</tr>,
+  table_cell: ({ key, content, attrs: { colspan, rowspan, /* colwidth, */ background } }) => {
+    const el = background ? 'th' : 'td';
+    return React.createElement(
+      el,
+      { key, colSpan: colspan, rowSpan: rowspan },
+      renderContent(content)
     );
   },
 
@@ -124,11 +165,14 @@ const RENDERERS = {
       </ul>
     );
   },
-  list_item: ({ key, content }) => (
-    <li key={key} className="article-unordered__item">
-      {renderContent(content)}
-    </li>
-  ),
+  ordered_list: ({ key, content }) => {
+    return (
+      <ol key={key} className="article-ordered">
+        {renderContent(content)}
+      </ol>
+    );
+  },
+  list_item: ({ key, content }) => <li key={key}>{renderContent(content)}</li>,
 };
 
 export default renderContent;

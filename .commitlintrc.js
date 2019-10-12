@@ -24,6 +24,7 @@ module.exports = {
         'kit',
         'admin',
         'diary',
+        'fibery',
       ],
     ],
     'scope-empty': [2, 'never'],

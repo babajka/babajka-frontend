@@ -289,38 +289,61 @@
   &__hard {
     height: 48px;
   }
+}
 
-  &__right-element {
-    display: inline-block;
-    font-size: 14px;
-    line-height: 21px;
-    margin: 0;
-    margin-bottom: 10px;
+.right-element {
+  display: inline-block;
+  font-size: 14px;
+  line-height: 21px;
+  margin: 0;
+  margin-bottom: 10px;
+  margin-left: 30px;
+  width: 240px;
+
+  @include screen-touch {
+    margin-left: 60px;
+  }
+
+  @include screen-tablet {
+    float: right;
     margin-left: 30px;
-    width: 240px;
+  }
 
-    @include screen-touch {
-      margin-left: 60px;
-    }
+  @include screen-tablet-large {
+    float: right;
+    margin-left: 30px;
+  }
 
-    @include screen-tablet {
-      float: right;
-      margin-left: 30px;
-    }
+  @include screen-desktop {
+    float: right;
+    margin-left: 30px;
+  }
+}
 
-    @include screen-tablet-large {
-      float: right;
-      margin-left: 30px;
-    }
+.article-note {
+  th {
+    text-align: left;
+  }
 
-    @include screen-desktop {
-      float: right;
-      margin-left: 30px;
-    }
+  td {
+    line-height: 24px;
+  }
+
+  h1 {
+    font-size: 72px;
+    font-weight: bold;
+    line-height: 72px;
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
   }
 }
 
 .article-image {
+  display: block;
+
   &__image {
     object-position: 50% 0;
     width: 100%;
@@ -418,11 +441,19 @@
   }
 }
 
+.article-ordered {
+  margin: 0;
+
+  li {
+    margin-top: 24px;
+  }
+}
+
 .article-unordered {
   list-style: none;
   margin: 0;
 
-  &__item {
+  li {
     margin-top: 24px;
 
     &::before {
