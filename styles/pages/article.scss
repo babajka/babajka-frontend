@@ -1,5 +1,6 @@
 @import 'responsiveness';
 @import 'variables';
+/* stylelint-disable no-descending-specificity */
 
 .article-page {
   &__subtitle {
@@ -270,7 +271,7 @@
     }
 
     @include screen-tablet-large {
-      margin-top: 24px;
+      margin-top: $paragraph-spacing;
 
       br {
         display: none;
@@ -278,7 +279,7 @@
     }
 
     @include screen-desktop {
-      margin-top: 24px;
+      margin-top: $paragraph-spacing;
 
       br {
         display: none;
@@ -286,8 +287,30 @@
     }
   }
 
+  h3 {
+    margin-top: $block-spacing;
+  }
+
+  h4 {
+    margin-bottom: 0;
+    margin-top: $block-spacing;
+
+    // stylelint-disable-next-line scss/selector-no-redundant-nesting-selector
+    & + p {
+      margin-top: 0;
+    }
+  }
+
   &__hard {
     height: 48px;
+  }
+}
+
+.article-ordered {
+  margin: 0;
+
+  li {
+    margin-top: 24px;
   }
 }
 
@@ -318,15 +341,21 @@
     float: right;
     margin-left: 30px;
   }
+
+  .article-ordered {
+    padding-left: 24px;
+
+    li {
+      margin-top: 0;
+    }
+  }
 }
 
 .article-note {
+  line-height: 24px;
+
   th {
     text-align: left;
-  }
-
-  td {
-    line-height: 24px;
   }
 
   h1 {
@@ -339,10 +368,21 @@
   p {
     margin: 0;
   }
+
+  li {
+    margin: 0;
+  }
 }
 
 .article-image {
   display: block;
+  margin-bottom: $block-spacing;
+  margin-top: $block-spacing;
+
+  &.right-element {
+    margin-bottom: 0;
+    margin-top: 0;
+  }
 
   &__image {
     object-position: 50% 0;
@@ -357,7 +397,7 @@
 }
 
 .article-quote {
-  margin: 0;
+  margin: $block-spacing 0;
 
   &__text {
     border-left: 1px solid #000000;
@@ -423,6 +463,12 @@
 
 .article-table {
   display: flex;
+  margin: $block-spacing 0;
+
+  &.right-element {
+    margin-bottom: 0;
+    margin-top: 0;
+  }
 
   th {
     border-bottom: 0.25px solid #cccccc;
@@ -438,14 +484,6 @@
   p {
     margin: 0;
     padding: 0;
-  }
-}
-
-.article-ordered {
-  margin: 0;
-
-  li {
-    margin-top: 24px;
   }
 }
 
