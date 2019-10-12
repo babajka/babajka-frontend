@@ -9,11 +9,16 @@ import Clickable from 'components/common/Clickable';
 
 export const MODAL_ROOT_ID = 'wir-modal-root';
 
+const DEFAULT_TOP_MARGIN = 70;
+
 const Modal = ({ children, onClose }) => (
   <Portal id={MODAL_ROOT_ID}>
     <div className="wir-modal">
       <Clickable tag="div" className="wir-modal__background" onClick={onClose} />
-      <div className="wir-modal__content">
+      <div
+        className="wir-modal__content"
+        style={{ 'margin-top': DEFAULT_TOP_MARGIN + window.pageYOffset }}
+      >
         <Clickable className="wir-modal__close" onClick={onClose}>
           <Icon name="times" />
         </Clickable>

@@ -3,6 +3,7 @@ import './diary.scss';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import cn from 'classnames';
 
 import Text from 'components/common/Text';
 import Clickable from 'components/common/Clickable';
@@ -53,11 +54,11 @@ const DiaryBlock = ({ diary, getNext, getPrev, fetchData, isNextAvailable }) => 
       )}
       <BlockWrapper className="diary" negativeTop>
         <div className="diary__content">
-          {diaryImage && (
-            <div className="diary__picture">
+          <div className={cn('diary__picture', { 'diary__picture--no-image': !diaryImage })}>
+            {diaryImage && (
               <Image alt={name} sourceSizes={[DIARY_PICTURE_WIDTH]} baseUrl={diaryImage} mode="x" />
-            </div>
-          )}
+            )}
+          </div>
 
           <div className="diary__text-content">
             <div className="diary__title">

@@ -14,13 +14,13 @@
     opacity: 0.5;
     position: fixed;
     width: 100%;
-    z-index: 100; // same with .wir-overlay
+    z-index: 250; // more than .wir-sidebar
   }
 
   &__content {
     background-color: $primary-white;
     position: absolute;
-    z-index: 200; // same with .wir-sidebar
+    z-index: 300; // more than .wir-sidebar & .wir-modal__background; less than .wir-up
   }
 
   &__close {
