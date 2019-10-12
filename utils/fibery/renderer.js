@@ -2,7 +2,6 @@
 
 import React, { Fragment, createElement } from 'react';
 import identity from 'lodash/identity';
-import cn from 'classnames';
 
 import Image from 'components/common/Image';
 import ExternalLink from 'components/common/ExternalLink';
@@ -13,7 +12,7 @@ import toString from './toString';
 import getMeta, { TYPES } from './parseTableMeta';
 import { parseQuote, parseImage } from './utils';
 
-const { TABLE, TABLE_RIGHT, NOTE } = TYPES;
+const { TABLE, TABLE_RIGHT, NOTE, POEM, SPLIT } = TYPES;
 
 const returnNull = () => null;
 
@@ -66,8 +65,12 @@ const addMarks = (text, marks) => {
   }, text);
 };
 
-const CUSTOM_BLOCKS = {
-  [NOTE]: c => <span className="article-note right-element">{renderContent(c)}</span>,
+const TABLE_CLASS_BY_TYPE = {
+  [TABLE]: 'article-table',
+  [TABLE_RIGHT]: 'article-table right-element',
+  [NOTE]: 'article-note right-element',
+  [POEM]: 'article-poem',
+  [SPLIT]: 'article-split',
 };
 
 const RENDERERS = {
@@ -128,22 +131,8 @@ const RENDERERS = {
 
   table: ({ key, content }) => {
     const [type, parsed] = getMeta(content);
-    if (!type.startsWith(TABLE)) {
-      const render = CUSTOM_BLOCKS[type];
-      if (!__PROD__ && !render) {
-        // eslint-disable-next-line no-console
-        console.log('Missed custom renderer: ', type);
-        return null;
-      }
-      return render(parsed);
-    }
     return (
-      <table
-        className={cn('article-table', {
-          'right-element': type === TABLE_RIGHT,
-        })}
-        key={key}
-      >
+      <table className={TABLE_CLASS_BY_TYPE[type]} key={key}>
         <tbody>{renderContent(parsed)}</tbody>
       </table>
     );

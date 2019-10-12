@@ -1,6 +1,6 @@
 import createConstants from 'lib/utils/createConstants';
 
-export const TYPES = createConstants('UNKNOWN', 'TABLE', 'TABLE_RIGHT', 'NOTE');
+export const TYPES = createConstants('UNKNOWN', 'TABLE', 'TABLE_RIGHT', 'NOTE', 'POEM', 'SPLIT');
 
 const traverse = (content = []) =>
   content.reduce((acc, { type, ...params }) => {
