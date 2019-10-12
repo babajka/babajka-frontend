@@ -506,3 +506,32 @@
     padding: 0;
   }
 }
+
+.article-poem {
+  margin-bottom: $block-spacing;
+  width: 100%;
+
+  p {
+    margin: auto;
+    text-align: left;
+    width: 50%;
+  }
+}
+
+.article-split {
+  margin: $block-spacing 0;
+
+  tr {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  td {
+    width: 50%;
+  }
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+}
