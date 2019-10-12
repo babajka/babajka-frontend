@@ -9,14 +9,15 @@ import Clickable from 'components/common/Clickable';
 import Image from 'components/common/Image';
 import Icon from 'components/common/ui/Icon';
 
-import DiaryModal from 'components/common/modal/DiaryModal';
+import DiaryModal from 'components/specials/diary/DiaryModal';
 
 import { diaryActions, diarySelectors } from 'redux/ducks/diary';
+import { DiaryModel } from 'utils/customPropTypes';
 import { formatDate, getYear } from 'utils/formatters';
 import fiberyToString from 'utils/fibery/toString';
-import fiberyRenderer from 'utils/fibery/renderer';
 
 import { SHORT_DATE_FORMAT } from 'constants';
+import { DIARY_PICTURE_WIDTH } from 'constants/misc';
 
 import BlockWrapper from './BlockWrapper';
 
@@ -31,17 +32,6 @@ const mapDispatchToProps = {
   getPrev: () => diaryActions.getClosest('prev'),
 };
 
-export const DiaryModel = {
-  text: PropTypes.object,
-  date: PropTypes.number.isRequired,
-  author: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    diaryImage: PropTypes.string,
-  }),
-};
-
-const DIARY_PICTURE_WIDTH = 180;
-
 const DiaryBlock = ({ diary, getNext, getPrev, fetchData, isNextAvailable }) => {
   const [isOpened, setState] = useState(false);
   useEffect(() => {
@@ -52,7 +42,14 @@ const DiaryBlock = ({ diary, getNext, getPrev, fetchData, isNextAvailable }) => 
   return (
     <>
       {isOpened && (
-        <DiaryModal onClose={() => setState(false)}> {fiberyRenderer(text.content)}</DiaryModal>
+        <DiaryModal
+          diary={diary}
+          getNext={getNext}
+          getPrev={getPrev}
+          fetchData={fetchData}
+          isNextAvailable={isNextAvailable}
+          onClose={() => setState(false)}
+        />
       )}
       <BlockWrapper className="diary" negativeTop>
         <div className="diary__content">

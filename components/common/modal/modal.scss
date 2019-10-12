@@ -33,7 +33,7 @@
   }
 }
 
-@mixin screen-desktop-tablet-large {
+@mixin shared-desktop-tablet-large {
   .wir-modal {
     &__content {
       margin: 70px calc((100vw - 690px) / 3) 0 calc((100vw - 690px) / 6);
@@ -43,11 +43,11 @@
 }
 
 @include screen-desktop {
-  @include screen-desktop-tablet-large;
+  @include shared-desktop-tablet-large;
 }
 
 @include screen-tablet-large {
-  @include screen-desktop-tablet-large;
+  @include shared-desktop-tablet-large;
 }
 
 @include screen-tablet {
@@ -72,7 +72,7 @@
   .wir-modal {
     &__content {
       margin: 0;
-      padding: 20px calc((100vw - 302px) * 2 / 3) 0 calc((100vw - 302px) / 3);
+      padding: 20px calc((100vw - 302px) * 2 / 3) 20px calc((100vw - 302px) / 3);
     }
   }
 }
