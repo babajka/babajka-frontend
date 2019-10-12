@@ -5,10 +5,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Text from 'components/common/Text';
-import Modal from 'components/common/Modal';
 import Clickable from 'components/common/Clickable';
 import Image from 'components/common/Image';
 import Icon from 'components/common/ui/Icon';
+
+import DiaryModal from 'components/common/modal/DiaryModal';
 
 import { diaryActions, diarySelectors } from 'redux/ducks/diary';
 import { formatDate, getYear } from 'utils/formatters';
@@ -50,7 +51,9 @@ const DiaryBlock = ({ diary, getNext, getPrev, fetchData, isNextAvailable }) => 
 
   return (
     <>
-      {isOpened && <Modal onClose={() => setState(false)}> {fiberyRenderer(text.content)}</Modal>}
+      {isOpened && (
+        <DiaryModal onClose={() => setState(false)}> {fiberyRenderer(text.content)}</DiaryModal>
+      )}
       <BlockWrapper className="diary" negativeTop>
         <div className="diary__content">
           {diaryImage && (

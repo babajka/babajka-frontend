@@ -7,7 +7,7 @@ import ScrollToTop from 'react-scroll-up';
 
 import Icon from 'components/common/ui/Icon';
 import Clickable from 'components/common/Clickable';
-import { MODAL_ROOT_ID } from 'components/common/Modal';
+import { MODAL_ROOT_ID } from 'components/common/modal/Modal';
 
 import useBoolean from 'hooks/useBoolean';
 import { LangType } from 'utils/customPropTypes';
