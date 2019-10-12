@@ -112,7 +112,7 @@ export const UserShape = PropTypes.shape({
   permissions: PermissionsShape.isRequired,
 });
 
-export const DiaryModel = PropTypes.shape({
+export const DiaryShape = PropTypes.shape({
   text: PropTypes.object,
   date: PropTypes.number.isRequired,
   author: PropTypes.shape({

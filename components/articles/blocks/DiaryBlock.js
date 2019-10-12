@@ -8,12 +8,12 @@ import cn from 'classnames';
 import Text from 'components/common/Text';
 import Clickable from 'components/common/Clickable';
 import Image from 'components/common/Image';
-import Icon from 'components/common/ui/Icon';
 
 import DiaryModal from 'components/specials/diary/DiaryModal';
+import DiaryArrows from 'components/specials/diary/DiaryArrows';
 
 import { diaryActions, diarySelectors } from 'redux/ducks/diary';
-import { DiaryModel } from 'utils/customPropTypes';
+import { DiaryShape } from 'utils/customPropTypes';
 import { formatDate, getYear } from 'utils/formatters';
 import fiberyToString from 'utils/fibery/toString';
 
@@ -24,31 +24,28 @@ import BlockWrapper from './BlockWrapper';
 
 const mapStateToProps = (state, { lang }) => ({
   diary: diarySelectors.getCurrent(state, lang),
-  isNextAvailable: diarySelectors.isNextAvailable(state),
 });
 
 const mapDispatchToProps = {
   fetchData: diaryActions.getByDay,
-  getNext: () => diaryActions.getClosest('next'),
-  getPrev: () => diaryActions.getClosest('prev'),
 };
 
-const DiaryBlock = ({ diary, getNext, getPrev, fetchData, isNextAvailable }) => {
+const DiaryBlock = ({ diary, fetchData }) => {
   const [isOpened, setState] = useState(false);
   useEffect(() => {
     fetchData();
   }, [fetchData]);
   const { author: { name, diaryImage } = {}, date, text } = diary;
+  const formatted = formatDate(date, SHORT_DATE_FORMAT);
 
   return (
     <>
       {isOpened && (
         <DiaryModal
-          diary={diary}
-          getNext={getNext}
-          getPrev={getPrev}
-          fetchData={fetchData}
-          isNextAvailable={isNextAvailable}
+          name={name}
+          date={formatted}
+          image={diaryImage}
+          text={text}
           onClose={() => setState(false)}
         />
       )}
@@ -59,10 +56,9 @@ const DiaryBlock = ({ diary, getNext, getPrev, fetchData, isNextAvailable }) => 
               <Image alt={name} sourceSizes={[DIARY_PICTURE_WIDTH]} baseUrl={diaryImage} mode="x" />
             )}
           </div>
-
           <div className="diary__text-content">
             <div className="diary__title">
-              <span className="diary__date">{formatDate(date, SHORT_DATE_FORMAT)}</span>
+              <span className="diary__date">{formatted}</span>
               <span className="diary__year">{getYear(date)}</span>
               <span className="diary__name">{name}</span>
               <Text id="diary.wrote" />
@@ -75,19 +71,7 @@ const DiaryBlock = ({ diary, getNext, getPrev, fetchData, isNextAvailable }) => 
                 </Clickable>
               </div>
             )}
-            <div className="diary__arrows">
-              <Clickable onClick={getPrev} linkStyle titleId="diary.previous">
-                <Icon name="long-arrow-alt-left" />
-              </Clickable>
-              <Clickable
-                disabled={!isNextAvailable}
-                onClick={getNext}
-                linkStyle
-                titleId="diary.next"
-              >
-                <Icon name="long-arrow-alt-right" />
-              </Clickable>
-            </div>
+            <DiaryArrows />
           </div>
         </div>
       </BlockWrapper>
@@ -96,11 +80,8 @@ const DiaryBlock = ({ diary, getNext, getPrev, fetchData, isNextAvailable }) => 
 };
 
 DiaryBlock.propTypes = {
-  diary: PropTypes.shape(DiaryModel).isRequired,
-  getNext: PropTypes.func.isRequired,
-  getPrev: PropTypes.func.isRequired,
+  diary: DiaryShape.isRequired,
   fetchData: PropTypes.func.isRequired,
-  isNextAvailable: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DiaryBlock);
