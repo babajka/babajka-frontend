@@ -24,6 +24,11 @@ footer {
   flex-shrink: 0;
 }
 
+// stylelint-disable-next-line selector-max-id
+#__next {
+  position: relative;
+}
+
 .wir-root {
   background-color: $primary-white;
   margin: auto;
