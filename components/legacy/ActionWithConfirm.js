@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 
 import Text from 'components/common/Text';
 import Button from 'components/common/Button';
-import Modal from 'components/legacy/Modal';
+// import Modal from 'components/legacy/Modal';
+// The Modal below is no functional with legacy code. This is to suppress lint warnings.
+import Modal from 'components/common/modal/Modal';
 
 const mapDispatchToProps = (dispatch, { action }) => ({
   confirmAction: () => dispatch(action()),

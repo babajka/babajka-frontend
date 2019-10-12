@@ -20,7 +20,7 @@
 
     img {
       height: 100%;
-      width: 100%;
+      width: auto;
     }
   }
 
@@ -49,10 +49,9 @@
     /* stylelint-disable */
     -webkit-box-orient: vertical;
     display: -webkit-box;
-    height: 96px;
+    /* stylelint-enable */
     -webkit-line-clamp: 4;
     overflow: hidden;
-    /* stylelint-enable */
   }
 
   &__arrows {
@@ -91,6 +90,10 @@
       order: 1;
       padding-left: 20px;
       width: 180px;
+
+      &--no-image {
+        width: 0;
+      }
     }
 
     &__title {
@@ -105,22 +108,10 @@
 
 @include screen-desktop {
   @include shared-desktop-tablet-large;
-
-  .diary {
-    &__text {
-      // width: 570px;
-    }
-  }
 }
 
 @include screen-tablet-large {
   @include shared-desktop-tablet-large;
-
-  .diary {
-    &__text {
-      // width: 384px;
-    }
-  }
 }
 
 @include screen-tablet {
@@ -132,24 +123,22 @@
 
     &__text-content {
       flex-direction: column;
-      width: 440px;
     }
 
     &__picture {
       height: 180px;
       order: 1;
       width: 180px;
+
+      &--no-image {
+        width: 0;
+      }
     }
 
     &__title {
       font-size: 14px;
       font-weight: bold;
       line-height: 21px;
-    }
-
-    &__text {
-      font-size: 14px;
-      line-height: 24px;
     }
   }
 }
@@ -166,10 +155,6 @@
       margin-bottom: 30px;
       text-align: right;
       width: 100%;
-
-      img {
-        width: 90px;
-      }
     }
 
     &__text-content {
@@ -184,27 +169,15 @@
     }
 
     &__text {
-      font-size: 14px;
+      margin-bottom: 5px;
     }
   }
 }
 
 @include screen-touch {
   @include shared-touch-mobile;
-
-  .diary {
-    &__text {
-      // height: 63px;
-    }
-  }
 }
 
 @include screen-mobile {
   @include shared-touch-mobile;
-
-  .diary {
-    &__text {
-      // height: 105px;
-    }
-  }
 }
