@@ -111,3 +111,12 @@ export const UserShape = PropTypes.shape({
   imageUrl: PropTypes.string,
   permissions: PermissionsShape.isRequired,
 });
+
+export const DiaryModel = PropTypes.shape({
+  text: PropTypes.object,
+  date: PropTypes.number.isRequired,
+  author: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    diaryImage: PropTypes.string,
+  }),
+});
