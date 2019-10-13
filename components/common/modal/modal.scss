@@ -14,13 +14,13 @@
     opacity: 0.5;
     position: fixed;
     width: 100%;
-    z-index: 250; // more than .wir-sidebar
+    z-index: map-get($zindex, modal-background);
   }
 
   &__content {
     background-color: $primary-white;
     position: absolute;
-    z-index: 300; // more than .wir-sidebar & .wir-modal__background; less than .wir-up
+    z-index: map-get($zindex, modal-content);
   }
 
   &__close {

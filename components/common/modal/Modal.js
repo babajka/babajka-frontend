@@ -9,7 +9,7 @@ import Clickable from 'components/common/Clickable';
 
 export const MODAL_ROOT_ID = 'wir-modal-root';
 
-const DEFAULT_TOP_MARGIN = 70;
+const DEFAULT_TOP_MARGIN = 0;
 
 const Modal = ({ children, onClose }) => {
   const [margin, setState] = useState(DEFAULT_TOP_MARGIN);

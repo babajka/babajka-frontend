@@ -17,7 +17,7 @@ import { DiaryShape } from 'utils/customPropTypes';
 import { formatDate, getYear } from 'utils/formatters';
 import fiberyToString from 'utils/fibery/toString';
 
-import { SHORT_DATE_FORMAT } from 'constants';
+import { DATE_FORMAT, SHORT_DATE_FORMAT } from 'constants';
 import { DIARY_PICTURE_WIDTH } from 'constants/misc';
 
 import BlockWrapper from './BlockWrapper';
@@ -36,14 +36,13 @@ const DiaryBlock = ({ diary, fetchData }) => {
     fetchData();
   }, [fetchData]);
   const { author: { name, diaryImage } = {}, date, text } = diary;
-  const formatted = formatDate(date, SHORT_DATE_FORMAT);
 
   return (
     <>
       {isOpened && (
         <DiaryModal
           name={name}
-          date={formatted}
+          date={formatDate(date, DATE_FORMAT)}
           image={diaryImage}
           text={text}
           onClose={() => setState(false)}
@@ -58,7 +57,7 @@ const DiaryBlock = ({ diary, fetchData }) => {
           </div>
           <div className="diary__text-content">
             <div className="diary__title">
-              <span className="diary__date">{formatted}</span>
+              <span className="diary__date">{formatDate(date, SHORT_DATE_FORMAT)}</span>
               <span className="diary__year">{getYear(date)}</span>
               <span className="diary__name">{name}</span>
               <Text id="diary.wrote" />
@@ -71,7 +70,7 @@ const DiaryBlock = ({ diary, fetchData }) => {
                 </Clickable>
               </div>
             )}
-            <DiaryArrows />
+            <DiaryArrows className="diary__arrows" size="24" />
           </div>
         </div>
       </BlockWrapper>

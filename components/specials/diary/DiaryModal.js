@@ -15,7 +15,7 @@ import DiaryArrows from './DiaryArrows';
 const DiaryModal = ({ name, date, image, text, onClose }) => (
   <Modal onClose={onClose}>
     <div className="diary-modal">
-      <DiaryArrows inModal="top" />
+      <DiaryArrows className="diary-modal__arrows--top" size="36" />
       <div className={cn('diary-modal__title', { 'diary-modal__title--with-image': image })}>
         <div className="diary-modal__date">{date}</div>
         <div className="diary-modal__name">{name}</div>
@@ -36,7 +36,7 @@ const DiaryModal = ({ name, date, image, text, onClose }) => (
         )}
       </div>
       <div className="diary-modal__text">{fiberyRenderer(text.content)}</div>
-      <DiaryArrows inModal="bottom" />
+      <DiaryArrows className="diary-modal__arrows--bottom" size="48" />
     </div>
   </Modal>
 );

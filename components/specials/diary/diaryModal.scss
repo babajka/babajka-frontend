@@ -42,13 +42,13 @@
     }
 
     &--top {
-      font-size: 36px;
+      width: 80px;
     }
 
     &--bottom {
-      font-size: 48px;
+      align-self: center;
       margin-top: 60px;
-      text-align: center;
+      width: 110px;
     }
   }
 }
