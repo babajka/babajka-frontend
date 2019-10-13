@@ -50,19 +50,14 @@
     -webkit-box-orient: vertical;
     display: -webkit-box;
     /* stylelint-enable */
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 3;
     overflow: hidden;
   }
 
   &__arrows {
     background-color: $primary-white;
-    bottom: -13px;
-    display: flex;
-    flex-direction: row;
-    font-size: 24px;
-    justify-content: space-between;
+    bottom: -15px;
     left: 0;
-    line-height: 24px;
     padding-right: 20px;
     position: absolute;
     width: 60px;
