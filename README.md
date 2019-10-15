@@ -32,7 +32,7 @@ Next.js &amp; React app
 
 ## configuration
 
-- `npm run dev -- http://localhost:8080` sets url to the local backend instance. (defaults to `http://api.wir.by`)
+- `npm run dev -- http://localhost:8080` sets url to the local backend instance. (defaults to `https://api.wir.by`)
 
 ## rules
 
