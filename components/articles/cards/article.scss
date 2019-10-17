@@ -3,6 +3,8 @@
 
 @import './cards';
 
+$experiment-slavics-default-bg: #fef04c;
+
 .article-card {
   color: $primary-white;
   display: flex;
@@ -179,6 +181,11 @@
 
     &__filler--middle {
       display: unset;
+    }
+
+    &--experiment-slavics {
+      // stylelint-disable-next-line declaration-no-important
+      background: $experiment-slavics-default-bg !important;
     }
   }
 
@@ -423,6 +430,11 @@
       line-height: 24px;
       margin-bottom: 36px;
     }
+
+    &--experiment-slavics {
+      // stylelint-disable-next-line declaration-no-important
+      background: $experiment-slavics-default-bg !important;
+    }
   }
 
   /* stylelint-disable-next-line selector-class-pattern */
@@ -512,6 +524,11 @@
 
     &__brand {
       margin-right: 12px;
+    }
+
+    &--experiment-slavics {
+      // stylelint-disable-next-line declaration-no-important
+      color: $primary-white !important;
     }
   }
 }

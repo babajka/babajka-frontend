@@ -93,6 +93,7 @@ const ArticleCard = props => {
       className={cn('article-card', {
         'article-card--with-collection': collection,
         'article-card--with-brand': !!brands.length,
+        'article-card--experiment-slavics': collection && collection.slug === 'slav-movy',
       })}
     >
       <div
