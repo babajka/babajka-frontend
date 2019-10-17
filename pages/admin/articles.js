@@ -25,45 +25,17 @@ const mapStateToProps = (state, { lang }) => ({
 const ARTICLE_COLS = [
   {
     id: 'title',
+    className: 'wir-table--font-large',
     render: ({ value, row: { slug } }) => (
       <Link route={ROUTES_NAMES.article} params={{ slug }}>
         {value}
       </Link>
     ),
-    nowrap: ({ title }) => title.length < 30,
-  },
-  {
-    id: 'type',
-  },
-  {
-    id: 'subtitle',
-    formatter: text => `${text.slice(0, 100)}...`,
-  },
-  {
-    id: 'tagsByTopic',
-    title: 'Tags',
-    formatter: tagsByTopic => {
-      const tags = Object.values(tagsByTopic).reduce((acc, cur) => acc.concat(cur), []);
-      return renderNodeList(tags.map(tag => getTagLink({ tag })), <br />);
-    },
-  },
-  {
-    id: 'status',
-    prop: 'published',
-    render: ({ value }) => (value ? 'Published' : 'Draft'),
-  },
-  {
-    id: 'publishAt',
-    title: 'Publication Date',
-    formatter: optional(formatDate, 'Not Planned'),
-  },
-  {
-    id: 'metadata.updatedAt',
-    title: 'Updated At',
-    formatter: v => formatDate(v, DATETIME_FORMAT),
+    nowrap: ({ title }) => title.length < 20,
   },
   {
     id: 'actions',
+    className: 'wir-table__column-actions',
     render: ({ row: { fiberyPublicId }, index }) => {
       const url = getArticleBaseUrl(fiberyPublicId);
       return (
@@ -83,6 +55,38 @@ const ARTICLE_COLS = [
         </>
       );
     },
+  },
+  {
+    id: 'type',
+  },
+  {
+    id: 'subtitle',
+    className: 'wir-table--font-small',
+    formatter: text => `${text.slice(0, 100)}...`,
+  },
+  {
+    id: 'tagsByTopic',
+    title: 'Tags',
+    className: 'wir-table--font-small',
+    formatter: tagsByTopic => {
+      const tags = Object.values(tagsByTopic).reduce((acc, cur) => acc.concat(cur), []);
+      return renderNodeList(tags.map(tag => getTagLink({ tag })), <br />);
+    },
+  },
+  {
+    id: 'status',
+    prop: 'published',
+    render: ({ value }) => (value ? 'Published' : 'Draft'),
+  },
+  {
+    id: 'publishAt',
+    title: 'Publication Date',
+    formatter: optional(formatDate, 'Not Planned'),
+  },
+  {
+    id: 'metadata.updatedAt',
+    title: 'Updated At',
+    formatter: v => formatDate(v, DATETIME_FORMAT),
   },
 ];
 

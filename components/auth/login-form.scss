@@ -4,19 +4,17 @@
   width: 100%;
 
   &__title {
-    color: #333333;
-    display: block;
-    font-size: 30px;
-    line-height: 1.2;
-    text-align: center;
-  }
-
-  &__logo {
-    text-align: center;
+    align-items: center;
+    color: $primary-black;
+    display: flex;
+    flex-direction: row;
+    font-size: 2rem;
+    margin-bottom: 3rem;
   }
 
   &__input {
     border-radius: 5px;
+    box-sizing: border-box;
     color: #555555;
     display: block;
     font-size: 15px;
@@ -47,15 +45,14 @@
 
   &__btn {
     align-items: center;
-    border-radius: 25px;
-    color: #ffffff;
+    border-radius: 5px;
+    color: $primary-white;
     cursor: pointer;
-    font-size: 15px;
+    font-size: 1.1rem;
     height: 50px;
     line-height: 1.2;
     padding: 0 20px;
     text-transform: uppercase;
-    width: 100%;
 
     &-container {
       display: flex;

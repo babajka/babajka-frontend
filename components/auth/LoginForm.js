@@ -8,7 +8,6 @@ import { validEmail, required, checkLength, hasErrors } from 'utils/validators';
 import FormWrapper from 'components/common/form/FormWrapper';
 import Button from 'components/common/Button';
 import Text from 'components/common/Text';
-import Logo from 'assets/logo/Logo';
 
 import { authActions } from 'redux/ducks/auth';
 
@@ -79,11 +78,8 @@ const loginValidator = values =>
 
 const LoginForm = () => (
   <div className="login-form">
-    <h2 className="login-form__title">
+    <div className="login-form__title">
       <Text id="auth.signIn" />
-    </h2>
-    <div className="login-form__logo">
-      <Logo size={50} />
     </div>
     <FormWrapper
       initialValues={LOGIN_INITIAL_FORM}

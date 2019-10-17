@@ -52,7 +52,7 @@
       border: solid #c4d4d5;
       border-width: 1px 0 0;
       height: 71px;
-      padding: 10px 20px 13px;
+      padding: 10px 15px 13px;
       vertical-align: middle;
     }
 
@@ -69,5 +69,21 @@
         border-bottom-right-radius: 4px;
       }
     }
+  }
+
+  &__column-actions {
+    text-transform: uppercase;
+
+    div {
+      margin: 10px 0;
+    }
+  }
+
+  &--font-large {
+    font-size: 1.2rem;
+  }
+
+  &--font-small {
+    font-size: 0.7rem;
   }
 }

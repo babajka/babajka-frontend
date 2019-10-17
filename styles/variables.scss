@@ -28,3 +28,11 @@ $odnoklassniki-color: #ed812b;
 $error: #e21017;
 
 $tag-image-height: 48px;
+
+$zindex: (
+  sidebar-overlay: 100,
+  sidebar: 200,
+  modal-background: 300,
+  modal-content: 400,
+  button-go-up: 500
+);
