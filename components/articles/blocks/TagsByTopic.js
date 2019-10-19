@@ -2,7 +2,6 @@ import './tagsByTopic.scss';
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import cn from 'classnames';
 
 import TagCard from 'components/articles/cards/TagCard';
 
@@ -18,14 +17,10 @@ const TagsByTopic = ({ block, data: { tags } }) => {
   const tagsData = tagsIds.map(id => tags[id]);
   const topicLink = getTopicLink({ topic: topicSlug });
   return (
-    <BlockWrapper className="tags-by-topic">
+    <BlockWrapper className={`tags-by-topic tags-by-topic--style-${style}`}>
       <div className="tags-by-topic__title-label">{topicLink}</div>
       <div className="tags-by-topic__cards">
-        <div
-          className={cn('tags-by-topic__2', {
-            'tags-by-topic__2--pulled-right': style === '1-2',
-          })}
-        >
+        <div className="tags-by-topic__2">
           <div className="tags-by-topic__2-top">
             <TagCard {...tagsData[0]} />
           </div>

@@ -23,8 +23,12 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+  }
+}
 
-    &--pulled-right {
+.tags-by-topic--style-1-2 {
+  .tags-by-topic {
+    &__2 {
       order: 1;
     }
   }
@@ -42,7 +46,7 @@
     }
 
     &__2-top {
-      margin-bottom: 5px;
+      margin-bottom: 2px;
     }
   }
 }
