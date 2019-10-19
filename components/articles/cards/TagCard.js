@@ -1,3 +1,4 @@
+import './tagCard.scss';
 import './location.scss';
 import './person.scss';
 
@@ -33,7 +34,7 @@ const TagCard = ({ slug, topicSlug, content, size }) => {
         theme={theme}
         color={color}
         alt={title}
-        className="location"
+        className="tag-card location"
       >
         <div className="location__title">{title}</div>
       </CardWrapper>
@@ -43,7 +44,7 @@ const TagCard = ({ slug, topicSlug, content, size }) => {
   if (topicSlug === TOPIC.personalities) {
     const { name, description, subtitle, image, theme, color } = content;
     return (
-      <CardWrapper {...wrapperProps} theme={theme} color={color} className="person">
+      <CardWrapper {...wrapperProps} theme={theme} color={color} className="tag-card person">
         {' '}
         <div className="person__cover-container">
           {image && (

@@ -1,12 +1,11 @@
 @import 'responsiveness';
+@import 'variables';
 
 @import './cards';
 
 .location {
   background-size: cover;
-  border-radius: 3px;
   box-sizing: border-box;
-  color: #ffffff;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -30,7 +29,7 @@
   }
 }
 
-.size-l {
+.card-size-l {
   @include shared-size-l;
 }
 
@@ -47,7 +46,7 @@
   }
 }
 
-.size-square-m {
+.card-size-square-m {
   @include shared-size-square-m;
 }
 
@@ -64,7 +63,7 @@
   }
 }
 
-.size-square-s {
+.card-size-square-s {
   @include shared-size-square-s;
 }
 
@@ -87,7 +86,7 @@
   }
 }
 
-.size-ms {
+.card-size-ms {
   @include shared-size-ms;
 }
 
@@ -99,7 +98,7 @@
   }
 }
 
-.size-s-wide {
+.card-size-s-wide {
   @include shared-size-s-wide;
 }
 
@@ -116,7 +115,7 @@
   }
 }
 
-.size-s {
+.card-size-s {
   @include shared-size-s;
 }
 
@@ -133,7 +132,7 @@
   }
 }
 
-.size-xs-wide {
+.card-size-xs-wide {
   @include shared-size-xs-wide;
 }
 
@@ -150,7 +149,7 @@
   }
 }
 
-.size-xs {
+.card-size-xs {
   @include shared-size-xs;
 }
 
