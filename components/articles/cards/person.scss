@@ -15,15 +15,16 @@
     position: relative;
   }
 
-  &.theme-light > &__cover-container {
-    margin-right: $theme-dark-border-width;
-    margin-top: $theme-dark-border-width;
+  &.theme-black > &__cover-container,
+  &.theme-white > &__cover-container {
+    margin-right: $border-width-default;
+    margin-top: $border-width-default;
   }
 
   &:hover > &__cover-container {
     @media (hover: hover) {
-      margin-right: $hover-border-width;
-      margin-top: $hover-border-width;
+      margin-right: $border-width-hover;
+      margin-top: $border-width-hover;
     }
   }
 
@@ -34,15 +35,16 @@
     width: 100%;
   }
 
-  &.theme-light > &__cover-container > &__cover {
-    right: -($theme-dark-border-width);
-    top: -($theme-dark-border-width);
+  &.theme-black > &__cover-container > &__cover,
+  &.theme-white > &__cover-container > &__cover {
+    right: -($border-width-default);
+    top: -($border-width-default);
   }
 
   &:hover > &__cover-container > &__cover {
     @media (hover: hover) {
-      right: -($hover-border-width);
-      top: -($hover-border-width);
+      right: -($border-width-hover);
+      top: -($border-width-hover);
     }
   }
 
@@ -75,19 +77,20 @@
     }
   }
 
-  /* stylelint-disable-next-line selector-class-pattern */
-  .person.theme-light > .person__cover-container {
-    height: $cover-size - 2 * $theme-dark-border-width;
-    width: $cover-size - $theme-dark-border-width;
+  /* stylelint-disable */
+  .person.theme-black > .person__cover-container,
+  .person.theme-white > .person__cover-container {
+    height: $cover-size - 2 * $border-width-default;
+    width: $cover-size - $border-width-default;
   }
 
-  /* stylelint-disable-next-line selector-class-pattern */
   .person:hover > .person__cover-container {
     @media (hover: hover) {
-      height: $cover-size - 2 * $hover-border-width;
-      width: $cover-size - $hover-border-width;
+      height: $cover-size - 2 * $border-width-hover;
+      width: $cover-size - $border-width-hover;
     }
   }
+  /* stylelint-enable */
 }
 
 @mixin shared-size-l {

@@ -4,17 +4,34 @@
 @import './cards';
 
 .wir-card-wrapper {
+  color: $primary-white;
+
   &.theme-light {
-    box-shadow: inset $theme-dark-border-width $theme-dark-border-width
-      $primary-widescreen-background,
-      inset (-$theme-dark-border-width) (-$theme-dark-border-width) $primary-widescreen-background;
     color: $primary-black;
   }
 
   &:hover {
     @media (hover: hover) {
-      box-shadow: inset $hover-border-width $hover-border-width $primary,
-        inset (-$hover-border-width) (-$hover-border-width) $primary;
+      // stylelint-disable-next-line declaration-no-important
+      box-shadow: inset $border-width-hover $border-width-hover $primary,
+        inset (-$border-width-hover) (-$border-width-hover) $primary !important;
     }
+  }
+}
+
+@mixin card-border {
+  box-shadow: inset $border-width-default $border-width-default $primary-widescreen-background,
+    inset (-$border-width-default) (-$border-width-default) $primary-widescreen-background;
+}
+
+.wir-no-background {
+  .wir-card-wrapper.theme-white {
+    @include card-border;
+  }
+}
+
+.wir-with-background {
+  .wir-card-wrapper.theme-black {
+    @include card-border;
   }
 }

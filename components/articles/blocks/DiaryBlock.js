@@ -47,7 +47,7 @@ const DiaryBlock = ({ diary, getNext, getPrev, fetchData, isNextAvailable }) => 
   const { author: { name, diaryImage } = {}, date, text } = diary;
 
   return (
-    <BlockWrapper className="diary">
+    <BlockWrapper className="diary" negativeTop>
       <div className="diary__content">
         {diaryImage && (
           <div className="diary__picture">

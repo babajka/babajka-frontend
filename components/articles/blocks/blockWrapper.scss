@@ -1,13 +1,18 @@
 @import 'variables';
 
 .block {
-  &__no-background {
+  &.wir-no-background {
     margin-top: 60px;
   }
 
-  &__with-background {
+  &.wir-with-background {
     background-color: $primary-black;
     margin-bottom: 20px;
     margin-top: 80px;
+  }
+
+  &--negative-margin-top {
+    // stylelint-disable-next-line declaration-no-important
+    margin-top: -15px !important;
   }
 }
