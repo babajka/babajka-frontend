@@ -37,7 +37,7 @@ const ArticlePreview = ({ article, error }) => {
         <span>Preview Cards instead of the Article</span>
       </div>
       {cardsPreview && (
-        <div className="preview-page__cards" style={{ margin: '50px' }}>
+        <div className="wir-no-background preview-page__cards" style={{ margin: '50px' }}>
           {DEFAULT_SIZES.concat(SQUARE_SIZES).map(size => (
             <div key={size} className="preview-page__card">
               <ArticleCard {...article} size={size} />

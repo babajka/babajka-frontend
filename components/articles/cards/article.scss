@@ -6,7 +6,6 @@
 $experiment-slavics-default-bg: #fef04c;
 
 .article-card {
-  color: $primary-white;
   display: flex;
 
   &__cover-container {
@@ -15,15 +14,16 @@ $experiment-slavics-default-bg: #fef04c;
     position: relative;
   }
 
-  &.theme-light > &__cover-container {
-    margin-left: $theme-dark-border-width;
-    margin-top: $theme-dark-border-width;
+  &.theme-black > &__cover-container,
+  &.theme-white > &__cover-container {
+    margin-left: $border-width-default;
+    margin-top: $border-width-default;
   }
 
   &:hover > &__cover-container {
     @media (hover: hover) {
-      margin-left: $hover-border-width;
-      margin-top: $hover-border-width;
+      margin-left: $border-width-hover;
+      margin-top: $border-width-hover;
     }
   }
 
@@ -32,15 +32,16 @@ $experiment-slavics-default-bg: #fef04c;
     position: absolute;
   }
 
-  &.theme-light > &__cover-container > &__cover {
-    left: -($theme-dark-border-width);
-    top: -($theme-dark-border-width);
+  &.theme-black > &__cover-container > &__cover,
+  &.theme-white > &__cover-container > &__cover {
+    left: -($border-width-default);
+    top: -($border-width-default);
   }
 
   &:hover > &__cover-container > &__cover {
     @media (hover: hover) {
-      left: -($hover-border-width);
-      top: -($hover-border-width);
+      left: -($border-width-hover);
+      top: -($border-width-hover);
     }
   }
 
@@ -120,7 +121,7 @@ $experiment-slavics-default-bg: #fef04c;
 }
 
 @mixin shared-vertical-cover($cover-height, $cover-width) {
-  // Hovering the cards (as well as border for "light" cards) require some non-trivial
+  // Hovering the cards (as well as border for "almost" black and white cards) require some non-trivial
   // adjustments to work properly. These adjustments, common for all card sizes but
   // dependent on card sizes are extracted into this mixin.
   // Also check 'shared-horizontal-cover' mixin for cards with different layout.
@@ -143,19 +144,20 @@ $experiment-slavics-default-bg: #fef04c;
   // This is due to inclusion of .card-size-X class through &.
   // The may be fixed using @at-root. Same applies for mixins below.
 
-  /* stylelint-disable-next-line selector-class-pattern */
-  .article-card.theme-light > .article-card__cover-container {
-    height: $cover-height - 2 * $theme-dark-border-width;
-    width: $cover-width - $theme-dark-border-width;
+  /* stylelint-disable */
+  .article-card.theme-black > .article-card__cover-container,
+  .article-card.theme-white > .article-card__cover-container {
+    height: $cover-height - 2 * $border-width-default;
+    width: $cover-width - $border-width-default;
   }
 
-  /* stylelint-disable-next-line selector-class-pattern */
   .article-card:hover > .article-card__cover-container {
     @media (hover: hover) {
-      height: $cover-height - 2 * $hover-border-width;
-      width: $cover-width - $hover-border-width;
+      height: $cover-height - 2 * $border-width-hover;
+      width: $cover-width - $border-width-hover;
     }
   }
+  /* stylelint-enable */
 }
 
 @mixin shared-sizes-xxl-xl-l {
@@ -550,21 +552,21 @@ $experiment-slavics-default-bg: #fef04c;
     }
   }
 
-  /* stylelint-disable-next-line selector-class-pattern */
-  .article-card.theme-light > .article-card__cover-container {
-    max-height: $cover-max-height - $theme-dark-border-width;
-    min-height: $cover-min-height - $theme-dark-border-width;
-    width: $cover-width - 2 * $theme-dark-border-width;
+  /* stylelint-disable */
+  .article-card.theme-black > .article-card__cover-container .article-card.theme-white > .article-card__cover-container {
+    max-height: $cover-max-height - $border-width-default;
+    min-height: $cover-min-height - $border-width-default;
+    width: $cover-width - 2 * $border-width-default;
   }
 
-  /* stylelint-disable-next-line selector-class-pattern */
   .article-card:hover > .article-card__cover-container {
     @media (hover: hover) {
-      max-height: $cover-max-height - $hover-border-width;
-      min-height: $cover-min-height - $hover-border-width;
-      width: $cover-width - 2 * $hover-border-width;
+      max-height: $cover-max-height - $border-width-hover;
+      min-height: $cover-min-height - $border-width-hover;
+      width: $cover-width - 2 * $border-width-hover;
     }
   }
+  /* stylelint-enable */
 }
 
 @mixin shared-size-square-m {

@@ -157,11 +157,11 @@
     },
     {
       "path": ".next/static/**/_error.js",
-      "maxSize": "400 B"
+      "maxSize": "2 kB"
     },
     {
       "path": ".next/static/**/styles*.css",
-      "maxSize": "19 kB"
+      "maxSize": "20 kB"
     }
   ]
 }

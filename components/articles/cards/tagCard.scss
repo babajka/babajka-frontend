@@ -2,7 +2,7 @@
 @import 'variables';
 
 .tag-card {
-  color: $primary-white;
+  //
 }
 
 @mixin tag-card-radius($bottom-left: false, $bottom-right: false, $top-left: false, $top-right: false) {
