@@ -5,7 +5,12 @@
   //
 }
 
-@mixin tag-card-radius($bottom-left: false, $bottom-right: false, $top-left: false, $top-right: false) {
+@mixin tag-card-radius(
+  $bottom-left: false,
+  $bottom-right: false,
+  $top-left: false,
+  $top-right: false
+) {
   $tag-card-border-radius: 3px;
 
   .tag-card {

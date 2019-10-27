@@ -12,7 +12,7 @@ export const getDiary = ({ author, text, day, month, year }) => ({
 });
 
 export const getLocalizedCollection = (
-  { slug, cover, name, description, /* prev, next, */ articleIndex },
+  { slug, cover, name, description, prev, next, articleIndex },
   lang
 ) => ({
   slug,
@@ -20,9 +20,8 @@ export const getLocalizedCollection = (
   articleIndex,
   name: localize(name, lang),
   description: localize(description, lang),
-  // FIXME: for now prev & next articles aren't showing on article page
-  // prev: getLocalizedArticle(prev), // eslint-disable-line no-use-before-define
-  // next: getLocalizedArticle(next), // eslint-disable-line no-use-before-define
+  prev: getLocalizedArticle(prev), // eslint-disable-line no-use-before-define
+  next: getLocalizedArticle(next), // eslint-disable-line no-use-before-define
 });
 
 export const getLocalizedCollections = localizeArray(getLocalizedCollection);
@@ -67,10 +66,13 @@ export const getLocalizedArticle = (article, lang) => {
   const { text, ...localized } = localize(locales, lang);
 
   // TODO: think about implementing this logic at backend
-  const tagsByTopic = getLocalizedTags(tags, lang).reduce((acc, tag) => {
-    acc[tag.topicSlug].push(tag);
-    return acc;
-  }, getInitTagsByTopic());
+  // WARNING: there are no tags in `prev` & `next` articles in collection
+  const tagsByTopic =
+    tags &&
+    getLocalizedTags(tags, lang).reduce((acc, tag) => {
+      acc[tag.topicSlug].push(tag);
+      return acc;
+    }, getInitTagsByTopic());
 
   return {
     ...rest,
