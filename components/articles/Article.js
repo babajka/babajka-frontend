@@ -7,13 +7,14 @@ import { MetaTitle, MetaDescription, MetaImage, MetaKeywords } from 'components/
 import AudioPlayer from 'components/common/AudioPlayer';
 import VideoPlayer from 'components/common/VideoPlayer';
 import Image from 'components/common/Image';
-import Text from 'components/common/Text';
 import ShareButtons from 'components/social/ShareButtons';
 
 import { ArticleShape } from 'utils/customPropTypes';
 import { getTagLink, getTagImageRenderer } from 'utils/tags';
 import { renderNodeList } from 'utils/formatters';
 import fiberyRenderer from 'utils/fibery/renderer';
+
+import CollectionNote from './CollectionNote';
 
 const COVER_SIZES = [1200, 1000, 770, 640, 360];
 
@@ -71,29 +72,7 @@ const Article = ({
         <div className="article-page-content">
           {type === 'audio' && <AudioPlayer trackId={audio.id} />}
           {type === 'video' && <VideoPlayer videoId={video.id} />}
-          {collection && (
-            <div className="article-page__collection">
-              {collection.cover && (
-                <Image
-                  className="article-page__collection-cover"
-                  alt={collection.name}
-                  sourceSizes={[70]}
-                  baseUrl={collection.cover}
-                  mode="x"
-                />
-              )}
-              <div className="article-page__collection-items">
-                <div className="article-page__collection-item">
-                  <Text id="article.this-is-the" /> {` ${collection.articleIndex + 1} `}
-                  <Text id="article.of-collection" />{' '}
-                  <span className="article-page__collection-name">{collection.name}</span>
-                </div>
-                {/* TODO: replace below with links to parts of collection. */}
-                <div className="article-page__collection-item">2. Лекцыя 2</div>
-                <div className="article-page__collection-item">3. Лекцыя 3</div>
-              </div>
-            </div>
-          )}
+          {collection && <CollectionNote data={collection} />}
           {fiberyRenderer(text.content)}
         </div>
         <div className="article-page__share">
