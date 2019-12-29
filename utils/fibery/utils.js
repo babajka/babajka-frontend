@@ -10,6 +10,7 @@ export const parseQuote = s => {
 const IMAGE_URL_REGEX = /(.+)#align=(.+)$/;
 
 export const parseImage = src => {
-  const [_, url, align] = src.match(IMAGE_URL_REGEX);
+  const urlWithAlign = src.includes('#align') ? src : `${src}#align=center`;
+  const [_, url, align] = urlWithAlign.match(IMAGE_URL_REGEX);
   return { url, align };
 };
