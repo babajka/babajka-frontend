@@ -93,7 +93,4 @@ DiaryBlock.propTypes = {
   isNextAvailable: PropTypes.bool.isRequired,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DiaryBlock);
+export default connect(mapStateToProps, mapDispatchToProps)(DiaryBlock);

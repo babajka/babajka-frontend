@@ -27,7 +27,7 @@ module.exports = {
     // weird rule
     'react/jsx-one-expression-per-line': 'off',
     // allow create components without prop-types check
-    'react/prop-types': ['error', { skipUndeclared: true }],
+    'react/prop-types': ['warn', { skipUndeclared: true }],
     'react/forbid-prop-types': 'warn',
     'react/require-default-props': 'warn',
 
