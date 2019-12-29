@@ -553,7 +553,8 @@ $experiment-slavics-default-bg: #fef04c;
   }
 
   /* stylelint-disable */
-  .article-card.theme-black > .article-card__cover-container .article-card.theme-white > .article-card__cover-container {
+  .article-card.theme-black > .article-card__cover-container,
+  .article-card.theme-white > .article-card__cover-container {
     max-height: $cover-max-height - $border-width-default;
     min-height: $cover-min-height - $border-width-default;
     width: $cover-width - 2 * $border-width-default;
