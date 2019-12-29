@@ -150,7 +150,4 @@ Sidebar.defaultProps = {
   user: null,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Sidebar);
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

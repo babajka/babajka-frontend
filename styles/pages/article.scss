@@ -2,6 +2,9 @@
 @import 'variables';
 /* stylelint-disable no-descending-specificity */
 
+$block-spacing: 60px;
+$paragraph-spacing: 24px;
+
 .article-page {
   &__cover {
     object-fit: cover;
@@ -554,13 +557,13 @@
   }
 
   th {
-    border-bottom: 0.25px solid #cccccc;
+    border-bottom: 0.25px solid $primary-grey-article-table;
     padding-bottom: 17px;
     text-align: left;
   }
 
   td {
-    border-bottom: 0.25px solid #cccccc;
+    border-bottom: 0.25px solid $primary-grey-article-table;
     padding: 17px 0;
   }
 

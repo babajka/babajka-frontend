@@ -157,7 +157,7 @@
     },
     {
       "path": ".next/static/**/_error.js",
-      "maxSize": "2 kB"
+      "maxSize": "3 kB"
     },
     {
       "path": ".next/static/**/styles*.css",

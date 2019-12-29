@@ -70,7 +70,10 @@ const ARTICLE_COLS = [
     className: 'wir-table--font-small',
     formatter: tagsByTopic => {
       const tags = Object.values(tagsByTopic).reduce((acc, cur) => acc.concat(cur), []);
-      return renderNodeList(tags.map(tag => getTagLink({ tag })), <br />);
+      return renderNodeList(
+        tags.map(tag => getTagLink({ tag })),
+        <br />
+      );
     },
   },
   {
