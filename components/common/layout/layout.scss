@@ -43,8 +43,8 @@ footer {
   }
 
   &--sidebar-expanded {
-    overflow: hidden;
     overflow-x: unset;
+    overflow-y: scroll;
     position: fixed;
   }
 }
@@ -92,7 +92,7 @@ footer {
   overflow-x: hidden;
   overflow-y: scroll;
   position: fixed;
-  right: -240px;
+  right: -255px;
   top: 0;
   transition: 0.5s right;
   z-index: map-get($zindex, sidebar);
