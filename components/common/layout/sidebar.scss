@@ -26,6 +26,7 @@
     list-style: none;
     margin-bottom: 38px;
     margin-top: 0;
+    padding: 0;
     padding-inline-start: 0;
     text-transform: uppercase;
   }
@@ -39,8 +40,12 @@
   &__icon-close {
     color: $primary;
     cursor: pointer;
+    display: block;
     float: right;
     font-size: 20px;
+    position: absolute;
+    right: 0;
+    top: 0;
 
     @include sidebar-visible {
       display: none;
@@ -63,6 +68,7 @@
     color: $primary;
     font-size: 20px;
     margin: 0;
+    padding: 0;
     padding-inline-start: 0;
   }
 
