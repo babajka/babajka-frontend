@@ -54,6 +54,9 @@ const ROUTES = [
     name: 'about',
   },
   {
+    name: 'diary',
+  },
+  {
     name: 'status',
     pattern: 'status/:code(404|500)',
   },

@@ -1,15 +1,14 @@
 import './diary.scss';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import cn from 'classnames';
 
+import Link from 'components/common/Link';
 import Text from 'components/common/Text';
-import Clickable from 'components/common/Clickable';
 import Image from 'components/common/Image';
 
-import DiaryModal from 'components/specials/diary/DiaryModal';
 import DiaryArrows from 'components/specials/diary/DiaryArrows';
 
 import { diaryActions, diarySelectors } from 'redux/ducks/diary';
@@ -19,6 +18,7 @@ import fiberyToString from 'utils/fibery/toString';
 
 import { DATE_FORMAT, SHORT_DATE_FORMAT } from 'constants';
 import { DIARY_PICTURE_WIDTH } from 'constants/misc';
+import { ROUTES_NAMES } from 'routes';
 
 import BlockWrapper from './BlockWrapper';
 
@@ -31,7 +31,6 @@ const mapDispatchToProps = {
 };
 
 const DiaryBlock = ({ diary, fetchData }) => {
-  const [isOpened, setState] = useState(false);
   useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -39,15 +38,6 @@ const DiaryBlock = ({ diary, fetchData }) => {
 
   return (
     <>
-      {isOpened && (
-        <DiaryModal
-          name={name}
-          date={formatDate(date, DATE_FORMAT)}
-          image={diaryImage}
-          text={text}
-          onClose={() => setState(false)}
-        />
-      )}
       <BlockWrapper className="diary" negativeTop>
         <div className="diary__content">
           <div className={cn('diary__picture', { 'diary__picture--no-image': !diaryImage })}>
@@ -65,9 +55,15 @@ const DiaryBlock = ({ diary, fetchData }) => {
             {text && (
               <div className="diary__text-wrap">
                 <div className="diary__text">{fiberyToString(text.content)}</div>
-                <Clickable linkStyle onClick={() => setState(true)}>
+                <Link
+                  route={ROUTES_NAMES.diary}
+                  name={name}
+                  date={formatDate(date, DATE_FORMAT)}
+                  image={diaryImage}
+                  text={text}
+                >
                   <Text id="diary.more" />
-                </Clickable>
+                </Link>
               </div>
             )}
             <DiaryArrows className="diary__arrows" size="24" />
