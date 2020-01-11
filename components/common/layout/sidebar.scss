@@ -38,14 +38,18 @@
   }
 
   &__icon-close {
+    align-items: center;
     color: $primary;
     cursor: pointer;
-    display: block;
+    display: flex;
     float: right;
     font-size: 20px;
+    height: 28px;
+    justify-content: center;
     position: absolute;
     right: 0;
     top: 0;
+    width: 28px;
 
     @include sidebar-visible {
       display: none;
