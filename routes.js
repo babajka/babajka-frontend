@@ -55,6 +55,7 @@ const ROUTES = [
   },
   {
     name: 'diary',
+    pattern: 'diary/:slug',
   },
   {
     name: 'status',
