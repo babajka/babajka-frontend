@@ -43,7 +43,4 @@ DiaryArrows.defaultProps = {
   className: '',
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DiaryArrows);
+export default connect(mapStateToProps, mapDispatchToProps)(DiaryArrows);
