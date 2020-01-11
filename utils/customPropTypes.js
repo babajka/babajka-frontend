@@ -113,6 +113,7 @@ export const UserShape = PropTypes.shape({
 });
 
 export const DiaryShape = PropTypes.shape({
+  slug: PropTypes.string.isRequired,
   text: PropTypes.object,
   date: PropTypes.number.isRequired,
   author: PropTypes.shape({

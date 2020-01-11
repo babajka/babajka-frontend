@@ -16,7 +16,7 @@ import { DiaryShape } from 'utils/customPropTypes';
 import { formatDate, getYear } from 'utils/formatters';
 import fiberyToString from 'utils/fibery/toString';
 
-import { DATE_FORMAT, SHORT_DATE_FORMAT } from 'constants';
+import { SHORT_DATE_FORMAT } from 'constants';
 import { DIARY_PICTURE_WIDTH } from 'constants/misc';
 import { ROUTES_NAMES } from 'routes';
 
@@ -34,7 +34,7 @@ const DiaryBlock = ({ diary, fetchData }) => {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-  const { author: { name, diaryImage } = {}, date, text } = diary;
+  const { slug, author: { name, diaryImage } = {}, date, text } = diary;
 
   return (
     <>
@@ -55,18 +55,12 @@ const DiaryBlock = ({ diary, fetchData }) => {
             {text && (
               <div className="diary__text-wrap">
                 <div className="diary__text">{fiberyToString(text.content)}</div>
-                <Link
-                  route={ROUTES_NAMES.diary}
-                  name={name}
-                  date={formatDate(date, DATE_FORMAT)}
-                  image={diaryImage}
-                  text={text}
-                >
+                <Link route={ROUTES_NAMES.diary} params={{ slug }}>
                   <Text id="diary.more" />
                 </Link>
               </div>
             )}
-            <DiaryArrows className="diary__arrows" size="24" />
+            <DiaryArrows className="diary__arrows" size={24} />
           </div>
         </div>
       </BlockWrapper>

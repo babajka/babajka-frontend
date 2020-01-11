@@ -4,9 +4,10 @@ import chunk from 'lodash/chunk';
 import { TOPICS } from 'constants';
 import { localize, localizeArray, localizeFields } from 'utils/localization';
 
-export const getDiary = ({ author, text, day, month, year }) => ({
+export const getDiary = ({ author, text, day, month, year, slug }) => ({
   author,
   text,
+  slug,
   // TODO(tyndria): extract it in some func & simplify
   date: ((month && moment({ day, month: month - 1, year })) || moment()).valueOf(),
 });

@@ -11,24 +11,33 @@ const duck = 'specials/diary';
 
 // constants
 const GET_BY_DAY = `${duck}/GET_BY_DAY`;
+const GET_BY_SLUG = `${duck}/GET_BY_SLUG`;
+
+const DUMMY_DIARY = {
+  slug: 'sample',
+  date: 123,
+};
 
 const initialState = {
   pending: false,
   error: false,
-  data: {},
+  data: DUMMY_DIARY,
   next: null,
   prev: null,
 };
 
+const diaryReducer = defaultReducer((state, { payload: { data, next, prev } }) => ({
+  ...state,
+  data: data && getDiary(data),
+  next,
+  prev,
+  pending: false,
+}));
+
 export default createReducer(
   {
-    [GET_BY_DAY]: defaultReducer((state, { payload: { data, next, prev } }) => ({
-      ...state,
-      data: data && getDiary(data),
-      next,
-      prev,
-      pending: false,
-    })),
+    [GET_BY_DAY]: diaryReducer,
+    [GET_BY_SLUG]: diaryReducer,
   },
   initialState
 );
@@ -40,6 +49,8 @@ const getCurrent = (state, lang) => {
   const { author, ...rest } = getData(state);
   return { ...rest, author: author && getLocalizedTag(author, lang).content };
 };
+const getPrev = state => getState(state).prev;
+const getNext = state => getState(state).next;
 const isPending = state => getState(state).pending;
 const isError = state => getState(state).error;
 const isNextAvailable = state => {
@@ -56,6 +67,8 @@ const isNextAvailable = state => {
 
 export const diarySelectors = {
   getCurrent,
+  getPrev,
+  getNext,
   getState,
   isPending,
   isError,
@@ -67,6 +80,10 @@ export const diaryActions = {
   getByDay: (month = new Date().getMonth() + 1, day = new Date().getDate()) => ({
     type: GET_BY_DAY,
     payload: makeRequest(api.diary.getByDay(month, day)),
+  }),
+  getBySlug: slug => ({
+    type: GET_BY_SLUG,
+    payload: makeRequest(api.diary.getBySlug(slug)),
   }),
   getClosest: closest => (dispatch, getStore) => {
     const diary = getState(getStore());

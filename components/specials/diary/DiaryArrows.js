@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Clickable from 'components/common/Clickable';
-
 import { diaryActions, diarySelectors } from 'redux/ducks/diary';
 
 import ArrowIcon from './ArrowIcon';
