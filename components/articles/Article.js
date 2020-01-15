@@ -76,7 +76,7 @@ const Article = ({
           {fiberyRenderer(text.content)}
         </div>
         <div className="article-page__share">
-          <ShareButtons url={router.asPath} title={title} />
+          <ShareButtons urlPath={router.asPath} title={title} />
         </div>
         <div className="article-page__other-tags">
           {/* flatMap or flatten? */}

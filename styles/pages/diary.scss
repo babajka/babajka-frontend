@@ -39,14 +39,20 @@
 
   &__arrows {
     line-height: 24px;
-
-    &--left {
-      margin-right: 5px;
-    }
+    width: 80px;
 
     &--top {
-      width: 80px;
+      //
     }
+
+    &--bottom {
+      margin: 20px 0 40px;
+    }
+  }
+
+  &__share {
+    margin: 40px 0;
+    width: 200px;
   }
 }
 
