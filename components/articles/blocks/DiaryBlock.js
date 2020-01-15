@@ -50,7 +50,7 @@ const DiaryBlock = ({ diary, fetchData }) => {
               <span className="diary__date">{formatDate(date, SHORT_DATE_FORMAT)}</span>
               <span className="diary__year">{getYear(date)}</span>
               <span className="diary__name">{name}</span>
-              <Text id="diary.wrote" />
+              <Text id="diary.wrote" />:
             </div>
             {text && (
               <div className="diary__text-wrap">
