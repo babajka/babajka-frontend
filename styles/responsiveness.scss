@@ -18,6 +18,15 @@ $desktop: 1100px;
 $desktop-with-sidebar: 1360px;
 $widescreen: 1600px;
 
+// Page content width by screen sizes.
+$page-content: (
+  mobile: 300px,
+  touch: 480px,
+  tablet: 624px,
+  tablet-large: 818px,
+  desktop: 1020px,
+);
+
 @mixin mobile {
   @media screen and (max-width: $mobile-large - 1) {
     @content;
