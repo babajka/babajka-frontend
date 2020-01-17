@@ -24,7 +24,7 @@ before_deploy:
   - |
     if [ $TRAVIS_BRANCH == "develop" ]; then
       MODE="dev"
-    elif [ $TRAVIS_BRANCH == "prod-config" ]; then
+    elif [ $TRAVIS_BRANCH == "master" ]; then
       MODE="prod"
     else
       exit 1
@@ -39,6 +39,6 @@ deploy:
     on:
       branch:
         - develop
-        - prod-config
+        - master
 after_deploy:
   - bash bin/deploy/after-deploy.sh $MODE
