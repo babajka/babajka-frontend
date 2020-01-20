@@ -7,6 +7,7 @@ import chunk from 'lodash/chunk';
 
 import Link from 'components/common/Link';
 import ArticleCard from 'components/articles/cards/ArticleCard';
+import { MetaImage } from 'components/social/Metatags';
 
 import { topicsActions, topicsSelectors } from 'redux/ducks/topics';
 import { ArticlesById, TagShape, TagsArray, ArticlesArray, IdsArray } from 'utils/customPropTypes';
@@ -52,20 +53,24 @@ const mapStateToProps = (state, { lang }) => topicsSelectors.getData(state, lang
 const TopicPage = ({ tags, articlesByTag, articleById }) => {
   const filteredTags = tags.filter(({ slug }) => articlesByTag[slug] && articlesByTag[slug].length);
   return (
-    <div className="wir-content-padding topics wir-no-background">
-      {chunk(filteredTags, Math.ceil(filteredTags.length / COLS_COUNT)).map((col, i) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <div key={i} className="topics__column">
-          {col.map(tag => (
-            <TopicSection
-              key={tag.id}
-              tag={tag}
-              articles={articlesByTag[tag.slug].map(id => articleById[id])}
-            />
-          ))}
-        </div>
-      ))}
-    </div>
+    <>
+      <MetaImage url="" />
+
+      <div className="wir-content-padding topics wir-no-background">
+        {chunk(filteredTags, Math.ceil(filteredTags.length / COLS_COUNT)).map((col, i) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <div key={i} className="topics__column">
+            {col.map(tag => (
+              <TopicSection
+                key={tag.id}
+                tag={tag}
+                articles={articlesByTag[tag.slug].map(id => articleById[id])}
+              />
+            ))}
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 

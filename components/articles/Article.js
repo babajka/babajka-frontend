@@ -30,8 +30,9 @@ const Article = ({
       <MetaTitle title={title} type="article" />
       <MetaDescription description={subtitle} />
       {/* FIXME: proper social preview image (size) */}
-      <MetaImage url={images.page} />
+      <MetaImage url={type === 'text' ? images.page : ''} />
       <MetaKeywords keywords={keywords} />
+
       <div className="article-page">
         <div className="wir-content-padding article-page-content">
           <div className="article-page__subtitle">{subtitle}</div>

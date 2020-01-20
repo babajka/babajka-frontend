@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import FeaturedBlock from 'components/articles/blocks/FeaturedBlock';
 import TagPageBlockB from 'components/articles/blocks/TagPageBlockB';
 import TagPageBlockCD from 'components/articles/blocks/TagPageBlockCD';
+import { MetaImage } from 'components/social/Metatags';
 
 import { tagsActions, tagsSelectors } from 'redux/ducks/tags';
 import { ArticlesArray, TagShape } from 'utils/customPropTypes';
@@ -56,13 +57,17 @@ const ArticlesBlocks = ({ articlesCount, blocks }) => {
 const mapStateToProps = (state, { lang }) => tagsSelectors.getData(state, lang);
 
 const TagPage = ({ routerQuery: { topic }, tag, blocks, articlesCount }) => (
-  <div className="tag-page">
-    <div className="wir-content-padding tag-page__header">
-      <div className="tag-page__topic">{getTopicLink({ topic, postfix: 'one' })}</div>
-      <div className="tag-page__title">{renderTag(tag)}</div>
+  <>
+    <MetaImage url="" />
+
+    <div className="tag-page">
+      <div className="wir-content-padding tag-page__header">
+        <div className="tag-page__topic">{getTopicLink({ topic, postfix: 'one' })}</div>
+        <div className="tag-page__title">{renderTag(tag)}</div>
+      </div>
+      <ArticlesBlocks articlesCount={articlesCount} blocks={blocks} />
     </div>
-    <ArticlesBlocks articlesCount={articlesCount} blocks={blocks} />
-  </div>
+  </>
 );
 
 TagPage.propTypes = {
