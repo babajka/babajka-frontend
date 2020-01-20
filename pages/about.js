@@ -36,10 +36,10 @@ const AboutPage = ({ lang }) => (
         </div>
         <div className="about-page__description-text about-page__team">
           {team.map(({ image, name, role }) => (
-            <div className="about-page__teammate teammate">
-              <img className="teammate__pic" src={image} alt={name[lang]} />
-              <div className="teammate__name">{name[lang]}</div>
-              <div className="teammate__role">{role[lang]}</div>
+            <div key={name} className="about-page__teammate teammate">
+              <img className="teammate__pic" src={image} alt={localize(name, lang)} />
+              <div className="teammate__name">{localize(name, lang)}</div>
+              <div className="teammate__role">{localize(role, lang)}</div>
             </div>
           ))}
         </div>
