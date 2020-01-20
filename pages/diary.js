@@ -1,29 +1,28 @@
 import 'styles/pages/diary.scss';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import cn from 'classnames';
 import { useRouter } from 'next/router';
 
-import LatestArticles from 'components/articles/blocks/LatestArticles';
 import Image from 'components/common/Image';
 import { localize } from 'components/common/Text';
 import DiaryLinkArrows from 'components/specials/diary/DiaryLinkArrows';
 import ShareButtons from 'components/social/ShareButtons';
 import { MetaTitle, MetaDescription, MetaKeywords, MetaImage } from 'components/social/Metatags';
-
-import { formatDate, getYear, dateIsToday } from 'utils/formatters';
-import { getLocalizedArticle } from 'utils/getters';
+import TwoArticlesInRow from 'components/articles/blocks/TwoArticlesInRow';
 
 import { diaryActions, diarySelectors } from 'redux/ducks/diary';
+import { formatDate, getYear, dateIsToday } from 'utils/formatters';
 import fiberyRenderer from 'utils/fibery/renderer';
 import fiberyToString from 'utils/fibery/toString';
-import { populateRequest } from 'utils/request';
+import { populateRequest, makeRequest } from 'utils/request';
+import { DiaryShape, LangType } from 'utils/customPropTypes';
+import { getLocalizedArticles } from 'utils/getters';
 
 import { DATE_FORMAT, SHORT_DATE_FORMAT } from 'constants';
 import { DIARY_PICTURE_WIDTH } from 'constants/misc';
-
-import tempLatestArticles from 'pages/tempLatestArticles.json';
+import api from 'constants/api';
 
 const mapStateToProps = (state, { lang }) => ({
   diary: diarySelectors.getCurrent(state, lang),
@@ -45,9 +44,13 @@ const DiaryPage = ({
   diary: { author: { name, diaryImage: image } = {}, date, text: { content } = {} },
   lang,
 }) => {
+  const [articles, setArticles] = useState([]);
+  useEffect(() => {
+    makeRequest(api.articles.getChunk({ take: 2 })).then(({ data }) => setArticles(data));
+  }, []);
   const router = useRouter();
-
   const metaTitle = `${formatDate(date, DATE_FORMAT)}, ${name}`;
+  const [first, second] = getLocalizedArticles(articles, lang);
 
   return (
     <>
@@ -84,15 +87,16 @@ const DiaryPage = ({
         <DiaryLinkArrows className="diary-page__arrows diary-page__arrows--bottom" size={36} />
       </div>
 
-      <LatestArticles
-        className="diary-page-extras"
-        block={{ articlesIds: [{ frozen: false }, { frozen: false }] }}
-        data={{
-          latestArticles: tempLatestArticles.data.map(art => getLocalizedArticle(art, lang)),
-        }}
-      />
+      {!!articles.length && (
+        <TwoArticlesInRow className="diary-page-extras" first={first} second={second} />
+      )}
     </>
   );
+};
+
+DiaryPage.propTypes = {
+  diary: DiaryShape.isRequired,
+  lang: LangType.isRequired,
 };
 
 DiaryPage.getInitialProps = ctx =>
