@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import keyBy from 'lodash/keyBy';
+import filter from 'lodash/filter';
 
 import BLOCKS_BY_TYPE from 'components/articles/blocks';
 
@@ -20,9 +20,20 @@ const MainPage = ({ blocks, data, lang }) =>
     if (!Block) {
       return null;
     }
+    const options = {};
+    if (block.type === 'latestArticles') {
+      // This is the only block which behavior depends on behavior of other blocks
+      // i.e. additional options must be passed.
+      const featured = filter(blocks, { type: 'featured' });
+      if (featured.length > 0) {
+        options.offset = featured[0].frozen ? 0 : 1;
+        // TODO: to handle situation with multiple 'featured' blocks or 'featured' blocks
+        // going *after* latestArticles.
+      }
+    }
     return (
       // eslint-disable-next-line react/no-array-index-key
-      <Block key={index} block={block} data={data} blocks={keyBy(blocks, 'type')} lang={lang} />
+      <Block key={index} block={block} data={data} options={options} lang={lang} />
     );
   });
 

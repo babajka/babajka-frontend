@@ -4,7 +4,6 @@
 .diary-page {
   display: flex;
   flex-direction: column;
-  padding-bottom: 150px;
 
   &__title {
     display: flex;
@@ -46,7 +45,7 @@
     }
 
     &--bottom {
-      margin: 20px 0 40px;
+      margin: 20px 0;
     }
   }
 
@@ -54,6 +53,11 @@
     margin: 40px 0;
     width: 200px;
   }
+}
+
+.diary-page-extras {
+  padding-bottom: 8rem;
+  padding-top: 1rem;
 }
 
 @mixin shared-desktop-tablet-large {

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import cn from 'classnames';
 import { useRouter } from 'next/router';
 
+import LatestArticles from 'components/articles/blocks/LatestArticles';
 import Image from 'components/common/Image';
 import { localize } from 'components/common/Text';
 import DiaryLinkArrows from 'components/specials/diary/DiaryLinkArrows';
@@ -12,6 +13,7 @@ import ShareButtons from 'components/social/ShareButtons';
 import { MetaTitle, MetaDescription, MetaKeywords, MetaImage } from 'components/social/Metatags';
 
 import { formatDate, getYear, dateIsToday } from 'utils/formatters';
+import { getLocalizedArticle } from 'utils/getters';
 
 import { diaryActions, diarySelectors } from 'redux/ducks/diary';
 import fiberyRenderer from 'utils/fibery/renderer';
@@ -21,31 +23,27 @@ import { populateRequest } from 'utils/request';
 import { DATE_FORMAT, SHORT_DATE_FORMAT } from 'constants';
 import { DIARY_PICTURE_WIDTH } from 'constants/misc';
 
+import tempLatestArticles from 'pages/tempLatestArticles.json';
+
 const mapStateToProps = (state, { lang }) => ({
   diary: diarySelectors.getCurrent(state, lang),
 });
 
-const SHARE_TEXT = {
-  today: 'Сёння',
-  year: year => `, у ${year} годзе, `,
-};
-
 const getShareText = (date, name) => {
-  let shareText = '';
+  const today = dateIsToday(date);
   const year = getYear(date);
-  if (dateIsToday(date)) {
-    shareText = SHARE_TEXT.today;
-    if (year) {
-      shareText = shareText.concat(SHARE_TEXT.year(year));
-    }
-  } else {
-    shareText = `${formatDate(date, DATE_FORMAT)} `;
-  }
-  return shareText.concat(`${name} ${localize('diary.wrote', 'be')}...`);
+  return [
+    today ? 'Сёння' : formatDate(date, DATE_FORMAT),
+    today && year && `, у ${year} годзе, `,
+    `${name} ${localize('diary.wrote', 'be')}...`,
+  ]
+    .filter(Boolean)
+    .join('');
 };
 
 const DiaryPage = ({
   diary: { author: { name, diaryImage: image } = {}, date, text: { content } = {} },
+  lang,
 }) => {
   const router = useRouter();
 
@@ -85,6 +83,14 @@ const DiaryPage = ({
         </div>
         <DiaryLinkArrows className="diary-page__arrows diary-page__arrows--bottom" size={36} />
       </div>
+
+      <LatestArticles
+        className="diary-page-extras"
+        block={{ articlesIds: [{ frozen: false }, { frozen: false }] }}
+        data={{
+          latestArticles: tempLatestArticles.data.map(art => getLocalizedArticle(art, lang)),
+        }}
+      />
     </>
   );
 };
