@@ -44,19 +44,24 @@ export const getTagLink = ({
 );
 
 const TAG_IMAGE_HEIGHT = 48;
+const DEFAULT_THEME = 'light';
 const BRAND_LOGO_BY_THEME = {
   dark: 'white',
   light: 'black',
 };
 
-const getTagImageUrl = ({ topicSlug, content: { image, images }, theme }) => {
+export const getTagImageUrl = ({
+  topicSlug,
+  content: { image, images },
+  theme = DEFAULT_THEME,
+}) => {
   if (topicSlug !== 'brands') {
     return image;
   }
   return images[BRAND_LOGO_BY_THEME[theme]];
 };
 
-export const getTagImageRenderer = ({ className, theme = 'light' }) => ({
+export const getTagImageRenderer = ({ className, theme = DEFAULT_THEME }) => ({
   slug,
   topicSlug,
   content,

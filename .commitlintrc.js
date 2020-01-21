@@ -25,6 +25,7 @@ module.exports = {
         'admin',
         'diary',
         'fibery',
+        'tags',
       ],
     ],
     'scope-empty': [2, 'never'],
