@@ -4,15 +4,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { MetaTitle, MetaImage, MetaDescription, DEFAULT_IMAGE } from 'components/social/Metatags';
+import { localize } from 'components/common/Text';
 import FeaturedBlock from 'components/articles/blocks/FeaturedBlock';
 import TagPageBlockB from 'components/articles/blocks/TagPageBlockB';
 import TagPageBlockCD from 'components/articles/blocks/TagPageBlockCD';
 
 import { tagsActions, tagsSelectors } from 'redux/ducks/tags';
-import { ArticlesArray, TagShape } from 'utils/customPropTypes';
+import { ArticlesArray, TagShape, LangType } from 'utils/customPropTypes';
 import { populateRequest } from 'utils/request';
-import { renderTag, getTopicLink } from 'utils/tags';
-import { toTitleCase } from 'utils/formatters';
+import { renderTag, getTopicLink, getTagImageUrl } from 'utils/tags';
+import host from 'utils/host';
 
 import { TOPICS } from 'constants';
 
@@ -55,17 +57,27 @@ const ArticlesBlocks = ({ articlesCount, blocks }) => {
 
 const mapStateToProps = (state, { lang }) => tagsSelectors.getData(state, lang);
 
-const TagPage = ({ routerQuery: { topic }, tag, blocks, articlesCount }) => (
-  <div className="tag-page">
-    <div className="wir-content-padding tag-page__header">
-      <div className="tag-page__topic">{getTopicLink({ topic, postfix: 'one' })}</div>
-      <div className="tag-page__title">{renderTag(tag)}</div>
-    </div>
-    <ArticlesBlocks articlesCount={articlesCount} blocks={blocks} />
-  </div>
-);
+const TagPage = ({ lang, routerQuery: { topic }, tag, blocks, articlesCount }) => {
+  const title = renderTag(tag);
+  const imageUrl = getTagImageUrl(tag);
+  return (
+    <>
+      <MetaTitle title={title} />
+      <MetaImage url={imageUrl ? `${host}${imageUrl}` : DEFAULT_IMAGE} small />
+      <MetaDescription description={localize('common.read-on-wir', lang)} />
+      <div className="tag-page">
+        <div className="wir-content-padding tag-page__header">
+          <div className="tag-page__topic">{getTopicLink({ topic, postfix: 'one' })}</div>
+          <div className="tag-page__title">{title}</div>
+        </div>
+        <ArticlesBlocks articlesCount={articlesCount} blocks={blocks} />
+      </div>
+    </>
+  );
+};
 
 TagPage.propTypes = {
+  lang: LangType.isRequired,
   routerQuery: PropTypes.shape({
     topic: PropTypes.oneOf(TOPICS).isRequired,
     tag: PropTypes.string.isRequired,
@@ -74,10 +86,6 @@ TagPage.propTypes = {
   blocks: PropTypes.arrayOf(ArticlesArray).isRequired,
   articlesCount: PropTypes.number.isRequired,
 };
-
-TagPage.getLayoutProps = ({ routerQuery: { tag } }) => ({
-  noLocTitle: toTitleCase(tag),
-});
 
 TagPage.getInitialProps = ctx =>
   populateRequest(ctx, ({ query: { tag } }) => tagsActions.fetchArticles(tag));

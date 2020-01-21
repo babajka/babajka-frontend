@@ -35,20 +35,25 @@ export const MetaDescription = ({ description }) => (
   </Head>
 );
 
-export const MetaImage = ({ url }) => (
+export const DEFAULT_IMAGE =
+  'https://res.cloudinary.com/wir-by/image/upload/v1542061416/production/meta/meta-wir.jpg';
+
+export const MetaImage = ({ url, small }) => (
   <Head>
     <meta key="meta-image-fb" property="og:image" content={url} />
-    <meta key="meta-twi-card" name="twitter:card" content="summary_large_image" />
+    <meta key="meta-twi-card" name="twitter:card" content={small ? '' : 'summary_large_image'} />
     <meta key="meta-image-twi" name="twitter:image" content={url} />
   </Head>
 );
 
 MetaImage.propTypes = {
+  small: PropTypes.bool,
   url: PropTypes.string,
 };
 
 MetaImage.defaultProps = {
-  url: 'https://res.cloudinary.com/wir-by/image/upload/v1542061416/production/meta/meta-wir.jpg',
+  small: false,
+  url: DEFAULT_IMAGE,
 };
 
 export const MetaLocale = ({ locale, altLocales }) => (
