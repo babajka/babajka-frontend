@@ -19,13 +19,12 @@ const scopes = [
   'article',
   'sidebar',
   'admin',
-  'banners',
-  // legacy, to check:
-  'about',
   'auth',
+  'forms',
+  'about',
   'diary',
   'errors',
-  'forms',
+  'banners',
   'header',
 ];
 

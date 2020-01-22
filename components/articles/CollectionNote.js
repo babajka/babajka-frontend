@@ -39,7 +39,7 @@ const CollectionNote = ({ data: { cover, articleIndex = 0, name, prev, next } })
       <div className="article-page__collection-items">
         <div className="article-page__collection-item">
           <Text id="article.this-is-the" /> {` ${index} `}
-          <Text id="article.of-collection" />{' '}
+          <Text id="article.of-collection" /> <br />
           <span className="article-page__collection-name">{name}</span>
         </div>
         {prev && <CollectionArticleLink {...prev} index={index - 1} />}

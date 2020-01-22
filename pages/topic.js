@@ -6,10 +6,19 @@ import { connect } from 'react-redux';
 import chunk from 'lodash/chunk';
 
 import Link from 'components/common/Link';
+import { localize } from 'components/common/Text';
 import ArticleCard from 'components/articles/cards/ArticleCard';
+import { MetaTitle, MetaDescription, MetaKeywords } from 'components/social/Metatags';
 
 import { topicsActions, topicsSelectors } from 'redux/ducks/topics';
-import { ArticlesById, TagShape, TagsArray, ArticlesArray, IdsArray } from 'utils/customPropTypes';
+import {
+  ArticlesById,
+  TagShape,
+  TagsArray,
+  ArticlesArray,
+  IdsArray,
+  LangType,
+} from 'utils/customPropTypes';
 import { populateRequest } from 'utils/request';
 import { renderTag } from 'utils/tags';
 import { TOPICS } from 'constants';
@@ -49,27 +58,34 @@ const COLS_COUNT = 3;
 
 const mapStateToProps = (state, { lang }) => topicsSelectors.getData(state, lang);
 
-const TopicPage = ({ tags, articlesByTag, articleById }) => {
+const TopicPage = ({ lang, routerQuery: { topic }, tags, articlesByTag, articleById }) => {
   const filteredTags = tags.filter(({ slug }) => articlesByTag[slug] && articlesByTag[slug].length);
   return (
-    <div className="wir-content-padding topics wir-no-background">
-      {chunk(filteredTags, Math.ceil(filteredTags.length / COLS_COUNT)).map((col, i) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <div key={i} className="topics__column">
-          {col.map(tag => (
-            <TopicSection
-              key={tag.id}
-              tag={tag}
-              articles={articlesByTag[tag.slug].map(id => articleById[id])}
-            />
-          ))}
-        </div>
-      ))}
-    </div>
+    <>
+      <MetaTitle title={localize(`topic.${topic}`, lang)} />
+      <MetaDescription description={localize(`topic.meta_${topic}_description`, lang)} />
+      <MetaKeywords keywords={localize(`topic.meta_${topic}_keywords`, lang)} />
+
+      <div className="wir-content-padding topics wir-no-background">
+        {chunk(filteredTags, Math.ceil(filteredTags.length / COLS_COUNT)).map((col, i) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <div key={i} className="topics__column">
+            {col.map(tag => (
+              <TopicSection
+                key={tag.id}
+                tag={tag}
+                articles={articlesByTag[tag.slug].map(id => articleById[id])}
+              />
+            ))}
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 
 TopicPage.propTypes = {
+  lang: LangType.isRequired,
   tags: TagsArray.isRequired,
   articlesByTag: PropTypes.objectOf(IdsArray).isRequired,
   articleById: ArticlesById.isRequired,

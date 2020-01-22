@@ -9,7 +9,13 @@ import Image from 'components/common/Image';
 import { localize } from 'components/common/Text';
 import DiaryLinkArrows from 'components/specials/diary/DiaryLinkArrows';
 import ShareButtons from 'components/social/ShareButtons';
-import { MetaTitle, MetaDescription, MetaKeywords, MetaImage } from 'components/social/Metatags';
+import {
+  MetaTitle,
+  MetaDescription,
+  MetaKeywords,
+  MetaImage,
+  DEFAULT_IMAGE,
+} from 'components/social/Metatags';
 import TwoArticlesInRow from 'components/articles/blocks/TwoArticlesInRow';
 
 import { diaryActions, diarySelectors } from 'redux/ducks/diary';
@@ -19,6 +25,7 @@ import fiberyToString from 'utils/fibery/toString';
 import { populateRequest, makeRequest } from 'utils/request';
 import { DiaryShape, LangType } from 'utils/customPropTypes';
 import { getLocalizedArticles } from 'utils/getters';
+import host from 'utils/host';
 
 import { DATE_FORMAT, SHORT_DATE_FORMAT } from 'constants';
 import { DIARY_PICTURE_WIDTH } from 'constants/misc';
@@ -50,14 +57,19 @@ const DiaryPage = ({
   }, []);
   const router = useRouter();
   const metaTitle = `${formatDate(date, DATE_FORMAT)}, ${name}`;
+  const metaKeywords = [
+    formatDate(date, SHORT_DATE_FORMAT),
+    name,
+    localize('diary.meta-keywords', lang),
+  ].join(', ');
   const [first, second] = getLocalizedArticles(articles, lang);
 
   return (
     <>
       <MetaTitle title={metaTitle} type="article" />
       <MetaDescription description={`${fiberyToString(content).substring(0, 100)}...`} />
-      <MetaKeywords keywords={`${formatDate(date, SHORT_DATE_FORMAT)}, ${name}`} />
-      <MetaImage url="" />
+      <MetaKeywords keywords={metaKeywords} />
+      <MetaImage url={image ? `${host}${image}` : DEFAULT_IMAGE} small />
 
       <div className="wir-content-padding diary-page">
         <DiaryLinkArrows className="diary-page__arrows diary-page__arrows--top" size={36} />

@@ -4,7 +4,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { MetaTitle, MetaImage, MetaDescription, DEFAULT_IMAGE } from 'components/social/Metatags';
+import {
+  MetaTitle,
+  MetaImage,
+  MetaDescription,
+  MetaKeywords,
+  DEFAULT_IMAGE,
+} from 'components/social/Metatags';
 import { localize } from 'components/common/Text';
 import FeaturedBlock from 'components/articles/blocks/FeaturedBlock';
 import TagPageBlockB from 'components/articles/blocks/TagPageBlockB';
@@ -60,11 +66,14 @@ const mapStateToProps = (state, { lang }) => tagsSelectors.getData(state, lang);
 const TagPage = ({ lang, routerQuery: { topic }, tag, blocks, articlesCount }) => {
   const title = renderTag(tag);
   const imageUrl = getTagImageUrl(tag);
+  const metaKeywords = [title, localize(`topic.meta_${topic}_keywords`, lang)].join(', ');
   return (
     <>
       <MetaTitle title={title} />
       <MetaImage url={imageUrl ? `${host}${imageUrl}` : DEFAULT_IMAGE} small />
-      <MetaDescription description={localize('common.read-on-wir', lang)} />
+      <MetaDescription description={localize(`topic.meta_other_${topic}_description`, lang)} />
+      <MetaKeywords keywords={metaKeywords} />
+
       <div className="tag-page">
         <div className="wir-content-padding tag-page__header">
           <div className="tag-page__topic">{getTopicLink({ topic, postfix: 'one' })}</div>

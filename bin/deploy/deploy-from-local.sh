@@ -33,12 +33,12 @@ HOST="wir-$MODE@$MODE.wir.by"
 ssh $HOST "mkdir -p \"${FRONTEND_REMOTE_SWAP_PATH}\""
 rsync -r --delete-after --exclude=.git --exclude=node_modules . \
   $HOST:"${FRONTEND_REMOTE_SWAP_PATH}"
-echo '[OK] Frontend pushed to server'
+echo "[OK] Frontend pushed to $MODE server"
 
 ssh $HOST 'bash -s' < bin/deploy/install-deps.sh $MODE
-echo '[OK] Dependencies are installed'
+echo "[OK] Dependencies are installed"
 
 ssh $HOST 'bash -s' < bin/deploy/postdeploy.sh $MODE
-echo '[OK] Deployed'
+echo "[OK] Deployed to $MODE"
 
 bash bin/deploy/after-deploy.sh $MODE
