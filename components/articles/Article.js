@@ -13,6 +13,7 @@ import { ArticleShape } from 'utils/customPropTypes';
 import { getTagLink, getTagImageRenderer } from 'utils/tags';
 import { renderNodeList } from 'utils/formatters';
 import fiberyRenderer from 'utils/fibery/renderer';
+import host from 'utils/host';
 
 import CollectionNote from './CollectionNote';
 
@@ -30,7 +31,7 @@ const Article = ({
       <MetaTitle title={title} type="article" />
       <MetaDescription description={subtitle} />
       {/* FIXME: proper social preview image (size) */}
-      <MetaImage url={images.page} />
+      <MetaImage url={type === 'text' ? `${host}${images.page}` : ''} small={type !== 'text'} />
       <MetaKeywords keywords={keywords} />
       <div className="article-page">
         <div className="wir-content-padding article-page-content">
