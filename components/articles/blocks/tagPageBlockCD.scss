@@ -23,7 +23,6 @@
 @mixin shared-screen-tablet-touch-mobile {
   .tag-page-block-cd {
     flex-direction: column;
-    margin-top: 0;
 
     &__card {
       padding: 10px 0;

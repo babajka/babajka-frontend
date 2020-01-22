@@ -146,11 +146,11 @@
     },
     {
       "path": ".next/static/**/topic.js",
-      "maxSize": "2 kB"
+      "maxSize": "5 kB"
     },
     {
       "path": ".next/static/**/tag.js",
-      "maxSize": "2 kB"
+      "maxSize": "5 kB"
     },
     {
       "path": ".next/static/**/about.js",
