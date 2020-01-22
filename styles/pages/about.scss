@@ -32,11 +32,12 @@ $team-columns: (
     align-items: center;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     margin-left: 1rem;
   }
 
   &__partner-logo {
-    margin: 0 1rem;
+    margin: 1rem;
   }
 
   &__team {
@@ -164,6 +165,12 @@ $team-columns: (
       img {
         width: 3rem;
       }
+
+      &--smallest {
+        img {
+          width: 4rem;
+        }
+      }
     }
   }
 
@@ -179,10 +186,16 @@ $team-columns: (
     }
 
     &__partner-logo {
-      margin: 0 0.2rem;
+      margin: 0.5rem;
 
       img {
         width: 3rem;
+      }
+
+      &--smallest {
+        img {
+          width: 4rem;
+        }
       }
     }
   }
