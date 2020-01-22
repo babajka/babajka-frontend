@@ -32,4 +32,10 @@ export const PARTNERS = [
     img: 'museum_brouka_logo.jpg',
     url: 'http://brouka.museum.by',
   },
+  {
+    id: 'logo-art-museum',
+    img: 'mastacki_logo.jpg',
+    url: 'https://www.artmuseum.by/by/',
+    className: 'about-page__partner-logo--smallest',
+  },
 ];

@@ -37,9 +37,9 @@ const AboutPage = ({ lang }) => (
         <div className="about-page__description-text about-page__team">
           {team.map(({ image, name, role }) => (
             <div key={name} className="about-page__teammate teammate">
-              <img className="teammate__pic" src={image} alt={localize(name, lang)} />
-              <div className="teammate__name">{localize(name, lang)}</div>
-              <div className="teammate__role">{localize(role, lang)}</div>
+              <img className="teammate__pic" src={image} alt={name[lang || 'be']} />
+              <div className="teammate__name">{name[lang || 'be']}</div>
+              <div className="teammate__role">{role[lang || 'be']}</div>
             </div>
           ))}
         </div>
@@ -65,7 +65,7 @@ const AboutPage = ({ lang }) => (
           <Text id="about.section-partners-header" />
         </div>
         <div className="about-page__description-text about-page__partners">
-          {PARTNERS.map(({ id, img, url, className }) => (
+          {PARTNERS.map(({ id, img, url, className = '' }) => (
             <div key={id} className={`about-page__partner-logo ${className}`}>
               <ExternalLink href={url}>
                 <img src={getLogoUrl(img)} alt={localize(`about.${id}`, lang)} />
