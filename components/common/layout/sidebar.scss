@@ -10,6 +10,7 @@
   min-height: 100vh;
   min-width: 240px;
   padding: 21px 24px 120px;
+  position: relative;
   width: calc(240px + (100vw - #{$desktop-with-sidebar}) * 2 / 3);
 
   @include mobile {
@@ -38,20 +39,12 @@
   }
 
   &__icon-close {
-    align-items: center;
     color: $primary;
     cursor: pointer;
-    display: flex;
     float: right;
     font-size: 20px;
-    height: 28px;
-    justify-content: center;
-    margin-right: -24px;
-    margin-top: -24px;
     position: sticky;
-    right: 0;
-    top: 0;
-    width: 28px;
+    top: 21px;
 
     @include sidebar-visible {
       display: none;
