@@ -100,3 +100,11 @@ $page-content: (
     @content;
   }
 }
+
+// Mixed:
+
+@mixin screen-tablet-touch-mobile {
+  @media screen and (max-width: $tablet - 1) {
+    @content;
+  }
+}

@@ -114,8 +114,4 @@ DiaryPage.propTypes = {
 DiaryPage.getInitialProps = ctx =>
   populateRequest(ctx, ({ query: { slug } }) => diaryActions.getBySlug(slug));
 
-DiaryPage.getLayoutProps = () => ({
-  hideFooter: true,
-});
-
 export default connect(mapStateToProps)(DiaryPage);

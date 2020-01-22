@@ -1,8 +1,17 @@
+@import 'responsiveness';
 @import 'variables';
 
 .block {
   &.wir-no-background {
     margin-top: 60px;
+
+    @include screen-tablet-touch-mobile {
+      // FIXME: to eliminate this workaround by properly handling Block margins.
+      &.tag-page-block-b,
+      &.tag-page-block-cd {
+        margin-top: 0;
+      }
+    }
   }
 
   &.wir-with-background {
