@@ -5,7 +5,11 @@ bold=$(tput bold)
 normal=$(tput sgr0)
 
 MODE=$1
-if [ $MODE != "dev" ] && [ $MODE != "prod" ]; then
+if [ $MODE == "dev" ]; then
+  ENV="staging"
+elif [ $MODE == "prod" ]; then
+  ENV="production"
+else
   echo '[FAIL] Mode (dev or prod) must be provided.'
   exit 1
 fi
@@ -24,8 +28,8 @@ fi
 export $(cat .env | xargs)
 bash bin/deploy/before-deploy.sh $MODE
 
-echo 'Building...'
-WIR_ENV=staging npm run build
+echo "Building with ENV=$ENV"
+WIR_ENV=$ENV npm run build
 
 FRONTEND_REMOTE_SWAP_PATH="/home/wir-$MODE/deployed/swap-frontend/babajka-frontend/"
 HOST="wir-$MODE@$MODE.wir.by"

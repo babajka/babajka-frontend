@@ -1,9 +1,16 @@
 language: node_js
 node_js:
   - '10'
+before_script:
+  - |
+    if [ $TRAVIS_BRANCH == "master" ]; then
+      ENV="production"
+    else
+      ENV="staging"
+    fi
 script:
   - npm run lint
-  - WIR_ENV=staging npm run build
+  - WIR_ENV=$ENV npm run build
   - npm run bundlesize
 after_success:
   - npm run travis-deploy-once "npm run semantic-release"
