@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { linkCn } from 'utils/ui';
 
 const MailLink = ({ to, children = `${to}@wir.by` }) => (
-  <a href={`mailto:wir.${to}@wir.by`} target="_top" className={linkCn()}>
+  <a href={`mailto:${to}@wir.by`} target="_top" className={linkCn()}>
     {children}
   </a>
 );
