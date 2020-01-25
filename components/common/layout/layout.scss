@@ -12,6 +12,7 @@ body {
   height: 100%;
   margin: 0;
   max-width: 100vw;
+  min-width: $min-website-width;
 
   @include sidebar-visible {
     display: block;
@@ -34,6 +35,7 @@ footer {
   margin: auto;
   max-width: $widescreen;
   min-height: 100vh;
+  min-width: $min-website-width;
   overflow-x: hidden;
   position: relative;
 
@@ -54,6 +56,7 @@ footer {
   flex-direction: column;
   max-width: 100vw;
   min-height: 100vh;
+  min-width: $min-website-width;
 
   @include sidebar-visible {
     flex-grow: 1;
