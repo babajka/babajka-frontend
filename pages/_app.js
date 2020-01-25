@@ -127,6 +127,13 @@ class Root extends App {
           <Head>
             <link rel="icon" type="image/png" href={FAVICON_URL} />
             <link rel="preconnect" href="https://www.google-analytics.com" />
+            {/* https://developers.google.com/search/reference/podcast/homepage-requirements */}
+            {/* <link
+              rel="alternate"
+              type="application/rss+xml"
+              title="Wir.by Podcasts"
+              href="https://wir.by/rss/podcasts"
+            /> */}
           </Head>
           <CoreLayout lang={locale} hideFooter={hideFooter} hideSidebar={hideSidebar}>
             <Guard permissions={permissions}>

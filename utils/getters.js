@@ -10,6 +10,8 @@ export const getDiary = ({ author, text, day, month, year, slug }) => ({
   slug,
   // TODO(tyndria): extract it in some func & simplify
   date: ((month && moment({ day, month: month - 1, year })) || moment()).valueOf(),
+  day,
+  month,
 });
 
 export const getLocalizedCollection = (
