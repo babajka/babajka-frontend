@@ -1,6 +1,9 @@
 start:
 	npm start
 
+local-backend:
+	npm run local-backend
+
 lint:
 	npm run lint
 

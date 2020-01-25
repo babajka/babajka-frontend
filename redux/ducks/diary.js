@@ -54,15 +54,15 @@ const getNext = state => getState(state).next;
 const isPending = state => getState(state).pending;
 const isError = state => getState(state).error;
 const isNextAvailable = state => {
-  const { next } = getState(state);
+  const { data, next } = getState(state);
   if (!next) {
     return false;
   }
   const now = moment();
-  const { month, day } = next;
+  const { month, day } = data;
   const nowHash = (now.month() + 1) * 100 + now.date();
-  const nextHash = +month * 100 + +day;
-  return nextHash <= nowHash;
+  const currentHash = +month * 100 + +day;
+  return currentHash !== nowHash;
 };
 
 export const diarySelectors = {
