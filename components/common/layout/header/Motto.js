@@ -1,4 +1,5 @@
 import React from 'react';
+import sample from 'lodash/sample';
 
 import Text from 'components/common/Text';
 import Link from 'components/common/Link';
@@ -6,6 +7,8 @@ import Link from 'components/common/Link';
 import { TagLink } from 'utils/tags';
 import { ROUTES_NAMES } from 'routes';
 import { TOPIC } from 'constants/misc';
+
+const CULTURE = ['art', 'cinema', 'literature']; // + 'music'
 
 const Motto = () => (
   <>
@@ -20,7 +23,7 @@ const Motto = () => (
             <TagLink topic={TOPIC.locations} tag="europe">
               {world}
             </TagLink>
-            <TagLink topic={TOPIC.themes} tag="art">
+            <TagLink topic={TOPIC.themes} tag={sample(CULTURE)}>
               {culture}
             </TagLink>
             {and}
