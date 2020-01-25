@@ -15,7 +15,7 @@ export const getDiary = ({ author, text, day, month, year, slug }) => ({
 });
 
 export const getLocalizedCollection = (
-  { slug, cover, name, description, prev, next, articleIndex },
+  { slug, cover, name, description, articles, articleIndex },
   lang
 ) => ({
   slug,
@@ -23,8 +23,7 @@ export const getLocalizedCollection = (
   articleIndex,
   name: localize(name, lang),
   description: localize(description, lang),
-  prev: getLocalizedArticle(prev), // eslint-disable-line no-use-before-define
-  next: getLocalizedArticle(next), // eslint-disable-line no-use-before-define
+  articles: articles.map(getLocalizedArticle), // eslint-disable-line no-use-before-define
 });
 
 export const getLocalizedCollections = localizeArray(getLocalizedCollection);
