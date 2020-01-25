@@ -106,6 +106,7 @@ footer {
 
   @include sidebar-visible {
     background-color: $primary-concrete;
+    overflow-y: unset;
     position: unset;
     right: unset;
     width: unset;
