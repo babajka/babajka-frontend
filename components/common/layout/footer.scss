@@ -87,7 +87,7 @@
   }
 
   &__interactions {
-    align-items: flex-start;
+    align-items: stretch;
     display: flex;
     flex-direction: column;
     padding: 1rem 0;
@@ -102,6 +102,7 @@
   }
 
   &__mailing {
+    height: 120px;
     padding-bottom: 10px;
   }
 
