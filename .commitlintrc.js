@@ -26,6 +26,7 @@ module.exports = {
         'diary',
         'fibery',
         'tags',
+        'social',
       ],
     ],
     'scope-empty': [2, 'never'],

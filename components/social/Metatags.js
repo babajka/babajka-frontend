@@ -36,7 +36,7 @@ export const MetaDescription = ({ description }) => (
 );
 
 export const DEFAULT_IMAGE =
-  'https://res.cloudinary.com/wir-by/image/upload/v1542061416/production/meta/meta-wir.jpg';
+  'https://res.cloudinary.com/wir-by/image/upload/v1580048273/production/meta/meta-large.png';
 
 export const MetaImage = ({ url, small }) => (
   <Head>
