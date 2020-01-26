@@ -23,7 +23,7 @@
     display: flex;
     flex-direction: column;
 
-    @media screen and (min-width: $tablet) {
+    @media screen and (min-width: 720px) {
       flex-direction: row;
     }
 
@@ -87,6 +87,9 @@
   }
 
   &__interactions {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
     padding: 1rem 0;
 
     @include touch {
@@ -99,7 +102,15 @@
   }
 
   &__mailing {
-    padding-bottom: 2rem;
+    padding-bottom: 10px;
+  }
+
+  &__rss {
+    padding: 10px 0 20px;
+
+    &-icon {
+      margin-right: 5px;
+    }
   }
 
   &__help-us {

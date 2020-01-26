@@ -5,6 +5,7 @@ import React from 'react';
 import Text, { useLocalization } from 'components/common/Text';
 import Link from 'components/common/Link';
 import ExternalLink from 'components/common/ExternalLink';
+import Icon from 'components/common/ui/Icon';
 
 import MailLink from 'components/social/MailLink';
 import ShareButtons from 'components/social/ShareButtons';
@@ -50,6 +51,10 @@ const Footer = () => (
         <div className="footer-layout__block2">
           <div className="footer__interactions">
             <SubscribeForm />
+            <ExternalLink className="footer__rss" href="/rss">
+              <Icon className="footer__rss-icon" pack="s" name="rss" />
+              <Text id="footer.rss" />
+            </ExternalLink>
             <div className="footer__social">
               <div className="footer__header">
                 <Text id="footer.share" />
