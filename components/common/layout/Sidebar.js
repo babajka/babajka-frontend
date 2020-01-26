@@ -16,6 +16,7 @@ import { authActions, authSelectors } from 'redux/ducks/auth';
 import { sidebarSelectors } from 'redux/ducks/sidebar';
 import { TagsById, UserShape, IdsArray } from 'utils/customPropTypes';
 import { getTagLink, getTopicLink } from 'utils/tags';
+import env from 'utils/env';
 
 import { TOPICS, LANGS } from 'constants';
 import { TOPIC } from 'constants/misc';
@@ -66,7 +67,9 @@ const getFooter = (topic, linkProps) => {
   return getTopicLink({ topic, ...linkProps });
 };
 
-const handleLangClick = Cookies.set.bind(null, LOCALE_COOKIE_NAME);
+const handleLangClick = lang => {
+  Cookies.set(LOCALE_COOKIE_NAME, lang, { secure: env !== 'development' });
+};
 
 const mapStateToProps = (state, { lang }) => ({
   user: authSelectors.getUser(state),
