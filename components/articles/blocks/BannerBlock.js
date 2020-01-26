@@ -30,9 +30,9 @@ const BannerBlock = ({ block: { banner } }) => {
   return (
     <BlockWrapper>
       <div className={`banner banner-${banner}`}>
-        <Picture sources={BANNERS} alt={title} />
         <ExternalLink href={LINK}>
           <div className={`banner__title banner-${banner}__title`}>{title}</div>
+          <Picture sources={BANNERS} alt={title} />
         </ExternalLink>
       </div>
     </BlockWrapper>
