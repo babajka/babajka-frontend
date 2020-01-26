@@ -36,7 +36,7 @@ const getData = (state, lang) => {
 
   return {
     blocks: getArticlesBlocks(localizedArticles),
-    tag: getLocalizedTag(tag),
+    tag: getLocalizedTag(tag, lang),
     articlesCount: localizedArticles.length,
   };
 };
