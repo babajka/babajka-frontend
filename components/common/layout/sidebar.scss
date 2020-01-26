@@ -6,12 +6,12 @@
   box-sizing: border-box;
   font-size: 14px;
   line-height: 24px;
-  max-width: 400px;
+  max-width: 300px;
   min-height: 100vh;
   min-width: 240px;
   padding: 21px 24px 120px;
   position: relative;
-  width: calc(240px + (100vw - #{$desktop-with-sidebar}) * 2 / 3);
+  width: calc(240px + (100vw - #{$desktop-with-sidebar}) / 4);
 
   @include mobile {
     width: 100vw;
