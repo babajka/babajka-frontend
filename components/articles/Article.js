@@ -3,7 +3,13 @@ import 'styles/pages/article.scss';
 import React from 'react';
 import { useRouter } from 'next/router';
 
-import { MetaTitle, MetaDescription, MetaImage, MetaKeywords } from 'components/social/Metatags';
+import {
+  MetaTitle,
+  MetaDescription,
+  MetaImage,
+  MetaKeywords,
+  DEFAULT_IMAGE,
+} from 'components/social/Metatags';
 import AudioPlayer from 'components/common/AudioPlayer';
 import VideoPlayer from 'components/common/VideoPlayer';
 import Image from 'components/common/Image';
@@ -30,7 +36,13 @@ const Article = ({
     <>
       <MetaTitle title={title} type="article" />
       <MetaDescription description={subtitle} />
-      <MetaImage url={`${host}${images.page || images.horizontal}`} />
+      <MetaImage
+        url={
+          (images.page && `${host}${images.page}`) ||
+          (images.horizontal && `${host}${images.horizontal}`) ||
+          DEFAULT_IMAGE
+        }
+      />
       <MetaKeywords keywords={keywords} />
       <div className="article-page">
         <div className="wir-content-padding article-page-content">

@@ -4,7 +4,13 @@ import React from 'react';
 
 import ExternalLink from 'components/common/ExternalLink';
 import Text, { localize } from 'components/common/Text';
-import { MetaTitle, MetaDescription, MetaKeywords, MetaImage } from 'components/social/Metatags';
+import {
+  MetaTitle,
+  MetaDescription,
+  MetaKeywords,
+  MetaImage,
+  DEFAULT_IMAGE,
+} from 'components/social/Metatags';
 
 import team from 'data/team.json';
 
@@ -18,7 +24,7 @@ const AboutPage = ({ lang }) => (
     <MetaTitle title={localize('about.meta-title', lang)} type="article" />
     <MetaDescription description={localize('about.meta-description', lang)} />
     <MetaKeywords keywords={localize('about.meta-keywords', lang)} />
-    <MetaImage url="" />
+    <MetaImage url={DEFAULT_IMAGE} small />
 
     <div className="wir-content-padding about-page">
       <div className="about-page__description-block">
