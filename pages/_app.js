@@ -27,7 +27,7 @@ import Metatags, {
 import { localize } from 'components/common/Text';
 
 import { DEFAULT_LOCALE, VALID_LOCALES } from 'constants';
-import { getGoogleAnalyticsID } from 'constants/social';
+import { GA_ID } from 'constants/social';
 import { FAVICON_URL } from 'constants/assets';
 
 import clearUtmParams from 'lib/utils/clearUtmParams';
@@ -90,10 +90,8 @@ class Root extends App {
   }
 
   componentDidMount() {
-    if ((__PROD__ || __STAGING__) && !window.ga) {
-      ReactGA.initialize(getGoogleAnalyticsID(__PROD__), {
-        debug: false,
-      });
+    if (__PROD__ && !window.ga) {
+      ReactGA.initialize(GA_ID, { debug: false });
       const url = document.location.pathname + document.location.search;
       ReactGA.ga('send', 'pageview', url, { hitCallback: clearUtmParams });
     }
