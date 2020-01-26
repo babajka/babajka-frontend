@@ -69,7 +69,7 @@ export const SHARE_NETWORKS = [
   },
 ];
 
-export const getGoogleAnalyticsID = isProd => (isProd ? 'UA-117143376-2' : 'UA-117143376-1');
+export const GA_ID = 'UA-117143376-2';
 
 export const DEFAULT_KEYWORDS = [
   // common

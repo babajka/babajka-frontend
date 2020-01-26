@@ -31,18 +31,13 @@ const Article = ({
   const router = useRouter();
   const { brands, authors, ...tags } = tagsByTopic;
   const renderTagImage = getTagImageRenderer({ className: 'article-page__tag-image' });
+  const imageUrl = images.page || images.horizontal;
 
   return (
     <>
       <MetaTitle title={title} type="article" />
       <MetaDescription description={subtitle} />
-      <MetaImage
-        url={
-          (images.page && `${host}${images.page}`) ||
-          (images.horizontal && `${host}${images.horizontal}`) ||
-          DEFAULT_IMAGE
-        }
-      />
+      <MetaImage url={imageUrl ? `${host}${imageUrl}` : DEFAULT_IMAGE} />
       <MetaKeywords keywords={keywords} />
       <div className="article-page">
         <div className="wir-content-padding article-page-content">
