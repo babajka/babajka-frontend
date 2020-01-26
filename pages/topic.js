@@ -3,7 +3,6 @@ import 'styles/pages/topic.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import chunk from 'lodash/chunk';
 
 import Link from 'components/common/Link';
 import { localize } from 'components/common/Text';
@@ -26,7 +25,8 @@ import { ROUTES_NAMES } from 'routes';
 
 const TopicSection = ({ tag, articles }) => {
   const [first, ...rest] = articles;
-  const showCard = articles.length > 1;
+  // const showCard = articles.length > 1;
+  const showCard = false;
   const list = showCard ? rest : articles;
   return (
     <div className="topics__section">
@@ -54,8 +54,6 @@ TopicSection.propTypes = {
   articles: ArticlesArray.isRequired,
 };
 
-const COLS_COUNT = 3;
-
 const mapStateToProps = (state, { lang }) => topicsSelectors.getData(state, lang);
 
 const TopicPage = ({ lang, routerQuery: { topic }, tags, articlesByTag, articleById }) => {
@@ -67,18 +65,15 @@ const TopicPage = ({ lang, routerQuery: { topic }, tags, articlesByTag, articleB
       <MetaKeywords keywords={localize(`topic.meta_${topic}_keywords`, lang)} />
 
       <div className="wir-content-padding topics wir-no-background">
-        {chunk(filteredTags, Math.ceil(filteredTags.length / COLS_COUNT)).map((col, i) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <div key={i} className="topics__column">
-            {col.map(tag => (
-              <TopicSection
-                key={tag.id}
-                tag={tag}
-                articles={articlesByTag[tag.slug].map(id => articleById[id])}
-              />
-            ))}
-          </div>
-        ))}
+        {filteredTags
+          .sort((tagA, tagB) => articlesByTag[tagB.slug].length - articlesByTag[tagA.slug].length)
+          .map(tag => (
+            <TopicSection
+              key={tag.id}
+              tag={tag}
+              articles={articlesByTag[tag.slug].map(id => articleById[id])}
+            />
+          ))}
       </div>
     </>
   );
