@@ -1,7 +1,7 @@
 import env from './env';
 
 const HOSTS = {
-  production: 'https://prod.wir.by',
+  production: 'https://wir.by',
   staging: 'https://dev.wir.by',
 };
 
