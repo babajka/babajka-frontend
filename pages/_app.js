@@ -27,7 +27,7 @@ import Metatags, {
 import { localize } from 'components/common/Text';
 
 import { DEFAULT_LOCALE, VALID_LOCALES } from 'constants';
-import { GA_ID } from 'constants/social';
+import { GA_ID, YM_ID } from 'constants/social';
 import { FAVICON_URL } from 'constants/assets';
 
 import clearUtmParams from 'lib/utils/clearUtmParams';
@@ -36,6 +36,7 @@ import { replaceLocale } from 'utils/formatters';
 import { LangType } from 'utils/customPropTypes';
 import host from 'utils/host';
 import initStore from 'redux/store';
+import loadYM from 'utils/loadYM';
 
 import { authActions } from 'redux/ducks/auth';
 import { sidebarActions } from 'redux/ducks/sidebar';
@@ -90,9 +91,13 @@ class Root extends App {
   }
 
   componentDidMount() {
+    const url = document.location.pathname + document.location.search;
+    if (__PROD__ && !window.ym) {
+      loadYM(YM_ID);
+      window.ym(YM_ID, 'hit', url);
+    }
     if (__PROD__ && !window.ga) {
       ReactGA.initialize(GA_ID, { debug: false });
-      const url = document.location.pathname + document.location.search;
       ReactGA.ga('send', 'pageview', url, { hitCallback: clearUtmParams });
     }
   }
@@ -132,6 +137,15 @@ class Root extends App {
               title="Wir.by Podcasts"
               href="https://wir.by/rss/podcasts"
             /> */}
+            <noscript>
+              <div>
+                <img
+                  src={`https://mc.yandex.ru/watch/${YM_ID}`}
+                  style={{ position: 'absolute', left: '-9999px' }}
+                  alt=""
+                />
+              </div>
+            </noscript>
           </Head>
           <CoreLayout lang={locale} hideFooter={hideFooter} hideSidebar={hideSidebar}>
             <Guard permissions={permissions}>

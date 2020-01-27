@@ -2,12 +2,14 @@ import 'styles/pages/article.scss';
 
 import React from 'react';
 import { useRouter } from 'next/router';
+import flatten from 'lodash/flatten';
 
 import {
   MetaTitle,
   MetaDescription,
   MetaImage,
   MetaKeywords,
+  MetaArticleItems,
   DEFAULT_IMAGE,
 } from 'components/social/Metatags';
 import AudioPlayer from 'components/common/AudioPlayer';
@@ -16,7 +18,7 @@ import Image from 'components/common/Image';
 import ShareButtons from 'components/social/ShareButtons';
 
 import { ArticleShape } from 'utils/customPropTypes';
-import { getTagLink, getTagImageRenderer } from 'utils/tags';
+import { getTagLink, getTagImageRenderer, renderTag } from 'utils/tags';
 import { renderNodeList } from 'utils/formatters';
 import fiberyRenderer from 'utils/fibery/renderer';
 import host from 'utils/host';
@@ -26,12 +28,26 @@ import CollectionNote from './CollectionNote';
 const COVER_SIZES = [1200, 1000, 770, 640, 360];
 
 const Article = ({
-  data: { images, title, subtitle, keywords, text, type, audio, video, tagsByTopic, collection },
+  data: {
+    images,
+    title,
+    subtitle,
+    keywords,
+    text,
+    type,
+    audio,
+    video,
+    tagsByTopic,
+    collection,
+    publishAt,
+  },
 }) => {
   const router = useRouter();
-  const { brands, authors, ...tags } = tagsByTopic;
+  const { brands, authors, ...tagsObject } = tagsByTopic;
   const renderTagImage = getTagImageRenderer({ className: 'article-page__tag-image' });
   const imageUrl = images.page || images.horizontal;
+  // https://caniuse.com/#feat=array-flat
+  const tags = flatten(Object.values(tagsObject));
 
   return (
     <>
@@ -39,6 +55,9 @@ const Article = ({
       <MetaDescription description={subtitle} />
       <MetaImage url={imageUrl ? `${host}${imageUrl}` : DEFAULT_IMAGE} />
       <MetaKeywords keywords={keywords} />
+      <MetaArticleItems name="author" list={authors.map(renderTag)} />
+      <MetaArticleItems name="tag" list={tags.map(renderTag)} />
+      <MetaArticleItems name="published_time" value={publishAt} />
       <div className="article-page">
         <div className="wir-content-padding article-page-content">
           <div className="article-page__subtitle">{subtitle}</div>
@@ -86,14 +105,11 @@ const Article = ({
           <ShareButtons urlPath={router.asPath} title={title} />
         </div>
         <div className="article-page__other-tags">
-          {/* flatMap or flatten? */}
-          {Object.values(tags).map(tagList =>
-            tagList.map(tag => (
-              <div key={tag.slug} className="article-page__other-tag">
-                {getTagLink({ tag })}
-              </div>
-            ))
-          )}
+          {tags.map(tag => (
+            <div key={tag.slug} className="article-page__other-tag">
+              {getTagLink({ tag })}
+            </div>
+          ))}
         </div>
       </div>
     </>

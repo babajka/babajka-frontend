@@ -93,6 +93,27 @@ MetaKeywords.defaultProps = {
   keywords: DEFAULT_KEYWORDS,
 };
 
+export const MetaArticleItems = ({ name, list, value }) => (
+  <Head>
+    {list.map((author, i) => (
+      // eslint-disable-next-line react/no-array-index-key
+      <meta key={`meta-${name}-${i}`} property={`article:${name}`} content={author} />
+    ))}
+    {value && <meta key={`meta-${name}`} property={`article:${name}`} content={value} />}
+  </Head>
+);
+
+MetaArticleItems.propTypes = {
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string,
+  list: PropTypes.arrayOf(PropTypes.string),
+};
+
+MetaArticleItems.defaultProps = {
+  list: [],
+  value: null,
+};
+
 export const MetaAppleTouchDevices = ({ title }) => (
   <Head>
     <link rel="apple-touch-icon" href={APPLE_TOUCH_ICON} />
