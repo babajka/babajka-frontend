@@ -30,10 +30,6 @@ Next.js &amp; React app
   - `npm run analyze:client`
 - `npm run size` to check client-side bundle sizes with [`bundlesize`](https://github.com/siddharthkp/bundlesize)
 
-## configuration
-
-- `npm run dev -- http://localhost:8080` sets url to the local backend instance. (defaults to `https://api.wir.by`)
-
 ## rules
 
 - we use [`ducks convention`](https://github.com/erikras/ducks-modular-redux) for redux modules
