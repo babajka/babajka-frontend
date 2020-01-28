@@ -1,86 +1,94 @@
-import fromPairs from 'lodash/fromPairs';
-import chunk from 'lodash/chunk';
 import moment from 'moment';
-import { DEFAULT_LOCALE } from 'constants';
+import chunk from 'lodash/chunk';
 
-// here are the rules for localization:
-// 1. requested lang
-// 2. default (be)
-// 3. any existing
-const localize = (object, lang = DEFAULT_LOCALE) =>
-  object && (object[lang] || object[DEFAULT_LOCALE] || Object.values(object)[0]);
+import { TOPICS } from 'constants';
+import { localize, localizeArray, localizeFields } from 'utils/localization';
 
-const getLocalizedArray = localizeItem => (items, lang) =>
-  items && items.map(item => localizeItem(item, lang));
-
-export const getLocalizedAuthor = (author, lang) => {
-  if (!author) {
-    return null;
-  }
-  const localized = { ...author };
-  ['firstName', 'lastName', 'displayName', 'bio'].forEach(key => {
-    localized[key] = localize(author[key], lang);
-  });
-  return localized;
-};
-
-export const getLocalizedAuthors = getLocalizedArray(getLocalizedAuthor);
-
-export const getLocalizedBrand = ({ slug, imageUrl, names }, lang) => ({
+export const getDiary = ({ author, text, day, month, year, slug }) => ({
+  author,
+  text,
   slug,
-  imageUrl,
-  name: localize(names, lang),
+  // TODO(tyndria): extract it in some func & simplify
+  date: ((month && moment({ day, month: month - 1, year })) || moment()).valueOf(),
+  day,
+  month,
 });
 
-export const getLocalizedBrands = getLocalizedArray(getLocalizedBrand);
-
 export const getLocalizedCollection = (
-  { slug, imageUrl, name, description, prev, next },
+  { slug, cover, name, description, articles, articleIndex },
   lang
 ) => ({
   slug,
-  imageUrl,
+  cover,
+  articleIndex,
   name: localize(name, lang),
   description: localize(description, lang),
-  prev: prev && getLocalizedArticle(prev), // eslint-disable-line no-use-before-define
-  next: next && getLocalizedArticle(next), // eslint-disable-line no-use-before-define
+  articles: articles.map(getLocalizedArticle), // eslint-disable-line no-use-before-define
 });
 
-export const getLocalizedCollections = getLocalizedArray(getLocalizedCollection);
+export const getLocalizedCollections = localizeArray(getLocalizedCollection);
 
 export const getLocalesBySlug = ({ locales }) =>
-  fromPairs(Object.entries(locales).map(([key, { slug }]) => [slug, key]));
+  Object.entries(locales).reduce((acc, [key, { slug }]) => {
+    acc[slug] = key;
+    return acc;
+  }, {});
+
+const LOCALIZE_TAG_CONTENT = {
+  themes: localizeFields(['title']),
+  locations: localizeFields(['title']),
+  times: localizeFields(['title']),
+  personalities: localizeFields(['name', 'subtitle', 'description']),
+  brands: localizeFields(['title']),
+  authors: localizeFields(['firstName', 'lastName', 'bio']),
+};
+
+export const getTopic = ({ _id: id, slug }) => ({ id, slug });
+
+export const getTopics = topics => topics.map(getTopic);
+
+// WARNING: filter `topic`
+// TODO: remove `topic` on back, replace with `topicSlug`
+export const getLocalizedTag = ({ _id: id, topicSlug, content, topic: _, ...rest }, lang) => ({
+  ...rest,
+  id,
+  topicSlug,
+  content: LOCALIZE_TAG_CONTENT[topicSlug](content, lang),
+});
+
+export const getLocalizedTags = localizeArray(getLocalizedTag);
+
+const getInitTagsByTopic = () => TOPICS.reduce((acc, topic) => ({ ...acc, [topic]: [] }), {});
 
 export const getLocalizedArticle = (article, lang) => {
   if (!article) {
     return null;
   }
-  const {
-    brand,
-    type,
-    locales,
-    author,
-    imagePreviewUrl,
-    imageFolderUrl,
-    collection,
-    publishAt,
-    video,
-  } = article;
+  const { _id: id, locales, collection, publishAt, tags, ...rest } = article;
+  const { text, ...localized } = localize(locales, lang);
+
+  // TODO: think about implementing this logic at backend
+  // WARNING: there are no tags in `prev` & `next` articles in collection
+  const tagsByTopic =
+    tags &&
+    getLocalizedTags(tags, lang).reduce((acc, tag) => {
+      acc[tag.topicSlug].push(tag);
+      return acc;
+    }, getInitTagsByTopic());
+
   return {
-    ...localize(locales, lang),
-    author: author && getLocalizedAuthor(author, lang),
-    brand: brand && getLocalizedBrand(brand, lang),
-    collection: collection && getLocalizedCollection(collection, lang),
-    imagePreviewUrl,
-    imageFolderUrl,
-    type,
+    ...rest,
+    ...localized,
+    text: text || {},
+    id,
     publishAt,
+    collection: collection && getLocalizedCollection(collection, lang),
     published: !!publishAt && moment(publishAt).isBefore(moment()),
-    video,
+    tagsByTopic,
   };
 };
 
-export const getLocalizedArticles = getLocalizedArray(getLocalizedArticle);
+export const getLocalizedArticles = localizeArray(getLocalizedArticle);
 
 export const getShortLocale = ({ locale, slug, title }) => ({ locale, slug, title });
 
@@ -93,26 +101,15 @@ export const getMainArticlesRows = (articles, rowSize, complexRowSize) => {
   return [firstRow, secondRow, ...getArticlesRows(articles.slice(secondRowEnd), rowSize)];
 };
 
-export const getLocalizedTeam = (team, lang) =>
-  team &&
-  team.map(({ name, role, ...rest }, index) => ({
-    ...rest,
-    id: index,
-    name: localize(name, lang),
-    role: localize(role, lang),
-  }));
+export const getLocalizedTeam = localizeArray(localizeFields(['name', 'role']));
 
-export const getLocalizedVacancies = (vacancies, lang) =>
-  vacancies &&
-  vacancies.map(({ title, description }, index) => ({
-    id: index,
-    title: localize(title, lang),
-    description: localize(description, lang),
-  }));
+export const getLocalizedVacancies = localizeArray(localizeFields(['title', 'description']));
 
-export const getDiary = ({ author = '', text = '', day, month, year } = {}) => ({
-  author,
-  text,
-  // TODO(tyndria): extract it in some func & simplify
-  date: ((month && moment({ day, month: month - 1, year })) || moment()).valueOf(),
-});
+// returns a list of articles coupled by 2 or 3
+// 5 articles = 2 blocks (2 + 3)
+export const getArticlesBlocks = articles =>
+  chunk(articles, 5).reduce(
+    (blocks, blockOf5) =>
+      blocks.concat([blockOf5.slice(0, 2), blockOf5.slice(2)]).filter(b => b.length),
+    []
+  );

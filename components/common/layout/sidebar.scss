@@ -1,0 +1,87 @@
+@import 'responsiveness';
+@import 'variables';
+
+.sidebar {
+  background-color: $primary-concrete;
+  box-sizing: border-box;
+  font-size: 14px;
+  line-height: 24px;
+  max-width: 300px;
+  min-height: 100vh;
+  min-width: 240px;
+  padding: 21px 24px 120px;
+  position: relative;
+  width: calc(240px + (100vw - #{$desktop-with-sidebar}) / 4);
+
+  @include mobile {
+    width: 100vw;
+  }
+
+  @include sidebar-visible {
+    height: 100%;
+  }
+
+  &__langs {
+    color: $primary;
+    letter-spacing: 1px;
+    list-style: none;
+    margin-bottom: 38px;
+    margin-top: 0;
+    padding: 0;
+    padding-inline-start: 0;
+    text-transform: uppercase;
+  }
+
+  &__about-label {
+    letter-spacing: 1px;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
+
+  &__icon-close {
+    color: $primary;
+    cursor: pointer;
+    float: right;
+    font-size: 20px;
+    position: sticky;
+    top: 21px;
+
+    @include sidebar-visible {
+      display: none;
+    }
+  }
+
+  &__section {
+    border-top: 0.5px solid $primary-grey;
+    padding: 60px 0 70px;
+  }
+
+  &__section-title {
+    color: $primary-black;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  &__section-list {
+    color: $primary;
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+    padding-inline-start: 0;
+  }
+
+  &__section-list-item {
+    list-style: none;
+    padding: 6px 0;
+  }
+
+  &__section-link-to-all {
+    color: $primary;
+    display: inline-block;
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin-top: 30px;
+    text-transform: uppercase;
+  }
+}

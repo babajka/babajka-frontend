@@ -1,53 +1,57 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import withRedux from 'next-redux-wrapper';
+import { connect } from 'react-redux';
 
-import PageLayout from 'components/common/layout/PageLayout';
-import PublicArticle from 'components/articles/PublicArticle';
+import { localize } from 'components/common/Text';
+import Article from 'components/articles/Article';
+import HeaderLinks from 'components/common/layout/header/HeaderLinks';
 
-import initStore from 'redux/store';
-import { actions as articlesActions, selectors } from 'redux/ducks/articles';
-import { actions as auth, selectors as authSelectors } from 'redux/ducks/auth';
-import request from 'utils/request';
-import { ArticleShape, LangType } from 'utils/customPropTypes';
+import { ROUTES_NAMES } from 'routes';
 
-const mapStateToProps = (state, { url: { query } }) => ({
-  article: selectors.getCurrent(state, query.slug),
-  articleLocale: query.articleLocale || selectors.getLocaleBySlug(state, query.slug),
-  error: selectors.isError(state),
-  permissions: authSelectors.getPermissions(state),
+import { publicArticleActions, publicArticleSelectors } from 'redux/ducks/publicArticle';
+import { populateRequest } from 'utils/request';
+import { ArticleShape } from 'utils/customPropTypes';
+
+const mapStateToProps = (state, { routerQuery: { slug } }) => ({
+  article: publicArticleSelectors.getCurrent(state, slug),
+  otherLocales: publicArticleSelectors.getOtherLocales(state, slug),
 });
 
-class ArticlePage extends Component {
-  static getInitialProps(ctx) {
-    const {
-      query: { slug },
-    } = ctx;
-    return request.populate(
-      ctx,
-      [auth.getCurrentUser, slug && articlesActions.fetchBySlug.bind(null, slug)].filter(Boolean)
-    );
-  }
-
-  render() {
-    const { article, url, articleLocale } = this.props;
-    return (
-      <PageLayout className="article-content" url={url} title="header.home">
-        <PublicArticle {...article} articleLocale={articleLocale} />
-      </PageLayout>
-    );
-  }
-}
+const ArticlePage = ({ article, otherLocales }) => (
+  <>
+    <HeaderLinks
+      links={otherLocales.map(({ locale, slug }) => ({
+        key: locale,
+        route: ROUTES_NAMES.article,
+        params: { slug },
+        title: localize('article.read-in', locale),
+      }))}
+    />
+    <Article data={article} />
+  </>
+);
 
 ArticlePage.propTypes = {
   article: ArticleShape,
-  articleLocale: LangType,
-  url: PropTypes.shape({}).isRequired,
+  otherLocales: PropTypes.arrayOf(
+    PropTypes.shape({
+      slug: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  routerQuery: PropTypes.shape({
+    slug: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 ArticlePage.defaultProps = {
   article: null,
-  articleLocale: null,
 };
 
-export default withRedux(initStore, mapStateToProps)(ArticlePage);
+ArticlePage.layoutProps = () => ({
+  title: 'header.articles',
+});
+
+ArticlePage.getInitialProps = ctx =>
+  populateRequest(ctx, ({ query: { slug } }) => publicArticleActions.fetchBySlug(slug));
+
+export default connect(mapStateToProps)(ArticlePage);

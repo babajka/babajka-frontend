@@ -1,0 +1,206 @@
+@import 'responsiveness';
+@import 'variables';
+
+$team-columns: (
+  mobile: 3,
+  touch: 4,
+  tablet: 6,
+  tablet-large: 6,
+  desktop: 8,
+);
+
+.about-page {
+  font-weight: 300;
+  padding-bottom: 3rem;
+  padding-top: 3rem;
+
+  &__description-block {
+    margin: 2rem 0 6rem;
+  }
+
+  &__description-header {
+    font-size: 1.6rem;
+    line-height: 1.35em;
+    margin-bottom: 1.5rem;
+  }
+
+  &__description-text {
+    line-height: 1.42em;
+  }
+
+  &__partners {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: 1rem;
+  }
+
+  &__partner-logo {
+    margin: 1rem;
+  }
+
+  &__team {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  &__team-subtext {
+    //
+  }
+}
+
+.teammate {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 5px;
+  text-align: center;
+
+  &__pic {
+    filter: grayscale(35%);
+    height: auto;
+    width: 90%;
+  }
+
+  &__name {
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1rem;
+    margin-bottom: 2px;
+    margin-top: 5px;
+  }
+
+  &__role {
+    color: $primary-grey;
+    font-size: 0.7rem;
+    line-height: 0.7rem;
+  }
+}
+
+@include screen-desktop {
+  .about-page {
+    &__partner-logo {
+      img {
+        width: 4rem;
+      }
+
+      &--small {
+        img {
+          width: 5.5rem;
+        }
+      }
+
+      &--smallest {
+        img {
+          width: 7rem;
+        }
+      }
+    }
+  }
+
+  .teammate {
+    width: map-get($page-content, desktop) / map-get($team-columns, desktop);
+  }
+}
+
+@include screen-tablet-large {
+  .about-page {
+    &__partner-logo {
+      img {
+        width: 4rem;
+      }
+
+      &--small {
+        img {
+          width: 5.5rem;
+        }
+      }
+
+      &--smallest {
+        img {
+          width: 7rem;
+        }
+      }
+    }
+  }
+
+  .teammate {
+    width: map-get($page-content, tablet-large) / map-get($team-columns, tablet-large);
+  }
+}
+
+@include screen-tablet {
+  .about-page {
+    &__partner-logo {
+      img {
+        width: 3.5rem;
+      }
+
+      &--small {
+        img {
+          width: 4.5rem;
+        }
+      }
+
+      &--smallest {
+        img {
+          width: 6rem;
+        }
+      }
+    }
+  }
+
+  .teammate {
+    width: map-get($page-content, tablet) / map-get($team-columns, tablet);
+  }
+}
+
+@include screen-touch {
+  .about-page {
+    &__partner-logo {
+      img {
+        width: 3rem;
+      }
+
+      &--smallest {
+        img {
+          width: 4rem;
+        }
+      }
+    }
+  }
+
+  .teammate {
+    width: map-get($page-content, touch) / map-get($team-columns, touch);
+  }
+}
+
+@include screen-mobile {
+  .about-page {
+    &__partners {
+      margin: 0;
+    }
+
+    &__partner-logo {
+      margin: 0.5rem;
+
+      img {
+        width: 3rem;
+      }
+
+      &--smallest {
+        img {
+          width: 4rem;
+        }
+      }
+    }
+  }
+
+  .teammate {
+    width: map-get($page-content, mobile) / map-get($team-columns, mobile);
+  }
+}

@@ -1,55 +1,51 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ErrorMessage } from 'formik';
 
-import Icon from 'components/common/Icon';
+import Icon from 'components/common/ui/Icon';
 import Text from 'components/common/Text';
 
-/* eslint-disable jsx-a11y/label-has-for */
-const FormField = ({ inputId, label, icon, children, pending, touched, error, successMessage }) => {
+const FormField = ({ id, label, icon, children, pending, touched, error }) => {
   const hasError = !pending && touched && error;
   return (
-    <div className="field">
-      <label className="label login__input-text" htmlFor={inputId}>
-        {label || <Text id={`auth.${inputId}`} />}
+    <div className="login-form__input-wrap">
+      <label className="login-form__input-label" htmlFor={id}>
+        <Icon name={icon} /> {label || <Text id={`auth.${id}`} />}
       </label>
-      <div className="control has-icons-left">
-        <span className="icon is-small">
-          <Icon name={icon} />
-        </span>
-        {children(hasError)}
-      </div>
-      {hasError && (
-        <p className="help is-danger">
-          <Text id={error} />
-        </p>
-      )}
-      {touched &&
-        !error &&
-        successMessage && (
-          <p className="help is-success">
-            <Text id={successMessage} />
+      {children(hasError)}
+      <ErrorMessage name={id}>
+        {message => (
+          <p className="login-form__input-error-message">
+            <Text id={message} />
           </p>
         )}
+      </ErrorMessage>
+      {/* {touched && !error && successText && (
+        <p className="">
+          <Text id={successText} />
+        </p>
+      )} */}
     </div>
   );
 };
 
 FormField.propTypes = {
-  inputId: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   label: PropTypes.node,
   icon: PropTypes.string.isRequired,
   children: PropTypes.func.isRequired,
   pending: PropTypes.bool,
-  touched: PropTypes.bool.isRequired,
-  error: PropTypes.string,
-  successMessage: PropTypes.string,
+  touched: PropTypes.bool,
+  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  // successText: PropTypes.string,
 };
 
 FormField.defaultProps = {
-  successMessage: null,
+  label: null,
   pending: false,
-  error: null,
-  label: '',
+  touched: false,
+  error: false,
+  // successText: '',
 };
 
 export default FormField;

@@ -1,42 +1,74 @@
-/* eslint-disable import/no-extraneous-dependencies */
-const withBundleAnalyzer = require('@zeit/next-bundle-analyzer');
+const withPlugins = require('next-compose-plugins');
+const fonts = require('next-fonts');
+const sass = require('@zeit/next-sass');
+const css = require('@zeit/next-css');
+const bundleAnalyzer = require('@zeit/next-bundle-analyzer');
+// eslint-disable-next-line import/no-extraneous-dependencies
 const webpack = require('webpack');
+const GenerateJsonPlugin = require('generate-json-webpack-plugin');
+const envCi = require('env-ci');
 
 const packageJson = require('./package.json');
-const { LOCALES } = require('./constants');
+const { definePlugin, sassLoaderOptions } = require('./utils/webpack-plugins');
+const { VALID_LOCALES } = require('./constants');
+const ENV = require('./utils/env');
 
-const langs = Object.keys(LOCALES).join('|');
+const langs = VALID_LOCALES.join('|');
 
-const ENV = process.env.WIR_ENV || process.env.NODE_ENV || 'not-set';
+const { branch, commit } = envCi();
+const { version } = packageJson;
 
-module.exports = withBundleAnalyzer({
+const nextConfig = {
+  experimental: {
+    // https://github.com/zeit/next.js/issues/7949#issuecomment-524929448
+    granularChunks: true,
+  },
   webpack(config) {
     config.plugins.push(
       ...[
         new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, new RegExp(langs)),
-        new webpack.DefinePlugin({
-          __ENV__: ENV,
-          __VERSION__: JSON.stringify(packageJson.version),
-          __PROD__: ENV === 'production',
-          __STAGING__: ENV === 'staging',
-          __DEV__: ENV === 'development',
-          __TESTING__: ENV === 'testing',
-          __DEBUG_STYLES__: process.env.DEBUG_STYLES === 'true',
+        definePlugin,
+        new GenerateJsonPlugin('static/info.json', {
+          env: ENV,
+          version,
+          commit,
+          branch,
         }),
       ]
     );
     return config;
   },
-  analyzeServer: ['server', 'both'].includes(process.env.BUNDLE_ANALYZE),
-  analyzeBrowser: ['browser', 'both'].includes(process.env.BUNDLE_ANALYZE),
-  bundleAnalyzerConfig: {
-    server: {
-      analyzerMode: 'static',
-      reportFilename: '../../reports/server.html',
+};
+
+const plugins = [
+  [fonts, { enableSvg: true }],
+
+  css,
+
+  [
+    sass,
+    {
+      sassLoaderOptions,
     },
-    browser: {
-      analyzerMode: 'static',
-      reportFilename: '../reports/client.html',
+  ],
+
+  [
+    bundleAnalyzer,
+    {
+      analyzeServer: ['server', 'both'].includes(process.env.BUNDLE_ANALYZE),
+      analyzeBrowser: ['browser', 'both'].includes(process.env.BUNDLE_ANALYZE),
+      bundleAnalyzerConfig: {
+        server: {
+          analyzerMode: 'static',
+          reportFilename: '../../reports/server.html',
+        },
+        browser: {
+          analyzerMode: 'static',
+          reportFilename: '../reports/client.html',
+        },
+      },
     },
-  },
-});
+  ],
+];
+
+module.exports = withPlugins(plugins, nextConfig);

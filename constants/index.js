@@ -1,16 +1,46 @@
 const DEFAULT_LOCALE = 'be';
 
+// maybe move labels to i18n dict
 // supported locales
 const LOCALES = {
-  be: 'Беларуская',
-  ru: 'Русский',
-  en: 'English',
+  be: 'па-беларуску',
+  ru: 'по-русски',
+  en: 'in english',
 };
+
+const LOCALE_CODE = {
+  be: 'be_BY',
+  ru: 'ru_RU',
+  en: 'en_US',
+};
+
+const VALID_LOCALES = Object.keys(LOCALES);
 
 const LANGS = Object.entries(LOCALES).map(([id, label]) => ({ id, label }));
 
 const DATE_FORMAT = 'D MMMM YYYY';
 
+const DATETIME_FORMAT = 'DD/MM/YY HH:mm';
+
+const SHORT_DATE_FORMAT = 'D MMMM';
+
 const DOMAIN_SECURE = 'https://wir.by';
 
-module.exports = { LOCALES, DEFAULT_LOCALE, LANGS, DATE_FORMAT, DOMAIN_SECURE };
+const STATIC_PATHS = ['static', '_next'];
+
+// `themes` should be first (check out Footer)
+const TOPICS = ['themes', 'locations', 'times', 'personalities', 'authors', 'brands'];
+
+module.exports = {
+  DATE_FORMAT,
+  DATETIME_FORMAT,
+  SHORT_DATE_FORMAT,
+  DEFAULT_LOCALE,
+  DOMAIN_SECURE,
+  LANGS,
+  LOCALE_CODE,
+  LOCALES,
+  STATIC_PATHS,
+  VALID_LOCALES,
+  TOPICS,
+};

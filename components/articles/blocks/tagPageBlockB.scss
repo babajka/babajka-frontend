@@ -1,0 +1,45 @@
+@import 'responsiveness';
+
+.tag-page-block-b {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  &__style-large-left {
+    .small-card {
+      order: 1;
+    }
+  }
+
+  &__style-large-right {
+    .large-card {
+      order: 1;
+    }
+  }
+}
+
+@mixin shared-screen-tablet-touch-mobile {
+  .tag-page-block-b {
+    flex-direction: column;
+
+    .large-card {
+      padding: 10px 0;
+    }
+
+    .small-card {
+      padding: 10px 0;
+    }
+  }
+}
+
+@include screen-tablet {
+  @include shared-screen-tablet-touch-mobile;
+}
+
+@include screen-touch {
+  @include shared-screen-tablet-touch-mobile;
+}
+
+@include screen-mobile {
+  @include shared-screen-tablet-touch-mobile;
+}

@@ -1,15 +1,51 @@
 language: node_js
 node_js:
   - '10'
+before_script:
+  - |
+    if [ $TRAVIS_BRANCH == "master" ]; then
+      ENV="production"
+    else
+      ENV="staging"
+    fi
 script:
   - npm run lint
-  - npm run build
+  - WIR_ENV=$ENV npm run build
+  - npm run bundlesize
 after_success:
   - npm run travis-deploy-once "npm run semantic-release"
-cache:
-  directories:
-    - node_modules
 notifications:
   slack:
     rooms:
       secure: IJQ/In8oX+KAdJ4REPp81F8KIa/LTymLmWRdOLFSv06Ju+hOa69vi0DmTKgd9nYy+vzxMsJDCSStIJ+knKtfk5B6OZYNAmq/Etz388Ly2Ih/S+06XAMLJf3/uc61eLpPjmFf6fImZo+PRhPlNW21U9AEXRG0COga2T8AAH8dWPuZjbnK/kY5JyjtzuQti5/GW+M7YiYxfw7UKIiIfBxZXNYbeE1l+R9LVIaw2pwbVtDTpw61JosTTWmq/fvOsXCGYHLigJmLLLliK9f35aij4Wa612RFMSBZ0FaYbp6Flt5RlbTOuwe01u4CuAVMfc4h4DFoxCOhIU7R7ZFqX9oOTVl7Z2lVvvOYloHMzgKG20g4aV0pqVxX+yl3lh4dMQ6mtzTIaI75w9MIEzg2sxx6lMrO76P576W0L6VXs5Qt29/9MHf8CQ8MowpxTChncH6fBD66ebHX+Ixo3yTyjsDiXG9LkwFmMjE7k4/BqYcwjwO5Gb4Wn1IBWTE1iL/Nq4kIUsQ+eA2LgwxP1F/ARQZO0N8ZXfSlSiUjn0ouF4CrFgq5ZP1obT4fIi7+cJC8I54K6x8O3hcSEtdT5tHV3QettDYki/d3Eh3SuIDP5gVciLm1x+5txWrIM6zjU1AO/e8AV5SSkHSURgiv3wphw8nQUxSC4DkEknPsGPVCPbGbSVY=
+addons:
+  ssh_known_hosts:
+    - dev.wir.by
+    - prod.wir.by
+before_deploy:
+  - openssl aes-256-cbc -K $encrypted_fd70b31c6719_key -iv $encrypted_fd70b31c6719_iv
+    -in babajka_dev_rsa.enc -out /tmp/babajka_dev_rsa -d
+  - eval "$(ssh-agent -s)"
+  - chmod 600 /tmp/babajka_dev_rsa
+  - ssh-add /tmp/babajka_dev_rsa
+  - |
+    if [ $TRAVIS_BRANCH == "develop" ]; then
+      MODE="dev"
+    elif [ $TRAVIS_BRANCH == "master" ]; then
+      MODE="prod"
+    else
+      exit 1
+    fi
+  - bash bin/deploy/before-deploy.sh $MODE
+  - HOST="wir-$MODE@$MODE.wir.by"
+  - SWAPPATH="/home/wir-$MODE/deployed/swap-frontend/"
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR $HOST:$SWAPPATH && ssh $HOST 'bash -s' < bin/deploy/postdeploy.sh $MODE
+    on:
+      branch:
+        - develop
+        - master
+after_deploy:
+  - bash bin/deploy/after-deploy.sh $MODE

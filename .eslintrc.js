@@ -1,7 +1,7 @@
 module.exports = {
   parser: 'babel-eslint',
   extends: ['airbnb', 'prettier', 'prettier/react'],
-  plugins: ['prettier'],
+  plugins: ['prettier', 'react-hooks'],
   globals: {
     __ENV__: false,
     __VERSION__: false,
@@ -9,7 +9,6 @@ module.exports = {
     __STAGING__: false,
     __DEV__: false,
     __TESTING__: false,
-    __DEBUG_STYLES__: false,
   },
   env: {
     browser: true,
@@ -18,12 +17,24 @@ module.exports = {
     // prettier overrides
     'prettier/prettier': 'error',
 
+    // we use named export in utils
+    'import/prefer-default-export': 'off',
+
     // we use bind
     'react/jsx-no-bind': 'off',
     // we use only .js extension
     'react/jsx-filename-extension': ['error', { extensions: ['.js'] }],
+    // weird rule
+    'react/jsx-one-expression-per-line': 'off',
     // allow create components without prop-types check
-    'react/prop-types': ['error', { skipUndeclared: true }],
+    'react/prop-types': ['warn', { skipUndeclared: true }],
+    'react/forbid-prop-types': 'warn',
+    'react/require-default-props': 'warn',
+
+    // react-hooks
+    'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
+    'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
+
     // allow console.error & console.warning
     'no-console': ['error', { allow: ['warn', 'error'] }],
     // backend use `_id` prop

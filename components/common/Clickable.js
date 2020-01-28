@@ -1,32 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Clickable = ({ tag, onClick, children, ...props }) => {
-  const elementProps = {
-    ...props,
-    onClick,
-  };
+import { useLocalization } from 'components/common/Text';
+import LibClickable from 'lib/components/Clickable';
 
-  elementProps.role = 'button';
-  elementProps.tabIndex = 0;
-  elementProps.onKeyPress = event => {
-    if (event.key === 'Enter') {
-      onClick(event);
-    }
-  };
+import { linkCn } from 'utils/ui';
 
-  return React.createElement(tag, elementProps, children);
+const Clickable = ({ linkStyle, className, titleId, title, ...props }) => {
+  const cls = linkStyle ? linkCn({ ...props }) : className;
+  return <LibClickable {...props} className={cls} title={useLocalization(titleId) || title} />;
 };
 
 Clickable.propTypes = {
-  tag: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
-  children: PropTypes.node,
+  titleId: PropTypes.string,
+  ...LibClickable.propTypes,
+  linkStyle: PropTypes.bool,
 };
 
 Clickable.defaultProps = {
-  tag: 'span',
-  children: null,
+  ...LibClickable.defaultProps,
+  linkStyle: false,
 };
 
 export default Clickable;

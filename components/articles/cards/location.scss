@@ -1,0 +1,198 @@
+@import 'responsiveness';
+@import 'variables';
+
+@import './cards';
+
+.location {
+  background-size: cover;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+
+  &__title {
+    font-weight: bold;
+  }
+}
+
+@mixin shared-size-l {
+  .location {
+    @include l-sizes;
+
+    padding: 0 39px 43px;
+
+    &__title {
+      font-size: 72px;
+      line-height: 72px;
+    }
+  }
+}
+
+.card-size-l {
+  @include shared-size-l;
+}
+
+@mixin shared-size-square-m {
+  .location {
+    @include square-m-sizes;
+
+    padding: 0 30px 42px;
+
+    &__title {
+      font-size: 48px;
+      line-height: 60px;
+    }
+  }
+}
+
+.card-size-square-m {
+  @include shared-size-square-m;
+}
+
+@mixin shared-size-square-s {
+  .location {
+    @include square-s-sizes;
+
+    padding: 0 30px 42px;
+
+    &__title {
+      font-size: 48px;
+      line-height: 60px;
+    }
+  }
+}
+
+.card-size-square-s {
+  @include shared-size-square-s;
+}
+
+@mixin shared-sizes-ms-s-wide {
+  .location {
+    padding: 0 30px 42px;
+
+    &__title {
+      font-size: 30px;
+      line-height: 36px;
+    }
+  }
+}
+
+@mixin shared-size-ms {
+  @include shared-sizes-ms-s-wide;
+
+  .location {
+    @include ms-sizes;
+  }
+}
+
+.card-size-ms {
+  @include shared-size-ms;
+}
+
+@mixin shared-size-s-wide {
+  @include shared-sizes-ms-s-wide;
+
+  .location {
+    @include s-wide-sizes;
+  }
+}
+
+.card-size-s-wide {
+  @include shared-size-s-wide;
+}
+
+@mixin shared-size-s {
+  .location {
+    @include s-sizes;
+
+    padding: 0 30px 42px;
+
+    &__title {
+      font-size: 60px;
+      line-height: 72px;
+    }
+  }
+}
+
+.card-size-s {
+  @include shared-size-s;
+}
+
+@mixin shared-size-xs-wide {
+  .location {
+    @include xs-wide-sizes;
+
+    padding: 0 30px 42px;
+
+    &__title {
+      font-size: 30px;
+      line-height: 36px;
+    }
+  }
+}
+
+.card-size-xs-wide {
+  @include shared-size-xs-wide;
+}
+
+@mixin shared-size-xs {
+  .location {
+    @include xs-sizes;
+
+    padding: 0 30px 42px;
+
+    &__title {
+      font-size: 30px;
+      line-height: 36px;
+    }
+  }
+}
+
+.card-size-xs {
+  @include shared-size-xs;
+}
+
+// Below are the rules for cards to be auto adjustable.
+
+.tags-by-topic {
+  &__1 {
+    @include screen-desktop {
+      @include shared-size-l;
+    }
+
+    @include screen-tablet-large {
+      @include shared-size-square-m;
+    }
+
+    @include screen-tablet {
+      @include shared-size-square-m;
+    }
+
+    @include screen-mobile {
+      @include shared-size-l;
+    }
+  }
+
+  &__2 {
+    @include screen-desktop {
+      @include shared-size-s;
+    }
+
+    @include screen-tablet-large {
+      @include shared-size-s-wide;
+    }
+
+    @include screen-tablet {
+      @include shared-size-xs;
+    }
+
+    @include screen-touch {
+      @include shared-size-ms;
+    }
+
+    @include screen-mobile {
+      @include shared-size-xs-wide;
+    }
+  }
+}

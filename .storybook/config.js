@@ -1,11 +1,32 @@
-import { configure, setAddon } from '@storybook/react';
-import infoAddon from '@storybook/addon-info';
+import '../styles/index.scss';
 
-const req = require.context('../components', true, /\.stories\.js$/);
+import { configure, addParameters, addDecorator } from '@storybook/react';
+import { withKnobs } from '@storybook/addon-knobs';
+
+import StoriesDecorator from 'components/dev/StoriesDecorator';
+
+const req = require.context('../stories', true, /\.js$/);
 
 function loadStories() {
   req.keys().forEach(req);
 }
 
-setAddon(infoAddon);
+addParameters({
+  options: {
+    isFullScreen: false,
+    showNav: true,
+    showPanel: true,
+    panelPosition: 'bottom',
+    sortStoriesByKind: false,
+    hierarchySeparator: /\/|\./,
+    hierarchyRootSeparator: /\|/,
+    sidebarAnimations: true,
+    enableShortcuts: true,
+    theme: undefined,
+  },
+});
+
+addDecorator(withKnobs);
+addDecorator(StoriesDecorator);
+
 configure(loadStories, module);

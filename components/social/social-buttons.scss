@@ -1,0 +1,25 @@
+@import 'variables';
+
+.wir-social-buttons {
+  &__button {
+    font-size: 1.3rem;
+    padding: 0.3rem;
+    width: 0.5rem;
+
+    &--facebook {
+      color: $facebook-color;
+    }
+
+    &--vk {
+      color: $vk-color;
+    }
+
+    &--twitter {
+      color: $twitter-color;
+    }
+
+    &--odnoklassniki {
+      color: $odnoklassniki-color;
+    }
+  }
+}

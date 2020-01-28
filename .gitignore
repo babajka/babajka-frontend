@@ -1,9 +1,10 @@
 .idea/
 .next/
+.cache/
 node_modules/
 reports/
-static/
 storybook-static/
 *.log*
 *.DS_Store
 data/*.json
+.env

@@ -1,70 +1,96 @@
 import createReducer from 'type-to-reducer';
+import moment from 'moment';
 
 import api from 'constants/api';
-import { DEFAULT_LOCALE } from 'constants';
 
-import request from 'utils/request';
+import { makeRequest } from 'utils/request';
 import { defaultReducer } from 'utils/redux';
-import { getDiary } from 'utils/getters';
+import { getDiary, getLocalizedTag } from 'utils/getters';
 
 const duck = 'specials/diary';
 
 // constants
 const GET_BY_DAY = `${duck}/GET_BY_DAY`;
+const GET_BY_SLUG = `${duck}/GET_BY_SLUG`;
+
+const DUMMY_DIARY = {
+  slug: 'sample',
+  date: 123,
+};
 
 const initialState = {
   pending: false,
   error: false,
-  data: {
-    author: '',
-    text: '',
-    date: Date.now(),
-  },
+  data: DUMMY_DIARY,
   next: null,
   prev: null,
 };
 
+const diaryReducer = defaultReducer((state, { payload: { data, next, prev } }) => ({
+  ...state,
+  data: data && getDiary(data),
+  next,
+  prev,
+  pending: false,
+}));
+
 export default createReducer(
   {
-    [GET_BY_DAY]: defaultReducer((state, { payload: { data, next, prev } }) => ({
-      ...state,
-      data: getDiary(data),
-      next,
-      prev,
-      pending: false,
-    })),
+    [GET_BY_DAY]: diaryReducer,
+    [GET_BY_SLUG]: diaryReducer,
   },
   initialState
 );
 
-// actions
-export const actions = {
-  getByDay: (
-    locale = DEFAULT_LOCALE,
-    month = new Date().getMonth() + 1,
-    day = new Date().getDate()
-  ) => ({
-    type: GET_BY_DAY,
-    payload: request.fetch(api.diary.getByDay(locale, month, day)),
-  }),
-  getClosest: closest => (dispatch, getState) => {
-    const { month, day } = getState().diary[closest];
-    dispatch({
-      type: GET_BY_DAY,
-      payload: request.fetch(api.diary.getByDay(DEFAULT_LOCALE, month, day)),
-    });
-  },
-};
-
 // selectors
 const getState = state => state.diary;
-const getCurrent = state => getState(state).data;
+const getData = state => getState(state).data;
+const getCurrent = (state, lang) => {
+  const { author, ...rest } = getData(state);
+  return { ...rest, author: author && getLocalizedTag(author, lang).content };
+};
+const getPrev = state => getState(state).prev;
+const getNext = state => getState(state).next;
 const isPending = state => getState(state).pending;
 const isError = state => getState(state).error;
+const isNextAvailable = state => {
+  const { data, next } = getState(state);
+  if (!next) {
+    return false;
+  }
+  const now = moment();
+  const { month, day } = data;
+  const nowHash = (now.month() + 1) * 100 + now.date();
+  const currentHash = +month * 100 + +day;
+  return currentHash !== nowHash;
+};
 
-export const selectors = {
+export const diarySelectors = {
   getCurrent,
+  getPrev,
+  getNext,
   getState,
   isPending,
   isError,
+  isNextAvailable,
+};
+
+// actions
+export const diaryActions = {
+  getByDay: (month = new Date().getMonth() + 1, day = new Date().getDate()) => ({
+    type: GET_BY_DAY,
+    payload: makeRequest(api.diary.getByDay(month, day)),
+  }),
+  getBySlug: slug => ({
+    type: GET_BY_SLUG,
+    payload: makeRequest(api.diary.getBySlug(slug)),
+  }),
+  getClosest: closest => (dispatch, getStore) => {
+    const diary = getState(getStore());
+    const { month, day } = diary[closest];
+    dispatch({
+      type: GET_BY_DAY,
+      payload: makeRequest(api.diary.getByDay(month, day)),
+    });
+  },
 };

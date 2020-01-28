@@ -1,0 +1,110 @@
+// SCREEN SIZES DEFINITION:
+//
+// MOBILE screen size
+// --- $mobile-small breakpoint
+// TOUCH
+// --- $mobile-large
+// TABLET
+// --- $tablet
+// TABLET-LARGE
+// --- $desktop
+// DESKTOP  (incl. $desktop-with-sidebar and $widescreen)
+
+// Breakpoints for screen sizes.
+$mobile-small: 500px;
+$mobile-large: 650px;
+$tablet: 800px;
+$desktop: 1100px;
+$desktop-with-sidebar: 1360px;
+$widescreen: 1600px;
+
+// Page content width by screen sizes.
+$page-content: (
+  mobile: 300px,
+  touch: 480px,
+  tablet: 624px,
+  tablet-large: 818px,
+  desktop: 1020px,
+);
+
+@mixin mobile {
+  @media screen and (max-width: $mobile-large - 1) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (min-width: $mobile-large) and (max-width: $tablet - 1) {
+    @content;
+  }
+}
+
+@mixin touch {
+  @media screen and (min-width: $mobile-large) {
+    @content;
+  }
+}
+
+@mixin sidebar-invisible {
+  @media screen and (max-width: $desktop-with-sidebar - 1) {
+    @content;
+  }
+}
+
+@mixin sidebar-visible {
+  @media screen and (min-width: $desktop-with-sidebar) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: $desktop) {
+    @content;
+  }
+}
+
+@mixin widescreen {
+  @media screen and (min-width: $widescreen) {
+    @content;
+  }
+}
+
+// Redefining screens:
+
+@mixin screen-mobile {
+  @media screen and (max-width: $mobile-small - 1) {
+    @content;
+  }
+}
+
+@mixin screen-touch {
+  @media screen and (min-width: $mobile-small) and (max-width: $mobile-large - 1) {
+    @content;
+  }
+}
+
+@mixin screen-tablet {
+  @media screen and (min-width: $mobile-large) and (max-width: $tablet - 1) {
+    @content;
+  }
+}
+
+@mixin screen-tablet-large {
+  @media screen and (min-width: $tablet) and (max-width: $desktop - 1) {
+    @content;
+  }
+}
+
+@mixin screen-desktop {
+  @media screen and (min-width: $desktop) {
+    @content;
+  }
+}
+
+// Mixed:
+
+@mixin screen-tablet-touch-mobile {
+  @media screen and (max-width: $tablet - 1) {
+    @content;
+  }
+}

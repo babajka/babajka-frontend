@@ -1,104 +1,53 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import withRedux from 'next-redux-wrapper';
+import { connect } from 'react-redux';
+import keyBy from 'lodash/keyBy';
 
-import PageLayout from 'components/common/layout/PageLayout';
-import Button from 'components/common/Button';
-import Text from 'components/common/Text';
-import Diary from 'components/specials/Diary';
-import ArticlesRow from 'components/articles/ArticlesRow';
-import ArticlesComplexRow from 'components/articles/ArticlesComplexRow';
+import BLOCKS_BY_TYPE from 'components/articles/blocks';
 
-import { ArticlesArray } from 'utils/customPropTypes';
-import { getMainArticlesRows } from 'utils/getters';
+import { homeActions, homeSelectors } from 'redux/ducks/home';
+import { populateRequest } from 'utils/request';
+import { ArticlesArray, ArticlesById, TopicsById, TagsById, LangType } from 'utils/customPropTypes';
 
-import initStore from 'redux/store';
-import { actions as articlesActions, selectors as articlesSelectors } from 'redux/ducks/articles';
-import { actions as auth } from 'redux/ducks/auth';
-import request from 'utils/request';
-import { ROW_SIZE, COMPLEX_ROW_SIZE } from 'constants/articles';
-
-const mapStateToProps = (state, { url: { query } }) => ({
-  articles: articlesSelectors.getAll(state, query.lang),
-  articlesPending: articlesSelectors.isPending(state),
-  nextPage: articlesSelectors.getNextPage(state),
-  nextNextPage: articlesSelectors.getNextNextPage(state),
-  error: articlesSelectors.isError(state),
+const mapStateToProps = (state, { lang = 'be' }) => ({
+  blocks: homeSelectors.getBlocks(state),
+  data: homeSelectors.getData(state, lang),
+  lang,
 });
 
-const mapDispatchToProps = {
-  getChunk: articlesActions.fetchChunk,
-  mergeCached: articlesActions.mergeCached,
+const MainPage = ({ blocks, data, lang }) => {
+  const blocksByType = keyBy(blocks, 'type');
+  return blocks.map((block, index) => {
+    const Block = BLOCKS_BY_TYPE[block.type];
+    if (!Block) {
+      return null;
+    }
+    return (
+      // eslint-disable-next-line react/no-array-index-key
+      <Block key={index} block={block} data={data} blocks={blocksByType} lang={lang} />
+    );
+  });
 };
 
-class HomePage extends Component {
-  static propTypes = {
-    url: PropTypes.shape({
-      query: PropTypes.object.isRequired,
-    }).isRequired,
-    articles: ArticlesArray.isRequired,
-    articlesPending: PropTypes.bool.isRequired,
-    nextPage: PropTypes.number,
-    nextNextPage: PropTypes.number,
-    getChunk: PropTypes.func.isRequired,
-    mergeCached: PropTypes.func.isRequired,
-  };
+MainPage.propTypes = {
+  blocks: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.oneOf(Object.keys(BLOCKS_BY_TYPE)).isRequired,
+    })
+  ).isRequired,
+  data: PropTypes.shape({
+    articles: ArticlesById.isRequired,
+    tags: TagsById.isRequired,
+    topics: TopicsById.isRequired,
+    latestArticles: ArticlesArray.isRequired,
+  }).isRequired,
+  lang: LangType.isRequired,
+};
 
-  static defaultProps = {
-    nextPage: null,
-    nextNextPage: null,
-  };
+MainPage.getInitialProps = ctx => populateRequest(ctx, homeActions.fetch);
 
-  static getInitialProps(ctx) {
-    // TODO: somehow extract getCurrentUser to populate method
-    const initialRequests = [auth.getCurrentUser, articlesActions.initialFetch];
-    return request.populate(ctx, initialRequests);
-  }
+MainPage.getLayoutProps = () => ({
+  title: 'header.main',
+});
 
-  componentDidMount() {
-    const { nextPage, getChunk } = this.props;
-    if (nextPage) {
-      getChunk(nextPage);
-    }
-  }
-
-  handleLoadMore = () => {
-    const { nextNextPage, getChunk, mergeCached } = this.props;
-    mergeCached();
-    if (nextNextPage) {
-      getChunk(nextNextPage);
-    }
-  };
-
-  render() {
-    const { articles, articlesPending, nextPage, url } = this.props;
-
-    const {
-      query: { lang },
-    } = url;
-
-    const articlesRows = getMainArticlesRows(articles, ROW_SIZE, COMPLEX_ROW_SIZE);
-    const [firstRow, secondRow, ...remainRows] = articlesRows;
-
-    return (
-      <PageLayout className="page-content main-page page-container" url={url} title="header.home">
-        {firstRow && <ArticlesRow articles={firstRow} className="first-line is-ancestor" />}
-        {secondRow && (
-          <ArticlesComplexRow articles={secondRow} renderDiary={() => <Diary lang={lang} />} />
-        )}
-        {remainRows.map(data => (
-          <ArticlesRow key={data[0]._id} articles={data} className="first-line is-ancestor" />
-        ))}
-        {nextPage && (
-          <div className="load-more" align="center">
-            <Button className="button" pending={articlesPending} onClick={this.handleLoadMore}>
-              <Text id="home.loadMore" />
-            </Button>
-          </div>
-        )}
-      </PageLayout>
-    );
-  }
-}
-
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps)(MainPage);

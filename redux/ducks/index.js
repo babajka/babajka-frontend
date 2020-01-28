@@ -1,11 +1,23 @@
 import { combineReducers } from 'redux';
 
-import articles from './articles';
+import home from './home';
 import auth from './auth';
 import diary from './diary';
+import sidebar from './sidebar';
+import publicArticle from './publicArticle';
+import topics from './topics';
+import tags from './tags';
+
+import admin from './admin';
 
 export default combineReducers({
-  articles,
+  home,
   auth,
   diary,
+  sidebar,
+  publicArticle,
+  topics,
+  tags,
+
+  admin,
 });

@@ -1,0 +1,65 @@
+@import 'responsiveness';
+@import 'variables';
+
+$columns: (
+  mobile: 1,
+  touch: 1,
+  tablet: 2,
+  tablet-large: 2,
+  desktop: 3,
+);
+
+.topics {
+  align-content: space-between;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  &__section {
+    width: map-get($page-content, desktop) / map-get($columns, desktop);
+
+    @include screen-tablet-large {
+      width: map-get($page-content, tablet-large) / map-get($columns, tablet-large);
+    }
+
+    @include screen-tablet {
+      width: map-get($page-content, tablet) / map-get($columns, tablet);
+    }
+
+    @include screen-touch {
+      padding-left: (map-get($page-content, touch) - 300px) / 3;
+      padding-right: (map-get($page-content, touch) - 300px) * 2 / 3;
+      width: 300px;
+    }
+
+    @include screen-mobile {
+      width: 300px;
+    }
+  }
+
+  &__section-list {
+    color: $primary;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    padding-inline-start: 0;
+  }
+
+  &__section-image {
+    padding-bottom: 10px;
+  }
+
+  &__section-list-item {
+    list-style: none;
+    padding: 10px 0;
+  }
+
+  &__section-title {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+    padding-bottom: 10px;
+    padding-top: 40px;
+  }
+}

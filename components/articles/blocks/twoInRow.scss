@@ -1,0 +1,43 @@
+@import 'responsiveness';
+
+.two-in-row {
+  display: flex;
+}
+
+@mixin shared-desktop-tablet-large {
+  .two-in-row {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+@include screen-desktop {
+  @include shared-desktop-tablet-large;
+}
+
+@include screen-tablet-large {
+  @include shared-desktop-tablet-large;
+}
+
+@mixin shared-tablet-touch-mobile {
+  .two-in-row {
+    flex-direction: column;
+    justify-content: space-between;
+
+    &__first {
+      margin-bottom: 30px;
+    }
+  }
+}
+
+@include screen-tablet {
+  @include shared-tablet-touch-mobile;
+}
+
+@include screen-touch {
+  @include shared-tablet-touch-mobile;
+}
+
+@include screen-mobile {
+  @include shared-tablet-touch-mobile;
+}

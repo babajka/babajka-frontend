@@ -1,7 +1,7 @@
 import createReducer from 'type-to-reducer';
 
 import api from 'constants/api';
-import request from 'utils/request';
+import { makeRequest } from 'utils/request';
 import { defaultReducer } from 'utils/redux';
 
 const duck = 'auth';
@@ -20,9 +20,9 @@ const initialState = {
 
 export default createReducer(
   {
-    [SIGNIN]: defaultReducer((state, { payload }) => ({
+    [SIGNIN]: defaultReducer((state, { payload: { user } }) => ({
       ...state,
-      user: payload,
+      user,
       errors: {},
       pending: false,
     })),
@@ -31,35 +31,14 @@ export default createReducer(
       user: null,
       pending: false,
     })),
-    [GET_CURRENT_USER]: defaultReducer((state, { payload }) => ({
+    [GET_CURRENT_USER]: defaultReducer((state, { payload: { user } }) => ({
       ...state,
-      user: payload,
+      user,
       pending: false,
     })),
   },
   initialState
 );
-
-// actions
-export const actions = {
-  getCurrentUser: () => ({
-    type: GET_CURRENT_USER,
-    payload: request.fetch(api.users.getCurrent),
-  }),
-  signIn: (data, signUp = false) => ({
-    type: SIGNIN,
-    payload: signUp
-      ? request.fetch(api.auth.register, 'POST', data)
-      : request.fetch(api.auth.login, 'POST', data),
-    meta: {
-      ga: true,
-    },
-  }),
-  signOut: () => ({
-    type: SIGNOUT,
-    payload: request.fetch(api.auth.logout),
-  }),
-};
 
 // selectors
 const getState = state => state.auth;
@@ -68,12 +47,27 @@ const getPermissions = state => {
   const user = getUser(state);
   return user ? user.permissions : {};
 };
-const isLoginPending = state => getState(state).pending;
-const getLoginErrors = state => getState(state).errors;
 
-export const selectors = {
+export const authSelectors = {
   getUser,
   getPermissions,
-  isLoginPending,
-  getLoginErrors,
+};
+
+// actions
+export const authActions = {
+  getCurrentUser: () => ({
+    type: GET_CURRENT_USER,
+    payload: makeRequest(api.users.getCurrent),
+  }),
+  signIn: ({ isSignUp = false, ...data }) => ({
+    type: SIGNIN,
+    payload: makeRequest(isSignUp ? api.auth.register : api.auth.login, 'POST', data),
+    meta: {
+      ga: true,
+    },
+  }),
+  signOut: () => ({
+    type: SIGNOUT,
+    payload: makeRequest(api.auth.logout),
+  }),
 };

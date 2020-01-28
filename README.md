@@ -12,14 +12,13 @@ Next.js &amp; React app
 
 - `npm start` to run dev server with hot-reloading (`npm run dev`)
 - `npm run start:prod` to build and run a production version
-- `npm run build` to build a production version
+- `npm run build` to build a production version (`WIR_ENV=staging` must be set for [`dev.wir.by`](http://dev.wir.by))
 - `npm run local-backend` to run dev server that uses `http://localhost:8080` as backend
-- `npm run local-styles` to run dev server that uses `http://localhost:3001` as styles server
+- `npm run deploy-from-local` to deploy code on [`dev.wir.by`](http://dev.wir.by)
 - `npm run lint` to check code style with [`eslint`](http://eslint.org/),
   [`airbnb`](https://github.com/airbnb/javascript/tree/master/react) react style guide and
   [`prettier`](https://prettier.io)
 - `npm run lint` to just fix style with `prettier` and check on `eslint` errors
-- `npm run update-styles` to update styles from markup module
 - `npm run update-dict` to fetch translations from [GoogleDrive](https://docs.google.com/spreadsheets/d/e/2PACX-1vTAexRyfGOsnzvZKvVpPkr8M-l3Ph2vAvBqVu7W_vrPOQ3iUIGg4ZVcOLCeFj-Qg6BowPluH9QO3vXM/pubhtml#) and store it in `data/i18n.json` (gitignored)
 - `npm run storybook` to run storybook on [`localhost:9001`](http://localhost:9001/)
   - `npm run storybook:build` to build static version of storybook
@@ -29,10 +28,7 @@ Next.js &amp; React app
 - `npm run analyze` to check bundle sizes with [`webpack-bundle-analyzer`](https://github.com/webpack-contrib/webpack-bundle-analyzer) (create reports in `reports/`)
   - `npm run analyze:server`
   - `npm run analyze:client`
-
-## configuration
-
-- `npm run dev -- http://localhost:8080` sets url to the local backend instance. (defaults to `http://api.wir.by`)
+- `npm run size` to check client-side bundle sizes with [`bundlesize`](https://github.com/siddharthkp/bundlesize)
 
 ## rules
 

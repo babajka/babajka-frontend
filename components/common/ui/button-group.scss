@@ -1,0 +1,40 @@
+@import 'variables';
+
+.wir-button-group {
+  display: flex;
+  font-size: 0.8rem;
+  position: relative;
+
+  .wir-button {
+    background-color: $primary-white;
+    border: 1px solid $primary-grey;
+    border-left: 0;
+    float: left;
+    outline: none;
+    padding: 0.6rem 0.8rem;
+    text-align: center;
+
+    &__icon {
+      flex-basis: auto;
+      flex-grow: 1;
+      padding: 0.3rem;
+    }
+
+    &:hover {
+      background-color: $primary-white;
+      box-shadow: inset 0 0 1px $primary-grey;
+      cursor: pointer;
+    }
+
+    &:first-child {
+      border-bottom-left-radius: 5px;
+      border-left: 1px solid $primary-grey;
+      border-top-left-radius: 5px;
+    }
+
+    &:last-child {
+      border-bottom-right-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+  }
+}

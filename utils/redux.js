@@ -7,9 +7,6 @@ export const pendingReducer = state => ({
 });
 
 const getErrors = payload => {
-  if (!__PROD__) {
-    console.error('Error during api call: ', payload);
-  }
   if (typeof payload === 'object') {
     return { error: true, errors: payload };
   }
@@ -27,3 +24,7 @@ export const defaultReducer = successReducer => ({
   [SUCCESS]: successReducer,
   [ERROR]: errorReducer,
 });
+
+export const isLoading = ({ type }) => type.endsWith(LOADING);
+
+export const isSuccess = ({ type }) => type.endsWith(SUCCESS);

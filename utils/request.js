@@ -1,87 +1,104 @@
 import fetch from 'isomorphic-fetch';
-import Router from 'next/router';
+import nextCookie from 'next-cookies';
+import castArray from 'lodash/castArray';
 
-import { BACKEND_URL, SESSION_COOKIE } from 'constants/server';
+import { Router, ROUTES_NAMES } from 'routes';
+import api from 'constants/api';
+import { BACKEND_URL } from 'constants/server';
+import { DEFAULT_LOCALE } from 'constants';
 
-export const DEFAULT_OPTIONS = {
+const NOT_FOUND = 'Not Found';
+
+const DEFAULT_OPTIONS = {
   mode: 'cors',
+  credentials: 'same-origin',
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
   },
-  credentials: 'same-origin',
 };
 
-class Request {
-  fetch = (url, method = 'GET', rawBody = null) =>
-    new Promise((resolve, reject) => {
-      if (!url) {
-        reject(new Error('URL parameter required'));
-      }
+// HACK: https://github.com/zeit/next.js/issues/2455
+let cookie = null;
 
-      const options = { ...DEFAULT_OPTIONS, method };
-      options.headers.Cookie = this.cookie;
-      if (rawBody) {
-        options.body = JSON.stringify(rawBody);
-      }
+const getCookieString = cookies =>
+  Object.entries(cookies).reduce((acc, [key, value]) => `${acc}${key}=${value};`, '');
 
-      // for requests from server we need to avoid proxying
-      const prefix = this.isServer ? BACKEND_URL : '';
-      fetch(`${prefix}${url}`, options)
-        .then(response => {
-          const contentType = response.headers.get('content-type');
+const getOptions = options => {
+  const mergedOptions = { ...DEFAULT_OPTIONS, ...options };
+  if (cookie) {
+    mergedOptions.headers.cookie = getCookieString(cookie);
+  }
+  return mergedOptions;
+};
 
-          if (response.status === 404) {
-            if (this.isServer) {
-              const { res } = this;
-              res.writeHead(302, {
-                Location: '/_error',
-              });
-              res.end();
-              res.finished = true;
-            } else {
-              Router.push({ pathname: '_error' });
-            }
-          }
+export const uploadFile = file => {
+  const fd = new FormData();
+  fd.append('image', file);
+  return fetch(api.core.uploads, {
+    mode: DEFAULT_OPTIONS.mode,
+    credentials: DEFAULT_OPTIONS.credentials,
+    method: 'POST',
+    body: fd,
+  }).then(res => res.json());
+};
 
-          if (contentType && contentType.includes('application/json')) {
-            return response.json();
-          }
-
-          if (!response.ok) {
-            return {
-              error: response.statusText,
-            };
-          }
-
-          return {};
-        })
-        .then(jsonResponse => {
-          if (jsonResponse.error) {
-            reject(jsonResponse.error);
-          } else {
-            resolve(jsonResponse);
-          }
-        })
-        .catch(reject);
-    });
-
-  populate = ({ store: { dispatch }, isServer, req, res }, actionsToLoad) => {
-    this.isServer = isServer;
-    this.res = res;
-    // TODO: check if we can omit this `if`
-    if (isServer) {
-      this.cookie = `${SESSION_COOKIE}=${req.cookies[SESSION_COOKIE]}`;
+export const makeRequest = (url, method = 'GET', rawBody = null) =>
+  new Promise((resolve, reject) => {
+    if (!url) {
+      reject(new Error('URL parameter required'));
     }
 
-    /* @tyndria: I changed the line below, can't get why do we need to pass parameter isServer
-    *  const actions = actionsToLoad.map(action => action(isServer)); */
-    const actions = actionsToLoad.map(action => action());
-    actions.forEach(action => dispatch(action));
-    const promises = actions.map(action => action.payload.catch(e => e));
-    // TODO: better error handling
-    return Promise.all(promises).catch(err => console.error(err));
-  };
-}
+    const options = getOptions({
+      method,
+      body: rawBody && JSON.stringify(rawBody),
+    });
 
-export default new Request();
+    const isServer = !process.browser;
+    // for requests from server we need to avoid proxying
+    const prefix = isServer ? BACKEND_URL : '';
+    fetch(`${prefix}${url}`, options)
+      .then(response => {
+        const contentType = response.headers.get('content-type');
+
+        if (!isServer && response.status === 404) {
+          Router.pushRoute(ROUTES_NAMES.status, { code: '404', lang: DEFAULT_LOCALE });
+        }
+
+        if (contentType && contentType.includes('application/json')) {
+          return response.json();
+        }
+
+        if (!response.ok) {
+          return {
+            error: response.statusText,
+          };
+        }
+
+        return {};
+      })
+      .then(jsonResponse => {
+        if (jsonResponse.error) {
+          reject(jsonResponse.error);
+        } else {
+          resolve(jsonResponse);
+        }
+      })
+      .catch(reject);
+  });
+
+export const populateRequest = (ctx, actions) => {
+  const { store, res } = ctx;
+  cookie = nextCookie(ctx);
+  const isServer = !process.browser;
+
+  const promises = castArray(actions).map(action => store.dispatch(action(ctx)));
+
+  return Promise.all(promises).catch(err => {
+    if (isServer && err === NOT_FOUND) {
+      res.writeHead(302, { Location: '/status/404' });
+      res.end();
+      res.finished = true;
+    }
+  });
+};

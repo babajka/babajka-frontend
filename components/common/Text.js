@@ -1,28 +1,47 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
-import LocaleContext from 'components/common/LocaleContext';
-import { DEFAULT_LOCALE } from 'constants';
+import LocaleContext, { DEFAULT_LOCALE } from 'components/common/LocaleContext';
 import dict from 'data/i18n.json';
+
+const SEPARATOR = '||';
 
 const defaultRender = text => <>{text}</>;
 
-export const localize = (id, lang) =>
-  get(dict, `${id}.${lang}`) || get(dict, `${id}.${DEFAULT_LOCALE}`) || '';
+const extract = key => {
+  const translation = get(dict, key, '');
+  if (!translation && !__PROD__) {
+    console.warn('[i18n]: No translation for ', key);
+  }
+  return translation;
+};
 
-const Text = ({ id, children, render = children }) => (
-  <LocaleContext.Consumer>{lang => render(localize(id, lang))}</LocaleContext.Consumer>
-);
+export const localize = (id, lang) =>
+  extract(`${id}.${lang}`) || extract(`${id}.${DEFAULT_LOCALE}`);
+
+export const useLocaleContext = () => useContext(LocaleContext);
+
+export const useLocalization = id => {
+  const lang = useLocaleContext();
+  if (!id) {
+    return id;
+  }
+  return localize(id, lang);
+};
+
+const Text = ({ id, children, render = children }) =>
+  render(...useLocalization(id).split(SEPARATOR));
 
 Text.propTypes = {
+  /** translation key in our i18n dict */
   id: PropTypes.string.isRequired,
+  // eslint-disable-next-line react/require-default-props
   render: PropTypes.func,
   children: PropTypes.func,
 };
 
 Text.defaultProps = {
-  render: defaultRender,
   children: defaultRender,
 };
 

@@ -1,59 +1,70 @@
-import React, { Component } from 'react';
+import './layout.scss';
+
+import React from 'react';
 import PropTypes from 'prop-types';
-import Head from 'next/head';
-import ReactGA from 'react-ga';
-import moment from 'moment';
+import cn from 'classnames';
+import ScrollToTop from 'react-scroll-up';
 
-import { localize } from 'components/common/Text';
-import { MARKUP_URL } from 'constants/server';
-import { getGoogleAnalyticsID } from 'constants/social';
+import Icon from 'components/common/ui/Icon';
+import Clickable from 'components/common/Clickable';
+import { MODAL_ROOT_ID } from 'components/common/modal/Modal';
 
-class CoreLayout extends Component {
-  static propTypes = {
-    lang: PropTypes.string.isRequired,
-    title: PropTypes.string,
-    children: PropTypes.node.isRequired,
-  };
+import useBoolean from 'hooks/useBoolean';
+import { LangType } from 'utils/customPropTypes';
 
-  static defaultProps = { title: '' };
+import Header from './Header';
+import Footer from './Footer';
+import Sidebar from './Sidebar';
 
-  componentDidMount() {
-    if ((__PROD__ || __STAGING__) && !window.ga) {
-      ReactGA.initialize(getGoogleAnalyticsID(__PROD__), {
-        debug: false,
-      });
-      ReactGA.pageview(document.location.pathname);
-    }
-  }
+const CoreLayout = ({ children, hideFooter, hideSidebar, lang }) => {
+  const [sidebarActive, toggleSidebar, setState] = useBoolean(false);
+  return (
+    <>
+      <div
+        id="wir-root"
+        className={cn('wir-root', { 'wir-root--sidebar-expanded': sidebarActive })}
+      >
+        <div className="wir-space">
+          <Header toggleSidebar={toggleSidebar} />
 
-  render() {
-    const { lang, title, children } = this.props;
-    moment.locale(lang);
-    return (
-      <div>
-        <Head>
-          <title>
-            Wir.by {title && '| '}
-            {localize(title, lang)}
-          </title>
-          <meta charSet="utf-8" />
-          <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-          <meta name="theme-color" content="#1a9582" />
-          <link rel="icon" type="image/png" href="/static/images/logo/favicon-colored.png" />
-          <link
-            rel="stylesheet"
-            href={`${__DEBUG_STYLES__ ? MARKUP_URL : ''}/static/styles/bundle.min.css`}
+          <main className="wir-content">{children}</main>
+
+          {!hideFooter && <Footer />}
+
+          <Clickable
+            tag="div"
+            className={cn('wir-overlay', { 'wir-overlay--active': sidebarActive })}
+            onClick={toggleSidebar}
           />
-          <link
-            rel="stylesheet"
-            href={`${__DEBUG_STYLES__ ? MARKUP_URL : ''}/static/styles/assets.min.css`}
-          />
-        </Head>
-        {children}
+        </div>
+
+        {(!hideSidebar || sidebarActive) && (
+          <nav className={cn('wir-sidebar', { 'wir-sidebar--expanded': sidebarActive })}>
+            <Sidebar toggleSidebar={toggleSidebar} close={() => setState(false)} lang={lang} />
+          </nav>
+        )}
+
+        <div className="wir-up">
+          <ScrollToTop showUnder={160} easing="easeInExpo" duration={500}>
+            <Icon pack="r" name="arrow-alt-circle-up" className="wir-link" />
+          </ScrollToTop>
+        </div>
       </div>
-    );
-  }
-}
+      <div id={MODAL_ROOT_ID} />
+    </>
+  );
+};
+
+CoreLayout.propTypes = {
+  children: PropTypes.node.isRequired,
+  hideFooter: PropTypes.bool,
+  hideSidebar: PropTypes.bool,
+  lang: LangType.isRequired,
+};
+
+CoreLayout.defaultProps = {
+  hideFooter: false,
+  hideSidebar: false,
+};
 
 export default CoreLayout;

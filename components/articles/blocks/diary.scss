@@ -1,0 +1,178 @@
+@import 'responsiveness';
+@import 'variables';
+
+.diary {
+  &__content {
+    border-bottom: 1px solid $primary-grey;
+    display: flex;
+    position: relative;
+  }
+
+  &__text-content {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 12px;
+  }
+
+  &__picture {
+    flex-shrink: 0;
+    z-index: 1;
+
+    img {
+      height: 100%;
+      width: auto;
+    }
+  }
+
+  &__title {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+    span {
+      display: inline-block;
+      margin-right: 5px;
+    }
+  }
+
+  &__date {
+    font-weight: bold;
+  }
+
+  &__text-wrap {
+    font-size: 14px;
+    line-height: 24px;
+  }
+
+  &__text {
+    /* stylelint-disable */
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    /* stylelint-enable */
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+
+  &__arrows {
+    background-color: $primary-white;
+    bottom: -15px;
+    left: 0;
+    padding-right: 20px;
+    position: absolute;
+    width: 60px;
+    z-index: 1;
+  }
+}
+
+@mixin shared-desktop-tablet-large {
+  .diary {
+    &__content {
+      align-items: flex-end;
+      flex-direction: row;
+      height: 180px;
+      justify-content: space-between;
+    }
+
+    &__text-content {
+      align-items: flex-start;
+      flex-direction: row;
+      height: 120px;
+    }
+
+    &__picture {
+      height: 180px;
+      order: 1;
+      padding-left: 20px;
+      width: 180px;
+
+      &--no-image {
+        width: 0;
+      }
+    }
+
+    &__title {
+      font-size: 20px;
+      height: 100px;
+      line-height: 33px;
+      padding-right: 20px;
+      width: 220px;
+    }
+  }
+}
+
+@include screen-desktop {
+  @include shared-desktop-tablet-large;
+}
+
+@include screen-tablet-large {
+  @include shared-desktop-tablet-large;
+}
+
+@include screen-tablet {
+  .diary {
+    &__content {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    &__text-content {
+      flex-direction: column;
+    }
+
+    &__picture {
+      height: 180px;
+      order: 1;
+      width: 180px;
+
+      &--no-image {
+        width: 0;
+      }
+    }
+
+    &__title {
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 21px;
+    }
+  }
+}
+
+@mixin shared-touch-mobile {
+  .diary {
+    &__content {
+      flex-direction: column;
+    }
+
+    &__picture {
+      border-bottom: 1px solid $primary-grey;
+      height: 89px;
+      margin-bottom: 30px;
+      text-align: right;
+      width: 100%;
+    }
+
+    &__text-content {
+      flex-direction: column;
+      margin-bottom: 42px;
+    }
+
+    &__title {
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 21px;
+    }
+
+    &__text {
+      margin-bottom: 5px;
+    }
+  }
+}
+
+@include screen-touch {
+  @include shared-touch-mobile;
+}
+
+@include screen-mobile {
+  @include shared-touch-mobile;
+}

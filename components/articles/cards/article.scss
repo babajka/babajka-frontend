@@ -1,0 +1,828 @@
+@import 'responsiveness';
+@import 'variables';
+
+@import './cards';
+
+$experiment-slavics-default-bg: #fef04c;
+
+.article-card {
+  display: flex;
+
+  &__cover-container {
+    flex-shrink: 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  &.theme-black > &__cover-container,
+  &.theme-white > &__cover-container {
+    margin-left: $border-width-default;
+    margin-top: $border-width-default;
+  }
+
+  &:hover > &__cover-container {
+    @media (hover: hover) {
+      margin-left: $border-width-hover;
+      margin-top: $border-width-hover;
+    }
+  }
+
+  &__cover {
+    display: inline-block;
+    position: absolute;
+  }
+
+  &.theme-black > &__cover-container > &__cover,
+  &.theme-white > &__cover-container > &__cover {
+    left: -($border-width-default);
+    top: -($border-width-default);
+  }
+
+  &:hover > &__cover-container > &__cover {
+    @media (hover: hover) {
+      left: -($border-width-hover);
+      top: -($border-width-hover);
+    }
+  }
+
+  &__content {
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+  }
+
+  &__collection-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__collection-content {
+    flex-grow: 1;
+  }
+
+  &__collection-name {
+    font-weight: bold;
+  }
+
+  &__collection-cover {
+    border-radius: 50%;
+  }
+
+  &__title {
+    font-weight: bold;
+    overflow: hidden;
+  }
+
+  &__description-container {
+    overflow: hidden;
+    position: relative;
+  }
+
+  &__description {
+    overflow: hidden;
+  }
+
+  &__interactive-icon {
+    margin-right: 1rem;
+  }
+
+  &__filler {
+    display: none;
+    flex-grow: 1;
+  }
+
+  &--with-collection > &__content > &__filler--top {
+    display: unset;
+  }
+
+  &__author-brand {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    &--placed-middle {
+      display: none;
+    }
+
+    &--placed-bottom {
+      display: none;
+    }
+  }
+
+  &__brand {
+    height: $tag-image-height;
+  }
+
+  &__label-read-full {
+    display: none;
+  }
+}
+
+@mixin shared-vertical-cover($cover-height, $cover-width) {
+  // Hovering the cards (as well as border for "almost" black and white cards) require some non-trivial
+  // adjustments to work properly. These adjustments, common for all card sizes but
+  // dependent on card sizes are extracted into this mixin.
+  // Also check 'shared-horizontal-cover' mixin for cards with different layout.
+
+  .article-card {
+    flex-direction: row;
+
+    &__cover-container {
+      height: $cover-height;
+      width: $cover-width;
+    }
+
+    &__cover {
+      height: $cover-height;
+      width: $cover-width;
+    }
+  }
+
+  // Rules below do not get applied when embedded into .article-card {}.
+  // This is due to inclusion of .card-size-X class through &.
+  // The may be fixed using @at-root. Same applies for mixins below.
+
+  /* stylelint-disable */
+  .article-card.theme-black > .article-card__cover-container,
+  .article-card.theme-white > .article-card__cover-container {
+    height: $cover-height - 2 * $border-width-default;
+    width: $cover-width - $border-width-default;
+  }
+
+  .article-card:hover > .article-card__cover-container {
+    @media (hover: hover) {
+      height: $cover-height - 2 * $border-width-hover;
+      width: $cover-width - $border-width-hover;
+    }
+  }
+  /* stylelint-enable */
+}
+
+@mixin shared-sizes-xxl-xl-l {
+  .article-card {
+    &__collection-container {
+      margin-top: 24px;
+    }
+
+    &__collection-order {
+      font-size: 20px;
+      line-height: 36px;
+    }
+
+    &__collection-name {
+      font-size: 20px;
+      line-height: 27px;
+    }
+
+    &__collection-cover {
+      height: 70px;
+      width: 70px;
+    }
+
+    &__filler--middle {
+      display: unset;
+    }
+
+    &--experiment-slavics {
+      // stylelint-disable-next-line declaration-no-important
+      background: $experiment-slavics-default-bg !important;
+    }
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card--with-collection > .article-card__content > .article-card__filler--middle {
+    display: none;
+  }
+}
+
+@mixin shared-size-xxl {
+  // TODO: to consider extracting more values into variables.
+  $card-height: 630px;
+  $card-width: 1020px;
+  $cover-height: $card-height;
+  $cover-width: 390px;
+
+  @include shared-sizes-xxl-xl-l;
+
+  @include shared-vertical-cover($cover-height, $cover-width);
+
+  .article-card {
+    height: $card-height;
+    width: $card-width;
+
+    &__content {
+      padding: 0 60px 0 30px;
+    }
+
+    &__title {
+      font-size: 60px;
+      line-height: 66px;
+      margin-bottom: 30px;
+      margin-top: 24px;
+      max-height: 66px * 3;
+    }
+
+    &__description-container {
+      font-size: 20px;
+      line-height: 36px;
+    }
+
+    &__description {
+      max-height: 36px * 6;
+    }
+
+    &__author-brand {
+      font-size: 14px;
+      line-height: 24px;
+      margin-bottom: 60px;
+    }
+
+    &__brand {
+      margin-right: 20px;
+    }
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card--with-brand > .article-card__content > .article-card__author-brand {
+    margin-bottom: 48px;
+  }
+}
+
+.card-size-xxl {
+  @include shared-size-xxl;
+}
+
+@mixin shared-size-xl {
+  $card-height: 504px;
+  $card-width: 818px;
+  $cover-height: $card-height;
+  $cover-width: 313px;
+
+  @include shared-sizes-xxl-xl-l;
+
+  @include shared-vertical-cover($cover-height, $cover-width);
+
+  .article-card {
+    height: $card-height;
+    width: $card-width;
+
+    &__content {
+      padding: 0 62px 0 24px;
+    }
+
+    &__title {
+      font-size: 48px;
+      line-height: 60px;
+      margin-bottom: 30px;
+      margin-top: 24px;
+      max-height: 60px * 3;
+    }
+
+    &__description-container {
+      font-size: 14px;
+      line-height: 24px;
+    }
+
+    &__description {
+      max-height: 36px * 7;
+    }
+
+    &__author-brand {
+      font-size: 14px;
+      line-height: 24px;
+      margin-bottom: 48px;
+    }
+
+    &__brand {
+      margin-right: 15px;
+    }
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card--with-brand > .article-card__content > .article-card__author-brand {
+    margin-bottom: 36px;
+  }
+}
+
+.card-size-xl {
+  @include shared-size-xl;
+}
+
+@mixin shared-size-l {
+  $card-height: 390px;
+  $card-width: 624px;
+  $cover-height: $card-height;
+  $cover-width: 240px;
+
+  @include shared-sizes-xxl-xl-l;
+
+  @include shared-vertical-cover($cover-height, $cover-width);
+
+  .article-card {
+    height: $card-height;
+    width: $card-width;
+
+    &__content {
+      padding: 0 42px 0 30px;
+    }
+
+    &__title {
+      font-size: 30px;
+      line-height: 36px;
+      margin-bottom: 24px;
+      margin-top: 24px;
+      max-height: 36px * 3;
+    }
+
+    &__description-container {
+      font-size: 14px;
+      line-height: 24px;
+    }
+
+    &__description {
+      max-height: 24px * 5; // TEMP. There should be 7 rows here. There is no enough space on 3-row titles.
+    }
+
+    &__author-brand {
+      font-size: 14px;
+      line-height: 24px;
+      margin-bottom: 48px;
+    }
+
+    &__brand {
+      margin-right: 18px;
+    }
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card--with-brand > .article-card__content > .article-card__author-brand {
+    margin-bottom: 36px;
+  }
+}
+
+.card-size-l {
+  @include shared-size-l;
+}
+
+@mixin shared-size-m {
+  $card-height: 300px;
+  $card-width: 480px;
+  $cover-height: $card-height;
+  $cover-width: 184px;
+
+  @include shared-vertical-cover($cover-height, $cover-width);
+
+  .article-card {
+    height: $card-height;
+    width: $card-width;
+
+    &__content {
+      padding: 0 30px 0 11px;
+    }
+
+    &__collection-container {
+      margin-top: 24px;
+    }
+
+    &__collection-order {
+      font-size: 14px;
+      line-height: 21px;
+    }
+
+    &__collection-name {
+      font-size: 14px;
+      line-height: 21px;
+    }
+
+    &__collection-cover {
+      height: 70px;
+      width: 70px;
+    }
+
+    &__title {
+      font-size: 30px;
+      line-height: 36px;
+      margin-bottom: 24px;
+      margin-top: 24px;
+      max-height: 36px * 3;
+    }
+
+    &__description-container {
+      display: none;
+    }
+
+    &__author-brand {
+      font-size: 14px;
+      line-height: 24px;
+    }
+
+    &__brand {
+      margin-right: 18px;
+    }
+
+    &__filler--bottom {
+      display: unset;
+    }
+
+    &__label-read-full {
+      display: unset;
+      font-size: 14px;
+      line-height: 24px;
+      margin-bottom: 36px;
+    }
+
+    &--experiment-slavics {
+      // stylelint-disable-next-line declaration-no-important
+      background: $experiment-slavics-default-bg !important;
+    }
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card--with-collection > .article-card__content > .article-card__title {
+    margin-bottom: 12px;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card--with-collection > .article-card__content > .article-card__author-brand {
+    margin-bottom: 36px;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card--with-collection > .article-card__content > .article-card__filler--bottom {
+    display: none;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card--with-collection > .article-card__content > .article-card__label-read-full {
+    display: none;
+  }
+}
+
+.card-size-m {
+  @include shared-size-m;
+}
+
+@mixin shared-sizes-square-s-square-m {
+  // Rules common for 'square-m' and square-s' sizes.
+  .article-card {
+    flex-direction: column;
+
+    &__cover-container {
+      flex-shrink: 1;
+
+      &--with-collection {
+        display: none;
+      }
+    }
+
+    &__cover {
+      object-fit: cover;
+      position: absolute;
+    }
+
+    &__content {
+      flex-grow: 1;
+      flex-shrink: 0;
+      justify-content: flex-end;
+    }
+
+    &__description-container {
+      display: none;
+    }
+
+    &__collection-container {
+      margin-top: 19px;
+    }
+
+    &__collection-order {
+      font-size: 14px;
+      line-height: 24px;
+    }
+
+    &__collection-name {
+      font-size: 14px;
+      line-height: 21px;
+    }
+
+    &__collection-cover {
+      height: 70px;
+      width: 70px;
+    }
+
+    &__title {
+      font-size: 30px;
+      line-height: 36px;
+      margin-bottom: 20px; // ?
+      margin-top: 10px; // ?
+      max-height: 36px * 3;
+    }
+
+    &__author-brand {
+      font-size: 14px;
+      line-height: 24px;
+    }
+
+    &__brand {
+      margin-right: 12px;
+    }
+
+    &--experiment-slavics {
+      // stylelint-disable-next-line declaration-no-important
+      color: $primary-white !important;
+    }
+  }
+}
+
+@mixin shared-horizontal-cover($cover-max-height, $cover-width) {
+  $cover-min-height: $cover-max-height - 36px * 2; // 36px is a title line-height.
+
+  .article-card {
+    &__cover-container {
+      flex-basis: $cover-max-height;
+      max-height: $cover-max-height;
+      min-height: $cover-min-height;
+      width: $cover-width;
+    }
+
+    &__cover {
+      height: $cover-max-height;
+      width: $cover-width;
+    }
+  }
+
+  /* stylelint-disable */
+  .article-card.theme-black > .article-card__cover-container,
+  .article-card.theme-white > .article-card__cover-container {
+    max-height: $cover-max-height - $border-width-default;
+    min-height: $cover-min-height - $border-width-default;
+    width: $cover-width - 2 * $border-width-default;
+  }
+
+  .article-card:hover > .article-card__cover-container {
+    @media (hover: hover) {
+      max-height: $cover-max-height - $border-width-hover;
+      min-height: $cover-min-height - $border-width-hover;
+      width: $cover-width - 2 * $border-width-hover;
+    }
+  }
+  /* stylelint-enable */
+}
+
+@mixin shared-size-square-m {
+  $card-height: 390px;
+  $card-width: $card-height;
+  $cover-max-height: 240px;
+  $cover-width: $card-width;
+
+  @include shared-sizes-square-s-square-m;
+
+  @include shared-horizontal-cover($cover-max-height, $cover-width);
+
+  .article-card {
+    height: $card-height;
+    width: $card-width;
+
+    &__content {
+      padding: 0 39px;
+    }
+
+    &__author-brand {
+      margin-bottom: 48px;
+    }
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card--with-brand > .article-card__content > .article-card__author-brand {
+    margin-bottom: 36px;
+  }
+}
+
+.card-size-square-m {
+  @include shared-size-square-m;
+}
+
+@mixin shared-size-square-s {
+  $card-height: 300px;
+  $card-width: $card-height;
+  $cover-max-height: 168px;
+  $cover-width: $card-width;
+
+  @include shared-sizes-square-s-square-m;
+
+  @include shared-horizontal-cover($cover-max-height, $cover-width);
+
+  .article-card {
+    height: $card-height;
+    width: $card-width;
+
+    &__content {
+      padding: 0 24px;
+    }
+
+    &__author-brand {
+      margin-bottom: 36px;
+    }
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .article-card--with-brand > .article-card__content > .article-card__author-brand {
+    margin-bottom: 24px;
+  }
+}
+
+.card-size-square-s {
+  @include shared-size-square-s;
+}
+
+// Below are the rules for cards to be auto adjustable.
+// TODO(?): to wrap with .card-size-auto class.
+
+.featured {
+  @include screen-desktop {
+    @include shared-size-xxl;
+  }
+
+  @include screen-tablet-large {
+    @include shared-size-xl;
+  }
+
+  @include screen-tablet {
+    @include shared-size-l;
+  }
+
+  @include screen-touch {
+    @include shared-size-m;
+  }
+
+  @include screen-mobile {
+    @include shared-size-square-s;
+  }
+}
+
+.two-in-row {
+  @include screen-desktop {
+    @include shared-size-m;
+  }
+
+  @include screen-tablet {
+    @include shared-size-l;
+  }
+
+  @include screen-touch {
+    @include shared-size-m;
+  }
+
+  @include screen-mobile {
+    @include shared-size-square-s;
+  }
+
+  &__first {
+    @include screen-tablet-large {
+      @include shared-size-m;
+    }
+  }
+
+  &__second {
+    @include screen-tablet-large {
+      @include shared-size-square-s;
+    }
+  }
+}
+
+.articles-by-tag-2 {
+  @include screen-desktop {
+    @include shared-size-square-m;
+  }
+
+  @include screen-tablet-large {
+    @include shared-size-l;
+  }
+
+  @include screen-tablet {
+    @include shared-size-square-m;
+  }
+
+  @include screen-touch {
+    @include shared-size-m;
+  }
+
+  @include screen-mobile {
+    @include shared-size-square-s;
+  }
+}
+
+.articles-by-tag-3 {
+  @include screen-desktop {
+    @include shared-size-square-s;
+  }
+
+  @include screen-tablet-large {
+    @include shared-size-square-m;
+  }
+
+  @include screen-tablet {
+    @include shared-size-square-s;
+  }
+
+  @include screen-touch {
+    @include shared-size-m;
+  }
+
+  @include screen-mobile {
+    @include shared-size-square-s;
+  }
+}
+
+.tag-page-block-b {
+  .large-card {
+    @include screen-desktop {
+      @include shared-size-l;
+    }
+
+    @include screen-tablet-large {
+      @include shared-size-m;
+    }
+
+    @include screen-tablet {
+      @include shared-size-l;
+    }
+
+    @include screen-touch {
+      @include shared-size-m;
+    }
+
+    @include screen-mobile {
+      @include shared-size-square-s;
+    }
+  }
+
+  .small-card {
+    @include screen-desktop {
+      @include shared-size-square-m;
+    }
+
+    @include screen-tablet-large {
+      @include shared-size-square-s;
+    }
+
+    @include screen-tablet {
+      @include shared-size-l;
+    }
+
+    @include screen-touch {
+      @include shared-size-m;
+    }
+
+    @include screen-mobile {
+      @include shared-size-square-s;
+    }
+  }
+}
+
+.tag-page-block-cd {
+  &__style-row-of-two {
+    @include screen-desktop {
+      @include shared-size-m;
+    }
+
+    @include screen-tablet-large {
+      @include shared-size-square-m;
+    }
+
+    @include screen-tablet {
+      @include shared-size-l;
+    }
+
+    @include screen-touch {
+      @include shared-size-m;
+    }
+
+    @include screen-mobile {
+      @include shared-size-square-s;
+    }
+  }
+
+  &__style-row-of-three {
+    @include screen-desktop {
+      @include shared-size-square-s;
+    }
+
+    @include screen-tablet-large {
+      @include shared-size-l;
+    }
+
+    @include screen-tablet {
+      @include shared-size-l;
+    }
+
+    @include screen-touch {
+      @include shared-size-m;
+    }
+
+    @include screen-mobile {
+      @include shared-size-square-s;
+    }
+  }
+}

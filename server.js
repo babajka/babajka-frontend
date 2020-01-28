@@ -3,22 +3,24 @@ const express = require('express');
 const next = require('next');
 const proxy = require('http-proxy-middleware');
 const cookieParser = require('cookie-parser');
+const qs = require('querystring');
 
 const routes = require('./routes');
-const { BACKEND_URL, MARKUP_URL } = require('./constants/server');
-const { DEFAULT_LOCALE } = require('./constants');
-const getArgs = require('./utils/args');
-
-const ARGS = getArgs();
-const port = ARGS.port || 3000;
-
-// This is a workaround as __ENV__ defined in next.config.js is not visible here.
-const ENV = process.env.WIR_ENV || process.env.NODE_ENV || 'not-set';
+const { PORT, BACKEND_URL, LOCALE_COOKIE_NAME } = require('./constants/server');
+const { DEFAULT_LOCALE, STATIC_PATHS, VALID_LOCALES } = require('./constants');
+const ENV = require('./utils/env');
 
 const dev = ENV !== 'production' && ENV !== 'staging';
 const app = next({ dev });
 
 const handle = routes.getRequestHandler(app);
+
+const getUserLocale = req => {
+  const lang = req.cookies[LOCALE_COOKIE_NAME];
+  return VALID_LOCALES.includes(lang) && lang;
+};
+
+const getValidLocale = loc => loc || DEFAULT_LOCALE;
 
 process.on('uncaughtException', err => {
   console.error('Uncaught Exception: ', err);
@@ -38,23 +40,50 @@ app.prepare().then(() => {
   // This is useful for fully local development.
   server.use('/test', proxy({ target: BACKEND_URL, changeOrigin: true }));
 
-  // TODO: redirect on preffered lang
-  server.get('/:lang?', (req, res) => {
-    const { lang = DEFAULT_LOCALE } = req.params;
-    return res.redirect(`/${lang}/articles`);
-  });
-  server.get('*', (req, res) => handle(req, res));
+  server.get('/', (req, res) => res.redirect(`/${getValidLocale(getUserLocale(req))}${req.url}`));
 
-  server.listen(port, err => {
-    if (err) throw err;
+  server.get('/:lang/admin', (req, res) => res.redirect(`/${req.params.lang}/admin/articles`));
+
+  server.get('/:startPath*', (req, res) => {
+    const { startPath } = req.params;
+
+    if (STATIC_PATHS.includes(startPath)) {
+      return handle(req, res);
+    }
+
+    const userLocale = getUserLocale(req);
+    if (!VALID_LOCALES.includes(startPath)) {
+      // missed locale, add it & redirect
+      return res.redirect(`/${getValidLocale(userLocale)}${req.originalUrl}`);
+    }
+
+    if (userLocale && startPath !== userLocale) {
+      // switch locale to user preferable
+      return res.redirect(`/${userLocale}${req.params[0]}`);
+    }
+
+    // fix http://local.wir.by:3000/en?kek=lol - 404
+    if (!req.path.endsWith('/')) {
+      let url = `${req.path}/`;
+      const query = qs.stringify(req.query);
+      if (query) {
+        url = `${url}?${query}`;
+      }
+      return res.redirect(url);
+    }
+
+    return handle(req, res);
+  });
+
+  server.listen(PORT, err => {
+    if (err) {
+      throw err;
+    }
     console.log(`> Environment is:\t${ENV}`);
     console.log(`> Using Backend on\t${BACKEND_URL}`);
-    if (process.env.DEBUG_STYLES === 'true') {
-      console.log(`> Using Markup on\t${MARKUP_URL}`);
-    }
-    console.log(`> Ready on\t\thttp://localhost:${port}`);
+    console.log(`> Ready on\t\thttp://localhost:${PORT}`);
     console.log(
-      `> To support cookies add '127.0.0.1 local.wir.by' into your hosts file and access on http://local.wir.by:${port}`
+      `> To support cookies add '127.0.0.1 local.wir.by' into your hosts file and access on http://local.wir.by:${PORT}`
     );
   });
 });

@@ -1,149 +1,87 @@
-import React, { Component } from 'react';
-import withRedux from 'next-redux-wrapper';
-import chunk from 'lodash/chunk';
-import cn from 'classnames';
+import 'styles/pages/about.scss';
 
-import Text from 'components/common/Text';
-import Icon from 'components/common/Icon';
-import Clickable from 'components/common/Clickable';
-import MailLink from 'components/common/MailLink';
-import OutsideClickable from 'components/common/OutsideClickable';
-import PageLayout from 'components/common/layout/PageLayout';
-import TeamRow, { ROW_SIZE } from 'components/about/TeamRow';
+import React from 'react';
 
-import initStore from 'redux/store';
-import { actions as auth } from 'redux/ducks/auth';
-import request from 'utils/request';
-import { getLocalizedTeam, getLocalizedVacancies } from 'utils/getters';
-import rawTeam from 'data/team.json';
-import rawVacancies from 'data/vacancies.json';
+import ExternalLink from 'components/common/ExternalLink';
+import Text, { localize } from 'components/common/Text';
+import {
+  MetaTitle,
+  MetaDescription,
+  MetaKeywords,
+  MetaImage,
+  DEFAULT_IMAGE,
+} from 'components/social/Metatags';
 
-class AboutPage extends Component {
-  static getInitialProps(ctx) {
-    return request.populate(ctx, [auth.getCurrentUser]);
-  }
+import team from 'data/team.json';
 
-  state = {
-    openedVacancy: null,
-  };
+import { PARTNERS } from 'constants/partners';
 
-  handleVacancyToggle = vacancy => {
-    const { openedVacancy } = this.state;
-    if (openedVacancy && openedVacancy.id === vacancy.id) {
-      this.setState({ openedVacancy: null });
-      return;
-    }
-    this.setState({ openedVacancy: vacancy });
-  };
+const getLogoUrl = name =>
+  `https://res.cloudinary.com/wir-by/image/upload/c_scale,w_250,f_auto,q_auto/v1546529671/production/partners-logos/${name}`;
 
-  render() {
-    const { openedVacancy } = this.state;
-    const { url } = this.props;
-    const {
-      query: { lang },
-    } = url;
-    const vacancies = getLocalizedVacancies(rawVacancies, lang);
-    const team = getLocalizedTeam(rawTeam, lang);
-    const teamChunks = chunk(team, ROW_SIZE);
+const AboutPage = ({ lang }) => (
+  <>
+    <MetaTitle title={localize('about.meta-title', lang)} type="article" />
+    <MetaDescription description={localize('about.meta-description', lang)} />
+    <MetaKeywords keywords={localize('about.meta-keywords', lang)} />
+    <MetaImage url={DEFAULT_IMAGE} small />
 
-    return (
-      <PageLayout className="page-content about-container" url={url} title="header.about">
-        <div className="title">Wir.by</div>
-        <div className="goal">
-          <Text id="about.goal" />
+    <div className="wir-content-padding about-page">
+      <div className="about-page__description-block">
+        <div className="about-page__description-header">
+          <Text id="about.section1-header" />
         </div>
-        <hr />
-        {vacancies &&
-          vacancies.length && (
-            <>
-              <div className="helpus">
-                <div className="title">
-                  <Text id="about.join-us" />
-                </div>
-                <Text id="about.looking-for" />
-                <OutsideClickable onClick={() => this.setState({ openedVacancy: null })}>
-                  <div className="positions is-centered">
-                    {vacancies.map(vacancy => {
-                      const active = openedVacancy && openedVacancy.id === vacancy.id;
-                      return (
-                        <Clickable
-                          key={vacancy.id}
-                          tag="div"
-                          className={cn('position', { 'is-active': active })}
-                          onClick={this.handleVacancyToggle.bind(null, vacancy)}
-                        >
-                          {vacancy.title} <Icon name={`chevron-circle-${active ? 'up' : 'down'}`} />
-                        </Clickable>
-                      );
-                    })}
-                  </div>
-                  {openedVacancy && (
-                    <div id="position-description" className="position-description">
-                      <div className="name">{openedVacancy.title}</div>
-                      {openedVacancy.description}
-                      <br />
-                      <MailLink />
-                    </div>
-                  )}
-                </OutsideClickable>
-              </div>
-              <hr />
-            </>
-          )}
-        {team &&
-          team.length && (
-            <>
-              <div className="team">
-                <div className="title">
-                  <Text id="about.team" />
-                </div>
-                {teamChunks.map((data, index) => (
-                  // eslint-disable-next-line react/no-array-index-key
-                  <TeamRow key={index} data={data} />
-                ))}
-                <div className="thanks">
-                  <Text id="about.thanks-beginning" />{' '}
-                  <b>
-                    <Text id="about.thanks-hanna" />{' '}
-                  </b>
-                  <Text id="about.thanks-logo-and" />{' '}
-                  <b>
-                    <Text id="about.thanks-daniil" />{' '}
-                  </b>
-                  <Text id="about.thanks-soundtrack" />
-                </div>
-              </div>
-              <hr />
-            </>
-          )}
-        <div className="contact">
-          <Text id="about.find-us" />
-          <br />
-          <Text id="about.mail-to-us" />
-          <br />
-          <Text id="about.mail-to-dev" /> <MailLink />
-          <br />
-          <Text id="about.mail-to-help" /> <MailLink to="help" />
-          <div className="talaka">
-            <span className="talaka-text">
-              <Text id="about.we-on" />
-            </span>{' '}
-            <a className="talaka" href="https://www.talaka.org/projects/2495/overview">
-              <img
-                className="talaka-text"
-                alt="Talaka"
-                src="/static/images/references/talaka_logo.png"
-                width="30"
-              />{' '}
-              <span className="talaka-text">
-                <Text id="about.talaka" />
-              </span>
-            </a>
-          </div>
+        <div className="about-page__description-text">
+          <Text id="about.section1-text" />
         </div>
-      </PageLayout>
-    );
-  }
-}
+      </div>
 
-export default withRedux(initStore)(AboutPage);
+      <div className="about-page__description-block">
+        <div className="about-page__description-header">
+          <Text id="about.section-team-header" />
+        </div>
+        <div className="about-page__description-text about-page__team">
+          {team.map(({ image, name, role }) => (
+            <div key={name} className="about-page__teammate teammate">
+              <img className="teammate__pic" src={image} alt={name[lang || 'be']} />
+              <div className="teammate__name">{name[lang || 'be']}</div>
+              <div className="teammate__role">{role[lang || 'be']}</div>
+            </div>
+          ))}
+        </div>
+        <div className="about-page__description-text">
+          <Text id="about.section-team-subtext">
+            {(thanks, name1, descr1, name2, descr2, name3, descr3) => (
+              <>
+                {thanks}
+                <b>{name1}</b>
+                {descr1}
+                <b>{name2}</b>
+                {descr2}
+                <b>{name3}</b>
+                {descr3}
+              </>
+            )}
+          </Text>
+        </div>
+      </div>
+
+      <div className="about-page__description-block">
+        <div className="about-page__description-header">
+          <Text id="about.section-partners-header" />
+        </div>
+        <div className="about-page__description-text about-page__partners">
+          {PARTNERS.map(({ id, img, url, className = '' }) => (
+            <div key={id} className={`about-page__partner-logo ${className}`}>
+              <ExternalLink href={url}>
+                <img src={getLogoUrl(img)} alt={localize(`about.${id}`, lang)} />
+              </ExternalLink>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </>
+);
+
+export default AboutPage;

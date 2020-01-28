@@ -1,76 +1,123 @@
 import PropTypes from 'prop-types';
 
-import { LOCALES } from 'constants';
+import { TOPICS } from 'constants';
+import { VALID_LOCALES } from 'components/common/LocaleContext';
+import { ARTICLE_TYPES } from 'constants/articles';
 
-export const PaginationModel = {
-  page: PropTypes.number.isRequired,
-  pageSize: PropTypes.number.isRequired,
-};
+export const IdsArray = PropTypes.arrayOf(PropTypes.string);
 
-export const PaginationShape = PropTypes.shape(PaginationModel);
-
-export const BrandModel = {
-  slug: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  imageUrl: PropTypes.string,
-};
-
-export const BrandShape = PropTypes.shape(BrandModel);
-
-export const BrandsArray = PropTypes.arrayOf(BrandShape);
-
-export const AuthorModel = {
-  firstName: PropTypes.string.isRequired,
-  lastName: PropTypes.string.isRequired,
-  displayName: PropTypes.string.isRequired,
-  bio: PropTypes.string.isRequired,
+export const ShortUserShape = PropTypes.shape({
+  id: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
-  role: PropTypes.string.isRequired,
-  imageUrl: PropTypes.string.isRequired,
-  active: PropTypes.bool.isRequired,
-};
+});
 
-export const AuthorShape = PropTypes.shape(AuthorModel);
-
-export const AuthorsArray = PropTypes.arrayOf(AuthorShape);
+export const MetadataShape = PropTypes.shape({
+  createdAt: PropTypes.number.isRequired,
+  updatedAt: PropTypes.number.isRequired,
+  createdBy: ShortUserShape.isRequired,
+  updatedBy: ShortUserShape.isRequired,
+});
 
 export const CollectionModel = {
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
-  imageUrl: PropTypes.string,
+  cover: PropTypes.string.isRequired,
 };
 
 export const CollectionShape = PropTypes.shape(CollectionModel);
 
 export const CollectionsArray = PropTypes.arrayOf(CollectionShape);
 
-export const LangType = PropTypes.oneOf(Object.keys(LOCALES));
+export const LangType = PropTypes.oneOf(VALID_LOCALES);
+
+export const TopicSlug = PropTypes.oneOf(TOPICS);
+export const TopicShape = PropTypes.shape({
+  id: PropTypes.string.isRequired,
+  slug: TopicSlug.isRequired,
+});
+
+// export const TopicsArray = PropTypes.arrayOf(TopicShape);
+export const TopicsById = PropTypes.objectOf(TopicShape);
+
+export const TagShape = PropTypes.shape({
+  id: PropTypes.string.isRequired,
+  topicSlug: TopicSlug.isRequired,
+  content: PropTypes.object.isRequired,
+});
+
+export const TagsArray = PropTypes.arrayOf(TagShape);
+export const TagsById = PropTypes.objectOf(TagShape);
+
+export const ArticleCoversShape = PropTypes.shape({
+  page: PropTypes.string,
+  horizontal: PropTypes.string.isRequired,
+  vertical: PropTypes.string.isRequired,
+});
+
+export const ThemeType = PropTypes.oneOf(['light', 'dark']);
+
+export const ArticleMediaShape = PropTypes.shape({
+  platform: PropTypes.string,
+  id: PropTypes.string,
+  url: PropTypes.string,
+});
+
+export const ArticleType = PropTypes.oneOf(ARTICLE_TYPES);
 
 export const ArticleModel = {
   active: PropTypes.bool.isRequired,
   articleId: PropTypes.string.isRequired,
-  author: AuthorShape,
-  brand: BrandShape,
   collection: CollectionShape,
-  content: PropTypes.shape({}).isRequired,
-  createdAt: PropTypes.string.isRequired,
-  imageFolderUrl: PropTypes.string,
-  imagePreviewUrl: PropTypes.string.isRequired,
+  text: PropTypes.object.isRequired,
   locale: LangType,
   publishAt: PropTypes.string,
   published: PropTypes.bool.isRequired,
   slug: PropTypes.string.isRequired,
-  subtitle: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  video: PropTypes.shape({
-    platform: PropTypes.string,
-    videoId: PropTypes.string,
-    videoUrl: PropTypes.string,
-  }),
+  subtitle: PropTypes.string.isRequired,
+  type: ArticleType.isRequired,
+  images: ArticleCoversShape.isRequired,
+  video: ArticleMediaShape,
+  audio: ArticleMediaShape,
+  metadata: MetadataShape.isRequired,
+  keywords: PropTypes.string.isRequired,
+  tagsByTopic: PropTypes.objectOf(TagsArray).isRequired,
+  theme: ThemeType.isRequired,
+  color: PropTypes.string.isRequired,
 };
 
 export const ArticleShape = PropTypes.shape(ArticleModel);
-
 export const ArticlesArray = PropTypes.arrayOf(ArticleShape);
+export const ArticlesById = PropTypes.objectOf(ArticleShape);
+
+const PermissionsModel = {
+  adminAccess: PropTypes.bool.isRequired,
+  canCreateArticle: PropTypes.bool.isRequired,
+  canManageArticles: PropTypes.bool.isRequired,
+  canManageUsers: PropTypes.bool.isRequired,
+};
+
+export const PermissionsList = PropTypes.arrayOf(PropTypes.oneOf(Object.keys(PermissionsModel)));
+
+export const PermissionsShape = PropTypes.shape(PermissionsModel);
+
+export const UserShape = PropTypes.shape({
+  firstName: PropTypes.string.isRequired,
+  lastName: PropTypes.string.isRequired,
+  displayName: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  active: PropTypes.bool.isRequired,
+  imageUrl: PropTypes.string,
+  permissions: PermissionsShape.isRequired,
+});
+
+export const DiaryShape = PropTypes.shape({
+  slug: PropTypes.string.isRequired,
+  text: PropTypes.object,
+  date: PropTypes.number.isRequired,
+  author: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    diaryImage: PropTypes.string,
+  }),
+});

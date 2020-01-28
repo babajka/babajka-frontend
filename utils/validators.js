@@ -13,20 +13,15 @@ export const hasErrors = (errors, touched) =>
   }).length;
 
 const emailRegexp = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/;
-export const isEmail = (email, massageId = 'auth.badEmail') =>
-  email.match(emailRegexp) ? null : massageId;
+export const isEmail = email => !!email && email.match(emailRegexp);
+export const validEmail = (email, massageId = 'forms.badEmail') =>
+  isEmail(email) ? null : massageId;
 
-export const isEqual = (value1, value2, massageId) => (value1 === value2 ? null : massageId);
+export const notEqual = (value1, value2, massageId) => (value1 === value2 ? null : massageId);
 
 export const required = (field, massageId = 'forms.required') => (field ? null : massageId);
 
 export const checkLength = (value, length, massageId) => (value.length < length ? massageId : null);
-
-export const isSameDay = date => {
-  const now = moment();
-  const day = moment(date);
-  return day.date() === now.date() && day.month() === now.month();
-};
 
 export const validDate = date => !moment(date).isValid() && 'forms.invalidDate';
 
