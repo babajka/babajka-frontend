@@ -21,7 +21,7 @@ const getLogoUrl = name =>
 
 const AboutPage = ({ lang }) => (
   <>
-    <MetaTitle title={localize('about.meta-title', lang)} type="article" />
+    <MetaTitle title={localize('about.meta-title', lang)} />
     <MetaDescription description={localize('about.meta-description', lang)} />
     <MetaKeywords keywords={localize('about.meta-keywords', lang)} />
     <MetaImage url={DEFAULT_IMAGE} small />
@@ -51,7 +51,7 @@ const AboutPage = ({ lang }) => (
         </div>
         <div className="about-page__description-text">
           <Text id="about.section-team-subtext">
-            {(thanks, name1, descr1, name2, descr2, name3, descr3) => (
+            {(thanks, name1, descr1, name2, descr2, name3, descr3, name4, descr4) => (
               <>
                 {thanks}
                 <b>{name1}</b>
@@ -60,6 +60,8 @@ const AboutPage = ({ lang }) => (
                 {descr2}
                 <b>{name3}</b>
                 {descr3}
+                <b>{name4}</b>
+                {descr4}
               </>
             )}
           </Text>
