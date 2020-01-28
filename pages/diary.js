@@ -35,16 +35,22 @@ const mapStateToProps = (state, { lang }) => ({
   diary: diarySelectors.getCurrent(state, lang),
 });
 
-const getShareText = (date, name) => {
+const getShareText = (date, name, lang, content) => {
   const today = dateIsToday(date);
   const year = getYear(date);
-  return [
-    today ? 'Сёння' : formatDate(date, DATE_FORMAT),
+
+  const base = [
+    today ? 'Сёння' : `${formatDate(date, DATE_FORMAT)} `,
     today && year && `, у ${year} годзе, `,
-    `${name} ${localize('diary.wrote', 'be')}...`,
+    `${name} ${localize('diary.wrote', lang)}`,
   ]
     .filter(Boolean)
     .join('');
+
+  return {
+    basic: `${base}...`,
+    extended: `${base}:\n«${content}...»\n`,
+  };
 };
 
 const DiaryPage = ({
@@ -67,7 +73,7 @@ const DiaryPage = ({
   return (
     <>
       <MetaTitle title={metaTitle} type="article" />
-      <MetaDescription description={`${fiberyToString(content).substring(0, 100)}...`} />
+      <MetaDescription description={`${fiberyToString(content).substring(0, 150)}...`} />
       <MetaKeywords keywords={metaKeywords} />
       <MetaImage url={image ? `${host}${image}` : DEFAULT_IMAGE} small />
 
@@ -94,7 +100,10 @@ const DiaryPage = ({
         </div>
         <div className="diary-page__text">{fiberyRenderer(content)}</div>
         <div className="diary-page__share">
-          <ShareButtons urlPath={router.asPath} title={getShareText(date, name)} />
+          <ShareButtons
+            urlPath={router.asPath}
+            text={getShareText(date, name, lang, fiberyToString(content).substring(0, 140))}
+          />
         </div>
         <DiaryLinkArrows className="diary-page__arrows diary-page__arrows--bottom" size={36} />
       </div>

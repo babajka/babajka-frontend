@@ -102,7 +102,7 @@ const Article = ({
           {fiberyRenderer(text.content)}
         </div>
         <div className="article-page__share">
-          <ShareButtons urlPath={router.asPath} title={title} />
+          <ShareButtons urlPath={router.asPath} text={{ basic: title }} />
         </div>
         <div className="article-page__other-tags">
           {tags.map(tag => (

@@ -67,6 +67,12 @@ export const SHARE_NETWORKS = [
     baseUrl: 'https://connect.ok.ru/offer',
     getParams: (url, title) => ({ url, title }),
   },
+  {
+    id: 'telegram',
+    icon: 'telegram-plane',
+    baseUrl: 'https://telegram.me/share',
+    getParams: url => ({ url }),
+  },
 ];
 
 export const GA_ID = 'UA-117143376-2';
