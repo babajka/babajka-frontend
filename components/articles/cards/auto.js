@@ -9,8 +9,8 @@ export const SCREENS = ['mobile', 'touch', 'tablet', 'tablet-large', 'desktop'];
 export const ARTICLE_CARD_SIZES_BY_CONTEXT = {
   featured: ['square-s', 'm', 'l', 'xl', 'xxl'],
   'two-in-row': {
-    first: ['m', 'square-s', 'm', 'l', 'm'],
-    second: ['square-s', 'square-s', 'm', 'l', 'm'],
+    first: ['square-s', 'm', 'l', 'm', 'm'],
+    second: ['square-s', 'm', 'l', 'square-s', 'm'],
   },
   'articles-by-tag-2': ['square-s', 'm', 'square-m', 'l', 'square-m'],
   'articles-by-tag-3': ['square-s', 'm', 'square-s', 'square-m', 'square-s'],
