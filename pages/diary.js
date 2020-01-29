@@ -69,11 +69,12 @@ const DiaryPage = ({
     localize('diary.meta-keywords', lang),
   ].join(', ');
   const [first, second] = getLocalizedArticles(articles, lang);
+  const shortContent = fiberyToString(content).substring(0, 140);
 
   return (
     <>
       <MetaTitle title={metaTitle} type="article" />
-      <MetaDescription description={`${fiberyToString(content).substring(0, 150)}...`} />
+      <MetaDescription description={`${shortContent}...`} />
       <MetaKeywords keywords={metaKeywords} />
       <MetaImage url={image ? `${host}${image}` : DEFAULT_IMAGE} small />
 
@@ -102,7 +103,7 @@ const DiaryPage = ({
         <div className="diary-page__share">
           <ShareButtons
             urlPath={router.asPath}
-            text={getShareText(date, name, lang, fiberyToString(content).substring(0, 140))}
+            text={getShareText(date, name, lang, shortContent)}
           />
         </div>
         <DiaryLinkArrows className="diary-page__arrows diary-page__arrows--bottom" size={36} />
