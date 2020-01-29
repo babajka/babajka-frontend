@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
+import { IconPackShape } from 'utils/customPropTypes';
+
 const Icon = ({ className, name, pack, size, ...props }) => (
   <i
     className={cn(className, `fa${pack} fa-${name}`, size && `fa-${size}`)}
@@ -14,7 +16,7 @@ Icon.propTypes = {
   className: PropTypes.string,
   name: PropTypes.string.isRequired,
   size: PropTypes.string,
-  pack: PropTypes.oneOf(['s', 'r', 'b']),
+  pack: IconPackShape,
 };
 
 Icon.defaultProps = {

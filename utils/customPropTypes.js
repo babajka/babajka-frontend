@@ -121,3 +121,5 @@ export const DiaryShape = PropTypes.shape({
     diaryImage: PropTypes.string,
   }),
 });
+
+export const IconPackShape = PropTypes.oneOf(['s', 'r', 'b']);

@@ -63,15 +63,15 @@ export const SHARE_NETWORKS = [
     getParams: (url, title) => ({ url, title }),
   },
   {
-    id: 'odnoklassniki',
-    baseUrl: 'https://connect.ok.ru/offer',
-    getParams: (url, title) => ({ url, title }),
-  },
-  {
     id: 'telegram',
     icon: 'telegram-plane',
     baseUrl: 'https://telegram.me/share',
     getParams: url => ({ url }),
+  },
+  {
+    id: 'odnoklassniki',
+    baseUrl: 'https://connect.ok.ru/offer',
+    getParams: (url, title) => ({ url, title }),
   },
 ];
 
