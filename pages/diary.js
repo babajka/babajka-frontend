@@ -48,8 +48,8 @@ const getShareText = (date, name, lang, content) => {
     .join('');
 
   return {
-    basic: `${base}...`,
-    extended: `${base}:\n«${content}...»\n`,
+    basicText: `${base}...`,
+    extendedText: `${base}:\n«${content}...»\n`,
   };
 };
 
@@ -101,10 +101,7 @@ const DiaryPage = ({
         </div>
         <div className="diary-page__text">{fiberyRenderer(content)}</div>
         <div className="diary-page__share">
-          <ShareButtons
-            urlPath={router.asPath}
-            text={getShareText(date, name, lang, shortContent)}
-          />
+          <ShareButtons urlPath={router.asPath} {...getShareText(date, name, lang, shortContent)} />
         </div>
         <DiaryLinkArrows className="diary-page__arrows diary-page__arrows--bottom" size={36} />
       </div>

@@ -13,7 +13,7 @@ const convertContent = (content, init = '') => {
 };
 
 const CONVERTERS = {
-  paragraph: ({ content }) => convertContent(content),
+  paragraph: ({ content }) => `${convertContent(content)} `,
   text: ({ text }) => text,
 };
 

@@ -59,7 +59,7 @@ const Footer = () => (
               <div className="footer__header">
                 <Text id="footer.share" />
               </div>
-              <ShareButtons text={{ basic: useLocalization('common.project-description') }} />
+              <ShareButtons basixText={useLocalization('common.project-description')} />
             </div>
           </div>
         </div>
