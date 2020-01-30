@@ -15,7 +15,7 @@ import { DOMAIN_SECURE } from 'constants';
 
 const POPUP_WINDOW_PARAMS = 'width=600,height=400';
 
-const ShareButtons = ({ urlPath, text: { basic, extended } }) => {
+const ShareButtons = ({ urlPath, basicText, extendedText }) => {
   const lang = useLocaleContext();
   const [forceButtonGroup, setForceButtonGroup] = useState(false);
 
@@ -30,7 +30,7 @@ const ShareButtons = ({ urlPath, text: { basic, extended } }) => {
           onClick={() => {
             if (navigator.share) {
               navigator.share({
-                title: basic,
+                title: basicText,
                 url: `${DOMAIN_SECURE}${urlPath}`,
               });
             } else {
@@ -52,7 +52,7 @@ const ShareButtons = ({ urlPath, text: { basic, extended } }) => {
       >
         <ButtonGroup className="wir-social-buttons" icon>
           {SHARE_NETWORKS.map(({ id, icon = id, baseUrl, getParams }) => {
-            const text = id === 'twitter' ? extended || basic : basic;
+            const text = id === 'twitter' ? extendedText || basicText : basicText;
             return (
               <button
                 key={id}
@@ -79,14 +79,13 @@ const ShareButtons = ({ urlPath, text: { basic, extended } }) => {
 
 ShareButtons.propTypes = {
   urlPath: PropTypes.string,
-  text: PropTypes.shape({
-    basic: PropTypes.string.isRequired,
-    extended: PropTypes.string,
-  }).isRequired,
+  basicText: PropTypes.string.isRequired,
+  extendedText: PropTypes.string,
 };
 
 ShareButtons.defaultProps = {
   urlPath: '',
+  extendedText: '',
 };
 
 export default ShareButtons;
