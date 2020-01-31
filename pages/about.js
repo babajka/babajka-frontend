@@ -51,7 +51,21 @@ const AboutPage = ({ lang }) => (
         </div>
         <div className="about-page__description-text">
           <Text id="about.section-team-subtext">
-            {(thanks, name1, descr1, name2, descr2, name3, descr3, name4, descr4) => (
+            {(
+              thanks,
+              name1,
+              descr1,
+              name2,
+              descr2,
+              name3,
+              descr3,
+              name4,
+              descr4,
+              name5,
+              descr5,
+              name6,
+              descr6
+            ) => (
               <>
                 {thanks}
                 <b>{name1}</b>
@@ -62,6 +76,10 @@ const AboutPage = ({ lang }) => (
                 {descr3}
                 <b>{name4}</b>
                 {descr4}
+                <b>{name5}</b>
+                {descr5}
+                <b>{name6}</b>
+                {descr6}
               </>
             )}
           </Text>
