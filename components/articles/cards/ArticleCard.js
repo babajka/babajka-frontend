@@ -64,7 +64,7 @@ const getCoverLink = (images, cardSize) => {
   return `${images[type]}?w=${+width * 2}`;
 };
 
-// const COLLECTION_LOGO_WIDTH = 70;
+const COLLECTION_LOGO_WIDTH = 70;
 
 // TODO: fix storybook
 const ArticleCard = props => {
@@ -133,7 +133,7 @@ const ArticleCard = props => {
               </div>
               <div className="article-card__collection-name">{collection.name}</div>
             </div>
-            {/* collection.cover && (
+            {collection.cover && (
               <Image
                 className="article-card__collection-cover"
                 alt={collection.name}
@@ -141,7 +141,7 @@ const ArticleCard = props => {
                 baseUrl={collection.cover}
                 mode="x"
               />
-            ) */}
+            )}
           </div>
         )}
         <div className="article-card__filler article-card__filler--top" />

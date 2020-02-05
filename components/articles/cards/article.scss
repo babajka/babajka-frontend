@@ -5,6 +5,26 @@
 
 $experiment-slavics-default-bg: #fef04c;
 
+$title-font-size: (
+  xxl: 48px,
+  xl: 30px,
+  l: 24px,
+  m: 24px,
+  square-m: 24px,
+  square-s: 24px,
+);
+
+$title-line-height: (
+  xxl: 60px,
+  xl: 36px,
+  l: 30px,
+  m: 30px,
+  square-m: 30px,
+  square-s: 30px,
+);
+
+$default-card-font-size: 16px;
+
 .article-card {
   display: flex;
 
@@ -30,19 +50,6 @@ $experiment-slavics-default-bg: #fef04c;
   &__cover {
     display: inline-block;
     position: absolute;
-  }
-
-  &.theme-black > &__cover-container > &__cover,
-  &.theme-white > &__cover-container > &__cover {
-    left: -($border-width-default);
-    top: -($border-width-default);
-  }
-
-  &:hover > &__cover-container > &__cover {
-    @media (hover: hover) {
-      left: -($border-width-hover);
-      top: -($border-width-hover);
-    }
   }
 
   &__content {
@@ -151,10 +158,23 @@ $experiment-slavics-default-bg: #fef04c;
     width: $cover-width - $border-width-default;
   }
 
+  .article-card.theme-black > .article-card__cover-container > .article-card__cover,
+  .article-card.theme-white > .article-card__cover-container > .article-card__cover {
+    left: -($border-width-default);
+    top: -($border-width-default);
+  }
+
   .article-card:hover > .article-card__cover-container {
     @media (hover: hover) {
       height: $cover-height - 2 * $border-width-hover;
       width: $cover-width - $border-width-hover;
+    }
+  }
+
+  .article-card:hover > .article-card__cover-container > .article-card__cover {
+    @media (hover: hover) {
+      left: -($border-width-hover);
+      top: -($border-width-hover);
     }
   }
   /* stylelint-enable */
@@ -183,6 +203,11 @@ $experiment-slavics-default-bg: #fef04c;
 
     &__filler--middle {
       display: unset;
+    }
+
+    &__author-brand {
+      font-size: $default-card-font-size;
+      line-height: 24px;
     }
 
     &--experiment-slavics {
@@ -217,15 +242,15 @@ $experiment-slavics-default-bg: #fef04c;
     }
 
     &__title {
-      font-size: 60px;
-      line-height: 66px;
+      font-size: map-get($title-font-size, xxl);
+      line-height: map-get($title-line-height, xxl);
       margin-bottom: 30px;
       margin-top: 24px;
-      max-height: 66px * 3;
+      max-height: map-get($title-line-height, xxl) * 3;
     }
 
     &__description-container {
-      font-size: 20px;
+      font-size: 24px;
       line-height: 36px;
     }
 
@@ -234,8 +259,6 @@ $experiment-slavics-default-bg: #fef04c;
     }
 
     &__author-brand {
-      font-size: 14px;
-      line-height: 24px;
       margin-bottom: 60px;
     }
 
@@ -273,15 +296,15 @@ $experiment-slavics-default-bg: #fef04c;
     }
 
     &__title {
-      font-size: 48px;
-      line-height: 60px;
+      font-size: map-get($title-font-size, xl);
+      line-height: map-get($title-line-height, xl);
       margin-bottom: 30px;
       margin-top: 24px;
-      max-height: 60px * 3;
+      max-height: map-get($title-line-height, xl) * 3;
     }
 
     &__description-container {
-      font-size: 14px;
+      font-size: 16px;
       line-height: 24px;
     }
 
@@ -290,8 +313,6 @@ $experiment-slavics-default-bg: #fef04c;
     }
 
     &__author-brand {
-      font-size: 14px;
-      line-height: 24px;
       margin-bottom: 48px;
     }
 
@@ -329,15 +350,15 @@ $experiment-slavics-default-bg: #fef04c;
     }
 
     &__title {
-      font-size: 30px;
-      line-height: 36px;
+      font-size: map-get($title-font-size, l);
+      line-height: map-get($title-line-height, l);
       margin-bottom: 24px;
       margin-top: 24px;
-      max-height: 36px * 3;
+      max-height: map-get($title-line-height, l) * 3;
     }
 
     &__description-container {
-      font-size: 14px;
+      font-size: 16px;
       line-height: 24px;
     }
 
@@ -346,8 +367,6 @@ $experiment-slavics-default-bg: #fef04c;
     }
 
     &__author-brand {
-      font-size: 14px;
-      line-height: 24px;
       margin-bottom: 48px;
     }
 
@@ -387,12 +406,12 @@ $experiment-slavics-default-bg: #fef04c;
     }
 
     &__collection-order {
-      font-size: 14px;
+      font-size: $default-card-font-size;
       line-height: 21px;
     }
 
     &__collection-name {
-      font-size: 14px;
+      font-size: $default-card-font-size;
       line-height: 21px;
     }
 
@@ -402,11 +421,11 @@ $experiment-slavics-default-bg: #fef04c;
     }
 
     &__title {
-      font-size: 30px;
-      line-height: 36px;
+      font-size: map-get($title-font-size, m);
+      line-height: map-get($title-line-height, m);
       margin-bottom: 24px;
       margin-top: 24px;
-      max-height: 36px * 3;
+      max-height: map-get($title-line-height, m) * 3;
     }
 
     &__description-container {
@@ -414,7 +433,7 @@ $experiment-slavics-default-bg: #fef04c;
     }
 
     &__author-brand {
-      font-size: 14px;
+      font-size: $default-card-font-size;
       line-height: 24px;
     }
 
@@ -428,7 +447,7 @@ $experiment-slavics-default-bg: #fef04c;
 
     &__label-read-full {
       display: unset;
-      font-size: 14px;
+      font-size: $default-card-font-size;
       line-height: 24px;
       margin-bottom: 36px;
     }
@@ -497,12 +516,12 @@ $experiment-slavics-default-bg: #fef04c;
     }
 
     &__collection-order {
-      font-size: 14px;
+      font-size: $default-card-font-size;
       line-height: 24px;
     }
 
     &__collection-name {
-      font-size: 14px;
+      font-size: $default-card-font-size;
       line-height: 21px;
     }
 
@@ -512,16 +531,17 @@ $experiment-slavics-default-bg: #fef04c;
     }
 
     &__title {
-      font-size: 30px;
-      line-height: 36px;
-      margin-bottom: 20px; // ?
+      font-size: map-get($title-font-size, square-m);
+      line-height: map-get($title-line-height, square-m);
+      margin-bottom: 12px;
       margin-top: 10px; // ?
-      max-height: 36px * 3;
+      max-height: map-get($title-line-height, square-m) * 3;
     }
 
     &__author-brand {
-      font-size: 14px;
-      line-height: 24px;
+      font-size: $default-card-font-size;
+      line-height: 18px;
+      margin-bottom: 30px;
     }
 
     &__brand {
@@ -548,6 +568,8 @@ $experiment-slavics-default-bg: #fef04c;
 
     &__cover {
       height: $cover-max-height;
+      top: 50%;
+      transform: translate(0, -50%);
       width: $cover-width;
     }
   }
@@ -560,11 +582,24 @@ $experiment-slavics-default-bg: #fef04c;
     width: $cover-width - 2 * $border-width-default;
   }
 
+  .article-card.theme-black > .article-card__cover-container > .article-card__cover,
+  .article-card.theme-white > .article-card__cover-container > .article-card__cover {
+    left: -($border-width-default);
+    top: calc(50% - #{$border-width-default / 2});
+  }
+
   .article-card:hover > .article-card__cover-container {
     @media (hover: hover) {
       max-height: $cover-max-height - $border-width-hover;
       min-height: $cover-min-height - $border-width-hover;
       width: $cover-width - 2 * $border-width-hover;
+    }
+  }
+
+  .article-card:hover > .article-card__cover-container > .article-card__cover {
+    @media (hover: hover) {
+      left: -($border-width-hover);
+      top: calc(50% - #{$border-width-hover / 2});
     }
   }
   /* stylelint-enable */
@@ -587,15 +622,11 @@ $experiment-slavics-default-bg: #fef04c;
     &__content {
       padding: 0 39px;
     }
-
-    &__author-brand {
-      margin-bottom: 48px;
-    }
   }
 
   /* stylelint-disable-next-line selector-class-pattern */
   .article-card--with-brand > .article-card__content > .article-card__author-brand {
-    margin-bottom: 36px;
+    margin-bottom: 30px;
   }
 }
 
@@ -606,7 +637,7 @@ $experiment-slavics-default-bg: #fef04c;
 @mixin shared-size-square-s {
   $card-height: 300px;
   $card-width: $card-height;
-  $cover-max-height: 168px;
+  $cover-max-height: 186px;
   $cover-width: $card-width;
 
   @include shared-sizes-square-s-square-m;
@@ -619,10 +650,6 @@ $experiment-slavics-default-bg: #fef04c;
 
     &__content {
       padding: 0 24px;
-    }
-
-    &__author-brand {
-      margin-bottom: 36px;
     }
   }
 

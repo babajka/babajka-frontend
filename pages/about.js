@@ -40,16 +40,16 @@ const AboutPage = ({ lang }) => (
         <div className="about-page__description-header">
           <Text id="about.section-team-header" />
         </div>
-        <div className="about-page__description-text about-page__team">
+        <div className="about-page__description-text about-page__description-text--margin-bottom about-page__team">
           {team.map(({ image, name, role }) => (
             <div key={name} className="about-page__teammate teammate">
-              <img className="teammate__pic" src={image} alt={name[lang || 'be']} />
-              <div className="teammate__name">{name[lang || 'be']}</div>
-              <div className="teammate__role">{role[lang || 'be']}</div>
+              <img className="teammate__pic" src={image} alt={name[lang] || name.be} />
+              <div className="teammate__name">{name[lang] || name.be}</div>
+              <div className="teammate__role">{role[lang] || name.be}</div>
             </div>
           ))}
         </div>
-        <div className="about-page__description-text">
+        <div className="about-page__description-text about-page__description-text--margin-bottom">
           <Text id="about.section-team-subtext">
             {(
               thanks,
@@ -80,6 +80,17 @@ const AboutPage = ({ lang }) => (
                 {descr5}
                 <b>{name6}</b>
                 {descr6}
+              </>
+            )}
+          </Text>
+        </div>
+        <div className="about-page__description-text about-page__description-text--margin-bottom">
+          <Text id="about.section-team-subtext2">
+            {(thanks, name, descr) => (
+              <>
+                {thanks}
+                <b>{name}</b>
+                {descr}
               </>
             )}
           </Text>

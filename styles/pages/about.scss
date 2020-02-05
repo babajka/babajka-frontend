@@ -26,6 +26,10 @@ $team-columns: (
 
   &__description-text {
     line-height: 1.42em;
+
+    &--margin-bottom {
+      margin-bottom: 2rem;
+    }
   }
 
   &__partners {
@@ -44,7 +48,6 @@ $team-columns: (
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin-bottom: 2rem;
   }
 
   &__team-subtext {

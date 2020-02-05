@@ -5,6 +5,22 @@
 $block-spacing: 60px;
 $paragraph-spacing: 24px;
 
+$content-font-size: (
+  desktop: 20px,
+  tablet-large: 20px,
+  tablet: 18px,
+  touch: 18px,
+  mobile: 16px,
+);
+
+$content-line-height: (
+  desktop: 36px,
+  tablet-large: 33px,
+  tablet: 30px,
+  touch: 30px,
+  mobile: 24px,
+);
+
 .article-page {
   &__cover {
     object-fit: cover;
@@ -108,8 +124,6 @@ $paragraph-spacing: 24px;
   }
 
   &__other-tag {
-    margin-bottom: 4px;
-
     &:not(:last-child) {
       margin-right: 12px;
     }
@@ -187,6 +201,10 @@ $paragraph-spacing: 24px;
       font-size: 54px;
       line-height: 69px;
     }
+
+    &__other-tags {
+      line-height: map-get($content-line-height, tablet-large);
+    }
   }
 }
 
@@ -207,6 +225,10 @@ $paragraph-spacing: 24px;
     &__title {
       font-size: 48px;
       line-height: 60px;
+    }
+
+    &__other-tags {
+      line-height: map-get($content-line-height, tablet);
     }
   }
 }
@@ -240,6 +262,10 @@ $paragraph-spacing: 24px;
     &__collection-item {
       margin-bottom: 10px;
     }
+
+    &__other-tags {
+      line-height: map-get($content-line-height, touch);
+    }
   }
 }
 
@@ -271,6 +297,10 @@ $paragraph-spacing: 24px;
 
     &__collection-item {
       margin-bottom: 8px;
+    }
+
+    &__other-tags {
+      line-height: map-get($content-line-height, mobile);
     }
   }
 }
@@ -315,30 +345,32 @@ $paragraph-spacing: 24px;
   }
 }
 
+
+
 .article-page-content {
-  font-size: 16px;
+  font-size: map-get($content-font-size, mobile);
   font-style: normal;
   font-weight: normal;
-  line-height: 24px;
+  line-height: map-get($content-line-height, mobile);
 
   @include screen-touch {
-    font-size: 18px;
-    line-height: 30px;
+    font-size: map-get($content-font-size, touch);
+    line-height: map-get($content-line-height, touch);
   }
 
   @include screen-tablet {
-    font-size: 18px;
-    line-height: 30px;
+    font-size: map-get($content-font-size, tablet);
+    line-height: map-get($content-line-height, tablet);
   }
 
   @include screen-tablet-large {
-    font-size: 20px;
-    line-height: 33px;
+    font-size: map-get($content-font-size, tablet-large);
+    line-height: map-get($content-line-height, tablet-large);
   }
 
   @include screen-desktop {
-    font-size: 20px;
-    line-height: 36px;
+    font-size: map-get($content-font-size, desktop);
+    line-height: map-get($content-line-height, desktop);
   }
 
   p {
