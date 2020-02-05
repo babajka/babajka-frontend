@@ -7,6 +7,9 @@ local-backend:
 lint:
 	npm run lint
 
+build:
+	npm run build
+
 deploy-dev-from-local:
 	npm run deploy-dev-from-local
 
