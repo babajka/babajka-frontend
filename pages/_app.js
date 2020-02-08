@@ -84,9 +84,17 @@ class Root extends App {
 
   constructor(props) {
     super(props);
-    const { router } = props;
-    if (router.query) {
-      moment.locale(router.query.lang);
+    this.setMoment();
+  }
+
+  setMoment() {
+    const {
+      router: {
+        query: { lang },
+      },
+    } = this.props;
+    if (moment.locale() !== lang) {
+      moment.locale(lang);
     }
   }
 
@@ -102,10 +110,15 @@ class Root extends App {
     }
   }
 
+  // componentDidUpdate() {
+  //   this.setMoment();
+  // }
+
   render() {
     const { Component, store, router, initial } = this.props;
     const { permissions = [], getLayoutProps = getEmptyObject } = Component;
     const locale = getLocale(router);
+    this.setMoment();
 
     const pageProps = { lang: locale, routerQuery: router.query, ...initial };
     const {
