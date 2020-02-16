@@ -17,7 +17,7 @@ const Header = ({ toggleSidebar }) => {
   const router = useRouter();
   return (
     <header className="navbar">
-      <Link route={ROUTES_NAMES.main} titleId="header.to-main">
+      <Link className="navbar__logo" route={ROUTES_NAMES.main} titleId="header.to-main">
         <Logo size={42} />
       </Link>
       <div id={HEADER_LINKS_ID} className="navbar__title-container">
