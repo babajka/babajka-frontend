@@ -2,12 +2,18 @@ import 'components/common/ui/link.scss';
 
 import cn from 'classnames';
 
-export const linkCn = ({ className, disabled, dark, active } = {}) =>
-  cn(
-    'wir-link',
-    { 'wir-link--disabled': disabled, 'wir-link--theme-dark': dark, 'wir-link--active': active },
-    className
-  );
+export const linkCn = ({ className, disabled, dark, active, disableStyles } = {}) =>
+  disableStyles
+    ? cn('wir-link--no-styles', className)
+    : cn(
+        'wir-link',
+        {
+          'wir-link--disabled': disabled,
+          'wir-link--theme-dark': dark,
+          'wir-link--active': active,
+        },
+        className
+      );
 
 // https://regex101.com/r/v1LxqC/1
 const HEX_COLOR_REGEX = /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i;

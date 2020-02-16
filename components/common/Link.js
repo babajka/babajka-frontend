@@ -19,6 +19,7 @@ const Link = ({
   titleId,
   title,
   onMouseUp,
+  disableStyles,
   ...props
 }) => {
   const lang = useLocaleContext();
@@ -33,7 +34,7 @@ const Link = ({
       {React.createElement(
         tag,
         {
-          className: linkCn({ className, disabled, dark, active }),
+          className: linkCn({ className, disabled, dark, active, disableStyles }),
           target,
           title: useLocalization(titleId) || title,
           onMouseUp,
@@ -60,6 +61,7 @@ Link.propTypes = {
   disabled: PropTypes.bool,
   dark: PropTypes.bool,
   active: PropTypes.bool,
+  disableStyles: PropTypes.bool,
 };
 
 Link.defaultProps = {
@@ -70,6 +72,7 @@ Link.defaultProps = {
   disabled: false,
   active: false,
   dark: false,
+  disableStyles: false,
 
   titleId: '',
   title: '',

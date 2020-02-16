@@ -40,11 +40,16 @@ const DiaryBlock = ({ diary, fetchData }) => {
     <>
       <BlockWrapper className="diary" negativeTop>
         <div className="diary__content">
-          <div className={cn('diary__picture', { 'diary__picture--no-image': !diaryImage })}>
+          <Link
+            className={cn('diary__picture', { 'diary__picture--no-image': !diaryImage })}
+            route={ROUTES_NAMES.diary}
+            params={{ slug }}
+            disableStyles
+          >
             {diaryImage && (
               <Image alt={name} sourceSizes={[DIARY_PICTURE_WIDTH]} baseUrl={diaryImage} mode="x" />
             )}
-          </div>
+          </Link>
           <div className="diary__text-content">
             <div className="diary__title">
               <span className="diary__date">{formatDate(date, SHORT_DATE_FORMAT)}</span>
@@ -54,7 +59,14 @@ const DiaryBlock = ({ diary, fetchData }) => {
             </div>
             {text && (
               <div className="diary__text-wrap">
-                <div className="diary__text">{fiberyToString(text.content)}</div>
+                <Link
+                  className="diary__text"
+                  route={ROUTES_NAMES.diary}
+                  params={{ slug }}
+                  disableStyles
+                >
+                  {fiberyToString(text.content)}
+                </Link>
                 <Link route={ROUTES_NAMES.diary} params={{ slug }}>
                   <Text id="diary.more" />
                 </Link>

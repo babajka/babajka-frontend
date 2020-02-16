@@ -51,4 +51,14 @@
     color: #45565b !important;
     font-weight: bold;
   }
+
+  &--no-styles {
+    &:link,
+    &:visited,
+    &:hover,
+    &:focus {
+      color: inherit;
+      text-decoration: inherit;
+    }
+  }
 }
