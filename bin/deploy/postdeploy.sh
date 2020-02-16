@@ -10,9 +10,9 @@ mv "${DEPLOYMENTS_PATH}/swap-frontend/babajka-frontend" "${DEPLOYMENTS_PATH}/fro
 
 cd "${DEPLOYMENTS_PATH}/frontend"
 
-if [ $MODE == "dev" ]; then
+if [[ $MODE == "dev" ]]; then
   JOB="frontend-staging"
-elif [ $MODE == "prod" ]; then
+elif [[ $MODE == "prod" ]]; then
   JOB="frontend-production"
 else
   exit 1
