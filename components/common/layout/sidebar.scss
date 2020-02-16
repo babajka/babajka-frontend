@@ -4,7 +4,7 @@
 .sidebar {
   background-color: $primary-concrete;
   box-sizing: border-box;
-  font-size: 14px;
+  font-size: $default-font-size;
   line-height: 24px;
   max-width: 300px;
   min-height: 100vh;
@@ -58,7 +58,7 @@
 
   &__section-title {
     color: $primary-black;
-    font-size: 14px;
+    font-size: $default-font-size;
     letter-spacing: 1px;
     text-transform: uppercase;
   }
@@ -79,7 +79,7 @@
   &__section-link-to-all {
     color: $primary;
     display: inline-block;
-    font-size: 14px;
+    font-size: $default-font-size;
     letter-spacing: 1px;
     margin-top: 30px;
     text-transform: uppercase;

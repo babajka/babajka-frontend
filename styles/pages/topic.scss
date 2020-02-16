@@ -40,10 +40,11 @@ $columns: (
 
   &__section-list {
     color: $primary;
-    font-size: 14px;
+    font-size: $default-font-size;
     margin: 0;
     padding: 0;
     padding-inline-start: 0;
+    padding-right: 10px;
   }
 
   &__section-image {
