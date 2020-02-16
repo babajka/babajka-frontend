@@ -23,8 +23,6 @@ $title-line-height: (
   square-s: 30px,
 );
 
-$default-card-font-size: 16px;
-
 .article-card {
   display: flex;
 
@@ -206,7 +204,7 @@ $default-card-font-size: 16px;
     }
 
     &__author-brand {
-      font-size: $default-card-font-size;
+      font-size: $default-font-size;
       line-height: 24px;
     }
 
@@ -406,12 +404,12 @@ $default-card-font-size: 16px;
     }
 
     &__collection-order {
-      font-size: $default-card-font-size;
+      font-size: $default-font-size;
       line-height: 21px;
     }
 
     &__collection-name {
-      font-size: $default-card-font-size;
+      font-size: $default-font-size;
       line-height: 21px;
     }
 
@@ -433,7 +431,7 @@ $default-card-font-size: 16px;
     }
 
     &__author-brand {
-      font-size: $default-card-font-size;
+      font-size: $default-font-size;
       line-height: 24px;
     }
 
@@ -447,7 +445,7 @@ $default-card-font-size: 16px;
 
     &__label-read-full {
       display: unset;
-      font-size: $default-card-font-size;
+      font-size: $default-font-size;
       line-height: 24px;
       margin-bottom: 36px;
     }
@@ -516,12 +514,12 @@ $default-card-font-size: 16px;
     }
 
     &__collection-order {
-      font-size: $default-card-font-size;
+      font-size: $default-font-size;
       line-height: 24px;
     }
 
     &__collection-name {
-      font-size: $default-card-font-size;
+      font-size: $default-font-size;
       line-height: 21px;
     }
 
@@ -539,7 +537,7 @@ $default-card-font-size: 16px;
     }
 
     &__author-brand {
-      font-size: $default-card-font-size;
+      font-size: $default-font-size;
       line-height: 18px;
       margin-bottom: 30px;
     }
