@@ -110,10 +110,6 @@ class Root extends App {
     }
   }
 
-  // componentDidUpdate() {
-  //   this.setMoment();
-  // }
-
   render() {
     const { Component, store, router, initial } = this.props;
     const { permissions = [], getLayoutProps = getEmptyObject } = Component;

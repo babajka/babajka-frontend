@@ -1,209 +1,165 @@
 @import 'responsiveness';
 @import 'variables';
 
-$team-columns: (
-  mobile: 3,
-  touch: 4,
-  tablet: 6,
-  tablet-large: 6,
-  desktop: 8,
-);
+// The convention in Babajka project is that we go from 'desktop' to 'mobile'.
+$team-num-columns: 7 6 4 3 2;
+$heading-font-size: 48px 48px 48px 30px 30px;
+$heading-line-height: 60px 60px 60px 36px 36px;
+$subheading-font-size: 30px 30px 30px 20px 20px;
+$subheading-line-height: 36px 36px 36px 27px 27px;
+$text-font-size: 20px 20px 20px 16px 16px;
+$text-line-height: 36px 36px 36px 24px 24px;
+$text-margin-top-large: 156px 156px 60px 60px 60px;
+$team-margin-top: 120px 120px 90px 30px 30px;
+$partner-logo-margin-right: 30px 30px 60px 36px 36px;
 
 .about-page {
-  font-weight: 300;
-  padding-bottom: 3rem;
-  padding-top: 3rem;
+  margin-bottom: 50px;
 
-  &__description-block {
-    margin: 2rem 0 6rem;
+  &__heading {
+    font-weight: bold;
+    margin-top: 48px;
   }
 
-  &__description-header {
-    font-size: 1.6rem;
-    line-height: 1.35em;
-    margin-bottom: 1.5rem;
-  }
+  &__subheading {
+    font-weight: bold;
+    text-align: left;
 
-  &__description-text {
-    line-height: 1.42em;
+    &--mobile-only {
+      display: none;
 
-    &--margin-bottom {
-      margin-bottom: 2rem;
+      @include screen-touch {
+        display: inherit;
+      }
+
+      @include screen-mobile {
+        display: inherit;
+      }
     }
   }
 
-  &__partners {
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin-left: 1rem;
-  }
+  &__text {
+    &--margin-top-small {
+      margin-top: 30px;
+    }
 
-  &__partner-logo {
-    margin: 1rem;
+    &--margin-top-medium {
+      margin-top: 40px;
+    }
   }
 
   &__team {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    margin-top: 120px;
   }
 
-  &__team-subtext {
+  &__partners {
     //
+  }
+
+  &__partners-logos {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 30px;
+  }
+
+  &__partner-logo {
+    margin-bottom: 20px;
+
+    img {
+      height: 80px;
+      width: auto;
+    }
+
+    &--small {
+      img {
+        height: 60px;
+      }
+    }
+
+    &--smallest {
+      img {
+        height: 40px;
+      }
+    }
   }
 }
 
 .teammate {
-  align-items: center;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   padding: 10px 5px;
-  text-align: center;
 
   &__pic {
-    filter: grayscale(35%);
-    height: auto;
-    width: 90%;
+    height: 102px;
+    object-fit: cover;
+    width: 100%;
   }
 
   &__name {
-    font-size: 0.9rem;
-    font-weight: 400;
-    line-height: 1rem;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 21px;
     margin-bottom: 2px;
     margin-top: 5px;
   }
 
   &__role {
-    color: $primary-grey;
-    font-size: 0.7rem;
-    line-height: 0.7rem;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  &__placeholder {
+    @include screen-touch {
+      display: none;
+    }
+
+    @include screen-mobile {
+      display: none;
+    }
   }
 }
 
-@include screen-desktop {
-  .about-page {
-    &__partner-logo {
-      img {
-        width: 4rem;
+@each $idx, $screen-name in $indexed-screens {
+  @include screen-size($screen-name) {
+    .about-page {
+      &__heading {
+        font-size: nth($heading-font-size, $idx);
+        line-height: nth($heading-line-height, $idx);
       }
 
-      &--small {
-        img {
-          width: 5.5rem;
+      &__subheading {
+        font-size: nth($subheading-font-size, $idx);
+        line-height: nth($subheading-line-height, $idx);
+      }
+
+      &__text {
+        font-size: nth($text-font-size, $idx);
+        line-height: nth($text-line-height, $idx);
+
+        &--margin-top-large {
+          margin-top: nth($text-margin-top-large, $idx);
         }
       }
 
-      &--smallest {
-        img {
-          width: 7rem;
-        }
-      }
-    }
-  }
-
-  .teammate {
-    width: map-get($page-content, desktop) / map-get($team-columns, desktop);
-  }
-}
-
-@include screen-tablet-large {
-  .about-page {
-    &__partner-logo {
-      img {
-        width: 4rem;
+      &__team {
+        margin-top: nth($team-margin-top, $idx);
       }
 
-      &--small {
-        img {
-          width: 5.5rem;
-        }
-      }
-
-      &--smallest {
-        img {
-          width: 7rem;
+      &__partner-logo {
+        &:not(:last-child) {
+          margin-right: nth($partner-logo-margin-right, $idx);
         }
       }
     }
-  }
 
-  .teammate {
-    width: map-get($page-content, tablet-large) / map-get($team-columns, tablet-large);
-  }
-}
-
-@include screen-tablet {
-  .about-page {
-    &__partner-logo {
-      img {
-        width: 3.5rem;
-      }
-
-      &--small {
-        img {
-          width: 4.5rem;
-        }
-      }
-
-      &--smallest {
-        img {
-          width: 6rem;
-        }
-      }
+    .teammate {
+      width: map-get($page-content, $screen-name) / nth($team-num-columns, $idx);
     }
-  }
-
-  .teammate {
-    width: map-get($page-content, tablet) / map-get($team-columns, tablet);
-  }
-}
-
-@include screen-touch {
-  .about-page {
-    &__partner-logo {
-      img {
-        width: 3rem;
-      }
-
-      &--smallest {
-        img {
-          width: 4rem;
-        }
-      }
-    }
-  }
-
-  .teammate {
-    width: map-get($page-content, touch) / map-get($team-columns, touch);
-  }
-}
-
-@include screen-mobile {
-  .about-page {
-    &__partners {
-      margin: 0;
-    }
-
-    &__partner-logo {
-      margin: 0.5rem;
-
-      img {
-        width: 3rem;
-      }
-
-      &--smallest {
-        img {
-          width: 4rem;
-        }
-      }
-    }
-  }
-
-  .teammate {
-    width: map-get($page-content, mobile) / map-get($team-columns, mobile);
   }
 }

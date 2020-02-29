@@ -108,3 +108,21 @@ $page-content: (
     @content;
   }
 }
+
+$indexed-screens: 1 'desktop', 2 'tablet-large', 3 'tablet', 4 'touch', 5 'mobile';
+
+// Alternative approach: mixins with an argument instead of a naming convention
+// That would probably replace other approached in future.
+$queries: (
+  'mobile': '(max-width: 499px)',
+  'touch': '(min-width: 500px) and (max-width: 649px)',
+  'tablet': '(min-width: 650px) and (max-width: 799px)',
+  'tablet-large': '(min-width: 800px) and (max-width: 1099px)',
+  'desktop': '(min-width: 1100px)',
+);
+
+@mixin screen-size($screen-name) {
+  @media screen and #{map-get($queries, $screen-name)} {
+    @content;
+  }
+}
