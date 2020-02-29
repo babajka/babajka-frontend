@@ -44,7 +44,7 @@ const DiaryBlock = ({ diary, fetchData }) => {
             className={cn('diary__picture', { 'diary__picture--no-image': !diaryImage })}
             route={ROUTES_NAMES.diary}
             params={{ slug }}
-            disableStyles
+            noStyles
           >
             {diaryImage && (
               <Image alt={name} sourceSizes={[DIARY_PICTURE_WIDTH]} baseUrl={diaryImage} mode="x" />
@@ -59,12 +59,7 @@ const DiaryBlock = ({ diary, fetchData }) => {
             </div>
             {text && (
               <div className="diary__text-wrap">
-                <Link
-                  className="diary__text"
-                  route={ROUTES_NAMES.diary}
-                  params={{ slug }}
-                  disableStyles
-                >
+                <Link className="diary__text" route={ROUTES_NAMES.diary} params={{ slug }} noStyles>
                   {fiberyToString(text.content)}
                 </Link>
                 <Link route={ROUTES_NAMES.diary} params={{ slug }}>

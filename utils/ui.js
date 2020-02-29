@@ -2,8 +2,8 @@ import 'components/common/ui/link.scss';
 
 import cn from 'classnames';
 
-export const linkCn = ({ className, disabled, dark, active, disableStyles } = {}) =>
-  disableStyles
+export const linkCn = ({ className, disabled, dark, active, noStyles } = {}) =>
+  noStyles
     ? cn('wir-link--no-styles', className)
     : cn(
         'wir-link',
