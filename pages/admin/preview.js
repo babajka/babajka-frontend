@@ -1,8 +1,10 @@
-import 'styles/pages/preview.scss';
+import styles from 'styles/pages/preview.module.scss';
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import block from 'bem-css-modules';
+import cn from 'classnames';
 
 import Article from 'components/articles/Article';
 import ArticleCard from 'components/articles/cards/ArticleCard';
@@ -13,6 +15,8 @@ import { populateRequest } from 'utils/request';
 import { ArticleShape } from 'utils/customPropTypes';
 
 import useBoolean from 'hooks/useBoolean';
+
+const b = block(styles);
 
 const mapStateToProps = (state, { lang }) => ({
   article: adminArticlesSelectors.getPreview(state, lang),
@@ -31,15 +35,15 @@ const ArticlePreview = ({ article, error }) => {
   }
   return (
     <>
-      <div className="preview-page__switch">
+      <div className={b('switch')}>
         <input type="checkbox" checked={cardsPreview} onChange={togglePreview} />
         {'  '}
         <span>Preview Cards instead of the Article</span>
       </div>
       {cardsPreview && (
-        <div className="wir-no-background preview-page__cards" style={{ margin: '50px' }}>
+        <div className={cn('wir-no-background', b('cards'))} style={{ margin: '50px' }}>
           {DEFAULT_SIZES.concat(SQUARE_SIZES).map(size => (
-            <div key={size} className="preview-page__card">
+            <div key={size} className={b('card')}>
               <ArticleCard {...article} size={size} />
             </div>
           ))}

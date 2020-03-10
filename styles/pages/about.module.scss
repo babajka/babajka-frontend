@@ -1,8 +1,7 @@
-@import 'responsiveness';
-@import 'variables';
+@import 'styles/responsiveness';
+@import 'styles/variables';
 
 // The convention in Babajka project is that we go from 'desktop' to 'mobile'.
-$team-num-columns: 7 6 4 3 2;
 $heading-font-size: 48px 48px 48px 30px 30px;
 $heading-line-height: 60px 60px 60px 36px 36px;
 $subheading-font-size: 30px 30px 30px 20px 20px;
@@ -39,12 +38,14 @@ $partner-logo-margin-right: 30px 30px 60px 36px 36px;
   }
 
   &__text {
-    &--margin-top-small {
-      margin-top: 30px;
-    }
+    &--margin-top {
+      &--small {
+        margin-top: 30px;
+      }
 
-    &--margin-top-medium {
-      margin-top: 40px;
+      &--medium {
+        margin-top: 40px;
+      }
     }
   }
 
@@ -53,10 +54,6 @@ $partner-logo-margin-right: 30px 30px 60px 36px 36px;
     flex-direction: row;
     flex-wrap: wrap;
     margin-top: 120px;
-  }
-
-  &__partners {
-    //
   }
 
   &__partners-logos {
@@ -89,42 +86,6 @@ $partner-logo-margin-right: 30px 30px 60px 36px 36px;
   }
 }
 
-.teammate {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  padding: 10px 5px;
-
-  &__pic {
-    height: 102px;
-    object-fit: cover;
-    width: 100%;
-  }
-
-  &__name {
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 21px;
-    margin-bottom: 2px;
-    margin-top: 5px;
-  }
-
-  &__role {
-    font-size: 16px;
-    line-height: 24px;
-  }
-
-  &__placeholder {
-    @include screen-touch {
-      display: none;
-    }
-
-    @include screen-mobile {
-      display: none;
-    }
-  }
-}
-
 @each $idx, $screen-name in $indexed-screens {
   @include screen-size($screen-name) {
     .about-page {
@@ -142,8 +103,11 @@ $partner-logo-margin-right: 30px 30px 60px 36px 36px;
         font-size: nth($text-font-size, $idx);
         line-height: nth($text-line-height, $idx);
 
-        &--margin-top-large {
-          margin-top: nth($text-margin-top-large, $idx);
+        &--margin-top {
+          // stylelint-disable-next-line max-nesting-depth
+          &--large {
+            margin-top: nth($text-margin-top-large, $idx);
+          }
         }
       }
 
@@ -156,10 +120,6 @@ $partner-logo-margin-right: 30px 30px 60px 36px 36px;
           margin-right: nth($partner-logo-margin-right, $idx);
         }
       }
-    }
-
-    .teammate {
-      width: map-get($page-content, $screen-name) / nth($team-num-columns, $idx);
     }
   }
 }

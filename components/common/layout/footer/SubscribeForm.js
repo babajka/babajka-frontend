@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import block from 'bem-css-modules';
 import { Form } from 'formik';
 
 import Clickable from 'components/common/Clickable';
@@ -10,18 +11,20 @@ import InputField from 'components/common/form/InputField';
 import { homeActions } from 'redux/ducks/home';
 import { validEmail } from 'utils/validators';
 import createConstants from 'lib/utils/createConstants';
+import styles from './index.module.scss';
 
+const b = block(styles);
 const STATUS = createConstants('subscribed', 'unsubscribed');
 
 const SubscribeForm = () => {
   const [email, setEmail] = useState(null);
   return (
-    <div className="footer__mailing">
-      <div id="footer-subscribe" className="footer__header">
+    <div className={b('mailing')}>
+      <div id="footer-subscribe" className={b('header')}>
         <Text id="footer.subscribe" />
       </div>
       {email && (
-        <div className="footer__help-text">
+        <div className={b('help-text')}>
           <Text
             id="footer.subscribed"
             render={(subscribed, on) => (

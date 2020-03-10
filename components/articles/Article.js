@@ -1,8 +1,10 @@
-import 'styles/pages/article.scss';
+import styles from 'styles/pages/article.module.scss';
 
 import React from 'react';
 import { useRouter } from 'next/router';
 import flatten from 'lodash/flatten';
+import cn from 'classnames';
+import block from 'bem-css-modules';
 
 import {
   MetaTitle,
@@ -25,6 +27,7 @@ import host from 'utils/host';
 
 import CollectionNote from './CollectionNote';
 
+const b = block(styles);
 const COVER_SIZES = [1200, 1000, 770, 640, 360];
 
 const Article = ({
@@ -45,7 +48,7 @@ const Article = ({
 }) => {
   const router = useRouter();
   const { brands, authors, ...tagsObject } = tagsByTopic;
-  const renderTagImage = getTagImageRenderer({ className: 'article-page__tag-image' });
+  const renderTagImage = getTagImageRenderer({ className: b('tag-image') });
   const imageUrl = images.page || images.horizontal;
   // https://caniuse.com/#feat=array-flat
   const tags = flatten(Object.values(tagsObject));
@@ -59,31 +62,31 @@ const Article = ({
       <MetaArticleItems name="author" list={authors.map(renderTag)} />
       <MetaArticleItems name="tag" list={tags.map(renderTag)} />
       <MetaArticleItems name="published_time" value={publishAt} />
-      <div className="article-page">
-        <div className="wir-content-padding article-page-content">
-          <div className="article-page__subtitle">{subtitle}</div>
+      <div>
+        <div className="wir-content-padding">
+          <div className={b('subtitle')}>{subtitle}</div>
         </div>
         {type === 'text' && (
           <Image
-            className="article-page__cover"
+            className={b('cover')}
             alt={title}
             sourceSizes={COVER_SIZES}
             baseUrl={images.page}
           />
         )}
       </div>
-      <div className="wir-content-padding article-page__header">
+      <div className={cn('wir-content-padding', b('header'))}>
         {/* TODO: hover corresponding image and title simultaneously */}
         {(!!brands.length || !!authors.length) && (
-          <div className="article-page__tags">
+          <div className={b('tags')}>
             {brands.concat(authors).map(tag =>
               getTagLink({
-                className: 'article-page__tag-image-link',
+                className: b('tag-image-link'),
                 render: renderTagImage,
                 tag,
               })
             )}
-            <div className="article-page__tag-titles">
+            <div className={b('tag-titles')}>
               <span>
                 {renderNodeList(brands.map(tag => getTagLink({ tag })))}
                 {!!brands.length && !!authors.length && ','}
@@ -92,11 +95,11 @@ const Article = ({
             </div>
           </div>
         )}
-        <div className="article-page__title">{title}</div>
+        <div className={b('title')}>{title}</div>
       </div>
 
       <div className="wir-content-padding">
-        <div className="article-page-content">
+        <div className={styles['article-page-content']}>
           {type === 'audio' && <AudioPlayer trackId={audio.id} />}
           {type === 'video' && <VideoPlayer videoId={video.id} />}
           {collection && collection.articles.length > 1 && (
@@ -104,12 +107,12 @@ const Article = ({
           )}
           {fiberyRenderer(text.content)}
         </div>
-        <div className="article-page__share">
+        <div className={b('share')}>
           <ShareButtons urlPath={router.asPath} basicText={title} />
         </div>
-        <div className="article-page__other-tags">
+        <div className={b('other-tags')}>
           {tags.map(tag => (
-            <div key={tag.slug} className="article-page__other-tag">
+            <div key={tag.slug} className={b('other-tag')}>
               {getTagLink({ tag })}
             </div>
           ))}

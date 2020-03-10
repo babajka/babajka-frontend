@@ -1,17 +1,19 @@
-import './admin.scss';
-
 import React from 'react';
 import PropTypes from 'prop-types';
+import block from 'bem-css-modules';
+import styles from './admin.module.scss';
 
 import AdminSidebar from './AdminSidebar';
 
+const b = block(styles);
+
 const AdminLayout = ({ children }) => (
-  <div className="admin-panel">
-    <div className="admin-panel-grid">
-      <div className="admin-panel-grid__aside">
+  <div className={b()}>
+    <div className={b('grid')}>
+      <div className={b('grid-aside')}>
         <AdminSidebar />
       </div>
-      <div className="admin-panel-grid__main">{children}</div>
+      <div className={b('grid-main')}>{children}</div>
     </div>
   </div>
 );

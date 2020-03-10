@@ -1,13 +1,13 @@
-import './ui/button-group.scss';
-
 import React from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
+import block from 'bem-css-modules';
+import styles from './ui/button-group.module.scss';
+
+const b = block(styles);
 
 const ButtonGroup = ({ children, icon, className }) => (
-  <div className={cn('wir-button-group', { 'wir-button-group__icon': icon }, className)}>
-    {children}
-  </div>
+  <div className={cn(b(), icon && b('icon'), className)}>{children}</div>
 );
 
 ButtonGroup.propTypes = {
