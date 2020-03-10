@@ -1,0 +1,27 @@
+@import 'styles/responsiveness';
+@import 'styles/variables';
+
+.block {
+  &.wir-no-background {
+    margin-top: 60px;
+
+    @include screen-tablet-touch-mobile {
+      // FIXME: to eliminate this workaround by properly handling Block margins.
+      &.tag-page-block-b,
+      &.tag-page-block-cd {
+        margin-top: 0;
+      }
+    }
+  }
+
+  &.wir-with-background {
+    background-color: $primary-black;
+    margin-bottom: 20px;
+    margin-top: 80px;
+  }
+
+  &--negative-margin-top {
+    // stylelint-disable-next-line declaration-no-important
+    margin-top: -15px !important;
+  }
+}

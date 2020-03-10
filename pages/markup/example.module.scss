@@ -1,0 +1,17 @@
+.example {
+  margin: 20px;
+
+  &__blue {
+    // stylelint-disable-next-line color-named
+    color: blue;
+  }
+
+  &__red {
+    // stylelint-disable-next-line color-named
+    color: red;
+  }
+
+  &__big {
+    font-size: 50px;
+  }
+}

@@ -1,0 +1,375 @@
+@import 'styles/responsiveness';
+@import 'styles/variables';
+
+@import './cards';
+
+.person {
+  background-color: $primary-black;
+  display: flex;
+  flex-direction: row-reverse;
+  position: relative;
+
+  &__cover-container {
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  &.theme-black > &__cover-container,
+  &.theme-white > &__cover-container {
+    margin-right: $border-width-default;
+    margin-top: $border-width-default;
+  }
+
+  &:hover > &__cover-container {
+    @media (hover: hover) {
+      margin-right: $border-width-hover;
+      margin-top: $border-width-hover;
+    }
+  }
+
+  &__cover {
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    width: 100%;
+  }
+
+  &.theme-black > &__cover-container > &__cover,
+  &.theme-white > &__cover-container > &__cover {
+    right: -($border-width-default);
+    top: -($border-width-default);
+  }
+
+  &:hover > &__cover-container > &__cover {
+    @media (hover: hover) {
+      right: -($border-width-hover);
+      top: -($border-width-hover);
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  &__subtitle {
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  &__title {
+    font-weight: bold;
+  }
+}
+
+@mixin shared-cover-rules($cover-size) {
+  .person {
+    &__cover-container {
+      height: $cover-size;
+      width: $cover-size;
+    }
+
+    &__cover {
+      height: $cover-size;
+      width: $cover-size;
+    }
+  }
+
+  /* stylelint-disable */
+  .person.theme-black > .person__cover-container,
+  .person.theme-white > .person__cover-container {
+    height: $cover-size - 2 * $border-width-default;
+    width: $cover-size - $border-width-default;
+  }
+
+  .person:hover > .person__cover-container {
+    @media (hover: hover) {
+      height: $cover-size - 2 * $border-width-hover;
+      width: $cover-size - $border-width-hover;
+    }
+  }
+  /* stylelint-enable */
+}
+
+@mixin shared-size-l {
+  @include shared-cover-rules(390px);
+
+  .person {
+    @include l-sizes;
+
+    &__content {
+      bottom: 42px;
+      left: 30px;
+      position: absolute;
+      width: 240px;
+    }
+
+    &__title {
+      font-size: 72px;
+      line-height: 72px;
+      margin-top: 18px;
+      max-height: 72px * 2;
+      max-width: 420px;
+    }
+
+    &__description {
+      font-size: 14px;
+      line-height: 21px;
+      margin-top: 19px;
+    }
+  }
+}
+
+.card-size-l {
+  @include shared-size-l;
+}
+
+@mixin shared-size-square-m {
+  @include shared-cover-rules(390px);
+
+  .person {
+    @include square-m-sizes;
+
+    &__content {
+      bottom: 42px;
+      left: 30px;
+      position: absolute;
+      right: 48px;
+      width: 100%;
+    }
+
+    &__title {
+      font-size: 48px;
+      line-height: 60px;
+      margin-top: 18px;
+      max-height: 60px * 2;
+      max-width: 312px;
+    }
+
+    &__description {
+      display: none;
+    }
+  }
+}
+
+.card-size-square-m {
+  @include shared-size-square-m;
+}
+
+@mixin shared-size-square-s {
+  @include shared-cover-rules(300px);
+
+  .person {
+    @include square-s-sizes;
+
+    &__content {
+      bottom: 42px;
+      left: 23px;
+      position: absolute;
+      right: 37px;
+      width: 100%;
+    }
+
+    &__title {
+      font-size: 30px;
+      line-height: 36px;
+      max-height: 36px * 2;
+      max-width: 240px;
+    }
+
+    &__description {
+      display: none;
+    }
+  }
+}
+
+.card-size-square-s {
+  @include shared-size-square-s;
+}
+
+@mixin shared-sizes-ms-s-wide {
+  @include shared-cover-rules(194px);
+
+  .person {
+    &__content {
+      bottom: 42px;
+      left: 30px;
+      position: absolute;
+      width: 230px;
+    }
+
+    &__title {
+      font-size: 30px;
+      line-height: 36px;
+      max-height: 36px * 2;
+    }
+
+    &__description {
+      display: none;
+    }
+  }
+}
+
+@mixin shared-size-ms {
+  @include shared-sizes-ms-s-wide;
+
+  .person {
+    @include ms-sizes;
+
+    &__title {
+      max-width: 400px;
+    }
+  }
+}
+
+.card-size-ms {
+  @include shared-size-ms;
+}
+
+@mixin shared-size-s-wide {
+  @include shared-sizes-ms-s-wide;
+
+  .person {
+    @include s-wide-sizes;
+
+    &__title {
+      max-width: 320px;
+    }
+  }
+}
+
+.card-size-s-wide {
+  @include shared-size-s-wide;
+}
+
+@mixin shared-size-s {
+  @include shared-cover-rules(194px);
+
+  .person {
+    @include s-sizes;
+
+    &__content {
+      bottom: 42px;
+      left: 30px;
+      position: absolute;
+      width: 230px;
+    }
+
+    &__title {
+      font-size: 30px;
+      line-height: 36px;
+      max-height: 36px * 2;
+      max-width: 270px;
+    }
+
+    &__description {
+      display: none;
+    }
+  }
+}
+
+.card-size-s {
+  @include shared-size-s;
+}
+
+@mixin shared-sizes-xs-wide-xs {
+  @include shared-cover-rules(194px);
+
+  .person {
+    &__content {
+      bottom: 42px;
+      left: 30px;
+      position: absolute;
+      width: 150px;
+    }
+
+    &__title {
+      font-size: 30px;
+      line-height: 36px;
+      margin-top: 7px;
+      max-height: 36px * 2;
+    }
+
+    &__description {
+      display: none;
+    }
+  }
+}
+
+@mixin shared-size-xs-wide {
+  @include shared-sizes-xs-wide-xs;
+
+  .person {
+    @include xs-wide-sizes;
+
+    &__title {
+      max-width: 240px;
+    }
+  }
+}
+
+.card-size-xs-wide {
+  @include shared-size-xs-wide;
+}
+
+@mixin shared-size-xs {
+  @include shared-sizes-xs-wide-xs;
+
+  .person {
+    @include xs-sizes;
+
+    &__title {
+      max-width: 174px;
+    }
+  }
+}
+
+.card-size-xs {
+  @include shared-size-xs;
+}
+
+// Below are the rules for cards to be auto adjustable.
+
+.tags-by-topic {
+  &__1 {
+    @include screen-desktop {
+      @include shared-size-l;
+    }
+
+    @include screen-tablet-large {
+      @include shared-size-square-m;
+    }
+
+    @include screen-tablet {
+      @include shared-size-square-m;
+    }
+
+    @include screen-mobile {
+      @include shared-size-l;
+    }
+  }
+
+  &__2 {
+    @include screen-desktop {
+      @include shared-size-s;
+    }
+
+    @include screen-tablet-large {
+      @include shared-size-s-wide;
+    }
+
+    @include screen-tablet {
+      @include shared-size-xs;
+    }
+
+    @include screen-touch {
+      @include shared-size-ms;
+    }
+
+    @include screen-mobile {
+      @include shared-size-xs-wide;
+    }
+  }
+}

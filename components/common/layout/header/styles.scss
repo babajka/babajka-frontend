@@ -1,0 +1,120 @@
+@import 'styles/responsiveness';
+@import 'styles/variables';
+
+$navbar-base-height: 42px;
+
+.navbar {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  padding: 1.5rem;
+
+  &__logo {
+    height: $navbar-base-height;
+    width: $navbar-base-height;
+  }
+
+  &__title-container {
+    display: flex;
+    font-size: $default-font-size;
+    letter-spacing: 1px;
+    line-height: $default-font-size;
+    margin: 0 18px;
+    min-height: $navbar-base-height;
+    text-transform: uppercase;
+  }
+
+  &__title {
+    &--screen-wide {
+      display: none;
+    }
+
+    &--screen-narrow {
+      display: none;
+    }
+  }
+
+  &__burger {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    height: 30px;
+    justify-content: space-between;
+    margin-left: auto;
+    width: 35px;
+
+    @include sidebar-visible {
+      display: none;
+    }
+  }
+
+  &__burger-item {
+    background-color: $primary;
+    border-radius: 2px;
+    height: 5px;
+    width: 100%;
+  }
+}
+
+@mixin shared-desktop-tablets {
+  .navbar {
+    &__title-container {
+      flex-direction: row;
+    }
+
+    &__title {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+
+      &:not(:last-child) {
+        padding-right: 20px;
+      }
+
+      &--screen-wide {
+        display: unset;
+      }
+    }
+  }
+}
+
+@include screen-desktop {
+  @include shared-desktop-tablets;
+}
+
+@include screen-tablet-large {
+  @include shared-desktop-tablets;
+}
+
+@include screen-tablet {
+  @include shared-desktop-tablets;
+}
+
+@mixin shared-touch-mobile {
+  .navbar {
+    &__title-container {
+      flex-direction: column;
+      justify-content: space-around;
+    }
+
+    &__title {
+      &:not(:last-child) {
+        padding-bottom: 10px;
+      }
+
+      &--screen-narrow {
+        display: unset;
+      }
+    }
+  }
+}
+
+@include screen-touch {
+  @include shared-touch-mobile;
+}
+
+@include screen-mobile {
+  @include shared-touch-mobile;
+}

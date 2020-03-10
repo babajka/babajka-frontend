@@ -1,0 +1,75 @@
+@import 'styles/responsiveness';
+@import 'styles/variables';
+
+.social-buttons {
+  &__native {
+    display: none;
+
+    @include screen-mobile {
+      display: unset;
+    }
+
+    @include screen-touch {
+      display: unset;
+    }
+
+    &--hidden {
+      // stylelint-disable-next-line declaration-no-important
+      display: none !important;
+    }
+  }
+
+  &__generic {
+    @include screen-mobile {
+      display: none;
+    }
+
+    @include screen-touch {
+      display: none;
+    }
+
+    &--shown {
+      // stylelint-disable-next-line declaration-no-important
+      display: unset !important;
+    }
+  }
+
+  &__button {
+    font-size: 22px;
+    line-height: 24px;
+    padding: 10px 0;
+    width: 0.5rem;
+
+    &--facebook {
+      color: $facebook-color;
+    }
+
+    &--vk {
+      color: $vk-color;
+    }
+
+    &--twitter {
+      color: $twitter-color;
+    }
+
+    &--odnoklassniki {
+      color: $odnoklassniki-color;
+    }
+
+    &--telegram {
+      color: $telegram-color;
+
+      // It is not clear how to share to telegram on mobile;
+      // it does not work at iOS at least.
+      // Hiding the button until resolved.
+
+      @include screen-mobile {
+        display: none;
+      }
+
+      @include screen-touch {
+        display: none;
+      }
+    }
+  }
+}

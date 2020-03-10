@@ -1,0 +1,136 @@
+@import 'styles/responsiveness';
+@import 'styles/variables';
+
+.diary-page {
+  display: flex;
+  flex-direction: column;
+
+  &__title {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+
+  &__image-container {
+    border-bottom: 1px solid $primary-concrete;
+    margin-bottom: 40px;
+    width: 100%;
+
+    &--no-image {
+      margin-top: 40px;
+    }
+  }
+
+  &__image {
+    float: right;
+  }
+
+  &__text {
+    box-sizing: border-box;
+    // stylelint-disable-next-line font-family-no-missing-generic-family-keyword
+    font-family: Georgia;
+    font-size: 20px;
+    font-style: italic;
+    line-height: 36px;
+    padding: 0 3px;
+  }
+
+  &__arrows {
+    line-height: 24px;
+    width: 80px;
+
+    &--top {
+      //
+    }
+
+    &--bottom {
+      margin: 20px 0;
+    }
+  }
+
+  &__share {
+    margin: 40px 0;
+    width: 300px;
+  }
+}
+
+.diary-page-extras {
+  padding-bottom: 8rem;
+  padding-top: 1rem;
+}
+
+@mixin shared-desktop-tablet-large {
+  .diary-page {
+    &__title {
+      font-size: 48px;
+      line-height: 60px;
+
+      &--with-image {
+        max-width: 800px;
+      }
+    }
+
+    &__image {
+      margin-top: -125px;
+      width: 170px;
+    }
+  }
+}
+
+@include screen-desktop {
+  @include shared-desktop-tablet-large;
+}
+
+@include screen-tablet-large {
+  @include shared-desktop-tablet-large;
+}
+
+@include screen-tablet {
+  .diary-page {
+    &__title {
+      font-size: 42px;
+      line-height: 54px;
+
+      &--with-image {
+        max-width: 400px;
+      }
+    }
+
+    &__image {
+      margin-top: -125px;
+      width: 170px;
+    }
+  }
+}
+
+@include screen-touch {
+  .diary-page {
+    &__title {
+      font-size: 36px;
+      line-height: 48px;
+
+      &--with-image {
+        max-width: 350px;
+      }
+    }
+
+    &__image {
+      margin-top: -100px;
+      width: 115px;
+    }
+  }
+}
+
+@include screen-mobile {
+  .diary-page {
+    &__title {
+      font-size: 30px;
+      line-height: 36px;
+    }
+
+    &__image {
+      width: 115px;
+    }
+  }
+}
