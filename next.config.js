@@ -1,7 +1,4 @@
 const withPlugins = require('next-compose-plugins');
-const fonts = require('next-fonts');
-const sass = require('@zeit/next-sass');
-const css = require('@zeit/next-css');
 const bundleAnalyzer = require('@zeit/next-bundle-analyzer');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const webpack = require('webpack');
@@ -9,7 +6,7 @@ const GenerateJsonPlugin = require('generate-json-webpack-plugin');
 const envCi = require('env-ci');
 
 const packageJson = require('./package.json');
-const { definePlugin, sassLoaderOptions } = require('./utils/webpack-plugins');
+const { definePlugin } = require('./utils/webpack-plugins');
 const { VALID_LOCALES } = require('./constants');
 const ENV = require('./utils/env');
 
@@ -19,10 +16,6 @@ const { branch, commit } = envCi();
 const { version } = packageJson;
 
 const nextConfig = {
-  experimental: {
-    // https://github.com/zeit/next.js/issues/7949#issuecomment-524929448
-    granularChunks: true,
-  },
   webpack(config) {
     config.plugins.push(
       ...[
@@ -41,17 +34,6 @@ const nextConfig = {
 };
 
 const plugins = [
-  [fonts, { enableSvg: true }],
-
-  css,
-
-  [
-    sass,
-    {
-      sassLoaderOptions,
-    },
-  ],
-
   [
     bundleAnalyzer,
     {

@@ -33,14 +33,13 @@
     "gds": "github-deploy-status -u babajka -p babajka-frontend"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.9.0",
+    "@fortawesome/fontawesome-free": "^5.12.1",
     "@storybook/addon-actions": "^5.0.7",
     "@storybook/addon-knobs": "^5.0.7",
     "@storybook/addon-links": "^5.0.3",
     "@storybook/react": "^5.0.7",
     "@zeit/next-bundle-analyzer": "^0.1.2",
-    "@zeit/next-css": "^0.2.1-canary.4",
-    "@zeit/next-sass": "^0.2.1-canary.4",
+    "bem-css-modules": "^1.4.2",
     "classnames": "^2.2.6",
     "command-line-args": "^4.0.7",
     "cookie-parser": "^1.4.4",
@@ -55,19 +54,17 @@
     "js-cookie": "^2.2.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
-    "next": "^9.2.1",
+    "next": "^9.3.0",
     "next-compose-plugins": "^2.2.0",
     "next-cookies": "^1.1.3",
-    "next-fonts": "^0.18.0",
     "next-redux-wrapper": "^3.0.0",
     "next-routes": "^1.4.2",
-    "node-sass": "^4.13.1",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.7.2",
     "qs": "^6.6.0",
-    "react": "^16.10.0",
+    "react": "^16.13.0",
     "react-datetime": "^2.16.3",
-    "react-dom": "^16.10.0",
+    "react-dom": "^16.13.0",
     "react-dropzone": "^6.0.2",
     "react-ga": "^2.5.7",
     "react-redux": "^6.0.0",
@@ -76,6 +73,7 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-promise-middleware": "^6.1.0",
     "redux-thunk": "^2.3.0",
+    "sass": "^1.26.2",
     "type-to-reducer": "^1.1.0"
   },
   "repository": {
@@ -138,11 +136,11 @@
     },
     {
       "path": ".next/static/**/index.js",
-      "maxSize": "7 kB"
+      "maxSize": "6 kB"
     },
     {
       "path": ".next/static/**/article.js",
-      "maxSize": "3 kB"
+      "maxSize": "2 kB"
     },
     {
       "path": ".next/static/**/topic.js",
@@ -150,19 +148,19 @@
     },
     {
       "path": ".next/static/**/tag.js",
-      "maxSize": "6 kB"
+      "maxSize": "5 kB"
     },
     {
       "path": ".next/static/**/about.js",
-      "maxSize": "8 kB"
+      "maxSize": "7 kB"
     },
     {
       "path": ".next/static/**/_error.js",
       "maxSize": "3 kB"
     },
     {
-      "path": ".next/static/**/styles*.css",
-      "maxSize": "20 kB"
+      "path": ".next/static/**/*.css",
+      "maxSize": "16 kB"
     }
   ]
 }
