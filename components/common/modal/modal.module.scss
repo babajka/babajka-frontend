@@ -1,0 +1,78 @@
+@import 'styles/responsiveness';
+@import 'styles/variables';
+
+.wir-modal {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+
+  &__background {
+    background-color: $primary-black;
+    height: 100%;
+    opacity: 0.5;
+    position: fixed;
+    width: 100%;
+    z-index: map-get($zindex, modal-background);
+  }
+
+  &__content {
+    background-color: $primary-white;
+    position: absolute;
+    z-index: map-get($zindex, modal-content);
+  }
+
+  &__close {
+    color: $primary;
+    cursor: pointer;
+    font-size: 20px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+  }
+}
+
+@mixin shared-desktop-tablet-large {
+  .wir-modal {
+    &__content {
+      margin: 70px calc((100vw - 690px) / 3) 0 calc((100vw - 690px) / 6);
+      padding: 20px calc((100vw - 690px) / 3) 90px calc((100vw - 690px) / 6);
+    }
+  }
+}
+
+@include screen-desktop {
+  @include shared-desktop-tablet-large;
+}
+
+@include screen-tablet-large {
+  @include shared-desktop-tablet-large;
+}
+
+@include screen-tablet {
+  .wir-modal {
+    &__content {
+      margin: 70px calc((100vw - 530px) / 3) 0 calc((100vw - 530px) / 6);
+      padding: 20px calc((100vw - 530px) / 3) 90px calc((100vw - 530px) / 6);
+    }
+  }
+}
+
+@include screen-touch {
+  .wir-modal {
+    &__content {
+      margin: 70px calc((100vw - 450px) / 3) 0 calc((100vw - 450px) / 6);
+      padding: 20px calc((100vw - 450px) / 3) 90px calc((100vw - 450px) / 6);
+    }
+  }
+}
+
+@include screen-mobile {
+  .wir-modal {
+    &__content {
+      margin: 0;
+      padding: 20px calc((100vw - 302px) * 2 / 3) 20px calc((100vw - 302px) / 3);
+    }
+  }
+}

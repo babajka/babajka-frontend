@@ -1,5 +1,3 @@
-import 'components/common/ui/link.scss';
-
 import cn from 'classnames';
 
 export const linkCn = ({ className, disabled, dark, active, noStyles } = {}) =>

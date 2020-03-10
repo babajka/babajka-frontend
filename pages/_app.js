@@ -1,10 +1,14 @@
 import 'normalize.css';
 import 'styles/index.scss';
+import 'components/common/ui/link.scss';
+import 'components/common/layout/layout.scss';
+import 'components/common/layout/header/styles.scss';
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactGA from 'react-ga';
 import moment from 'moment';
+import block from 'bem-css-modules';
 
 import { Provider } from 'react-redux';
 import withRedux from 'next-redux-wrapper';
@@ -40,6 +44,11 @@ import loadYM from 'utils/loadYM';
 
 import { authActions } from 'redux/ducks/auth';
 import { sidebarActions } from 'redux/ducks/sidebar';
+
+block.setSettings({
+  throwOnError: true,
+  modifierDelimiter: '--',
+});
 
 const getEmptyObject = () => ({});
 

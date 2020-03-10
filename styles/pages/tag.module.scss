@@ -1,0 +1,66 @@
+@import 'styles/responsiveness';
+@import 'styles/variables';
+
+.tag-page {
+  padding-bottom: 3rem;
+  padding-top: 3rem;
+
+  &__level-a,
+  &__level-b,
+  &__level-c,
+  &__level-d {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-bottom: 2rem;
+  }
+
+  &__topic {
+    font-size: $default-font-size;
+    line-height: 24px;
+    text-transform: uppercase;
+  }
+
+  &__title {
+    font-size: 48px;
+    font-weight: bold;
+    line-height: 60px;
+    padding-bottom: 50px;
+  }
+}
+
+@mixin screens-below-desktop {
+  .tag-page {
+    &__level-b,
+    &__level-c {
+      padding-bottom: 0;
+    }
+
+    &__card {
+      padding-bottom: 25px;
+    }
+  }
+}
+
+@include screen-tablet-large {
+  @include screens-below-desktop;
+}
+
+@include screen-tablet {
+  @include screens-below-desktop;
+}
+
+@include screen-touch {
+  @include screens-below-desktop;
+}
+
+@include screen-mobile {
+  @include screens-below-desktop;
+
+  .tag-page {
+    &__title {
+      font-size: 36px;
+      line-height: 42px;
+    }
+  }
+}
