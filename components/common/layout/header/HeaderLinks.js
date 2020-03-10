@@ -21,7 +21,7 @@ const HeaderLinks = ({ links }) => (
 HeaderLinks.propTypes = {
   links: PropTypes.arrayOf(
     PropTypes.shape({
-      route: Object.values(ROUTES_NAMES),
+      route: PropTypes.oneOf(Object.values(ROUTES_NAMES)),
       key: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       params: PropTypes.shape({}),

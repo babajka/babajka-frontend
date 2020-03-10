@@ -1,7 +1,6 @@
-import './admin-sidebar.scss';
-
 import React from 'react';
 import { useRouter } from 'next/router';
+import block from 'bem-css-modules';
 
 import Link from 'components/common/Link';
 import Text from 'components/common/Text';
@@ -10,14 +9,16 @@ import Dispatcher from 'lib/components/Dispatcher';
 
 import { authActions } from 'redux/ducks/auth';
 import { ADMIN_ROUTES, ROUTES_NAMES } from 'routes';
+import styles from './admin-sidebar.module.scss';
 
+const b = block(styles);
 const IGNORE_ROUTES = ['login', 'preview'].map(page => ROUTES_NAMES.admin[page]);
 
 const AdminSidebar = () => {
   const router = useRouter();
   return (
-    <div className="admin-sidebar">
-      <ul className="admin-sidebar-nav-list">
+    <div className={b()}>
+      <ul className={b('nav-list')}>
         {ADMIN_ROUTES.filter(({ name }) => !IGNORE_ROUTES.includes(name)).map(({ name, page }) => (
           <li key={name}>
             {/* FIXME: active */}

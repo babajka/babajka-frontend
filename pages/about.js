@@ -1,6 +1,9 @@
-import 'styles/pages/about.scss';
+import styles from 'styles/pages/about.module.scss';
+import teammateStyles from 'components/social/teammate.module.scss';
 
 import React from 'react';
+import cn from 'classnames';
+import block from 'bem-css-modules';
 
 import ExternalLink from 'components/common/ExternalLink';
 import Text, { localize } from 'components/common/Text';
@@ -11,10 +14,14 @@ import {
   MetaImage,
   DEFAULT_IMAGE,
 } from 'components/social/Metatags';
+import Teammate from 'components/social/Teammate';
+import { Thanks1, Thanks2 } from 'components/social/Thanks';
 
 import team from 'data/team.json';
-
 import { PARTNERS } from 'constants/partners';
+
+const b = block(styles);
+const t = block(teammateStyles);
 
 const getLogoUrl = name =>
   `https://res.cloudinary.com/wir-by/image/upload/c_scale,w_250,f_auto,q_auto/v1546529671/production/partners-logos/${name}`;
@@ -26,81 +33,47 @@ const AboutPage = ({ lang }) => (
     <MetaKeywords keywords={localize('about.meta-keywords', lang)} />
     <MetaImage url={DEFAULT_IMAGE} small />
 
-    <div className="wir-content-padding about-page">
-      <div className="about-page__heading">
+    <div className={cn('wir-content-padding', b())}>
+      <div className={b('heading')}>
         <Text id="about.section1-header" />
       </div>
-      <div className="about-page__text about-page__text--margin-top-small">
+      <div className={b('text', { 'margin-top': 'small' })}>
         <Text id="about.section1-text" />
       </div>
-      <div className="about-page__subheading about-page__subheading--mobile-only about-page__text--margin-top-large">
+      <div
+        className={cn(
+          b('subheading', { 'mobile-only': true }),
+          b('text', { 'margin-top': 'large' })
+        )}
+      >
         <Text id="about.section-team-header" />
       </div>
-      <div className="about-page__team">
-        <div className="about-page__subheading about-page__teammate teammate teammate__placeholder">
+      <div className={b('team')}>
+        <div className={cn(t(), t('placeholder'))}>
           <Text id="about.section-team-header" />
         </div>
         {team.map(({ image, name, role }) => (
-          <div key={name} className="about-page__teammate teammate">
-            <img className="teammate__pic" src={image} alt={name[lang] || name.be} />
-            <div className="teammate__name">{name[lang] || name.be}</div>
-            <div className="teammate__role">{role[lang] || name.be}</div>
-          </div>
+          <Teammate
+            key={image}
+            image={image}
+            name={name[lang] || name.be}
+            role={role[lang] || role.be}
+          />
         ))}
       </div>
-      <div className="about-page__text about-page__text--margin-top-medium">
-        <Text id="about.section-team-subtext">
-          {(
-            thanks,
-            name1,
-            descr1,
-            name2,
-            descr2,
-            name3,
-            descr3,
-            name4,
-            descr4,
-            name5,
-            descr5,
-            name6,
-            descr6
-          ) => (
-            <>
-              {thanks}
-              <b>{name1}</b>
-              {descr1}
-              <b>{name2}</b>
-              {descr2}
-              <b>{name3}</b>
-              {descr3}
-              <b>{name4}</b>
-              {descr4}
-              <b>{name5}</b>
-              {descr5}
-              <b>{name6}</b>
-              {descr6}
-            </>
-          )}
-        </Text>
+      <div className={b('text', { 'margin-top': 'medium' })}>
+        <Thanks1 />
       </div>
-      <div className="about-page__text about-page__text--margin-top-medium">
-        <Text id="about.section-team-subtext2">
-          {(thanks, name, descr) => (
-            <>
-              {thanks}
-              <b>{name}</b>
-              {descr}
-            </>
-          )}
-        </Text>
+      <div className={b('text', { 'margin-top': 'medium' })}>
+        <Thanks2 />
       </div>
-      <div className="about-page__text--margin-top-large about-page__partners">
-        <div className="about-page__subheading">
+      <div className={b('text', { 'margin-top': 'large' })}>
+        <div className={b('subheading')}>
           <Text id="about.section-partners-header" />
         </div>
-        <div className="about-page__partners-logos">
+        <div className={b('partners-logos')}>
           {PARTNERS.map(({ id, img, url, className = '' }) => (
-            <div key={id} className={`about-page__partner-logo ${className}`}>
+            <div key={id} className={cn(className, b('partner-logo'))}>
               <ExternalLink href={url}>
                 <img src={getLogoUrl(img)} alt={localize(`about.${id}`, lang)} />
               </ExternalLink>

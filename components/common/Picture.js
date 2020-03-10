@@ -1,7 +1,10 @@
-import './picture.scss';
-
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
+import block from 'bem-css-modules';
+import styles from './ui/picture.module.scss';
+
+const b = block(styles);
 
 // checkout `styles/responsiveness.scss`
 const BREAKPOINTS = {
@@ -16,7 +19,7 @@ const getMedia = ({ min, max }) =>
   [min && `(min-width: ${min}px)`, max && `(max-width: ${max}px)`].filter(Boolean).join(' and ');
 
 const Picture = ({ className, sources, alt }) => (
-  <picture className={className}>
+  <picture className={cn(b(), className)}>
     {Object.entries(sources).map(([screen, src]) => (
       <source key={screen} media={getMedia(BREAKPOINTS[screen])} srcSet={src} />
     ))}

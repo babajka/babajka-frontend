@@ -1,9 +1,7 @@
-import './social-buttons.scss';
-
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
-import cn from 'classnames';
+import block from 'bem-css-modules';
 
 import Text, { localize, useLocaleContext } from 'components/common/Text';
 import Icon from 'components/common/ui/Icon';
@@ -12,7 +10,9 @@ import ButtonGroup from 'components/common/ButtonGroup';
 
 import { SHARE_NETWORKS } from 'constants/social';
 import { DOMAIN_SECURE } from 'constants';
+import styles from './social-buttons.module.scss';
 
+const b = block(styles);
 const POPUP_WINDOW_PARAMS = 'width=600,height=400';
 
 const ShareButtons = ({ urlPath, basicText, extendedText }) => {
@@ -21,11 +21,7 @@ const ShareButtons = ({ urlPath, basicText, extendedText }) => {
 
   return (
     <>
-      <div
-        className={cn('wir-social-buttons__native', {
-          'wir-social-buttons__native--hidden': forceButtonGroup,
-        })}
-      >
+      <div className={b('native', { hidden: forceButtonGroup })}>
         <Button
           onClick={() => {
             if (navigator.share) {
@@ -45,18 +41,14 @@ const ShareButtons = ({ urlPath, basicText, extendedText }) => {
           <Text id="common.share-link" />
         </Button>
       </div>
-      <div
-        className={cn('wir-social-buttons__generic', {
-          'wir-social-buttons__generic--shown': forceButtonGroup,
-        })}
-      >
-        <ButtonGroup className="wir-social-buttons" icon>
+      <div className={b('generic', { shown: forceButtonGroup })}>
+        <ButtonGroup icon>
           {SHARE_NETWORKS.map(({ id, icon = id, baseUrl, getParams }) => {
             const text = id === 'twitter' ? extendedText || basicText : basicText;
             return (
               <button
                 key={id}
-                className={`wir-button wir-button__icon wir-social-buttons__button wir-social-buttons__button--${id}`}
+                className={b('button', { [id]: true })}
                 title={localize(`common.share-${id}`, lang)}
                 type="button"
                 onClick={() => {

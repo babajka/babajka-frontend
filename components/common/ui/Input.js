@@ -1,12 +1,12 @@
-import './input.scss';
-
 import React from 'react';
 import PropTypes from 'prop-types';
+import block from 'bem-css-modules';
 
 import Clickable from 'components/common/Clickable';
 import Icon from 'components/common/ui/Icon';
+import styles from './input.module.scss';
 
-const getClass = (cls, err) => `${cls}${err ? ` ${cls}--error` : ''}`;
+const b = block(styles);
 
 const Input = ({
   pending,
@@ -19,9 +19,9 @@ const Input = ({
   ...props
 }) => (
   <>
-    <div className="wir-input">
+    <div className={b()}>
       <input
-        className="wir-input__input"
+        className={b('control')}
         type="text"
         disabled={disabled}
         placeholder={placeholder}
@@ -29,26 +29,23 @@ const Input = ({
         {...props}
       />
       {pending && (
-        <span className="wir-input__icon wir-input__icon--left wir-input__icon--loading">
+        <span className={b('icon', { left: true, loading: true })}>
           <Icon name="circle-notch" />
         </span>
       )}
       {leftIcon && (
-        <span className={`${getClass('wir-input__icon', error)} wir-input__icon--left`}>
+        <span className={b('icon', { left: true, error })}>
           <Icon {...leftIcon} />
         </span>
       )}
       {rightIcon && (
-        <Clickable
-          className={`${getClass('wir-input__icon', error)} wir-input__icon--right`}
-          onClick={onRightClick}
-        >
+        <Clickable className={b('icon', { right: true, error })} onClick={onRightClick}>
           <Icon {...rightIcon} />
         </Clickable>
       )}
-      <span className={getClass('wir-input__bar', error)} />
+      <span className={b('bar', { error })} />
     </div>
-    {error && <p className="wir-input__error">{error}</p>}
+    {error && <p className={b('error')}>{error}</p>}
   </>
 );
 
