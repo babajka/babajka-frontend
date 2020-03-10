@@ -1,11 +1,9 @@
-// fix fa path
-$fa-font-path: '../node_modules/@fortawesome/fontawesome-free/webfonts';
 // https://github.com/FortAwesome/Font-Awesome/issues/14387#issuecomment-458715148
 $fa-font-display: swap;
 
 @import url('https://fonts.googleapis.com/css?family=Ubuntu:300,400,700&display=swap');
 
-@import '../node_modules/@fortawesome/fontawesome-free/scss/fontawesome';
-@import '../node_modules/@fortawesome/fontawesome-free/scss/brands';
-@import '../node_modules/@fortawesome/fontawesome-free/scss/regular';
-@import '../node_modules/@fortawesome/fontawesome-free/scss/solid';
+@import '@fortawesome/fontawesome-free/scss/fontawesome';
+@import '@fortawesome/fontawesome-free/scss/brands';
+@import '@fortawesome/fontawesome-free/scss/regular';
+@import '@fortawesome/fontawesome-free/scss/solid';

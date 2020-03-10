@@ -15,3 +15,6 @@ deploy-dev-from-local:
 
 update:
 	npm run fetch-data
+
+build-size:
+	npm run size
