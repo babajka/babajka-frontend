@@ -83,7 +83,7 @@ export const diaryActions = {
   }),
   getBySlug: slug => ({
     type: GET_BY_SLUG,
-    payload: makeRequest(api.diary.getBySlug(slug)),
+    payload: makeRequest(slug ? api.diary.getBySlug(slug) : api.diary.today),
   }),
   getClosest: closest => (dispatch, getStore) => {
     const diary = getState(getStore());

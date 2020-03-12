@@ -1,11 +1,13 @@
 import 'styles/pages/diary.scss';
 
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import cn from 'classnames';
 import { useRouter } from 'next/router';
 
 import Image from 'components/common/Image';
+import Redirect from 'components/common/Redirect';
 import { localize } from 'components/common/Text';
 import DiaryLinkArrows from 'components/specials/diary/DiaryLinkArrows';
 import ShareButtons from 'components/social/ShareButtons';
@@ -29,6 +31,7 @@ import host from 'utils/host';
 
 import { DATE_FORMAT, SHORT_DATE_FORMAT } from 'constants';
 import { DIARY_PICTURE_WIDTH } from 'constants/misc';
+import { ROUTES_NAMES } from 'routes';
 import api from 'constants/api';
 
 const mapStateToProps = (state, { lang }) => ({
@@ -54,8 +57,9 @@ const getShareText = (date, name, lang, content) => {
 };
 
 const DiaryPage = ({
-  diary: { author: { name, diaryImage: image } = {}, date, text: { content } = {} },
+  diary: { slug, author: { name, diaryImage: image } = {}, date, text: { content } = {} },
   lang,
+  routerQuery,
 }) => {
   const [articles, setArticles] = useState([]);
   useEffect(() => {
@@ -70,6 +74,10 @@ const DiaryPage = ({
   ].join(', ');
   const [first, second] = getLocalizedArticles(articles, lang);
   const shortContent = fiberyToString(content).substring(0, 140);
+
+  if (!routerQuery.slug) {
+    return <Redirect to={ROUTES_NAMES.diary} params={{ slug }} options={{ shallow: true }} />;
+  }
 
   return (
     <>
@@ -116,6 +124,9 @@ const DiaryPage = ({
 DiaryPage.propTypes = {
   diary: DiaryShape.isRequired,
   lang: LangType.isRequired,
+  routerQuery: PropTypes.shape({
+    slug: PropTypes.string,
+  }).isRequired,
 };
 
 DiaryPage.getInitialProps = ctx =>

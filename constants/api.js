@@ -34,6 +34,7 @@ export default {
   diary: {
     getByDay: (month, day) => `${API_URL}/specials/diary/get/${month}/${day}`,
     getBySlug: slug => `${API_URL}/specials/diary/getBySlug/${slug}`,
+    today: `${API_URL}/specials/diary/today`,
   },
   topics: {
     getArticles: topic => `${API_URL}/topics/articles/${topic}`,

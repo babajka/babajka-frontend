@@ -5,9 +5,9 @@ import { Router } from 'routes';
 import LocaleContext from 'components/common/LocaleContext';
 import { LangType } from 'utils/customPropTypes';
 
-const Redirect = ({ to, params, method, lang }) => {
+const Redirect = ({ to, params, method, lang, options }) => {
   useEffect(() => {
-    Router[`${method}Route`](to, { lang, ...params });
+    Router[`${method}Route`](to, { lang, ...params }, options);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return null;
@@ -16,12 +16,16 @@ const Redirect = ({ to, params, method, lang }) => {
 Redirect.propTypes = {
   to: PropTypes.string.isRequired,
   params: PropTypes.shape({}),
+  options: PropTypes.shape({
+    shallow: PropTypes.bool,
+  }),
   method: PropTypes.oneOf(['replace', 'push']),
   lang: LangType.isRequired,
 };
 
 Redirect.defaultProps = {
   params: {},
+  options: {},
   method: 'replace',
 };
 
