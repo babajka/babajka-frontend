@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Text from 'components/common/Text';
+import { localize } from 'components/common/Text';
 import Link from 'components/common/Link';
 import Image from 'components/common/Image';
 
-import { CollectionShape } from 'utils/customPropTypes';
+import { CollectionShape, LangType } from 'utils/customPropTypes';
 
 import { ROUTES_NAMES } from 'routes';
 
@@ -27,7 +27,7 @@ CollectionNoteItem.propTypes = {
   slug: PropTypes.string.isRequired,
 };
 
-const CollectionNote = ({ data: { cover, articleIndex = 0, name, articles } }) => (
+const CollectionNote = ({ locale, data: { cover, articleIndex = 0, name, articles } }) => (
   <div className="article-page__collection">
     {cover && (
       <Image
@@ -40,8 +40,9 @@ const CollectionNote = ({ data: { cover, articleIndex = 0, name, articles } }) =
     )}
     <div className="article-page__collection-items">
       <div className="article-page__collection-item">
-        <Text id="article.this-is-the" /> {` ${articleIndex + 1} `}
-        <Text id="article.of-collection" /> <br />
+        {localize('article.this-is-the', locale)} {` ${articleIndex + 1} `}
+        {localize('article.of-collection', locale)}
+        <br />
         <span className="article-page__collection-name">{name}</span>
       </div>
       {articles.map(({ _id, slug, title }, i) => (
@@ -58,6 +59,7 @@ const CollectionNote = ({ data: { cover, articleIndex = 0, name, articles } }) =
 
 CollectionNote.propTypes = {
   data: CollectionShape.isRequired,
+  locale: LangType.isRequired,
 };
 
 export default CollectionNote;
