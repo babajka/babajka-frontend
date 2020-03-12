@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import block from 'bem-css-modules';
+import bem from 'bem-css-modules';
 import styles from './admin.module.scss';
 
 import AdminSidebar from './AdminSidebar';
 
-const b = block(styles);
+const b = bem(styles);
 
 const AdminLayout = ({ children }) => (
   <div className={b()}>

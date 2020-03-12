@@ -1,12 +1,12 @@
-import './diaryArrows.module.scss';
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import cn from 'classnames';
 
 import Link from 'components/common/Link';
 import { diarySelectors } from 'redux/ducks/diary';
 import { ROUTES_NAMES } from 'routes';
+import styles from './diaryArrows.module.scss';
 
 import ArrowIcon from './ArrowIcon';
 
@@ -17,7 +17,7 @@ const mapStateToProps = state => ({
 });
 
 const DiaryLinkArrows = ({ className, prev, next, size, isNextAvailable }) => (
-  <div className={`diary-arrows ${className}`}>
+  <div className={cn(styles.arrows, className)}>
     <Link route={ROUTES_NAMES.diary} params={{ slug: prev.slug }} titleId="diary.previous">
       <ArrowIcon direction="left" size={size} />
     </Link>

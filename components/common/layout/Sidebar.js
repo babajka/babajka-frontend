@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
-import block from 'bem-css-modules';
+import bem from 'bem-css-modules';
 import cn from 'classnames';
 
 import Icon from 'components/common/ui/Icon';
@@ -29,7 +29,7 @@ const getLocaleSwitchUrl = (path, lang) => {
   parts[1] = lang;
   return parts.join('/');
 };
-const b = block(styles);
+const b = bem(styles);
 
 const SidebarSection = ({ title, data, idKey, renderItem, footer }) => (
   <section className={b('section')}>

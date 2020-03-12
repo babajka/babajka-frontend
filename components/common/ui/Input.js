@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import block from 'bem-css-modules';
+import bem from 'bem-css-modules';
 
 import Clickable from 'components/common/Clickable';
 import Icon from 'components/common/ui/Icon';
 import styles from './input.module.scss';
 
-const b = block(styles);
+const b = bem(styles);
 
 const Input = ({
   pending,

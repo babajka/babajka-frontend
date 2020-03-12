@@ -1,22 +1,18 @@
-import './ui/button.scss';
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
+import bem from 'bem-css-modules';
 
 import Icon from 'components/common/ui/Icon';
 
 import { IconPackShape } from 'utils/customPropTypes';
+import styles from './ui/button.module.scss';
 
-const Button = ({ className, children, pending, icon: { pack, name }, ...props }) => (
-  <button
-    type="button"
-    className={cn('wir-kit-button', className, {
-      'wir-kit-button__loading': pending,
-    })}
-    {...props}
-  >
-    {name && <Icon className="wir-kit-button__icon" pack={pack} name={name} />}
+const b = bem(styles);
+
+const Button = ({ className, children, pending: _, icon: { pack, name }, ...props }) => (
+  <button type="button" className={cn(b(), className)} {...props}>
+    {name && <Icon className={b('icon')} pack={pack} name={name} />}
     {children}
   </button>
 );

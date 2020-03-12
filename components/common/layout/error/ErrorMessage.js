@@ -1,6 +1,5 @@
-import './error.scss';
-
 import React from 'react';
+import bem from 'bem-css-modules';
 
 import Link from 'components/common/Link';
 import Text from 'components/common/Text';
@@ -9,28 +8,31 @@ import ExternalLink from 'components/common/ExternalLink';
 
 import { ROUTES_NAMES } from 'routes';
 import { NETWORKS } from 'constants/social';
+import styles from './error.module.scss';
+
+const b = bem(styles);
 
 const ErrorMessage = ({ code }) => (
-  <div className="error-message">
-    <div className="error-message__title">
-      <span className="error-message__code">{code}</span> <Text id={`errors.${code}-title`} />
+  <div className={b()}>
+    <div className={b('title')}>
+      <span className={b('code')}>{code}</span> <Text id={`errors.${code}-title`} />
     </div>
-    <div className="error-message__subtitle">
+    <div className={b('subtitle')}>
       <Text id={`errors.${code}-subtitle`} />
     </div>
-    <div className="error-message__go-to-main">
+    <div className={b('go-to-main')}>
       <Link route={ROUTES_NAMES.main}>
         <Text id="errors.go-to-main" />
       </Link>
     </div>
-    <div className="error-message__social-buttons">
+    <div className={b('social-buttons')}>
       {NETWORKS.map(({ id, link, color }) => (
-        <ExternalLink key={id} href={link} className="error-message__social-button">
+        <ExternalLink key={id} href={link} className={b('social-button')}>
           <Icon pack="b" name={id} style={{ color }} />
         </ExternalLink>
       ))}
     </div>
-    <div className="error-message__contact-us">
+    <div className={b('contact-us')}>
       <Text id="errors.contact-us" />
       {': '}
       <ExternalLink href="mailto:dev@wir.by">dev@wir.by</ExternalLink>

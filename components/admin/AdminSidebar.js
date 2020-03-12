@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import block from 'bem-css-modules';
+import bem from 'bem-css-modules';
 
 import Link from 'components/common/Link';
 import Text from 'components/common/Text';
@@ -11,7 +11,7 @@ import { authActions } from 'redux/ducks/auth';
 import { ADMIN_ROUTES, ROUTES_NAMES } from 'routes';
 import styles from './admin-sidebar.module.scss';
 
-const b = block(styles);
+const b = bem(styles);
 const IGNORE_ROUTES = ['login', 'preview'].map(page => ROUTES_NAMES.admin[page]);
 
 const AdminSidebar = () => {

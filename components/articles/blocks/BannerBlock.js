@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import block from 'bem-css-modules';
+import bem from 'bem-css-modules';
 import cn from 'classnames';
 
 import Picture from 'components/common/Picture';
@@ -10,7 +10,7 @@ import styles from './banner.module.scss';
 
 import BlockWrapper from './BlockWrapper';
 
-const b = block(styles);
+const b = bem(styles);
 const LINK = 'https://map.wir.by?utm_source=wirby-main-page';
 
 const getLink = (width, name) =>

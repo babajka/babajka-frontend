@@ -1,8 +1,9 @@
-import 'styles/pages/tag.scss';
+import styles from 'styles/pages/tag.module.scss';
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import bem from 'bem-css-modules';
 
 import {
   MetaTitle,
@@ -24,6 +25,7 @@ import host from 'utils/host';
 
 import { TOPICS } from 'constants';
 
+const b = bem(styles);
 const PAGE_LEVEL_ORDER = ['B1', 'C', 'D', 'C', 'B2', 'C', 'D', 'C'];
 
 const BLOCK_BY_LEVEL = {
@@ -74,10 +76,10 @@ const TagPage = ({ lang, routerQuery: { topic }, tag, blocks, articlesCount }) =
       <MetaDescription description={localize(`topic.meta_other_${topic}_description`, lang)} />
       <MetaKeywords keywords={metaKeywords} />
 
-      <div className="tag-page">
-        <div className="wir-content-padding tag-page__header">
-          <div className="tag-page__topic">{getTopicLink({ topic, postfix: 'one' })}</div>
-          <div className="tag-page__title">{title}</div>
+      <div className={b()}>
+        <div className="wir-content-padding">
+          <div className={b('topic')}>{getTopicLink({ topic, postfix: 'one' })}</div>
+          <div className={b('title')}>{title}</div>
         </div>
         <ArticlesBlocks articlesCount={articlesCount} blocks={blocks} />
       </div>

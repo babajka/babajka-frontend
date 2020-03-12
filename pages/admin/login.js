@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ROUTES_NAMES } from 'routes';
 import { connect } from 'react-redux';
-import block from 'bem-css-modules';
+import bem from 'bem-css-modules';
 
 import Redirect from 'components/common/Redirect';
 import LoginForm from 'components/auth/LoginForm';
@@ -12,7 +12,7 @@ import LoginForm from 'components/auth/LoginForm';
 import { authSelectors } from 'redux/ducks/auth';
 import { UserShape } from 'utils/customPropTypes';
 
-const b = block(styles);
+const b = bem(styles);
 
 const mapStateToProps = state => ({
   user: authSelectors.getUser(state),

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import block from 'bem-css-modules';
+import bem from 'bem-css-modules';
 
 import Link from 'components/common/Link';
 import Table, { styles } from 'components/common/Table';
@@ -19,7 +19,7 @@ import { getArticleBaseUrl } from 'utils/fibery';
 import { ROUTES_NAMES } from 'routes';
 import { DATETIME_FORMAT } from 'constants';
 
-const b = block(styles);
+const b = bem(styles);
 
 const mapStateToProps = (state, { lang }) => ({
   articles: adminArticlesSelectors.getAll(state, lang),

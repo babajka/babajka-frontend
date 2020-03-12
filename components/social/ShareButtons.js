@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
-import block from 'bem-css-modules';
+import bem from 'bem-css-modules';
 
 import Text, { localize, useLocaleContext } from 'components/common/Text';
 import Icon from 'components/common/ui/Icon';
@@ -12,7 +12,7 @@ import { SHARE_NETWORKS } from 'constants/social';
 import { DOMAIN_SECURE } from 'constants';
 import styles from './social-buttons.module.scss';
 
-const b = block(styles);
+const b = bem(styles);
 const POPUP_WINDOW_PARAMS = 'width=600,height=400';
 
 const ShareButtons = ({ urlPath, basicText, extendedText }) => {
