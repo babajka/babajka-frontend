@@ -3,7 +3,6 @@ import nextCookie from 'next-cookies';
 import castArray from 'lodash/castArray';
 
 import { Router, ROUTES_NAMES } from 'routes';
-import api from 'constants/api';
 import { BACKEND_URL } from 'constants/server';
 import { DEFAULT_LOCALE } from 'constants';
 
@@ -30,17 +29,6 @@ const getOptions = options => {
     mergedOptions.headers.cookie = getCookieString(cookie);
   }
   return mergedOptions;
-};
-
-export const uploadFile = file => {
-  const fd = new FormData();
-  fd.append('image', file);
-  return fetch(api.core.uploads, {
-    mode: DEFAULT_OPTIONS.mode,
-    credentials: DEFAULT_OPTIONS.credentials,
-    method: 'POST',
-    body: fd,
-  }).then(res => res.json());
 };
 
 export const makeRequest = (url, method = 'GET', rawBody = null) =>
