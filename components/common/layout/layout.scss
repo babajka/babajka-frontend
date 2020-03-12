@@ -159,3 +159,7 @@ footer {
     padding-right: calc((100% - #{map-get($page-content, mobile)}) * 2 / 3);
   }
 }
+
+.nowrap {
+  white-space: nowrap;
+}

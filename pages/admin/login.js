@@ -1,15 +1,18 @@
-import 'styles/pages/login.scss';
+import styles from 'styles/pages/login.module.scss';
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ROUTES_NAMES } from 'routes';
 import { connect } from 'react-redux';
+import block from 'bem-css-modules';
 
 import Redirect from 'components/common/Redirect';
 import LoginForm from 'components/auth/LoginForm';
 
 import { authSelectors } from 'redux/ducks/auth';
 import { UserShape } from 'utils/customPropTypes';
+
+const b = block(styles);
 
 const mapStateToProps = state => ({
   user: authSelectors.getUser(state),
@@ -21,8 +24,8 @@ const LoginPage = ({ user, routerQuery: { next = ROUTES_NAMES.admin.articles } }
   }
 
   return (
-    <div className="login-page-container">
-      <div className="login-page-wrap">
+    <div className={b('container')}>
+      <div className={b('wrap')}>
         <LoginForm />
       </div>
     </div>

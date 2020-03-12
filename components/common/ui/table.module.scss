@@ -1,10 +1,6 @@
 // FIXME
 /* stylelint-disable selector-max-compound-selectors, no-descending-specificity */
 
-.nowrap {
-  white-space: nowrap;
-}
-
 .wir-table {
   border-spacing: 0;
 
@@ -79,11 +75,11 @@
     }
   }
 
-  &--font-large {
+  &__font--size--large {
     font-size: 1.2rem;
   }
 
-  &--font-small {
+  &__font--size--small {
     font-size: 0.7rem;
   }
 }

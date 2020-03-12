@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import block from 'bem-css-modules';
 
 import Link from 'components/common/Link';
-import Table from 'components/common/Table';
+import Table, { styles } from 'components/common/Table';
 import Clickable from 'components/common/Clickable';
 import ExternalLink from 'components/common/ExternalLink';
 import withAdmin from 'components/hoc/withAdmin';
@@ -18,6 +19,8 @@ import { getArticleBaseUrl } from 'utils/fibery';
 import { ROUTES_NAMES } from 'routes';
 import { DATETIME_FORMAT } from 'constants';
 
+const b = block(styles);
+
 const mapStateToProps = (state, { lang }) => ({
   articles: adminArticlesSelectors.getAll(state, lang),
 });
@@ -25,7 +28,7 @@ const mapStateToProps = (state, { lang }) => ({
 const ARTICLE_COLS = [
   {
     id: 'title',
-    className: 'wir-table--font-large',
+    className: b('font', { size: 'large' }),
     render: ({ value, row: { slug } }) => (
       <Link route={ROUTES_NAMES.article} params={{ slug }}>
         {value}
@@ -35,7 +38,7 @@ const ARTICLE_COLS = [
   },
   {
     id: 'actions',
-    className: 'wir-table__column-actions',
+    className: b('column-actions'),
     render: ({ row: { fiberyPublicId }, index }) => {
       const url = getArticleBaseUrl(fiberyPublicId);
       return (
@@ -61,13 +64,13 @@ const ARTICLE_COLS = [
   },
   {
     id: 'subtitle',
-    className: 'wir-table--font-small',
+    className: b('font', { size: 'small' }),
     formatter: text => `${text.slice(0, 100)}...`,
   },
   {
     id: 'tagsByTopic',
     title: 'Tags',
-    className: 'wir-table--font-small',
+    className: b('font', { size: 'small' }),
     formatter: tagsByTopic => {
       const tags = Object.values(tagsByTopic).reduce((acc, cur) => acc.concat(cur), []);
       return renderNodeList(
@@ -106,7 +109,6 @@ const AdminArticlesPage = ({ articles }) => {
         />{' '}
         {previewUrl && (
           <Link
-            className="button"
             route={ROUTES_NAMES.admin.preview}
             params={{ url: encodeURIComponent(previewUrl) }}
             target="_blank"
@@ -116,7 +118,7 @@ const AdminArticlesPage = ({ articles }) => {
         )}
       </div>
       <br />
-      <Table rows={articles} cols={ARTICLE_COLS} />
+      <Table className={b()} rows={articles} cols={ARTICLE_COLS} />
     </div>
   );
 };

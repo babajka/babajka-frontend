@@ -1,21 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ErrorMessage } from 'formik';
+import block from 'bem-css-modules';
 
 import Icon from 'components/common/ui/Icon';
 import Text from 'components/common/Text';
+import styles from './login-form.module.scss';
+
+const b = block(styles);
 
 const FormField = ({ id, label, icon, children, pending, touched, error }) => {
   const hasError = !pending && touched && error;
   return (
-    <div className="login-form__input-wrap">
-      <label className="login-form__input-label" htmlFor={id}>
+    <div className={b('input-wrap')}>
+      <label className={b('input-label')} htmlFor={id}>
         <Icon name={icon} /> {label || <Text id={`auth.${id}`} />}
       </label>
       {children(hasError)}
       <ErrorMessage name={id}>
         {message => (
-          <p className="login-form__input-error-message">
+          <p className={b('input-error-message')}>
             <Text id={message} />
           </p>
         )}

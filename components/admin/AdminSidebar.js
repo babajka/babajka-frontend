@@ -17,7 +17,7 @@ const IGNORE_ROUTES = ['login', 'preview'].map(page => ROUTES_NAMES.admin[page])
 const AdminSidebar = () => {
   const router = useRouter();
   return (
-    <div className={b()}>
+    <div>
       <ul className={b('nav-list')}>
         {ADMIN_ROUTES.filter(({ name }) => !IGNORE_ROUTES.includes(name)).map(({ name, page }) => (
           <li key={name}>

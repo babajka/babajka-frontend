@@ -1,8 +1,6 @@
-import './login-form.scss';
-
 import React from 'react';
-import cn from 'classnames';
 import { Form, Field } from 'formik';
+import block from 'bem-css-modules';
 
 import { validEmail, required, checkLength, hasErrors } from 'utils/validators';
 import FormWrapper from 'components/common/form/FormWrapper';
@@ -10,8 +8,11 @@ import Button from 'components/common/Button';
 import Text from 'components/common/Text';
 
 import { authActions } from 'redux/ducks/auth';
+import styles from './login-form.module.scss';
 
 import FormField from './FormField';
+
+const b = block(styles);
 
 const LOGIN_INITIAL_FORM = {
   isSignUp: false,
@@ -77,8 +78,8 @@ const loginValidator = values =>
   }, {});
 
 const LoginForm = () => (
-  <div className="login-form">
-    <div className="login-form__title">
+  <div className={b()}>
+    <div className={b('title')}>
       <Text id="auth.signIn" />
     </div>
     <FormWrapper
@@ -112,17 +113,17 @@ const LoginForm = () => (
                 {hasError => (
                   <Field
                     id={id}
-                    className={cn('login-form__input', { 'login-form__input-error': hasError })}
+                    className={b('input', { error: !!hasError })}
                     name={id}
                     type={type}
                   />
                 )}
               </FormField>
             ))}
-          <div className="login-form__btn-container">
-            <div className="login-form__btn-wrap">
+          <div className={b('btn-container')}>
+            <div className={b('btn-wrap')}>
               <Button
-                className="login-form__btn"
+                className={b('btn')}
                 type="submit"
                 disabled={hasErrors(errors, touched)}
                 pending={isSubmitting}
