@@ -1,9 +1,9 @@
 import React from 'react';
-import block from 'bem-css-modules';
+import bem from 'bem-css-modules';
 import styles from './example.module.scss';
 
 const BIG = 'big';
-const b = block(styles);
+const b = bem(styles);
 
 export default () => (
   <div className={b()}>

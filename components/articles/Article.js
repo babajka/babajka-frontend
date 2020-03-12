@@ -4,7 +4,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import flatten from 'lodash/flatten';
 import cn from 'classnames';
-import block from 'bem-css-modules';
+import bem from 'bem-css-modules';
 
 import {
   MetaTitle,
@@ -27,7 +27,7 @@ import host from 'utils/host';
 
 import CollectionNote from './CollectionNote';
 
-const b = block(styles);
+const b = bem(styles);
 const COVER_SIZES = [1200, 1000, 770, 640, 360];
 
 const Article = ({

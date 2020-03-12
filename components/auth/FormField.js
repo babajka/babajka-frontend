@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ErrorMessage } from 'formik';
-import block from 'bem-css-modules';
+import bem from 'bem-css-modules';
 
 import Icon from 'components/common/ui/Icon';
 import Text from 'components/common/Text';
 import styles from './login-form.module.scss';
 
-const b = block(styles);
+const b = bem(styles);
 
 const FormField = ({ id, label, icon, children, pending, touched, error }) => {
   const hasError = !pending && touched && error;

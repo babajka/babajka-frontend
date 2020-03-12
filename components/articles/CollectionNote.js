@@ -2,7 +2,7 @@ import styles from 'styles/pages/article.module.scss';
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import block from 'bem-css-modules';
+import bem from 'bem-css-modules';
 
 import { localize } from 'components/common/Text';
 import Link from 'components/common/Link';
@@ -12,7 +12,7 @@ import { CollectionShape, LangType } from 'utils/customPropTypes';
 
 import { ROUTES_NAMES } from 'routes';
 
-const b = block(styles);
+const b = bem(styles);
 
 const CollectionNoteItem = ({ className, hideLink, text, slug }) => (
   <div className={className}>

@@ -1,10 +1,11 @@
-import 'styles/pages/diary.scss';
+import styles from 'styles/pages/diary.module.scss';
 
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import cn from 'classnames';
 import { useRouter } from 'next/router';
+import bem from 'bem-css-modules';
 
 import Image from 'components/common/Image';
 import Redirect from 'components/common/Redirect';
@@ -34,9 +35,7 @@ import { DIARY_PICTURE_WIDTH } from 'constants/misc';
 import { ROUTES_NAMES } from 'routes';
 import api from 'constants/api';
 
-const mapStateToProps = (state, { lang }) => ({
-  diary: diarySelectors.getCurrent(state, lang),
-});
+const b = bem(styles);
 
 const getShareText = (date, name, lang, content) => {
   const today = dateIsToday(date);
@@ -55,6 +54,10 @@ const getShareText = (date, name, lang, content) => {
     extendedText: `${base}:\n«${content}...»\n`,
   };
 };
+
+const mapStateToProps = (state, { lang }) => ({
+  diary: diarySelectors.getCurrent(state, lang),
+});
 
 const DiaryPage = ({
   diary: { slug, author: { name, diaryImage: image } = {}, date, text: { content } = {} },
@@ -86,20 +89,16 @@ const DiaryPage = ({
       <MetaKeywords keywords={metaKeywords} />
       <MetaImage url={image ? `${host}${image}` : DEFAULT_IMAGE} small />
 
-      <div className="wir-content-padding diary-page">
-        <DiaryLinkArrows className="diary-page__arrows diary-page__arrows--top" size={36} />
-        <div className={cn('diary-page__title', { 'diary-page__title--with-image': image })}>
-          <div className="diary-page__date">{formatDate(date, DATE_FORMAT)}</div>
-          <div className="diary-page__name">{name}</div>
+      <div className={cn('wir-content-padding', b())}>
+        <DiaryLinkArrows className={b('arrows')} size={36} />
+        <div className={b('title', { 'with-image': !!image })}>
+          <div>{formatDate(date, DATE_FORMAT)}</div>
+          <div>{name}</div>
         </div>
-        <div
-          className={cn('diary-page__image-container', {
-            'diary-page__image-container--no-image': !image,
-          })}
-        >
+        <div className={b('image-container', { 'no-image': !image })}>
           {image && (
             <Image
-              className="diary-page__image"
+              className={b('image')}
               alt={name}
               sourceSizes={[DIARY_PICTURE_WIDTH]}
               baseUrl={image}
@@ -107,15 +106,15 @@ const DiaryPage = ({
             />
           )}
         </div>
-        <div className="diary-page__text">{fiberyRenderer(content)}</div>
-        <div className="diary-page__share">
+        <div className={b('text')}>{fiberyRenderer(content)}</div>
+        <div className={b('share')}>
           <ShareButtons urlPath={router.asPath} {...getShareText(date, name, lang, shortContent)} />
         </div>
-        <DiaryLinkArrows className="diary-page__arrows diary-page__arrows--bottom" size={36} />
+        <DiaryLinkArrows className={b('arrows', { bottom: true })} size={36} />
       </div>
 
       {!!articles.length && (
-        <TwoArticlesInRow className="diary-page-extras" first={first} second={second} />
+        <TwoArticlesInRow className={b('extras')} first={first} second={second} />
       )}
     </>
   );

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import block from 'bem-css-modules';
+import bem from 'bem-css-modules';
 import styles from './teammate.module.scss';
 
-const b = block(styles);
+const b = bem(styles);
 
 const Teammate = ({ image, name, role }) => (
   <div className={b()}>

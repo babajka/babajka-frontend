@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import block from 'bem-css-modules';
+import bem from 'bem-css-modules';
 
 import Link from 'components/common/Link';
 import Text from 'components/common/Text';
@@ -21,7 +21,7 @@ import styles from './diary.module.scss';
 
 import BlockWrapper from './BlockWrapper';
 
-const b = block(styles);
+const b = bem(styles);
 
 const mapStateToProps = (state, { lang }) => ({
   diary: diarySelectors.getCurrent(state, lang),

@@ -1,6 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
-import block from 'bem-css-modules';
+import bem from 'bem-css-modules';
 
 import Text, { useLocalization } from 'components/common/Text';
 import Link from 'components/common/Link';
@@ -18,8 +18,8 @@ import layout from './footer/layout.module.scss';
 
 import SubscribeForm from './footer/SubscribeForm';
 
-const f = block(footer);
-const l = block(layout);
+const f = bem(footer);
+const l = bem(layout);
 
 const Footer = () => (
   <footer className={cn(f(), l())}>

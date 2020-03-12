@@ -3,7 +3,7 @@ import teammateStyles from 'components/social/teammate.module.scss';
 
 import React from 'react';
 import cn from 'classnames';
-import block from 'bem-css-modules';
+import bem from 'bem-css-modules';
 
 import ExternalLink from 'components/common/ExternalLink';
 import Text, { localize } from 'components/common/Text';
@@ -20,8 +20,8 @@ import { Thanks1, Thanks2 } from 'components/social/Thanks';
 import team from 'data/team.json';
 import { PARTNERS } from 'constants/partners';
 
-const b = block(styles);
-const t = block(teammateStyles);
+const b = bem(styles);
+const t = bem(teammateStyles);
 
 const getLogoUrl = name =>
   `https://res.cloudinary.com/wir-by/image/upload/c_scale,w_250,f_auto,q_auto/v1546529671/production/partners-logos/${name}`;

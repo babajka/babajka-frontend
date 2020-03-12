@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import block from 'bem-css-modules';
+import bem from 'bem-css-modules';
 import styles from './ui/picture.module.scss';
 
-const b = block(styles);
+const b = bem(styles);
 
 // checkout `styles/responsiveness.scss`
 const BREAKPOINTS = {

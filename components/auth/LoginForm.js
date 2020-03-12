@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Field } from 'formik';
-import block from 'bem-css-modules';
+import bem from 'bem-css-modules';
 
 import { validEmail, required, checkLength, hasErrors } from 'utils/validators';
 import FormWrapper from 'components/common/form/FormWrapper';
@@ -12,7 +12,7 @@ import styles from './login-form.module.scss';
 
 import FormField from './FormField';
 
-const b = block(styles);
+const b = bem(styles);
 
 const LOGIN_INITIAL_FORM = {
   isSignUp: false,

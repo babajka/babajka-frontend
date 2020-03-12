@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import block from 'bem-css-modules';
+import bem from 'bem-css-modules';
 import { Form } from 'formik';
 
 import Clickable from 'components/common/Clickable';
@@ -13,7 +13,7 @@ import { validEmail } from 'utils/validators';
 import createConstants from 'lib/utils/createConstants';
 import styles from './index.module.scss';
 
-const b = block(styles);
+const b = bem(styles);
 const STATUS = createConstants('subscribed', 'unsubscribed');
 
 const SubscribeForm = () => {

@@ -53,11 +53,11 @@
     margin: 40px 0;
     width: 300px;
   }
-}
 
-.diary-page-extras {
-  padding-bottom: 8rem;
-  padding-top: 1rem;
+  &__extras {
+    padding-bottom: 8rem;
+    padding-top: 1rem;
+  }
 }
 
 @mixin shared-desktop-tablet-large {

@@ -3,7 +3,7 @@ import styles from 'styles/pages/preview.module.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import block from 'bem-css-modules';
+import bem from 'bem-css-modules';
 import cn from 'classnames';
 
 import Article from 'components/articles/Article';
@@ -16,7 +16,7 @@ import { ArticleShape } from 'utils/customPropTypes';
 
 import useBoolean from 'hooks/useBoolean';
 
-const b = block(styles);
+const b = bem(styles);
 
 const mapStateToProps = (state, { lang }) => ({
   article: adminArticlesSelectors.getPreview(state, lang),
