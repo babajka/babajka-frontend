@@ -4,6 +4,11 @@ import 'components/common/ui/link.scss';
 import 'components/common/layout/layout.scss';
 import 'components/common/layout/header/styles.scss';
 
+// FIXME(@uladbohdan):
+import 'components/articles/blocks/tagPageBlockB.scss';
+import 'components/articles/blocks/tagPageBlockCD.scss';
+import 'components/articles/blocks/tagsByTopic.scss';
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactGA from 'react-ga';
@@ -150,7 +155,6 @@ class Root extends App {
           <MetaAppleTouchDevices title={localize(titleApple, locale)} />
           <Head>
             <link rel="icon" type="image/png" href={FAVICON_URL} />
-            <link rel="preconnect" href="https://www.google-analytics.com" />
             {/* https://developers.google.com/search/reference/podcast/homepage-requirements */}
             {/* <link
               rel="alternate"

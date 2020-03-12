@@ -1,8 +1,7 @@
-import './articlesByTag2.scss';
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
+import bem from 'bem-css-modules';
 
 import Text from 'components/common/Text';
 import ArticleCard from 'components/articles/cards/ArticleCard';
@@ -11,8 +10,11 @@ import { IdsArray } from 'utils/customPropTypes';
 import { getTagLink, getTopicLink, getTagImageRenderer } from 'utils/tags';
 
 import { TOPIC } from 'constants/misc';
+import styles from './articlesByTag2.module.scss';
 
 import BlockWrapper from './BlockWrapper';
+
+const b = bem(styles);
 
 const ArticlesByTag2 = ({ block, data }) => {
   const { tagId, articlesIds } = block;
@@ -25,41 +27,33 @@ const ArticlesByTag2 = ({ block, data }) => {
   const topicLink = getTopicLink({ topic: topicSlug, dark: true });
 
   return (
-    <BlockWrapper className="articles-by-tag-2" withBackground>
-      <div
-        className={cn('articles-by-tag-2__labels', {
-          'articles-by-tag-2__labels--right': isBrand,
-        })}
-      >
-        <div className="articles-by-tag-2__top-mobile-labels">
+    <BlockWrapper className={b()} withBackground>
+      <div className={b('labels', { right: isBrand })}>
+        <div className={b('top-mobile-labels')}>
           {isBrand &&
             getTagImageRenderer({
               theme: 'dark',
-              className: 'articles-by-tag-2__logo',
+              className: b('logo'),
             })(tag)}
-          <div className="articles-by-tag-2__label">
+          <div className={b('label')}>
             <Text id={`topic.${topicSlug}_essentials`} />: {tagLink}
           </div>
         </div>
-        <div className="articles-by-tag-2__label articles-by-tag-2__bottom-desktop-label">
-          {topicLink}
-        </div>
+        <div className={cn(b('label'), b('bottom-desktop-label'))}>{topicLink}</div>
       </div>
 
-      <div className="articles-by-tag-2__cards">
-        <div className="articles-by-tag-2__card-1">
+      <div className={b('cards')}>
+        <div className={b('card-1')}>
           <ArticleCard {...first} context={['articles-by-tag-2']} />
         </div>
 
-        <div className="articles-by-tag-2__card-2">
+        <div className={b('card-2')}>
           <ArticleCard {...second} context={['articles-by-tag-2']} />
         </div>
       </div>
 
-      <div className="articles-by-tag-2__bottom-labels">
-        <div className="articles-by-tag-2__label articles-by-tag-2__bottom-mobile-label">
-          {topicLink}
-        </div>
+      <div className={b('bottom-labels')}>
+        <div className={cn(b('label'), b('bottom-mobile-label'))}>{topicLink}</div>
       </div>
     </BlockWrapper>
   );

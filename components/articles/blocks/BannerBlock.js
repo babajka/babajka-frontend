@@ -1,14 +1,16 @@
-import './banner.scss';
-
 import React from 'react';
 import PropTypes from 'prop-types';
+import block from 'bem-css-modules';
+import cn from 'classnames';
 
 import Picture from 'components/common/Picture';
 import ExternalLink from 'components/common/ExternalLink';
 import { useLocalization } from 'components/common/Text';
+import styles from './banner.module.scss';
 
 import BlockWrapper from './BlockWrapper';
 
+const b = block(styles);
 const LINK = 'https://map.wir.by?utm_source=wirby-main-page';
 
 const getLink = (width, name) =>
@@ -26,12 +28,12 @@ const BANNERS = Object.entries({
 }, {});
 
 const BannerBlock = ({ block: { banner } }) => {
-  const title = useLocalization('banners.mapa-title');
+  const title = useLocalization(`banners.${banner}-title`);
   return (
     <BlockWrapper>
-      <div className={`banner banner-${banner}`}>
+      <div className={b()}>
         <ExternalLink href={LINK}>
-          <div className={`banner__title banner-${banner}__title`}>{title}</div>
+          <div className={cn(b('title'), b(`${banner}-title`))}>{title}</div>
           <Picture sources={BANNERS} alt={title} />
         </ExternalLink>
       </div>

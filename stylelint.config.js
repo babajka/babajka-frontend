@@ -125,5 +125,13 @@ module.exports = {
 
     // Prevents adding unnecesary Specificity or complicated sass stuff
     'scss/selector-no-redundant-nesting-selector': true,
+
+    // pass css-modules :global selector
+    'selector-pseudo-class-no-unknown': [
+      true,
+      {
+        ignorePseudoClasses: ['/^global$/'],
+      },
+    ],
   },
 };

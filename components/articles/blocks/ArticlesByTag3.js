@@ -1,14 +1,17 @@
-import './articlesByTag3.scss';
-
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
+import bem from 'bem-css-modules';
 
 import ArticleCard from 'components/articles/cards/ArticleCard';
 
 import { IdsArray } from 'utils/customPropTypes';
 import { getTagLink, getTopicLink } from 'utils/tags';
+import styles from './articlesByTag3.module.scss';
 
 import BlockWrapper from './BlockWrapper';
+
+const b = bem(styles);
 
 const ArticlesByTag3 = ({ block, data }) => {
   const { tagId, articlesIds } = block;
@@ -18,23 +21,23 @@ const ArticlesByTag3 = ({ block, data }) => {
   const topicLink = getTopicLink({ topic: tag.topicSlug, dark: true });
 
   return (
-    <BlockWrapper className="articles-by-tag-3">
-      <div className="articles-by-tag-3__combined-title-line articles-by-tag-3__title">
+    <BlockWrapper>
+      <div className={cn(b('combined-title-line'), b('title'))}>
         {tagLink}
         {topicLink}
       </div>
 
-      <div className="articles-by-tag-3__separate-header articles-by-tag-3__title">{tagLink}</div>
+      <div className={cn(b('separate-header'), b('title'))}>{tagLink}</div>
 
-      <div className="articles-by-tag-3__cards">
+      <div className={b('cards')}>
         {articlesIds.map((id, index) => (
-          <div key={id} className={`articles-by-tag-3__card-${index + 1}`}>
+          <div key={id} className={b(`card-${index + 1}`)}>
             <ArticleCard {...articles[id]} context={['articles-by-tag-3']} />
           </div>
         ))}
       </div>
 
-      <div className="articles-by-tag-3__separate-footer articles-by-tag-3__title">{topicLink}</div>
+      <div className={cn(b('separate-footer'), b('title'))}>{topicLink}</div>
     </BlockWrapper>
   );
 };
