@@ -40,6 +40,7 @@ const Article = ({
     tagsByTopic,
     collection,
     publishAt,
+    locale,
   },
 }) => {
   const router = useRouter();
@@ -98,7 +99,9 @@ const Article = ({
         <div className="article-page-content">
           {type === 'audio' && <AudioPlayer trackId={audio.id} />}
           {type === 'video' && <VideoPlayer videoId={video.id} />}
-          {collection && collection.articles.length > 1 && <CollectionNote data={collection} />}
+          {collection && collection.articles.length > 1 && (
+            <CollectionNote data={collection} locale={locale} />
+          )}
           {fiberyRenderer(text.content)}
         </div>
         <div className="article-page__share">
