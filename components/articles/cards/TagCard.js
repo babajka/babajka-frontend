@@ -1,7 +1,3 @@
-import './tagCard.scss';
-import './location.scss';
-import './person.scss';
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
