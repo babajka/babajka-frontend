@@ -18,7 +18,7 @@ const extract = key => {
 };
 
 export const localize = (id, lang) =>
-  extract(`${id}.${lang}`) || extract(`${id}.${DEFAULT_LOCALE}`);
+  extract(`${id}.${lang}`) || extract(`${id}.${DEFAULT_LOCALE}`) || id;
 
 export const useLocaleContext = () => useContext(LocaleContext);
 

@@ -1,5 +1,3 @@
-import './ui/table.scss';
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import identity from 'lodash/identity';
@@ -7,6 +5,7 @@ import get from 'lodash/get';
 import cn from 'classnames';
 
 import { toTitleCase } from 'utils/formatters';
+import styles from './ui/table.module.scss';
 
 const renderValue = ({ value }) => value;
 
@@ -44,7 +43,7 @@ const Table = ({ className, cols, rows, getRowClass }) => (
 );
 
 Table.propTypes = {
-  className: PropTypes.string,
+  className: PropTypes.string.isRequired,
   rows: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -63,8 +62,9 @@ Table.propTypes = {
 };
 
 Table.defaultProps = {
-  className: 'wir-table',
   getRowClass: () => '',
 };
+
+export { styles };
 
 export default Table;
