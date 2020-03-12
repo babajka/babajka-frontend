@@ -1,8 +1,10 @@
-import './blockWrapper.scss';
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
+import block from 'bem-css-modules';
+import styles from './blockWrapper.module.scss';
+
+const b = block(styles);
 
 const BlockWrapper = ({ className, withBackground, negativeTop, children }) => (
   <div
@@ -12,8 +14,7 @@ const BlockWrapper = ({ className, withBackground, negativeTop, children }) => (
         'wir-with-background': withBackground,
         'wir-no-background': !withBackground,
       },
-      'block',
-      { 'block--negative-margin-top': negativeTop },
+      b({ 'negative-margin-top': negativeTop }),
       className
     )}
   >

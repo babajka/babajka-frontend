@@ -1,11 +1,11 @@
-import './diaryArrows.scss';
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import cn from 'classnames';
 
 import Clickable from 'components/common/Clickable';
 import { diaryActions, diarySelectors } from 'redux/ducks/diary';
+import styles from './diaryArrows.module.scss';
 
 import ArrowIcon from './ArrowIcon';
 
@@ -20,7 +20,7 @@ const mapDispatchToProps = {
 };
 
 const DiaryArrows = ({ className, size, getPrev, getNext, isNextAvailable }) => (
-  <div className={`diary-arrows ${className}`}>
+  <div className={cn(styles.arrows, className)}>
     <Clickable onClick={getPrev} linkStyle titleId="diary.previous">
       <ArrowIcon direction="left" size={size} />
     </Clickable>

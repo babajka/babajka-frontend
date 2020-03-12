@@ -2,11 +2,14 @@
 @import 'styles/variables';
 
 .block {
-  &.wir-no-background {
+  &:global(.wir-no-background) {
     margin-top: 60px;
 
+    // FIXME(@uladbohdan): refactor
+    // https://trello.com/c/NTBa9AE1/495-block-wrapper-margin-fix
+    // to eliminate this workaround by properly handling Block margins.
+
     @include screen-tablet-touch-mobile {
-      // FIXME: to eliminate this workaround by properly handling Block margins.
       &.tag-page-block-b,
       &.tag-page-block-cd {
         margin-top: 0;
@@ -14,7 +17,7 @@
     }
   }
 
-  &.wir-with-background {
+  &:global(.wir-with-background) {
     background-color: $primary-black;
     margin-bottom: 20px;
     margin-top: 80px;

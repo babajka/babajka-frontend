@@ -17,10 +17,8 @@
     line-height: 36px;
     position: absolute;
   }
-}
 
-.banner-mapa {
-  &__title {
+  &__mapa-title {
     @include screen-desktop {
       height: 108px;
       left: 330px;

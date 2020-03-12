@@ -1,9 +1,7 @@
-import './diary.scss';
-
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import cn from 'classnames';
+import block from 'bem-css-modules';
 
 import Link from 'components/common/Link';
 import Text from 'components/common/Text';
@@ -19,8 +17,11 @@ import fiberyToString from 'utils/fibery/toString';
 import { SHORT_DATE_FORMAT } from 'constants';
 import { DIARY_PICTURE_WIDTH } from 'constants/misc';
 import { ROUTES_NAMES } from 'routes';
+import styles from './diary.module.scss';
 
 import BlockWrapper from './BlockWrapper';
+
+const b = block(styles);
 
 const mapStateToProps = (state, { lang }) => ({
   diary: diarySelectors.getCurrent(state, lang),
@@ -38,10 +39,10 @@ const DiaryBlock = ({ diary, fetchData }) => {
 
   return (
     <>
-      <BlockWrapper className="diary" negativeTop>
-        <div className="diary__content">
+      <BlockWrapper negativeTop>
+        <div className={b('content')}>
           <Link
-            className={cn('diary__picture', { 'diary__picture--no-image': !diaryImage })}
+            className={b('picture', { 'no-image': !diaryImage })}
             route={ROUTES_NAMES.diary}
             params={{ slug }}
             noStyles
@@ -50,16 +51,16 @@ const DiaryBlock = ({ diary, fetchData }) => {
               <Image alt={name} sourceSizes={[DIARY_PICTURE_WIDTH]} baseUrl={diaryImage} mode="x" />
             )}
           </Link>
-          <div className="diary__text-content">
-            <div className="diary__title">
-              <span className="diary__date">{formatDate(date, SHORT_DATE_FORMAT)}</span>
-              <span className="diary__year">{getYear(date)}</span>
-              <span className="diary__name">{name}</span>
+          <div className={b('text-content')}>
+            <div className={b('title')}>
+              <span className={b('date')}>{formatDate(date, SHORT_DATE_FORMAT)}</span>
+              <span>{getYear(date)}</span>
+              <span>{name}</span>
               <Text id="diary.wrote" />:
             </div>
             {text && (
-              <div className="diary__text-wrap">
-                <Link className="diary__text" route={ROUTES_NAMES.diary} params={{ slug }} noStyles>
+              <div className={b('text-wrap')}>
+                <Link className={b('text')} route={ROUTES_NAMES.diary} params={{ slug }} noStyles>
                   {fiberyToString(text.content)}
                 </Link>
                 <Link route={ROUTES_NAMES.diary} params={{ slug }}>
@@ -67,7 +68,7 @@ const DiaryBlock = ({ diary, fetchData }) => {
                 </Link>
               </div>
             )}
-            <DiaryArrows className="diary__arrows" size={24} />
+            <DiaryArrows className={b('arrows')} size={24} />
           </div>
         </div>
       </BlockWrapper>

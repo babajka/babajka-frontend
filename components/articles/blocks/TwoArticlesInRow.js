@@ -1,19 +1,23 @@
-import './twoInRow.scss';
-
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
+import bem from 'bem-css-modules';
 
 import ArticleCard from 'components/articles/cards/ArticleCard';
 import { ArticleShape } from 'utils/customPropTypes';
+import styles from './twoInRow.module.scss';
 
 import BlockWrapper from './BlockWrapper';
 
+const b = bem(styles);
+
 const TwoArticlesInRow = ({ className, first, second }) => (
-  <BlockWrapper className={`two-in-row ${className}`}>
-    <div className="two-in-row__first">
+  <BlockWrapper className={cn(b(), className)}>
+    <div className={b('first')}>
       <ArticleCard {...first} context={['two-in-row', 'first']} />
     </div>
-    <div className="two-in-row__second">
+    {/* <div className={b('second')}> */}
+    <div>
       <ArticleCard {...second} context={['two-in-row', 'second']} />
     </div>
   </BlockWrapper>
