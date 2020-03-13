@@ -108,6 +108,9 @@ class Root extends App {
       ReactGA.initialize(GA_ID, { debug: false });
       ReactGA.ga('send', 'pageview', url, { hitCallback: clearUtmParams });
     }
+    if (!__PROD__) {
+      clearUtmParams();
+    }
   }
 
   render() {
