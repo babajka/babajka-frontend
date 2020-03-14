@@ -34,7 +34,7 @@ const DiaryBlock = ({ diary, fetchData }) => {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-  const { author: { name, diaryImage } = {}, date, text } = diary;
+  const { slug, author: { name, diaryImage } = {}, date, text } = diary;
 
   return (
     <>
@@ -43,6 +43,7 @@ const DiaryBlock = ({ diary, fetchData }) => {
           <Link
             className={cn('diary__picture', { 'diary__picture--no-image': !diaryImage })}
             route={ROUTES_NAMES.diary}
+            params={{ slug }}
             noStyles
           >
             {diaryImage && (
@@ -58,10 +59,10 @@ const DiaryBlock = ({ diary, fetchData }) => {
             </div>
             {text && (
               <div className="diary__text-wrap">
-                <Link className="diary__text" route={ROUTES_NAMES.diary} noStyles>
+                <Link className="diary__text" route={ROUTES_NAMES.diary} params={{ slug }} noStyles>
                   {fiberyToString(text.content)}
                 </Link>
-                <Link route={ROUTES_NAMES.diary}>
+                <Link route={ROUTES_NAMES.diary} params={{ slug }}>
                   <Text id="diary.more" />
                 </Link>
               </div>
