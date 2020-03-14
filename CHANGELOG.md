@@ -1,3 +1,27 @@
+# [2.1.0](https://github.com/babajka/babajka-frontend/compare/v2.0.0...v2.1.0) (2020-03-14)
+
+### Bug Fixes
+
+- **about:** thank you, tonia! and meta type fixed ([8f0fe9f](https://github.com/babajka/babajka-frontend/commit/8f0fe9f36f320c83c15a283537e8238815743150))
+- **about:** two more people for thank you section ([4f290b6](https://github.com/babajka/babajka-frontend/commit/4f290b63242f8a1e98134c2a2b7038856b682b80))
+- **article:** fix collection note i18n [[#95](https://github.com/babajka/babajka-frontend/issues/95)](<[6dc29b3](https://github.com/babajka/babajka-frontend/commit/6dc29b32d3d247d7c1baf2999f780ada097b5e64)>)
+- **cards:** context for auto cards in two-in-row block ([0fdf774](https://github.com/babajka/babajka-frontend/commit/0fdf7745e59dbef0722ee486a032cf728cc2a1e9))
+- **cards:** minor font redesign; thank you, Kniazieu ([f3e9e6e](https://github.com/babajka/babajka-frontend/commit/f3e9e6ebbfa114b46466404b3fde3edc3ab30282))
+- **core:** fix moment realtime locale change [[#93](https://github.com/babajka/babajka-frontend/issues/93)](<[19d0bd3](https://github.com/babajka/babajka-frontend/commit/19d0bd3230e1988beb0edbe8d8100643ab743bf5)>)
+- **diary:** show today's diary without slug [[#95](https://github.com/babajka/babajka-frontend/issues/95)](<[804aaff](https://github.com/babajka/babajka-frontend/commit/804aaffc82c57b80f8c9f52b91b6bab61a3cc055)>)
+- **fibery:** fix for content to string method ([7be85a6](https://github.com/babajka/babajka-frontend/commit/7be85a62031552a7de30cbd48658c7915dbdf303))
+- **social:** clear fbclid [[#95](https://github.com/babajka/babajka-frontend/issues/95)](<[fe26adf](https://github.com/babajka/babajka-frontend/commit/fe26adf677dd4827092534e9c1ba9f25b681c30a)>)
+- **styles:** better alignment for navbar labels ([3dd1d3e](https://github.com/babajka/babajka-frontend/commit/3dd1d3edbcb5ba9c4e831b0c8c9bf66448e8cbae))
+- **styles:** clickable areas on diary block ([36f92ba](https://github.com/babajka/babajka-frontend/commit/36f92ba25dfbf47e5eb53ed1e1db605bd169e165))
+- **styles:** increased default font size for all pages ([1452021](https://github.com/babajka/babajka-frontend/commit/1452021793ae2409e224ac7950a4c3e58a3804a9))
+- **tools:** google api v4 upgrade for spreadsheet fetchers ([9ad0082](https://github.com/babajka/babajka-frontend/commit/9ad0082e84f14a8cacf87ada89bd65add6838496))
+
+### Features
+
+- **social:** share to telegram, popup window, diary text for twitter ([a3354a8](https://github.com/babajka/babajka-frontend/commit/a3354a85d31fd9f26f45bcc0c2b69dd9de62ab93))
+- **social:** sharing using native dialog on mobile; ui kit button ([aa1343d](https://github.com/babajka/babajka-frontend/commit/aa1343d3b0712a4ae84b2d63f45f51ced10a2d2c))
+- **styles:** redesigned about page; bug fixed for tag page ([8184714](https://github.com/babajka/babajka-frontend/commit/81847141c84f43f27e86488dbab9eedf68650a25))
+
 # [2.0.0](https://github.com/babajka/babajka-frontend/compare/v1.0.1...v2.0.0) (2020-01-28)
 
 ### Bug Fixes
