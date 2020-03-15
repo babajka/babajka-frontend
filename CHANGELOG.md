@@ -1,3 +1,9 @@
+## [2.1.1](https://github.com/babajka/babajka-frontend/compare/v2.1.0...v2.1.1) (2020-03-15)
+
+### Bug Fixes
+
+- **diary:** fix timezone bug & link from home [[#97](https://github.com/babajka/babajka-frontend/issues/97)](<[d8e6040](https://github.com/babajka/babajka-frontend/commit/d8e60407ac30fbdd8b207e956e9eceeb408a172e)>)
+
 # [2.1.0](https://github.com/babajka/babajka-frontend/compare/v2.0.0...v2.1.0) (2020-03-14)
 
 ### Bug Fixes
