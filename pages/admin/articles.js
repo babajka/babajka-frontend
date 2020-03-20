@@ -28,7 +28,7 @@ const mapStateToProps = (state, { lang }) => ({
 const ARTICLE_COLS = [
   {
     id: 'title',
-    className: b('font', { size: 'large' }),
+    className: styles['wir-table__font--size--large'],
     render: ({ value, row: { slug } }) => (
       <Link route={ROUTES_NAMES.article} params={{ slug }}>
         {value}
@@ -64,13 +64,13 @@ const ARTICLE_COLS = [
   },
   {
     id: 'subtitle',
-    className: b('font', { size: 'small' }),
+    className: styles['wir-table__font--size--small'],
     formatter: text => `${text.slice(0, 100)}...`,
   },
   {
     id: 'tagsByTopic',
     title: 'Tags',
-    className: b('font', { size: 'small' }),
+    className: styles['wir-table__font--size--small'],
     formatter: tagsByTopic => {
       const tags = Object.values(tagsByTopic).reduce((acc, cur) => acc.concat(cur), []);
       return renderNodeList(

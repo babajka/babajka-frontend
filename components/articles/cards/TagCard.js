@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
+import bem from 'bem-css-modules';
 
 import { TopicSlug, ThemeType } from 'utils/customPropTypes';
 import { ROUTES_NAMES } from 'routes';
@@ -7,9 +9,17 @@ import { TOPIC } from 'constants/misc';
 
 import Image from 'components/common/Image';
 
+import { colorLooksBlack, colorLooksWhite } from 'utils/ui';
+
 import CardWrapper, { SIZES } from './CardWrapper';
 
-const TagCard = ({ slug, topicSlug, content, size }) => {
+import styles from './tagCard.module.scss';
+
+const b = bem(styles);
+
+const TagCard = ({ slug, topicSlug, content, size, blockContext }) => {
+  const { theme, color } = content;
+
   const wrapperProps = {
     size,
     linkProps: {
@@ -19,33 +29,38 @@ const TagCard = ({ slug, topicSlug, content, size }) => {
         tag: slug,
       },
     },
+    theme,
+    color,
+    blockContextClass: blockContext.map(ctx => styles[`block-${ctx}`]).join(' '),
   };
 
   if (topicSlug === TOPIC.locations) {
-    const { title, image, theme, color } = content;
+    const { title, image } = content;
     return (
-      <CardWrapper
-        {...wrapperProps}
-        image={image}
-        theme={theme}
-        color={color}
-        alt={title}
-        className="tag-card location"
-      >
-        <div className="location__title">{title}</div>
+      <CardWrapper {...wrapperProps} image={image} alt={title} className={cn(b(), b('location'))}>
+        <div className={b('location-title')}>{title}</div>
       </CardWrapper>
     );
   }
 
   if (topicSlug === TOPIC.personalities) {
-    const { name, description, subtitle, image, theme, color } = content;
+    const { name, description, subtitle, image } = content;
     return (
-      <CardWrapper {...wrapperProps} theme={theme} color={color} className="tag-card person">
+      <CardWrapper
+        {...wrapperProps}
+        className={cn(
+          b(),
+          b('person', {
+            'theme-black': colorLooksBlack(color),
+            'theme-white': colorLooksWhite(color),
+          })
+        )}
+      >
         {' '}
-        <div className="person__cover-container">
+        <div className={b('person-cover-container')}>
           {image && (
             <Image
-              className="person__cover"
+              className={b('person-cover')}
               alt={name}
               title={name}
               sourceSizes={[390]}
@@ -54,10 +69,10 @@ const TagCard = ({ slug, topicSlug, content, size }) => {
             />
           )}
         </div>
-        <div className="person__content">
-          <div className="person__subtitle">{subtitle}</div>
-          <div className="person__title">{name}</div>
-          <div className="person__description">{description}</div>
+        <div className={b('person-content')}>
+          <div className={b('person-subtitle')}>{subtitle}</div>
+          <div className={b('person-title')}>{name}</div>
+          <div className={b('person-description')}>{description}</div>
         </div>
       </CardWrapper>
     );
@@ -68,6 +83,7 @@ const TagCard = ({ slug, topicSlug, content, size }) => {
 TagCard.propTypes = {
   slug: PropTypes.string.isRequired,
   size: PropTypes.oneOf(SIZES),
+  blockContext: PropTypes.arrayOf(PropTypes.string),
   topicSlug: TopicSlug.isRequired,
   content: PropTypes.shape({
     title: PropTypes.string,
@@ -82,6 +98,7 @@ TagCard.propTypes = {
 
 TagCard.defaultProps = {
   size: 'auto',
+  blockContext: [],
 };
 
 export default TagCard;

@@ -1,30 +1,33 @@
 @import 'styles/responsiveness';
 
-.tag-page-block-cd {
+.tag-page-block-b {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-}
 
-@include screen-tablet-large {
-  .tag-page-block-cd {
-    &__style-row-of-three {
-      flex-direction: column;
+  &--style--large-left {
+    .small-card {
+      order: 1;
+    }
+  }
 
-      .tag-page-block-cd {
-        &__card {
-          padding: 10px 0;
-        }
-      }
+  &--style--large-right {
+    .large-card {
+      order: 1;
     }
   }
 }
 
 @mixin shared-screen-tablet-touch-mobile {
-  .tag-page-block-cd {
+  .tag-page-block-b {
     flex-direction: column;
+    margin-top: 0;
 
-    &__card {
+    .large-card {
+      padding: 10px 0;
+    }
+
+    .small-card {
       padding: 10px 0;
     }
   }

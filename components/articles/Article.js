@@ -1,5 +1,3 @@
-import styles from 'styles/pages/article.module.scss';
-
 import React from 'react';
 import { useRouter } from 'next/router';
 import flatten from 'lodash/flatten';
@@ -24,6 +22,8 @@ import { getTagLink, getTagImageRenderer, renderTag } from 'utils/tags';
 import { renderNodeList } from 'utils/formatters';
 import fiberyRenderer from 'utils/fibery/renderer';
 import host from 'utils/host';
+
+import styles from './article.module.scss';
 
 import CollectionNote from './CollectionNote';
 
@@ -63,7 +63,7 @@ const Article = ({
       <MetaArticleItems name="tag" list={tags.map(renderTag)} />
       <MetaArticleItems name="published_time" value={publishAt} />
       <div>
-        <div className="wir-content-padding">
+        <div className={cn('wir-content-padding', styles['article-page-content'])}>
           <div className={b('subtitle')}>{subtitle}</div>
         </div>
         {type === 'text' && (

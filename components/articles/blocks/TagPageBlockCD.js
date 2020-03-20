@@ -1,12 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import bem from 'bem-css-modules';
 
 import ArticleCard from 'components/articles/cards/ArticleCard';
 import PlaceholderCard from 'components/articles/cards/PlaceholderCard';
 
 import { ArticlesArray } from 'utils/customPropTypes';
 
+import styles from './tagPageBlockCD.module.scss';
+
 import BlockWrapper from './BlockWrapper';
+
+const b = bem(styles);
 
 const SIZE_BY_LAYOUT = {
   'row-of-two': 2,
@@ -14,14 +19,17 @@ const SIZE_BY_LAYOUT = {
 };
 
 const TagPageBlockCD = ({ articles, layout }) => (
-  <BlockWrapper className={`tag-page-block-cd tag-page-block-cd__style-${layout}`}>
+  <BlockWrapper className={b({ layout })}>
     {Array.from({ length: SIZE_BY_LAYOUT[layout] }).map((_, i) => (
       // eslint-disable-next-line react/no-array-index-key
-      <div key={i} className="tag-page-block-cd__card">
+      <div key={i} className={b('card')}>
         {articles[i] ? (
-          <ArticleCard {...articles[i]} context={['tag-page-block-cd', layout]} />
+          <ArticleCard
+            {...articles[i]}
+            blockContext={['tag-page-block-cd', `tag-page-block-cd__${layout}`]}
+          />
         ) : (
-          <PlaceholderCard />
+          <PlaceholderCard blockContext={['tag-page-block-cd', `tag-page-block-cd__${layout}`]} />
         )}
       </div>
     ))}

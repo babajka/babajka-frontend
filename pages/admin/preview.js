@@ -4,7 +4,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import bem from 'bem-css-modules';
-import cn from 'classnames';
 
 import Article from 'components/articles/Article';
 import ArticleCard from 'components/articles/cards/ArticleCard';
@@ -41,7 +40,7 @@ const ArticlePreview = ({ article, error }) => {
         <span>Preview Cards instead of the Article</span>
       </div>
       {cardsPreview && (
-        <div className={cn('wir-no-background', b('cards'))} style={{ margin: '50px' }}>
+        <div className={b('cards')} style={{ margin: '50px' }}>
           {DEFAULT_SIZES.concat(SQUARE_SIZES).map(size => (
             <div key={size} className={b('card')}>
               <ArticleCard {...article} size={size} />

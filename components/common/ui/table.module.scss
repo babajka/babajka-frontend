@@ -75,11 +75,13 @@
     }
   }
 
-  &__font--size--large {
-    font-size: 1.2rem;
-  }
+  &__font {
+    &--size--large {
+      font-size: 1.2rem;
+    }
 
-  &__font--size--small {
-    font-size: 0.7rem;
+    &--size--small {
+      font-size: 0.7rem;
+    }
   }
 }

@@ -2,22 +2,14 @@
 @import 'styles/variables';
 
 .block {
-  &:global(.wir-no-background) {
+  // Rule with no effect to force keep the .block class.
+  font-weight: normal;
+
+  &--no-background {
     margin-top: 60px;
-
-    // FIXME(@uladbohdan): refactor
-    // https://trello.com/c/NTBa9AE1/495-block-wrapper-margin-fix
-    // to eliminate this workaround by properly handling Block margins.
-
-    @include screen-tablet-touch-mobile {
-      &.tag-page-block-b,
-      &.tag-page-block-cd {
-        margin-top: 0;
-      }
-    }
   }
 
-  &:global(.wir-with-background) {
+  &--with-background {
     background-color: $primary-black;
     margin-bottom: 20px;
     margin-top: 80px;

@@ -2,18 +2,6 @@ import 'normalize.css';
 import 'styles/index.scss';
 import 'components/common/ui/link.scss';
 import 'components/common/layout/layout.scss';
-import 'components/common/layout/header/styles.scss';
-
-// FIXME(@uladbohdan):
-import 'components/articles/blocks/tagPageBlockB.scss';
-import 'components/articles/blocks/tagPageBlockCD.scss';
-import 'components/articles/blocks/tagsByTopic.scss';
-import 'components/articles/cards/cardWrapper.scss';
-import 'components/articles/cards/article.scss';
-import 'components/articles/cards/placeholder.scss';
-import 'components/articles/cards/tagCard.scss';
-import 'components/articles/cards/location.scss';
-import 'components/articles/cards/person.scss';
 
 import React from 'react';
 import PropTypes from 'prop-types';

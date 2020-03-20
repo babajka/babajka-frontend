@@ -1,5 +1,3 @@
-import styles from 'styles/pages/article.module.scss';
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import bem from 'bem-css-modules';
@@ -11,6 +9,8 @@ import Image from 'components/common/Image';
 import { CollectionShape, LangType } from 'utils/customPropTypes';
 
 import { ROUTES_NAMES } from 'routes';
+
+import styles from './article.module.scss';
 
 const b = bem(styles);
 

@@ -1,6 +1,7 @@
 // https://github.com/ProseMirror/prosemirror-schema-basic/blob/7d8502f2cb89659c543c7b554d67d7db8c7c63c4/src/schema-basic.js
 
 import React, { Fragment, createElement } from 'react';
+import cn from 'classnames';
 import identity from 'lodash/identity';
 
 import Image from 'components/common/Image';
@@ -11,6 +12,8 @@ import parseYoutubeUrl from 'lib/utils/parseYoutubeUrl';
 import toString from './toString';
 import getMeta, { TYPES } from './parseTableMeta';
 import { parseQuote, parseImage } from './utils';
+
+import styles from './renderer.module.scss';
 
 const { TABLE, TABLE_RIGHT, NOTE, POEM, SPLIT } = TYPES;
 
@@ -66,11 +69,11 @@ const addMarks = (text, marks) => {
 };
 
 const TABLE_CLASS_BY_TYPE = {
-  [TABLE]: 'article-table',
-  [TABLE_RIGHT]: 'article-table right-element',
-  [NOTE]: 'article-note right-element',
-  [POEM]: 'article-poem',
-  [SPLIT]: 'article-split',
+  [TABLE]: styles['article-table'],
+  [TABLE_RIGHT]: cn(styles['article-table'], styles['right-element']),
+  [NOTE]: cn(styles['article-note'], styles['right-element']),
+  [POEM]: styles['article-poem'],
+  [SPLIT]: styles['article-split'],
 };
 
 const RENDERERS = {
@@ -79,21 +82,21 @@ const RENDERERS = {
   //   return null;
   // },
   entity: ({ attrs: { id, typeId } }) => (
-    <span key={id} className="right-element">
-      <span>TODO: Entiny Element</span>
+    <span key={id} className={styles['right-element']}>
+      <span>TODO: Entity Element</span>
       {id}, {typeId}
     </span>
   ),
   blockquote: ({ key, content }) => {
     const { quote, author } = parseQuote(toString(content));
     return (
-      <blockquote key={key} className="article-quote">
-        <div className="article-quote__text">{quote}</div>
-        {author && <span className="article-quote__caption">{author}</span>}
+      <blockquote key={key} className={styles['article-quote']}>
+        <div className={styles['article-quote__text']}>{quote}</div>
+        {author && <span className={styles['article-quote__caption']}>{author}</span>}
       </blockquote>
     );
   },
-  hard_break: ({ key }) => <span key={key} className="article-page-content__hard" />,
+  hard_break: ({ key }) => <span key={key} className={styles['article-page-content__hard']} />,
   heading: ({ key, attrs: { level }, content }) =>
     createElement(`h${level}`, { key }, renderContent(content)),
   image: ({ key, attrs: { alt, src, title } }) => {
@@ -101,11 +104,11 @@ const RENDERERS = {
     const right = align === 'right';
     if (right) {
       return (
-        <span key={key} className="article-image right-element">
+        <span key={key} className={cn(styles['article-image'], styles['right-element'])}>
           {right && (
             <ExternalLink href={url}>
               <Image
-                className="article-image__image"
+                className={styles['article-image__image']}
                 alt={alt}
                 sourceSizes={[240]}
                 baseUrl={url}
@@ -113,14 +116,14 @@ const RENDERERS = {
               />
             </ExternalLink>
           )}
-          <span className="article-image__caption">{title}</span>
+          <span className={styles['article-image__caption']}>{title}</span>
         </span>
       );
     }
     return (
-      <span key={key} className="article-image">
-        <img className="article-image__image" src={url} alt={alt} />
-        <span className="article-image__caption">{title}</span>
+      <span key={key} className={styles['article-image']}>
+        <img className={styles['article-image__image']} src={url} alt={alt} />
+        <span className={styles['article-image__caption']}>{title}</span>
       </span>
     );
   },
@@ -149,14 +152,14 @@ const RENDERERS = {
 
   bullet_list: ({ key, content }) => {
     return (
-      <ul key={key} className="article-unordered">
+      <ul key={key} className={styles['article-unordered']}>
         {renderContent(content)}
       </ul>
     );
   },
   ordered_list: ({ key, content }) => {
     return (
-      <ol key={key} className="article-ordered">
+      <ol key={key} className={styles['article-ordered']}>
         {renderContent(content)}
       </ol>
     );

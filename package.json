@@ -129,11 +129,11 @@
     },
     {
       "path": ".next/static/**/_app.js",
-      "maxSize": "20 kB"
+      "maxSize": "19 kB"
     },
     {
       "path": ".next/static/**/index.js",
-      "maxSize": "6 kB"
+      "maxSize": "7 kB"
     },
     {
       "path": ".next/static/**/article.js",
@@ -145,7 +145,7 @@
     },
     {
       "path": ".next/static/**/tag.js",
-      "maxSize": "5 kB"
+      "maxSize": "6 kB"
     },
     {
       "path": ".next/static/**/about.js",
@@ -157,7 +157,7 @@
     },
     {
       "path": ".next/static/**/*.css",
-      "maxSize": "24 kB"
+      "maxSize": "17 kB"
     }
   ]
 }

@@ -24,16 +24,6 @@ $navbar-base-height: 42px;
     text-transform: uppercase;
   }
 
-  &__title {
-    &--screen-wide {
-      display: none;
-    }
-
-    &--screen-narrow {
-      display: none;
-    }
-  }
-
   &__burger {
     align-items: center;
     cursor: pointer;
@@ -73,8 +63,8 @@ $navbar-base-height: 42px;
         padding-right: 20px;
       }
 
-      &--screen-wide {
-        display: unset;
+      &--screen--narrow {
+        display: none;
       }
     }
   }
@@ -104,8 +94,8 @@ $navbar-base-height: 42px;
         padding-bottom: 10px;
       }
 
-      &--screen-narrow {
-        display: unset;
+      &--screen--wide {
+        display: none;
       }
     }
   }

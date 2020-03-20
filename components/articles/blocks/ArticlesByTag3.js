@@ -32,7 +32,7 @@ const ArticlesByTag3 = ({ block, data }) => {
       <div className={b('cards')}>
         {articlesIds.map((id, index) => (
           <div key={id} className={b(`card-${index + 1}`)}>
-            <ArticleCard {...articles[id]} context={['articles-by-tag-3']} />
+            <ArticleCard {...articles[id]} blockContext={['articles-by-tag-3']} />
           </div>
         ))}
       </div>

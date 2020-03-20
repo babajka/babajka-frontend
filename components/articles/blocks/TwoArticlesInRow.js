@@ -14,11 +14,11 @@ const b = bem(styles);
 const TwoArticlesInRow = ({ className, first, second }) => (
   <BlockWrapper className={cn(b(), className)}>
     <div className={b('first')}>
-      <ArticleCard {...first} context={['two-in-row', 'first']} />
+      <ArticleCard {...first} blockContext={['two-in-row', 'two-in-row__first']} />
     </div>
     {/* <div className={b('second')}> */}
     <div>
-      <ArticleCard {...second} context={['two-in-row', 'second']} />
+      <ArticleCard {...second} blockContext={['two-in-row', 'two-in-row__second']} />
     </div>
   </BlockWrapper>
 );

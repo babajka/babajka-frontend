@@ -12,7 +12,7 @@ const FeaturedBlock = ({ block, data }) => {
   const articleData = frozen ? articles[articleId] : latestArticles[0];
   return (
     <BlockWrapper className="featured">
-      <ArticleCard {...articleData} context={['featured']} />
+      <ArticleCard {...articleData} blockContext={['featured']} />
     </BlockWrapper>
   );
 };

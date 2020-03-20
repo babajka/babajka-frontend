@@ -4,6 +4,8 @@ import qs from 'qs';
 
 import { SOUNDCLOUD_EMBED_PREFIX } from 'constants/social';
 
+import styles from './audioVideoPlayer.module.scss';
+
 /* eslint-disable camelcase */
 const getUrl = ({
   url,
@@ -30,10 +32,9 @@ const getUrl = ({
 /* eslint-enable */
 
 const AudioPlayer = ({ trackId, type, width, height, color }) => (
-  <div className="article-page-interactive">
-    <span className="article__playerwrapper">
+  <div className={styles['article-page-interactive']}>
+    <span>
       <iframe
-        className="article__player"
         title="AudioPlayer"
         width={width}
         height={height}

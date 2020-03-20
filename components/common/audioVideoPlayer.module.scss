@@ -1,0 +1,41 @@
+@import 'styles/responsiveness';
+
+.article-page-interactive {
+  margin-top: 30px;
+
+  @include screen-touch {
+    margin-top: 40px;
+  }
+
+  @include screen-tablet {
+    margin-top: 50px;
+  }
+
+  @include screen-tablet-large {
+    margin-top: 60px;
+  }
+
+  @include screen-desktop {
+    margin-top: 72px;
+  }
+
+  &__video {
+    height: 200px;
+
+    @include screen-touch {
+      height: 200px;
+    }
+
+    @include screen-tablet {
+      height: 300px;
+    }
+
+    @include screen-tablet-large {
+      height: 400px;
+    }
+
+    @include screen-desktop {
+      height: 600px;
+    }
+  }
+}

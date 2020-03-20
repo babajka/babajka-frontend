@@ -14,8 +14,8 @@
   }
 }
 
-.tag-page-block-cd {
-  &__style-row-of-three {
+.block-tag-page-block-cd {
+  &__row-of-three {
     @include screen-desktop {
       @include shared-size-square-s;
     }

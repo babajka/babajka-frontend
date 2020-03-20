@@ -32,8 +32,8 @@ $title-line-height: (
     position: relative;
   }
 
-  &.theme-black > &__cover-container,
-  &.theme-white > &__cover-container {
+  &--theme-black > &__cover-container,
+  &--theme-white > &__cover-container {
     margin-left: $border-width-default;
     margin-top: $border-width-default;
   }
@@ -150,14 +150,14 @@ $title-line-height: (
   // The may be fixed using @at-root. Same applies for mixins below.
 
   /* stylelint-disable */
-  .article-card.theme-black > .article-card__cover-container,
-  .article-card.theme-white > .article-card__cover-container {
+  .article-card--theme-black > .article-card__cover-container,
+  .article-card--theme-white > .article-card__cover-container {
     height: $cover-height - 2 * $border-width-default;
     width: $cover-width - $border-width-default;
   }
 
-  .article-card.theme-black > .article-card__cover-container > .article-card__cover,
-  .article-card.theme-white > .article-card__cover-container > .article-card__cover {
+  .article-card--theme-black > .article-card__cover-container > .article-card__cover,
+  .article-card--theme-white > .article-card__cover-container > .article-card__cover {
     left: -($border-width-default);
     top: -($border-width-default);
   }
@@ -573,15 +573,15 @@ $title-line-height: (
   }
 
   /* stylelint-disable */
-  .article-card.theme-black > .article-card__cover-container,
-  .article-card.theme-white > .article-card__cover-container {
+  .article-card--theme-black > .article-card__cover-container,
+  .article-card--theme-white > .article-card__cover-container {
     max-height: $cover-max-height - $border-width-default;
     min-height: $cover-min-height - $border-width-default;
     width: $cover-width - 2 * $border-width-default;
   }
 
-  .article-card.theme-black > .article-card__cover-container > .article-card__cover,
-  .article-card.theme-white > .article-card__cover-container > .article-card__cover {
+  .article-card--theme-black > .article-card__cover-container > .article-card__cover,
+  .article-card--theme-white > .article-card__cover-container > .article-card__cover {
     left: -($border-width-default);
     top: calc(50% - #{$border-width-default / 2});
   }
@@ -664,7 +664,7 @@ $title-line-height: (
 // Below are the rules for cards to be auto adjustable.
 // TODO(?): to wrap with .card-size-auto class.
 
-.featured {
+.block-featured {
   @include screen-desktop {
     @include shared-size-xxl;
   }
@@ -686,7 +686,7 @@ $title-line-height: (
   }
 }
 
-.two-in-row {
+.block-two-in-row {
   @include screen-desktop {
     @include shared-size-m;
   }
@@ -716,7 +716,7 @@ $title-line-height: (
   }
 }
 
-.articles-by-tag-2 {
+.block-articles-by-tag-2 {
   @include screen-desktop {
     @include shared-size-square-m;
   }
@@ -738,7 +738,7 @@ $title-line-height: (
   }
 }
 
-.articles-by-tag-3 {
+.block-articles-by-tag-3 {
   @include screen-desktop {
     @include shared-size-square-s;
   }
@@ -760,8 +760,8 @@ $title-line-height: (
   }
 }
 
-.tag-page-block-b {
-  .large-card {
+.block-tag-page-block-b {
+  &__large-card {
     @include screen-desktop {
       @include shared-size-l;
     }
@@ -783,7 +783,7 @@ $title-line-height: (
     }
   }
 
-  .small-card {
+  &__small-card {
     @include screen-desktop {
       @include shared-size-square-m;
     }
@@ -806,8 +806,8 @@ $title-line-height: (
   }
 }
 
-.tag-page-block-cd {
-  &__style-row-of-two {
+.block-tag-page-block-cd {
+  &__row-of-two {
     @include screen-desktop {
       @include shared-size-m;
     }
@@ -829,7 +829,7 @@ $title-line-height: (
     }
   }
 
-  &__style-row-of-three {
+  &__row-of-three {
     @include screen-desktop {
       @include shared-size-square-s;
     }

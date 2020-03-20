@@ -68,7 +68,7 @@ const TopicPage = ({ lang, routerQuery: { topic }, tags, articlesByTag, articleB
       <MetaDescription description={localize(`topic.meta_${topic}_description`, lang)} />
       <MetaKeywords keywords={localize(`topic.meta_${topic}_keywords`, lang)} />
 
-      <div className={cn('wir-content-padding wir-no-background', b())}>
+      <div className={cn('wir-content-padding', b())}>
         {filteredTags
           .sort((tagA, tagB) => articlesByTag[tagB.slug].length - articlesByTag[tagA.slug].length)
           .map(tag => (
