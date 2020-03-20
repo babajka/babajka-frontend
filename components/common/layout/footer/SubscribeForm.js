@@ -38,7 +38,7 @@ const SubscribeForm = () => {
               </>
             )}
           />
-          <Clickable tag="div" onClick={() => setEmail(null)} className="wir-link">
+          <Clickable linkStyle tag="div" onClick={() => setEmail(null)}>
             <Text id="footer.add-email" />
           </Clickable>
         </div>

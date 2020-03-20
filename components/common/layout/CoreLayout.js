@@ -43,7 +43,9 @@ const CoreLayout = ({ children, hideFooter, hideSidebar, lang }) => {
 
         <div className="wir-up">
           <ScrollToTop showUnder={160} easing="easeInExpo" duration={500}>
-            <Icon pack="r" name="arrow-alt-circle-up" className="wir-link" />
+            <Clickable linkStyle>
+              <Icon pack="r" name="arrow-alt-circle-up" />
+            </Clickable>
           </ScrollToTop>
         </div>
       </div>
