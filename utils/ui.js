@@ -1,17 +1,14 @@
 import cn from 'classnames';
+import bem from 'bem-css-modules';
+
+import linkStyles from 'components/common/ui/link.module.scss';
+
+const b = bem(linkStyles);
 
 export const linkCn = ({ className, disabled, dark, active, noStyles } = {}) =>
   noStyles
-    ? cn('wir-link--no-styles', className)
-    : cn(
-        'wir-link',
-        {
-          'wir-link--disabled': disabled,
-          'wir-link--theme-dark': dark,
-          'wir-link--active': active,
-        },
-        className
-      );
+    ? cn(linkStyles['wir-link--no-styles'], className)
+    : cn(b({ disabled, 'theme-dark': !!dark, active }), className);
 
 // https://regex101.com/r/v1LxqC/1
 const HEX_COLOR_REGEX = /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i;

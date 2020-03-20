@@ -149,7 +149,7 @@
     },
     {
       "path": ".next/static/**/about.js",
-      "maxSize": "7 kB"
+      "maxSize": "8 kB"
     },
     {
       "path": ".next/static/**/_error.js",

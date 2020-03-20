@@ -1,6 +1,5 @@
 import 'normalize.css';
 import 'styles/index.scss';
-import 'components/common/ui/link.scss';
 import 'components/common/layout/layout.scss';
 
 import React from 'react';

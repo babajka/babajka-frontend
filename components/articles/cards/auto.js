@@ -1,4 +1,4 @@
-// This data must be in sync with article.module.scss file.
+// This data must be in sync with articleCard.module.scss file.
 
 // TODO: to generate SCSS rules based on this file.
 
@@ -11,7 +11,6 @@ export const SCREENS = ['mobile', 'touch', 'tablet', 'tablet-large', 'desktop'];
 
 export const ARTICLE_CARD_SIZES_BY_CONTEXT = {
   featured: ['square-s', 'm', 'l', 'xl', 'xxl'],
-  // TODO: how to to pass prefixes explicitly ?
   'two-in-row': {
     'two-in-row__first': ['square-s', 'm', 'l', 'm', 'm'],
     'two-in-row__second': ['square-s', 'm', 'l', 'square-s', 'm'],

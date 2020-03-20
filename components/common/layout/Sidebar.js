@@ -116,7 +116,7 @@ const Sidebar = ({ blocks, data, toggleSidebar, close, user, logout }) => {
       {user && (
         // FIXME
         <div className={b('about-label')}>
-          <Clickable className="wir-link" onClick={logout}>
+          <Clickable linkStyle onClick={logout}>
             <Text id="auth.signOut" />
           </Clickable>
         </div>
