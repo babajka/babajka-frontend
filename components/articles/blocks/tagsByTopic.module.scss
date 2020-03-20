@@ -26,12 +26,18 @@
   }
 }
 
-.tags-by-topic--style-1-2 {
+.tags-by-topic--style--1-2 {
   .tags-by-topic {
     &__2 {
       order: 1;
     }
   }
+}
+
+.tags-by-topic--style--2-1 {
+  // This is a default rule, but we need it
+  // for .tags-by-topic--style--2-1 class to force appear in js.
+  display: block;
 }
 
 @mixin shared-touch-mobile {

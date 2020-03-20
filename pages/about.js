@@ -43,13 +43,13 @@ const AboutPage = ({ lang }) => (
       <div
         className={cn(
           b('subheading', { 'mobile-only': true }),
-          b('text', { 'margin-top': 'large' })
+          styles['about-page__text--margin-top--large']
         )}
       >
         <Text id="about.section-team-header" />
       </div>
       <div className={b('team')}>
-        <div className={cn(t(), t('placeholder'))}>
+        <div className={cn(b('subheading'), t(), t('placeholder'))}>
           <Text id="about.section-team-header" />
         </div>
         {team.map(({ image, name, role }) => (
@@ -67,13 +67,13 @@ const AboutPage = ({ lang }) => (
       <div className={b('text', { 'margin-top': 'medium' })}>
         <Thanks2 />
       </div>
-      <div className={b('text', { 'margin-top': 'large' })}>
+      <div className={styles['about-page__text--margin-top--large']}>
         <div className={b('subheading')}>
           <Text id="about.section-partners-header" />
         </div>
         <div className={b('partners-logos')}>
-          {PARTNERS.map(({ id, img, url, className = '' }) => (
-            <div key={id} className={cn(className, b('partner-logo'))}>
+          {PARTNERS.map(({ id, img, url, size = undefined }) => (
+            <div key={id} className={b('partner-logo', { size })}>
               <ExternalLink href={url}>
                 <img src={getLogoUrl(img)} alt={localize(`about.${id}`, lang)} />
               </ExternalLink>

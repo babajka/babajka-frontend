@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 
 import { YOUTUBE_EMBED_PREFIX } from 'constants/social';
 
+import styles from './audioVideoPlayer.module.scss';
+
 const VideoPlayer = ({ videoId, width, height }) => (
-  <div className="article-page-interactive">
-    <div className="article-page-interactive__video">
-      <span className="article-page__playerwrapper">
+  <div className={styles['article-page-interactive']}>
+    <div className={styles['article-page-interactive__video']}>
+      <span>
         <iframe
           id="ytplayer"
-          className="article__player"
           title="VideoPlayer"
           width={width}
           height={height}

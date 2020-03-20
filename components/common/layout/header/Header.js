@@ -1,5 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import bem from 'bem-css-modules';
 
 import Text from 'components/common/Text';
 import Link from 'components/common/Link';
@@ -8,18 +9,22 @@ import Clickable from 'components/common/Clickable';
 import { ROUTES_NAMES } from 'routes';
 
 import Logo from 'assets/logo/Logo';
-import Motto from './header/Motto';
-import { HEADER_LINKS_ID } from './header/HeaderLinks';
+import Motto from './Motto';
+import { HEADER_LINKS_ID } from './HeaderLinks';
+
+import styles from './header.module.scss';
+
+const b = bem(styles);
 
 const Header = ({ toggleSidebar }) => {
   const router = useRouter();
   return (
-    <header className="navbar">
-      <Link className="navbar__logo" route={ROUTES_NAMES.main} titleId="header.to-main">
+    <header className={b()}>
+      <Link className={b('logo')} route={ROUTES_NAMES.main} titleId="header.to-main">
         <Logo size={42} />
       </Link>
-      <div id={HEADER_LINKS_ID} className="navbar__title-container">
-        <div className="navbar__title">
+      <div id={HEADER_LINKS_ID} className={b('title-container')}>
+        <div className={b('title')}>
           {router.route === '/' ? (
             <Motto />
           ) : (
@@ -29,15 +34,10 @@ const Header = ({ toggleSidebar }) => {
           )}
         </div>
       </div>
-      <Clickable
-        tag="div"
-        titleId="sidebar.open"
-        className="navbar__burger"
-        onClick={toggleSidebar}
-      >
-        <div className="navbar__burger-item" />
-        <div className="navbar__burger-item" />
-        <div className="navbar__burger-item" />
+      <Clickable tag="div" titleId="sidebar.open" className={b('burger')} onClick={toggleSidebar}>
+        <div className={b('burger-item')} />
+        <div className={b('burger-item')} />
+        <div className={b('burger-item')} />
       </Clickable>
     </header>
   );

@@ -9,7 +9,7 @@ import Clickable from 'components/common/Clickable';
 import useBoolean from 'hooks/useBoolean';
 import { LangType } from 'utils/customPropTypes';
 
-import Header from './Header';
+import Header from './header/Header';
 import Footer from './Footer';
 import Sidebar from './Sidebar';
 

@@ -2,6 +2,8 @@
 @import 'styles/variables';
 
 // The convention in Babajka project is that we go from 'desktop' to 'mobile'.
+// TODO(uladbohdan): to replace with mobile->desktop approach which is already
+// in use in other parts of the project.
 $heading-font-size: 48px 48px 48px 30px 30px;
 $heading-line-height: 60px 60px 60px 36px 36px;
 $subheading-font-size: 30px 30px 30px 20px 20px;
@@ -72,13 +74,13 @@ $partner-logo-margin-right: 30px 30px 60px 36px 36px;
       width: auto;
     }
 
-    &--small {
+    &--size--small {
       img {
         height: 60px;
       }
     }
 
-    &--smallest {
+    &--size--smallest {
       img {
         height: 40px;
       }

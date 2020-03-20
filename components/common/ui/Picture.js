@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import bem from 'bem-css-modules';
-import styles from './ui/picture.module.scss';
+import styles from './picture.module.scss';
 
 const b = bem(styles);
 

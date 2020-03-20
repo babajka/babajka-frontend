@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import bem from 'bem-css-modules';
 
 import TagCard from 'components/articles/cards/TagCard';
 
@@ -8,26 +9,49 @@ import { getTopicLink } from 'utils/tags';
 
 import { TOPICS } from 'constants';
 
+import styles from './tagsByTopic.module.scss';
+
 import BlockWrapper from './BlockWrapper';
+
+const b = bem(styles);
 
 const TagsByTopic = ({ block, data: { tags } }) => {
   const { topicSlug, tagsIds, style } = block;
   const tagsData = tagsIds.map(id => tags[id]);
   const topicLink = getTopicLink({ topic: topicSlug });
   return (
-    <BlockWrapper className={`tags-by-topic tags-by-topic--style-${style}`}>
-      <div className="tags-by-topic__title-label">{topicLink}</div>
-      <div className="tags-by-topic__cards">
-        <div className="tags-by-topic__2">
-          <div className="tags-by-topic__2-top">
-            <TagCard {...tagsData[0]} />
+    <BlockWrapper className={b({ style })}>
+      <div className={b('title-label')}>{topicLink}</div>
+      <div className={b('cards')}>
+        <div className={b('2')}>
+          <div className={b('2-top')}>
+            <TagCard
+              {...tagsData[0]}
+              blockContext={[
+                'tags-by-topic',
+                `tags-by-topic--style--${style}`,
+                'tags-by-topic__2',
+                'tags-by-topic__2-top',
+              ]}
+            />
           </div>
-          <div className="tags-by-topic__2-bottom">
-            <TagCard {...tagsData[1]} />
+          <div>
+            <TagCard
+              {...tagsData[1]}
+              blockContext={[
+                'tags-by-topic',
+                `tags-by-topic--style--${style}`,
+                'tags-by-topic__2',
+                'tags-by-topic__2-bottom',
+              ]}
+            />
           </div>
         </div>
-        <div className="tags-by-topic__1">
-          <TagCard {...tagsData[2]} />
+        <div className={b('1')}>
+          <TagCard
+            {...tagsData[2]}
+            blockContext={['tags-by-topic', `tags-by-topic--style--${style}`, 'tags-by-topic__1']}
+          />
         </div>
       </div>
     </BlockWrapper>

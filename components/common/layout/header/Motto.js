@@ -8,6 +8,8 @@ import { TagLink } from 'utils/tags';
 import { ROUTES_NAMES } from 'routes';
 import { TOPIC } from 'constants/misc';
 
+import styles from './header.module.scss';
+
 const CULTURE = ['art', 'cinema', 'literature']; // + 'music'
 
 const Motto = () => {
@@ -18,7 +20,7 @@ const Motto = () => {
 
   return (
     <>
-      <span className="navbar__title--screen-wide">
+      <span className={styles['navbar__title--screen--wide']}>
         <Text id="common.motto">
           {(bel, asWell, world, culture, and, history) => (
             <>
@@ -40,7 +42,7 @@ const Motto = () => {
           )}
         </Text>
       </span>
-      <span className="navbar__title--screen-narrow">
+      <span className={styles['navbar__title--screen--narrow']}>
         <Text id="common.motto-short">
           {(edu, wir) => (
             <>

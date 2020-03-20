@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import bem from 'bem-css-modules';
 import cn from 'classnames';
 
-import Picture from 'components/common/Picture';
+import Picture from 'components/common/ui/Picture';
 import ExternalLink from 'components/common/ExternalLink';
 import { useLocalization } from 'components/common/Text';
 import styles from './banner.module.scss';

@@ -19,13 +19,13 @@ export const PARTNERS = [
     id: 'logo-art-museum',
     img: 'mastacki_logo.jpg',
     url: 'https://www.artmuseum.by/by/',
-    className: 'about-page__partner-logo--small',
+    size: 'small',
   },
   {
     id: 'logo-libra',
     img: 'libra_logo.png',
     url: 'https://libra-gallery.by',
-    className: 'about-page__partner-logo--small',
+    size: 'small',
   },
   {
     id: 'logo-museum-brouka',
@@ -36,6 +36,6 @@ export const PARTNERS = [
     id: 'logo-ethno',
     img: 'ethno_logo.jpg',
     url: 'https://ethno.by',
-    className: 'about-page__partner-logo--smallest',
+    size: 'smallest',
   },
 ];
