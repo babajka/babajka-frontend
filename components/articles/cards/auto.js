@@ -26,3 +26,6 @@ export const ARTICLE_CARD_SIZES_BY_CONTEXT = {
     'tag-page-block-cd__row-of-three': ['square-s', 'm', 'l', 'l', 'square-s'],
   },
 };
+
+export const buildBlockContextStyles = (blockContext, styles) =>
+  blockContext.map(ctx => styles[`block-${ctx}`]).join(' ');

@@ -13,6 +13,8 @@ import { colorLooksBlack, colorLooksWhite } from 'utils/ui';
 
 import CardWrapper, { SIZES } from './CardWrapper';
 
+import { buildBlockContextStyles } from './auto';
+
 import styles from './tagCard.module.scss';
 
 const b = bem(styles);
@@ -31,7 +33,7 @@ const TagCard = ({ slug, topicSlug, content, size, blockContext }) => {
     },
     theme,
     color,
-    blockContextClass: blockContext.map(ctx => styles[`block-${ctx}`]).join(' '),
+    blockContextClass: buildBlockContextStyles(blockContext, styles),
   };
 
   if (topicSlug === TOPIC.locations) {

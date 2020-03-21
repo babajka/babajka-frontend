@@ -25,7 +25,7 @@ import { linkCn, colorLooksBlack, colorLooksWhite } from 'utils/ui';
 import { ROUTES_NAMES } from 'routes';
 import styles from './articleCard.module.scss';
 
-import { SCREENS, ARTICLE_CARD_SIZES_BY_CONTEXT } from './auto';
+import { SCREENS, ARTICLE_CARD_SIZES_BY_CONTEXT, buildBlockContextStyles } from './auto';
 
 import CardWrapper, { SIZES } from './CardWrapper';
 
@@ -91,7 +91,7 @@ const ArticleCard = props => {
     <CardWrapper
       size={size}
       sizeClass={styles[`card-size-${size}`]}
-      blockContextClass={blockContext.map(ctx => styles[`block-${ctx}`]).join(' ')}
+      blockContextClass={buildBlockContextStyles(blockContext, styles)}
       theme={theme}
       color={color}
       linkProps={{ route: ROUTES_NAMES.article, params: { slug } }}

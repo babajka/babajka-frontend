@@ -34,8 +34,7 @@ const CardWrapper = ({
       className={cn(
         b({
           'theme-light': theme === 'light',
-          'with-border':
-            (onBackground && colorLooksBlack(color)) || (!onBackground && colorLooksWhite(color)),
+          'with-border': onBackground ? colorLooksBlack(color) : colorLooksWhite(color),
         }),
         className
       )}

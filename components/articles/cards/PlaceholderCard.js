@@ -1,11 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import bem from 'bem-css-modules';
+
+import { buildBlockContextStyles } from './auto';
 
 import styles from './placeholderCard.module.scss';
 
+const b = bem(styles);
+
 const PlaceholderCard = ({ blockContext }) => (
-  <div className={blockContext.map(ctx => styles[`block-${ctx}`]).join(' ')}>
-    <div className="placeholder" />
+  <div className={buildBlockContextStyles(blockContext, styles)}>
+    <div className={b()} />
   </div>
 );
 
