@@ -17,4 +17,6 @@ update:
 	npm run fetch-data
 
 build-size:
-	npm run size
+	npm run reset-cache
+	npm run build
+	npm run size-limit

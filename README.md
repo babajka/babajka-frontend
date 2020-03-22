@@ -28,7 +28,7 @@ Next.js &amp; React app
 - `npm run analyze` to check bundle sizes with [`webpack-bundle-analyzer`](https://github.com/webpack-contrib/webpack-bundle-analyzer) (create reports in `reports/`)
   - `npm run analyze:server`
   - `npm run analyze:client`
-- `npm run size` to check client-side bundle sizes with [`bundlesize`](https://github.com/siddharthkp/bundlesize)
+- `npm run size-limit` to check client-side bundle sizes with [`@ai/size-limit`](https://github.com/ai/size-limit)
 
 ## rules
 
