@@ -28,7 +28,9 @@
     "postinstall": "git submodule update --init && npm run fetch-data",
     "semantic-release": "semantic-release",
     "travis-deploy-once": "travis-deploy-once",
+    "size-build": "npm run reset-cache && npm run build",
     "size-limit": "size-limit",
+    "size": "npm run size-build && size-limit",
     "gds": "github-deploy-status -u babajka -p babajka-frontend"
   },
   "dependencies": {
