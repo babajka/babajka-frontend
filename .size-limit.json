@@ -1,0 +1,54 @@
+[
+  {
+    "name": "> framework",
+    "path": ".next/static/**/framework.*.js",
+    "limit": "40 kB"
+  },
+  {
+    "name": "> app",
+    "path": ".next/static/**/_app.js",
+    "limit": "19 kB"
+  },
+  {
+    "name": "> home",
+    "path": ".next/static/**/index.js",
+    "running": false,
+    "limit": "7 kB"
+  },
+  {
+    "name": "> article",
+    "path": ".next/static/**/article.js",
+    "running": false,
+    "limit": "2 kB"
+  },
+  {
+    "name": "> topic",
+    "path": ".next/static/**/topic.js",
+    "running": false,
+    "limit": "5 kB"
+  },
+  {
+    "name": "> tag",
+    "path": ".next/static/**/tag.js",
+    "running": false,
+    "limit": "6 kB"
+  },
+  {
+    "name": "> about",
+    "path": ".next/static/**/about.js",
+    "running": false,
+    "limit": "8 kB"
+  },
+  {
+    "name": "> _error",
+    "path": ".next/static/**/_error.js",
+    "running": false,
+    "limit": "3 kB"
+  },
+  {
+    "name": "> all css",
+    "path": ".next/static/**/*.css",
+    "running": false,
+    "limit": "40 kB"
+  }
+]
