@@ -87,6 +87,7 @@
   "main": "index.js",
   "devDependencies": {
     "@babel/plugin-proposal-export-default-from": "^7.8.3",
+    "@babel/plugin-proposal-optional-chaining": "^7.9.0",
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^7.5.0",
     "@semantic-release/changelog": "^3.0.2",

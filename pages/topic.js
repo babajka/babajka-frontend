@@ -61,7 +61,7 @@ TopicSection.propTypes = {
 const mapStateToProps = (state, { lang }) => topicsSelectors.getData(state, lang);
 
 const TopicPage = ({ lang, routerQuery: { topic }, tags, articlesByTag, articleById }) => {
-  const filteredTags = tags.filter(({ slug }) => articlesByTag[slug] && articlesByTag[slug].length);
+  const filteredTags = tags.filter(({ slug }) => articlesByTag?.[slug].length);
   return (
     <>
       <MetaTitle title={localize(`topic.${topic}`, lang)} />

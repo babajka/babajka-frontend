@@ -13,7 +13,7 @@ export const hasErrors = (errors, touched) =>
   }).length;
 
 const emailRegexp = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/;
-export const isEmail = email => !!email && email.match(emailRegexp);
+export const isEmail = email => !!email?.match(emailRegexp);
 export const validEmail = (email, massageId = 'forms.badEmail') =>
   isEmail(email) ? null : massageId;
 
