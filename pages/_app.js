@@ -67,14 +67,6 @@ const getLocale = ({ asPath, query: { lang } }) => {
 };
 
 class Root extends App {
-  static propTypes = {
-    router: PropTypes.shape({
-      query: PropTypes.shape({
-        lang: LangType,
-      }).isRequired,
-    }).isRequired,
-  };
-
   // https://err.sh/next.js/opt-out-automatic-prerendering
   static async getInitialProps({ Component, ctx }) {
     await populateRequest(ctx, authActions.getCurrentUser);
@@ -175,5 +167,13 @@ class Root extends App {
     );
   }
 }
+
+Root.propTypes = {
+  router: PropTypes.shape({
+    query: PropTypes.shape({
+      lang: LangType,
+    }).isRequired,
+  }).isRequired,
+};
 
 export default withRouter(withRedux(initStore)(Root));
