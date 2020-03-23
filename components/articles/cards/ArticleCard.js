@@ -101,7 +101,7 @@ const ArticleCard = props => {
           'with-brand': !!brands.length,
           'theme-black': colorLooksBlack(color),
           'theme-white': colorLooksWhite(color),
-          'experiment-slavics': !!collection && collection.slug === 'slav-movy',
+          'experiment-slavics': collection?.slug === 'slav-movy',
         })
       )}
       onBackground={onBackground}

@@ -8,7 +8,7 @@ export const localize = (object, lang = DEFAULT_LOCALE) =>
   object && (object[lang] || object[DEFAULT_LOCALE] || Object.values(object)[0]);
 
 export const localizeArray = localizeItem => (items, lang) =>
-  items && items.map(item => localizeItem(item, lang));
+  items?.map(item => localizeItem(item, lang));
 
 const copy = obj => ({ ...obj });
 

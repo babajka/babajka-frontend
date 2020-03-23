@@ -102,9 +102,7 @@ const Article = ({
         <div className={styles['article-page-content']}>
           {type === 'audio' && <AudioPlayer trackId={audio.id} />}
           {type === 'video' && <VideoPlayer videoId={video.id} />}
-          {collection && collection.articles.length > 1 && (
-            <CollectionNote data={collection} locale={locale} />
-          )}
+          {collection?.articles.length > 1 && <CollectionNote data={collection} locale={locale} />}
           {fiberyRenderer(text.content)}
         </div>
         <div className={b('share')}>

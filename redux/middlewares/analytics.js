@@ -2,7 +2,7 @@ import ReactGA from 'react-ga';
 
 import { isLoading } from 'utils/redux';
 
-const trackAction = ({ meta }) => meta && meta.ga;
+const trackAction = ({ meta }) => meta?.ga;
 
 export default () => next => action => {
   if (typeof window !== 'undefined' && !isLoading(action) && trackAction(action)) {
