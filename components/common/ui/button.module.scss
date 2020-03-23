@@ -3,7 +3,7 @@
 .wir-kit-button {
   background-color: $primary-white;
   border: 1px solid $primary-grey-article-table;
-  border-radius: 3px;
+  border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
   line-height: 24px;
@@ -20,5 +20,15 @@
 
   &__icon {
     padding-right: 5px;
+  }
+
+  &--highlighted {
+    background-color: $primary;
+    border: 0;
+    color: $primary-white;
+
+    &:hover {
+      color: $primary-concrete;
+    }
   }
 }

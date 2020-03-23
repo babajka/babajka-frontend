@@ -4,6 +4,8 @@ import flatten from 'lodash/flatten';
 import cn from 'classnames';
 import bem from 'bem-css-modules';
 
+import { CROWDFUNDING_ENABLED, CROWDFUNDING_OPTIONS } from 'constants/misc';
+
 import {
   MetaTitle,
   MetaDescription,
@@ -15,6 +17,10 @@ import {
 import AudioPlayer from 'components/common/AudioPlayer';
 import VideoPlayer from 'components/common/VideoPlayer';
 import Image from 'components/common/Image';
+import ExternalLink from 'components/common/ExternalLink';
+import Button from 'components/common/Button';
+import Text from 'components/common/Text';
+import IconImage from 'components/common/ui/IconImage';
 import ShareButtons from 'components/social/ShareButtons';
 
 import { ArticleShape } from 'utils/customPropTypes';
@@ -105,8 +111,19 @@ const Article = ({
           {collection?.articles.length > 1 && <CollectionNote data={collection} locale={locale} />}
           {fiberyRenderer(text.content)}
         </div>
-        <div className={b('share')}>
-          <ShareButtons urlPath={router.asPath} basicText={title} />
+        <div className={b('post-actions')}>
+          {CROWDFUNDING_ENABLED && (
+            <ExternalLink href={CROWDFUNDING_OPTIONS.link}>
+              <Button className={b('crowdfunding')} highlighted>
+                <Text id="article.support-crowdfunding" />
+                <span>&nbsp;&nbsp;</span>
+                <IconImage name="molamola" color="white" />
+              </Button>
+            </ExternalLink>
+          )}
+          <div className={b('share')}>
+            <ShareButtons urlPath={router.asPath} basicText={title} />
+          </div>
         </div>
         <div className={b('other-tags')}>
           {tags.map(tag => (

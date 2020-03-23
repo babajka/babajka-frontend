@@ -10,8 +10,15 @@ import styles from './ui/button.module.scss';
 
 const b = bem(styles);
 
-const Button = ({ className, children, pending: _, icon: { pack, name }, ...props }) => (
-  <button type="button" className={cn(b(), className)} {...props}>
+const Button = ({
+  className,
+  children,
+  pending: _,
+  highlighted,
+  icon: { pack, name },
+  ...props
+}) => (
+  <button type="button" className={cn(b({ highlighted }), className)} {...props}>
     {name && <Icon className={b('icon')} pack={pack} name={name} />}
     {children}
   </button>
@@ -21,6 +28,7 @@ Button.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node.isRequired,
   pending: PropTypes.bool,
+  highlighted: PropTypes.bool,
   icon: PropTypes.shape({
     pack: IconPackShape,
     name: PropTypes.string,
@@ -31,6 +39,7 @@ Button.propTypes = {
 Button.defaultProps = {
   className: '',
   pending: false,
+  highlighted: false,
   icon: {
     pack: 's',
     name: '',

@@ -45,7 +45,10 @@
 
   &__block3 {
     @include desktop {
+      display: flex;
       flex: 2;
+      flex-direction: column;
+      justify-content: space-between;
     }
   }
 }
