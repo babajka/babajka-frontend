@@ -110,8 +110,39 @@ $content-line-height: (
     }
   }
 
-  &__share {
+  &__post-actions {
+    display: flex;
+    flex-direction: row;
     margin-top: 72px;
+
+    @include screen-tablet-large {
+      flex-direction: column;
+    }
+
+    @include screen-tablet-touch-mobile {
+      flex-direction: column;
+    }
+  }
+
+  &__crowdfunding {
+    font-size: 16px;
+    line-height: 24px;
+    margin-right: 10px;
+    text-align: left;
+
+    @include screen-tablet-large {
+      margin-bottom: 20px;
+      margin-right: 0;
+    }
+
+    @include screen-tablet-touch-mobile {
+      line-height: 20px;
+      margin-bottom: 20px;
+      margin-right: 0;
+    }
+  }
+
+  &__share {
     width: 300px;
   }
 

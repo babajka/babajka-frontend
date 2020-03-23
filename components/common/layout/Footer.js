@@ -2,10 +2,13 @@ import React from 'react';
 import cn from 'classnames';
 import bem from 'bem-css-modules';
 
+import { CROWDFUNDING_ENABLED, CROWDFUNDING_OPTIONS } from 'constants/misc';
+
 import Text, { useLocalization } from 'components/common/Text';
 import Link from 'components/common/Link';
 import ExternalLink from 'components/common/ExternalLink';
 import Icon from 'components/common/ui/Icon';
+import IconImage from 'components/common/ui/IconImage';
 
 import MailLink from 'components/social/MailLink';
 import ShareButtons from 'components/social/ShareButtons';
@@ -72,7 +75,7 @@ const Footer = () => (
 
       <div className={l('block3')}>
         <div className={f('help-us')}>
-          <div className={f('header')}>
+          <div className={f('header', { 'padding-bottom': 'small' })}>
             <Text id="footer.help-us" />
           </div>
           <div className={f('help-text')}>
@@ -87,11 +90,27 @@ const Footer = () => (
             />
           </div>
         </div>
+        {CROWDFUNDING_ENABLED && (
+          <div className={f('help-us')}>
+            <div className={f('header', { 'padding-bottom': 'small' })}>
+              <Text id="footer.support-financially" />
+            </div>
+            <div className={f('help-text')}>
+              <ExternalLink href={CROWDFUNDING_OPTIONS.link}>
+                <Text id="footer.wir-on" />
+                <span>&nbsp;&nbsp;</span>
+                <IconImage name="molamola" color="#1a9582" />
+              </ExternalLink>
+            </div>
+          </div>
+        )}
       </div>
     </div>
 
     <div className={f('bottom')}>
-      <span className={f('copyright')}>© Wir.by, {new Date().getFullYear()}</span>
+      <span className={f('copyright')}>
+        © Wir.by, {new Date().getFullYear()}. <Text id="footer.copyright" />
+      </span>
     </div>
   </footer>
 );

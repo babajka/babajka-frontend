@@ -13,6 +13,10 @@
     font-size: 1.1rem;
     font-weight: bold;
     padding: 0.5rem 0 1rem;
+
+    &--padding-bottom--small {
+      padding-bottom: 0.25rem;
+    }
   }
 
   &__links {
@@ -60,7 +64,7 @@
   }
 
   &__help-us {
-    padding: 1rem 0;
+    padding: 0.5rem 0;
 
     @include desktop {
       padding: 0 2rem;
@@ -69,7 +73,7 @@
 
   &__help-text {
     line-height: 1.7em;
-    padding: 0.5rem 0;
+    padding-bottom: 0.5rem;
   }
 
   &__bottom {
@@ -89,6 +93,8 @@
   }
 
   &__copyright {
+    font-size: 16px;
+    line-height: 24px;
     margin-right: 1rem;
   }
 }
