@@ -30,6 +30,8 @@ module.exports = {
     'react/prop-types': ['warn', { skipUndeclared: true }],
     'react/forbid-prop-types': 'warn',
     'react/require-default-props': 'warn',
+    'react/jsx-props-no-spreading': 'off',
+    'react/state-in-constructor': 'off',
 
     // react-hooks
     'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
