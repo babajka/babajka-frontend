@@ -94,6 +94,10 @@ const ARTICLE_COLS = [
     title: 'Updated At',
     formatter: v => formatDate(v, DATETIME_FORMAT),
   },
+  {
+    id: 'metrics',
+    title: 'Total Views',
+  },
 ];
 
 const AdminArticlesPage = ({ articles }) => {

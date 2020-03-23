@@ -85,6 +85,7 @@ export const ArticleModel = {
   tagsByTopic: PropTypes.objectOf(TagsArray).isRequired,
   theme: ThemeType.isRequired,
   color: PropTypes.string.isRequired,
+  metrics: PropTypes.number,
 };
 
 export const ArticleShape = PropTypes.shape(ArticleModel);

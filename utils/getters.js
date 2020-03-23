@@ -65,7 +65,7 @@ export const getLocalizedArticle = (article, lang) => {
     return null;
   }
   const { _id: id, locales, collection, publishAt, tags, ...rest } = article;
-  const { text, ...localized } = localize(locales, lang);
+  const { text, metrics: _, ...localized } = localize(locales, lang);
 
   // TODO: think about implementing this logic at backend
   // WARNING: there are no tags in `prev` & `next` articles in collection
@@ -76,6 +76,16 @@ export const getLocalizedArticle = (article, lang) => {
       return acc;
     }, getInitTagsByTopic());
 
+  // Accumulating metrics for all content and interface localizations.
+  const totalMetrics = Object.values(article.locales).reduce(
+    (acc, locale) =>
+      acc +
+      (locale.metrics
+        ? Object.values(locale.metrics).reduce((acc2, counter) => acc2 + parseInt(counter, 10), 0)
+        : 0),
+    0
+  );
+
   return {
     ...rest,
     ...localized,
@@ -85,6 +95,7 @@ export const getLocalizedArticle = (article, lang) => {
     collection: collection && getLocalizedCollection(collection, lang),
     published: !!publishAt && moment(publishAt).isBefore(moment()),
     tagsByTopic,
+    metrics: totalMetrics,
   };
 };
 
