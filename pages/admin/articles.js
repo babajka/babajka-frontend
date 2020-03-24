@@ -12,7 +12,7 @@ import Dispatcher from 'lib/components/Dispatcher';
 import { ArticlesArray } from 'utils/customPropTypes';
 import { adminArticlesActions, adminArticlesSelectors } from 'redux/ducks/admin/articles';
 import { populateRequest } from 'utils/request';
-import { formatDate, optional, renderNodeList } from 'utils/formatters';
+import { formatDate, renderNodeList } from 'utils/formatters';
 import { getTagLink } from 'utils/tags';
 import { getArticleBaseUrl } from 'utils/fibery';
 
@@ -65,16 +65,16 @@ const ARTICLE_COLS = [
   {
     id: 'subtitle',
     className: styles['wir-table__font--size--small'],
-    formatter: text => `${text.slice(0, 100)}...`,
+    formatter: (text) => `${text.slice(0, 100)}...`,
   },
   {
     id: 'tagsByTopic',
     title: 'Tags',
     className: styles['wir-table__font--size--small'],
-    formatter: tagsByTopic => {
+    formatter: (tagsByTopic) => {
       const tags = Object.values(tagsByTopic).reduce((acc, cur) => acc.concat(cur), []);
       return renderNodeList(
-        tags.map(tag => getTagLink({ tag })),
+        tags.map((tag) => getTagLink({ tag })),
         <br />
       );
     },
@@ -86,13 +86,14 @@ const ARTICLE_COLS = [
   },
   {
     id: 'publishAt',
-    title: 'Publication Date',
-    formatter: optional(formatDate, 'Not Planned'),
+    title: 'Publication Time',
+    formatter: (v) => formatDate(v, DATETIME_FORMAT),
+    render: ({ value }) => value || 'Not Planned',
   },
   {
     id: 'metadata.updatedAt',
     title: 'Updated At',
-    formatter: v => formatDate(v, DATETIME_FORMAT),
+    formatter: (v) => formatDate(v, DATETIME_FORMAT),
   },
   {
     id: 'metrics',
@@ -131,6 +132,6 @@ AdminArticlesPage.propTypes = {
   articles: ArticlesArray.isRequired,
 };
 
-AdminArticlesPage.getInitialProps = ctx => populateRequest(ctx, adminArticlesActions.fetchAll);
+AdminArticlesPage.getInitialProps = (ctx) => populateRequest(ctx, adminArticlesActions.fetchAll);
 
 export default withAdmin(connect(mapStateToProps)(AdminArticlesPage));
