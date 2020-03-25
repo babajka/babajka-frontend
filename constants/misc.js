@@ -6,9 +6,11 @@ export const TOPIC = createConstants(...TOPICS);
 
 export const DIARY_PICTURE_WIDTH = 180;
 
-// TODO(drapegnik): to get from DB.
-export const CROWDFUNDING_ENABLED = true;
-export const CROWDFUNDING_OPTIONS = {
-  // TODO: to set proper language ( /be/ ) based on our interface locale.
-  link: 'https://molamola.by/be/campaigns/2360',
+// TODO(drapegnik): to get from DB Storage.
+// https://dev.wir.by/api/storage/byKey/features
+export const CROWDFUNDING_CAMPAIGN = {
+  enabled: false,
+  options: {
+    link: 'https://molamola.by/campaigns/2360',
+  },
 };

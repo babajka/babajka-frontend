@@ -4,7 +4,7 @@ import flatten from 'lodash/flatten';
 import cn from 'classnames';
 import bem from 'bem-css-modules';
 
-import { CROWDFUNDING_ENABLED, CROWDFUNDING_OPTIONS } from 'constants/misc';
+import { CROWDFUNDING_CAMPAIGN } from 'constants/misc';
 
 import {
   MetaTitle,
@@ -112,8 +112,8 @@ const Article = ({
           {fiberyRenderer(text.content)}
         </div>
         <div className={b('post-actions')}>
-          {CROWDFUNDING_ENABLED && (
-            <ExternalLink href={CROWDFUNDING_OPTIONS.link}>
+          {CROWDFUNDING_CAMPAIGN.enabled && (
+            <ExternalLink href={CROWDFUNDING_CAMPAIGN.options.link}>
               <Button className={b('crowdfunding')} highlighted>
                 <Text id="article.support-crowdfunding" />
                 <span>&nbsp;&nbsp;</span>
