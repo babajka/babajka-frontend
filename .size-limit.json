@@ -7,7 +7,7 @@
   {
     "name": "> app",
     "path": ".next/static/**/_app.js",
-    "limit": "19 kB"
+    "limit": "20 kB"
   },
   {
     "name": "> home",
