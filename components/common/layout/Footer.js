@@ -8,7 +8,7 @@ import Text, { useLocalization } from 'components/common/Text';
 import Link from 'components/common/Link';
 import ExternalLink from 'components/common/ExternalLink';
 import Icon from 'components/common/ui/Icon';
-import IconImage from 'components/common/ui/IconImage';
+import MolamolaIcon from 'components/common/ui/MolamolaIcon';
 
 import MailLink from 'components/social/MailLink';
 import ShareButtons from 'components/social/ShareButtons';
@@ -99,7 +99,7 @@ const Footer = () => (
               <ExternalLink href={CROWDFUNDING_CAMPAIGN.options.link}>
                 <Text id="footer.wir-on" />
                 <span>&nbsp;&nbsp;</span>
-                <IconImage name="molamola" color="#1a9582" />
+                <MolamolaIcon />
               </ExternalLink>
             </div>
           </div>

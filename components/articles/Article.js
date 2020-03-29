@@ -20,7 +20,7 @@ import Image from 'components/common/Image';
 import ExternalLink from 'components/common/ExternalLink';
 import Button from 'components/common/Button';
 import Text from 'components/common/Text';
-import IconImage from 'components/common/ui/IconImage';
+import MolamolaIcon from 'components/common/ui/MolamolaIcon';
 import ShareButtons from 'components/social/ShareButtons';
 
 import { ArticleShape } from 'utils/customPropTypes';
@@ -117,7 +117,7 @@ const Article = ({
               <Button className={b('crowdfunding')} highlighted>
                 <Text id="article.support-crowdfunding" />
                 <span>&nbsp;&nbsp;</span>
-                <IconImage name="molamola" color="white" />
+                <MolamolaIcon />
               </Button>
             </ExternalLink>
           )}
