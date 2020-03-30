@@ -9,8 +9,8 @@ export const DIARY_PICTURE_WIDTH = 180;
 // TODO(drapegnik): to get from DB Storage.
 // https://dev.wir.by/api/storage/byKey/features
 export const CROWDFUNDING_CAMPAIGN = {
-  enabled: false,
+  enabled: true,
   options: {
-    link: 'https://molamola.by/campaigns/2360',
+    link: 'https://molamola.by/campaigns/2449',
   },
 };
