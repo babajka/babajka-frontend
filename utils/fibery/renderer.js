@@ -7,6 +7,7 @@ import identity from 'lodash/identity';
 import Image from 'components/common/Image';
 import ExternalLink from 'components/common/ExternalLink';
 import VideoPlayer from 'components/common/VideoPlayer';
+import ImageSlider from 'components/common/ui/ImageSlider';
 import parseYoutubeUrl from 'lib/utils/parseYoutubeUrl';
 
 import toString from './toString';
@@ -126,6 +127,9 @@ const RENDERERS = {
         <span className={styles['article-image__caption']}>{title}</span>
       </span>
     );
+  },
+  image_slider: ({ attrs: { images, subtitle } }) => {
+    return <ImageSlider images={images} subtitle={subtitle} />;
   },
   paragraph: ({ key, attrs = {}, content }) => {
     return <p key={attrs.guid || key}>{renderContent(content)}</p>;

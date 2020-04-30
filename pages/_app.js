@@ -2,6 +2,8 @@ import 'normalize.css';
 import 'styles/index.scss';
 import 'components/common/layout/layout.scss';
 
+import 'swiper/css/swiper.css';
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactGA from 'react-ga';
