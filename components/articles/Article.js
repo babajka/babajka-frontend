@@ -109,7 +109,21 @@ const Article = ({
           {type === 'audio' && <AudioPlayer trackId={audio.id} />}
           {type === 'video' && <VideoPlayer videoId={video.id} />}
           {collection?.articles.length > 1 && <CollectionNote data={collection} locale={locale} />}
-          {fiberyRenderer(text.content)}
+          {fiberyRenderer([
+            ...text.content,
+            // TODO: remove once we have real data coming from backend.
+            {
+              type: 'image_slider',
+              attrs: {
+                subtitle: 'Sample images : description',
+                images: [
+                  { image: 'https://picsum.photos/1000/600', description: '1000*600' },
+                  { image: 'https://picsum.photos/400/1100', description: '400*1100' },
+                  { image: 'https://picsum.photos/500', description: 'sq500' },
+                ],
+              },
+            },
+          ])}
         </div>
         <div className={b('post-actions')}>
           {CROWDFUNDING_CAMPAIGN.enabled && (
