@@ -18,3 +18,6 @@ update:
 
 build-size:
 	npm run size
+
+install:
+	npm i
