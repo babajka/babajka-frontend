@@ -79,8 +79,20 @@ const TABLE_CLASS_BY_TYPE = {
 
 const CUSTOM_RENDERER = {
   [CAROUSEL]: content => {
-    const images = traverseTable(content, true);
-    return <ImageSlider images={images} />;
+    const data = traverseTable(content, true);
+    const { images, description } = data.reduce(
+      (acc, cur) => {
+        if (cur?.type === 'image') {
+          acc.images.push(cur.attrs);
+        }
+        if (typeof cur === 'string') {
+          acc.description = cur;
+        }
+        return acc;
+      },
+      { images: [] }
+    );
+    return <ImageSlider images={images} description={description} />;
   },
 };
 
