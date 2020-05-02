@@ -11,12 +11,12 @@ import ImageSlider from 'components/common/ui/ImageSlider';
 import parseYoutubeUrl from 'lib/utils/parseYoutubeUrl';
 
 import toString from './toString';
-import getMeta, { TYPES } from './parseTableMeta';
+import { getTableMeta, traverseTable, TYPES } from './parseTable';
 import { parseQuote, parseImage } from './utils';
 
 import styles from './renderer.module.scss';
 
-const { TABLE, TABLE_RIGHT, NOTE, POEM, SPLIT } = TYPES;
+const { TABLE, TABLE_RIGHT, NOTE, POEM, SPLIT, CAROUSEL } = TYPES;
 
 const returnNull = () => null;
 
@@ -77,6 +77,13 @@ const TABLE_CLASS_BY_TYPE = {
   [SPLIT]: styles['article-split'],
 };
 
+const CUSTOM_RENDERER = {
+  [CAROUSEL]: content => {
+    const images = traverseTable(content, true);
+    return <ImageSlider images={images} />;
+  },
+};
+
 const RENDERERS = {
   // debug: (...params) => {
   //   console.log(params)
@@ -128,16 +135,17 @@ const RENDERERS = {
       </span>
     );
   },
-  image_slider: ({ attrs: { images, subtitle } }) => {
-    return <ImageSlider images={images} subtitle={subtitle} />;
-  },
   paragraph: ({ key, attrs = {}, content }) => {
     return <p key={attrs.guid || key}>{renderContent(content)}</p>;
   },
   text: ({ key, text, marks }) => <Fragment key={key}>{addMarks(text, marks)}</Fragment>,
 
   table: ({ key, content }) => {
-    const [type, parsed] = getMeta(content);
+    const [type, parsed] = getTableMeta(content);
+    if (CUSTOM_RENDERER[type]) {
+      return CUSTOM_RENDERER[type](parsed);
+    }
+
     return (
       <table className={TABLE_CLASS_BY_TYPE[type]} key={key}>
         <tbody>{renderContent(parsed)}</tbody>

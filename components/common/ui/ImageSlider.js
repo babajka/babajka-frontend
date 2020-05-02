@@ -19,23 +19,23 @@ const DEFAULT_PARAMS = {
   },
 };
 
-const ImageSlider = ({ images, subtitle }) => (
+const ImageSlider = ({ images }) => (
   <div className={b()}>
     <Swiper {...DEFAULT_PARAMS}>
-      {images.map(({ image, description }) => (
+      {/* TODO: reformat to better structure */}
+      {images.map(({ attrs: { src, alt, title } }) => (
         <div className={b('slide')}>
-          <img className={b('slide-image')} src={image} alt={description} />
-          <span className={b('slide-description')}>{description}</span>
+          <img className={b('slide-image')} src={src} alt={alt} />
+          <span className={b('slide-description')}>{title}</span>
         </div>
       ))}
     </Swiper>
-    <span className={b('subtitle')}>{subtitle}</span>
+    {/* <span className={b('subtitle')}>{subtitle}</span> */}
   </div>
 );
 
 ImageSlider.propTypes = {
   images: PropTypes.arrayOf(PropTypes.object).isRequired,
-  description: PropTypes.string.isRequired,
 };
 
 export default ImageSlider;
