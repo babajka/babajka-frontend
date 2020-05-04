@@ -14,8 +14,8 @@ const DEFAULT_PARAMS = {
     clickable: true,
   },
   navigation: {
-    nextEl: `.swiper-button-next.${b('button-navigation')}`,
-    prevEl: `.swiper-button-prev.${b('button-navigation')}`,
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
   },
 };
 

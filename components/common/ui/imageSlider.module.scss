@@ -1,14 +1,14 @@
+@import 'styles/responsiveness';
 @import 'styles/variables';
+
+$image-width-constraint: 0.8;
 
 .image-slider {
   text-decoration: none;
 
-  &__button-navigation {
-    color: $primary-grey;
-  }
-
   &__subtitle {
-    text-align: center;
+    font-size: 14px;
+    line-height: 16px;
   }
 
   &__slide {
@@ -24,12 +24,19 @@
     flex-grow: 1;
     height: auto;
     max-height: 500px;
-    max-width: 80vw;
     object-fit: contain;
     width: auto;
+
+    @each $idx, $screen-name in $indexed-screens {
+      @include screen-size($screen-name) {
+        max-width: map-get($page-content, $screen-name) * $image-width-constraint;
+      }
+    }
   }
 
   &__slide-description {
-    text-decoration: none;
+    font-size: 14px;
+    line-height: 18px;
+    text-align: center;
   }
 }
