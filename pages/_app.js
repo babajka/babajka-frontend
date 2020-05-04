@@ -3,6 +3,7 @@ import 'styles/index.scss';
 import 'components/common/layout/layout.scss';
 
 import 'swiper/css/swiper.css';
+import 'styles/swiper-customization.scss';
 
 import React from 'react';
 import PropTypes from 'prop-types';

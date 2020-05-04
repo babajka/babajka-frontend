@@ -19,7 +19,7 @@
     "name": "> article",
     "path": ".next/static/**/article.js",
     "running": false,
-    "limit": "2 kB"
+    "limit": "5 kB"
   },
   {
     "name": "> topic",

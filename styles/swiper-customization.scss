@@ -1,0 +1,15 @@
+@import 'responsiveness';
+@import 'variables';
+
+$swiper-navigation-size: 40px 36px 30px 24px 20px;
+
+:root {
+  --swiper-navigation-color: #{$primary-grey};
+  --swiper-theme-color: #{$primary};
+
+  @each $idx, $screen-name in $indexed-screens {
+    @include screen-size($screen-name) {
+      --swiper-navigation-size: #{nth($swiper-navigation-size, $idx)};
+    }
+  }
+}
