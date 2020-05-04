@@ -23,7 +23,7 @@ const ImageSlider = ({ images, description }) => (
   <div className={b()}>
     <Swiper {...DEFAULT_PARAMS}>
       {images.map(({ src, alt, title }) => (
-        <div className={b('slide')}>
+        <div key={src} className={b('slide')}>
           <img className={b('slide-image')} src={src} alt={alt} />
           <span className={b('slide-description')}>{title}</span>
         </div>
