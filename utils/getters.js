@@ -1,5 +1,6 @@
-import moment from 'moment';
 import chunk from 'lodash/chunk';
+import parseISO from 'date-fns/parseISO';
+import isBefore from 'date-fns/isBefore';
 
 import { TOPICS } from 'constants';
 import { localize, localizeArray, localizeFields } from 'utils/localization';
@@ -8,8 +9,7 @@ export const getDiary = ({ author, text, day, month, year, slug }) => ({
   author,
   text,
   slug,
-  // TODO(tyndria): extract it in some func & simplify
-  date: ((month && moment({ day, month: month - 1, year })) || moment()).valueOf(),
+  date: new Date(year, month - 1, day).getTime(),
   day,
   month,
 });
@@ -93,7 +93,7 @@ export const getLocalizedArticle = (article, lang) => {
     id,
     publishAt,
     collection: collection && getLocalizedCollection(collection, lang),
-    published: !!publishAt && moment(publishAt).isBefore(moment()),
+    published: !!publishAt && isBefore(parseISO(publishAt), new Date()),
     tagsByTopic,
     metrics: totalMetrics,
   };

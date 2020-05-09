@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import bem from 'bem-css-modules';
+import parseISO from 'date-fns/parseISO';
 
 import Link from 'components/common/Link';
 import Table, { styles } from 'components/common/Table';
@@ -12,7 +13,7 @@ import Dispatcher from 'lib/components/Dispatcher';
 import { ArticlesArray } from 'utils/customPropTypes';
 import { adminArticlesActions, adminArticlesSelectors } from 'redux/ducks/admin/articles';
 import { populateRequest } from 'utils/request';
-import { formatDate, renderNodeList } from 'utils/formatters';
+import { renderNodeList, formatDate } from 'utils/formatters';
 import { getTagLink } from 'utils/tags';
 import { getArticleBaseUrl } from 'utils/fibery';
 
@@ -87,7 +88,7 @@ const ARTICLE_COLS = [
   {
     id: 'publishAt',
     title: 'Publication Time',
-    formatter: v => formatDate(v, DATETIME_FORMAT),
+    formatter: v => v && formatDate(parseISO(v), DATETIME_FORMAT),
     render: ({ value }) => value || 'Not Planned',
   },
   {

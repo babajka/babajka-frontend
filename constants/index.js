@@ -18,11 +18,11 @@ const VALID_LOCALES = Object.keys(LOCALES);
 
 const LANGS = Object.entries(LOCALES).map(([id, label]) => ({ id, label }));
 
-const DATE_FORMAT = 'D MMMM YYYY';
+const DATE_FORMAT = 'd MMMM yyyy';
 
-const DATETIME_FORMAT = 'DD/MM/YY HH:mm';
+const DATETIME_FORMAT = 'dd/MM/yy HH:mm';
 
-const SHORT_DATE_FORMAT = 'D MMMM';
+const SHORT_DATE_FORMAT = 'd MMMM';
 
 const DOMAIN_SECURE = 'https://wir.by';
 

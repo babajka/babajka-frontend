@@ -8,7 +8,6 @@ import 'styles/swiper-customization.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactGA from 'react-ga';
-import moment from 'moment';
 import bem from 'bem-css-modules';
 
 import { Provider } from 'react-redux';
@@ -84,22 +83,6 @@ class Root extends App {
     return props;
   }
 
-  constructor(props) {
-    super(props);
-    this.setMoment();
-  }
-
-  setMoment() {
-    const {
-      router: {
-        query: { lang },
-      },
-    } = this.props;
-    if (moment.locale() !== lang) {
-      moment.locale(lang);
-    }
-  }
-
   componentDidMount() {
     const url = document.location.pathname + document.location.search;
     if (__PROD__ && !window.ym) {
@@ -119,7 +102,6 @@ class Root extends App {
     const { Component, store, router, initial } = this.props;
     const { permissions = [], getLayoutProps = getEmptyObject } = Component;
     const locale = getLocale(router);
-    this.setMoment();
 
     const pageProps = { lang: locale, routerQuery: router.query, ...initial };
     const {

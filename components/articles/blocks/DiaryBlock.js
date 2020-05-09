@@ -11,8 +11,9 @@ import DiaryArrows from 'components/specials/diary/DiaryArrows';
 
 import { diaryActions, diarySelectors } from 'redux/ducks/diary';
 import { DiaryShape } from 'utils/customPropTypes';
-import { formatDate, getYear } from 'utils/formatters';
+import { getYear } from 'utils/formatters';
 import fiberyToString from 'utils/fibery/toString';
+import useLocalizedDate from 'hooks/useLocalizedDate';
 
 import { SHORT_DATE_FORMAT } from 'constants';
 import { DIARY_PICTURE_WIDTH } from 'constants/misc';
@@ -41,19 +42,19 @@ const DiaryBlock = ({ diary, fetchData }) => {
     <>
       <BlockWrapper negativeTop>
         <div className={b('content')}>
-          <Link
-            className={b('picture', { 'no-image': !diaryImage })}
-            route={ROUTES_NAMES.diary}
-            params={{ slug }}
-            noStyles
-          >
-            {diaryImage && (
+          {diaryImage && (
+            <Link
+              className={b('picture', { 'no-image': !diaryImage })}
+              route={ROUTES_NAMES.diary}
+              params={{ slug }}
+              noStyles
+            >
               <Image alt={name} sourceSizes={[DIARY_PICTURE_WIDTH]} baseUrl={diaryImage} mode="x" />
-            )}
-          </Link>
+            </Link>
+          )}
           <div className={b('text-content')}>
             <div className={b('title')}>
-              <span className={b('date')}>{formatDate(date, SHORT_DATE_FORMAT)}</span>
+              <span className={b('date')}>{useLocalizedDate(date, SHORT_DATE_FORMAT)}</span>
               <span>{getYear(date)}</span>
               <span>{name}</span>
               <Text id="diary.wrote" />:

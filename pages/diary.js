@@ -22,7 +22,7 @@ import {
 import TwoArticlesInRow from 'components/articles/blocks/TwoArticlesInRow';
 
 import { diaryActions, diarySelectors } from 'redux/ducks/diary';
-import { formatDate, getYear, dateIsToday } from 'utils/formatters';
+import { formatLocalizedDate, getYear, isSameDate } from 'utils/formatters';
 import fiberyRenderer from 'utils/fibery/renderer';
 import fiberyToString from 'utils/fibery/toString';
 import { populateRequest, makeRequest } from 'utils/request';
@@ -38,12 +38,12 @@ import api from 'constants/api';
 const b = bem(styles);
 
 const getShareText = (date, name, lang, content) => {
-  const today = dateIsToday(date);
+  const isToday = isSameDate(date);
   const year = getYear(date);
 
   const base = [
-    today ? 'Сёння' : `${formatDate(date, DATE_FORMAT)} `,
-    today && year && `, у ${year} годзе, `,
+    isToday ? 'Сёння' : `${formatLocalizedDate(date, lang, DATE_FORMAT)} `,
+    isToday && year && `, у ${year} годзе, `,
     `${name} ${localize('diary.wrote', lang)}`,
   ]
     .filter(Boolean)
@@ -69,9 +69,9 @@ const DiaryPage = ({
     makeRequest(api.articles.getChunk({ take: 2 })).then(({ data }) => setArticles(data));
   }, []);
   const router = useRouter();
-  const metaTitle = `${formatDate(date, DATE_FORMAT)}, ${name}`;
+  const metaTitle = `${formatLocalizedDate(date, lang, DATE_FORMAT)}, ${name}`;
   const metaKeywords = [
-    formatDate(date, SHORT_DATE_FORMAT),
+    formatLocalizedDate(date, lang, SHORT_DATE_FORMAT),
     name,
     localize('diary.meta-keywords', lang),
   ].join(', ');
@@ -92,7 +92,7 @@ const DiaryPage = ({
       <div className={cn('wir-content-padding', b())}>
         <DiaryLinkArrows className={b('arrows')} size={36} />
         <div className={b('title', { 'with-image': !!image })}>
-          <div>{formatDate(date, DATE_FORMAT)}</div>
+          <div>{formatLocalizedDate(date, lang, DATE_FORMAT)}</div>
           <div>{name}</div>
         </div>
         <div className={b('image-container', { 'no-image': !image })}>

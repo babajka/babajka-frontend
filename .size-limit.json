@@ -50,5 +50,11 @@
     "path": ".next/static/**/*.css",
     "running": false,
     "limit": "40 kB"
+  },
+  {
+    "name": "> all js",
+    "path": ".next/static/chunks/*.js",
+    "running": false,
+    "limit": "160 kB"
   }
 ]
