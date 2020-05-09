@@ -1,12 +1,11 @@
 import createReducer from 'type-to-reducer';
-import moment from 'moment';
 
 import api from 'constants/api';
-import { MINSK_TZ_OFFSET } from 'constants/server';
 
 import { makeRequest } from 'utils/request';
 import { defaultReducer } from 'utils/redux';
 import { getDiary, getLocalizedTag } from 'utils/getters';
+import { getNowHash } from 'utils/time';
 
 const duck = 'specials/diary';
 
@@ -59,12 +58,10 @@ const isNextAvailable = state => {
   if (!next) {
     return false;
   }
-  // HACK: during ssr we have different timezone
-  const now = moment.utc().utcOffset(MINSK_TZ_OFFSET);
+
   const { month, day } = data;
-  const nowHash = (now.month() + 1) * 100 + now.date();
   const currentHash = +month * 100 + +day;
-  return currentHash !== nowHash;
+  return currentHash !== getNowHash();
 };
 
 export const diarySelectors = {
