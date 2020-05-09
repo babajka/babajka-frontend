@@ -64,7 +64,7 @@ CardWrapper.defaultProps = {
   className: '',
   size: 'auto',
   sizeClass: '',
-  color: null,
+  color: '#ffffff',
   image: null,
   theme: 'light',
   onBackground: false,

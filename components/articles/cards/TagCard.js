@@ -20,7 +20,7 @@ import styles from './tagCard.module.scss';
 const b = bem(styles);
 
 const TagCard = ({ slug, topicSlug, content, size, blockContext }) => {
-  const { theme, color } = content;
+  const { theme, color = '#ffffff' } = content;
 
   const wrapperProps = {
     size,
