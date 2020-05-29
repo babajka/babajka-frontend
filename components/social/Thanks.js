@@ -17,7 +17,13 @@ export const Thanks1 = () => (
       name5,
       descr5,
       name6,
-      descr6
+      descr6,
+      name7,
+      descr7,
+      name8,
+      descr8,
+      name9,
+      descr9
     ) => (
       <>
         {thanks}
@@ -33,6 +39,12 @@ export const Thanks1 = () => (
         {descr5}
         <b>{name6}</b>
         {descr6}
+        <b>{name7}</b>
+        {descr7}
+        <b>{name8}</b>
+        {descr8}
+        <b>{name9}</b>
+        {descr9}
       </>
     )}
   </Text>
