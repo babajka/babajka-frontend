@@ -68,6 +68,10 @@ const getCoverLink = (images, cardSize) => {
 
 const COLLECTION_LOGO_WIDTH = 70;
 
+const COLLECTIONS_HIDE_COVER = {
+  starbellit: true,
+};
+
 // TODO: fix storybook
 const ArticleCard = props => {
   const {
@@ -139,7 +143,7 @@ const ArticleCard = props => {
               </div>
               <div className={b('collection-name')}>{collection.name}</div>
             </div>
-            {collection.cover && (
+            {collection.cover && !COLLECTIONS_HIDE_COVER[collection.slug] && (
               <Image
                 className={b('collection-cover')}
                 alt={collection.name}
