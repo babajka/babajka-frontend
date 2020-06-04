@@ -5,7 +5,6 @@ import bem from 'bem-css-modules';
 import { CROWDFUNDING_CAMPAIGN } from 'constants/misc';
 
 import Text, { useLocalization } from 'components/common/Text';
-import Link from 'components/common/Link';
 import ExternalLink from 'components/common/ExternalLink';
 import Icon from 'components/common/ui/Icon';
 import MolamolaIcon from 'components/common/ui/MolamolaIcon';
@@ -13,9 +12,7 @@ import MolamolaIcon from 'components/common/ui/MolamolaIcon';
 import MailLink from 'components/social/MailLink';
 import ShareButtons from 'components/social/ShareButtons';
 
-import { TOPICS } from 'constants';
-import { NETWORKS } from 'constants/social';
-import { ROUTES_NAMES } from 'routes';
+import { NETWORKS, PODCASTS_PLATFORMS } from 'constants/social';
 import footer from './footer/index.module.scss';
 import layout from './footer/layout.module.scss';
 
@@ -29,11 +26,11 @@ const Footer = () => (
     <div className={l('nested1')}>
       <div className={l('nested2')}>
         <div className={cn(f('links'), l('block1'))}>
-          <div className={f('links-column')}>
+          {/* <div className={f('links-column')}>
             <div className={f('header')}>
               <Text id="footer.materials" />
             </div>
-            {/* `themes` should be first */}
+            // `themes` should be first
             {TOPICS.map(topic => (
               <div key={topic} className={f('item')}>
                 <Link route={ROUTES_NAMES.topic} params={{ topic }}>
@@ -41,12 +38,24 @@ const Footer = () => (
                 </Link>
               </div>
             ))}
-          </div>
+          </div> */}
           <div className={f('links-column')}>
             <div className={f('header')}>
               <Text id="footer.our-networks" />
             </div>
             {NETWORKS.map(({ id, label, link }) => (
+              <div key={id} className={f('item')}>
+                <ExternalLink key={id} href={link}>
+                  {label}
+                </ExternalLink>
+              </div>
+            ))}
+          </div>
+          <div className={f('links-column')}>
+            <div className={f('header')}>
+              <Text id="footer.listen-us" />
+            </div>
+            {PODCASTS_PLATFORMS.map(({ id, label, link }) => (
               <div key={id} className={f('item')}>
                 <ExternalLink key={id} href={link}>
                   {label}

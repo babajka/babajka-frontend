@@ -75,6 +75,31 @@ export const SHARE_NETWORKS = [
   },
 ];
 
+export const PODCASTS_PLATFORMS = [
+  {
+    id: 'yandexmusic',
+    label: 'Yandex Music',
+    link: 'https://music.yandex.ru/album/10622616',
+  },
+  {
+    id: 'applepodcasts',
+    label: 'Apple Podcasts',
+    link:
+      'https://podcasts.apple.com/by/podcast/wir-by-беларуская-і-сусветная-культура/id1511316106',
+  },
+  {
+    id: 'googlepodcasts',
+    label: 'Google Podcasts',
+    link: 'https://podcasts.google.com/?feed=aHR0cHM6Ly93aXIuYnkvcnNzL3BvZGNhc3RzLw',
+  },
+  {
+    id: 'vkpodcasts',
+    label: 'VK',
+    // TODO: upd vk link.
+    link: 'https://vk.com/wir_by',
+  },
+];
+
 export const GA_ID = 'UA-117143376-2';
 export const YM_ID = 57206620;
 
