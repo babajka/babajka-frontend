@@ -5,6 +5,8 @@
 
 $experiment-slavics-default-bg: #fef04c;
 
+$brand-image-height: 24px;
+
 $title-font-size: (
   xxl: 48px,
   xl: 30px,
@@ -117,7 +119,7 @@ $title-line-height: (
   }
 
   &__brand {
-    height: $tag-image-height;
+    height: $brand-image-height;
   }
 
   &__label-read-full {

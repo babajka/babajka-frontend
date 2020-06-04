@@ -19,7 +19,6 @@ import { getTagLink, getTopicLink } from 'utils/tags';
 import env from 'utils/env';
 
 import { TOPICS, LANGS } from 'constants';
-import { TOPIC } from 'constants/misc';
 import { LOCALE_COOKIE_NAME } from 'constants/server';
 import { ROUTES_NAMES } from 'routes';
 import styles from './sidebar.module.scss';
@@ -59,13 +58,6 @@ SidebarSection.defaultProps = {
 };
 
 const getFooter = (topic, linkProps) => {
-  if (topic === TOPIC.authors) {
-    return (
-      <Link route={ROUTES_NAMES.about} {...linkProps}>
-        <Text id="sidebar.all-team" />
-      </Link>
-    );
-  }
   return getTopicLink({ topic, ...linkProps });
 };
 
