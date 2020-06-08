@@ -6,11 +6,9 @@ export const parseQuote = s => {
   return { quote, author };
 };
 
-// https://regex101.com/r/7eFFHP/2
-const IMAGE_URL_REGEX = /(.+)#align=(.+)$/;
-
 export const parseImage = src => {
-  const urlWithAlign = src.includes('#align') ? src : `${src}#align=center`;
-  const [_, url, align] = urlWithAlign.match(IMAGE_URL_REGEX);
+  const [url, rawParams] = src.split('#');
+  const params = new URLSearchParams(rawParams);
+  const align = params.get('align') || 'center';
   return { url, align };
 };
