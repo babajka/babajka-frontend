@@ -51,6 +51,11 @@ const ROUTES = [
     pattern: `topic/:topic(${topics})/tag/:tag`,
   },
   {
+    name: 'collection',
+    pattern: 'collection/:slug',
+    page: 'collection',
+  },
+  {
     name: 'about',
   },
   {

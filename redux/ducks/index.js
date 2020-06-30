@@ -7,6 +7,7 @@ import sidebar from './sidebar';
 import publicArticle from './publicArticle';
 import topics from './topics';
 import tags from './tags';
+import collections from './collections';
 
 import admin from './admin';
 
@@ -18,6 +19,7 @@ export default combineReducers({
   publicArticle,
   topics,
   tags,
+  collections,
 
   admin,
 });

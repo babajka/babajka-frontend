@@ -42,4 +42,7 @@ export default {
   tags: {
     getArticles: tag => `${API_URL}/tags/articles/${tag}`,
   },
+  collections: {
+    getOne: slug => `${API_URL}/collections/${slug}`,
+  },
 };

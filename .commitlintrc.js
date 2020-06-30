@@ -27,6 +27,7 @@ module.exports = {
         'fibery',
         'tags',
         'social',
+        'collections',
       ],
     ],
     'scope-empty': [2, 'never'],
