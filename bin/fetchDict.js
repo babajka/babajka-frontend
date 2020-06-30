@@ -20,6 +20,7 @@ const scopes = [
   'article',
   'auth',
   'banners',
+  'collection',
   'common',
   'diary',
   'errors',

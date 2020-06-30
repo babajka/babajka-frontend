@@ -23,7 +23,7 @@ export const getLocalizedCollection = (
   articleIndex,
   name: localize(name, lang),
   description: localize(description, lang),
-  articles: articles.map(a => getLocalizedArticle(a, lang)), // eslint-disable-line no-use-before-define
+  articles: articles?.map(a => getLocalizedArticle(a, lang)), // eslint-disable-line no-use-before-define
 });
 
 export const getLocalizedCollections = localizeArray(getLocalizedCollection);

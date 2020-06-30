@@ -42,7 +42,7 @@ const LAYOUT_BY_LEVEL = {
   D: 'row-of-two',
 };
 
-const ArticlesBlocks = ({ articlesCount, blocks }) => {
+export const ArticlesBlocks = ({ articlesCount, blocks }) => {
   if (articlesCount === 1) {
     const [article] = blocks[0];
     const { articleId } = article;

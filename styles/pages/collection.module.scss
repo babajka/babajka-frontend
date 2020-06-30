@@ -1,0 +1,48 @@
+@import 'styles/responsiveness';
+@import 'styles/variables';
+
+.collection-page {
+  text-decoration: none; // placeholder.
+
+  &__heading {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 46px;
+  }
+
+  &__cover {
+    border-radius: 50%;
+    height: 90px;
+    margin-right: 29px;
+    width: 90px;
+  }
+
+  &__text {
+    text-decoration: none;
+  }
+
+  &__subheading {
+    color: $primary;
+    font-size: 14px;
+    letter-spacing: 1px;
+    line-height: 24px;
+    text-transform: uppercase;
+  }
+
+  &__title {
+    font-size: 48px;
+    font-weight: bold;
+    line-height: 60px;
+
+    @include screen-tablet-touch-mobile {
+      font-size: 24px;
+      line-height: 30px;
+    }
+  }
+
+  &__author {
+    color: $primary;
+    font-size: 16px;
+    line-height: 24px;
+  }
+}

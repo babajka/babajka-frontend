@@ -23,6 +23,7 @@ export const CollectionModel = {
   description: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
   cover: PropTypes.string.isRequired,
+  podcastCover: PropTypes.string,
 };
 
 export const CollectionShape = PropTypes.shape(CollectionModel);
