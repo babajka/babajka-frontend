@@ -14,19 +14,27 @@ import {
 } from 'components/social/Metatags';
 import Text, { localize } from 'components/common/Text';
 import Image from 'components/common/Image';
+import ArticlesComposition from 'components/articles/compositions/ArticlesComposition';
 
 import { collectionsActions, collectionsSelectors } from 'redux/ducks/collections';
-import { ArticlesArray, CollectionShape, LangType } from 'utils/customPropTypes';
+import { ArticlesArray, CollectionShape, LangType, TagShape } from 'utils/customPropTypes';
 import { populateRequest } from 'utils/request';
+import { getTagLink } from 'utils/tags';
+import { renderNodeList } from 'utils/formatters';
 import host from 'utils/host';
-
-import { ArticlesBlocks } from './tag';
 
 const b = bem(styles);
 
 const mapStateToProps = (state, { lang }) => collectionsSelectors.getData(state, lang);
 
-const CollectionPage = ({ lang, routerQuery: { slug: _ }, collection, blocks, articlesCount }) => {
+const CollectionPage = ({
+  lang,
+  routerQuery: { slug: _ },
+  collection,
+  blocks,
+  articlesCount,
+  authors,
+}) => {
   const metaKeywords = [collection.name, localize(`collection.meta_keywords`, lang)].join(', ');
   return (
     <>
@@ -50,11 +58,13 @@ const CollectionPage = ({ lang, routerQuery: { slug: _ }, collection, blocks, ar
                 <Text id="collection.one" />
               </div>
               <div className={b('title')}>{collection.name}</div>
-              <span className={b('author')}>AUTHOR</span>
+              <div className={b('authors')}>
+                {renderNodeList(authors.map(tag => getTagLink({ tag })))}
+              </div>
             </div>
           </div>
         </div>
-        <ArticlesBlocks articlesCount={articlesCount} blocks={blocks} />
+        <ArticlesComposition articlesCount={articlesCount} blocks={blocks} />
       </div>
     </>
   );
@@ -68,6 +78,7 @@ CollectionPage.propTypes = {
   collection: CollectionShape.isRequired,
   blocks: PropTypes.arrayOf(ArticlesArray).isRequired,
   articlesCount: PropTypes.number.isRequired,
+  authors: PropTypes.arrayOf(TagShape).isRequired,
 };
 
 CollectionPage.getInitialProps = ctx =>

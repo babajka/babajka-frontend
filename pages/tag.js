@@ -13,9 +13,7 @@ import {
   DEFAULT_IMAGE,
 } from 'components/social/Metatags';
 import { localize } from 'components/common/Text';
-import FeaturedBlock from 'components/articles/blocks/FeaturedBlock';
-import TagPageBlockB from 'components/articles/blocks/TagPageBlockB';
-import TagPageBlockCD from 'components/articles/blocks/TagPageBlockCD';
+import ArticlesComposition from 'components/articles/compositions/ArticlesComposition';
 
 import { tagsActions, tagsSelectors } from 'redux/ducks/tags';
 import { ArticlesArray, TagShape, LangType } from 'utils/customPropTypes';
@@ -26,42 +24,6 @@ import host from 'utils/host';
 import { TOPICS } from 'constants';
 
 const b = bem(styles);
-const PAGE_LEVEL_ORDER = ['B1', 'C', 'D', 'C', 'B2', 'C', 'D', 'C'];
-
-const BLOCK_BY_LEVEL = {
-  B1: TagPageBlockB,
-  B2: TagPageBlockB,
-  C: TagPageBlockCD,
-  D: TagPageBlockCD,
-};
-
-const LAYOUT_BY_LEVEL = {
-  B1: 'large-left',
-  B2: 'large-right',
-  C: 'row-of-three',
-  D: 'row-of-two',
-};
-
-export const ArticlesBlocks = ({ articlesCount, blocks }) => {
-  if (articlesCount === 1) {
-    const [article] = blocks[0];
-    const { articleId } = article;
-    return (
-      <FeaturedBlock
-        // This is a workaround in order to use FeaturedBlock as it is.
-        block={{ frozen: true, articleId }}
-        data={{ articles: { [articleId]: article } }}
-      />
-    );
-  }
-
-  return blocks.map((block, index) => {
-    const levelName = PAGE_LEVEL_ORDER[index % PAGE_LEVEL_ORDER.length];
-    const Block = BLOCK_BY_LEVEL[levelName];
-    // eslint-disable-next-line react/no-array-index-key
-    return <Block key={index} articles={block} layout={LAYOUT_BY_LEVEL[levelName]} />;
-  });
-};
 
 const mapStateToProps = (state, { lang }) => tagsSelectors.getData(state, lang);
 
@@ -81,7 +43,7 @@ const TagPage = ({ lang, routerQuery: { topic }, tag, blocks, articlesCount }) =
           <div className={b('topic')}>{getTopicLink({ topic, postfix: 'one' })}</div>
           <div className={b('title')}>{title}</div>
         </div>
-        <ArticlesBlocks articlesCount={articlesCount} blocks={blocks} />
+        <ArticlesComposition articlesCount={articlesCount} blocks={blocks} />
       </div>
     </>
   );
