@@ -1,5 +1,7 @@
 import createReducer from 'type-to-reducer';
 
+import omit from 'lodash/omit';
+
 import api from 'constants/api';
 import { defaultReducer } from 'utils/redux';
 import { makeRequest } from 'utils/request';
@@ -33,10 +35,20 @@ const getData = (state, lang) => {
   const { collection } = getState(state);
   const localizedArticles = getLocalizedArticles(collection.articles, lang);
 
+  const authors = Object.values(
+    localizedArticles.reduce((acc, { tagsByTopic: { authors: articleAuthors } }) => {
+      articleAuthors.forEach(authorTag => {
+        acc[authorTag.slug] = authorTag;
+      });
+      return acc;
+    }, {})
+  );
+
   return {
-    collection: getLocalizedCollection(collection, lang),
+    collection: getLocalizedCollection(omit(collection, ['articles']), lang),
     blocks: getArticlesBlocks(localizedArticles),
     articlesCount: localizedArticles.length,
+    authors,
   };
 };
 
