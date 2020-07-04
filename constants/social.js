@@ -90,13 +90,12 @@ export const PODCASTS_PLATFORMS = [
   {
     id: 'googlepodcasts',
     label: 'Google Podcasts',
-    link: 'https://podcasts.google.com/?feed=aHR0cHM6Ly93aXIuYnkvcnNzL3BvZGNhc3RzLw',
+    link: 'https://podcasts.google.com/feed/aHR0cHM6Ly93aXIuYnkvcnNzL3BvZGNhc3RzLw',
   },
   {
     id: 'vkpodcasts',
     label: 'VK',
-    // TODO: upd vk link.
-    link: 'https://vk.com/wir_by',
+    link: 'https://vk.com/podcasts-160609284',
   },
 ];
 

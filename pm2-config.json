@@ -1,19 +1,22 @@
 {
-  "apps": [{
-    "name": "frontend-staging",
-    "script": "npm",
-    "env": {
-      "WIR_ENV": "staging",
-      "NODE_ENV": "production",
+  "apps": [
+    {
+      "name": "frontend-staging",
+      "script": "npm",
+      "env": {
+        "WIR_ENV": "staging",
+        "NODE_ENV": "production"
+      },
+      "args": "run start:prod:remote -- --backend-url=http://localhost:8080 --port=3000"
     },
-    "args": "run start:prod:remote -- --backend_url=http://localhost:8080 --port=3000"
-  },{
-    "name": "frontend-production",
-    "script": "npm",
-    "env": {
-      "WIR_ENV": "production",
-      "NODE_ENV": "production",
-    },
-    "args": "run start:prod:remote -- --backend_url=http://localhost:8080 --port=3000"
-  }]
+    {
+      "name": "frontend-production",
+      "script": "npm",
+      "env": {
+        "WIR_ENV": "production",
+        "NODE_ENV": "production"
+      },
+      "args": "run start:prod:remote -- --backend-url=http://localhost:8080 --port=3000"
+    }
+  ]
 }
