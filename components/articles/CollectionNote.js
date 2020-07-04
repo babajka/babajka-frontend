@@ -14,6 +14,10 @@ import styles from './article.module.scss';
 
 const b = bem(styles);
 
+const COLLECTIONS_HIDE_COVER = {
+  starbellit: true,
+};
+
 const CollectionNoteItem = ({ className, hideLink, text, slug }) => (
   <div className={className}>
     {hideLink ? (
@@ -35,7 +39,7 @@ CollectionNoteItem.propTypes = {
 
 const CollectionNote = ({ locale, data: { cover, articleIndex = 0, name, articles, slug } }) => (
   <div className={b('collection')}>
-    {cover && (
+    {cover && !COLLECTIONS_HIDE_COVER[slug] && (
       <Link route={ROUTES_NAMES.collection} params={{ slug }}>
         <Image
           className={b('collection-cover')}
