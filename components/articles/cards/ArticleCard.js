@@ -90,6 +90,7 @@ const ArticleCard = props => {
   } = props;
   const { brands = [], authors = [] } = tagsByTopic;
   const { short, full } = ACTION_BY_TYPE[type];
+  const dark = theme !== 'light';
 
   return (
     <CardWrapper
@@ -162,7 +163,7 @@ const ArticleCard = props => {
         {!collection && (
           <div className={b('description-container')}>
             <div className={b('description')}>{subtitle}</div>
-            <div className={linkCn({ dark: theme !== 'light' })}>
+            <div className={linkCn({ dark })}>
               <Text id={`article.${short}`} />
             </div>
           </div>
@@ -179,7 +180,7 @@ const ArticleCard = props => {
         </div>
         <div className={b('filler', { bottom: true })} />
         <div className={b('label-read-full')}>
-          <span className={linkCn({ dark: theme !== 'light' })}>
+          <span className={linkCn({ dark })}>
             <Text id={`article.${full}`} />
           </span>
         </div>

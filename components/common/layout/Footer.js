@@ -45,9 +45,7 @@ const Footer = () => (
             </div>
             {NETWORKS.map(({ id, label, link }) => (
               <div key={id} className={f('item')}>
-                <ExternalLink key={id} href={link}>
-                  {label}
-                </ExternalLink>
+                <ExternalLink href={link}>{label}</ExternalLink>
               </div>
             ))}
           </div>
@@ -57,9 +55,7 @@ const Footer = () => (
             </div>
             {PODCASTS_PLATFORMS.map(({ id, label, link }) => (
               <div key={id} className={f('item')}>
-                <ExternalLink key={id} href={link}>
-                  {label}
-                </ExternalLink>
+                <ExternalLink href={link}>{label}</ExternalLink>
               </div>
             ))}
           </div>
