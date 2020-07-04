@@ -29,7 +29,7 @@ const mapStateToProps = (state, { lang }) => collectionsSelectors.getData(state,
 
 const CollectionPage = ({
   lang,
-  routerQuery: { slug: _ },
+  routerQuery: { slug },
   collection,
   blocks,
   articlesCount,
@@ -57,7 +57,9 @@ const CollectionPage = ({
               <div className={b('subheading')}>
                 <Text id="collection.one" />
               </div>
-              <div className={b('title')}>{collection.name}</div>
+              <div className={b('title', { 'hack-starbellit': slug === 'starbellit' })}>
+                {collection.name}
+              </div>
               <div className={b('authors')}>
                 {renderNodeList(authors.map(tag => getTagLink({ tag })))}
               </div>

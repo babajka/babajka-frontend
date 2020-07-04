@@ -48,6 +48,18 @@
       font-size: 30px;
       line-height: 36px;
     }
+
+    &--hack-starbellit {
+      @include screen-touch {
+        font-size: 24px;
+        line-height: 30px;
+      }
+
+      @include screen-mobile {
+        font-size: 24px;
+        line-height: 30px;
+      }
+    }
   }
 
   &__authors {
