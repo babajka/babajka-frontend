@@ -4,6 +4,7 @@ import teammateStyles from 'components/social/teammate.module.scss';
 import React from 'react';
 import cn from 'classnames';
 import bem from 'bem-css-modules';
+import times from 'lodash/times';
 
 import ExternalLink from 'components/common/ExternalLink';
 import Text, { localize } from 'components/common/Text';
@@ -15,7 +16,7 @@ import {
   DEFAULT_IMAGE,
 } from 'components/social/Metatags';
 import Teammate from 'components/social/Teammate';
-import { Thanks1, Thanks2 } from 'components/social/Thanks';
+import { Thanks } from 'components/social/Thanks';
 
 import team from 'data/team.json';
 import { PARTNERS } from 'constants/partners';
@@ -61,12 +62,11 @@ const AboutPage = ({ lang }) => (
           />
         ))}
       </div>
-      <div className={b('text', { 'margin-top': 'medium' })}>
-        <Thanks1 />
-      </div>
-      <div className={b('text', { 'margin-top': 'medium' })}>
-        <Thanks2 />
-      </div>
+      {times(3).map(idx => (
+        <div className={b('text', { 'margin-top': 'medium' })}>
+          <Thanks idx={idx + 1} />
+        </div>
+      ))}
       <div className={styles['about-page__text--margin-top--large']}>
         <div className={b('subheading')}>
           <Text id="about.section-partners-header" />
