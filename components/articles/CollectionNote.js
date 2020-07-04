@@ -33,31 +33,35 @@ CollectionNoteItem.propTypes = {
   slug: PropTypes.string.isRequired,
 };
 
-const CollectionNote = ({ locale, data: { cover, articleIndex = 0, name, articles } }) => (
+const CollectionNote = ({ locale, data: { cover, articleIndex = 0, name, articles, slug } }) => (
   <div className={b('collection')}>
     {cover && (
-      <Image
-        className={b('collection-cover')}
-        alt={name}
-        sourceSizes={[70]}
-        baseUrl={cover}
-        mode="x"
-      />
+      <Link route={ROUTES_NAMES.collection} params={{ slug }}>
+        <Image
+          className={b('collection-cover')}
+          alt={name}
+          sourceSizes={[70]}
+          baseUrl={cover}
+          mode="x"
+        />
+      </Link>
     )}
     <div className={b('collection-items')}>
       <div className={b('collection-item')}>
         {localize('article.this-is-the', locale)} {` ${articleIndex + 1} `}
         {localize('article.of-collection', locale)}
         <br />
-        <span className={b('collection-name')}>{name}</span>
+        <Link className={b('collection-name')} route={ROUTES_NAMES.collection} params={{ slug }}>
+          {name}
+        </Link>
       </div>
-      {articles.map(({ _id, slug, title }, i) => (
+      {articles.map(({ _id, slug: articleSlug, title }, i) => (
         <CollectionNoteItem
           key={_id}
           className={b('collection-item')}
           hideLink={articleIndex === i}
           text={`${i + 1}. ${title}`}
-          slug={slug}
+          slug={articleSlug}
         />
       ))}
     </div>
