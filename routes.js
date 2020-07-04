@@ -53,7 +53,6 @@ const ROUTES = [
   {
     name: 'collection',
     pattern: 'collection/:slug',
-    page: 'collection',
   },
   {
     name: 'about',

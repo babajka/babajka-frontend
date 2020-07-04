@@ -1,5 +1,4 @@
 import createReducer from 'type-to-reducer';
-
 import omit from 'lodash/omit';
 
 import api from 'constants/api';
