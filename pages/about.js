@@ -4,7 +4,6 @@ import teammateStyles from 'components/social/teammate.module.scss';
 import React from 'react';
 import cn from 'classnames';
 import bem from 'bem-css-modules';
-import times from 'lodash/times';
 
 import ExternalLink from 'components/common/ExternalLink';
 import Text, { localize } from 'components/common/Text';
@@ -62,7 +61,7 @@ const AboutPage = ({ lang }) => (
           />
         ))}
       </div>
-      {times(3).map(idx => (
+      {Array.from({ length: 3 }).map((_, idx) => (
         <div className={b('text', { 'margin-top': 'medium' })}>
           <Thanks idx={idx + 1} />
         </div>
