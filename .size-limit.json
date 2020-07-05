@@ -7,7 +7,7 @@
   {
     "name": "> app",
     "path": ".next/static/**/_app.js",
-    "limit": "20 kB"
+    "limit": "23 kB"
   },
   {
     "name": "> home",
@@ -31,13 +31,13 @@
     "name": "> tag",
     "path": ".next/static/**/tag.js",
     "running": false,
-    "limit": "6 kB"
+    "limit": "2 kB"
   },
   {
     "name": "> about",
     "path": ".next/static/**/about.js",
     "running": false,
-    "limit": "8 kB"
+    "limit": "9 kB"
   },
   {
     "name": "> _error",
@@ -55,6 +55,6 @@
     "name": "> all js",
     "path": ".next/static/chunks/*.js",
     "running": false,
-    "limit": "160 kB"
+    "limit": "170 kB"
   }
 ]
