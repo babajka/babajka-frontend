@@ -28,11 +28,6 @@ export const PARTNERS = [
     size: 'small',
   },
   {
-    id: 'logo-museum-brouka',
-    img: 'museum_brouka_logo.jpg',
-    url: 'http://brouka.museum.by',
-  },
-  {
     id: 'logo-ethno',
     img: 'ethno_logo.jpg',
     url: 'https://ethno.by',
