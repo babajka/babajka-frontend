@@ -22,6 +22,7 @@ import Button from 'components/common/Button';
 import Text from 'components/common/Text';
 import MolamolaIcon from 'components/common/ui/MolamolaIcon';
 import ShareButtons from 'components/social/ShareButtons';
+import Quiz from 'components/specials/Quiz';
 
 import { ArticleShape } from 'utils/customPropTypes';
 import { getTagLink, getTagImageRenderer, renderTag } from 'utils/tags';
@@ -38,6 +39,7 @@ const COVER_SIZES = [1200, 1000, 770, 640, 360];
 
 const Article = ({
   data: {
+    slug,
     images,
     title,
     subtitle,
@@ -111,6 +113,10 @@ const Article = ({
           {collection?.articles.length > 1 && <CollectionNote data={collection} locale={locale} />}
           {fiberyRenderer(text.content)}
         </div>
+
+        {/* FIXME: hardcode */}
+        {slug === 'bielaruski' && <Quiz id="a8822357-22c3-4090-bfe6-765948466bbe" />}
+
         <div className={b('post-actions')}>
           {CROWDFUNDING_CAMPAIGN.enabled && (
             <ExternalLink href={CROWDFUNDING_CAMPAIGN.options.link}>
