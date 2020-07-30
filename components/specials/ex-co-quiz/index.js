@@ -1,11 +1,8 @@
 import React, { useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
-import bem from 'bem-css-modules';
 
-import Icon from 'components/common/ui/Icon';
-import styles from './index.module.scss';
-
-const b = bem(styles);
+import Spinner from 'components/common/ui/Spinner';
+import styles from './quiz.module.scss';
 
 function loadSdk(d, s, id) {
   const fjs = d.getElementsByTagName(s)[0];
@@ -18,21 +15,21 @@ function loadSdk(d, s, id) {
   fjs.parentNode.insertBefore(js, fjs);
 }
 
-const Quiz = ({ id }) => {
+const ExCoQuiz = ({ id }) => {
   useLayoutEffect(() => {
     loadSdk(document, 'script', 'playbuzz-sdk');
   });
   return (
     <div className="playbuzz" data-id={id} data-show-share="false" data-show-info="false">
-      <div className={b()}>
-        <Icon className={b('icon', { loading: true })} name="circle-notch" size="2x" />
+      <div className={styles.quiz}>
+        <Spinner className={styles.icon} size="2x" />
       </div>
     </div>
   );
 };
 
-Quiz.propTypes = {
+ExCoQuiz.propTypes = {
   id: PropTypes.string.isRequired,
 };
 
-export default Quiz;
+export default ExCoQuiz;
