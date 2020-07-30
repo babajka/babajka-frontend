@@ -4,6 +4,8 @@ import bem from 'bem-css-modules';
 
 import Clickable from 'components/common/Clickable';
 import Icon from 'components/common/ui/Icon';
+import Spinner from 'components/common/ui/Spinner';
+
 import styles from './input.module.scss';
 
 const b = bem(styles);
@@ -29,8 +31,8 @@ const Input = ({
         {...props}
       />
       {pending && (
-        <span className={b('icon', { left: true, loading: true })}>
-          <Icon name="circle-notch" />
+        <span className={b('icon', { left: true })}>
+          <Spinner />
         </span>
       )}
       {leftIcon && (
