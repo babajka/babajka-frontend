@@ -216,8 +216,16 @@ $block-spacing: 60px;
   margin-bottom: $block-spacing;
   width: 100%;
 
+  tr:not(:first-child) td {
+    padding-top: 12px;
+  }
+
   p {
+    font-size: 16px;
+    line-height: 24px;
     margin: auto;
+    // stylelint-disable-next-line declaration-no-important
+    margin-top: 0 !important;
     text-align: left;
     width: 50%;
   }
