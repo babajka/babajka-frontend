@@ -228,6 +228,14 @@ $block-spacing: 60px;
     margin-top: 0 !important;
     text-align: left;
     width: 50%;
+
+    @include screen-touch {
+      width: unset;
+    }
+
+    @include screen-mobile {
+      width: unset;
+    }
   }
 }
 
