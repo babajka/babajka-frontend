@@ -37,5 +37,5 @@ export const toTitleCase = str =>
     .map(s => `${s[0].toUpperCase()}${s.slice(1)}`)
     .join(' ');
 
-export const renderNodeList = (nodes, delimiter = <span>, </span>) =>
+export const renderNodeList = (nodes, delimiter = <pr>,&nbsp;</pr>) =>
   !!nodes.length && nodes.reduce((acc, node, key) => [acc, cloneElement(delimiter, { key }), node]);
