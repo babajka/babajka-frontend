@@ -72,6 +72,10 @@ const COLLECTIONS_HIDE_COVER = {
   starbellit: true,
 };
 
+const COLLECTIONS_HIDE_COMPLETELY = {
+  vierszy2020: true,
+};
+
 // TODO: fix storybook
 const ArticleCard = props => {
   const {
@@ -79,7 +83,7 @@ const ArticleCard = props => {
     blockContext,
     theme,
     subtitle,
-    collection,
+    collection: rawCollection,
     color,
     images,
     title,
@@ -91,6 +95,9 @@ const ArticleCard = props => {
   const { brands = [], authors = [] } = tagsByTopic;
   const { short, full } = ACTION_BY_TYPE[type];
   const dark = theme !== 'light';
+
+  const collection =
+    rawCollection && !COLLECTIONS_HIDE_COMPLETELY[rawCollection.slug] ? rawCollection : undefined;
 
   return (
     <CardWrapper
