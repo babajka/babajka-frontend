@@ -23,6 +23,7 @@ import Text from 'components/common/Text';
 import MolamolaIcon from 'components/common/ui/MolamolaIcon';
 import ShareButtons from 'components/social/ShareButtons';
 import ExCoQuiz from 'components/specials/ex-co-quiz';
+import TextWithSeparator from 'lib/components/TextWithSeparator';
 
 import { ArticleShape } from 'utils/customPropTypes';
 import { getTagLink, getTagImageRenderer, renderTag } from 'utils/tags';
@@ -72,7 +73,9 @@ const Article = ({
       <MetaArticleItems name="published_time" value={publishAt} />
       <div>
         <div className={cn('wir-content-padding', styles['article-page-content'])}>
-          <div className={b('subtitle')}>{subtitle}</div>
+          <div className={b('subtitle')}>
+            <TextWithSeparator text={subtitle} symbol={'\n'} />
+          </div>
         </div>
         {type === 'text' && (
           <Image
