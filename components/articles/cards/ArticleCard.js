@@ -96,8 +96,7 @@ const ArticleCard = props => {
   const { short, full } = ACTION_BY_TYPE[type];
   const dark = theme !== 'light';
 
-  const collection =
-    rawCollection && !COLLECTIONS_HIDE_COMPLETELY[rawCollection.slug] ? rawCollection : undefined;
+  const collection = !COLLECTIONS_HIDE_COMPLETELY[rawCollection?.slug] && rawCollection;
 
   return (
     <CardWrapper
