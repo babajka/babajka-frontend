@@ -20,20 +20,21 @@ const { TABLE, TABLE_RIGHT, NOTE, POEM, SPLIT, CAROUSEL } = TYPES;
 
 const returnNull = () => null;
 
-const renderContent = content => {
+const renderContent = (content, overrides = {}) => {
   if (!Array.isArray(content)) {
     return null;
   }
+  // TEMP:
+  // eslint-disable-next-line no-use-before-define
+  const renderers = { ...RENDERERS, ...overrides };
   return content.map(({ type, ...params }, key) => {
-    // TEMP:
-    // eslint-disable-next-line no-use-before-define
-    if (!__PROD__ && !RENDERERS[type]) {
+    if (!__PROD__ && !renderers[type]) {
       // eslint-disable-next-line no-console
       console.log('Missed renderer: ', type);
     }
-    // eslint-disable-next-line no-use-before-define
-    const render = RENDERERS[type] || returnNull;
-    return render({ key, ...params });
+
+    const render = renderers[type] || returnNull;
+    return render({ key, ...params }, overrides);
   });
 };
 
@@ -73,7 +74,6 @@ const TABLE_CLASS_BY_TYPE = {
   [TABLE]: styles['article-table'],
   [TABLE_RIGHT]: cn(styles['article-table'], styles['right-element']),
   [NOTE]: cn(styles['article-note'], styles['right-element']),
-  [POEM]: styles['article-poem'],
   [SPLIT]: styles['article-split'],
 };
 
@@ -93,6 +93,18 @@ const CUSTOM_RENDERER = {
       { images: [] }
     );
     return <ImageSlider images={images} description={description} />;
+  },
+  [POEM]: poemContent => {
+    const tableCell = {
+      table_cell: ({ content }) => renderContent(content),
+    };
+    return (
+      <div className={styles['article-poem']}>
+        {renderContent(poemContent, {
+          table_row: ({ key, content }) => <div key={key}>{renderContent(content, tableCell)}</div>,
+        })}
+      </div>
+    );
   },
 };
 
