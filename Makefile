@@ -13,6 +13,9 @@ build:
 deploy-dev-from-local:
 	npm run deploy-dev-from-local
 
+deploy-prod-from-local:
+	npm run deploy-prod-from-local
+
 update:
 	npm run fetch-data
 
