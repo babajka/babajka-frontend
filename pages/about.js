@@ -23,9 +23,6 @@ import { PARTNERS } from 'constants/partners';
 const b = bem(styles);
 const t = bem(teammateStyles);
 
-const getLogoUrl = name =>
-  `https://res.cloudinary.com/wir-by/image/upload/c_scale,w_250,f_auto,q_auto/v1546529671/production/partners-logos/${name}`;
-
 const AboutPage = ({ lang }) => (
   <>
     <MetaTitle title={localize('about.meta-title', lang)} />
@@ -74,7 +71,7 @@ const AboutPage = ({ lang }) => (
           {PARTNERS.map(({ id, img, url, size = undefined }) => (
             <div key={id} className={b('partner-logo', { size })}>
               <ExternalLink href={url}>
-                <img src={getLogoUrl(img)} alt={localize(`about.${id}`, lang)} />
+                <img src={img} alt={localize(`about.${id}`, lang)} />
               </ExternalLink>
             </div>
           ))}
