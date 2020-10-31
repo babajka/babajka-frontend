@@ -5,6 +5,15 @@ import isBefore from 'date-fns/isBefore';
 import { TOPICS } from 'constants';
 import { localize, localizeArray, localizeFields } from 'utils/localization';
 
+// returns a list of articles coupled by 2 or 3
+// 5 articles = 2 blocks (2 + 3)
+export const getArticlesBlocks = articles =>
+  chunk(articles, 5).reduce(
+    (blocks, blockOf5) =>
+      blocks.concat([blockOf5.slice(0, 2), blockOf5.slice(2)]).filter(b => b.length),
+    []
+  );
+
 export const getDiary = ({ author, text, day, month, year, slug }) => ({
   author,
   text,
@@ -64,7 +73,7 @@ export const getLocalizedArticle = (article, lang) => {
   if (!article) {
     return null;
   }
-  const { _id: id, locales, collection, publishAt, tags, ...rest } = article;
+  const { _id: id, locales, collection, publishAt, tags, suggestedArticles, ...rest } = article;
   const { text, metrics: _, ...localized } = localize(locales, lang);
 
   // TODO: think about implementing this logic at backend
@@ -96,6 +105,10 @@ export const getLocalizedArticle = (article, lang) => {
     published: !!publishAt && isBefore(parseISO(publishAt), new Date()),
     tagsByTopic,
     metrics: totalMetrics,
+    suggestedArticles: suggestedArticles && {
+      count: suggestedArticles.length,
+      blocks: getArticlesBlocks(localizeArray(getLocalizedArticle)(suggestedArticles, lang)),
+    },
   };
 };
 
@@ -115,12 +128,3 @@ export const getMainArticlesRows = (articles, rowSize, complexRowSize) => {
 export const getLocalizedTeam = localizeArray(localizeFields(['name', 'role']));
 
 export const getLocalizedVacancies = localizeArray(localizeFields(['title', 'description']));
-
-// returns a list of articles coupled by 2 or 3
-// 5 articles = 2 blocks (2 + 3)
-export const getArticlesBlocks = articles =>
-  chunk(articles, 5).reduce(
-    (blocks, blockOf5) =>
-      blocks.concat([blockOf5.slice(0, 2), blockOf5.slice(2)]).filter(b => b.length),
-    []
-  );
