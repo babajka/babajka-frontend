@@ -66,11 +66,10 @@ export const ArticleMediaShape = PropTypes.shape({
 
 export const ArticleType = PropTypes.oneOf(ARTICLE_TYPES);
 
-export const ArticleModel = {
+export const ArticlePreviewModel = {
   active: PropTypes.bool.isRequired,
   articleId: PropTypes.string.isRequired,
   collection: CollectionShape,
-  text: PropTypes.object.isRequired,
   locale: LangType,
   publishAt: PropTypes.string,
   published: PropTypes.bool.isRequired,
@@ -82,11 +81,24 @@ export const ArticleModel = {
   video: ArticleMediaShape,
   audio: ArticleMediaShape,
   metadata: MetadataShape.isRequired,
-  keywords: PropTypes.string.isRequired,
   tagsByTopic: PropTypes.objectOf(TagsArray).isRequired,
   theme: ThemeType.isRequired,
   color: PropTypes.string.isRequired,
+};
+
+export const ArticlePreviewShape = PropTypes.shape(ArticlePreviewModel);
+export const ArticlePreviewArray = PropTypes.arrayOf(ArticlePreviewShape);
+export const ArticlePreviewsArrays = PropTypes.arrayOf(ArticlePreviewArray);
+
+export const ArticleModel = {
+  ...ArticlePreviewModel,
+  text: PropTypes.object.isRequired,
+  keywords: PropTypes.string.isRequired,
   metrics: PropTypes.number,
+  suggestedArticles: PropTypes.shape({
+    count: PropTypes.number.isRequired,
+    blocks: ArticlePreviewsArrays.isRequired,
+  }),
 };
 
 export const ArticleShape = PropTypes.shape(ArticleModel);

@@ -5,7 +5,7 @@ import FeaturedBlock from 'components/articles/blocks/FeaturedBlock';
 import TagPageBlockB from 'components/articles/blocks/TagPageBlockB';
 import TagPageBlockCD from 'components/articles/blocks/TagPageBlockCD';
 
-import { ArticlesArray } from 'utils/customPropTypes';
+import { ArticlePreviewArray } from 'utils/customPropTypes';
 
 const PAGE_LEVEL_ORDER = ['B1', 'C', 'D', 'C', 'B2', 'C', 'D', 'C'];
 
@@ -46,7 +46,7 @@ const ArticlesComposition = ({ articlesCount, blocks }) => {
 
 ArticlesComposition.propTypes = {
   articlesCount: PropTypes.number.isRequired,
-  blocks: PropTypes.arrayOf(ArticlesArray).isRequired,
+  blocks: PropTypes.arrayOf(ArticlePreviewArray).isRequired,
 };
 
 export default ArticlesComposition;

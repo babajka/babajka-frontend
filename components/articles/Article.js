@@ -34,6 +34,7 @@ import host from 'utils/host';
 import styles from './article.module.scss';
 
 import CollectionNote from './CollectionNote';
+import ArticlesComposition from './compositions/ArticlesComposition';
 
 const b = bem(styles);
 const COVER_SIZES = [1200, 1000, 770, 640, 360];
@@ -53,6 +54,7 @@ const Article = ({
     collection,
     publishAt,
     locale,
+    suggestedArticles,
   },
 }) => {
   const router = useRouter();
@@ -141,6 +143,16 @@ const Article = ({
             </div>
           ))}
         </div>
+
+        {suggestedArticles && (
+          <>
+            <Text id="article.suggested-articles" />
+            <ArticlesComposition
+              articlesCount={suggestedArticles.count}
+              blocks={suggestedArticles.blocks}
+            />
+          </>
+        )}
       </div>
     </>
   );
