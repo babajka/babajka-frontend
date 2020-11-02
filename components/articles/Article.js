@@ -34,7 +34,8 @@ import host from 'utils/host';
 import styles from './article.module.scss';
 
 import CollectionNote from './CollectionNote';
-import ArticlesComposition from './compositions/ArticlesComposition';
+
+import CardsLayout from './layout/Layout';
 
 const b = bem(styles);
 const COVER_SIZES = [1200, 1000, 770, 640, 360];
@@ -146,11 +147,10 @@ const Article = ({
 
         {suggestedArticles && (
           <>
-            <Text id="article.suggested-articles" />
-            <ArticlesComposition
-              articlesCount={suggestedArticles.count}
-              blocks={suggestedArticles.blocks}
-            />
+            <div className={b('suggested-articles-title')}>
+              <Text id="article.suggested-articles" />
+            </div>
+            <CardsLayout blocks={suggestedArticles.blocks} data={suggestedArticles.data} />
           </>
         )}
       </div>

@@ -1,3 +1,5 @@
+import ArticlesCompositionAsBlock from 'components/articles/compositions/ArticlesCompositionAsBlock';
+
 import FeaturedBlock from './FeaturedBlock';
 import DiaryBlock from './DiaryBlock';
 import LatestArticles from './LatestArticles';
@@ -14,4 +16,5 @@ export default {
   articlesByTag2: ArticlesByTag2,
   articlesByTag3: ArticlesByTag3,
   banner: BannerBlock,
+  list: ArticlesCompositionAsBlock,
 };
