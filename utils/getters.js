@@ -2,6 +2,8 @@ import chunk from 'lodash/chunk';
 import parseISO from 'date-fns/parseISO';
 import isBefore from 'date-fns/isBefore';
 
+import keyBy from 'lodash/keyBy';
+
 import { TOPICS } from 'constants';
 import { localize, localizeArray, localizeFields } from 'utils/localization';
 
@@ -106,8 +108,15 @@ export const getLocalizedArticle = (article, lang) => {
     tagsByTopic,
     metrics: totalMetrics,
     suggestedArticles: suggestedArticles && {
-      count: suggestedArticles.length,
-      blocks: getArticlesBlocks(localizeArray(getLocalizedArticle)(suggestedArticles, lang)),
+      blocks: suggestedArticles.blocks,
+      data: {
+        ...suggestedArticles.data,
+        articles: keyBy(
+          localizeArray(getLocalizedArticle)(suggestedArticles.data.articles, lang),
+          'id'
+        ),
+        tags: keyBy(localizeArray(getLocalizedTag)(suggestedArticles.data.tags, lang), 'id'),
+      },
     },
   };
 };
