@@ -5,9 +5,9 @@ import keyBy from 'lodash/keyBy';
 
 import BLOCKS_BY_TYPE from 'components/articles/blocks';
 
-import { ArticlesArray, ArticlesById, TopicsById, TagsById, LangType } from 'utils/customPropTypes';
+import { ArticlesArray, ArticlesById, TopicsById, TagsById } from 'utils/customPropTypes';
 
-const CardsLayout = ({ blocks, data, lang }) => {
+const CardsLayout = ({ blocks, data }) => {
   const blocksByType = keyBy(blocks, 'type');
   return blocks.map((block, index) => {
     const Block = BLOCKS_BY_TYPE[block.type];
@@ -16,7 +16,7 @@ const CardsLayout = ({ blocks, data, lang }) => {
     }
     return (
       // eslint-disable-next-line react/no-array-index-key
-      <Block key={index} block={block} data={data} blocks={blocksByType} lang={lang} />
+      <Block key={index} block={block} data={data} blocks={blocksByType} />
     );
   });
 };
@@ -33,7 +33,6 @@ CardsLayout.propTypes = {
     topics: TopicsById.isRequired,
     latestArticles: ArticlesArray.isRequired,
   }).isRequired,
-  lang: LangType.isRequired,
 };
 
 export default CardsLayout;
