@@ -35,7 +35,7 @@ import styles from './article.module.scss';
 
 import CollectionNote from './CollectionNote';
 
-import CardsLayout from './layout/Layout';
+import CardsLayout from './layout/CardsLayout';
 
 const b = bem(styles);
 const COVER_SIZES = [1200, 1000, 770, 640, 360];
