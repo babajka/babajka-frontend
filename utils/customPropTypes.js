@@ -97,8 +97,13 @@ export const ArticleModel = {
   keywords: PropTypes.string.isRequired,
   metrics: PropTypes.number,
   suggestedArticles: PropTypes.shape({
-    count: PropTypes.number.isRequired,
-    blocks: ArticlePreviewsArrays.isRequired,
+    blocks: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    data: PropTypes.shape({
+      articles: ArticlePreviewsById,
+      tags: TagsById,
+      topics: TopicsById,
+      latestArticles: ArticlePreviewArray,
+    }).isRequired,
   }),
 };
 
