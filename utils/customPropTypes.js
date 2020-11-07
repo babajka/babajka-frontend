@@ -14,8 +14,8 @@ export const ShortUserShape = PropTypes.shape({
 export const MetadataShape = PropTypes.shape({
   createdAt: PropTypes.number.isRequired,
   updatedAt: PropTypes.number.isRequired,
-  createdBy: ShortUserShape.isRequired,
-  updatedBy: ShortUserShape.isRequired,
+  createdBy: ShortUserShape,
+  updatedBy: ShortUserShape,
 });
 
 export const CollectionModel = {
@@ -89,6 +89,7 @@ export const ArticlePreviewModel = {
 export const ArticlePreviewShape = PropTypes.shape(ArticlePreviewModel);
 export const ArticlePreviewArray = PropTypes.arrayOf(ArticlePreviewShape);
 export const ArticlePreviewsArrays = PropTypes.arrayOf(ArticlePreviewArray);
+export const ArticlePreviewsById = PropTypes.objectOf(ArticlePreviewShape);
 
 export const ArticleModel = {
   ...ArticlePreviewModel,

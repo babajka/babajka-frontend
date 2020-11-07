@@ -1,7 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { ArticlePreviewArray, ArticlesById, TagsById } from 'utils/customPropTypes';
+import {
+  ArticlePreviewArray,
+  ArticlePreviewsById,
+  TagsById,
+  TopicsById,
+} from 'utils/customPropTypes';
 import { getArticlesBlocks } from 'utils/getters';
 
 import ArticlesComposition from './ArticlesComposition';
@@ -20,9 +25,10 @@ ArticlesCompositionAsBlock.propTypes = {
     articles: PropTypes.arrayOf(ArticlePreviewArray).isRequired,
   }).isRequired,
   data: PropTypes.shape({
-    articles: ArticlesById.isRequired,
+    articles: ArticlePreviewsById.isRequired,
     tags: TagsById,
-    // TODO: Complete.
+    topics: TopicsById,
+    latestArticles: ArticlePreviewArray,
   }).isRequired,
 };
 

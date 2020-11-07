@@ -75,7 +75,7 @@ const Article = ({
       <MetaArticleItems name="tag" list={tags.map(renderTag)} />
       <MetaArticleItems name="published_time" value={publishAt} />
       <div>
-        <div className={cn('wir-content-padding', styles['article-page-content'])}>
+        <div className={cn('wir-content-padding', styles['article-page-text-content'])}>
           <div className={b('subtitle')}>
             <TextWithSeparator text={subtitle} symbol={'\n'} />
           </div>
@@ -116,44 +116,43 @@ const Article = ({
         <div className={styles['article-page-content']}>
           {type === 'audio' && <AudioPlayer trackId={audio.id} />}
           {type === 'video' && <VideoPlayer videoId={video.id} />}
+
           {collection?.articles.length > 1 && <CollectionNote data={collection} locale={locale} />}
-          {fiberyRenderer(text.content)}
-        </div>
 
-        {/* FIXME: hardcode */}
-        {slug === 'bielaruski' && <ExCoQuiz id="a8822357-22c3-4090-bfe6-765948466bbe" />}
+          <div className={styles['article-page-text-content']}>{fiberyRenderer(text.content)}</div>
 
-        <div className={b('post-actions')}>
-          {CROWDFUNDING_CAMPAIGN.enabled && (
-            <ExternalLink href={CROWDFUNDING_CAMPAIGN.options.link}>
-              <Button className={b('crowdfunding')} highlighted>
-                <Text id="article.support-crowdfunding" />
-                <span>&nbsp;&nbsp;</span>
-                <MolamolaIcon />
-              </Button>
-            </ExternalLink>
-          )}
-          <div className={b('share')}>
-            <ShareButtons urlPath={router.asPath} basicText={title} />
+          {/* FIXME: hardcode */}
+          {slug === 'bielaruski' && <ExCoQuiz id="a8822357-22c3-4090-bfe6-765948466bbe" />}
+
+          <div className={b('post-actions')}>
+            {CROWDFUNDING_CAMPAIGN.enabled && (
+              <ExternalLink href={CROWDFUNDING_CAMPAIGN.options.link}>
+                <Button className={b('crowdfunding')} highlighted>
+                  <Text id="article.support-crowdfunding" />
+                  <span>&nbsp;&nbsp;</span>
+                  <MolamolaIcon />
+                </Button>
+              </ExternalLink>
+            )}
+            <div className={b('share')}>
+              <ShareButtons urlPath={router.asPath} basicText={title} />
+            </div>
+          </div>
+          <div className={b('other-tags')}>
+            {tags.map(tag => (
+              <div key={tag.slug} className={b('other-tag')}>
+                {getTagLink({ tag })}
+              </div>
+            ))}
           </div>
         </div>
-        <div className={b('other-tags')}>
-          {tags.map(tag => (
-            <div key={tag.slug} className={b('other-tag')}>
-              {getTagLink({ tag })}
-            </div>
-          ))}
-        </div>
-
-        {suggestedArticles && (
-          <>
-            <div className={b('suggested-articles-title')}>
-              <Text id="article.suggested-articles" />
-            </div>
-            <CardsLayout blocks={suggestedArticles.blocks} data={suggestedArticles.data} />
-          </>
-        )}
       </div>
+
+      {suggestedArticles && (
+        <div>
+          <CardsLayout blocks={suggestedArticles.blocks} data={suggestedArticles.data} />
+        </div>
+      )}
     </>
   );
 };
