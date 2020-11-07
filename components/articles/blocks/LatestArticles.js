@@ -16,7 +16,7 @@ const LatestArticles = ({ block, data, blocks }) => {
   // TODO: to handle situation with multiple 'featured' blocks or 'featured' blocks
   // going *after* latestArticles.
   const { featured } = blocks;
-  let nextIndex = featured.frozen ? 0 : 1;
+  let nextIndex = featured && !featured.frozen ? 1 : 0;
   const resolvedData = {};
   [resolvedData.first, nextIndex] = getData(data, first, nextIndex);
   [resolvedData.second] = getData(data, second, nextIndex);

@@ -12,6 +12,10 @@ import { getArticlesBlocks } from 'utils/getters';
 import ArticlesComposition from './ArticlesComposition';
 
 const ArticlesCompositionAsBlock = ({ block, data }) => {
+  if (block.articles.length === 0) {
+    // It's ok to have block template in fibery: it should be ignored unless it is filled with data.
+    return <></>;
+  }
   return (
     <ArticlesComposition
       articlesCount={block.articles.length}
