@@ -6,7 +6,12 @@ import BLOCKS_BY_TYPE from 'components/articles/blocks';
 
 import { homeActions, homeSelectors } from 'redux/ducks/home';
 import { populateRequest } from 'utils/request';
-import { ArticlesArray, ArticlesById, TopicsById, TagsById } from 'utils/customPropTypes';
+import {
+  ArticlePreviewArray,
+  ArticlePreviewsById,
+  TopicsById,
+  TagsById,
+} from 'utils/customPropTypes';
 
 import CardsLayout from 'components/articles/layout/CardsLayout';
 
@@ -24,10 +29,10 @@ MainPage.propTypes = {
     })
   ).isRequired,
   data: PropTypes.shape({
-    articles: ArticlesById.isRequired,
-    tags: TagsById.isRequired,
-    topics: TopicsById.isRequired,
-    latestArticles: ArticlesArray.isRequired,
+    articles: ArticlePreviewsById,
+    tags: TagsById,
+    topics: TopicsById,
+    latestArticles: ArticlePreviewArray,
   }).isRequired,
 };
 

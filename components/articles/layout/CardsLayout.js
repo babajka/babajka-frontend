@@ -5,7 +5,12 @@ import keyBy from 'lodash/keyBy';
 
 import BLOCKS_BY_TYPE from 'components/articles/blocks';
 
-import { ArticlesArray, ArticlesById, TopicsById, TagsById } from 'utils/customPropTypes';
+import {
+  ArticlePreviewArray,
+  ArticlePreviewsById,
+  TopicsById,
+  TagsById,
+} from 'utils/customPropTypes';
 
 const CardsLayout = ({ blocks, data }) => {
   const blocksByType = keyBy(blocks, 'type');
@@ -28,10 +33,10 @@ CardsLayout.propTypes = {
     })
   ).isRequired,
   data: PropTypes.shape({
-    articles: ArticlesById.isRequired,
-    tags: TagsById.isRequired,
-    topics: TopicsById.isRequired,
-    latestArticles: ArticlesArray.isRequired,
+    articles: ArticlePreviewsById,
+    tags: TagsById,
+    topics: TopicsById,
+    latestArticles: ArticlePreviewArray,
   }).isRequired,
 };
 

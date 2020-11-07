@@ -190,12 +190,6 @@ $content-line-height: (
   &__collection-item {
     margin-bottom: 20px;
   }
-
-  &__suggested-articles-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin: 100px 0 40px;
-  }
 }
 
 @include screen-desktop {
@@ -342,6 +336,10 @@ $content-line-height: (
 }
 
 .article-page-content {
+  overflow: auto;
+}
+
+.article-page-text-content {
   font-size: map-get($content-font-size, mobile);
   font-style: normal;
   font-weight: normal;

@@ -4,7 +4,7 @@ import api from 'constants/api';
 
 import { makeRequest } from 'utils/request';
 import { defaultReducer } from 'utils/redux';
-import { localizeData } from 'utils/storage';
+import { localizeData } from 'utils/getters';
 
 const duck = 'sidebar';
 

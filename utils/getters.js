@@ -1,11 +1,22 @@
 import chunk from 'lodash/chunk';
+import keyBy from 'lodash/keyBy';
+
 import parseISO from 'date-fns/parseISO';
 import isBefore from 'date-fns/isBefore';
 
-import keyBy from 'lodash/keyBy';
-
 import { TOPICS } from 'constants';
 import { localize, localizeArray, localizeFields } from 'utils/localization';
+
+const GETTER_BY_TYPE = {};
+
+const SKIP_MAP_BY_ID = ['latestArticles'];
+
+export const localizeData = (data, lang) =>
+  Object.entries(data).reduce((acc, [type, list]) => {
+    const localizedList = GETTER_BY_TYPE[type](list, lang);
+    acc[type] = SKIP_MAP_BY_ID.includes(type) ? localizedList : keyBy(localizedList, 'id');
+    return acc;
+  }, {});
 
 // returns a list of articles coupled by 2 or 3
 // 5 articles = 2 blocks (2 + 3)
@@ -56,7 +67,8 @@ const LOCALIZE_TAG_CONTENT = {
 
 export const getTopic = ({ _id: id, slug }) => ({ id, slug });
 
-export const getTopics = topics => topics.map(getTopic);
+export const getTopics = topics => topics?.map(getTopic);
+GETTER_BY_TYPE.topics = getTopics;
 
 // WARNING: filter `topic`
 // TODO: remove `topic` on back, replace with `topicSlug`
@@ -68,6 +80,7 @@ export const getLocalizedTag = ({ _id: id, topicSlug, content, topic: _, ...rest
 });
 
 export const getLocalizedTags = localizeArray(getLocalizedTag);
+GETTER_BY_TYPE.tags = getLocalizedTags;
 
 const getInitTagsByTopic = () => TOPICS.reduce((acc, topic) => ({ ...acc, [topic]: [] }), {});
 
@@ -88,7 +101,7 @@ export const getLocalizedArticle = (article, lang) => {
     }, getInitTagsByTopic());
 
   // Accumulating metrics for all content and interface localizations.
-  const totalMetrics = Object.values(article.locales).reduce(
+  const totalMetrics = Object.values(locales).reduce(
     (acc, locale) =>
       acc +
       (locale.metrics
@@ -109,19 +122,14 @@ export const getLocalizedArticle = (article, lang) => {
     metrics: totalMetrics,
     suggestedArticles: suggestedArticles && {
       blocks: suggestedArticles.blocks,
-      data: {
-        ...suggestedArticles.data,
-        articles: keyBy(
-          localizeArray(getLocalizedArticle)(suggestedArticles.data.articles, lang),
-          'id'
-        ),
-        tags: keyBy(localizeArray(getLocalizedTag)(suggestedArticles.data.tags, lang), 'id'),
-      },
+      data: localizeData(suggestedArticles.data, lang),
     },
   };
 };
 
 export const getLocalizedArticles = localizeArray(getLocalizedArticle);
+GETTER_BY_TYPE.articles = getLocalizedArticles;
+GETTER_BY_TYPE.latestArticles = getLocalizedArticles;
 
 export const getShortLocale = ({ locale, slug, title }) => ({ locale, slug, title });
 
