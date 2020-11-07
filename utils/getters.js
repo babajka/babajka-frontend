@@ -18,15 +18,6 @@ export const localizeData = (data, lang) =>
     return acc;
   }, {});
 
-// returns a list of articles coupled by 2 or 3
-// 5 articles = 2 blocks (2 + 3)
-export const getArticlesBlocks = articles =>
-  chunk(articles, 5).reduce(
-    (blocks, blockOf5) =>
-      blocks.concat([blockOf5.slice(0, 2), blockOf5.slice(2)]).filter(b => b.length),
-    []
-  );
-
 export const getDiary = ({ author, text, day, month, year, slug }) => ({
   author,
   text,
@@ -145,3 +136,12 @@ export const getMainArticlesRows = (articles, rowSize, complexRowSize) => {
 export const getLocalizedTeam = localizeArray(localizeFields(['name', 'role']));
 
 export const getLocalizedVacancies = localizeArray(localizeFields(['title', 'description']));
+
+// returns a list of articles coupled by 2 or 3
+// 5 articles = 2 blocks (2 + 3)
+export const getArticlesBlocks = articles =>
+  chunk(articles, 5).reduce(
+    (blocks, blockOf5) =>
+      blocks.concat([blockOf5.slice(0, 2), blockOf5.slice(2)]).filter(b => b.length),
+    []
+  );
