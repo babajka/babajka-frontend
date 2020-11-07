@@ -11,15 +11,15 @@ import { getArticlesBlocks } from 'utils/getters';
 
 import ArticlesComposition from './ArticlesComposition';
 
-const ArticlesCompositionAsBlock = ({ block, data }) => {
-  if (block.articles.length === 0) {
+const ArticlesCompositionAsBlock = ({ block: { articles }, data }) => {
+  if (!articles.length) {
     // It's ok to have block template in fibery: it should be ignored unless it is filled with data.
-    return <></>;
+    return null;
   }
   return (
     <ArticlesComposition
-      articlesCount={block.articles.length}
-      blocks={getArticlesBlocks(block.articles.map(articleId => data.articles[articleId]))}
+      articlesCount={articles.length}
+      blocks={getArticlesBlocks(articles.map(articleId => data.articles[articleId]))}
     />
   );
 };
