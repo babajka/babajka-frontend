@@ -28,12 +28,14 @@ const CardWrapper = ({
   theme,
   linkProps,
   onBackground,
+  slug,
 }) => (
   <Link className={size === 'auto' ? blockContextClass : sizeClass} {...linkProps}>
     <BgContainer
       className={cn(
         b({
           'theme-light': theme === 'light',
+          'experiment-viershy-listapad-custom-color': slug === 'viershy-listapad',
           'with-border': onBackground ? colorLooksBlack(color) : colorLooksWhite(color),
         }),
         className
@@ -57,6 +59,7 @@ CardWrapper.propTypes = {
   theme: ThemeType,
   linkProps: PropTypes.shape({}).isRequired,
   onBackground: PropTypes.bool,
+  slug: PropTypes.string,
 };
 
 CardWrapper.defaultProps = {
@@ -68,6 +71,7 @@ CardWrapper.defaultProps = {
   image: null,
   theme: 'light',
   onBackground: false,
+  slug: '',
 };
 
 export default CardWrapper;

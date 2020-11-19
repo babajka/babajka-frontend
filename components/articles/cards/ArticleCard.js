@@ -105,6 +105,7 @@ const ArticleCard = props => {
       blockContextClass={buildBlockContextStyles(blockContext, styles)}
       theme={theme}
       color={color}
+      slug={slug}
       linkProps={{ route: ROUTES_NAMES.article, params: { slug } }}
       className={cn(
         b({

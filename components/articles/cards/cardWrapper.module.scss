@@ -3,11 +3,17 @@
 
 @import './cards';
 
+$experiment-viershy-listapad-text-color: #294d68;
+
 .wir-card-wrapper {
   color: $primary-white;
 
   &--theme-light {
     color: $primary-black;
+  }
+
+  &--experiment-viershy-listapad-custom-color {
+    color: $experiment-viershy-listapad-text-color;
   }
 
   &--with-border {
