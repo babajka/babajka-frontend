@@ -40,6 +40,11 @@ import CardsLayout from './layout/CardsLayout';
 const b = bem(styles);
 const COVER_SIZES = [1200, 1000, 770, 640, 360];
 
+const SLUG_TO_QUIZ_ID = {
+  bielaruski: 'a8822357-22c3-4090-bfe6-765948466bbe',
+  'karatkiewich-test': 'd97b130c-8088-4183-aaf4-a1af49b4e814',
+};
+
 const Article = ({
   data: {
     slug,
@@ -122,7 +127,7 @@ const Article = ({
           <div className={styles['article-page-text-content']}>{fiberyRenderer(text.content)}</div>
 
           {/* FIXME: hardcode */}
-          {slug === 'bielaruski' && <ExCoQuiz id="a8822357-22c3-4090-bfe6-765948466bbe" />}
+          {SLUG_TO_QUIZ_ID[slug] && <ExCoQuiz id={SLUG_TO_QUIZ_ID[slug]} />}
 
           <div className={b('post-actions')}>
             {CROWDFUNDING_CAMPAIGN.enabled && (

@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - '10'
+  - '15'
 before_script:
   - |
     if [ $TRAVIS_BRANCH == "master" ]; then
@@ -46,5 +46,6 @@ deploy:
       branch:
         - develop
         - master
+        - update-node-add-quiz
 after_deploy:
   - bash bin/deploy/after-deploy.sh $MODE
