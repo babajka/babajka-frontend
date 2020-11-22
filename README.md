@@ -12,6 +12,7 @@ Next.js &amp; React app
 
 ## scripts
 
+- `nvm use` - set correct `node` version
 - `npm start` to run dev server with hot-reloading (`npm run dev`)
 - `npm run start:prod` to build and run a production version
 - `npm run build` to build a production version (`WIR_ENV=staging` must be set for [`dev.wir.by`](http://dev.wir.by))
