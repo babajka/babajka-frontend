@@ -6,7 +6,7 @@ import bem from 'bem-css-modules';
 import Link from 'components/common/Link';
 import BgContainer from 'components/common/ui/BgContainer';
 import { ThemeType } from 'utils/customPropTypes';
-import { colorLooksBlack, colorLooksWhite } from 'utils/ui';
+import { colorLooksBlack, colorLooksWhite, linkCn } from 'utils/ui';
 
 import styles from './cardWrapper.module.scss';
 
@@ -16,6 +16,21 @@ export const SQUARE_SIZES = ['square-m', 'square-s'];
 export const SIZES = DEFAULT_SIZES.concat(SQUARE_SIZES, TAG_SIZES, 'auto');
 
 const b = bem(styles);
+
+const HackLink = ({ children, className, slug, ...props }) => {
+  if (slug === 'bielaruski') {
+    return (
+      <a href="/article/bielaruski/" className={cn(className, linkCn())}>
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link className={className} {...props}>
+      {children}
+    </Link>
+  );
+};
 
 const CardWrapper = ({
   blockContextClass,
@@ -30,7 +45,7 @@ const CardWrapper = ({
   onBackground,
   slug,
 }) => (
-  <Link className={size === 'auto' ? blockContextClass : sizeClass} {...linkProps}>
+  <HackLink slug={slug} className={size === 'auto' ? blockContextClass : sizeClass} {...linkProps}>
     <BgContainer
       className={cn(
         b({
@@ -45,7 +60,7 @@ const CardWrapper = ({
     >
       {children}
     </BgContainer>
-  </Link>
+  </HackLink>
 );
 
 CardWrapper.propTypes = {
