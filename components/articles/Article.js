@@ -127,7 +127,9 @@ const Article = ({
           <div className={styles['article-page-text-content']}>{fiberyRenderer(text.content)}</div>
 
           {/* FIXME: hardcode */}
-          {SLUG_TO_QUIZ_ID[slug] && <ExCoQuiz id={SLUG_TO_QUIZ_ID[slug]} />}
+          {SLUG_TO_QUIZ_ID[slug] && (
+            <ExCoQuiz key={SLUG_TO_QUIZ_ID[slug]} id={SLUG_TO_QUIZ_ID[slug]} />
+          )}
 
           <div className={b('post-actions')}>
             {CROWDFUNDING_CAMPAIGN.enabled && (

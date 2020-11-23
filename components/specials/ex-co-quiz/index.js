@@ -7,6 +7,7 @@ import styles from './quiz.module.scss';
 function loadSdk(d, s, id) {
   const fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) {
+    window.Playbuzz.render();
     return;
   }
   const js = d.createElement(s);
@@ -18,7 +19,7 @@ function loadSdk(d, s, id) {
 const ExCoQuiz = ({ id }) => {
   useLayoutEffect(() => {
     loadSdk(document, 'script', 'playbuzz-sdk');
-  });
+  }, []);
   return (
     <div className="playbuzz" data-id={id} data-show-share="false" data-show-info="false">
       <div className={styles.quiz}>
