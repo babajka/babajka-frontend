@@ -183,7 +183,7 @@ const ArticleCard = props => {
               theme,
             })
           )}
-          {renderNodeList(authors.map(renderTag))}
+          <span>{renderNodeList(authors.map(renderTag))}</span>
         </div>
         <div className={b('filler', { bottom: true })} />
         <div className={b('label-read-full')}>
