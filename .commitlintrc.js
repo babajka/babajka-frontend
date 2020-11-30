@@ -28,6 +28,7 @@ module.exports = {
         'tags',
         'social',
         'collections',
+        'seo',
       ],
     ],
     'scope-empty': [2, 'never'],
