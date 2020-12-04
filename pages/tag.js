@@ -16,7 +16,7 @@ import { localize } from 'components/common/Text';
 import ArticlesComposition from 'components/articles/compositions/ArticlesComposition';
 
 import { tagsActions, tagsSelectors } from 'redux/ducks/tags';
-import { ArticlesArray, TagShape, LangType } from 'utils/customPropTypes';
+import { TagShape, LangType, ArticlePreviewArray } from 'utils/customPropTypes';
 import { populateRequest } from 'utils/request';
 import { renderTag, getTopicLink, getTagImageUrl } from 'utils/tags';
 import host from 'utils/host';
@@ -27,7 +27,7 @@ const b = bem(styles);
 
 const mapStateToProps = (state, { lang }) => tagsSelectors.getData(state, lang);
 
-const TagPage = ({ lang, routerQuery: { topic }, tag, blocks, articlesCount }) => {
+const TagPage = ({ lang, routerQuery: { topic }, tag, articles }) => {
   const title = renderTag(tag);
   const imageUrl = getTagImageUrl(tag);
   const metaKeywords = [title, localize(`topic.meta_${topic}_keywords`, lang)].join(', ');
@@ -43,7 +43,9 @@ const TagPage = ({ lang, routerQuery: { topic }, tag, blocks, articlesCount }) =
           <div className={b('topic')}>{getTopicLink({ topic, postfix: 'one' })}</div>
           <div className={b('title')}>{title}</div>
         </div>
-        <ArticlesComposition articlesCount={articlesCount} blocks={blocks} />
+        <ArticlesComposition
+          articles={articles} /* articlesCount={articlesCount} blocks={blocks} */
+        />
       </div>
     </>
   );
@@ -56,8 +58,7 @@ TagPage.propTypes = {
     tag: PropTypes.string.isRequired,
   }).isRequired,
   tag: TagShape.isRequired,
-  blocks: PropTypes.arrayOf(ArticlesArray).isRequired,
-  articlesCount: PropTypes.number.isRequired,
+  articles: ArticlePreviewArray.isRequired,
 };
 
 TagPage.getInitialProps = ctx =>

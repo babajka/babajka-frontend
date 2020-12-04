@@ -3,7 +3,7 @@ import createReducer from 'type-to-reducer';
 import api from 'constants/api';
 import { defaultReducer } from 'utils/redux';
 import { makeRequest } from 'utils/request';
-import { getLocalizedTag, getLocalizedArticles, getArticlesBlocks } from 'utils/getters';
+import { getLocalizedTag, getLocalizedArticles } from 'utils/getters';
 
 const duck = 'tags';
 
@@ -35,9 +35,8 @@ const getData = (state, lang) => {
   const localizedArticles = getLocalizedArticles(articles, lang);
 
   return {
-    blocks: getArticlesBlocks(localizedArticles),
     tag: getLocalizedTag(tag, lang),
-    articlesCount: localizedArticles.length,
+    articles: localizedArticles,
   };
 };
 

@@ -4,7 +4,7 @@ import omit from 'lodash/omit';
 import api from 'constants/api';
 import { defaultReducer } from 'utils/redux';
 import { makeRequest } from 'utils/request';
-import { getLocalizedCollection, getLocalizedArticles, getArticlesBlocks } from 'utils/getters';
+import { getLocalizedCollection, getLocalizedArticles } from 'utils/getters';
 
 const duck = 'collections';
 
@@ -45,8 +45,7 @@ const getData = (state, lang) => {
 
   return {
     collection: getLocalizedCollection(omit(collection, ['articles']), lang),
-    blocks: getArticlesBlocks(localizedArticles),
-    articlesCount: localizedArticles.length,
+    articles: localizedArticles,
     authors,
   };
 };
