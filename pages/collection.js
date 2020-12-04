@@ -17,7 +17,7 @@ import Image from 'components/common/Image';
 import ArticlesComposition from 'components/articles/compositions/ArticlesComposition';
 
 import { collectionsActions, collectionsSelectors } from 'redux/ducks/collections';
-import { ArticlesArray, CollectionShape, LangType, TagShape } from 'utils/customPropTypes';
+import { ArticlePreviewArray, CollectionShape, LangType, TagShape } from 'utils/customPropTypes';
 import { populateRequest } from 'utils/request';
 import { getTagLink } from 'utils/tags';
 import { renderNodeList } from 'utils/formatters';
@@ -27,14 +27,7 @@ const b = bem(styles);
 
 const mapStateToProps = (state, { lang }) => collectionsSelectors.getData(state, lang);
 
-const CollectionPage = ({
-  lang,
-  routerQuery: { slug },
-  collection,
-  blocks,
-  articlesCount,
-  authors,
-}) => {
+const CollectionPage = ({ lang, routerQuery: { slug }, collection, articles, authors }) => {
   const metaKeywords = [collection.name, localize(`collection.meta_keywords`, lang)].join(', ');
   return (
     <>
@@ -66,7 +59,9 @@ const CollectionPage = ({
             </div>
           </div>
         </div>
-        <ArticlesComposition articlesCount={articlesCount} blocks={blocks} />
+        <ArticlesComposition
+          articles={articles} /* articlesCount={articlesCount} blocks={blocks} */
+        />
       </div>
     </>
   );
@@ -78,8 +73,7 @@ CollectionPage.propTypes = {
     slug: PropTypes.string.isRequired,
   }).isRequired,
   collection: CollectionShape.isRequired,
-  blocks: PropTypes.arrayOf(ArticlesArray).isRequired,
-  articlesCount: PropTypes.number.isRequired,
+  articles: ArticlePreviewArray.isRequired,
   authors: PropTypes.arrayOf(TagShape).isRequired,
 };
 

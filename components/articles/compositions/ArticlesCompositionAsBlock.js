@@ -7,7 +7,6 @@ import {
   TagsById,
   TopicsById,
 } from 'utils/customPropTypes';
-import { getArticlesBlocks } from 'utils/getters';
 
 import ArticlesComposition from './ArticlesComposition';
 
@@ -16,12 +15,7 @@ const ArticlesCompositionAsBlock = ({ block: { articles }, data }) => {
     // It's ok to have block template in fibery: it should be ignored unless it is filled with data.
     return null;
   }
-  return (
-    <ArticlesComposition
-      articlesCount={articles.length}
-      blocks={getArticlesBlocks(articles.map(articleId => data.articles[articleId]))}
-    />
-  );
+  return <ArticlesComposition articles={articles.map(articleId => data.articles[articleId])} />;
 };
 
 ArticlesCompositionAsBlock.propTypes = {
