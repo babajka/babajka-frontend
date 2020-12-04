@@ -41,7 +41,7 @@ const TagPage = ({ lang, routerQuery: { topic }, tag, articles }) => {
       <div className={b()}>
         <div className="wir-content-padding">
           <div className={b('topic')}>{getTopicLink({ topic, postfix: 'one' })}</div>
-          <div className={b('title')}>{title}</div>
+          <h1 className={b('title')}>{title}</h1>
         </div>
         <ArticlesComposition articles={articles} />
       </div>

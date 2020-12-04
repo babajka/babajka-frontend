@@ -50,9 +50,9 @@ const CollectionPage = ({ lang, routerQuery: { slug }, collection, articles, aut
               <div className={b('subheading')}>
                 <Text id="collection.one" />
               </div>
-              <div className={b('title', { 'hack-starbellit': slug === 'starbellit' })}>
+              <h1 className={b('title', { 'hack-starbellit': slug === 'starbellit' })}>
                 {collection.name}
-              </div>
+              </h1>
               <div className={b('authors')}>
                 {renderNodeList(authors.map(tag => getTagLink({ tag })))}
               </div>
