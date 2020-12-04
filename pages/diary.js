@@ -92,8 +92,8 @@ const DiaryPage = ({
       <div className={cn('wir-content-padding', b())}>
         <DiaryLinkArrows className={b('arrows')} size={36} />
         <div className={b('title', { 'with-image': !!image })}>
-          <div>{formatLocalizedDate(date, lang, DATE_FORMAT)}</div>
-          <div>{name}</div>
+          <h1>{formatLocalizedDate(date, lang, DATE_FORMAT)}</h1>
+          <h1>{name}</h1>
         </div>
         <div className={b('image-container', { 'no-image': !image })}>
           {image && (

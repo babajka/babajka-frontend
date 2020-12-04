@@ -31,9 +31,9 @@ const AboutPage = ({ lang }) => (
     <MetaImage url={DEFAULT_IMAGE} small />
 
     <div className={cn('wir-content-padding', b())}>
-      <div className={b('heading')}>
+      <h1 className={b('heading')}>
         <Text id="about.section1-header" />
-      </div>
+      </h1>
       <div className={b('text', { 'margin-top': 'small' })}>
         <Text id="about.section1-text" />
       </div>

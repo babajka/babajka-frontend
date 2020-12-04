@@ -114,7 +114,7 @@ const Article = ({
             </div>
           </div>
         )}
-        <div className={b('title')}>{title}</div>
+        <h1 className={b('title')}>{title}</h1>
       </div>
 
       <div className="wir-content-padding">
