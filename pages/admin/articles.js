@@ -5,6 +5,7 @@ import parseISO from 'date-fns/parseISO';
 
 import Link from 'components/common/Link';
 import Table, { styles } from 'components/common/Table';
+import Image from 'components/common/Image';
 import Clickable from 'components/common/Clickable';
 import ExternalLink from 'components/common/ExternalLink';
 import withAdmin from 'components/hoc/withAdmin';
@@ -28,7 +29,21 @@ const mapStateToProps = (state, { lang }) => ({
 
 const ARTICLE_COLS = [
   {
+    id: 'images',
+    title: 'Вокладка',
+    render: ({ value: { horizontal: image } }) => (
+      <Image
+        className={b('cover-thumbnail')}
+        alt="вокладка матэрыяла"
+        sourceSizes={[200]}
+        sizes={[200]}
+        baseUrl={image}
+      />
+    ),
+  },
+  {
     id: 'title',
+    title: 'Назва',
     className: styles['wir-table__font--size--large'],
     render: ({ value, row: { slug } }) => (
       <Link route={ROUTES_NAMES.article} params={{ slug }}>
@@ -39,19 +54,20 @@ const ARTICLE_COLS = [
   },
   {
     id: 'actions',
-    className: b('column-actions'),
+    title: 'Дзеянні',
+    className: `${b('column-actions')} ${styles['wir-table__font--size--smallx']}`,
     render: ({ row: { fiberyPublicId }, index }) => {
       const url = getArticleBaseUrl(fiberyPublicId);
       return (
         <>
           <div>
-            <ExternalLink href={url}>Edit</ExternalLink>
+            <ExternalLink href={url}>Рэдагаваць</ExternalLink>
           </div>
           <div>
             <Dispatcher action={adminArticlesActions.updateArticle}>
               {({ onDispatch, pending }) => (
                 <Clickable linkStyle onClick={() => onDispatch(url, index)} disabled={pending}>
-                  {pending ? '...' : 'Update'}
+                  {pending ? '...' : 'Абнавіць'}
                 </Clickable>
               )}
             </Dispatcher>
@@ -62,15 +78,18 @@ const ARTICLE_COLS = [
   },
   {
     id: 'type',
+    title: 'Тып',
+    render: ({ value }) => ({ video: 'відэа', audio: 'падкаст', text: 'тэкст' }[value] || value),
   },
   {
     id: 'subtitle',
+    title: 'Апісанне',
     className: styles['wir-table__font--size--small'],
     formatter: text => `${text.slice(0, 100)}...`,
   },
   {
     id: 'tagsByTopic',
-    title: 'Tags',
+    title: 'Тэгі',
     className: styles['wir-table__font--size--small'],
     formatter: tagsByTopic => {
       const tags = Object.values(tagsByTopic).reduce((acc, cur) => acc.concat(cur), []);
@@ -82,23 +101,25 @@ const ARTICLE_COLS = [
   },
   {
     id: 'status',
+    title: 'Статус',
+    className: styles['wir-table__font--size--small'],
     prop: 'published',
-    render: ({ value }) => (value ? 'Published' : 'Draft'),
+    render: ({ value }) => (value ? 'Апублікаваны' : 'Чарнавік'),
   },
   {
     id: 'publishAt',
-    title: 'Publication Time',
+    title: 'Час публікацыі',
     formatter: v => v && formatDate(parseISO(v), DATETIME_FORMAT),
-    render: ({ value }) => value || 'Not Planned',
+    render: ({ value }) => value || 'Не запланавана',
   },
   {
     id: 'metadata.updatedAt',
-    title: 'Updated At',
+    title: 'Апошняе абнаўленне',
     formatter: v => formatDate(v, DATETIME_FORMAT),
   },
   {
     id: 'metrics',
-    title: 'Total Views',
+    title: 'Прагляды (Яндэкс)',
   },
 ];
 
@@ -108,7 +129,7 @@ const AdminArticlesPage = ({ articles }) => {
     <div>
       <div>
         <input
-          placeholder="Paste Fibery Url"
+          placeholder="Fibery-спасылка на матэрыял"
           type="text"
           value={previewUrl}
           onChange={({ target }) => setUrl(target.value)}
@@ -119,9 +140,13 @@ const AdminArticlesPage = ({ articles }) => {
             params={{ url: encodeURIComponent(previewUrl) }}
             target="_blank"
           >
-            Open Preview
+            Адкрыць перадпрагляд
           </Link>
         )}
+      </div>
+      <br />
+      <div>
+        Усяго матэрыялаў на сайце: <b>{articles.length}</b>
       </div>
       <br />
       <Table className={b()} rows={articles} cols={ARTICLE_COLS} />
