@@ -43,9 +43,7 @@ const TagPage = ({ lang, routerQuery: { topic }, tag, articles }) => {
           <div className={b('topic')}>{getTopicLink({ topic, postfix: 'one' })}</div>
           <div className={b('title')}>{title}</div>
         </div>
-        <ArticlesComposition
-          articles={articles} /* articlesCount={articlesCount} blocks={blocks} */
-        />
+        <ArticlesComposition articles={articles} />
       </div>
     </>
   );

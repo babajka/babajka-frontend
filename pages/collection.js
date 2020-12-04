@@ -59,9 +59,7 @@ const CollectionPage = ({ lang, routerQuery: { slug }, collection, articles, aut
             </div>
           </div>
         </div>
-        <ArticlesComposition
-          articles={articles} /* articlesCount={articlesCount} blocks={blocks} */
-        />
+        <ArticlesComposition articles={articles} />
       </div>
     </>
   );
