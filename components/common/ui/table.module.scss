@@ -1,6 +1,8 @@
 // FIXME
 /* stylelint-disable selector-max-compound-selectors, no-descending-specificity */
 
+@import 'styles/variables';
+
 .wir-table {
   border-spacing: 0;
 
@@ -83,6 +85,11 @@
     &--size--small {
       font-size: 0.7rem;
     }
+  }
+
+  &__interactive-icon {
+    color: $primary-grey;
+    margin-right: 5px;
   }
 
   &__cover-thumbnail {

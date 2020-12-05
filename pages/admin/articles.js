@@ -17,6 +17,7 @@ import { populateRequest } from 'utils/request';
 import { renderNodeList, formatDate } from 'utils/formatters';
 import { getTagLink } from 'utils/tags';
 import { getArticleBaseUrl } from 'utils/fibery';
+import { articleTypeIcon } from 'utils/ui';
 
 import { ROUTES_NAMES } from 'routes';
 import { DATETIME_FORMAT } from 'constants';
@@ -45,8 +46,9 @@ const ARTICLE_COLS = [
     id: 'title',
     title: 'Назва',
     className: styles['wir-table__font--size--large'],
-    render: ({ value, row: { slug } }) => (
+    render: ({ value, row: { slug, type } }) => (
       <Link route={ROUTES_NAMES.article} params={{ slug }}>
+        {articleTypeIcon({ className: b('interactive-icon'), type })}
         {value}
       </Link>
     ),
@@ -77,11 +79,6 @@ const ARTICLE_COLS = [
     },
   },
   {
-    id: 'type',
-    title: 'Тып',
-    render: ({ value }) => ({ video: 'відэа', audio: 'падкаст', text: 'тэкст' }[value] || value),
-  },
-  {
     id: 'subtitle',
     title: 'Апісанне',
     className: styles['wir-table__font--size--small'],
@@ -100,17 +97,10 @@ const ARTICLE_COLS = [
     },
   },
   {
-    id: 'status',
-    title: 'Статус',
-    className: styles['wir-table__font--size--small'],
-    prop: 'published',
-    render: ({ value }) => (value ? 'Апублікаваны' : 'Чарнавік'),
-  },
-  {
     id: 'publishAt',
     title: 'Час публікацыі',
     formatter: v => v && formatDate(parseISO(v), DATETIME_FORMAT),
-    render: ({ value }) => value || 'Не запланавана',
+    render: ({ value }) => value || 'Не запланавана (чарнавік)',
   },
   {
     id: 'metadata.updatedAt',
