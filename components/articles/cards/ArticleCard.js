@@ -9,7 +9,6 @@ import zip from 'lodash/zip';
 import Text from 'components/common/Text';
 import Image from 'components/common/Image';
 import Picture from 'components/common/ui/Picture';
-import Icon from 'components/common/ui/Icon';
 
 import {
   TagsArray,
@@ -20,7 +19,7 @@ import {
 } from 'utils/customPropTypes';
 import { renderNodeList } from 'utils/formatters';
 import { renderTag, getTagImageRenderer } from 'utils/tags';
-import { linkCn, colorLooksBlack, colorLooksWhite } from 'utils/ui';
+import { linkCn, colorLooksBlack, colorLooksWhite, articleTypeIcon } from 'utils/ui';
 
 import { ROUTES_NAMES } from 'routes';
 import styles from './articleCard.module.scss';
@@ -30,11 +29,6 @@ import { SCREENS, ARTICLE_CARD_SIZES_BY_CONTEXT, buildBlockContextStyles } from 
 import CardWrapper, { SIZES } from './CardWrapper';
 
 const b = bem(styles);
-
-const ICON_BY_TYPE = {
-  audio: { pack: 's', name: 'volume-up' },
-  video: { pack: 'b', name: 'youtube' },
-};
 
 const ACTION_BY_TYPE = {
   text: {
@@ -164,7 +158,7 @@ const ArticleCard = props => {
         )}
         <div className={b('filler', { top: true })} />
         <div className={b('title')}>
-          {ICON_BY_TYPE[type] && <Icon className={b('interactive-icon')} {...ICON_BY_TYPE[type]} />}
+          {articleTypeIcon({ className: b('interactive-icon'), type })}
           {title}
         </div>
         {!collection && (
