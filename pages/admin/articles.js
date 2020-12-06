@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import bem from 'bem-css-modules';
 import parseISO from 'date-fns/parseISO';
 
+import Button from 'components/common/Button';
 import Link from 'components/common/Link';
 import Table, { styles as tableStyles } from 'components/common/Table';
 import Image from 'components/common/Image';
@@ -126,7 +127,7 @@ const AdminArticlesPage = ({ articles }) => {
     <div>
       <div>
         <input
-          className={b('fibery-input')}
+          className={b('fibery-preview-input')}
           placeholder="Fibery-спасылка на матэрыял для папярэдняга прагляду"
           type="text"
           value={previewUrl}
@@ -138,7 +139,9 @@ const AdminArticlesPage = ({ articles }) => {
             params={{ url: encodeURIComponent(previewUrl) }}
             target="_blank"
           >
-            Адкрыць перадпрагляд
+            <Button className={b('fibery-preview-button')} highlighted>
+              Адкрыць перадпрагляд
+            </Button>
           </Link>
         )}
       </div>
