@@ -19,7 +19,7 @@ import {
 } from 'utils/customPropTypes';
 import { renderNodeList } from 'utils/formatters';
 import { renderTag, getTagImageRenderer } from 'utils/tags';
-import { linkCn, colorLooksBlack, colorLooksWhite, articleTypeIcon } from 'utils/ui';
+import { linkCn, colorLooksBlack, colorLooksWhite, ArticleTypeIcon } from 'utils/ui';
 
 import { ROUTES_NAMES } from 'routes';
 import styles from './articleCard.module.scss';
@@ -158,7 +158,7 @@ const ArticleCard = props => {
         )}
         <div className={b('filler', { top: true })} />
         <div className={b('title')}>
-          {articleTypeIcon({ className: b('interactive-icon'), type })}
+          <ArticleTypeIcon className={b('interactive-icon')} type={type} />
           {title}
         </div>
         {!collection && (

@@ -3,18 +3,16 @@ import PropTypes from 'prop-types';
 import bem from 'bem-css-modules';
 import styles from './admin.module.scss';
 
-import AdminSidebar from './AdminSidebar';
-
 const b = bem(styles);
 
 const AdminLayout = ({ children }) => (
   <div className={b()}>
-    <div className={b('grid')}>
-      <div className={b('grid-aside')}>
-        <AdminSidebar />
-      </div>
-      <div className={b('grid-main')}>{children}</div>
-    </div>
+    {/* <div className={b('grid')}> */}
+    {/*  <div className={b('grid-aside')}> */}
+    {/* <AdminSidebar /> */}
+    {/* </div> */}
+    <div className={b('grid-main')}>{children}</div>
+    {/* </div> */}
   </div>
 );
 

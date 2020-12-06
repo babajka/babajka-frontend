@@ -17,7 +17,7 @@ import { populateRequest } from 'utils/request';
 import { renderNodeList, formatDate } from 'utils/formatters';
 import { getTagLink } from 'utils/tags';
 import { getArticleBaseUrl } from 'utils/fibery';
-import { articleTypeIcon } from 'utils/ui';
+import { ArticleTypeIcon } from 'utils/ui';
 
 import { ROUTES_NAMES } from 'routes';
 import { DATETIME_FORMAT } from 'constants';
@@ -32,15 +32,19 @@ const ARTICLE_COLS = [
   {
     id: 'images',
     title: 'Вокладка',
-    render: ({ value: { horizontal: image } }) => (
-      <Image
-        className={b('cover-thumbnail')}
-        alt="вокладка матэрыяла"
-        sourceSizes={[200]}
-        sizes={[200]}
-        baseUrl={image}
-      />
-    ),
+    render: ({ value: { horizontal: image } }) => {
+      return (
+        image && (
+          <Image
+            className={b('cover-thumbnail')}
+            alt="вокладка матэрыяла"
+            sourceSizes={[200]}
+            sizes="200"
+            baseUrl={image}
+          />
+        )
+      );
+    },
   },
   {
     id: 'title',
@@ -48,7 +52,7 @@ const ARTICLE_COLS = [
     className: styles['wir-table__font--size--large'],
     render: ({ value, row: { slug, type } }) => (
       <Link route={ROUTES_NAMES.article} params={{ slug }}>
-        {articleTypeIcon({ className: b('interactive-icon'), type })}
+        <ArticleTypeIcon className={b('interactive-icon')} type={type} />
         {value}
       </Link>
     ),
