@@ -21,7 +21,6 @@ const ADMIN_ROUTES = [
   },
   {
     name: 'preview',
-    pattern: 'preview/:url',
   },
   {
     name: 'login',

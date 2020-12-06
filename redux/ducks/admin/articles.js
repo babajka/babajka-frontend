@@ -75,9 +75,9 @@ export const adminArticlesActions = {
     type: FETCH_ALL,
     payload: makeRequest(api.articles.getChunk()),
   }),
-  fiberyPreview: url => ({
+  fiberyPreview: ({ url, fiberyPublicId }) => ({
     type: FIBERY_PREVIEW,
-    payload: makeRequest(api.articles.fiberyPreview, 'POST', { url }),
+    payload: makeRequest(api.articles.fiberyPreview, 'POST', { url, fiberyPublicId }),
   }),
   updateArticle: (url, index) => ({
     type: UPDATE_ARTICLE,
