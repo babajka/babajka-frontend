@@ -17,8 +17,8 @@ const ICON_BY_TYPE = {
   video: { pack: 'b', name: 'youtube' },
 };
 
-export const articleTypeIcon = ({ className, type }) =>
-  ICON_BY_TYPE[type] && <Icon className={className} {...ICON_BY_TYPE[type]} />;
+export const ArticleTypeIcon = ({ className, type }) =>
+  ICON_BY_TYPE[type] ? <Icon className={className} {...ICON_BY_TYPE[type]} /> : null;
 
 // https://regex101.com/r/v1LxqC/1
 const HEX_COLOR_REGEX = /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i;
