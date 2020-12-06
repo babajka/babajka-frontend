@@ -54,8 +54,8 @@ const ArticlePreview = ({ article, error }) => {
 };
 
 ArticlePreview.getInitialProps = ctx =>
-  populateRequest(ctx, ({ query: { url } }) =>
-    adminArticlesActions.fiberyPreview(decodeURIComponent(url))
+  populateRequest(ctx, ({ query: { url, fiberyPublicId } }) =>
+    adminArticlesActions.fiberyPreview({ url: decodeURIComponent(url), fiberyPublicId })
   );
 
 ArticlePreview.propTypes = {
