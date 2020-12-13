@@ -11,10 +11,16 @@ import styles from './banner.module.scss';
 import BlockWrapper from './BlockWrapper';
 
 const b = bem(styles);
-const LINK = 'https://map.wir.by?utm_source=wirby-main-page';
+const LINK = {
+  mapa: 'https://map.wir.by?utm_source=wirby-main-page',
+  newyear2021: 'https://wir.by',
+};
 
-const getLink = (width, name) =>
-  `https://res.cloudinary.com/wir-by/image/upload/c_scale,w_${width},f_auto,q_auto/v1568474405/production/banners/mapa-all-sizes/${name}.png`;
+const getLink = (name, width, screen) => {
+  return {
+    mapa: `https://res.cloudinary.com/wir-by/image/upload/c_scale,w_${width},f_auto,q_auto/v1568474405/production/banners/mapa-all-sizes/${screen}.png`,
+  }[name];
+};
 
 const BANNERS = Object.entries({
   desktop: 1020,
@@ -22,8 +28,8 @@ const BANNERS = Object.entries({
   tablet: 624,
   touch: 480,
   mobile: 300,
-}).reduce((acc, [name, size]) => {
-  acc[name] = getLink(size, name);
+}).reduce((acc, [screen, size]) => {
+  acc[screen] = getLink(size, screen);
   return acc;
 }, {});
 
@@ -32,7 +38,7 @@ const BannerBlock = ({ block: { banner } }) => {
   return (
     <BlockWrapper>
       <div className={b()}>
-        <ExternalLink href={LINK}>
+        <ExternalLink href={LINK[banner]}>
           <div className={cn(b('title'), b(`${banner}-title`))}>{title}</div>
           <Picture sources={BANNERS} alt={title} />
         </ExternalLink>
@@ -43,7 +49,7 @@ const BannerBlock = ({ block: { banner } }) => {
 
 BannerBlock.propTypes = {
   block: PropTypes.shape({
-    banner: PropTypes.oneOf(['mapa']).isRequired,
+    banner: PropTypes.oneOf(['mapa', 'newyear2021']).isRequired,
   }).isRequired,
 };
 
