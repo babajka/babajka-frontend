@@ -2,14 +2,6 @@ module.exports = {
   parser: 'babel-eslint',
   extends: ['airbnb', 'prettier', 'prettier/react'],
   plugins: ['prettier', 'react-hooks'],
-  globals: {
-    __ENV__: false,
-    __VERSION__: false,
-    __PROD__: false,
-    __STAGING__: false,
-    __DEV__: false,
-    __TESTING__: false,
-  },
   env: {
     browser: true,
   },

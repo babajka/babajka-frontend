@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
-import LocaleContext, { DEFAULT_LOCALE } from 'components/common/LocaleContext';
+import LocaleContext from 'components/common/LocaleContext';
+import { DEFAULT_LOCALE } from 'constants';
 import dict from 'data/i18n.json';
 
 const SEPARATOR = '||';
@@ -11,7 +12,7 @@ const defaultRender = text => <>{text}</>;
 
 const extract = key => {
   const translation = get(dict, key, '');
-  if (!translation && !__PROD__) {
+  if (!translation && !process.env.isProd) {
     console.warn('[i18n]: No translation for ', key);
   }
   return translation;

@@ -11,7 +11,7 @@ import reducer from './ducks';
 const middlewares = [
   thunkMiddleware,
   createPromise({ promiseTypeSuffixes: [LOADING, SUCCESS, ERROR] }),
-  (__PROD__ || __STAGING__) && analytics,
+  (process.env.isProd || process.env.isStaging) && analytics,
   form,
 ].filter(Boolean);
 

@@ -70,7 +70,6 @@ const COLLECTIONS_HIDE_COMPLETELY = {
   vierszy2020: true,
 };
 
-// TODO: fix storybook
 const ArticleCard = props => {
   const {
     size,

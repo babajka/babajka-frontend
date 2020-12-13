@@ -28,7 +28,7 @@ const renderContent = (content, overrides = {}) => {
   // eslint-disable-next-line no-use-before-define
   const renderers = { ...RENDERERS, ...overrides };
   return content.map(({ type, ...params }, key) => {
-    if (!__PROD__ && !renderers[type]) {
+    if (!process.env.isProd && !renderers[type]) {
       // eslint-disable-next-line no-console
       console.log('Missed renderer: ', type);
     }
@@ -61,7 +61,7 @@ const addMarks = (text, marks) => {
   }
   return marks.reduce((acc, { type, ...params }) => {
     // TEMP:
-    if (!__PROD__ && !MARKS[type]) {
+    if (!process.env.isProd && !MARKS[type]) {
       // eslint-disable-next-line no-console
       console.log('Missed mark: ', type);
     }
