@@ -16,7 +16,7 @@ import { NETWORKS, PODCASTS_PLATFORMS } from 'constants/social';
 import footer from './footer/index.module.scss';
 import layout from './footer/layout.module.scss';
 
-import SubscribeForm from './footer/SubscribeForm';
+// import SubscribeForm from './footer/SubscribeForm';
 
 const f = bem(footer);
 const l = bem(layout);
@@ -63,7 +63,7 @@ const Footer = () => (
 
         <div className={l('block2')}>
           <div className={f('interactions')}>
-            <SubscribeForm />
+            {/* <SubscribeForm /> */}
             <ExternalLink className={f('rss')} href="/rss">
               <Icon className={f('rss-icon')} pack="s" name="rss" />
               <Text id="footer.rss" />
