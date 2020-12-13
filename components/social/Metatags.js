@@ -123,7 +123,7 @@ export const MetaAppleTouchDevices = ({ title }) => (
 
 const Metatags = ({ url }) => (
   <Head>
-    {!__PROD__ && <meta name="robots" content="noindex" />}
+    {!process.env.isProd && <meta name="robots" content="noindex" />}
     {/* Basic metatags */}
     <meta charSet="utf-8" />
     <meta httpEquiv="X-UA-Compatible" content="IE=edge" />

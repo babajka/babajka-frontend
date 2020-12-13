@@ -22,8 +22,5 @@ update:
 build-size:
 	npm run size
 
-analyze:
-	npm run analyze
-
 install:
 	npm i

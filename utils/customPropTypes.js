@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { TOPICS } from 'constants';
-import { VALID_LOCALES } from 'components/common/LocaleContext';
+import { TOPICS, VALID_LOCALES } from 'constants';
 import { ARTICLE_TYPES } from 'constants/articles';
 
 export const IdsArray = PropTypes.arrayOf(PropTypes.string);

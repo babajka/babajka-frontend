@@ -85,15 +85,15 @@ class Root extends App {
 
   componentDidMount() {
     const url = document.location.pathname + document.location.search;
-    if (__PROD__ && !window.ym) {
+    if (process.env.isProd && !window.ym) {
       loadYM(YM_ID);
       window.ym(YM_ID, 'hit', url);
     }
-    if (__PROD__ && !window.ga) {
+    if (process.env.isProd && !window.ga) {
       ReactGA.initialize(GA_ID, { debug: false });
       ReactGA.ga('send', 'pageview', url, { hitCallback: clearUtmParams });
     }
-    if (!__PROD__) {
+    if (!process.env.isProd) {
       clearUtmParams();
     }
   }
