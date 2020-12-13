@@ -5,7 +5,7 @@ import styles from './example.module.scss';
 const BIG = 'big';
 const b = bem(styles);
 
-export default () => (
+const Example = () => (
   <div className={b()}>
     <p>I am normal</p>
     <p className={b('red')}>I am red</p>
@@ -13,3 +13,5 @@ export default () => (
     <p className={b('big')}>I am {BIG}</p>
   </div>
 );
+
+export default Example;
