@@ -1,4 +1,4 @@
-export default id => {
+const loadYM = id => {
   /* eslint-disable */
   (function (m, e, t, r, i, k, a) {
     m[i] =
@@ -21,3 +21,5 @@ export default id => {
     accurateTrackBounce: true,
   });
 };
+
+export default loadYM;

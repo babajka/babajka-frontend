@@ -1,6 +1,6 @@
 import { isLoading } from 'utils/redux';
 
-export default () => next => action => {
+const formMiddleware = () => next => action => {
   const { meta, error, payload } = action;
 
   if (!meta || !meta.formikActions) {
@@ -21,3 +21,5 @@ export default () => next => action => {
 
   next(action);
 };
+
+export default formMiddleware;
