@@ -5,19 +5,15 @@ import 'components/common/layout/layout.scss';
 import 'swiper/css/swiper.css';
 import 'styles/swiper-customization.scss';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ReactGA from 'react-ga';
 import bem from 'bem-css-modules';
-
 import { Provider } from 'react-redux';
-import withRedux from 'next-redux-wrapper';
 
-import App from 'next/app';
 import Head from 'next/head';
 import { withRouter } from 'next/router';
 
-import Guard from 'components/auth/Guard';
 import CoreLayout from 'components/common/layout/CoreLayout';
 import LocaleContext from 'components/common/LocaleContext';
 import Metatags, {
@@ -35,15 +31,12 @@ import { GA_ID, YM_ID } from 'constants/social';
 import { FAVICON_URL } from 'constants/assets';
 
 import clearUtmParams from 'lib/utils/clearUtmParams';
-import { populateRequest } from 'utils/request';
+
 import { replaceLocale } from 'utils/formatters';
 import { LangType } from 'utils/customPropTypes';
 import host from 'utils/host';
-import initStore from 'redux/store';
 import loadYM from 'utils/loadYM';
-
-import { authActions } from 'redux/ducks/auth';
-import { sidebarActions } from 'redux/ducks/sidebar';
+import { useStore } from 'redux/store';
 
 bem.setSettings({
   throwOnError: true,
@@ -68,22 +61,22 @@ const getLocale = ({ asPath, query: { lang } }) => {
   return DEFAULT_LOCALE;
 };
 
-class Root extends App {
-  // https://err.sh/next.js/opt-out-automatic-prerendering
-  static async getInitialProps({ Component, ctx }) {
-    await populateRequest(ctx, authActions.getCurrentUser);
-    // TODO(@drapegnik): consider is it right place for that request
-    if (!Component.disableSidebarFetch) {
-      await populateRequest(ctx, sidebarActions.fetch);
-    }
-    const props = {};
-    if (Component.getInitialProps) {
-      props.initial = await Component.getInitialProps(ctx);
-    }
-    return props;
-  }
+const App = ({ Component, router, pageProps: basePageProps }) => {
+  const store = useStore();
+  const { getLayoutProps = getEmptyObject } = Component;
+  const locale = getLocale(router);
 
-  componentDidMount() {
+  const pageProps = { lang: locale, routerQuery: router.query, ...basePageProps };
+  const {
+    noLocTitle,
+    title: titleId = 'common.project-type',
+    titleApple = 'common.project-apple-title',
+    hideSidebar,
+    hideFooter,
+  } = getLayoutProps(pageProps);
+  const title = noLocTitle || localize(titleId, locale);
+
+  useEffect(() => {
     const url = document.location.pathname + document.location.search;
     if (process.env.isProd && !window.ym) {
       loadYM(YM_ID);
@@ -96,64 +89,46 @@ class Root extends App {
     if (!process.env.isProd) {
       clearUtmParams();
     }
-  }
+  }, []);
 
-  render() {
-    const { Component, store, router, initial } = this.props;
-    const { permissions = [], getLayoutProps = getEmptyObject } = Component;
-    const locale = getLocale(router);
-
-    const pageProps = { lang: locale, routerQuery: router.query, ...initial };
-    const {
-      noLocTitle,
-      title: titleId = 'common.project-type',
-      titleApple = 'common.project-apple-title',
-      hideSidebar,
-      hideFooter,
-    } = getLayoutProps(pageProps);
-    const title = noLocTitle || localize(titleId, locale);
-
-    return (
-      <Provider store={store}>
-        <LocaleContext.Provider value={locale}>
-          <Metatags url={`${host}${replaceLocale(router.asPath)}`} />
-          <MetaTitle title={title} />
-          <MetaDescription description={localize('common.project-description', locale)} />
-          <MetaImage />
-          <MetaLocale locale={locale} />
-          <MetaKeywords />
-          <MetaAppleTouchDevices title={localize(titleApple, locale)} />
-          <Head>
-            <link rel="icon" type="image/png" href={FAVICON_URL} />
-            {/* https://developers.google.com/search/reference/podcast/homepage-requirements */}
-            {/* <link
+  return (
+    <Provider store={store}>
+      <LocaleContext.Provider value={locale}>
+        <Metatags url={`${host}${replaceLocale(router.asPath)}`} />
+        <MetaTitle title={title} />
+        <MetaDescription description={localize('common.project-description', locale)} />
+        <MetaImage />
+        <MetaLocale locale={locale} />
+        <MetaKeywords />
+        <MetaAppleTouchDevices title={localize(titleApple, locale)} />
+        <Head>
+          <link rel="icon" type="image/png" href={FAVICON_URL} />
+          {/* https://developers.google.com/search/reference/podcast/homepage-requirements */}
+          {/* <link
               rel="alternate"
               type="application/rss+xml"
               title="Wir.by Podcasts"
               href="https://wir.by/rss/podcasts"
             /> */}
-            <noscript>
-              <div>
-                <img
-                  src={`https://mc.yandex.ru/watch/${YM_ID}`}
-                  style={{ position: 'absolute', left: '-9999px' }}
-                  alt=""
-                />
-              </div>
-            </noscript>
-          </Head>
-          <CoreLayout lang={locale} hideFooter={hideFooter} hideSidebar={hideSidebar}>
-            <Guard permissions={permissions}>
-              <Component {...pageProps} />
-            </Guard>
-          </CoreLayout>
-        </LocaleContext.Provider>
-      </Provider>
-    );
-  }
-}
+          <noscript>
+            <div>
+              <img
+                src={`https://mc.yandex.ru/watch/${YM_ID}`}
+                style={{ position: 'absolute', left: '-9999px' }}
+                alt=""
+              />
+            </div>
+          </noscript>
+        </Head>
+        <CoreLayout lang={locale} hideFooter={hideFooter} hideSidebar={hideSidebar}>
+          <Component {...pageProps} />
+        </CoreLayout>
+      </LocaleContext.Provider>
+    </Provider>
+  );
+};
 
-Root.propTypes = {
+App.propTypes = {
   router: PropTypes.shape({
     query: PropTypes.shape({
       lang: LangType,
@@ -161,4 +136,4 @@ Root.propTypes = {
   }).isRequired,
 };
 
-export default withRouter(withRedux(initStore)(Root));
+export default withRouter(App);

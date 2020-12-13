@@ -15,22 +15,6 @@ const getMarkup = () => {
   return ['example'].map(f => ({ name: `markup/${f}` }));
 };
 
-const ADMIN_ROUTES = [
-  {
-    name: 'articles',
-  },
-  {
-    name: 'preview',
-  },
-  {
-    name: 'login',
-  },
-].map(({ name, pattern = name, page = name }) => ({
-  name: `admin.${name}`,
-  pattern: `admin/${pattern}`,
-  page: `admin/${page}`,
-}));
-
 const ROUTES = [
   {
     name: 'main',
@@ -65,7 +49,6 @@ const ROUTES = [
     pattern: 'status/:code(404|500)',
   },
 ]
-  .concat(ADMIN_ROUTES)
   .concat(getMarkup())
   .map(({ name, pattern = name, page = name }) => ({
     name,
@@ -79,6 +62,5 @@ ROUTES.forEach(route => {
   routes.add(route);
 });
 
-routes.ADMIN_ROUTES = ADMIN_ROUTES;
 routes.ROUTES_NAMES = ROUTES_NAMES;
 module.exports = routes;
