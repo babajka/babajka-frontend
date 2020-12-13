@@ -2,59 +2,61 @@
   {
     "name": "> framework",
     "path": ".next/static/**/framework.*.js",
+    "running": false,
     "limit": "40 kB"
   },
   {
-    "name": "> app",
-    "path": ".next/static/**/_app.js",
-    "limit": "22 kB"
-  },
-  {
-    "name": "> home",
-    "path": ".next/static/**/index.js",
+    "name": "> polyfills",
+    "path": ".next/static/chunks/polyfills-*.js",
     "running": false,
-    "limit": "3 kB"
-  },
-  {
-    "name": "> article",
-    "path": ".next/static/**/article.js",
-    "running": false,
-    "limit": "5 kB"
-  },
-  {
-    "name": "> topic",
-    "path": ".next/static/**/topic.js",
-    "running": false,
-    "limit": "5 kB"
-  },
-  {
-    "name": "> tag",
-    "path": ".next/static/**/tag.js",
-    "running": false,
-    "limit": "6 kB"
-  },
-  {
-    "name": "> about",
-    "path": ".next/static/**/about.js",
-    "running": false,
-    "limit": "9 kB"
-  },
-  {
-    "name": "> _error",
-    "path": ".next/static/**/_error.js",
-    "running": false,
-    "limit": "3 kB"
+    "limit": "31 kB"
   },
   {
     "name": "> all css",
     "path": ".next/static/**/*.css",
     "running": false,
-    "limit": "40 kB"
+    "limit": "50 kB"
   },
   {
-    "name": "> all js",
-    "path": ".next/static/chunks/*.js",
+    "name": "> app",
+    "path": ".next/static/**/_app-*.js",
     "running": false,
-    "limit": "172 kB"
+    "limit": "22 kB"
+  },
+  {
+    "name": "> home",
+    "path": ".next/static/**/index-*.js",
+    "running": false,
+    "limit": "3 kB"
+  },
+  {
+    "name": "> article",
+    "path": ".next/static/**/article-*.js",
+    "running": false,
+    "limit": "5 kB"
+  },
+  {
+    "name": "> topic",
+    "path": ".next/static/**/topic-*.js",
+    "running": false,
+    "limit": "2 kB"
+  },
+  {
+    "name": "> tag",
+    "path": ".next/static/**/tag-*.js",
+    "running": false,
+    "limit": "3 kB"
+  },
+  {
+    "name": "> about",
+    "path": ".next/static/**/about-*.js",
+    "running": false,
+    "limit": "6 kB"
+  },
+  {
+    "name": "> _error",
+    "path": ".next/static/**/_error-*.js",
+    "running": false,
+    "limit": "3 kB"
   }
 ]

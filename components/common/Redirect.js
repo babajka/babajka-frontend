@@ -29,6 +29,8 @@ Redirect.defaultProps = {
   method: 'replace',
 };
 
-export default props => (
+const RedirectComponent = props => (
   <LocaleContext.Consumer>{lang => <Redirect {...props} lang={lang} />}</LocaleContext.Consumer>
 );
+
+export default RedirectComponent;
