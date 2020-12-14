@@ -1,15 +1,9 @@
 [
   {
-    "name": "> framework",
-    "path": ".next/static/**/framework.*.js",
+    "name": "> framework + polyfills",
+    "path": [".next/static/**/framework.*.js", ".next/static/**/polyfills-*.js"],
     "running": false,
-    "limit": "40 kB"
-  },
-  {
-    "name": "> polyfills",
-    "path": ".next/static/chunks/polyfills-*.js",
-    "running": false,
-    "limit": "31 kB"
+    "limit": "70 kB"
   },
   {
     "name": "> all css",
@@ -30,10 +24,20 @@
     "limit": "3 kB"
   },
   {
+    "name": "> home [server]",
+    "path": ".next/server/pages/index.js",
+    "running": false
+  },
+  {
     "name": "> article",
     "path": ".next/static/**/article-*.js",
     "running": false,
     "limit": "5 kB"
+  },
+  {
+    "name": "> article [server]",
+    "path": ".next/server/pages/article.js",
+    "running": false
   },
   {
     "name": "> topic",
@@ -42,10 +46,20 @@
     "limit": "2 kB"
   },
   {
+    "name": "> topic [server]",
+    "path": ".next/server/pages/topic.js",
+    "running": false
+  },
+  {
     "name": "> tag",
     "path": ".next/static/**/tag-*.js",
     "running": false,
     "limit": "3 kB"
+  },
+  {
+    "name": "> tag [server]",
+    "path": ".next/server/pages/tag.js",
+    "running": false
   },
   {
     "name": "> about",
@@ -54,9 +68,19 @@
     "limit": "6 kB"
   },
   {
-    "name": "> _error",
-    "path": ".next/static/**/_error-*.js",
+    "name": "> about [server]",
+    "path": ".next/server/pages/about.js",
+    "running": false
+  },
+  {
+    "name": "> diary",
+    "path": ".next/static/**/diary-*.js",
     "running": false,
     "limit": "3 kB"
+  },
+  {
+    "name": "> diary [server]",
+    "path": ".next/server/pages/diary.js",
+    "running": false
   }
 ]
