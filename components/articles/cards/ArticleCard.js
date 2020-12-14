@@ -17,9 +17,14 @@ import {
   ArticleType,
   ThemeType,
 } from 'utils/customPropTypes';
-import { renderNodeList } from 'utils/formatters';
+import {
+  renderNodeList,
+  linkCn,
+  colorLooksBlack,
+  colorLooksWhite,
+  ArticleTypeIcon,
+} from 'utils/ui';
 import { renderTag, getTagImageRenderer } from 'utils/features/tags';
-import { linkCn, colorLooksBlack, colorLooksWhite, ArticleTypeIcon } from 'utils/ui';
 
 import { ROUTES_NAMES } from 'routes';
 import styles from './articleCard.module.scss';

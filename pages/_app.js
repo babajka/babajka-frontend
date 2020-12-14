@@ -24,13 +24,12 @@ import Metatags, {
 } from 'components/social/Metatags';
 import { localize } from 'components/common/Text';
 
-import { DEFAULT_LOCALE, VALID_LOCALES } from 'constants';
 import { GA_ID, YM_ID } from 'constants/social';
 import { FAVICON_URL } from 'constants/assets';
 
 import clearUtmParams from 'lib/utils/clearUtmParams';
 
-import { replaceLocale } from 'utils/formatters';
+import { replaceLocale, getLocale } from 'utils/localization';
 import host from 'utils/host';
 import loadYM from 'utils/loadYM';
 
@@ -40,22 +39,6 @@ bem.setSettings({
 });
 
 const getEmptyObject = () => ({});
-
-const getLocale = ({ asPath, query: { lang } }) => {
-  // query has 'lang' field if it was successfully matched by the router.
-  if (lang) {
-    return lang;
-  }
-
-  // parse locale for invalid paths (404)
-  // asPath starts with '/', so we have to take [1], not [0].
-  const parsedLang = asPath.split('/')[1];
-  if (VALID_LOCALES.includes(parsedLang)) {
-    return parsedLang;
-  }
-
-  return DEFAULT_LOCALE;
-};
 
 const App = ({ Component, pageProps: basePageProps }) => {
   const router = useRouter();

@@ -18,12 +18,6 @@ const VALID_LOCALES = Object.keys(LOCALES);
 
 const LANGS = Object.entries(LOCALES).map(([id, label]) => ({ id, label }));
 
-const DATE_FORMAT = 'd MMMM yyyy';
-
-const DATETIME_FORMAT = 'dd/MM/yy HH:mm';
-
-const SHORT_DATE_FORMAT = 'd MMMM';
-
 const DOMAIN_SECURE = 'https://wir.by';
 
 const STATIC_PATHS = ['static', '_next'];
@@ -32,9 +26,6 @@ const STATIC_PATHS = ['static', '_next'];
 const TOPICS = ['themes', 'locations', 'times', 'personalities', 'authors', 'brands'];
 
 module.exports = {
-  DATE_FORMAT,
-  DATETIME_FORMAT,
-  SHORT_DATE_FORMAT,
   DEFAULT_LOCALE,
   DOMAIN_SECURE,
   LANGS,
