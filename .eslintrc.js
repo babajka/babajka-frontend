@@ -18,11 +18,12 @@ module.exports = {
     'react/jsx-filename-extension': ['error', { extensions: ['.js'] }],
     // weird rule
     'react/jsx-one-expression-per-line': 'off',
-    // allow create components without prop-types check
-    'react/prop-types': ['warn', { skipUndeclared: true }],
-    'react/forbid-prop-types': 'warn',
-    'react/require-default-props': 'warn',
+    // temporary disable prop-types check
+    'react/prop-types': 'off',
+    'react/forbid-prop-types': 'off',
+    'react/require-default-props': 'off',
     'react/jsx-props-no-spreading': 'off',
+    // TODO: remove
     'react/state-in-constructor': 'off',
 
     // react-hooks

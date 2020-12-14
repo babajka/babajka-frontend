@@ -26,7 +26,7 @@ import ExCoQuiz from 'components/specials/ex-co-quiz';
 import TextWithSeparator from 'lib/components/TextWithSeparator';
 
 import { ArticleShape } from 'utils/customPropTypes';
-import { getTagLink, getTagImageRenderer, renderTag } from 'utils/tags';
+import { getTagLink, getTagImageRenderer, renderTag } from 'utils/features/tags';
 import { renderNodeList } from 'utils/formatters';
 import fiberyRenderer from 'utils/fibery/renderer';
 import host from 'utils/host';

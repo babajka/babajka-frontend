@@ -1,20 +1,17 @@
 import React, { useState } from 'react';
 import bem from 'bem-css-modules';
-import { Form } from 'formik';
 
 import Clickable from 'components/common/Clickable';
 import Text from 'components/common/Text';
-import LocaleContext from 'components/common/LocaleContext';
-import FormWrapper from 'components/common/form/FormWrapper';
-import InputField from 'components/common/form/InputField';
+// import LocaleContext from 'components/common/LocaleContext';
 
-import { homeActions } from 'redux/ducks/home';
-import { validEmail } from 'utils/validators';
-import createConstants from 'lib/utils/createConstants';
+// import { homeActions } from 'redux/ducks/home';
+// import { validEmail } from 'utils/validators';
+// import createConstants from 'lib/utils/createConstants';
 import styles from './index.module.scss';
 
 const b = bem(styles);
-const STATUS = createConstants('subscribed', 'unsubscribed');
+// const STATUS = createConstants('subscribed', 'unsubscribed');
 
 const SubscribeForm = () => {
   const [email, setEmail] = useState(null);
@@ -43,7 +40,7 @@ const SubscribeForm = () => {
           </Clickable>
         </div>
       )}
-      {!email && (
+      {/* {!email && (
         <LocaleContext.Consumer>
           {lang => (
             <FormWrapper
@@ -75,7 +72,7 @@ const SubscribeForm = () => {
             </FormWrapper>
           )}
         </LocaleContext.Consumer>
-      )}
+      )} */}
     </div>
   );
 };

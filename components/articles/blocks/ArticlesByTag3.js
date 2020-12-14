@@ -6,7 +6,7 @@ import bem from 'bem-css-modules';
 import ArticleCard from 'components/articles/cards/ArticleCard';
 
 import { IdsArray } from 'utils/customPropTypes';
-import { getTagLink, getTopicLink } from 'utils/tags';
+import { getTagLink, getTopicLink } from 'utils/features/tags';
 import styles from './articlesByTag3.module.scss';
 
 import BlockWrapper from './BlockWrapper';

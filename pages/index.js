@@ -1,45 +1,27 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-
-import BLOCKS_BY_TYPE from 'components/articles/blocks';
-
-import { homeActions, homeSelectors } from 'redux/ducks/home';
-import { populateRequest } from 'utils/request';
-import {
-  ArticlePreviewArray,
-  ArticlePreviewsById,
-  TopicsById,
-  TagsById,
-} from 'utils/customPropTypes';
+import React, { useMemo } from 'react';
 
 import CardsLayout from 'components/articles/layout/CardsLayout';
+import { makeRequest } from 'utils/request';
+import { localizeData } from 'utils/getters';
+import api from 'constants/api';
 
-const mapStateToProps = (state, { lang = 'be' }) => ({
-  blocks: homeSelectors.getBlocks(state),
-  data: homeSelectors.getData(state, lang),
-});
-
-const MainPage = ({ blocks, data }) => <CardsLayout blocks={blocks} data={data} />;
-
-MainPage.propTypes = {
-  blocks: PropTypes.arrayOf(
-    PropTypes.shape({
-      type: PropTypes.oneOf(Object.keys(BLOCKS_BY_TYPE)).isRequired,
-    })
-  ).isRequired,
-  data: PropTypes.shape({
-    articles: ArticlePreviewsById,
-    tags: TagsById,
-    topics: TopicsById,
-    latestArticles: ArticlePreviewArray,
-  }).isRequired,
+const MainPage = ({ blocks, data, lang }) => {
+  const localized = useMemo(() => localizeData(data, lang), [data, lang]);
+  return <CardsLayout blocks={blocks} data={localized} />;
 };
-
-MainPage.getInitialProps = ctx => populateRequest(ctx, homeActions.fetch);
 
 MainPage.getLayoutProps = () => ({
   title: 'header.main',
 });
 
-export default connect(mapStateToProps)(MainPage);
+// TODO: use built-in i18n mechanism
+export const getStaticProps = async () => {
+  console.warn('home getStaticProps');
+  const { blocks, data } = await makeRequest(api.storage.getMainPage);
+  return {
+    props: { blocks, data },
+    revalidate: 1,
+  };
+};
+
+export default MainPage;

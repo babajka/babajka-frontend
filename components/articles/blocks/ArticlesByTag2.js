@@ -7,7 +7,7 @@ import Text from 'components/common/Text';
 import ArticleCard from 'components/articles/cards/ArticleCard';
 
 import { IdsArray } from 'utils/customPropTypes';
-import { getTagLink, getTopicLink, getTagImageRenderer } from 'utils/tags';
+import { getTagLink, getTopicLink, getTagImageRenderer } from 'utils/features/tags';
 
 import { TOPIC } from 'constants/misc';
 import styles from './articlesByTag2.module.scss';

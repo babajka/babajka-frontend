@@ -18,7 +18,7 @@ import {
   ThemeType,
 } from 'utils/customPropTypes';
 import { renderNodeList } from 'utils/formatters';
-import { renderTag, getTagImageRenderer } from 'utils/tags';
+import { renderTag, getTagImageRenderer } from 'utils/features/tags';
 import { linkCn, colorLooksBlack, colorLooksWhite, ArticleTypeIcon } from 'utils/ui';
 
 import { ROUTES_NAMES } from 'routes';
