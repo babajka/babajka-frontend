@@ -1,12 +1,6 @@
-// import fetch from 'isomorphic-fetch';
-import nextCookie from 'next-cookies';
-import castArray from 'lodash/castArray';
-
 import { Router, ROUTES_NAMES } from 'routes';
 import { BACKEND_URL } from 'constants/server';
 import { DEFAULT_LOCALE } from 'constants';
-
-const NOT_FOUND = 'Not Found';
 
 const DEFAULT_OPTIONS = {
   mode: 'cors',
@@ -17,30 +11,17 @@ const DEFAULT_OPTIONS = {
   },
 };
 
-// HACK: https://github.com/zeit/next.js/issues/2455
-let cookie = null;
-
-const getCookieString = cookies =>
-  Object.entries(cookies).reduce((acc, [key, value]) => `${acc}${key}=${value};`, '');
-
-const getOptions = options => {
-  const mergedOptions = { ...DEFAULT_OPTIONS, ...options };
-  if (cookie) {
-    mergedOptions.headers.cookie = getCookieString(cookie);
-  }
-  return mergedOptions;
-};
-
 export const makeRequest = (url, method = 'GET', rawBody = null) =>
   new Promise((resolve, reject) => {
     if (!url) {
       reject(new Error('URL parameter required'));
     }
 
-    const options = getOptions({
+    const options = {
+      ...DEFAULT_OPTIONS,
       method,
       body: rawBody && JSON.stringify(rawBody),
-    });
+    };
 
     const isServer = !process.browser;
     // for requests from server we need to avoid proxying
@@ -74,19 +55,3 @@ export const makeRequest = (url, method = 'GET', rawBody = null) =>
       })
       .catch(reject);
   });
-
-export const populateRequest = (ctx, actions) => {
-  const { store, res } = ctx;
-  cookie = nextCookie(ctx);
-  const isServer = !process.browser;
-
-  const promises = castArray(actions).map(action => store.dispatch(action(ctx)));
-
-  return Promise.all(promises).catch(err => {
-    if (isServer && err === NOT_FOUND) {
-      res.writeHead(302, { Location: '/status/404' });
-      res.end();
-      res.finished = true;
-    }
-  });
-};

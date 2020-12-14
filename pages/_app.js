@@ -6,13 +6,11 @@ import 'swiper/css/swiper.css';
 import 'styles/swiper-customization.scss';
 
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import ReactGA from 'react-ga';
 import bem from 'bem-css-modules';
-import { Provider } from 'react-redux';
 
 import Head from 'next/head';
-import { withRouter } from 'next/router';
+import { useRouter } from 'next/router';
 
 import CoreLayout from 'components/common/layout/CoreLayout';
 import LocaleContext from 'components/common/LocaleContext';
@@ -33,10 +31,8 @@ import { FAVICON_URL } from 'constants/assets';
 import clearUtmParams from 'lib/utils/clearUtmParams';
 
 import { replaceLocale } from 'utils/formatters';
-import { LangType } from 'utils/customPropTypes';
 import host from 'utils/host';
 import loadYM from 'utils/loadYM';
-import { useStore } from 'redux/store';
 
 bem.setSettings({
   throwOnError: true,
@@ -61,8 +57,8 @@ const getLocale = ({ asPath, query: { lang } }) => {
   return DEFAULT_LOCALE;
 };
 
-const App = ({ Component, router, pageProps: basePageProps }) => {
-  const store = useStore();
+const App = ({ Component, pageProps: basePageProps }) => {
+  const router = useRouter();
   const { getLayoutProps = getEmptyObject } = Component;
   const locale = getLocale(router);
 
@@ -96,48 +92,38 @@ const App = ({ Component, router, pageProps: basePageProps }) => {
   }, []);
 
   return (
-    <Provider store={store}>
-      <LocaleContext.Provider value={locale}>
-        <Metatags url={`${host}${replaceLocale(router.asPath)}`} />
-        <MetaTitle title={title} />
-        <MetaDescription description={localize('common.project-description', locale)} />
-        <MetaImage />
-        <MetaLocale locale={locale} />
-        <MetaKeywords />
-        <MetaAppleTouchDevices title={localize(titleApple, locale)} />
-        <Head>
-          <link rel="icon" type="image/png" href={FAVICON_URL} />
-          {/* https://developers.google.com/search/reference/podcast/homepage-requirements */}
-          {/* <link
+    <LocaleContext.Provider value={locale}>
+      <Metatags url={`${host}${replaceLocale(router.asPath)}`} />
+      <MetaTitle title={title} />
+      <MetaDescription description={localize('common.project-description', locale)} />
+      <MetaImage />
+      <MetaLocale locale={locale} />
+      <MetaKeywords />
+      <MetaAppleTouchDevices title={localize(titleApple, locale)} />
+      <Head>
+        <link rel="icon" type="image/png" href={FAVICON_URL} />
+        {/* https://developers.google.com/search/reference/podcast/homepage-requirements */}
+        {/* <link
               rel="alternate"
               type="application/rss+xml"
               title="Wir.by Podcasts"
               href="https://wir.by/rss/podcasts"
             /> */}
-          <noscript>
-            <div>
-              <img
-                src={`https://mc.yandex.ru/watch/${YM_ID}`}
-                style={{ position: 'absolute', left: '-9999px' }}
-                alt=""
-              />
-            </div>
-          </noscript>
-        </Head>
-        <CoreLayout lang={locale} hideFooter={hideFooter} hideSidebar={hideSidebar}>
-          <Component {...pageProps} />
-        </CoreLayout>
-      </LocaleContext.Provider>
-    </Provider>
+        <noscript>
+          <div>
+            <img
+              src={`https://mc.yandex.ru/watch/${YM_ID}`}
+              style={{ position: 'absolute', left: '-9999px' }}
+              alt=""
+            />
+          </div>
+        </noscript>
+      </Head>
+      <CoreLayout lang={locale} hideFooter={hideFooter} hideSidebar={hideSidebar}>
+        <Component {...pageProps} />
+      </CoreLayout>
+    </LocaleContext.Provider>
   );
 };
 
-App.propTypes = {
-  router: PropTypes.shape({
-    query: PropTypes.shape({
-      lang: LangType,
-    }).isRequired,
-  }).isRequired,
-};
-
-export default withRouter(App);
+export default App;
