@@ -5,7 +5,7 @@ import bem from 'bem-css-modules';
 import TagCard from 'components/articles/cards/TagCard';
 
 import { IdsArray, TagsById } from 'utils/customPropTypes';
-import { getTopicLink } from 'utils/tags';
+import { getTopicLink } from 'utils/features/tags';
 
 import { TOPICS } from 'constants';
 

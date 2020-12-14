@@ -1,20 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import cn from 'classnames';
 
 import Link from 'components/common/Link';
-import { diarySelectors } from 'redux/ducks/diary';
 import { ROUTES_NAMES } from 'routes';
 import styles from './diaryArrows.module.scss';
 
 import ArrowIcon from './ArrowIcon';
-
-const mapStateToProps = state => ({
-  prev: diarySelectors.getPrev(state),
-  next: diarySelectors.getNext(state),
-  isNextAvailable: diarySelectors.isNextAvailable(state),
-});
 
 const DiaryLinkArrows = ({ className, prev, next, size, isNextAvailable }) => (
   <div className={cn(styles.arrows, className)}>
@@ -48,4 +40,4 @@ DiaryLinkArrows.defaultProps = {
   className: '',
 };
 
-export default connect(mapStateToProps)(DiaryLinkArrows);
+export default DiaryLinkArrows;

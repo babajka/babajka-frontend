@@ -15,7 +15,7 @@ import LocaleContext from 'components/common/LocaleContext';
 import { authActions, authSelectors } from 'redux/ducks/auth';
 import { sidebarSelectors } from 'redux/ducks/sidebar';
 import { TagsById, UserShape, IdsArray } from 'utils/customPropTypes';
-import { getTagLink, getTopicLink } from 'utils/tags';
+import { getTagLink, getTopicLink } from 'utils/features/tags';
 import env from 'utils/env';
 
 import { TOPICS, LANGS } from 'constants';

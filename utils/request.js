@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch';
+// import fetch from 'isomorphic-fetch';
 import nextCookie from 'next-cookies';
 import castArray from 'lodash/castArray';
 

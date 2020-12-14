@@ -7,6 +7,8 @@ import isBefore from 'date-fns/isBefore';
 import { TOPICS } from 'constants';
 import { localize, localizeArray, localizeFields } from 'utils/localization';
 
+// TODO: split this file
+
 const GETTER_BY_TYPE = {};
 
 const SKIP_MAP_BY_ID = ['latestArticles'];
@@ -18,17 +20,8 @@ export const localizeData = (data, lang) =>
     return acc;
   }, {});
 
-export const getDiary = ({ author, text, day, month, year, slug }) => ({
-  author,
-  text,
-  slug,
-  date: new Date(year, month - 1, day).getTime(),
-  day,
-  month,
-});
-
 export const getLocalizedCollection = (
-  { slug, cover, name, description, articles, articleIndex },
+  { slug, cover, name, description, articles, articleIndex = 0 },
   lang
 ) => ({
   slug,
@@ -36,7 +29,7 @@ export const getLocalizedCollection = (
   articleIndex,
   name: localize(name, lang),
   description: localize(description, lang),
-  articles: articles?.map(a => getLocalizedArticle(a, lang)), // eslint-disable-line no-use-before-define
+  articles: articles?.map(a => getLocalizedArticle(a, lang)) || null, // eslint-disable-line no-use-before-define
 });
 
 export const getLocalizedCollections = localizeArray(getLocalizedCollection);
@@ -79,7 +72,15 @@ export const getLocalizedArticle = (article, lang) => {
   if (!article) {
     return null;
   }
-  const { _id: id, locales, collection, publishAt, tags, suggestedArticles, ...rest } = article;
+  const {
+    _id: id,
+    locales,
+    collection = null,
+    publishAt,
+    tags = null,
+    suggestedArticles = null,
+    ...rest
+  } = article;
   const { text, metrics: _, ...localized } = localize(locales, lang);
 
   // TODO: think about implementing this logic at backend

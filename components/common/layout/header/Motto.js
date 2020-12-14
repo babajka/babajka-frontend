@@ -4,7 +4,7 @@ import sample from 'lodash/sample';
 import Text from 'components/common/Text';
 import Link from 'components/common/Link';
 
-import { TagLink } from 'utils/tags';
+import { TagLink } from 'utils/features/tags';
 import { ROUTES_NAMES } from 'routes';
 import { TOPIC } from 'constants/misc';
 

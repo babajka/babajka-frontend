@@ -69,14 +69,14 @@
   },
   {
     "name": "> about [server]",
-    "path": ".next/server/pages/about.js",
+    "path": ".next/server/pages/about.html",
     "running": false
   },
   {
     "name": "> diary",
     "path": ".next/static/**/diary-*.js",
     "running": false,
-    "limit": "3 kB"
+    "limit": "5 kB"
   },
   {
     "name": "> diary [server]",

@@ -1,8 +1,6 @@
 import styles from 'styles/pages/tag.module.scss';
 
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import bem from 'bem-css-modules';
 
 import {
@@ -15,17 +13,13 @@ import {
 import { localize } from 'components/common/Text';
 import ArticlesComposition from 'components/articles/compositions/ArticlesComposition';
 
-import { tagsActions, tagsSelectors } from 'redux/ducks/tags';
-import { TagShape, LangType, ArticlePreviewArray } from 'utils/customPropTypes';
-import { populateRequest } from 'utils/request';
-import { renderTag, getTopicLink, getTagImageUrl } from 'utils/tags';
+import { makeRequest } from 'utils/request';
+import { renderTag, getTopicLink, getTagImageUrl } from 'utils/features/tags';
+import { getLocalizedTag, getLocalizedArticles } from 'utils/getters';
 import host from 'utils/host';
-
-import { TOPICS } from 'constants';
+import api from 'constants/api';
 
 const b = bem(styles);
-
-const mapStateToProps = (state, { lang }) => tagsSelectors.getData(state, lang);
 
 const TagPage = ({ lang, routerQuery: { topic }, tag, articles }) => {
   const title = renderTag(tag);
@@ -49,17 +43,17 @@ const TagPage = ({ lang, routerQuery: { topic }, tag, articles }) => {
   );
 };
 
-TagPage.propTypes = {
-  lang: LangType.isRequired,
-  routerQuery: PropTypes.shape({
-    topic: PropTypes.oneOf(TOPICS).isRequired,
-    tag: PropTypes.string.isRequired,
-  }).isRequired,
-  tag: TagShape.isRequired,
-  articles: ArticlePreviewArray.isRequired,
+// TODO: replace with SSG after migration from `next-routes`
+export const getServerSideProps = async ({ query: { tag: tagSlug, lang } }) => {
+  const { tag, articles } = await makeRequest(api.tags.getArticles(tagSlug));
+  const localizedArticles = getLocalizedArticles(articles, lang);
+
+  return {
+    props: {
+      tag: getLocalizedTag(tag, lang),
+      articles: localizedArticles,
+    },
+  };
 };
 
-TagPage.getInitialProps = ctx =>
-  populateRequest(ctx, ({ query: { tag } }) => tagsActions.fetchArticles(tag));
-
-export default connect(mapStateToProps)(TagPage);
+export default TagPage;

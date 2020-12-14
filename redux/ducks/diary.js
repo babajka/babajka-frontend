@@ -4,7 +4,7 @@ import api from 'constants/api';
 
 import { makeRequest } from 'utils/request';
 import { defaultReducer } from 'utils/redux';
-import { getDiary, getLocalizedTag } from 'utils/getters';
+import { getLocalizedTag } from 'utils/getters';
 import { getNowHash } from 'utils/time';
 
 const duck = 'specials/diary';
@@ -28,7 +28,7 @@ const initialState = {
 
 const diaryReducer = defaultReducer((state, { payload: { data, next, prev } }) => ({
   ...state,
-  data: data && getDiary(data),
+  data,
   next,
   prev,
   pending: false,
