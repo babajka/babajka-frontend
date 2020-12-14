@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import qs from 'qs';
+import qs from 'querystring';
 
 import { SOUNDCLOUD_EMBED_PREFIX } from 'constants/social';
 

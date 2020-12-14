@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import qs from 'qs';
+import qs from 'querystring';
 import bem from 'bem-css-modules';
 
 import Text, { localize, useLocaleContext } from 'components/common/Text';
