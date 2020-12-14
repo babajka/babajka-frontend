@@ -12,34 +12,6 @@
     "limit": "41 kB"
   },
   {
-    "name": "> app",
-    "path": ".next/static/**/_app-*.js",
-    "running": false,
-    "limit": "14 kB"
-  },
-  {
-    "name": "> home",
-    "path": ".next/static/**/index-*.js",
-    "running": false,
-    "limit": "2 kB"
-  },
-  {
-    "name": "> home [server]",
-    "path": ".next/server/pages/index.js",
-    "running": false
-  },
-  {
-    "name": "> article",
-    "path": ".next/static/**/article-*.js",
-    "running": false,
-    "limit": "5 kB"
-  },
-  {
-    "name": "> article [server]",
-    "path": ".next/server/pages/article.js",
-    "running": false
-  },
-  {
     "name": "> topic",
     "path": ".next/static/**/topic-*.js",
     "running": false,
@@ -76,11 +48,39 @@
     "name": "> diary",
     "path": ".next/static/**/diary-*.js",
     "running": false,
-    "limit": "2 kB"
+    "limit": "3 kB"
   },
   {
     "name": "> diary [server]",
     "path": ".next/server/pages/diary.js",
     "running": false
-  }
+  },
+  {
+    "name": "> home",
+    "path": ".next/static/**/index-*.js",
+    "running": false,
+    "limit": "2 kB"
+  },
+  {
+    "name": "> home [server]",
+    "path": ".next/server/pages/index.js",
+    "running": false
+  },
+  {
+    "name": "> article",
+    "path": ".next/static/**/article-*.js",
+    "running": false,
+    "limit": "5 kB"
+  },
+  {
+    "name": "> article [server]",
+    "path": ".next/server/pages/article.js",
+    "running": false
+  },
+  {
+    "name": "> _app",
+    "path": ".next/static/**/_app-*.js",
+    "running": false,
+    "limit": "14 kB"
+  },
 ]

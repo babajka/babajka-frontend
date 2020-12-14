@@ -6,12 +6,12 @@ import isBefore from 'date-fns/isBefore';
 import { TOPICS } from 'constants';
 import { localize, localizeArray, localizeFields } from 'utils/localization';
 
-// TODO: split this file
-
-const GETTER_BY_TYPE = {};
+const getTopic = ({ _id: id, slug }) => ({ id, slug });
+const GETTER_BY_TYPE = {
+  topics: topics => topics?.map(getTopic),
+};
 
 const SKIP_MAP_BY_ID = ['latestArticles'];
-
 export const localizeData = (data, lang) =>
   Object.entries(data).reduce((acc, [type, list]) => {
     const localizedList = GETTER_BY_TYPE[type](list, lang);
@@ -19,23 +19,11 @@ export const localizeData = (data, lang) =>
     return acc;
   }, {});
 
-export const getLocalizedCollection = (
-  { slug, cover, name, description, articles, articleIndex = 0 },
-  lang
-) => ({
-  slug,
-  cover,
-  articleIndex,
-  name: localize(name, lang),
-  description: localize(description, lang),
-  articles: articles?.map(a => getLocalizedArticle(a, lang)) || null, // eslint-disable-line no-use-before-define
-});
+/*
+ *               TAGS
+ */
 
-export const getLocalesBySlug = ({ locales }) =>
-  Object.entries(locales).reduce((acc, [key, { slug }]) => {
-    acc[slug] = key;
-    return acc;
-  }, {});
+const getInitTagsByTopic = () => TOPICS.reduce((acc, topic) => ({ ...acc, [topic]: [] }), {});
 
 const LOCALIZE_TAG_CONTENT = {
   themes: localizeFields(['title']),
@@ -45,11 +33,6 @@ const LOCALIZE_TAG_CONTENT = {
   brands: localizeFields(['title']),
   authors: localizeFields(['firstName', 'lastName', 'bio']),
 };
-
-const getTopic = ({ _id: id, slug }) => ({ id, slug });
-
-const getTopics = topics => topics?.map(getTopic);
-GETTER_BY_TYPE.topics = getTopics;
 
 // WARNING: filter `topic`
 // TODO: remove `topic` on back, replace with `topicSlug`
@@ -61,9 +44,16 @@ export const getLocalizedTag = ({ _id: id, topicSlug, content, topic: _, ...rest
 });
 
 const getLocalizedTags = localizeArray(getLocalizedTag);
-GETTER_BY_TYPE.tags = getLocalizedTags;
 
-const getInitTagsByTopic = () => TOPICS.reduce((acc, topic) => ({ ...acc, [topic]: [] }), {});
+/*
+ *               ARTICLE
+ */
+
+export const getLocalesBySlug = ({ locales }) =>
+  Object.entries(locales).reduce((acc, [key, { slug }]) => {
+    acc[slug] = key;
+    return acc;
+  }, {});
 
 export const getLocalizedArticle = (article, lang) => {
   if (!article) {
@@ -89,15 +79,16 @@ export const getLocalizedArticle = (article, lang) => {
       return acc;
     }, getInitTagsByTopic());
 
-  // Accumulating metrics for all content and interface localizations.
-  const totalMetrics = Object.values(locales).reduce(
-    (acc, locale) =>
-      acc +
-      (locale.metrics
-        ? Object.values(locale.metrics).reduce((acc2, counter) => acc2 + parseInt(counter, 10), 0)
-        : 0),
-    0
-  );
+  // TODO: move to admin / backend
+  // // Accumulating metrics for all content and interface localizations.
+  // const totalMetrics = Object.values(locales).reduce(
+  //   (acc, locale) =>
+  //     acc +
+  //     (locale.metrics
+  //       ? Object.values(locale.metrics).reduce((acc2, counter) => acc2 + parseInt(counter, 10), 0)
+  //       : 0),
+  //   0
+  // );
 
   return {
     ...rest,
@@ -105,10 +96,11 @@ export const getLocalizedArticle = (article, lang) => {
     text: text || {},
     id,
     publishAt,
+    // eslint-disable-next-line no-use-before-define
     collection: collection && getLocalizedCollection(collection, lang),
     published: !!publishAt && isBefore(parseISO(publishAt), new Date()),
     tagsByTopic,
-    metrics: totalMetrics,
+    // metrics: totalMetrics,
     suggestedArticles: suggestedArticles && {
       blocks: suggestedArticles.blocks,
       data: localizeData(suggestedArticles.data, lang),
@@ -117,5 +109,27 @@ export const getLocalizedArticle = (article, lang) => {
 };
 
 export const getLocalizedArticles = localizeArray(getLocalizedArticle);
+
+/*
+ *               COLLECTION
+ */
+
+export const getLocalizedCollection = (
+  { slug, cover, name, description, articles, articleIndex = 0 },
+  lang
+) => ({
+  slug,
+  cover,
+  articleIndex,
+  name: localize(name, lang),
+  description: localize(description, lang),
+  articles: articles?.map(a => getLocalizedArticle(a, lang)) || null,
+});
+
+/*
+ *               GETTER_BY_TYPE
+ */
+
+GETTER_BY_TYPE.tags = getLocalizedTags;
 GETTER_BY_TYPE.articles = getLocalizedArticles;
 GETTER_BY_TYPE.latestArticles = getLocalizedArticles;
