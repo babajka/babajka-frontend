@@ -1,5 +1,5 @@
 import { useLocaleContext } from 'components/common/Text';
-import { formatLocalizedDate } from 'utils/formatters';
+import { formatLocalizedDate } from 'utils/formatters/date';
 
 const useLocalizedDate = (date, format) => {
   const lang = useLocaleContext();

@@ -1,9 +1,25 @@
 import { localize } from 'components/common/Text';
-import { formatLocalizedDate, getYear, isSameDate } from 'utils/formatters';
+import {
+  formatLocalizedDate,
+  getYear,
+  formatDate,
+  MINSK_TZ_OFFSET,
+  SHORT_DATE_FORMAT,
+  DATE_FORMAT,
+} from 'utils/formatters/date';
 import { getLocalizedTag } from 'utils/getters';
-import { getNowHash } from 'utils/time';
 
-import { DATE_FORMAT } from 'constants';
+const getNowHash = () => {
+  const now = new Date();
+  // HACK: during ssr we have different timezone
+  now.setDate(now.getUTCDate());
+  now.setHours(now.getUTCHours() + MINSK_TZ_OFFSET);
+  return (now.getMonth() + 1) * 100 + now.getDate();
+};
+
+// WARNING: checks excluding the year
+const isSameDate = date =>
+  formatDate(date, SHORT_DATE_FORMAT) === formatDate(new Date(), SHORT_DATE_FORMAT);
 
 export const getShareText = (date, name, lang, content) => {
   const isToday = isSameDate(date);

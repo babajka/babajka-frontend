@@ -19,7 +19,7 @@ import {
 } from 'components/social/Metatags';
 import TwoArticlesInRow from 'components/articles/blocks/TwoArticlesInRow';
 
-import { formatLocalizedDate } from 'utils/formatters';
+import { formatLocalizedDate, DATE_FORMAT, SHORT_DATE_FORMAT } from 'utils/formatters/date';
 import fiberyRenderer from 'utils/fibery/renderer';
 import fiberyToString from 'utils/fibery/toString';
 import { makeRequest } from 'utils/request';
@@ -27,7 +27,6 @@ import { getLocalizedArticles } from 'utils/getters';
 import { getDiary, getShareText, isNextAvailable } from 'utils/features/diary';
 import host from 'utils/host';
 
-import { DATE_FORMAT, SHORT_DATE_FORMAT } from 'constants';
 import { DIARY_PICTURE_WIDTH } from 'constants/misc';
 import { ROUTES_NAMES } from 'routes';
 import api from 'constants/api';

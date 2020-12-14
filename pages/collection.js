@@ -17,7 +17,7 @@ import ArticlesComposition from 'components/articles/compositions/ArticlesCompos
 
 import { makeRequest } from 'utils/request';
 import { getTagLink } from 'utils/features/tags';
-import { renderNodeList } from 'utils/formatters';
+import { renderNodeList } from 'utils/ui';
 import { getLocalizedCollection, getLocalizedArticles } from 'utils/getters';
 import api from 'constants/api';
 import host from 'utils/host';

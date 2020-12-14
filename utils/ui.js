@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { cloneElement } from 'react';
 import cn from 'classnames';
 import bem from 'bem-css-modules';
 
@@ -34,3 +34,6 @@ export const colorLooksBlack = color => hexToRgb(color).every(val => val < 34);
 
 // Considering each color 'lighter' than #dddddd looking like white. #dd = 221
 export const colorLooksWhite = color => hexToRgb(color).every(val => val > 221);
+
+export const renderNodeList = (nodes, delimiter = <pr>,&nbsp;</pr>) =>
+  !!nodes.length && nodes.reduce((acc, node, key) => [acc, cloneElement(delimiter, { key }), node]);

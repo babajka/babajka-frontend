@@ -48,7 +48,7 @@
     "name": "> diary",
     "path": ".next/static/**/diary-*.js",
     "running": false,
-    "limit": "3 kB"
+    "limit": "2 kB"
   },
   {
     "name": "> diary [server]",
@@ -59,7 +59,7 @@
     "name": "> home",
     "path": ".next/static/**/index-*.js",
     "running": false,
-    "limit": "2 kB"
+    "limit": "500 B"
   },
   {
     "name": "> home [server]",
@@ -81,6 +81,6 @@
     "name": "> _app",
     "path": ".next/static/**/_app-*.js",
     "running": false,
-    "limit": "14 kB"
-  },
+    "limit": "16 kB"
+  }
 ]

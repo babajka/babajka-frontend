@@ -5,15 +5,13 @@ import Link from 'components/common/Link';
 import Text from 'components/common/Text';
 import Image from 'components/common/Image';
 import DiaryArrows from 'components/specials/diary/DiaryArrows';
-import useLocalizedDate from 'hooks/useLocalizedDate';
 
-import { getYear } from 'utils/formatters';
+import { formatLocalizedDate, getYear, SHORT_DATE_FORMAT } from 'utils/formatters/date';
 import fiberyToString from 'utils/fibery/toString';
 import { makeRequest } from 'utils/request';
 import { getDiary, isNextAvailable } from 'utils/features/diary';
 import api from 'constants/api';
 
-import { SHORT_DATE_FORMAT } from 'constants';
 import { DIARY_PICTURE_WIDTH } from 'constants/misc';
 import { ROUTES_NAMES } from 'routes';
 
@@ -63,7 +61,7 @@ const DiaryBlock = ({ lang }) => {
         )}
         <div className={b('text-content')}>
           <div className={b('title')}>
-            <span className={b('date')}>{useLocalizedDate(date, SHORT_DATE_FORMAT)}</span>
+            <span className={b('date')}>{formatLocalizedDate(date, lang, SHORT_DATE_FORMAT)}</span>
             <span>{getYear(date)}</span>
             <span>{name}</span>
             <Text id="diary.wrote" />:

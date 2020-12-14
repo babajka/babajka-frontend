@@ -27,7 +27,7 @@ import TextWithSeparator from 'lib/components/TextWithSeparator';
 
 import { ArticleShape } from 'utils/customPropTypes';
 import { getTagLink, getTagImageRenderer, renderTag } from 'utils/features/tags';
-import { renderNodeList } from 'utils/formatters';
+import { renderNodeList } from 'utils/ui';
 import fiberyRenderer from 'utils/fibery/renderer';
 import host from 'utils/host';
 
