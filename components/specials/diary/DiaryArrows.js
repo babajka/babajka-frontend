@@ -1,30 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import cn from 'classnames';
 
 import Clickable from 'components/common/Clickable';
-import { diaryActions, diarySelectors } from 'redux/ducks/diary';
+import ArrowIcon from './ArrowIcon';
 import styles from './diaryArrows.module.scss';
 
-import ArrowIcon from './ArrowIcon';
-
-const mapStateToProps = state => ({
-  isNextAvailable: diarySelectors.isNextAvailable(state),
-});
-
-const mapDispatchToProps = {
-  fetchData: diaryActions.getByDay,
-  getNext: () => diaryActions.getClosest('next'),
-  getPrev: () => diaryActions.getClosest('prev'),
-};
-
-const DiaryArrows = ({ className, size, getPrev, getNext, isNextAvailable }) => (
+const DiaryArrows = ({ className, size, onPrev, onNext, isNextAvailable }) => (
   <div className={cn(styles.arrows, className)}>
-    <Clickable onClick={getPrev} linkStyle titleId="diary.previous">
+    <Clickable onClick={onPrev} linkStyle titleId="diary.previous">
       <ArrowIcon direction="left" size={size} />
     </Clickable>
-    <Clickable disabled={!isNextAvailable} onClick={getNext} linkStyle titleId="diary.next">
+    <Clickable disabled={!isNextAvailable} onClick={onNext} linkStyle titleId="diary.next">
       <ArrowIcon direction="right" size={size} />
     </Clickable>
   </div>
@@ -33,8 +20,8 @@ const DiaryArrows = ({ className, size, getPrev, getNext, isNextAvailable }) => 
 DiaryArrows.propTypes = {
   className: PropTypes.string,
   size: PropTypes.number.isRequired,
-  getNext: PropTypes.func.isRequired,
-  getPrev: PropTypes.func.isRequired,
+  onNext: PropTypes.func.isRequired,
+  onPrev: PropTypes.func.isRequired,
   isNextAvailable: PropTypes.bool.isRequired,
 };
 
@@ -42,4 +29,4 @@ DiaryArrows.defaultProps = {
   className: '',
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DiaryArrows);
+export default DiaryArrows;

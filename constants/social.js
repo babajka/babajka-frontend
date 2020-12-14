@@ -37,8 +37,6 @@ export const NETWORKS = [
   },
 ];
 
-export const EXPORT_TO_NETWORKS = ['facebook', 'vk', 'twitter'];
-
 export const YOUTUBE_EMBED_PREFIX = 'https://www.youtube.com/embed';
 
 export const SOUNDCLOUD_EMBED_PREFIX = 'https://w.soundcloud.com/player';

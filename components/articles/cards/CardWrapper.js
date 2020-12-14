@@ -10,9 +10,9 @@ import { colorLooksBlack, colorLooksWhite } from 'utils/ui';
 
 import styles from './cardWrapper.module.scss';
 
-export const DEFAULT_SIZES = ['xxl', 'xl', 'l', 'm'];
-export const TAG_SIZES = ['s', 'xs', 'ms', 's-wide', 'xs-wide'];
-export const SQUARE_SIZES = ['square-m', 'square-s'];
+const DEFAULT_SIZES = ['xxl', 'xl', 'l', 'm'];
+const TAG_SIZES = ['s', 'xs', 'ms', 's-wide', 'xs-wide'];
+const SQUARE_SIZES = ['square-m', 'square-s'];
 export const SIZES = DEFAULT_SIZES.concat(SQUARE_SIZES, TAG_SIZES, 'auto');
 
 const b = bem(styles);

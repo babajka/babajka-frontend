@@ -11,6 +11,8 @@ module.exports = {
 
     // we use named export in utils
     'import/prefer-default-export': 'off',
+    // to find unused code:
+    // 'import/no-unused-modules': ['error', { unusedExports: true }],
 
     // we use bind
     'react/jsx-no-bind': 'off',
@@ -23,8 +25,6 @@ module.exports = {
     'react/forbid-prop-types': 'off',
     'react/require-default-props': 'off',
     'react/jsx-props-no-spreading': 'off',
-    // TODO: remove
-    'react/state-in-constructor': 'off',
 
     // react-hooks
     'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks

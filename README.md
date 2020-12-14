@@ -27,7 +27,6 @@ Next.js &amp; React app
 
 ## rules
 
-- we use [`ducks convention`](https://github.com/erikras/ducks-modular-redux) for redux modules
 - we have autoversioning set up, in order to trigger new release one should follow the conventions:
 
   - `fix(<scope>): <subject>` - increases **patch** version: 1.0.0 -> 1.0.1

@@ -23,11 +23,11 @@ export const getShareText = (date, name, lang, content) => {
   };
 };
 
-export const getDiary = ({ author, text = {}, day, month, year, slug }, lang) => ({
+export const getDiary = ({ author, text = {}, date, day, month, year, slug }, lang) => ({
   author: author ? getLocalizedTag(author, lang).content : {},
   text,
   slug,
-  date: new Date(year, month - 1, day).getTime(),
+  date: date || new Date(year, month - 1, day).getTime(),
   day,
   month,
 });

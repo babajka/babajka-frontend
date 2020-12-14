@@ -9,19 +9,19 @@
     "name": "> all css",
     "path": ".next/static/**/*.css",
     "running": false,
-    "limit": "50 kB"
+    "limit": "41 kB"
   },
   {
     "name": "> app",
     "path": ".next/static/**/_app-*.js",
     "running": false,
-    "limit": "22 kB"
+    "limit": "14 kB"
   },
   {
     "name": "> home",
     "path": ".next/static/**/index-*.js",
     "running": false,
-    "limit": "3 kB"
+    "limit": "2 kB"
   },
   {
     "name": "> home [server]",
@@ -65,7 +65,7 @@
     "name": "> about",
     "path": ".next/static/**/about-*.js",
     "running": false,
-    "limit": "6 kB"
+    "limit": "5 kB"
   },
   {
     "name": "> about [server]",
@@ -76,7 +76,7 @@
     "name": "> diary",
     "path": ".next/static/**/diary-*.js",
     "running": false,
-    "limit": "5 kB"
+    "limit": "2 kB"
   },
   {
     "name": "> diary [server]",

@@ -1,4 +1,3 @@
-import chunk from 'lodash/chunk';
 import keyBy from 'lodash/keyBy';
 
 import parseISO from 'date-fns/parseISO';
@@ -32,8 +31,6 @@ export const getLocalizedCollection = (
   articles: articles?.map(a => getLocalizedArticle(a, lang)) || null, // eslint-disable-line no-use-before-define
 });
 
-export const getLocalizedCollections = localizeArray(getLocalizedCollection);
-
 export const getLocalesBySlug = ({ locales }) =>
   Object.entries(locales).reduce((acc, [key, { slug }]) => {
     acc[slug] = key;
@@ -49,9 +46,9 @@ const LOCALIZE_TAG_CONTENT = {
   authors: localizeFields(['firstName', 'lastName', 'bio']),
 };
 
-export const getTopic = ({ _id: id, slug }) => ({ id, slug });
+const getTopic = ({ _id: id, slug }) => ({ id, slug });
 
-export const getTopics = topics => topics?.map(getTopic);
+const getTopics = topics => topics?.map(getTopic);
 GETTER_BY_TYPE.topics = getTopics;
 
 // WARNING: filter `topic`
@@ -63,7 +60,7 @@ export const getLocalizedTag = ({ _id: id, topicSlug, content, topic: _, ...rest
   content: LOCALIZE_TAG_CONTENT[topicSlug](content, lang),
 });
 
-export const getLocalizedTags = localizeArray(getLocalizedTag);
+const getLocalizedTags = localizeArray(getLocalizedTag);
 GETTER_BY_TYPE.tags = getLocalizedTags;
 
 const getInitTagsByTopic = () => TOPICS.reduce((acc, topic) => ({ ...acc, [topic]: [] }), {});
@@ -122,18 +119,3 @@ export const getLocalizedArticle = (article, lang) => {
 export const getLocalizedArticles = localizeArray(getLocalizedArticle);
 GETTER_BY_TYPE.articles = getLocalizedArticles;
 GETTER_BY_TYPE.latestArticles = getLocalizedArticles;
-
-export const getShortLocale = ({ locale, slug, title }) => ({ locale, slug, title });
-
-export const getArticlesRows = (articles, rowSize) => chunk(articles, rowSize);
-
-export const getMainArticlesRows = (articles, rowSize, complexRowSize) => {
-  const firstRow = articles.slice(0, rowSize);
-  const secondRowEnd = rowSize + complexRowSize;
-  const secondRow = articles.slice(rowSize, secondRowEnd);
-  return [firstRow, secondRow, ...getArticlesRows(articles.slice(secondRowEnd), rowSize)];
-};
-
-export const getLocalizedTeam = localizeArray(localizeFields(['name', 'role']));
-
-export const getLocalizedVacancies = localizeArray(localizeFields(['title', 'description']));
