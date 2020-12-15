@@ -6,6 +6,12 @@
     "limit": "70 kB"
   },
   {
+    "name": "> common",
+    "path": ".next/static/**/commons.*.js",
+    "running": false,
+    "limit": "27 kB"
+  },
+  {
     "name": "> all css",
     "path": ".next/static/**/*.css",
     "running": false,
@@ -70,7 +76,7 @@
     "name": "> article",
     "path": ".next/static/**/article-*.js",
     "running": false,
-    "limit": "5 kB"
+    "limit": "4 kB"
   },
   {
     "name": "> article [server]",
