@@ -24,6 +24,7 @@ Next.js &amp; React app
 - `npm run update-dict` to fetch translations from [GoogleDrive](https://docs.google.com/spreadsheets/d/e/2PACX-1vTAexRyfGOsnzvZKvVpPkr8M-l3Ph2vAvBqVu7W_vrPOQ3iUIGg4ZVcOLCeFj-Qg6BowPluH9QO3vXM/pubhtml#) and store it in `data/i18n.json` (gitignored)
 - `npm run reset-cache` to delete `.next` builded & cached files
 - `npm run size` to check client-side bundle sizes with [`@ai/size-limit`](https://github.com/ai/size-limit)
+- `npm run analyze` to run [`@next/bundle-analyzer`](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)
 
 ## rules
 

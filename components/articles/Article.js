@@ -4,7 +4,7 @@ import flatten from 'lodash/flatten';
 import cn from 'classnames';
 import bem from 'bem-css-modules';
 
-import { CROWDFUNDING_CAMPAIGN } from 'constants/misc';
+// import { CROWDFUNDING_CAMPAIGN } from 'constants/misc';
 
 import {
   MetaTitle,
@@ -17,10 +17,10 @@ import {
 import AudioPlayer from 'components/common/AudioPlayer';
 import VideoPlayer from 'components/common/VideoPlayer';
 import Image from 'components/common/Image';
-import ExternalLink from 'components/common/ExternalLink';
-import Button from 'components/common/Button';
-import Text from 'components/common/Text';
-import MolamolaIcon from 'components/common/ui/MolamolaIcon';
+// import ExternalLink from 'components/common/ExternalLink';
+// import Button from 'components/common/Button';
+// import Text from 'components/common/Text';
+// import MolamolaIcon from 'components/common/ui/MolamolaIcon';
 import ShareButtons from 'components/social/ShareButtons';
 import ExCoQuiz from 'components/specials/ex-co-quiz';
 import TextWithSeparator from 'lib/components/TextWithSeparator';
@@ -132,7 +132,7 @@ const Article = ({
           )}
 
           <div className={b('post-actions')}>
-            {CROWDFUNDING_CAMPAIGN.enabled && (
+            {/* {CROWDFUNDING_CAMPAIGN.enabled && (
               <ExternalLink href={CROWDFUNDING_CAMPAIGN.options.link}>
                 <Button className={b('crowdfunding')} highlighted>
                   <Text id="article.support-crowdfunding" />
@@ -140,7 +140,7 @@ const Article = ({
                   <MolamolaIcon />
                 </Button>
               </ExternalLink>
-            )}
+            )} */}
             <div className={b('share')}>
               <ShareButtons urlPath={router.asPath} basicText={title} />
             </div>

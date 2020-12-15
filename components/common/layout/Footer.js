@@ -2,12 +2,12 @@ import React from 'react';
 import cn from 'classnames';
 import bem from 'bem-css-modules';
 
-import { CROWDFUNDING_CAMPAIGN } from 'constants/misc';
+// import { CROWDFUNDING_CAMPAIGN } from 'constants/misc';
 
 import Text, { useLocalization } from 'components/common/Text';
 import ExternalLink from 'components/common/ExternalLink';
 import Icon from 'components/common/ui/Icon';
-import MolamolaIcon from 'components/common/ui/MolamolaIcon';
+// import MolamolaIcon from 'components/common/ui/MolamolaIcon';
 
 import MailLink from 'components/social/MailLink';
 import ShareButtons from 'components/social/ShareButtons';
@@ -95,7 +95,7 @@ const Footer = () => (
             />
           </div>
         </div>
-        {CROWDFUNDING_CAMPAIGN.enabled && (
+        {/* {CROWDFUNDING_CAMPAIGN.enabled && (
           <div className={f('help-us')}>
             <div className={f('header', { 'padding-bottom': 'small' })}>
               <Text id="footer.support-financially" />
@@ -108,7 +108,7 @@ const Footer = () => (
               </ExternalLink>
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </div>
 

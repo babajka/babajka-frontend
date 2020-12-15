@@ -1,6 +1,9 @@
+const withPlugins = require('next-compose-plugins');
+const getBundleAnalyzer = require('@next/bundle-analyzer');
+
 const ENV = require('./utils/env');
 
-module.exports = {
+const nextConfig = {
   env: {
     isProd: ENV === 'production',
     isStaging: ENV === 'staging',
@@ -12,3 +15,9 @@ module.exports = {
   //   localeDetection: false,
   // },
 };
+
+const withBundleAnalyzer = getBundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+module.exports = withPlugins([withBundleAnalyzer], nextConfig);
