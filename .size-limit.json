@@ -1,11 +1,5 @@
 [
   {
-    "name": "> framework + polyfills",
-    "path": [".next/static/**/framework.*.js", ".next/static/**/polyfills-*.js"],
-    "running": false,
-    "limit": "70 kB"
-  },
-  {
     "name": "> common",
     "path": ".next/static/**/commons.*.js",
     "running": false,
@@ -18,75 +12,51 @@
     "limit": "41 kB"
   },
   {
-    "name": "> topic",
-    "path": ".next/static/**/topic-*.js",
-    "running": false,
-    "limit": "2 kB"
-  },
-  {
     "name": "> topic [server]",
     "path": ".next/server/pages/topic.js",
-    "running": false
-  },
-  {
-    "name": "> tag",
-    "path": ".next/static/**/tag-*.js",
     "running": false,
-    "limit": "3 kB"
+    "limit": "21 kB"
   },
   {
     "name": "> tag [server]",
     "path": ".next/server/pages/tag.js",
-    "running": false
-  },
-  {
-    "name": "> about",
-    "path": ".next/static/**/about-*.js",
     "running": false,
-    "limit": "5 kB"
+    "limit": "27 kB"
   },
   {
     "name": "> about [server]",
     "path": ".next/server/pages/about.html",
-    "running": false
-  },
-  {
-    "name": "> diary",
-    "path": ".next/static/**/diary-*.js",
     "running": false,
-    "limit": "2 kB"
+    "limit": "6 kB"
   },
   {
     "name": "> diary [server]",
     "path": ".next/server/pages/diary.js",
-    "running": false
-  },
-  {
-    "name": "> home",
-    "path": ".next/static/**/index-*.js",
     "running": false,
-    "limit": "500 B"
+    "limit": "34 kB"
   },
   {
     "name": "> home [server]",
     "path": ".next/server/pages/index.js",
-    "running": false
-  },
-  {
-    "name": "> article",
-    "path": ".next/static/**/article-*.js",
     "running": false,
-    "limit": "4 kB"
+    "limit": "32 kB"
   },
   {
     "name": "> article [server]",
     "path": ".next/server/pages/article.js",
-    "running": false
+    "running": false,
+    "limit": "44 kB"
   },
   {
-    "name": "> _app",
+    "name": "> app",
     "path": ".next/static/**/_app-*.js",
     "running": false,
     "limit": "16 kB"
+  },
+  {
+    "name": "> app [server]",
+    "path": ".next/server/pages/_app.js",
+    "running": false,
+    "limit": "30 kB"
   }
 ]

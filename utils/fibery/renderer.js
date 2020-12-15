@@ -1,13 +1,13 @@
 // https://github.com/ProseMirror/prosemirror-schema-basic/blob/7d8502f2cb89659c543c7b554d67d7db8c7c63c4/src/schema-basic.js
 
 import React, { Fragment, createElement } from 'react';
+import dynamic from 'next/dynamic';
 import cn from 'classnames';
 import identity from 'lodash/identity';
 
 import Image from 'components/common/Image';
 import ExternalLink from 'components/common/ExternalLink';
 import VideoPlayer from 'components/common/VideoPlayer';
-import ImageSlider from 'components/common/ui/ImageSlider';
 import parseYoutubeUrl from 'lib/utils/parseYoutubeUrl';
 
 import toString from './toString';
@@ -79,6 +79,7 @@ const TABLE_CLASS_BY_TYPE = {
 
 const CUSTOM_RENDERER = {
   [CAROUSEL]: content => {
+    const ImageSlider = dynamic(() => import('components/common/ui/ImageSlider'));
     const data = traverseTable(content, true);
     const { images, description } = data.reduce(
       (acc, cur) => {
