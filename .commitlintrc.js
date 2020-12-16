@@ -12,7 +12,6 @@ module.exports = {
         'common',
         'about',
         'article',
-        'auth',
         'tools',
         'utils',
         'i18n',

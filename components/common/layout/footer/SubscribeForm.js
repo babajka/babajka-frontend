@@ -1,20 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useRef, useMemo } from 'react';
 import bem from 'bem-css-modules';
 
 import Clickable from 'components/common/Clickable';
-import Text from 'components/common/Text';
-// import LocaleContext from 'components/common/LocaleContext';
+import Text, { useLocaleContext } from 'components/common/Text';
+import Input from 'components/common/ui/Input';
 
-// import { homeActions } from 'redux/ducks/home';
-// import { validEmail } from 'utils/validators';
-// import createConstants from 'lib/utils/createConstants';
+import { makeRequest } from 'utils/request';
+import api from 'constants/api';
+
 import styles from './index.module.scss';
 
 const b = bem(styles);
-// const STATUS = createConstants('subscribed', 'unsubscribed');
 
+const emailRegexp = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/;
+const isEmail = email => !!email?.match(emailRegexp);
+
+// TODO: use swr
 const SubscribeForm = () => {
+  const lang = useLocaleContext();
   const [email, setEmail] = useState(null);
+  const [formValue, setValue] = useState('');
+  const [{ pending, apiError }, setState] = useState({ pending: false });
+  const inputRef = useRef();
+
+  const isValid = useMemo(() => isEmail(formValue), [formValue]);
+
+  const onChange = useCallback(({ target: { value } }) => {
+    setValue(value);
+  }, []);
+  const onSubmit = useCallback(
+    async event => {
+      event.preventDefault();
+      if (!isValid) {
+        return;
+      }
+
+      setState({ pending: true });
+      const body = {
+        emailAddress: formValue,
+        userStatus: 'subscribed',
+        language: lang,
+      };
+
+      try {
+        const { emailAddress } = await makeRequest(api.core.subscribe, 'POST', body);
+        setEmail(emailAddress);
+        setState({ pending: false });
+      } catch (error) {
+        setState({ pending: false, apiError: error });
+        inputRef.current.focus();
+      }
+    },
+    [formValue, isValid, lang]
+  );
+
   return (
     <div className={b('mailing')}>
       <div id="footer-subscribe" className={b('header')}>
@@ -40,39 +79,22 @@ const SubscribeForm = () => {
           </Clickable>
         </div>
       )}
-      {/* {!email && (
-        <LocaleContext.Consumer>
-          {lang => (
-            <FormWrapper
-              action={homeActions.subscribe}
-              initialValues={{
-                emailAddress: '',
-                userStatus: STATUS.subscribed,
-                language: lang,
-              }}
-              validators={{ emailAddress: validEmail }}
-              onSuccess={({ action: { payload, meta } }) => {
-                meta.formikActions.resetForm();
-                setEmail(payload.emailAddress);
-              }}
-            >
-              {({ isSubmitting, isValid, handleSubmit, errors }) => (
-                <Form>
-                  <InputField
-                    aria-labelledby="footer-subscribe"
-                    name="emailAddress"
-                    leftIcon={!isSubmitting && { name: 'envelope', pack: 'r' }}
-                    rightIcon={isValid && { name: 'arrow-right', pack: 's' }}
-                    onRightClick={handleSubmit}
-                    pending={isSubmitting}
-                    showError={!!errors.global}
-                  />
-                </Form>
-              )}
-            </FormWrapper>
-          )}
-        </LocaleContext.Consumer>
-      )} */}
+      {!email && (
+        <form onSubmit={onSubmit}>
+          <Input
+            ref={inputRef}
+            aria-labelledby="footer-subscribe"
+            name="emailAddress"
+            value={formValue}
+            onChange={onChange}
+            leftIcon={!pending && { name: 'envelope', pack: 'r' }}
+            rightIcon={isValid && { name: 'arrow-right', pack: 's' }}
+            onRightClick={onSubmit}
+            pending={pending}
+            error={apiError}
+          />
+        </form>
+      )}
     </div>
   );
 };
