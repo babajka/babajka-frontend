@@ -1,0 +1,84 @@
+@import 'styles/variables';
+
+.wir-input {
+  display: flex;
+  position: relative;
+
+  &__icon {
+    color: $primary-black;
+    font-size: 24px;
+    margin: 7px 0 2px;
+
+    &--left {
+      margin-right: 11.5px;
+      order: -1;
+    }
+
+    &--right {
+      cursor: pointer;
+      margin-left: 11.5px;
+    }
+  }
+
+  &__bar {
+    background-color: $primary-black;
+    bottom: 0;
+    height: 2px;
+    position: absolute;
+    width: 100%;
+  }
+
+  &__error {
+    color: $error;
+  }
+
+  &__control {
+    background: inherit;
+    border: 0;
+    flex-grow: 1;
+    font-size: 20px;
+    height: 30px;
+    margin: 5px 0 4px;
+    min-width: 0;
+    outline: none;
+
+    &:hover ~ .wir-input,
+    &:focus ~ .wir-input {
+      &__bar {
+        background-color: $primary;
+
+        // stylelint-disable-next-line max-nesting-depth
+        &--error {
+          background-color: $error;
+        }
+      }
+
+      &__icon {
+        color: $primary;
+
+        // stylelint-disable-next-line max-nesting-depth
+        &--error {
+          color: $error;
+        }
+      }
+    }
+
+    &:disabled ~ .wir-input {
+      &__bar {
+        background-color: $primary-grey;
+      }
+
+      &__icon {
+        color: $primary-grey;
+      }
+    }
+  }
+
+  // change autocomplete styles in Chrome
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+  }
+}
