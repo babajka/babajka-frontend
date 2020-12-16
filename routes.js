@@ -14,34 +14,34 @@ const ROUTES = [
   },
   {
     name: 'article',
-    pattern: 'article/:slug',
+    pattern: '/article/:slug',
   },
   {
     name: 'topic',
-    pattern: `topic/:topic(${topics})`,
+    pattern: `/topic/:topic(${topics})`,
   },
   {
     name: 'tag',
-    pattern: `topic/:topic(${topics})/tag/:tag`,
+    pattern: `/topic/:topic(${topics})/tag/:tag`,
   },
   {
     name: 'collection',
-    pattern: 'collection/:slug',
+    pattern: '/collection/:slug',
   },
   {
     name: 'about',
   },
   {
     name: 'diary',
-    pattern: 'diary/:slug?',
+    pattern: '/diary/:slug?',
   },
   {
     name: 'status',
-    pattern: 'status/:code(404|500)',
+    pattern: '/status/:code(404|500)',
   },
-].map(({ name, pattern = name, page = name }) => ({
+].map(({ name, pattern = `/${name}`, page = name }) => ({
   name,
-  pattern: `/:lang(${langs})/${pattern}`,
+  pattern: `/:lang(${langs})${pattern}`,
   page,
 }));
 

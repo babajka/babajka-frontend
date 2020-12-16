@@ -3,7 +3,6 @@ const express = require('express');
 const next = require('next');
 const proxy = require('http-proxy-middleware');
 const cookieParser = require('cookie-parser');
-const qs = require('querystring');
 
 const routes = require('./routes');
 const { PORT, BACKEND_URL, LOCALE_COOKIE_NAME } = require('./constants/server');
@@ -58,16 +57,6 @@ app.prepare().then(() => {
     if (userLocale && startPath !== userLocale) {
       // switch locale to user preferable
       return res.redirect(`/${userLocale}${req.params[0]}`);
-    }
-
-    // fix http://local.wir.by:3000/en?kek=lol - 404
-    if (!req.path.endsWith('/')) {
-      let url = `${req.path}/`;
-      const query = qs.stringify(req.query);
-      if (query) {
-        url = `${url}?${query}`;
-      }
-      return res.redirect(url);
     }
 
     return handle(req, res);
