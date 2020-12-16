@@ -14,13 +14,14 @@ MainPage.getLayoutProps = () => ({
   title: 'header.main',
 });
 
+const TEN_MINUTES = 10 * 60;
+
 // TODO: use built-in i18n mechanism
 export const getStaticProps = async () => {
-  console.warn('home getStaticProps');
   const { blocks, data } = await makeRequest(api.storage.getMainPage);
   return {
     props: { blocks, data },
-    revalidate: 1,
+    revalidate: TEN_MINUTES,
   };
 };
 
