@@ -24,7 +24,7 @@ import fiberyRenderer from 'utils/fibery/renderer';
 import fiberyToString from 'utils/fibery/toString';
 import { makeRequest } from 'utils/request';
 import { getLocalizedArticles } from 'utils/getters';
-import { getDiary, getShareText, isNextAvailable } from 'utils/features/diary';
+import { getDiary, getDiaryShareText, isNextDiaryAvailable } from 'utils/features/diary';
 import host from 'utils/host';
 
 import { DIARY_PICTURE_WIDTH } from 'constants/misc';
@@ -34,6 +34,7 @@ import api from 'constants/api';
 const b = bem(styles);
 
 const DiaryPage = ({
+  routerSlug,
   diary: {
     slug,
     author: { name, diaryImage: image },
@@ -44,16 +45,16 @@ const DiaryPage = ({
   metaTitle,
   metaKeywords,
   shortContent,
-  basicText,
-  extendedText,
+  basicShareText,
+  extendedShareText,
   lang,
-  routerQuery,
+
   arrowProps,
 }) => {
   const router = useRouter();
   const [first, second] = articles;
 
-  if (!routerQuery.slug) {
+  if (!routerSlug) {
     return <Redirect to={ROUTES_NAMES.diary} params={{ slug }} options={{ shallow: true }} />;
   }
 
@@ -83,7 +84,11 @@ const DiaryPage = ({
         </div>
         <div className={b('text')}>{fiberyRenderer(content)}</div>
         <div className={b('share')}>
-          <ShareButtons urlPath={router.asPath} basicText={basicText} extendedText={extendedText} />
+          <ShareButtons
+            urlPath={router.asPath}
+            basicText={basicShareText}
+            extendedText={extendedShareText}
+          />
         </div>
         <DiaryLinkArrows className={b('arrows', { bottom: true })} size={36} {...arrowProps} />
       </div>
@@ -99,7 +104,10 @@ const DiaryPage = ({
 export const getServerSideProps = async ({ query: { slug, lang } }) => {
   const url = slug ? api.diary.getBySlug(slug) : api.diary.today;
 
-  const { data, prev, next } = await makeRequest(url);
+  const { data, prev, next, error } = await makeRequest(url);
+  if (error) {
+    return { notFound: true };
+  }
   const { data: articles } = await makeRequest(api.articles.getChunk({ take: 2 }));
 
   const diary = getDiary(data, lang);
@@ -116,18 +124,19 @@ export const getServerSideProps = async ({ query: { slug, lang } }) => {
     localize('diary.meta-keywords', lang),
   ].join(', ');
   const shortContent = fiberyToString(text.content).substring(0, 140);
-  const { basicText, extendedText } = getShareText(date, name, lang, shortContent);
+  const shareData = getDiaryShareText(date, name, lang, shortContent);
 
   return {
     props: {
+      routerSlug: slug,
       diary,
       articles: getLocalizedArticles(articles, lang),
       metaTitle,
       metaKeywords,
       shortContent,
-      basicText,
-      extendedText,
-      arrowProps: { prev, next, isNextAvailable: isNextAvailable({ data, next }) },
+      basicShareText: shareData.basicText,
+      extendedShareText: shareData.extendedText,
+      arrowProps: { prev, next, isNextAvailable: isNextDiaryAvailable({ data, next }) },
     },
   };
 };

@@ -1,3 +1,5 @@
+import styles from 'components/articles/blocks/diary.module.scss';
+
 import React, { useEffect, useState, useCallback } from 'react';
 import bem from 'bem-css-modules';
 
@@ -9,14 +11,13 @@ import DiaryArrows from 'components/specials/diary/DiaryArrows';
 import { formatLocalizedDate, getYear, SHORT_DATE_FORMAT } from 'utils/formatters/date';
 import fiberyToString from 'utils/fibery/toString';
 import { makeRequest } from 'utils/request';
-import { getDiary, isNextAvailable } from 'utils/features/diary';
+import { getDiary, isNextDiaryAvailable } from 'utils/features/diary';
 import api from 'constants/api';
 
 import { DIARY_PICTURE_WIDTH } from 'constants/misc';
 import { ROUTES_NAMES } from 'routes';
 
 import BlockWrapper from './BlockWrapper';
-import styles from './diary.module.scss';
 
 const b = bem(styles);
 
@@ -79,7 +80,7 @@ const DiaryBlock = ({ lang }) => {
           <DiaryArrows
             className={b('arrows')}
             size={24}
-            isNextAvailable={isNextAvailable({ data, next })}
+            isNextAvailable={isNextDiaryAvailable({ data, next })}
             onPrev={onPrev}
             onNext={onNext}
           />

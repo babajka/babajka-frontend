@@ -7,7 +7,7 @@ const nextConfig = {
   env: {
     isProd: ENV === 'production',
     isStaging: ENV === 'staging',
-    isDev: ENV === 'development',
+    isDev: ENV !== 'production' && ENV !== 'staging',
   },
   // i18n: {
   //   locales: ['be', 'ru', 'en'],

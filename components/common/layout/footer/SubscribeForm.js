@@ -7,13 +7,11 @@ import Input from 'components/common/ui/Input';
 
 import { makeRequest } from 'utils/request';
 import api from 'constants/api';
+import isEmail from 'lib/utils/isEmail';
 
 import styles from './index.module.scss';
 
 const b = bem(styles);
-
-const emailRegexp = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/;
-const isEmail = email => !!email?.match(emailRegexp);
 
 // TODO: use swr
 const SubscribeForm = () => {

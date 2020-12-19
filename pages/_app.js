@@ -45,11 +45,7 @@ const App = ({ Component, pageProps: basePageProps }) => {
   const { getLayoutProps = getEmptyObject } = Component;
   const locale = getLocale(router);
 
-  const pageProps = {
-    lang: locale,
-    routerQuery: router.query,
-    ...basePageProps,
-  };
+  const pageProps = { ...basePageProps, lang: locale };
   const {
     noLocTitle,
     title: titleId = 'common.project-type',

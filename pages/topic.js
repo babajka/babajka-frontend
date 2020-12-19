@@ -38,11 +38,11 @@ TopicSection.propTypes = {
   articles: ArticlesArray.isRequired,
 };
 
-const TopicPage = ({ lang, routerQuery: { topic }, tags, articlesByTag, articleById }) => (
+const TopicPage = ({ lang, topicSlug, tags, articlesByTag, articleById }) => (
   <>
-    <MetaTitle title={localize(`topic.${topic}`, lang)} />
-    <MetaDescription description={localize(`topic.meta_${topic}_description`, lang)} />
-    <MetaKeywords keywords={localize(`topic.meta_${topic}_keywords`, lang)} />
+    <MetaTitle title={localize(`topic.${topicSlug}`, lang)} />
+    <MetaDescription description={localize(`topic.meta_${topicSlug}_description`, lang)} />
+    <MetaKeywords keywords={localize(`topic.meta_${topicSlug}_keywords`, lang)} />
 
     <div className={cn('wir-content-padding', b())}>
       {tags.map(tag => (
@@ -56,8 +56,8 @@ const TopicPage = ({ lang, routerQuery: { topic }, tags, articlesByTag, articleB
   </>
 );
 
-TopicPage.getLayoutProps = ({ routerQuery: { topic } }) => ({
-  title: `topic.${topic}`,
+TopicPage.getLayoutProps = ({ topicSlug }) => ({
+  title: `topic.${topicSlug}`,
 });
 
 // TODO: replace with SSG after migration from `next-routes`
@@ -75,6 +75,7 @@ export const getServerSideProps = async ({ query: { topic: topicSlug, lang } }) 
 
   return {
     props: {
+      topicSlug,
       articleById: keyBy(getLocalizedArticles(articles, lang), 'id'),
       tags,
       articlesByTag,

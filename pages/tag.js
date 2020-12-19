@@ -21,7 +21,7 @@ import api from 'constants/api';
 
 const b = bem(styles);
 
-const TagPage = ({ lang, routerQuery: { topic }, tag, articles }) => {
+const TagPage = ({ lang, topic, tag, articles }) => {
   const title = renderTag(tag);
   const imageUrl = getTagImageUrl(tag);
   const metaKeywords = [title, localize(`topic.meta_${topic}_keywords`, lang)].join(', ');
@@ -44,12 +44,16 @@ const TagPage = ({ lang, routerQuery: { topic }, tag, articles }) => {
 };
 
 // TODO: replace with SSG after migration from `next-routes`
-export const getServerSideProps = async ({ query: { tag: tagSlug, lang } }) => {
-  const { tag, articles } = await makeRequest(api.tags.getArticles(tagSlug));
+export const getServerSideProps = async ({ query: { topic, tag: tagSlug, lang } }) => {
+  const { tag, articles, error } = await makeRequest(api.tags.getArticles(tagSlug));
+  if (error) {
+    return { notFound: true };
+  }
   const localizedArticles = getLocalizedArticles(articles, lang);
 
   return {
     props: {
+      topic,
       tag: getLocalizedTag(tag, lang),
       articles: localizedArticles,
     },

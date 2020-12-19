@@ -21,7 +21,7 @@ const getNowHash = () => {
 const isSameDate = date =>
   formatDate(date, SHORT_DATE_FORMAT) === formatDate(new Date(), SHORT_DATE_FORMAT);
 
-export const getShareText = (date, name, lang, content) => {
+export const getDiaryShareText = (date, name, lang, content) => {
   const isToday = isSameDate(date);
   const year = getYear(date);
 
@@ -48,7 +48,7 @@ export const getDiary = ({ author, text = {}, date, day, month, year, slug }, la
   month,
 });
 
-export const isNextAvailable = ({ data, next }) => {
+export const isNextDiaryAvailable = ({ data, next }) => {
   if (!next) {
     return false;
   }
