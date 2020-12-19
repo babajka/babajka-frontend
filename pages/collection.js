@@ -24,7 +24,7 @@ import host from 'utils/host';
 
 const b = bem(styles);
 
-const CollectionPage = ({ routerQuery: { slug }, collection, metaKeywords, articles, authors }) => (
+const CollectionPage = ({ slug, collection, metaKeywords, articles, authors }) => (
   <>
     <MetaTitle title={collection.name} />
     <MetaImage url={collection.cover ? `${host}${collection.cover}` : DEFAULT_IMAGE} small />
@@ -60,7 +60,10 @@ const CollectionPage = ({ routerQuery: { slug }, collection, metaKeywords, artic
 
 // TODO: replace with SSG after migration from `next-routes`
 export const getServerSideProps = async ({ query: { slug, lang } }) => {
-  const { collection } = await makeRequest(api.collections.getOne(slug));
+  const { collection, error } = await makeRequest(api.collections.getOne(slug));
+  if (error) {
+    return { notFound: true };
+  }
   const localizedArticles = getLocalizedArticles(collection.articles, lang);
 
   const authors = Object.values(
@@ -80,6 +83,7 @@ export const getServerSideProps = async ({ query: { slug, lang } }) => {
       articles: localizedArticles,
       authors,
       metaKeywords,
+      slug,
     },
   };
 };

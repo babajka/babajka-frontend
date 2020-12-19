@@ -31,6 +31,10 @@ ArticlePage.layoutProps = () => ({
 // TODO: replace with SSG after migration from `next-routes`
 export const getServerSideProps = async ({ query: { slug } }) => {
   const article = await makeRequest(api.publicArticle.getBySlug(slug));
+  if (article.error) {
+    return { notFound: true };
+  }
+
   const { locales } = article;
   const localesBySlug = getLocalesBySlug({ locales });
   const currentLocale = localesBySlug[slug];
