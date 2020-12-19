@@ -4,22 +4,6 @@
 $block-spacing: 60px;
 $paragraph-spacing: 24px;
 
-$content-font-size: (
-  desktop: 20px,
-  tablet-large: 20px,
-  tablet: 18px,
-  touch: 18px,
-  mobile: 16px,
-);
-
-$content-line-height: (
-  desktop: 36px,
-  tablet-large: 33px,
-  tablet: 30px,
-  touch: 30px,
-  mobile: 24px,
-);
-
 .article-page {
   &__cover {
     object-fit: cover;
@@ -59,10 +43,6 @@ $content-line-height: (
     flex-direction: column;
     line-height: 24px;
     margin-left: 12px;
-  }
-
-  &__title {
-    font-weight: bold;
   }
 
   &__authors {
@@ -142,10 +122,6 @@ $content-line-height: (
     }
   }
 
-  &__share {
-    width: 300px;
-  }
-
   &__other-tags {
     display: flex;
     flex-direction: row;
@@ -205,11 +181,6 @@ $content-line-height: (
     &__header {
       margin-top: 72px;
     }
-
-    &__title {
-      font-size: 60px;
-      line-height: 72px;
-    }
   }
 }
 
@@ -225,11 +196,6 @@ $content-line-height: (
 
     &__header {
       margin-top: 60px;
-    }
-
-    &__title {
-      font-size: 54px;
-      line-height: 69px;
     }
 
     &__other-tags {
@@ -252,11 +218,6 @@ $content-line-height: (
       margin-top: 50px;
     }
 
-    &__title {
-      font-size: 48px;
-      line-height: 60px;
-    }
-
     &__other-tags {
       line-height: map-get($content-line-height, tablet);
     }
@@ -275,11 +236,6 @@ $content-line-height: (
 
     &__header {
       margin-top: 40px;
-    }
-
-    &__title {
-      font-size: 42px;
-      line-height: 54px;
     }
 
     &__collection {
@@ -313,11 +269,6 @@ $content-line-height: (
       margin-top: 30px;
     }
 
-    &__title {
-      font-size: 36px;
-      line-height: 42px;
-    }
-
     &__collection {
       float: unset;
       font-size: 14px;
@@ -340,31 +291,6 @@ $content-line-height: (
 }
 
 .article-page-text-content {
-  font-size: map-get($content-font-size, mobile);
-  font-style: normal;
-  font-weight: normal;
-  line-height: map-get($content-line-height, mobile);
-
-  @include screen-touch {
-    font-size: map-get($content-font-size, touch);
-    line-height: map-get($content-line-height, touch);
-  }
-
-  @include screen-tablet {
-    font-size: map-get($content-font-size, tablet);
-    line-height: map-get($content-line-height, tablet);
-  }
-
-  @include screen-tablet-large {
-    font-size: map-get($content-font-size, tablet-large);
-    line-height: map-get($content-line-height, tablet-large);
-  }
-
-  @include screen-desktop {
-    font-size: map-get($content-font-size, desktop);
-    line-height: map-get($content-line-height, desktop);
-  }
-
   p {
     margin-top: 12px;
 

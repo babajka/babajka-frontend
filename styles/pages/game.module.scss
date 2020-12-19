@@ -1,0 +1,101 @@
+@import 'styles/responsiveness';
+@import 'styles/variables';
+
+.game-page {
+  background-color: #000000;
+  background-image: url('https://res.cloudinary.com/wir-by/image/upload/v1607867725/production/games/sto-cakaje-u-2021.png');
+  background-position: center;
+  background-size: cover;
+  color: #ffffff;
+  padding-bottom: 120px;
+
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__content {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    max-width: 780px;
+  }
+
+  &__text {
+    margin-top: 40px;
+  }
+
+  &__result-text {
+    font-size: 30px;
+    line-height: 48px;
+    margin-top: 40px;
+  }
+
+  &__author {
+    // stylelint-disable-next-line font-family-no-missing-generic-family-keyword
+    font-family: Georgia;
+    font-style: italic;
+    margin-top: 28px;
+    opacity: 0.5;
+  }
+
+  &__btn {
+    background-color: $primary-caribbean-green;
+    border: unset;
+    color: #ffffff;
+    display: block;
+    margin-top: 40px;
+
+    &:hover {
+      color: #ffffff;
+    }
+  }
+
+  &__share {
+    margin-top: 60px;
+  }
+}
+
+@include screen-desktop {
+  .game-page {
+    &__result-text {
+      margin-top: 80px;
+    }
+  }
+}
+
+@include screen-tablet-large {
+  .game-page {
+    &__result-text {
+      font-size: map-get($content-font-size, tablet-large) * 1.5;
+      line-height: map-get($content-line-height, tablet-large) * 1.3;
+    }
+  }
+}
+
+@include screen-tablet {
+  .game-page {
+    &__result-text {
+      font-size: map-get($content-font-size, tablet) * 1.5;
+      line-height: map-get($content-line-height, tablet) * 1.3;
+    }
+  }
+}
+
+@include screen-touch {
+  .game-page {
+    &__result-text {
+      font-size: map-get($content-font-size, touch) * 1.5;
+      line-height: map-get($content-line-height, touch) * 1.3;
+    }
+  }
+}
+
+@include screen-mobile {
+  .game-page {
+    &__result-text {
+      font-size: map-get($content-font-size, mobile) * 1.5;
+      line-height: map-get($content-line-height, mobile) * 1.3;
+    }
+  }
+}

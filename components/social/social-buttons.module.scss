@@ -20,6 +20,8 @@
   }
 
   &__generic {
+    width: 300px;
+
     @include screen-mobile {
       display: none;
     }
