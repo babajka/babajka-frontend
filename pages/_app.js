@@ -50,6 +50,7 @@ const App = ({ Component, pageProps: basePageProps }) => {
     noLocTitle,
     title: titleId = 'common.project-type',
     titleApple = 'common.project-apple-title',
+    hideHeader,
     hideSidebar,
     hideFooter,
   } = getLayoutProps(pageProps);
@@ -98,7 +99,7 @@ const App = ({ Component, pageProps: basePageProps }) => {
           </div>
         </noscript>
       </Head>
-      <CoreLayout lang={locale} hideFooter={hideFooter} hideSidebar={hideSidebar}>
+      <CoreLayout lang={locale} hideHeader={hideHeader} hideFooter={hideFooter} hideSidebar={hideSidebar}>
         <Component {...pageProps} />
       </CoreLayout>
     </LocaleContext.Provider>

@@ -85,6 +85,7 @@ const DiaryPage = ({
         <div className={b('text')}>{fiberyRenderer(content)}</div>
         <div className={b('share')}>
           <ShareButtons
+            className={b('share')}
             urlPath={router.asPath}
             basicText={basicShareText}
             extendedText={extendedShareText}

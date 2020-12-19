@@ -23,6 +23,7 @@ import Image from 'components/common/Image';
 // import MolamolaIcon from 'components/common/ui/MolamolaIcon';
 import ShareButtons from 'components/social/ShareButtons';
 import ExCoQuiz from 'components/specials/ex-co-quiz';
+import typography from 'components/common/ui/typography';
 import TextWithSeparator from 'lib/components/TextWithSeparator';
 
 import { ArticleShape } from 'utils/customPropTypes';
@@ -80,7 +81,13 @@ const Article = ({
       <MetaArticleItems name="tag" list={tags.map(renderTag)} />
       <MetaArticleItems name="published_time" value={publishAt} />
       <div>
-        <div className={cn('wir-content-padding', styles['article-page-text-content'])}>
+        <div
+          className={cn(
+            'wir-content-padding',
+            styles['article-page-text-content'],
+            typography['common-text']
+          )}
+        >
           <div className={b('subtitle')}>
             <TextWithSeparator text={subtitle} symbol={'\n'} />
           </div>
@@ -114,7 +121,7 @@ const Article = ({
             </div>
           </div>
         )}
-        <h1 className={b('title')}>{title}</h1>
+        <h1 className={typography['common-title']}>{title}</h1>
       </div>
 
       <div className="wir-content-padding">
@@ -124,7 +131,9 @@ const Article = ({
 
           {collection?.articles.length > 1 && <CollectionNote data={collection} locale={locale} />}
 
-          <div className={styles['article-page-text-content']}>{fiberyRenderer(text.content)}</div>
+          <div className={cn(styles['article-page-text-content'], typography['common-text'])}>
+            {fiberyRenderer(text.content)}
+          </div>
 
           {/* FIXME: hardcode */}
           {SLUG_TO_QUIZ_ID[slug] && (
@@ -141,9 +150,7 @@ const Article = ({
                 </Button>
               </ExternalLink>
             )} */}
-            <div className={b('share')}>
-              <ShareButtons urlPath={router.asPath} basicText={title} />
-            </div>
+            <ShareButtons urlPath={router.asPath} basicText={title} />
           </div>
           <div className={b('other-tags')}>
             {tags.map(tag => (

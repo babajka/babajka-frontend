@@ -41,3 +41,19 @@ $zindex: (
 $min-website-width: 330px;
 
 $default-font-size: 16px;
+
+$content-font-size: (
+  desktop: 20px,
+  tablet-large: 20px,
+  tablet: 18px,
+  touch: 18px,
+  mobile: 16px,
+);
+
+$content-line-height: (
+  desktop: 36px,
+  tablet-large: 33px,
+  tablet: 30px,
+  touch: 30px,
+  mobile: 24px,
+);

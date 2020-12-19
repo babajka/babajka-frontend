@@ -13,7 +13,7 @@ import Header from './header/Header';
 import Footer from './Footer';
 import Sidebar from './Sidebar';
 
-const CoreLayout = ({ children, hideFooter, hideSidebar, lang }) => {
+const CoreLayout = ({ children, hideHeader, hideFooter, hideSidebar, lang }) => {
   const [sidebarActive, toggleSidebar, setState] = useBoolean(false);
   return (
     <>
@@ -22,7 +22,7 @@ const CoreLayout = ({ children, hideFooter, hideSidebar, lang }) => {
         className={cn('wir-root', { 'wir-root--sidebar-expanded': sidebarActive })}
       >
         <div className="wir-space">
-          <Header toggleSidebar={toggleSidebar} />
+          {!hideHeader && <Header toggleSidebar={toggleSidebar} />}
 
           <main className="wir-content">{children}</main>
 
@@ -35,7 +35,7 @@ const CoreLayout = ({ children, hideFooter, hideSidebar, lang }) => {
           />
         </div>
 
-        {(!hideSidebar || sidebarActive) && (
+        {!hideHeader && (!hideSidebar || sidebarActive) && (
           <nav className={cn('wir-sidebar', { 'wir-sidebar--expanded': sidebarActive })}>
             <Sidebar toggleSidebar={toggleSidebar} close={() => setState(false)} lang={lang} />
           </nav>
@@ -55,12 +55,14 @@ const CoreLayout = ({ children, hideFooter, hideSidebar, lang }) => {
 
 CoreLayout.propTypes = {
   children: PropTypes.node.isRequired,
+  hideHeader: PropTypes.bool,
   hideFooter: PropTypes.bool,
   hideSidebar: PropTypes.bool,
   lang: LangType.isRequired,
 };
 
 CoreLayout.defaultProps = {
+  hideHeader: false,
   hideFooter: false,
   hideSidebar: false,
 };
