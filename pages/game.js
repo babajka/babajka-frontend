@@ -6,24 +6,22 @@ import bem from 'bem-css-modules';
 import cn from 'classnames';
 
 import Header from 'components/common/layout/header/Header';
-import Sidebar from 'components/common/layout/Sidebar';
 import Button from 'components/common/Button';
 import ShareButtons from 'components/social/ShareButtons';
 import typography from 'components/common/ui/typography';
-import Clickable from 'components/common/Clickable';
 
 import useBoolean from 'hooks/useBoolean';
+import useToggleSidebar from 'hooks/useToggleSidebar';
 
 const b = bem(styles);
 
-const GamePage = ({ lang }) => {
-  const [sidebarActive, toggleSidebar, setState] = useBoolean(false);
+const GamePage = () => {
   const [isView, toggleView] = useBoolean(false);
   const title = 'Што чакае ў 2021';
   const router = useRouter();
   return (
     <div className={b()}>
-      <Header toggleSidebar={toggleSidebar} />
+      <Header toggleSidebar={useToggleSidebar()} />
 
       <div className={cn('wir-content-padding', typography['common-text'], b('wrapper'))}>
         <div className={b('content')}>
@@ -59,18 +57,6 @@ const GamePage = ({ lang }) => {
           <ShareButtons className={b('share')} urlPath={router.asPath} basicText={title} />
         </div>
       </div>
-
-      <Clickable
-        tag="div"
-        className={cn('wir-overlay', { 'wir-overlay--active': sidebarActive })}
-        onClick={toggleSidebar}
-      />
-
-      {sidebarActive && (
-        <nav className={cn('wir-sidebar', { 'wir-sidebar--expanded': sidebarActive })}>
-          <Sidebar toggleSidebar={toggleSidebar} close={() => setState(false)} lang={lang} />
-        </nav>
-      )}
     </div>
   );
 };
