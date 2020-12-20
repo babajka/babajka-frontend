@@ -15,7 +15,7 @@ import useToggleSidebar from 'hooks/useToggleSidebar';
 
 const b = bem(styles);
 
-const GamePage = () => {
+const Game2021page = () => {
   const [isView, toggleView] = useBoolean(false);
   const title = 'Што чакае ў 2021';
   const router = useRouter();
@@ -61,9 +61,9 @@ const GamePage = () => {
   );
 };
 
-GamePage.getLayoutProps = () => ({
+Game2021page.getLayoutProps = () => ({
   title: 'Што чакае ў 2021',
   hideHeader: true,
 });
 
-export default GamePage;
+export default Game2021page;

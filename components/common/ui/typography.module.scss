@@ -37,13 +37,13 @@
   }
 
   @include screen-touch {
-    font-size: map-get($content-font-size, touch);
-    line-height: map-get($content-line-height, touch);
+    font-size: 42px;
+    line-height: 54px;
   }
 
   @include screen-tablet {
-    font-size: 42px;
-    line-height: 54px;
+    font-size: 48px;
+    line-height: 60px;
   }
 
   @include screen-tablet-large {
