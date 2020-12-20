@@ -40,8 +40,7 @@ const ROUTES = [
     pattern: '/status/:code(404|500)',
   },
   {
-    name: 'game',
-    pattern: '/game/sto-cakaje-u-2021',
+    name: 'game/2021',
   },
 ].map(({ name, pattern = `/${name}`, page = name }) => ({
   name,

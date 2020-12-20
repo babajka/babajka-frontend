@@ -9,7 +9,7 @@
     "name": "> all css",
     "path": ".next/static/**/*.css",
     "running": false,
-    "limit": "41 kB"
+    "limit": "45 kB"
   },
   {
     "name": "> topic [server]",
@@ -28,6 +28,12 @@
     "path": ".next/server/pages/about.html",
     "running": false,
     "limit": "7 kB"
+  },
+  {
+    "name": "> game/2021 [server]",
+    "path": ".next/server/pages/game/2021.html",
+    "running": false,
+    "limit": "5 kB"
   },
   {
     "name": "> diary [server]",
