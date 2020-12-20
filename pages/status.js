@@ -8,6 +8,6 @@ StatusPage.getLayoutProps = () => ({
   hideFooter: true,
 });
 
-export const getServerSideProps = async ({ query: { code = 500 } }) => ({ props: { code } });
+export const getServerSideProps = ({ query: { code = 500 } }) => ({ props: { code } });
 
 export default StatusPage;

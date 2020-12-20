@@ -22,7 +22,7 @@ import TwoArticlesInRow from 'components/articles/blocks/TwoArticlesInRow';
 import { formatLocalizedDate, DATE_FORMAT, SHORT_DATE_FORMAT } from 'utils/formatters/date';
 import fiberyRenderer from 'utils/fibery/renderer';
 import fiberyToString from 'utils/fibery/toString';
-import { makeRequest } from 'utils/request';
+import { makeRequest, catchServerErrors } from 'utils/request';
 import { getLocalizedArticles } from 'utils/getters';
 import { getDiary, getDiaryShareText, isNextDiaryAvailable } from 'utils/features/diary';
 import host from 'utils/host';
@@ -101,13 +101,10 @@ const DiaryPage = ({
 };
 
 // TODO: replace with SSG after migration from `next-routes`
-export const getServerSideProps = async ({ query: { slug, lang } }) => {
+export const getServerSideProps = catchServerErrors(async ({ query: { slug, lang } }) => {
   const url = slug ? api.diary.getBySlug(slug) : api.diary.today;
 
-  const { data, prev, next, error } = await makeRequest(url);
-  if (error) {
-    return { notFound: true };
-  }
+  const { data, prev, next } = await makeRequest(url);
   const { data: articles } = await makeRequest(api.articles.getChunk({ take: 2 }));
 
   const diary = getDiary(data, lang);
@@ -139,6 +136,6 @@ export const getServerSideProps = async ({ query: { slug, lang } }) => {
       arrowProps: { prev, next, isNextAvailable: isNextDiaryAvailable({ data, next }) },
     },
   };
-};
+});
 
 export default DiaryPage;
