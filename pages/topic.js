@@ -11,7 +11,7 @@ import { MetaTitle, MetaDescription, MetaKeywords } from 'components/social/Meta
 
 import { TagShape, ArticlesArray } from 'utils/customPropTypes';
 import { getLocalizedTag, getLocalizedArticles } from 'utils/getters';
-import { makeRequest } from 'utils/request';
+import { makeRequest, catchServerErrors } from 'utils/request';
 import { renderTag } from 'utils/features/tags';
 import { ROUTES_NAMES } from 'routes';
 import api from 'constants/api';
@@ -61,26 +61,28 @@ TopicPage.getLayoutProps = ({ topicSlug }) => ({
 });
 
 // TODO: replace with SSG after migration from `next-routes`
-export const getServerSideProps = async ({ query: { topic: topicSlug, lang } }) => {
-  const { tags: rawTags, topic, articles, articlesByTag } = await makeRequest(
-    api.topics.getArticles(topicSlug)
-  );
+export const getServerSideProps = catchServerErrors(
+  async ({ query: { topic: topicSlug, lang } }) => {
+    const { tags: rawTags, topic, articles, articlesByTag } = await makeRequest(
+      api.topics.getArticles(topicSlug)
+    );
 
-  const sortTags = (x, y) => articlesByTag[y.slug].length - articlesByTag[x.slug].length;
+    const sortTags = (x, y) => articlesByTag[y.slug].length - articlesByTag[x.slug].length;
 
-  const tags = rawTags
-    .filter(({ slug }) => articlesByTag[slug]?.length)
-    .map(tag => getLocalizedTag({ ...tag, topic }, lang))
-    .sort(sortTags);
+    const tags = rawTags
+      .filter(({ slug }) => articlesByTag[slug]?.length)
+      .map(tag => getLocalizedTag({ ...tag, topic }, lang))
+      .sort(sortTags);
 
-  return {
-    props: {
-      topicSlug,
-      articleById: keyBy(getLocalizedArticles(articles, lang), 'id'),
-      tags,
-      articlesByTag,
-    },
-  };
-};
+    return {
+      props: {
+        topicSlug,
+        articleById: keyBy(getLocalizedArticles(articles, lang), 'id'),
+        tags,
+        articlesByTag,
+      },
+    };
+  }
+);
 
 export default TopicPage;

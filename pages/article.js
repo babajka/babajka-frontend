@@ -8,7 +8,7 @@ import { ROUTES_NAMES } from 'routes';
 import api from 'constants/api';
 
 import { getLocalizedArticle, getLocalesBySlug } from 'utils/getters';
-import { makeRequest } from 'utils/request';
+import { makeRequest, catchServerErrors } from 'utils/request';
 
 const ArticlePage = ({ article, otherLocales }) => (
   <>
@@ -29,11 +29,8 @@ ArticlePage.layoutProps = () => ({
 });
 
 // TODO: replace with SSG after migration from `next-routes`
-export const getServerSideProps = async ({ query: { slug } }) => {
+export const getServerSideProps = catchServerErrors(async ({ query: { slug } }) => {
   const article = await makeRequest(api.publicArticle.getBySlug(slug));
-  if (article.error) {
-    return { notFound: true };
-  }
 
   const { locales } = article;
   const localesBySlug = getLocalesBySlug({ locales });
@@ -45,6 +42,6 @@ export const getServerSideProps = async ({ query: { slug } }) => {
       otherLocales: Object.values(locales).filter(({ locale }) => locale !== currentLocale),
     },
   };
-};
+});
 
 export default ArticlePage;

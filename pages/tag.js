@@ -13,7 +13,7 @@ import {
 import { localize } from 'components/common/Text';
 import ArticlesComposition from 'components/articles/compositions/ArticlesComposition';
 
-import { makeRequest } from 'utils/request';
+import { makeRequest, catchServerErrors } from 'utils/request';
 import { renderTag, getTopicLink, getTagImageUrl } from 'utils/features/tags';
 import { getLocalizedTag, getLocalizedArticles } from 'utils/getters';
 import host from 'utils/host';
@@ -44,20 +44,20 @@ const TagPage = ({ lang, topic, tag, articles }) => {
 };
 
 // TODO: replace with SSG after migration from `next-routes`
-export const getServerSideProps = async ({ query: { topic, tag: tagSlug, lang } }) => {
-  const { tag, articles, error } = await makeRequest(api.tags.getArticles(tagSlug));
-  if (error) {
-    return { notFound: true };
-  }
-  const localizedArticles = getLocalizedArticles(articles, lang);
+export const getServerSideProps = catchServerErrors(
+  async ({ query: { topic, tag: tagSlug, lang } }) => {
+    const { tag, articles } = await makeRequest(api.tags.getArticles(tagSlug));
 
-  return {
-    props: {
-      topic,
-      tag: getLocalizedTag(tag, lang),
-      articles: localizedArticles,
-    },
-  };
-};
+    const localizedArticles = getLocalizedArticles(articles, lang);
+
+    return {
+      props: {
+        topic,
+        tag: getLocalizedTag(tag, lang),
+        articles: localizedArticles,
+      },
+    };
+  }
+);
 
 export default TagPage;
