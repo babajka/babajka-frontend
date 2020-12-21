@@ -1,8 +1,11 @@
 import qs from 'querystring';
 
-const API_URL = '/api';
+export const API_URL = '/api';
 
 export default {
+  auth: {
+    login: `/auth/login`,
+  },
   storage: {
     getMainPage: `${API_URL}/storage/main-page`,
     getSidebar: `${API_URL}/storage/sidebar`,
