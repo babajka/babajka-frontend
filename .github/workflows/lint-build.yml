@@ -20,6 +20,9 @@ jobs:
         with:
           node-version: "${{ steps.nvm.outputs.NVMRC }}"
 
+      - name: update submodules
+        run: git submodule update --init
+
       - run: npm install
       - run: npm run lint
       - run: npm run build
