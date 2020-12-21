@@ -32,7 +32,11 @@ echo "Building with ENV=$ENV"
 WIR_ENV=$ENV npm run build
 
 FRONTEND_REMOTE_SWAP_PATH="/home/wir-$MODE/deployed/swap-frontend/babajka-frontend/"
-HOST="wir-$MODE@$MODE.wir.by"
+if [[ $MODE == "dev" ]]; then
+  HOST="wir-dev@dev.wir.by"
+elif [[ $MODE == "prod" ]]; then
+  HOST="wir-prod@wir.by"
+fi
 
 ssh $HOST "mkdir -p \"${FRONTEND_REMOTE_SWAP_PATH}\""
 rsync -r --delete-after --exclude=.git --exclude=node_modules . \
