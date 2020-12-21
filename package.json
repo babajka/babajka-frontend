@@ -23,7 +23,7 @@
     "update-team": "bash bin/fetch.sh team",
     "reset-cache": "rm -rf node_modules/.cache && rm -rf .next/",
     "fetch-data": "npm run update-dict && npm run update-team",
-    "postinstall": "git submodule update --init && npm run fetch-data",
+    "postinstall": "npm run fetch-data",
     "semantic-release": "semantic-release",
     "size-build": "npm run reset-cache && npm run build",
     "size-limit": "size-limit",

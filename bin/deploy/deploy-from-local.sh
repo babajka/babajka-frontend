@@ -32,7 +32,6 @@ echo "Building with ENV=$ENV"
 WIR_ENV=$ENV npm run build
 
 FRONTEND_REMOTE_SWAP_PATH="/home/wir-$MODE/deployed/swap-frontend/babajka-frontend/"
-HOST=""
 if [[ $MODE == "dev" ]]; then
   HOST="wir-dev@dev.wir.by"
 elif [[ $MODE == "prod" ]]; then
