@@ -30,4 +30,10 @@ export default {
   collections: {
     getOne: slug => `${API_URL}/collections/${slug}`,
   },
+  games: {
+    fortune: {
+      get: slug => `${API_URL}/games/fortune/${slug}`,
+      getCookie: slug => `${API_URL}/games/fortune/getCookie/${slug}`,
+    },
+  },
 };

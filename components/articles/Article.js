@@ -1,7 +1,6 @@
 import typography from 'styles/typography.module.scss';
 
 import React from 'react';
-import { useRouter } from 'next/router';
 import flatten from 'lodash/flatten';
 import cn from 'classnames';
 import bem from 'bem-css-modules';
@@ -65,7 +64,6 @@ const Article = ({
     suggestedArticles,
   },
 }) => {
-  const router = useRouter();
   const { brands, authors, ...tagsObject } = tagsByTopic;
   const renderTagImage = getTagImageRenderer({ className: b('tag-image') });
   const imageUrl = images.page || images.horizontal;
@@ -151,7 +149,7 @@ const Article = ({
                 </Button>
               </ExternalLink>
             )} */}
-            <ShareButtons urlPath={router.asPath} basicText={title} />
+            <ShareButtons basicText={title} />
           </div>
           <div className={b('other-tags')}>
             {tags.map(tag => (

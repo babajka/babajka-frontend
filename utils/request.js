@@ -1,6 +1,6 @@
-import { Router, ROUTES_NAMES } from 'routes';
+// import { Router, ROUTES_NAMES } from 'routes';
 import { BACKEND_URL } from 'constants/server';
-import { DEFAULT_LOCALE } from 'constants';
+// import { DEFAULT_LOCALE } from 'constants';
 
 export class RequestError extends Error {
   constructor(response) {
@@ -33,9 +33,9 @@ export const makeRequest = async (url, method = 'GET', rawBody = null) => {
   const response = await fetch(`${prefix}${url}`, options);
   const contentType = response.headers.get('content-type');
 
-  if (!isServer && response.status === 404) {
-    Router.pushRoute(ROUTES_NAMES.status, { code: '404', lang: DEFAULT_LOCALE });
-  }
+  // if (!isServer && response.status === 404) {
+  //   Router.pushRoute(ROUTES_NAMES.status, { code: '404', lang: DEFAULT_LOCALE });
+  // }
 
   if (!response.ok) {
     throw new RequestError(response);
