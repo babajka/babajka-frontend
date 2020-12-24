@@ -1,3 +1,5 @@
+import typography from 'styles/typography.module.scss';
+
 import React from 'react';
 import { useRouter } from 'next/router';
 import flatten from 'lodash/flatten';
@@ -23,7 +25,6 @@ import Image from 'components/common/Image';
 // import MolamolaIcon from 'components/common/ui/MolamolaIcon';
 import ShareButtons from 'components/social/ShareButtons';
 import ExCoQuiz from 'components/specials/ex-co-quiz';
-import typography from 'components/common/ui/typography';
 import TextWithSeparator from 'lib/components/TextWithSeparator';
 
 import { ArticleShape } from 'utils/customPropTypes';
