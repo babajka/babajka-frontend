@@ -12,9 +12,11 @@ import BlockWrapper from './BlockWrapper';
 
 const b = bem(styles);
 
+const BANNERS_AVAILABLE = ['mapa', 'ny2021'];
+
 const LINK = {
   mapa: 'https://map.wir.by?utm_source=wirby-main-page',
-  ny2021: 'https://wir.by/games/ny2021',
+  ny2021: 'https://wir.by/game/ny2021',
 };
 
 const getLink = (name, width, screen) => {
@@ -39,6 +41,11 @@ const BANNERS = banner =>
 const BannerBlock = ({ block: { banner } }) => {
   const title = useLocalization(`banners.${banner}-title`);
   const subtitle = useLocalization(`banners.${banner}-subtitle`);
+
+  if (!BANNERS_AVAILABLE.includes(banner)) {
+    return null;
+  }
+
   return (
     <BlockWrapper>
       <div className={b()}>
@@ -56,7 +63,7 @@ const BannerBlock = ({ block: { banner } }) => {
 
 BannerBlock.propTypes = {
   block: PropTypes.shape({
-    banner: PropTypes.oneOf(['mapa', 'ny2021']).isRequired,
+    banner: PropTypes.oneOf(BANNERS_AVAILABLE).isRequired,
   }).isRequired,
 };
 
