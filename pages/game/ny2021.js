@@ -68,8 +68,10 @@ const Game2021page = ({ title, description, suggestedArticles }) => {
                     symbol={'\n'}
                   />
                 </span>
-                {!authorTag && <span className={b('author')}>{author}</span>}
-                {!!authorTag && getTagLink({ tag: authorTag, dark: true, target: '_blank' })}
+                <div className={b('author-wrapper')}>
+                  {!authorTag && <span className={b('author')}>{author}</span>}
+                  {!!authorTag && getTagLink({ tag: authorTag, dark: true, target: '_blank' })}
+                </div>
               </>
             )}
             <Button className={b('btn')} onClick={fetchCookie} pending={pending}>

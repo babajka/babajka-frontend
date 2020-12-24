@@ -33,11 +33,14 @@
     text-align: center;
   }
 
+  &__author-wrapper {
+    margin-top: 28px;
+  }
+
   &__author {
     // stylelint-disable-next-line font-family-no-missing-generic-family-keyword
     font-family: Georgia;
     font-style: italic;
-    margin-top: 28px;
     opacity: 0.5;
   }
 
