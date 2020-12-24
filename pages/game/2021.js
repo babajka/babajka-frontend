@@ -1,4 +1,5 @@
 import styles from 'styles/pages/game.module.scss';
+import typography from 'styles/typography.module.scss';
 
 import React from 'react';
 import { useRouter } from 'next/router';
@@ -8,7 +9,6 @@ import cn from 'classnames';
 import Header from 'components/common/layout/header/Header';
 import Button from 'components/common/Button';
 import ShareButtons from 'components/social/ShareButtons';
-import typography from 'components/common/ui/typography';
 
 import useBoolean from 'hooks/useBoolean';
 import useToggleSidebar from 'hooks/useToggleSidebar';
