@@ -75,6 +75,7 @@ const Footer = () => (
               <ShareButtons
                 className={l('share')}
                 basicText={useLocalization('common.project-description')}
+                noAsPath
               />
             </div>
           </div>

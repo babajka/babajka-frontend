@@ -2,7 +2,6 @@ import styles from 'styles/pages/diary.module.scss';
 
 import React from 'react';
 import cn from 'classnames';
-import { useRouter } from 'next/router';
 import bem from 'bem-css-modules';
 
 import Image from 'components/common/Image';
@@ -51,7 +50,6 @@ const DiaryPage = ({
 
   arrowProps,
 }) => {
-  const router = useRouter();
   const [first, second] = articles;
 
   if (!routerSlug) {
@@ -86,7 +84,6 @@ const DiaryPage = ({
         <div className={b('share')}>
           <ShareButtons
             className={b('share')}
-            urlPath={router.asPath}
             basicText={basicShareText}
             extendedText={extendedShareText}
           />

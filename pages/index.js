@@ -3,6 +3,7 @@ import React, { useMemo } from 'react';
 import CardsLayout from 'components/articles/layout/CardsLayout';
 import { makeRequest, catchServerErrors } from 'utils/request';
 import { localizeData } from 'utils/getters';
+import { TEN_MINUTES } from 'constants/misc';
 import api from 'constants/api';
 
 const MainPage = ({ blocks, data, lang }) => {
@@ -13,8 +14,6 @@ const MainPage = ({ blocks, data, lang }) => {
 MainPage.getLayoutProps = () => ({
   title: 'header.main',
 });
-
-const TEN_MINUTES = 10 * 60;
 
 // TODO: use built-in i18n mechanism
 export const getStaticProps = catchServerErrors(async () => {

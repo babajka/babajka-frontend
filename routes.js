@@ -1,7 +1,7 @@
 const set = require('lodash/set');
 const routes = require('next-routes')();
 
-const { VALID_LOCALES, TOPICS } = require('./constants');
+const { VALID_LOCALES, TOPICS, NY2021 } = require('./constants');
 
 const langs = VALID_LOCALES.join('|');
 const topics = TOPICS.join('|');
@@ -40,7 +40,7 @@ const ROUTES = [
     pattern: '/status/:code(404|500)',
   },
   {
-    name: 'game/2021',
+    name: `game/${NY2021}`,
   },
 ].map(({ name, pattern = `/${name}`, page = name }) => ({
   name,

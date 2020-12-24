@@ -99,7 +99,12 @@ const App = ({ Component, pageProps: basePageProps }) => {
           </div>
         </noscript>
       </Head>
-      <CoreLayout lang={locale} hideHeader={hideHeader} hideFooter={hideFooter} hideSidebar={hideSidebar}>
+      <CoreLayout
+        lang={locale}
+        hideHeader={hideHeader}
+        hideFooter={hideFooter}
+        hideSidebar={hideSidebar}
+      >
         <Component {...pageProps} />
       </CoreLayout>
     </LocaleContext.Provider>

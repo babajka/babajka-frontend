@@ -1,4 +1,4 @@
-const convertContent = (content, init = '') => {
+const convertContent = (content, { useBreak = false } = {}, init = '') => {
   if (!Array.isArray(content)) {
     return init;
   }
@@ -8,12 +8,13 @@ const convertContent = (content, init = '') => {
     if (!convert) {
       return acc;
     }
-    return `${acc}${convert(params)}`;
+    return `${acc}${convert(params, { useBreak })}`;
   }, init);
 };
 
 const CONVERTERS = {
-  paragraph: ({ content }) => `${convertContent(content)} `,
+  paragraph: ({ content }, { useBreak }) =>
+    `${convertContent(content, { useBreak })}${useBreak ? '\n' : ''}`,
   text: ({ text }) => text,
 };
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import qs from 'querystring';
 import bem from 'bem-css-modules';
@@ -16,9 +17,12 @@ import styles from './social-buttons.module.scss';
 const b = bem(styles);
 const POPUP_WINDOW_PARAMS = 'width=600,height=400';
 
-const ShareButtons = ({ className, urlPath, basicText, extendedText }) => {
+const ShareButtons = ({ className, noAsPath, basicText, extendedText }) => {
+  const router = useRouter();
   const lang = useLocaleContext();
   const [forceButtonGroup, setForceButtonGroup] = useState(false);
+  const urlPath = noAsPath ? '' : router.asPath;
+  const url = `${DOMAIN_SECURE}${urlPath}`;
 
   return (
     <>
@@ -26,10 +30,7 @@ const ShareButtons = ({ className, urlPath, basicText, extendedText }) => {
         <Button
           onClick={() => {
             if (navigator.share) {
-              navigator.share({
-                title: basicText,
-                url: `${DOMAIN_SECURE}${urlPath}`,
-              });
+              navigator.share({ title: basicText, url });
             } else {
               setForceButtonGroup(true);
             }
@@ -54,7 +55,7 @@ const ShareButtons = ({ className, urlPath, basicText, extendedText }) => {
                 type="button"
                 onClick={() => {
                   window.open(
-                    `${baseUrl}?${qs.stringify(getParams(`${DOMAIN_SECURE}${urlPath}`, text))}`,
+                    `${baseUrl}?${qs.stringify(getParams(url, text))}`,
                     localize(`common.share-link`, lang),
                     POPUP_WINDOW_PARAMS
                   );
@@ -72,14 +73,14 @@ const ShareButtons = ({ className, urlPath, basicText, extendedText }) => {
 
 ShareButtons.propTypes = {
   className: PropTypes.string,
-  urlPath: PropTypes.string,
+  noAsPath: PropTypes.bool,
   basicText: PropTypes.string.isRequired,
   extendedText: PropTypes.string,
 };
 
 ShareButtons.defaultProps = {
   className: '',
-  urlPath: '',
+  noAsPath: false,
   extendedText: '',
 };
 
