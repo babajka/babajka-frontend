@@ -33,7 +33,7 @@
     "name": "> diary [server]",
     "path": ".next/server/pages/diary.js",
     "running": false,
-    "limit": "34 kB"
+    "limit": "35 kB"
   },
   {
     "name": "> home [server]",
