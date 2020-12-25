@@ -33,7 +33,7 @@
     "name": "> game/ny2021 [server]",
     "path": ".next/server/pages/game/ny2021.html",
     "running": false,
-    "limit": "11 kB"
+    "limit": "14 kB"
   },
   {
     "name": "> diary [server]",
@@ -45,13 +45,13 @@
     "name": "> home [server]",
     "path": ".next/server/pages/index.js",
     "running": false,
-    "limit": "32 kB"
+    "limit": "33 kB"
   },
   {
     "name": "> article [server]",
     "path": ".next/server/pages/article.js",
     "running": false,
-    "limit": "44 kB"
+    "limit": "45 kB"
   },
   {
     "name": "> app",

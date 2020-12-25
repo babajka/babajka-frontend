@@ -10,7 +10,7 @@ import Button from 'components/common/Button';
 import ShareButtons from 'components/social/ShareButtons';
 import TextWithSeparator from 'lib/components/TextWithSeparator';
 import CardsLayout from 'components/articles/layout/CardsLayout';
-import { MetaImage } from 'components/social/Metatags';
+import { MetaImage, MetaDescription } from 'components/social/Metatags';
 
 import useToggleSidebar from 'hooks/useToggleSidebar';
 
@@ -59,6 +59,7 @@ const Game2021page = ({ title, description, suggestedArticles }) => {
   return (
     <>
       <MetaImage url={PREVIEW_URL} />
+      <MetaDescription description={description} />
       <div className={b()}>
         <Header toggleSidebar={useToggleSidebar()} />
 
