@@ -1,11 +1,11 @@
 import styles from 'styles/pages/diary.module.scss';
 
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import cn from 'classnames';
 import bem from 'bem-css-modules';
 
 import Image from 'components/common/Image';
-import Redirect from 'components/common/Redirect';
 import { localize } from 'components/common/Text';
 import DiaryLinkArrows from 'components/specials/diary/DiaryLinkArrows';
 import ShareButtons from 'components/social/ShareButtons';
@@ -26,14 +26,13 @@ import { getLocalizedArticles } from 'utils/getters';
 import { getDiary, getDiaryShareText, isNextDiaryAvailable } from 'utils/features/diary';
 import host from 'utils/host';
 
+import { Router, ROUTES_NAMES } from 'routes';
 import { DIARY_PICTURE_WIDTH } from 'constants/misc';
-import { ROUTES_NAMES } from 'routes';
 import api from 'constants/api';
 
 const b = bem(styles);
 
 const DiaryPage = ({
-  routerSlug,
   diary: {
     slug,
     author: { name, diaryImage: image },
@@ -47,14 +46,19 @@ const DiaryPage = ({
   basicShareText,
   extendedShareText,
   lang,
-
   arrowProps,
 }) => {
+  const router = useRouter();
+  const {
+    query: { slug: routerSlug },
+  } = router;
   const [first, second] = articles;
 
-  if (!routerSlug) {
-    return <Redirect to={ROUTES_NAMES.diary} params={{ slug }} options={{ shallow: true }} />;
-  }
+  useEffect(() => {
+    if (!routerSlug) {
+      Router.replaceRoute(ROUTES_NAMES.diary, { lang, slug }, { shallow: true });
+    }
+  }, [lang, routerSlug, slug]);
 
   return (
     <>
@@ -123,7 +127,6 @@ export const getServerSideProps = catchServerErrors(async ({ query: { slug, lang
 
   return {
     props: {
-      routerSlug: slug,
       diary,
       articles: getLocalizedArticles(articles, lang),
       metaTitle,
