@@ -4,26 +4,27 @@ import bem from 'bem-css-modules';
 import cn from 'classnames';
 
 import Picture from 'components/common/ui/Picture';
+import LocalLink from 'components/common/Link';
 import ExternalLink from 'components/common/ExternalLink';
 import { useLocalization } from 'components/common/Text';
+import { NY2021 } from 'constants';
 import styles from './banner.module.scss';
 
 import BlockWrapper from './BlockWrapper';
 
 const b = bem(styles);
 
+const CDN_HOST = 'https://res.cloudinary.com/wir-by/image/upload';
 const BANNERS_AVAILABLE = ['mapa', 'ny2021'];
-
 const LINK = {
-  mapa: 'https://map.wir.by?utm_source=wirby-main-page',
-  ny2021: 'https://wir.by/game/ny2021',
+  mapa: { href: 'https://map.wir.by?utm_source=wirby-main-page' },
+  [NY2021]: { route: `game/${NY2021}` },
 };
-
-const getLink = (name, width, screen) => {
-  return {
-    mapa: `https://res.cloudinary.com/wir-by/image/upload/c_scale,w_${width},f_auto,q_auto/v1568474405/production/banners/mapa-all-sizes/${screen}.png`,
-    ny2021: `https://res.cloudinary.com/wir-by/image/upload/c_scale,w_${width},f_auto,q_auto/v1607868560/production/banners/newyear2021-all-sizes/${screen}.png`,
-  }[name];
+const IMAGE_LINK = {
+  mapa: (width, screen) =>
+    `${CDN_HOST}/c_scale,w_${width},f_auto,q_auto/v1568474405/production/banners/mapa-all-sizes/${screen}.png`,
+  [NY2021]: (width, screen) =>
+    `${CDN_HOST}/c_scale,w_${width},f_auto,q_auto/v1607868560/production/banners/newyear2021-all-sizes/${screen}.png`,
 };
 
 const BANNERS = banner =>
@@ -34,7 +35,7 @@ const BANNERS = banner =>
     touch: 480,
     mobile: 300,
   }).reduce((acc, [screen, size]) => {
-    acc[screen] = getLink(banner, size, screen);
+    acc[screen] = IMAGE_LINK[banner](size, screen);
     return acc;
   }, {});
 
@@ -46,16 +47,19 @@ const BannerBlock = ({ block: { banner } }) => {
     return null;
   }
 
+  const linkProps = LINK[banner];
+  const Link = linkProps.route ? LocalLink : ExternalLink;
+
   return (
     <BlockWrapper>
       <div className={b()}>
-        <ExternalLink href={LINK[banner]}>
+        <Link {...linkProps}>
           <div className={cn(b('title'), b(`${banner}-title`))}>{title}</div>
-          {banner === 'ny2021' && (
+          {banner === NY2021 && (
             <div className={cn(b('subtitle'), b(`${banner}-subtitle`))}>{subtitle}</div>
           )}
           <Picture sources={BANNERS(banner)} alt={title} />
-        </ExternalLink>
+        </Link>
       </div>
     </BlockWrapper>
   );

@@ -10,6 +10,7 @@ import Button from 'components/common/Button';
 import ShareButtons from 'components/social/ShareButtons';
 import TextWithSeparator from 'lib/components/TextWithSeparator';
 import CardsLayout from 'components/articles/layout/CardsLayout';
+import { MetaImage } from 'components/social/Metatags';
 
 import useToggleSidebar from 'hooks/useToggleSidebar';
 
@@ -23,12 +24,12 @@ import { NY2021 } from 'constants';
 import { TEN_MINUTES } from 'constants/misc';
 
 const b = bem(styles);
-
+const LANG = 'be';
+const PREVIEW_URL =
+  'https://res.cloudinary.com/wir-by/image/upload/v1608913379/production/games/game-2021-preview.png';
 const initialCookie = {
   initial: true,
 };
-
-const LANG = 'be';
 
 const Game2021page = ({ title, description, suggestedArticles }) => {
   const [pending, setPending] = useState(false);
@@ -52,8 +53,12 @@ const Game2021page = ({ title, description, suggestedArticles }) => {
       setPending(false);
     }
   }, []);
+
+  const textStr = text ? fiberyToString(text.content, { useBreak: true }) : '';
+
   return (
     <>
+      <MetaImage url={PREVIEW_URL} />
       <div className={b()}>
         <Header toggleSidebar={useToggleSidebar()} />
 
@@ -66,10 +71,7 @@ const Game2021page = ({ title, description, suggestedArticles }) => {
             ) : (
               <>
                 <span className={b('result-text')}>
-                  <TextWithSeparator
-                    text={fiberyToString(text.content, { useBreak: true })}
-                    symbol={'\n'}
-                  />
+                  <TextWithSeparator text={textStr} symbol={'\n'} />
                 </span>
                 <div className={b('author-wrapper')}>
                   {!authorTag && <span className={b('author')}>{author}</span>}
@@ -81,7 +83,7 @@ const Game2021page = ({ title, description, suggestedArticles }) => {
               {!error && `Атрымаць${initial ? '' : ' яшчэ адно'}`}
               {error && 'Памылка, паспрабуйце яшчэ'}
             </Button>
-            <ShareButtons className={b('share')} basicText={title} />
+            <ShareButtons className={b('share')} basicText={`${title}\n\n${textStr}`} />
           </div>
         </div>
       </div>
