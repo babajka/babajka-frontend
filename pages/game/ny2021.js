@@ -65,20 +65,22 @@ const Game2021page = ({ title, description, suggestedArticles }) => {
         <div className={cn('wir-content-padding', typography['common-text'], b('wrapper'))}>
           <div className={b('content')}>
             <span>Прадказанне</span>
-            <h1 className={typography['common-title']}>{title}</h1>
-            {initial ? (
-              <span className={b('text')}>{description}</span>
-            ) : (
-              <>
-                <span className={b('result-text')}>
-                  <TextWithSeparator text={textStr} symbol={'\n'} />
-                </span>
-                <div className={b('author-wrapper')}>
-                  {!authorTag && <span className={b('author')}>{author}</span>}
-                  {!!authorTag && getTagLink({ tag: authorTag, dark: true, target: '_blank' })}
-                </div>
-              </>
-            )}
+            <h1 className={cn(typography['common-title'], b('title'))}>{title}</h1>
+            <div className={b('text-wrapper')}>
+              {initial ? (
+                <span>{description}</span>
+              ) : (
+                <>
+                  <span className={b('result-text')}>
+                    <TextWithSeparator text={textStr} symbol={'\n'} />
+                  </span>
+                  <div className={b('author-wrapper')}>
+                    {!authorTag && <span className={b('author')}>{author}</span>}
+                    {!!authorTag && getTagLink({ tag: authorTag, dark: true, target: '_blank' })}
+                  </div>
+                </>
+              )}
+            </div>
             <Button className={b('btn')} onClick={fetchCookie} pending={pending}>
               {!error && `Атрымаць${initial ? '' : ' яшчэ адно'}`}
               {error && 'Памылка, паспрабуйце яшчэ'}
