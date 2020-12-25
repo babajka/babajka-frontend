@@ -67,14 +67,6 @@
   }
 }
 
-@include screen-desktop {
-  .game-page {
-    &__result-text {
-      margin-top: 80px;
-    }
-  }
-}
-
 @include screen-tablet-large {
   .game-page {
     &__result-text {
