@@ -49,6 +49,12 @@ const getLocalizedTags = localizeArray(getLocalizedTag);
  *               ARTICLE
  */
 
+export const getLocalizedSuggested = (articles, lang) =>
+  articles && {
+    blocks: articles.blocks,
+    data: localizeData(articles.data, lang),
+  };
+
 export const getLocalesBySlug = ({ locales }) =>
   Object.entries(locales).reduce((acc, [key, { slug }]) => {
     acc[slug] = key;
@@ -101,10 +107,7 @@ export const getLocalizedArticle = (article, lang) => {
     published: !!publishAt && isBefore(parseISO(publishAt), new Date()),
     tagsByTopic,
     // metrics: totalMetrics,
-    suggestedArticles: suggestedArticles && {
-      blocks: suggestedArticles.blocks,
-      data: localizeData(suggestedArticles.data, lang),
-    },
+    suggestedArticles: getLocalizedSuggested(suggestedArticles, lang),
   };
 };
 

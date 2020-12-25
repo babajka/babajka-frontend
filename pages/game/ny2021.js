@@ -15,10 +15,11 @@ import useToggleSidebar from 'hooks/useToggleSidebar';
 
 import fiberyToString from 'utils/fibery/toString';
 import { makeRequest, catchServerErrors } from 'utils/request';
+import { getTagLink } from 'utils/features/tags';
+import { getLocalizedTag, getLocalizedSuggested } from 'utils/getters';
+
 import api from 'constants/api';
 import { NY2021 } from 'constants';
-import { getTagLink } from 'utils/features/tags';
-import { getLocalizedTag } from 'utils/getters';
 import { TEN_MINUTES } from 'constants/misc';
 
 const b = bem(styles);
@@ -26,6 +27,8 @@ const b = bem(styles);
 const initialCookie = {
   initial: true,
 };
+
+const LANG = 'be';
 
 const Game2021page = ({ title, description, suggestedArticles }) => {
   const [pending, setPending] = useState(false);
@@ -39,7 +42,7 @@ const Game2021page = ({ title, description, suggestedArticles }) => {
       setError(false);
       const data = await makeRequest(api.games.fortune.getCookie(NY2021));
       if (data.authorTag) {
-        data.authorTag = getLocalizedTag(data.authorTag, 'be');
+        data.authorTag = getLocalizedTag(data.authorTag, LANG);
       }
       setCookie(data);
     } catch (err) {
@@ -102,7 +105,7 @@ export const getStaticProps = catchServerErrors(async () => {
     props: {
       title,
       description: fiberyToString(description),
-      suggestedArticles,
+      suggestedArticles: getLocalizedSuggested(suggestedArticles, LANG),
     },
     revalidate: TEN_MINUTES,
   };
