@@ -30,7 +30,7 @@ const ShareButtons = ({ className, noAsPath, basicText, extendedText }) => {
         <Button
           onClick={() => {
             if (navigator.share) {
-              navigator.share({ title: basicText, url });
+              navigator.share({ text: basicText, url });
             } else {
               setForceButtonGroup(true);
             }
