@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import CardsLayout from 'components/articles/layout/CardsLayout';
 import { makeRequest } from 'utils/request';
 import { localizeData } from 'utils/getters';
-import { ONE_MINUTE } from 'constants/misc';
+import { REVALIDATE_TIMEOUT } from 'constants/misc';
 import api from 'constants/api';
 
 const MainPage = ({ blocks, data, lang }) => {
@@ -20,7 +20,7 @@ export const getStaticProps = async () => {
   const { blocks, data } = await makeRequest(api.storage.getMainPage);
   return {
     props: { blocks, data },
-    revalidate: ONE_MINUTE,
+    revalidate: REVALIDATE_TIMEOUT,
   };
 };
 
