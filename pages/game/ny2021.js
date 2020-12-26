@@ -26,7 +26,7 @@ import { TEN_MINUTES } from 'constants/misc';
 const b = bem(styles);
 const LANG = 'be';
 const PREVIEW_URL =
-  'https://res.cloudinary.com/wir-by/image/upload/v1608913379/production/games/game-2021-preview.png';
+  'https://res.cloudinary.com/wir-by/image/upload/c_scale,w_1200,f_auto,q_auto/v1608977422/production/games/game-ny2021-preview.png';
 const initialCookie = {
   initial: true,
 };
