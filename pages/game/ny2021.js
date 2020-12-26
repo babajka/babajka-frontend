@@ -21,7 +21,7 @@ import { getLocalizedTag, getLocalizedSuggested } from 'utils/getters';
 
 import api from 'constants/api';
 import { NY2021 } from 'constants';
-import { ONE_MINUTE } from 'constants/misc';
+import { REVALIDATE_TIMEOUT } from 'constants/misc';
 
 const b = bem(styles);
 const LANG = 'be';
@@ -112,7 +112,7 @@ export const getStaticProps = async () => {
       description: fiberyToString(description),
       suggestedArticles: getLocalizedSuggested(suggestedArticles, LANG),
     },
-    revalidate: ONE_MINUTE,
+    revalidate: REVALIDATE_TIMEOUT,
   };
 };
 
