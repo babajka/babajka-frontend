@@ -21,7 +21,7 @@ import TwoArticlesInRow from 'components/articles/blocks/TwoArticlesInRow';
 import { formatLocalizedDate, DATE_FORMAT, SHORT_DATE_FORMAT } from 'utils/formatters/date';
 import fiberyRenderer from 'utils/fibery/renderer';
 import fiberyToString from 'utils/fibery/toString';
-import { makeRequest, catchServerErrors } from 'utils/request';
+import { makeRequest, catchServerSideErrors } from 'utils/request';
 import { getLocalizedArticles } from 'utils/getters';
 import { getDiary, getDiaryShareText, isNextDiaryAvailable } from 'utils/features/diary';
 import host from 'utils/host';
@@ -103,7 +103,7 @@ const DiaryPage = ({
 };
 
 // TODO: replace with SSG after migration from `next-routes`
-export const getServerSideProps = catchServerErrors(async ({ query: { slug, lang } }) => {
+export const getServerSideProps = catchServerSideErrors(async ({ query: { slug, lang } }) => {
   const url = slug ? api.diary.getBySlug(slug) : api.diary.today;
 
   const { data, prev, next } = await makeRequest(url);

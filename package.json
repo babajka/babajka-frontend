@@ -14,7 +14,7 @@
     "local-backend": "npm run dev -- --backend-url=http://localhost:8080",
     "deploy-dev-from-local": "bash bin/deploy/deploy-from-local.sh dev",
     "deploy-prod-from-local": "bash bin/deploy/deploy-from-local.sh prod",
-    "build": "cross-env NODE_ENV=production next build",
+    "build": "make _pre_build && cross-env NODE_ENV=production next build",
     "lint": "npm run prettify && eslint '{!(.next*|*static*|node_modules*), }/**/*.js' --fix && npm run stylelint",
     "stylelint": "stylelint '{!(.next*|*static*|node_modules*), }/**/*.scss' --fix",
     "prettier": "prettier --write",
@@ -25,11 +25,11 @@
     "fetch-data": "npm run update-dict && npm run update-team",
     "postinstall": "npm run fetch-data",
     "semantic-release": "semantic-release",
-    "size-build": "npm run reset-cache && npm run build",
+    "size-build": "npm run reset-cache && make build",
     "size-limit": "size-limit",
     "size": "npm run size-build && size-limit",
     "gds": "github-deploy-status -u babajka -p babajka-frontend",
-    "analyze": "cross-env ANALYZE=true npm run build"
+    "analyze": "cross-env ANALYZE=true make build"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.12.1",

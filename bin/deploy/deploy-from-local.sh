@@ -7,8 +7,10 @@ normal=$(tput sgr0)
 MODE=$1
 if [[ $MODE == "dev" ]]; then
   ENV="staging"
+  BACKEND_URL="https://api.wir.by"
 elif [[ $MODE == "prod" ]]; then
   ENV="production"
+  BACKEND_URL="https://api-prod.wir.by"
 else
   echo '[FAIL] Mode (dev or prod) must be provided.'
   exit 1
@@ -29,7 +31,7 @@ export $(cat .env | xargs)
 bash bin/deploy/before-deploy.sh $MODE
 
 echo "Building with ENV=$ENV"
-WIR_ENV=$ENV npm run build
+WIR_ENV=$ENV BACKEND_URL=$BACKEND_URL npm run build
 
 FRONTEND_REMOTE_SWAP_PATH="/home/wir-$MODE/deployed/swap-frontend/babajka-frontend/"
 if [[ $MODE == "dev" ]]; then
