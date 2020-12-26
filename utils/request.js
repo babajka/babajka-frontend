@@ -1,6 +1,4 @@
-// import { Router, ROUTES_NAMES } from 'routes';
 import { BACKEND_URL } from 'constants/server';
-// import { DEFAULT_LOCALE } from 'constants';
 
 export class RequestError extends Error {
   constructor(response) {
@@ -30,12 +28,9 @@ export const makeRequest = async (url, method = 'GET', rawBody = null) => {
   const isServer = !process.browser;
   // for requests from server we need to avoid proxying
   const prefix = isServer ? BACKEND_URL : '';
+
   const response = await fetch(`${prefix}${url}`, options);
   const contentType = response.headers.get('content-type');
-
-  // if (!isServer && response.status === 404) {
-  //   Router.pushRoute(ROUTES_NAMES.status, { code: '404', lang: DEFAULT_LOCALE });
-  // }
 
   if (!response.ok) {
     throw new RequestError(response);
@@ -48,7 +43,8 @@ export const makeRequest = async (url, method = 'GET', rawBody = null) => {
   return response.text();
 };
 
-export const catchServerErrors = handler => ctx =>
+// WARNING: shouldn't be used with `getStaticProps`
+export const catchServerSideErrors = handler => ctx =>
   handler(ctx).catch(err => {
     if (err.statusCode === 404) {
       return { notFound: true };

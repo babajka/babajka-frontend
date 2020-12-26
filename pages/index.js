@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
 
 import CardsLayout from 'components/articles/layout/CardsLayout';
-import { makeRequest, catchServerErrors } from 'utils/request';
+import { makeRequest } from 'utils/request';
 import { localizeData } from 'utils/getters';
-import { TEN_MINUTES } from 'constants/misc';
+import { ONE_MINUTE } from 'constants/misc';
 import api from 'constants/api';
 
 const MainPage = ({ blocks, data, lang }) => {
@@ -16,12 +16,12 @@ MainPage.getLayoutProps = () => ({
 });
 
 // TODO: use built-in i18n mechanism
-export const getStaticProps = catchServerErrors(async () => {
+export const getStaticProps = async () => {
   const { blocks, data } = await makeRequest(api.storage.getMainPage);
   return {
     props: { blocks, data },
-    revalidate: TEN_MINUTES,
+    revalidate: ONE_MINUTE,
   };
-});
+};
 
 export default MainPage;

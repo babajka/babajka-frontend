@@ -11,7 +11,7 @@ import { MetaTitle, MetaDescription, MetaKeywords } from 'components/social/Meta
 
 import { TagShape, ArticlesArray } from 'utils/customPropTypes';
 import { getLocalizedTag, getLocalizedArticles } from 'utils/getters';
-import { makeRequest, catchServerErrors } from 'utils/request';
+import { makeRequest, catchServerSideErrors } from 'utils/request';
 import { renderTag } from 'utils/features/tags';
 import { ROUTES_NAMES } from 'routes';
 import api from 'constants/api';
@@ -61,7 +61,7 @@ TopicPage.getLayoutProps = ({ topicSlug }) => ({
 });
 
 // TODO: replace with SSG after migration from `next-routes`
-export const getServerSideProps = catchServerErrors(
+export const getServerSideProps = catchServerSideErrors(
   async ({ query: { topic: topicSlug, lang } }) => {
     const { tags: rawTags, topic, articles, articlesByTag } = await makeRequest(
       api.topics.getArticles(topicSlug)

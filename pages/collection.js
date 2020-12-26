@@ -15,7 +15,7 @@ import Text, { localize } from 'components/common/Text';
 import Image from 'components/common/Image';
 import ArticlesComposition from 'components/articles/compositions/ArticlesComposition';
 
-import { makeRequest, catchServerErrors } from 'utils/request';
+import { makeRequest, catchServerSideErrors } from 'utils/request';
 import { getTagLink } from 'utils/features/tags';
 import { renderNodeList } from 'utils/ui';
 import { getLocalizedCollection, getLocalizedArticles } from 'utils/getters';
@@ -59,7 +59,7 @@ const CollectionPage = ({ slug, collection, metaKeywords, articles, authors }) =
 );
 
 // TODO: replace with SSG after migration from `next-routes`
-export const getServerSideProps = catchServerErrors(async ({ query: { slug, lang } }) => {
+export const getServerSideProps = catchServerSideErrors(async ({ query: { slug, lang } }) => {
   const { collection } = await makeRequest(api.collections.getOne(slug));
   const localizedArticles = getLocalizedArticles(collection.articles, lang);
 

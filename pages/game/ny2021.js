@@ -15,13 +15,13 @@ import { MetaImage, MetaDescription } from 'components/social/Metatags';
 import useToggleSidebar from 'hooks/useToggleSidebar';
 
 import fiberyToString from 'utils/fibery/toString';
-import { makeRequest, catchServerErrors } from 'utils/request';
+import { makeRequest } from 'utils/request';
 import { getTagLink } from 'utils/features/tags';
 import { getLocalizedTag, getLocalizedSuggested } from 'utils/getters';
 
 import api from 'constants/api';
 import { NY2021 } from 'constants';
-import { TEN_MINUTES } from 'constants/misc';
+import { ONE_MINUTE } from 'constants/misc';
 
 const b = bem(styles);
 const LANG = 'be';
@@ -104,7 +104,7 @@ Game2021page.getLayoutProps = ({ title }) => ({
 
 const url = api.games.fortune.get(NY2021);
 
-export const getStaticProps = catchServerErrors(async () => {
+export const getStaticProps = async () => {
   const { title, description, suggestedArticles = null } = await makeRequest(url);
   return {
     props: {
@@ -112,8 +112,8 @@ export const getStaticProps = catchServerErrors(async () => {
       description: fiberyToString(description),
       suggestedArticles: getLocalizedSuggested(suggestedArticles, LANG),
     },
-    revalidate: TEN_MINUTES,
+    revalidate: ONE_MINUTE,
   };
-});
+};
 
 export default Game2021page;

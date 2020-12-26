@@ -1,6 +1,6 @@
 const ARGS = require('../utils/args');
 
-const BACKEND_URL = ARGS['backend-url'] || 'https://api.wir.by';
+const BACKEND_URL = process.env.BACKEND_URL || ARGS['backend-url'] || 'https://api.wir.by';
 
 const PORT = ARGS.port || 3000;
 
