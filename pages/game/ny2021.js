@@ -63,7 +63,7 @@ const Game2021page = ({ title, description, suggestedArticles }) => {
       <div className={b()}>
         <Header toggleSidebar={useToggleSidebar()} />
 
-        <div className={cn('wir-content-padding', typography['common-text'], b('wrapper'))}>
+        <div className={cn(typography['common-text'], b('wrapper'))}>
           <div className={b('content')}>
             <span>Прадказанне</span>
             <h1 className={cn(typography['common-title'], b('title'))}>{title}</h1>

@@ -12,6 +12,26 @@
   &__wrapper {
     display: flex;
     justify-content: center;
+
+    @include screen-desktop {
+      padding: 0 calc((100% - #{map-get($page-content, desktop)}) / 2);
+    }
+
+    @include screen-tablet-large {
+      padding: 0 calc((100% - #{map-get($page-content, tablet-large)}) / 2);
+    }
+
+    @include screen-tablet {
+      padding: 0 calc((100% - #{map-get($page-content, tablet)}) / 2);
+    }
+
+    @include screen-touch {
+      padding: 0 calc((100% - #{map-get($page-content, touch)}) / 2);
+    }
+
+    @include screen-mobile {
+      padding: 0 calc((100% - #{map-get($page-content, mobile)}) / 2);
+    }
   }
 
   &__content {
