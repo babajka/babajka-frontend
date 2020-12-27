@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ArticleCard from 'components/articles/cards/ArticleCard';
+import ArticleCard from 'features/articles/cards/ArticleCard';
 
 import BlockWrapper from './BlockWrapper';
 

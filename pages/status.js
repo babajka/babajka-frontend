@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ErrorMessage from 'components/common/layout/error/ErrorMessage';
+import ErrorMessage from 'components/layout/error/ErrorMessage';
 
 const StatusPage = ({ code }) => <ErrorMessage code={code} />;
 

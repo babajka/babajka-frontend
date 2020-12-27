@@ -11,7 +11,7 @@ import {
   DEFAULT_IMAGE,
 } from 'components/social/Metatags';
 import { localize } from 'components/common/Text';
-import ArticlesComposition from 'components/articles/compositions/ArticlesComposition';
+import ArticlesComposition from 'features/articles/compositions/ArticlesComposition';
 
 import { makeRequest, catchServerSideErrors } from 'utils/request';
 import { renderTag, getTopicLink, getTagImageUrl } from 'utils/features/tags';

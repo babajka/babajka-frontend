@@ -23,7 +23,7 @@ import Image from 'components/common/Image';
 // import Text from 'components/common/Text';
 // import MolamolaIcon from 'components/common/ui/MolamolaIcon';
 import ShareButtons from 'components/social/ShareButtons';
-import ExCoQuiz from 'components/specials/ex-co-quiz';
+import ExCoQuiz from 'features/ex-co-quiz';
 import TextWithSeparator from 'lib/components/TextWithSeparator';
 
 import { ArticleShape } from 'utils/customPropTypes';

@@ -1,4 +1,4 @@
-import styles from 'components/articles/blocks/diary.module.scss';
+import styles from 'features/articles/blocks/diary.module.scss';
 
 import React, { useEffect, useState, useCallback } from 'react';
 import bem from 'bem-css-modules';
@@ -6,7 +6,7 @@ import bem from 'bem-css-modules';
 import Link from 'components/common/Link';
 import Text from 'components/common/Text';
 import Image from 'components/common/Image';
-import DiaryArrows from 'components/specials/diary/DiaryArrows';
+import DiaryArrows from 'features/diary/DiaryArrows';
 
 import { formatLocalizedDate, getYear, SHORT_DATE_FORMAT } from 'utils/formatters/date';
 import fiberyToString from 'utils/fibery/toString';

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import CardsLayout from 'components/articles/layout/CardsLayout';
+import CardsLayout from 'features/articles/layout/CardsLayout';
 import { makeRequest } from 'utils/request';
 import { localizeData } from 'utils/getters';
 import { REVALIDATE_TIMEOUT } from 'constants/misc';

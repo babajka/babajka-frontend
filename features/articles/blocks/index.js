@@ -1,4 +1,4 @@
-import ArticlesCompositionAsBlock from 'components/articles/compositions/ArticlesCompositionAsBlock';
+import ArticlesCompositionAsBlock from 'features/articles/compositions/ArticlesCompositionAsBlock';
 
 import FeaturedBlock from './FeaturedBlock';
 import DiaryBlock from './DiaryBlock';

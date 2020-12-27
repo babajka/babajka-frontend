@@ -13,7 +13,7 @@ import {
 } from 'components/social/Metatags';
 import Text, { localize } from 'components/common/Text';
 import Image from 'components/common/Image';
-import ArticlesComposition from 'components/articles/compositions/ArticlesComposition';
+import ArticlesComposition from 'features/articles/compositions/ArticlesComposition';
 
 import { makeRequest, catchServerSideErrors } from 'utils/request';
 import { getTagLink } from 'utils/features/tags';

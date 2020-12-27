@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import bem from 'bem-css-modules';
 
-import ArticleCard from 'components/articles/cards/ArticleCard';
+import ArticleCard from 'features/articles/cards/ArticleCard';
 import { ArticleShape } from 'utils/customPropTypes';
 import styles from './twoInRow.module.scss';
 

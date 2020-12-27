@@ -5,11 +5,11 @@ import React, { useState, useCallback } from 'react';
 import bem from 'bem-css-modules';
 import cn from 'classnames';
 
-import Header from 'components/common/layout/header/Header';
+import Header from 'components/layout/header/Header';
 import Button from 'components/common/Button';
 import ShareButtons from 'components/social/ShareButtons';
 import TextWithSeparator from 'lib/components/TextWithSeparator';
-import CardsLayout from 'components/articles/layout/CardsLayout';
+import CardsLayout from 'features/articles/layout/CardsLayout';
 import { MetaImage, MetaDescription } from 'components/social/Metatags';
 
 import useToggleSidebar from 'hooks/useToggleSidebar';

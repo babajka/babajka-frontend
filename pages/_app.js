@@ -1,6 +1,6 @@
 import 'normalize.css';
 import 'styles/index.scss';
-import 'components/common/layout/layout.scss';
+import 'components/layout/layout.scss';
 
 import 'swiper/css/swiper.css';
 import 'styles/swiper-customization.scss';
@@ -12,7 +12,7 @@ import bem from 'bem-css-modules';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import CoreLayout from 'components/common/layout/CoreLayout';
+import CoreLayout from 'components/layout/CoreLayout';
 import LocaleContext from 'components/common/LocaleContext';
 import Metatags, {
   MetaTitle,

@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { localize } from 'components/common/Text';
-import Article from 'components/articles/Article';
-import HeaderLinks from 'components/common/layout/header/HeaderLinks';
+import Article from 'features/articles/Article';
+import HeaderLinks from 'components/layout/header/HeaderLinks';
 
 import { ROUTES_NAMES } from 'routes';
 import api from 'constants/api';

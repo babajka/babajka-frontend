@@ -7,7 +7,7 @@ import bem from 'bem-css-modules';
 
 import Image from 'components/common/Image';
 import { localize } from 'components/common/Text';
-import DiaryLinkArrows from 'components/specials/diary/DiaryLinkArrows';
+import DiaryLinkArrows from 'features/diary/DiaryLinkArrows';
 import ShareButtons from 'components/social/ShareButtons';
 import {
   MetaTitle,
@@ -16,7 +16,7 @@ import {
   MetaImage,
   DEFAULT_IMAGE,
 } from 'components/social/Metatags';
-import TwoArticlesInRow from 'components/articles/blocks/TwoArticlesInRow';
+import TwoArticlesInRow from 'features/articles/blocks/TwoArticlesInRow';
 
 import { formatLocalizedDate, DATE_FORMAT, SHORT_DATE_FORMAT } from 'utils/formatters/date';
 import fiberyRenderer from 'utils/fibery/renderer';

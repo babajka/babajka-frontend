@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import keyBy from 'lodash/keyBy';
 
-import BLOCKS_BY_TYPE from 'components/articles/blocks';
+import BLOCKS_BY_TYPE from 'features/articles/blocks';
 
 import {
   ArticlePreviewArray,

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import bem from 'bem-css-modules';
 
-import ArticleCard from 'components/articles/cards/ArticleCard';
+import ArticleCard from 'features/articles/cards/ArticleCard';
 
 import { IdsArray } from 'utils/customPropTypes';
 import { getTagLink, getTopicLink } from 'utils/features/tags';

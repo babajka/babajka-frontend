@@ -1,5 +1,5 @@
 import styles from 'styles/pages/about.module.scss';
-import teammateStyles from 'components/social/teammate.module.scss';
+import teammateStyles from 'features/about/teammate.module.scss';
 
 import React from 'react';
 import cn from 'classnames';
@@ -14,8 +14,8 @@ import {
   MetaImage,
   DEFAULT_IMAGE,
 } from 'components/social/Metatags';
-import Teammate from 'components/social/Teammate';
-import { Thanks } from 'components/social/Thanks';
+import Teammate from 'features/about/Teammate';
+import { Thanks } from 'features/about/Thanks';
 
 import team from 'data/team.json';
 import { PARTNERS } from 'constants/partners';

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import bem from 'bem-css-modules';
 
-import TagCard from 'components/articles/cards/TagCard';
+import TagCard from 'features/articles/cards/TagCard';
 
 import { IdsArray, TagsById } from 'utils/customPropTypes';
 import { getTopicLink } from 'utils/features/tags';

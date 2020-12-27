@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import bem from 'bem-css-modules';
 
-import ArticleCard from 'components/articles/cards/ArticleCard';
-import PlaceholderCard from 'components/articles/cards/PlaceholderCard';
+import ArticleCard from 'features/articles/cards/ArticleCard';
+import PlaceholderCard from 'features/articles/cards/PlaceholderCard';
 
 import { ArticlesArray } from 'utils/customPropTypes';
 

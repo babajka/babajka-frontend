@@ -1,9 +1,9 @@
 import React from 'react';
 import chunk from 'lodash/chunk';
 
-import FeaturedBlock from 'components/articles/blocks/FeaturedBlock';
-import TagPageBlockB from 'components/articles/blocks/TagPageBlockB';
-import TagPageBlockCD from 'components/articles/blocks/TagPageBlockCD';
+import FeaturedBlock from 'features/articles/blocks/FeaturedBlock';
+import TagPageBlockB from 'features/articles/blocks/TagPageBlockB';
+import TagPageBlockCD from 'features/articles/blocks/TagPageBlockCD';
 
 import { ArticlePreviewArray } from 'utils/customPropTypes';
 
