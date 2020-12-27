@@ -6,7 +6,9 @@ import bem from 'bem-css-modules';
 import Link from 'components/common/Link';
 import Text from 'components/common/Text';
 import Image from 'components/common/Image';
+import BlockWrapper from 'features/layout/blocks/wrapper';
 import DiaryArrows from 'features/diary/DiaryArrows';
+import { useDiary } from 'features/diary/store';
 
 import { formatLocalizedDate, getYear, SHORT_DATE_FORMAT } from 'utils/formatters/date';
 import fiberyToString from 'utils/fibery/toString';
@@ -17,34 +19,27 @@ import api from 'constants/api';
 import { DIARY_PICTURE_WIDTH } from 'constants/misc';
 import { ROUTES_NAMES } from 'routes';
 
-import BlockWrapper from 'features/layout/blocks/wrapper';
-
 const b = bem(styles);
 
-const initialState = {
-  data: {
-    slug: 'sample',
-    date: new Date().getTime(),
-  },
-};
-
-const getByDay = (month = new Date().getMonth() + 1, day = new Date().getDate()) =>
-  makeRequest(api.diary.getByDay(month, day));
-
 const DiaryBlock = ({ lang }) => {
-  const [{ month, day }, setFetchProps] = useState({});
-  const [{ data, next, prev }, setState] = useState(initialState);
+  const [{ data, next, prev }, setState] = useDiary();
+
+  const { month, day } = data;
+  const [query, setQuery] = useState({ month, day });
   useEffect(() => {
-    getByDay(month, day).then(setState);
-  }, [month, day]);
+    if (query.day === day && query.month === month) {
+      return;
+    }
+    makeRequest(api.diary.getByDay(query.month, query.day)).then(setState);
+  }, [day, month, query, setState]);
 
   const diary = getDiary(data, lang);
   const { slug, author: { name, diaryImage } = {}, date, text } = diary;
   const onPrev = useCallback(() => {
-    setFetchProps(prev);
+    setQuery(prev);
   }, [prev]);
   const onNext = useCallback(() => {
-    setFetchProps(next);
+    setQuery(next);
   }, [next]);
 
   return (
