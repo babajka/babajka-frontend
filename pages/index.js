@@ -12,7 +12,7 @@ const MainPage = ({ blocks, data, diary, lang }) => {
   const localized = useMemo(() => localizeData(data, lang), [data, lang]);
   return (
     <DiaryProvider value={diary}>
-      <CardBlocksLayout blocks={blocks} data={localized} />
+      <CardBlocksLayout blocks={blocks} data={localized} inViewport />
     </DiaryProvider>
   );
 };

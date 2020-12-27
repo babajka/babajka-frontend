@@ -88,6 +88,7 @@ const ArticleCard = props => {
     slug,
     tagsByTopic,
     onBackground,
+    inViewport,
   } = props;
   const { brands = [], authors = [] } = tagsByTopic;
   const { short, full } = ACTION_BY_TYPE[type];
@@ -128,6 +129,7 @@ const ArticleCard = props => {
                 {}
               )}
               alt={title}
+              inViewport={inViewport}
             />
           ) : (
             <Image
@@ -136,6 +138,7 @@ const ArticleCard = props => {
               sourceSizes={[COVER_BY_CARD_SIZE[size].width]}
               baseUrl={images[COVER_BY_CARD_SIZE[size].type]}
               mode="x"
+              inViewport={inViewport}
             />
           ))}
       </div>
@@ -155,6 +158,7 @@ const ArticleCard = props => {
                 sourceSizes={[COLLECTION_LOGO_WIDTH]}
                 baseUrl={collection.cover}
                 mode="x"
+                inViewport={inViewport}
               />
             )}
           </div>
@@ -178,6 +182,7 @@ const ArticleCard = props => {
             getTagImageRenderer({
               className: b('brand'),
               theme,
+              inViewport,
             })
           )}
           <span>{renderNodeList(authors.map(renderTag))}</span>

@@ -18,12 +18,12 @@ const BREAKPOINTS = {
 const getMedia = ({ min, max }) =>
   [min && `(min-width: ${min}px)`, max && `(max-width: ${max}px)`].filter(Boolean).join(' and ');
 
-const Picture = ({ className, sources, alt }) => (
+const Picture = ({ className, sources, alt, inViewport }) => (
   <picture className={cn(b(), className)}>
     {Object.entries(sources).map(([screen, src]) => (
       <source key={screen} media={getMedia(BREAKPOINTS[screen])} srcSet={src} />
     ))}
-    <img src={sources.mobile} alt={alt} />
+    <img src={sources.mobile} alt={alt} loading={inViewport ? 'eager' : 'lazy'} />
   </picture>
 );
 
@@ -32,10 +32,12 @@ Picture.propTypes = {
   className: PropTypes.string,
   sources: PropTypes.objectOf(PropTypes.string).isRequired,
   alt: PropTypes.string.isRequired,
+  inViewport: PropTypes.bool,
 };
 
 Picture.defaultProps = {
   className: '',
+  inViewport: false,
 };
 
 export default Picture;

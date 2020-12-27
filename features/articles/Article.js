@@ -64,7 +64,10 @@ const Article = ({
   },
 }) => {
   const { brands, authors, ...tagsObject } = tagsByTopic;
-  const renderTagImage = getTagImageRenderer({ className: b('tag-image') });
+  const renderTagImage = getTagImageRenderer({
+    className: b('tag-image'),
+    inViewport: true,
+  });
   const imageUrl = images.page || images.horizontal;
   // https://caniuse.com/#feat=array-flat
   const tags = flatten(Object.values(tagsObject));
@@ -96,6 +99,7 @@ const Article = ({
             alt={title}
             sourceSizes={COVER_SIZES}
             baseUrl={images.page}
+            inViewport
           />
         )}
       </div>

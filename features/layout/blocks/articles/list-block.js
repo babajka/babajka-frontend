@@ -38,7 +38,7 @@ const arrangeListInBlocks = articles =>
     []
   );
 
-export const ArticlesList = ({ articles }) => {
+export const ArticlesList = ({ articles, inViewport }) => {
   if (articles.length === 1) {
     const { articleId } = articles[0];
     return (
@@ -46,6 +46,7 @@ export const ArticlesList = ({ articles }) => {
         // This is a workaround in order to use FeaturedBlock as it is.
         block={{ frozen: true, articleId }}
         data={{ articles: { [articleId]: articles[0] } }}
+        inViewport={inViewport}
       />
     );
   }
@@ -53,7 +54,9 @@ export const ArticlesList = ({ articles }) => {
   if (articles.length === 3) {
     // If articles' list contains exactly 3 articles, we treat it in a special way:
     // we do not want 3 articles to be rendered in a same way as *3 first articles* are rendered in generic composition.
-    return <TagPageBlockCD articles={articles} layout={LAYOUT_BY_LEVEL.C} />;
+    return (
+      <TagPageBlockCD articles={articles} layout={LAYOUT_BY_LEVEL.C} inViewport={inViewport} />
+    );
   }
 
   const blocks = arrangeListInBlocks(articles);
@@ -61,8 +64,15 @@ export const ArticlesList = ({ articles }) => {
   return blocks.map((block, index) => {
     const levelName = PAGE_LEVEL_ORDER[index % PAGE_LEVEL_ORDER.length];
     const Block = BLOCK_BY_LEVEL[levelName];
-    // eslint-disable-next-line react/no-array-index-key
-    return <Block key={index} articles={block} layout={LAYOUT_BY_LEVEL[levelName]} />;
+    return (
+      <Block
+        // eslint-disable-next-line react/no-array-index-key
+        key={index}
+        articles={block}
+        layout={LAYOUT_BY_LEVEL[levelName]}
+        inViewport={inViewport && index < 1}
+      />
+    );
   });
 };
 
@@ -70,12 +80,17 @@ ArticlesList.propTypes = {
   articles: ArticlePreviewArray.isRequired,
 };
 
-const ArticlesListBlock = ({ block: { articles }, data }) => {
+const ArticlesListBlock = ({ block: { articles }, data, inViewport }) => {
   if (!articles.length) {
     // It's ok to have block template in fibery: it should be ignored unless it is filled with data.
     return null;
   }
-  return <ArticlesList articles={articles.map(articleId => data.articles[articleId])} />;
+  return (
+    <ArticlesList
+      articles={articles.map(articleId => data.articles[articleId])}
+      inViewport={inViewport}
+    />
+  );
 };
 
 ArticlesListBlock.propTypes = {

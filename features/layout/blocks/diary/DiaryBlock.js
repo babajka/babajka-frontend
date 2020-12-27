@@ -21,7 +21,7 @@ import { ROUTES_NAMES } from 'routes';
 
 const b = bem(styles);
 
-const DiaryBlock = ({ lang }) => {
+const DiaryBlock = ({ lang, inViewport }) => {
   const [{ data, next, prev }, setState] = useDiary();
 
   const { month, day } = data;
@@ -52,7 +52,13 @@ const DiaryBlock = ({ lang }) => {
             params={{ slug }}
             noStyles
           >
-            <Image alt={name} sourceSizes={[DIARY_PICTURE_WIDTH]} baseUrl={diaryImage} mode="x" />
+            <Image
+              alt={name}
+              sourceSizes={[DIARY_PICTURE_WIDTH]}
+              baseUrl={diaryImage}
+              mode="x"
+              inViewport={inViewport}
+            />
           </Link>
         )}
         <div className={b('text-content')}>

@@ -14,7 +14,7 @@ import styles from './tagsByTopic.module.scss';
 
 const b = bem(styles);
 
-const TagsByTopic = ({ block, data: { tags } }) => {
+const TagsByTopic = ({ block, data: { tags }, inViewport }) => {
   const { topicSlug, tagsIds, style } = block;
   const tagsData = tagsIds.map(id => tags[id]);
   const topicLink = getTopicLink({ topic: topicSlug });
@@ -32,6 +32,7 @@ const TagsByTopic = ({ block, data: { tags } }) => {
                 'tags-by-topic__2',
                 'tags-by-topic__2-top',
               ]}
+              inViewport={inViewport}
             />
           </div>
           <div>
@@ -43,6 +44,7 @@ const TagsByTopic = ({ block, data: { tags } }) => {
                 'tags-by-topic__2',
                 'tags-by-topic__2-bottom',
               ]}
+              inViewport={inViewport}
             />
           </div>
         </div>
@@ -50,6 +52,7 @@ const TagsByTopic = ({ block, data: { tags } }) => {
           <TagCard
             {...tagsData[2]}
             blockContext={['tags-by-topic', `tags-by-topic--style--${style}`, 'tags-by-topic__1']}
+            inViewport={inViewport}
           />
         </div>
       </div>

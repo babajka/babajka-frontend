@@ -38,7 +38,7 @@ const BANNERS = banner =>
     return acc;
   }, {});
 
-const BannerBlock = ({ block: { banner } }) => {
+const BannerBlock = ({ block: { banner }, inViewport }) => {
   const title = useLocalization(`banners.${banner}-title`);
   const subtitle = useLocalization(`banners.${banner}-subtitle`);
 
@@ -57,7 +57,7 @@ const BannerBlock = ({ block: { banner } }) => {
           {banner === NY2021 && (
             <div className={cn(b('subtitle'), b(`${banner}-subtitle`))}>{subtitle}</div>
           )}
-          <Picture sources={BANNERS(banner)} alt={title} />
+          <Picture sources={BANNERS(banner)} alt={title} inViewport={inViewport} />
         </Link>
       </div>
     </BlockWrapper>

@@ -21,7 +21,7 @@
     "name": "> tag [server]",
     "path": ".next/server/pages/tag.js",
     "running": false,
-    "limit": "27 kB"
+    "limit": "28 kB"
   },
   {
     "name": "> about [server]",
@@ -45,13 +45,13 @@
     "name": "> home [server]",
     "path": ".next/server/pages/index.js",
     "running": false,
-    "limit": "33 kB"
+    "limit": "34 kB"
   },
   {
     "name": "> article [server]",
     "path": ".next/server/pages/article.js",
     "running": false,
-    "limit": "45 kB"
+    "limit": "46 kB"
   },
   {
     "name": "> app",

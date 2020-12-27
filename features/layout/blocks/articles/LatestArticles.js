@@ -10,7 +10,7 @@ const getData = ({ articles, latestArticles }, { id, frozen }, nextIndex) => {
   return [latestArticles[nextIndex], nextIndex + 1];
 };
 
-const LatestArticles = ({ block, data, blocks }) => {
+const LatestArticles = ({ block, data, blocks, inViewport }) => {
   const { articlesIds } = block;
   const [first, second] = articlesIds;
   // TODO: to handle situation with multiple 'featured' blocks or 'featured' blocks
@@ -20,7 +20,7 @@ const LatestArticles = ({ block, data, blocks }) => {
   const resolvedData = {};
   [resolvedData.first, nextIndex] = getData(data, first, nextIndex);
   [resolvedData.second] = getData(data, second, nextIndex);
-  return <TwoArticlesInRow {...resolvedData} />;
+  return <TwoArticlesInRow {...resolvedData} inViewport={inViewport} />;
 };
 
 LatestArticles.propTypes = {

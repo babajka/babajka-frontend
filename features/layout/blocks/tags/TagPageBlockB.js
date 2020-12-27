@@ -12,7 +12,7 @@ import styles from './tagPageBlockB.module.scss';
 
 const b = bem(styles);
 
-const TagPageBlockB = ({ articles, layout }) => {
+const TagPageBlockB = ({ articles, layout, inViewport }) => {
   const resolvedLayout = articles.length === 1 ? 'large-left' : layout;
 
   const [first, second] =
@@ -24,6 +24,7 @@ const TagPageBlockB = ({ articles, layout }) => {
         <ArticleCard
           {...first}
           blockContext={['tag-page-block-b', 'tag-page-block-b__large-card']}
+          inViewport={inViewport}
         />
       </div>
 
@@ -32,6 +33,7 @@ const TagPageBlockB = ({ articles, layout }) => {
           <ArticleCard
             {...second}
             blockContext={['tag-page-block-b', 'tag-page-block-b__small-card']}
+            inViewport={inViewport}
           />
         ) : (
           <PlaceholderCard blockContext={['tag-page-block-b', 'tag-page-block-b__small-card']} />

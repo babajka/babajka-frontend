@@ -71,7 +71,7 @@ const AboutPage = ({ lang }) => (
           {PARTNERS.map(({ id, img, url, size = undefined }) => (
             <div key={id} className={b('partner-logo', { size })}>
               <ExternalLink href={url}>
-                <img src={img} alt={localize(`about.${id}`, lang)} />
+                <img src={img} alt={localize(`about.${id}`, lang)} loading="lazy" />
               </ExternalLink>
             </div>
           ))}
