@@ -7,7 +7,7 @@ import ArticlesByTag3 from './articles/ArticlesByTag3';
 import BannerBlock from './banner/BannerBlock';
 import ArticlesListBlock from './articles/list-block';
 
-export default {
+export const BLOCKS_BY_TYPE = {
   featured: FeaturedBlock,
   diary: DiaryBlock,
   latestArticles: LatestArticles,

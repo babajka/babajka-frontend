@@ -17,7 +17,7 @@ import styles from './tag.module.scss';
 
 const b = bem(styles);
 
-const TagCard = ({ slug, topicSlug, content, size, blockContext }) => {
+const TagCard = ({ slug, topicSlug, content, size, blockContext, inViewport }) => {
   const { theme, color = '#ffffff' } = content;
 
   const wrapperProps = {
@@ -66,6 +66,7 @@ const TagCard = ({ slug, topicSlug, content, size, blockContext }) => {
               sourceSizes={[390]}
               baseUrl={image}
               mode="x"
+              inViewport={inViewport}
             />
           )}
         </div>

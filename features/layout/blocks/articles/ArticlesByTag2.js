@@ -15,7 +15,7 @@ import styles from './articlesByTag2.module.scss';
 
 const b = bem(styles);
 
-const ArticlesByTag2 = ({ block, data }) => {
+const ArticlesByTag2 = ({ block, data, inViewport }) => {
   const { tagId, articlesIds } = block;
   const { tags, articles } = data;
   const [first, second] = articlesIds.map(id => articles[id]);
@@ -33,6 +33,7 @@ const ArticlesByTag2 = ({ block, data }) => {
             getTagImageRenderer({
               theme: 'dark',
               className: b('logo'),
+              inViewport,
             })(tag)}
           <div className={b('label')}>
             <Text id={`topic.${topicSlug}_essentials`} />: {tagLink}
@@ -43,11 +44,21 @@ const ArticlesByTag2 = ({ block, data }) => {
 
       <div className={b('cards')}>
         <div className={b('card-1')}>
-          <ArticleCard {...first} blockContext={['articles-by-tag-2']} onBackground />
+          <ArticleCard
+            {...first}
+            blockContext={['articles-by-tag-2']}
+            inViewport={inViewport}
+            onBackground
+          />
         </div>
 
         <div className={b('card-2')}>
-          <ArticleCard {...second} blockContext={['articles-by-tag-2']} onBackground />
+          <ArticleCard
+            {...second}
+            blockContext={['articles-by-tag-2']}
+            inViewport={inViewport}
+            onBackground
+          />
         </div>
       </div>
 

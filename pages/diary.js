@@ -81,6 +81,7 @@ const DiaryPage = ({
               sourceSizes={[DIARY_PICTURE_WIDTH]}
               baseUrl={image}
               mode="x"
+              inViewport
             />
           )}
         </div>

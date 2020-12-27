@@ -10,14 +10,22 @@ import styles from './twoInRow.module.scss';
 
 const b = bem(styles);
 
-const TwoArticlesInRow = ({ className, first, second }) => (
+const TwoArticlesInRow = ({ className, first, second, inViewport }) => (
   <BlockWrapper className={cn(b(), className)}>
     <div className={b('first')}>
-      <ArticleCard {...first} blockContext={['two-in-row', 'two-in-row__first']} />
+      <ArticleCard
+        {...first}
+        blockContext={['two-in-row', 'two-in-row__first']}
+        inViewport={inViewport}
+      />
     </div>
     {/* <div className={b('second')}> */}
     <div>
-      <ArticleCard {...second} blockContext={['two-in-row', 'two-in-row__second']} />
+      <ArticleCard
+        {...second}
+        blockContext={['two-in-row', 'two-in-row__second']}
+        inViewport={inViewport}
+      />
     </div>
   </BlockWrapper>
 );

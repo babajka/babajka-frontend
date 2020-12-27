@@ -155,7 +155,7 @@ const RENDERERS = {
     }
     return (
       <span key={key} className={styles['article-image']}>
-        <img className={styles['article-image__image']} src={url} alt={alt} />
+        <img className={styles['article-image__image']} src={url} alt={alt} loading="lazy" />
         <span className={styles['article-image__caption']}>{title}</span>
       </span>
     );

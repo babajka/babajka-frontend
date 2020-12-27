@@ -32,7 +32,7 @@ export const NETWORKS = [
   {
     id: 'youtube',
     label: 'YouTube',
-    link: 'https://www.youtube.com/channel/UCoj_6A55mEPeba8ZfBHqfCw',
+    link: 'https://www.youtube.com/c/WirBy',
     color: '#bb0000',
   },
 ];

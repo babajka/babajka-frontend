@@ -61,7 +61,7 @@ export const getTagImageUrl = ({
   return images[BRAND_LOGO_BY_THEME[theme]];
 };
 
-export const getTagImageRenderer = ({ className, theme = DEFAULT_THEME }) => ({
+export const getTagImageRenderer = ({ className, theme = DEFAULT_THEME, inViewport }) => ({
   slug,
   topicSlug,
   content,
@@ -74,5 +74,6 @@ export const getTagImageRenderer = ({ className, theme = DEFAULT_THEME }) => ({
     baseUrl={getTagImageUrl({ topicSlug, content, theme })}
     mode="x"
     dimension="h"
+    inViewport={inViewport}
   />
 );

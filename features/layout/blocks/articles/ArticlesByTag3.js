@@ -12,7 +12,7 @@ import styles from './articlesByTag3.module.scss';
 
 const b = bem(styles);
 
-const ArticlesByTag3 = ({ block, data }) => {
+const ArticlesByTag3 = ({ block, data, inViewport }) => {
   const { tagId, articlesIds } = block;
   const { tags, articles } = data;
   const tag = tags[tagId];
@@ -31,7 +31,11 @@ const ArticlesByTag3 = ({ block, data }) => {
       <div className={b('cards')}>
         {articlesIds.map((id, index) => (
           <div key={id} className={b(`card-${index + 1}`)}>
-            <ArticleCard {...articles[id]} blockContext={['articles-by-tag-3']} />
+            <ArticleCard
+              {...articles[id]}
+              blockContext={['articles-by-tag-3']}
+              inViewport={inViewport}
+            />
           </div>
         ))}
       </div>

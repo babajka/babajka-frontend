@@ -39,6 +39,7 @@ const CollectionPage = ({ slug, collection, metaKeywords, articles, authors }) =
             sourceSizes={[90]}
             baseUrl={collection.cover}
             mode="x"
+            inViewport
           />
           <div className={b('text')}>
             <div className={b('subheading')}>

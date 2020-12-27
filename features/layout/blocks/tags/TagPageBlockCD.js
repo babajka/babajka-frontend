@@ -17,7 +17,7 @@ const SIZE_BY_LAYOUT = {
   'row-of-three': 3,
 };
 
-const TagPageBlockCD = ({ articles, layout }) => (
+const TagPageBlockCD = ({ articles, layout, inViewport }) => (
   <BlockWrapper className={b({ layout })}>
     {Array.from({ length: SIZE_BY_LAYOUT[layout] }).map((_, i) => (
       // eslint-disable-next-line react/no-array-index-key
@@ -26,6 +26,7 @@ const TagPageBlockCD = ({ articles, layout }) => (
           <ArticleCard
             {...articles[i]}
             blockContext={['tag-page-block-cd', `tag-page-block-cd__${layout}`]}
+            inViewport={inViewport}
           />
         ) : (
           <PlaceholderCard blockContext={['tag-page-block-cd', `tag-page-block-cd__${layout}`]} />
