@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ArticleCard from 'features/articles/cards/ArticleCard';
+import ArticleCard from 'features/layout/cards/article';
 
-import BlockWrapper from './BlockWrapper';
+import BlockWrapper from 'features/layout/blocks/wrapper';
 
 const FeaturedBlock = ({ block, data }) => {
   // Another usage for FeaturedBlock is a Block A on Topic page.

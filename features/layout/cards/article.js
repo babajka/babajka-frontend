@@ -27,11 +27,10 @@ import {
 import { renderTag, getTagImageRenderer } from 'utils/features/tags';
 
 import { ROUTES_NAMES } from 'routes';
-import styles from './articleCard.module.scss';
+import CardWrapper, { SIZES } from 'features/layout/cards/wrapper';
+import styles from './article.module.scss';
 
-import { SCREENS, ARTICLE_CARD_SIZES_BY_CONTEXT, buildBlockContextStyles } from './auto';
-
-import CardWrapper, { SIZES } from './CardWrapper';
+import { SCREENS, ARTICLE_CARD_SIZES_BY_CONTEXT, buildBlockContextStyles } from './utils';
 
 const b = bem(styles);
 

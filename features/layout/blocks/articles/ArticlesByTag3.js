@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import bem from 'bem-css-modules';
 
-import ArticleCard from 'features/articles/cards/ArticleCard';
+import ArticleCard from 'features/layout/cards/article';
 
 import { IdsArray } from 'utils/customPropTypes';
 import { getTagLink, getTopicLink } from 'utils/features/tags';
+import BlockWrapper from 'features/layout/blocks/wrapper';
 import styles from './articlesByTag3.module.scss';
-
-import BlockWrapper from './BlockWrapper';
 
 const b = bem(styles);
 

@@ -8,7 +8,7 @@ import BgContainer from 'components/common/ui/BgContainer';
 import { ThemeType } from 'utils/customPropTypes';
 import { colorLooksBlack, colorLooksWhite } from 'utils/ui';
 
-import styles from './cardWrapper.module.scss';
+import styles from './wrapper.module.scss';
 
 const DEFAULT_SIZES = ['xxl', 'xl', 'l', 'm'];
 const TAG_SIZES = ['s', 'xs', 'ms', 's-wide', 'xs-wide'];

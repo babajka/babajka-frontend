@@ -16,7 +16,7 @@ import {
   MetaImage,
   DEFAULT_IMAGE,
 } from 'components/social/Metatags';
-import TwoArticlesInRow from 'features/articles/blocks/TwoArticlesInRow';
+import TwoArticlesInRow from 'features/layout/blocks/articles/TwoArticlesInRow';
 
 import { formatLocalizedDate, DATE_FORMAT, SHORT_DATE_FORMAT } from 'utils/formatters/date';
 import fiberyRenderer from 'utils/fibery/renderer';

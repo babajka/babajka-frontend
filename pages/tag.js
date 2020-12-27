@@ -11,7 +11,7 @@ import {
   DEFAULT_IMAGE,
 } from 'components/social/Metatags';
 import { localize } from 'components/common/Text';
-import ArticlesComposition from 'features/articles/compositions/ArticlesComposition';
+import { ArticlesList } from 'features/layout/blocks/articles/list-block';
 
 import { makeRequest, catchServerSideErrors } from 'utils/request';
 import { renderTag, getTopicLink, getTagImageUrl } from 'utils/features/tags';
@@ -37,7 +37,7 @@ const TagPage = ({ lang, topic, tag, articles }) => {
           <div className={b('topic')}>{getTopicLink({ topic, postfix: 'one' })}</div>
           <h1 className={b('title')}>{title}</h1>
         </div>
-        <ArticlesComposition articles={articles} />
+        <ArticlesList articles={articles} />
       </div>
     </>
   );

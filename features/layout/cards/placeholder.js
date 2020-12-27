@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import bem from 'bem-css-modules';
 
-import { buildBlockContextStyles } from './auto';
+import { buildBlockContextStyles } from './utils';
 
-import styles from './placeholderCard.module.scss';
+import styles from './placeholder.module.scss';
 
 const b = bem(styles);
 

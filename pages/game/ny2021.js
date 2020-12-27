@@ -9,7 +9,7 @@ import Header from 'components/layout/header/Header';
 import Button from 'components/common/Button';
 import ShareButtons from 'components/social/ShareButtons';
 import TextWithSeparator from 'lib/components/TextWithSeparator';
-import CardsLayout from 'features/articles/layout/CardsLayout';
+import CardBlocksLayout from 'features/layout/card-blocks-layout';
 import { MetaImage, MetaDescription } from 'components/social/Metatags';
 
 import useToggleSidebar from 'hooks/useToggleSidebar';
@@ -91,7 +91,7 @@ const Game2021page = ({ title, description, suggestedArticles }) => {
         </div>
       </div>
       {suggestedArticles && (
-        <CardsLayout blocks={suggestedArticles.blocks} data={suggestedArticles.data} />
+        <CardBlocksLayout blocks={suggestedArticles.blocks} data={suggestedArticles.data} />
       )}
     </>
   );

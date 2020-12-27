@@ -1,11 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import chunk from 'lodash/chunk';
 
-import FeaturedBlock from 'features/articles/blocks/FeaturedBlock';
-import TagPageBlockB from 'features/articles/blocks/TagPageBlockB';
-import TagPageBlockCD from 'features/articles/blocks/TagPageBlockCD';
+import FeaturedBlock from 'features/layout/blocks/articles/FeaturedBlock';
+import TagPageBlockB from 'features/layout/blocks/tags/TagPageBlockB';
+import TagPageBlockCD from 'features/layout/blocks/tags/TagPageBlockCD';
 
-import { ArticlePreviewArray } from 'utils/customPropTypes';
+import {
+  ArticlePreviewArray,
+  ArticlePreviewsById,
+  TagsById,
+  TopicsById,
+} from 'utils/customPropTypes';
 
 const PAGE_LEVEL_ORDER = ['B1', 'C', 'D', 'C', 'B2', 'C', 'D', 'C'];
 
@@ -32,7 +38,7 @@ const arrangeListInBlocks = articles =>
     []
   );
 
-const ArticlesComposition = ({ articles }) => {
+export const ArticlesList = ({ articles }) => {
   if (articles.length === 1) {
     const { articleId } = articles[0];
     return (
@@ -60,8 +66,28 @@ const ArticlesComposition = ({ articles }) => {
   });
 };
 
-ArticlesComposition.propTypes = {
+ArticlesList.propTypes = {
   articles: ArticlePreviewArray.isRequired,
 };
 
-export default ArticlesComposition;
+const ArticlesListBlock = ({ block: { articles }, data }) => {
+  if (!articles.length) {
+    // It's ok to have block template in fibery: it should be ignored unless it is filled with data.
+    return null;
+  }
+  return <ArticlesList articles={articles.map(articleId => data.articles[articleId])} />;
+};
+
+ArticlesListBlock.propTypes = {
+  block: PropTypes.shape({
+    articles: PropTypes.arrayOf(ArticlePreviewArray).isRequired,
+  }).isRequired,
+  data: PropTypes.shape({
+    articles: ArticlePreviewsById.isRequired,
+    tags: TagsById,
+    topics: TopicsById,
+    latestArticles: ArticlePreviewArray,
+  }).isRequired,
+};
+
+export default ArticlesListBlock;

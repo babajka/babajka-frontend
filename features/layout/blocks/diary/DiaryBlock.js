@@ -1,4 +1,4 @@
-import styles from 'features/articles/blocks/diary.module.scss';
+import styles from 'features/layout/blocks/diary/diary.module.scss';
 
 import React, { useEffect, useState, useCallback } from 'react';
 import bem from 'bem-css-modules';
@@ -17,7 +17,7 @@ import api from 'constants/api';
 import { DIARY_PICTURE_WIDTH } from 'constants/misc';
 import { ROUTES_NAMES } from 'routes';
 
-import BlockWrapper from './BlockWrapper';
+import BlockWrapper from 'features/layout/blocks/wrapper';
 
 const b = bem(styles);
 

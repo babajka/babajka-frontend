@@ -13,7 +13,7 @@ import {
 } from 'components/social/Metatags';
 import Text, { localize } from 'components/common/Text';
 import Image from 'components/common/Image';
-import ArticlesComposition from 'features/articles/compositions/ArticlesComposition';
+import { ArticlesList } from 'features/layout/blocks/articles/list-block';
 
 import { makeRequest, catchServerSideErrors } from 'utils/request';
 import { getTagLink } from 'utils/features/tags';
@@ -53,7 +53,7 @@ const CollectionPage = ({ slug, collection, metaKeywords, articles, authors }) =
           </div>
         </div>
       </div>
-      <ArticlesComposition articles={articles} />
+      <ArticlesList articles={articles} />
     </div>
   </>
 );

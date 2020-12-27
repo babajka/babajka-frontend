@@ -2,14 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import bem from 'bem-css-modules';
 
-import ArticleCard from 'features/articles/cards/ArticleCard';
-import PlaceholderCard from 'features/articles/cards/PlaceholderCard';
+import ArticleCard from 'features/layout/cards/article';
+import PlaceholderCard from 'features/layout/cards/placeholder';
 
 import { ArticlesArray } from 'utils/customPropTypes';
 
+import BlockWrapper from 'features/layout/blocks/wrapper';
 import styles from './tagPageBlockCD.module.scss';
-
-import BlockWrapper from './BlockWrapper';
 
 const b = bem(styles);
 

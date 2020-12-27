@@ -3,19 +3,17 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import bem from 'bem-css-modules';
 
+import Image from 'components/common/Image';
+import CardWrapper, { SIZES } from 'features/layout/cards/wrapper';
+
+import { colorLooksBlack, colorLooksWhite } from 'utils/ui';
 import { TopicSlug, ThemeType } from 'utils/customPropTypes';
 import { ROUTES_NAMES } from 'routes';
 import { TOPIC } from 'constants/misc';
 
-import Image from 'components/common/Image';
+import { buildBlockContextStyles } from './utils';
 
-import { colorLooksBlack, colorLooksWhite } from 'utils/ui';
-
-import CardWrapper, { SIZES } from './CardWrapper';
-
-import { buildBlockContextStyles } from './auto';
-
-import styles from './tagCard.module.scss';
+import styles from './tag.module.scss';
 
 const b = bem(styles);
 

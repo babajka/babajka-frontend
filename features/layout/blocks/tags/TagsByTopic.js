@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import bem from 'bem-css-modules';
 
-import TagCard from 'features/articles/cards/TagCard';
+import TagCard from 'features/layout/cards/tag';
+import BlockWrapper from 'features/layout/blocks/wrapper';
 
 import { IdsArray, TagsById } from 'utils/customPropTypes';
 import { getTopicLink } from 'utils/features/tags';
@@ -10,8 +11,6 @@ import { getTopicLink } from 'utils/features/tags';
 import { TOPICS } from 'constants';
 
 import styles from './tagsByTopic.module.scss';
-
-import BlockWrapper from './BlockWrapper';
 
 const b = bem(styles);
 

@@ -1,7 +1,7 @@
 @import 'styles/responsiveness';
 @import 'styles/variables';
 
-@import './cards';
+@import 'features/layout/cards/index';
 
 .tag-card {
   display: flex;

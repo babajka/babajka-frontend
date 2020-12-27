@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import keyBy from 'lodash/keyBy';
 
-import BLOCKS_BY_TYPE from 'features/articles/blocks';
+import BLOCKS_BY_TYPE from 'features/layout/blocks';
 
 import {
   ArticlePreviewArray,
@@ -12,7 +12,7 @@ import {
   TagsById,
 } from 'utils/customPropTypes';
 
-const CardsLayout = ({ blocks, data }) => {
+const CardBlocksLayout = ({ blocks, data }) => {
   const blocksByType = keyBy(blocks, 'type');
   return blocks.map((block, index) => {
     const Block = BLOCKS_BY_TYPE[block.type];
@@ -26,7 +26,7 @@ const CardsLayout = ({ blocks, data }) => {
   });
 };
 
-CardsLayout.propTypes = {
+CardBlocksLayout.propTypes = {
   blocks: PropTypes.arrayOf(
     PropTypes.shape({
       type: PropTypes.oneOf(Object.keys(BLOCKS_BY_TYPE)).isRequired,
@@ -40,4 +40,4 @@ CardsLayout.propTypes = {
   }).isRequired,
 };
 
-export default CardsLayout;
+export default CardBlocksLayout;

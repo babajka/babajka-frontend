@@ -8,9 +8,8 @@ import LocalLink from 'components/common/Link';
 import ExternalLink from 'components/common/ExternalLink';
 import { useLocalization } from 'components/common/Text';
 import { NY2021 } from 'constants';
+import BlockWrapper from 'features/layout/blocks/wrapper';
 import styles from './banner.module.scss';
-
-import BlockWrapper from './BlockWrapper';
 
 const b = bem(styles);
 

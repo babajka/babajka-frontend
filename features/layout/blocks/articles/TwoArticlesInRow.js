@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import bem from 'bem-css-modules';
 
-import ArticleCard from 'features/articles/cards/ArticleCard';
+import ArticleCard from 'features/layout/cards/article';
 import { ArticleShape } from 'utils/customPropTypes';
+import BlockWrapper from 'features/layout/blocks/wrapper';
 import styles from './twoInRow.module.scss';
-
-import BlockWrapper from './BlockWrapper';
 
 const b = bem(styles);
 

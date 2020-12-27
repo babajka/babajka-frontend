@@ -4,15 +4,14 @@ import cn from 'classnames';
 import bem from 'bem-css-modules';
 
 import Text from 'components/common/Text';
-import ArticleCard from 'features/articles/cards/ArticleCard';
+import ArticleCard from 'features/layout/cards/article';
 
 import { IdsArray } from 'utils/customPropTypes';
 import { getTagLink, getTopicLink, getTagImageRenderer } from 'utils/features/tags';
 
 import { TOPIC } from 'constants/misc';
+import BlockWrapper from 'features/layout/blocks/wrapper';
 import styles from './articlesByTag2.module.scss';
-
-import BlockWrapper from './BlockWrapper';
 
 const b = bem(styles);
 

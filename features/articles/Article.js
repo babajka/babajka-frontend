@@ -32,11 +32,10 @@ import { renderNodeList } from 'utils/ui';
 import fiberyRenderer from 'utils/fibery/renderer';
 import host from 'utils/host';
 
+import CardBlocksLayout from 'features/layout/card-blocks-layout';
 import styles from './article.module.scss';
 
 import CollectionNote from './CollectionNote';
-
-import CardsLayout from './layout/CardsLayout';
 
 const b = bem(styles);
 const COVER_SIZES = [1200, 1000, 770, 640, 360];
@@ -163,7 +162,7 @@ const Article = ({
 
       {suggestedArticles && (
         <div>
-          <CardsLayout blocks={suggestedArticles.blocks} data={suggestedArticles.data} />
+          <CardBlocksLayout blocks={suggestedArticles.blocks} data={suggestedArticles.data} />
         </div>
       )}
     </>

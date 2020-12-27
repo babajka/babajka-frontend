@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import CardsLayout from 'features/articles/layout/CardsLayout';
+import CardBlocksLayout from 'features/layout/card-blocks-layout';
 import { makeRequest } from 'utils/request';
 import { localizeData } from 'utils/getters';
 import { REVALIDATE_TIMEOUT } from 'constants/misc';
@@ -8,7 +8,7 @@ import api from 'constants/api';
 
 const MainPage = ({ blocks, data, lang }) => {
   const localized = useMemo(() => localizeData(data, lang), [data, lang]);
-  return <CardsLayout blocks={blocks} data={localized} />;
+  return <CardBlocksLayout blocks={blocks} data={localized} />;
 };
 
 MainPage.getLayoutProps = () => ({
