@@ -28,7 +28,7 @@ AudioPlayer.propTypes = {
 
 AudioPlayer.defaultProps = {
   width: '100%',
-  height: '180',
+  height: '360',
 };
 
 export default AudioPlayer;
