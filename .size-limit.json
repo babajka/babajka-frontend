@@ -33,7 +33,7 @@
     "name": "> game/ny2021 [server]",
     "path": ".next/server/pages/game/ny2021.html",
     "running": false,
-    "limit": "15 kB"
+    "limit": "16 kB"
   },
   {
     "name": "> diary [server]",
