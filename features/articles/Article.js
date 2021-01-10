@@ -20,8 +20,8 @@ import VideoPlayer from 'components/common/VideoPlayer';
 import Image from 'components/common/Image';
 // import ExternalLink from 'components/common/ExternalLink';
 // import Button from 'components/common/Button';
-// import Text from 'components/common/Text';
 // import MolamolaIcon from 'components/common/ui/MolamolaIcon';
+import Text from 'components/common/Text';
 import ShareButtons from 'components/social/ShareButtons';
 import ExCoQuiz from 'features/ex-co-quiz';
 import TextWithSeparator from 'lib/components/TextWithSeparator';
@@ -128,7 +128,14 @@ const Article = ({
 
       <div className="wir-content-padding">
         <div className={styles['article-page-content']}>
-          {type === 'audio' && <AudioPlayer trackId={audio.id} />}
+          {type === 'audio' &&
+            (audio.id ? (
+              <AudioPlayer trackId={audio.id} />
+            ) : (
+              <div className={cn(b('content-unavailable'), typography['common-text'])}>
+                <Text id="article.podcast-will-be-available-soon" />
+              </div>
+            ))}
           {type === 'video' && <VideoPlayer videoId={video.id} />}
 
           {collection?.articles.length > 1 && <CollectionNote data={collection} locale={locale} />}
