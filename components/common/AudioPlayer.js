@@ -10,6 +10,7 @@ const AudioPlayer = ({ trackId, width, height }) => (
     <span>
       <iframe
         title="AudioPlayer"
+        key={trackId}
         frameBorder="0"
         style={{ border: 'none', width, height }}
         width={width}
