@@ -29,6 +29,7 @@ module.exports = {
         'collections',
         'seo',
         'game',
+        'media',
       ],
     ],
     'scope-empty': [2, 'never'],

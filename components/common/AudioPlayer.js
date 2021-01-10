@@ -1,51 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import qs from 'querystring';
 
-import { SOUNDCLOUD_EMBED_PREFIX } from 'constants/social';
+import { YANDEX_MUSIC_EMBED_PREFIX, YANDEX_MUSIC_ALBUM_ID } from 'constants/social';
 
 import styles from './audioVideoPlayer.module.scss';
 
-/* eslint-disable camelcase */
-const getUrl = ({
-  url,
-  color,
-  auto_play = false,
-  hide_related = true,
-  show_comments = false,
-  show_user = true,
-  show_reposts = true,
-  show_teaser = false,
-  visual = false,
-}) =>
-  `${SOUNDCLOUD_EMBED_PREFIX}/?${qs.stringify({
-    url,
-    color,
-    auto_play,
-    hide_related,
-    show_comments,
-    show_user,
-    show_reposts,
-    show_teaser,
-    visual,
-  })}`;
-/* eslint-enable */
-
-const AudioPlayer = ({ trackId, type, width, height, color }) => (
+const AudioPlayer = ({ trackId, width, height }) => (
   <div className={styles['article-page-interactive']}>
     <span>
       <iframe
         title="AudioPlayer"
+        frameBorder="0"
+        style={{ border: 'none', width, height }}
         width={width}
         height={height}
-        scrolling="no"
-        frameBorder="no"
-        allow="autoplay"
-        src={getUrl({
-          url: `https://api.soundcloud.com/tracks/${trackId}`,
-          color,
-          visual: type === 'big',
-        })}
+        src={`${YANDEX_MUSIC_EMBED_PREFIX}/#track/${trackId}/${YANDEX_MUSIC_ALBUM_ID}`}
       />
     </span>
   </div>
@@ -55,15 +24,11 @@ AudioPlayer.propTypes = {
   trackId: PropTypes.string.isRequired,
   width: PropTypes.string,
   height: PropTypes.string,
-  color: PropTypes.string,
-  type: PropTypes.oneOf(['big', 'small']),
 };
 
 AudioPlayer.defaultProps = {
   width: '100%',
-  height: '165',
-  type: 'small',
-  color: '',
+  height: '180',
 };
 
 export default AudioPlayer;
