@@ -39,7 +39,9 @@ export const NETWORKS = [
 
 export const YOUTUBE_EMBED_PREFIX = 'https://www.youtube.com/embed';
 
-export const SOUNDCLOUD_EMBED_PREFIX = 'https://w.soundcloud.com/player';
+export const YANDEX_MUSIC_EMBED_PREFIX = 'https://music.yandex.ru/iframe';
+
+export const YANDEX_MUSIC_ALBUM_ID = '10622616';
 
 const FACEBOOK_APP_ID = '332376853960377';
 
