@@ -5,6 +5,9 @@ import { YANDEX_MUSIC_EMBED_PREFIX, YANDEX_MUSIC_ALBUM_ID } from 'constants/soci
 
 import styles from './audioVideoPlayer.module.scss';
 
+const getTrackUrl = trackId =>
+  `${YANDEX_MUSIC_EMBED_PREFIX}/#track/${trackId}/${YANDEX_MUSIC_ALBUM_ID}`;
+
 const AudioPlayer = ({ trackId, width, height }) => (
   <div className={styles['article-page-interactive']}>
     <span>
@@ -15,7 +18,7 @@ const AudioPlayer = ({ trackId, width, height }) => (
         style={{ border: 'none', width, height }}
         width={width}
         height={height}
-        src={`${YANDEX_MUSIC_EMBED_PREFIX}/#track/${trackId}/${YANDEX_MUSIC_ALBUM_ID}`}
+        src={getTrackUrl(trackId)}
       />
     </span>
   </div>
