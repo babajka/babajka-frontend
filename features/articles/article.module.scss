@@ -122,10 +122,6 @@ $paragraph-spacing: 24px;
     }
   }
 
-  &__content-unavailable {
-    text-decoration: underline solid $primary-warning;
-  }
-
   &__other-tags {
     display: flex;
     flex-direction: row;
