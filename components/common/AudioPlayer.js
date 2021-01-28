@@ -60,6 +60,7 @@ AudioPlayer.propTypes = {
 };
 
 AudioPlayer.defaultProps = {
+  trackId: '',
   width: '100%',
 };
 
