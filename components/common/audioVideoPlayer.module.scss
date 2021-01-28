@@ -1,4 +1,5 @@
 @import 'styles/responsiveness';
+@import 'styles/variables';
 
 .article-page-interactive {
   margin-top: 30px;
@@ -37,5 +38,9 @@
     @include screen-desktop {
       height: 600px;
     }
+  }
+
+  &__content-unavailable {
+    text-decoration: underline solid $primary-warning;
   }
 }
