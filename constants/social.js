@@ -97,6 +97,11 @@ export const PODCASTS_PLATFORMS = [
     label: 'VK',
     link: 'https://vk.com/podcasts-160609284',
   },
+  {
+    id: 'soundcloud',
+    label: 'SoundCloud',
+    link: 'https://soundcloud.com/user-779783062',
+  },
 ];
 
 export const GA_ID = 'UA-117143376-2';
