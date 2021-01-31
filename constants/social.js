@@ -92,15 +92,20 @@ export const PODCASTS_PLATFORMS = [
     label: 'Google Podcasts',
     link: 'https://podcasts.google.com/feed/aHR0cHM6Ly93aXIuYnkvcnNzL3BvZGNhc3RzLw',
   },
+  // {
+  //   id: 'vkpodcasts',
+  //   label: 'VK',
+  //   link: 'https://vk.com/podcasts-160609284',
+  // },
   {
-    id: 'vkpodcasts',
-    label: 'VK',
-    link: 'https://vk.com/podcasts-160609284',
-  },
-  {
-    id: 'soundcloud',
+    id: 'soundcloudpodcasts',
     label: 'SoundCloud',
     link: 'https://soundcloud.com/user-779783062',
+  },
+  {
+    id: 'castboxpodcasts',
+    label: 'Castbox',
+    link: 'https://castbox.fm/vc/2834723',
   },
 ];
 
