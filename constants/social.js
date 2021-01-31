@@ -112,6 +112,11 @@ export const PODCASTS_PLATFORMS = [
     label: 'Spotify',
     link: 'https://open.spotify.com/show/61Q5hmZfpw3fDoNM6cGir5',
   },
+  {
+    id: 'overcastpodcasts',
+    label: 'Overcast',
+    link: 'https://overcast.fm/itunes1511316106',
+  },
 ];
 
 export const GA_ID = 'UA-117143376-2';
