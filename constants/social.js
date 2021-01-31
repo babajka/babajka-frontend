@@ -107,6 +107,11 @@ export const PODCASTS_PLATFORMS = [
     label: 'Castbox',
     link: 'https://castbox.fm/vc/2834723',
   },
+  {
+    id: 'spotifypodcasts',
+    label: 'Spotify',
+    link: 'https://open.spotify.com/show/61Q5hmZfpw3fDoNM6cGir5',
+  },
 ];
 
 export const GA_ID = 'UA-117143376-2';
