@@ -1,0 +1,9 @@
+.idea
+.next
+.cache
+node_modules
+bin/deploy
+*.log
+data/*.json
+.env
+pm2-config.json
