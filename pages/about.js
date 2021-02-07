@@ -1,5 +1,5 @@
 import styles from 'styles/pages/about.module.scss';
-import teammateStyles from 'features/about/teammate.module.scss';
+// import teammateStyles from 'features/about/teammate.module.scss';
 
 import React from 'react';
 import cn from 'classnames';
@@ -14,14 +14,15 @@ import {
   MetaImage,
   DEFAULT_IMAGE,
 } from 'components/social/Metatags';
-import Teammate from 'features/about/Teammate';
-import { Thanks } from 'features/about/Thanks';
 
-import team from 'data/team.json';
+// import Teammate from 'features/about/Teammate';
+// import { Thanks } from 'features/about/Thanks';
+// import team from 'data/team.json';
+
 import { PARTNERS } from 'constants/partners';
 
 const b = bem(styles);
-const t = bem(teammateStyles);
+// const t = bem(teammateStyles);
 
 const AboutPage = ({ lang }) => (
   <>
@@ -45,6 +46,7 @@ const AboutPage = ({ lang }) => (
       >
         <Text id="about.section-team-header" />
       </div>
+      {/*
       <div className={b('team')}>
         <div className={cn(b('subheading'), t(), t('placeholder'))}>
           <Text id="about.section-team-header" />
@@ -63,6 +65,7 @@ const AboutPage = ({ lang }) => (
           <Thanks idx={idx + 1} />
         </div>
       ))}
+      */}
       <div className={styles['about-page__text--margin-top--large']}>
         <div className={b('subheading')}>
           <Text id="about.section-partners-header" />
