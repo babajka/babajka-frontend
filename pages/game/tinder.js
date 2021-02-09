@@ -70,50 +70,52 @@ const TinderPage = ({ title, description }) => {
         {isPopupShown && (
           <>
             <div className={cn('wir-overlay', 'wir-overlay--active', b('overlay'))} />
-            <div className={b('match')}>
-              <img
-                className={b('match-image')}
-                alt="It's a match!"
-                src="https://res.cloudinary.com/wir-by/image/upload/c_scale,w_1300,f_auto,q_auto/v1612824869/production/games/game-tinder-match.png"
-              />
-              <Image
-                className={b('match-photo')}
-                alt="Фота"
-                src="/dudar.jpeg"
-                width="90px"
-                height="90px"
-              />
-              <div className={b('match-content')}>
-                <div className={b('match-text')}>
-                  Як я жыў без цябе?
-                  <br />
-                  А маглі ж не сустрэцца ніколі,
-                  <br />
-                  За паўкроку
-                  <br />
-                  Адно аднаго абмінуць,
-                  <br />
-                  Разысціся,
-                  <br />
-                  Як сцежкі расходзяцца ў полі,
-                  <br />
-                  I не знаў бы,
-                  <br />
-                  За страту каго папракнуць
-                </div>
-                <ShareButtons
-                  className={b('match-share')}
-                  basicText={`${title}\n\n${description}`}
+            <div className={b('match-wrapper')}>
+              <div className={b('match')}>
+                <img
+                  className={b('match-image')}
+                  alt="It's a match!"
+                  src="https://res.cloudinary.com/wir-by/image/upload/c_scale,w_1300,f_auto,q_auto/v1612824869/production/games/game-tinder-match.png"
                 />
+                <Image
+                  className={b('match-photo')}
+                  alt="Фота"
+                  src="/dudar.jpeg"
+                  width="90px"
+                  height="90px"
+                />
+                <div className={b('match-content')}>
+                  <div className={b('match-text')}>
+                    Як я жыў без цябе?
+                    <br />
+                    А маглі ж не сустрэцца ніколі,
+                    <br />
+                    За паўкроку
+                    <br />
+                    Адно аднаго абмінуць,
+                    <br />
+                    Разысціся,
+                    <br />
+                    Як сцежкі расходзяцца ў полі,
+                    <br />
+                    I не знаў бы,
+                    <br />
+                    За страту каго папракнуць
+                  </div>
+                  <ShareButtons
+                    className={b('match-share')}
+                    basicText={`${title}\n\n${description}`}
+                  />
+                </div>
+                <Button className={b('match-button')} onClick={togglePopup}>
+                  Добра, хачу іншых паглядзець
+                  {/* Дзякуй! */}
+                </Button>
+                <span className={b('match-info')}>
+                  Можна палайкаць яшчэ {profilesLeftNumber}
+                  {/* Лайкі скончыліся */}
+                </span>
               </div>
-              <Button className={b('match-button')} onClick={togglePopup}>
-                Добра, хачу іншых паглядзець
-                {/* Дзякуй! */}
-              </Button>
-              <span className={b('match-info')}>
-                Можна палайкаць яшчэ {profilesLeftNumber}
-                {/* Лайкі скончыліся */}
-              </span>
             </div>
           </>
         )}
