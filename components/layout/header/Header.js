@@ -16,12 +16,12 @@ import styles from './header.module.scss';
 
 const b = bem(styles);
 
-const Header = ({ toggleSidebar }) => {
+const Header = ({ toggleSidebar, color }) => {
   const router = useRouter();
   return (
     <header className={b()}>
       <Link className={b('logo')} route={ROUTES_NAMES.main} titleId="header.to-main">
-        <Logo size={42} />
+        <Logo size={42} color={color} />
       </Link>
       <div id={HEADER_LINKS_ID} className={b('title-container')}>
         <div className={b('title')}>
@@ -29,15 +29,22 @@ const Header = ({ toggleSidebar }) => {
             <Motto />
           ) : (
             <Link route={ROUTES_NAMES.main}>
-              <Text id="header.to-main" />
+              <span style={color ? { color } : {}}>
+                <Text id="header.to-main" />
+              </span>
             </Link>
           )}
         </div>
       </div>
       <Clickable tag="div" titleId="sidebar.open" className={b('burger')} onClick={toggleSidebar}>
-        <div className={b('burger-item')} />
-        <div className={b('burger-item')} />
-        <div className={b('burger-item')} />
+        {[...Array(3)].map((value, i) => (
+          <div
+            // eslint-disable-next-line react/no-array-index-key
+            key={i}
+            className={b('burger-item')}
+            style={color ? { backgroundColor: color } : {}}
+          />
+        ))}
       </Clickable>
     </header>
   );

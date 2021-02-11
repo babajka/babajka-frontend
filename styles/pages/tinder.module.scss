@@ -23,6 +23,14 @@
     }
   }
 
+  &__end {
+    color: #ffffff;
+  }
+
+  &__end-info {
+    margin-top: 28px;
+  }
+
   &__card {
     border-radius: 10px;
     box-sizing: border-box;
@@ -127,37 +135,38 @@
     &:hover {
       color: #ffffff;
     }
-  }
 
-  &__dislike {
-    background: #fe4771;
+    &--dislike {
+      background: #fe4771;
 
-    &:hover {
-      background-color: darken($color: #fe4771, $amount: 5%);
+      &:hover {
+        background-color: darken($color: #fe4771, $amount: 5%);
+      }
     }
-  }
 
-  &__like {
-    background: #1a9582;
-    margin-left: 12px;
+    &--like {
+      background: #1a9582;
+      margin-left: 12px;
 
-    &:hover {
-      background-color: darken($color: #1a9582, $amount: 5%);
+      &:hover {
+        background-color: darken($color: #1a9582, $amount: 5%);
+      }
     }
   }
 
   &__text {
     background-color: #ffffff;
+    box-sizing: border-box;
     padding: 20px 60px;
     width: 100%;
 
     @include screen-touch {
-      padding: 20px 0;
+      padding: 20px 8px;
       text-align: center;
     }
 
     @include screen-mobile {
-      padding: 20px 0;
+      padding: 20px 8px;
       text-align: center;
     }
   }
@@ -245,6 +254,7 @@
     display: flex;
     flex-direction: column;
     margin: 32px 12px 0;
+    max-width: 500px;
     padding: 44px 16px 20px;
     position: relative;
 
