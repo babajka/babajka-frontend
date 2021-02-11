@@ -35,5 +35,9 @@ export default {
       get: slug => `${API_URL}/games/fortune/${slug}`,
       getCookie: slug => `${API_URL}/games/fortune/getCookie/${slug}`,
     },
+    tinder: {
+      get: slug => `${API_URL}/games/tinder/${slug}`,
+      postStats: `${API_URL}/games/tinder/stats`,
+    },
   },
 };
