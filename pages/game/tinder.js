@@ -19,6 +19,7 @@ import useBoolean from 'hooks/useBoolean';
 import fiberyRenderer from 'utils/fibery/renderer';
 import { makeRequest } from 'utils/request';
 import { getLocalizedSuggested } from 'utils/getters';
+import { getShuffledArray } from 'utils/formatters/list';
 
 import api from 'constants/api';
 
@@ -30,44 +31,42 @@ const PREVIEW_URL =
 const MATCH_IMAGE_URL =
   'https://res.cloudinary.com/wir-by/image/upload/c_scale,w_457,f_auto,q_auto/v1612824869/production/games/game-tinder-match.png';
 
+const postStats = (action, personId) =>
+  makeRequest(api.games.tinder.postStats, 'POST', {
+    slug: TINDER_SLUG,
+    action,
+    personId,
+  });
+
 const TinderPage = ({ title, profiles, suggestedArticles }) => {
   const [profilesIndex, setProfilesIndex] = useState(0);
   const [isPopupShown, togglePopup] = useBoolean(false);
 
   const profile = profiles[profilesIndex];
+  const { personStatsId: personId } = profile || {};
 
-  const profilesLeftNumber = profiles.length - profilesIndex;
-
-  const incrementProfilesIndex = () => setProfilesIndex(profilesIndex + 1);
+  const profilesLeft = profiles.length - profilesIndex;
 
   const dislike = useCallback(async () => {
-    await makeRequest(api.games.tinder.postStats, 'POST', {
-      slug: TINDER_SLUG,
-      action: 'dislike',
-      personId: profile.personStatsId,
-    });
-    incrementProfilesIndex();
-  }, [profilesIndex]);
+    await postStats('dislike', personId);
+    setProfilesIndex(profilesIndex + 1);
+  }, [personId, profilesIndex]);
 
   const like = useCallback(async () => {
-    await makeRequest(api.games.tinder.postStats, 'POST', {
-      slug: TINDER_SLUG,
-      action: 'like',
-      personId: profile.personStatsId,
-    });
+    await postStats('like', personId);
 
     if (Math.random() < 0.7) {
       togglePopup();
       return;
     }
 
-    incrementProfilesIndex();
-  }, [profilesIndex]);
+    setProfilesIndex(profilesIndex + 1);
+  }, [personId, profilesIndex, togglePopup]);
 
   const next = useCallback(() => {
-    incrementProfilesIndex();
+    setProfilesIndex(profilesIndex + 1);
     togglePopup();
-  }, [profilesIndex]);
+  }, [profilesIndex, togglePopup]);
 
   return (
     <>
@@ -75,13 +74,13 @@ const TinderPage = ({ title, profiles, suggestedArticles }) => {
       <div className={b()}>
         <Header toggleSidebar={useToggleSidebar()} color="#ffffff" />
         <div className={b('wrapper')}>
-          {!profilesLeftNumber && (
+          {!profilesLeft && (
             <div className={b('end')}>
               <h1 className={cn(typography['common-title'])}>{title}</h1>
-              <div className={b('end-info')}>Вы прагледзелі ўсе профілі</div>
+              <div className={b('end-info')}>Вы праглядзелі ўсе профілі</div>
             </div>
           )}
-          {!!profilesLeftNumber && (
+          {!!profilesLeft && (
             <div className={b('card')}>
               <div className={b('photo-container')}>
                 <Image
@@ -127,11 +126,11 @@ const TinderPage = ({ title, profiles, suggestedArticles }) => {
                   <ShareButtons className={b('match-share')} basicText={title} />
                 </div>
                 <Button className={b('match-button')} onClick={next}>
-                  {profilesLeftNumber > 1 ? 'Добра, хачу іншых паглядзець' : 'Дзякуй!'}
+                  {profilesLeft > 1 ? 'Добра, хачу іншых паглядзець' : 'Дзякуй!'}
                 </Button>
                 <span className={b('match-info')}>
-                  {profilesLeftNumber > 1
-                    ? `Можна палайкаць яшчэ ${profilesLeftNumber - 1}`
+                  {profilesLeft > 1
+                    ? `Можна палайкаць яшчэ ${profilesLeft - 1}`
                     : 'Лайкі скончыліся'}
                 </span>
               </div>
@@ -151,24 +150,10 @@ TinderPage.getLayoutProps = ({ title }) => ({
   hideHeader: true,
 });
 
-const url = api.games.tinder.get(TINDER_SLUG);
-
-// Fisher-Yates shuffle algorithm
-const getShuffledArray = array => {
-  const newArray = [...array];
-
-  for (let i = newArray.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
-    const item = newArray[i];
-    newArray[i] = newArray[j];
-    newArray[j] = item;
-  }
-
-  return newArray;
-};
-
 export const getStaticProps = async () => {
-  const { title, people, suggestedArticles = null } = await makeRequest(url);
+  const { title, people, suggestedArticles = null } = await makeRequest(
+    api.games.tinder.get(TINDER_SLUG)
+  );
   return {
     props: {
       title,
