@@ -24,7 +24,7 @@ import { getShuffledArray } from 'utils/formatters/list';
 import api from 'constants/api';
 
 const b = bem(styles);
-const TINDER_SLUG = 'tinder-belarusian-writers';
+const TINDER_SLUG = 'belarusian-writers';
 const LANG = 'be';
 const PREVIEW_URL =
   'https://res.cloudinary.com/wir-by/image/upload/c_scale,w_1200,f_auto,q_auto/v1613049623/production/games/game-tinder-preview.png';
