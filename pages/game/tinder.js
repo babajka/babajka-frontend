@@ -4,8 +4,9 @@ import typography from 'styles/typography.module.scss';
 import React, { useState, useCallback } from 'react';
 import bem from 'bem-css-modules';
 import cn from 'classnames';
+import shuffle from 'lodash/shuffle';
 
-import { MetaImage } from 'components/social/Metatags';
+import { MetaImage, MetaDescription } from 'components/social/Metatags';
 import Header from 'components/layout/header/Header';
 import Button from 'components/common/Button';
 import Icon from 'components/common/ui/Icon';
@@ -19,7 +20,6 @@ import useBoolean from 'hooks/useBoolean';
 import fiberyRenderer from 'utils/fibery/renderer';
 import { makeRequest } from 'utils/request';
 import { getLocalizedSuggested } from 'utils/getters';
-import { getShuffledArray } from 'utils/formatters/list';
 
 import api from 'constants/api';
 
@@ -27,7 +27,7 @@ const b = bem(styles);
 const TINDER_SLUG = 'belarusian-writers';
 const LANG = 'be';
 const PREVIEW_URL =
-  'https://res.cloudinary.com/wir-by/image/upload/c_scale,w_1200,f_auto,q_auto/v1613049623/production/games/game-tinder-preview.png';
+  'https://res.cloudinary.com/wir-by/image/upload/c_scale,w_1200,f_auto,q_auto/v1613152867/production/games/game-tinder-preview.png';
 const MATCH_IMAGE_URL =
   'https://res.cloudinary.com/wir-by/image/upload/c_scale,w_457,f_auto,q_auto/v1612824869/production/games/game-tinder-match.png';
 
@@ -71,6 +71,7 @@ const TinderPage = ({ title, profiles, suggestedArticles }) => {
   return (
     <>
       <MetaImage url={PREVIEW_URL} />
+      <MetaDescription description="Знайдзі сабе пару" />
       <div className={b()}>
         <Header toggleSidebar={useToggleSidebar()} color="#ffffff" />
         <div className={b('wrapper')}>
@@ -157,7 +158,7 @@ export const getStaticProps = async () => {
   return {
     props: {
       title,
-      profiles: getShuffledArray(people),
+      profiles: shuffle(people),
       suggestedArticles: getLocalizedSuggested(suggestedArticles, LANG),
     },
     revalidate: 1, // seconds
