@@ -28,8 +28,11 @@ const TINDER_SLUG = 'belarusian-writers';
 const LANG = 'be';
 const PREVIEW_URL =
   'https://res.cloudinary.com/wir-by/image/upload/c_scale,w_1200,f_auto,q_auto/v1613152867/production/games/game-tinder-preview.png';
+const PREVIEW_DESCRIPTION =
+  'Мы ўявілі, як быццам культавыя беларускія літаратары ХХ стагоддзя зарэгістраваны на знакамітым дадатку для знаёмстваў.';
 const MATCH_IMAGE_URL =
   'https://res.cloudinary.com/wir-by/image/upload/c_scale,w_457,f_auto,q_auto/v1612824869/production/games/game-tinder-match.png';
+const IMAGE_SIZE = 180;
 
 const postStats = (action, personId) =>
   makeRequest(api.games.tinder.postStats, 'POST', {
@@ -68,11 +71,16 @@ const TinderPage = ({ title, profiles, suggestedArticles }) => {
     togglePopup();
   }, [profilesIndex, togglePopup]);
 
+  const nextProfile = profiles[profilesIndex + 1];
+
   return (
     <>
       <MetaImage url={PREVIEW_URL} />
-      <MetaDescription description="Знайдзі сабе пару" />
+      <MetaDescription description={PREVIEW_DESCRIPTION} />
       <div className={b()}>
+        {!!nextProfile && (
+          <link rel="prefetch" href={`${nextProfile.photoUrl}?w=${IMAGE_SIZE * 2}`} />
+        )}
         <Header toggleSidebar={useToggleSidebar()} color="#ffffff" />
         <div className={b('wrapper')}>
           {!profilesLeft && (
@@ -88,7 +96,7 @@ const TinderPage = ({ title, profiles, suggestedArticles }) => {
                   className={b('photo')}
                   alt={profile.nickname}
                   baseUrl={profile.photoUrl}
-                  sourceSizes={[180]}
+                  sourceSizes={[IMAGE_SIZE]}
                   inViewport
                 />
                 <div className={cn(b('buttons'))}>
@@ -118,7 +126,7 @@ const TinderPage = ({ title, profiles, suggestedArticles }) => {
                   className={b('match-photo')}
                   alt={profile.nickname}
                   baseUrl={profile.photoUrl}
-                  sourceSizes={[180]}
+                  sourceSizes={[IMAGE_SIZE]}
                 />
                 <div className={b('match-content')}>
                   <div className={b('match-text')}>
