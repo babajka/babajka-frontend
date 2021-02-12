@@ -14,16 +14,19 @@ import styles from './banner.module.scss';
 const b = bem(styles);
 
 const CDN_HOST = 'https://res.cloudinary.com/wir-by/image/upload';
-const BANNERS_AVAILABLE = ['mapa', 'ny2021'];
+const BANNERS_AVAILABLE = ['mapa', 'ny2021', 'tinder'];
 const LINK = {
   mapa: { href: 'https://map.wir.by?utm_source=wirby-main-page' },
   [NY2021]: { route: `game/${NY2021}` },
+  tinder: { route: `game/tinder` },
 };
 const IMAGE_LINK = {
   mapa: (width, screen) =>
     `${CDN_HOST}/c_scale,w_${width},f_auto,q_auto/v1568474405/production/banners/mapa-all-sizes/${screen}.png`,
   [NY2021]: (width, screen) =>
     `${CDN_HOST}/c_scale,w_${width},f_auto,q_auto/v1607868560/production/banners/newyear2021-all-sizes/${screen}.png`,
+  tinder: (width, screen) =>
+    `${CDN_HOST}/c_scale,w_${width},f_auto,q_auto/v1613151926/production/banners/tinder-all-sizes/${screen}.png`,
 };
 
 const BANNERS = banner =>
@@ -54,7 +57,7 @@ const BannerBlock = ({ block: { banner }, inViewport }) => {
       <div className={b()}>
         <Link {...linkProps}>
           <div className={cn(b('title'), b(`${banner}-title`))}>{title}</div>
-          {banner === NY2021 && (
+          {[NY2021, 'tinder'].includes(banner) && (
             <div className={cn(b('subtitle'), b(`${banner}-subtitle`))}>{subtitle}</div>
           )}
           <Picture sources={BANNERS(banner)} alt={title} inViewport={inViewport} />
