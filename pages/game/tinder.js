@@ -28,8 +28,7 @@ const LANG = 'be';
 const URL = 'https://tinder.wir.by';
 const PREVIEW_URL =
   'https://res.cloudinary.com/wir-by/image/upload/c_scale,w_1200,f_auto,q_auto/v1613152867/production/games/game-tinder-preview.png';
-const PREVIEW_DESCRIPTION =
-  'Мы ўявілі, як быццам культавыя беларускія літаратары ХХ стагоддзя зарэгістраваны на знакамітым дадатку для знаёмстваў.';
+const PREVIEW_DESCRIPTION = 'Хто з беларускіх класікаў вам напіша?';
 const MATCH_IMAGE_URL =
   'https://res.cloudinary.com/wir-by/image/upload/c_scale,w_457,f_auto,q_auto/v1612824869/production/games/game-tinder-match.png';
 const SHARE_TEXT = 'Знайдзі сабе пару на: ';
