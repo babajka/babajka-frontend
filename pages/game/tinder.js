@@ -12,7 +12,6 @@ import Button from 'components/common/Button';
 import Icon from 'components/common/ui/Icon';
 import ShareButtons from 'components/social/ShareButtons';
 import CardBlocksLayout from 'features/layout/card-blocks-layout';
-import Image from 'components/common/Image';
 
 import useToggleSidebar from 'hooks/useToggleSidebar';
 import useBoolean from 'hooks/useBoolean';
@@ -26,13 +25,14 @@ import api from 'constants/api';
 const b = bem(styles);
 const TINDER_SLUG = 'belarusian-writers';
 const LANG = 'be';
+const URL = 'https://tinder.wir.by';
 const PREVIEW_URL =
   'https://res.cloudinary.com/wir-by/image/upload/c_scale,w_1200,f_auto,q_auto/v1613152867/production/games/game-tinder-preview.png';
 const PREVIEW_DESCRIPTION =
   'Мы ўявілі, як быццам культавыя беларускія літаратары ХХ стагоддзя зарэгістраваны на знакамітым дадатку для знаёмстваў.';
 const MATCH_IMAGE_URL =
   'https://res.cloudinary.com/wir-by/image/upload/c_scale,w_457,f_auto,q_auto/v1612824869/production/games/game-tinder-match.png';
-const IMAGE_SIZE = 180;
+const SHARE_TEXT = 'Знайдзі сабе пару на: ';
 
 const postStats = (action, personId) =>
   makeRequest(api.games.tinder.postStats, 'POST', {
@@ -40,6 +40,8 @@ const postStats = (action, personId) =>
     action,
     personId,
   });
+
+const rawMode = url => `${url}?mode=raw`;
 
 const TinderPage = ({ title, profiles, suggestedArticles }) => {
   const [profilesIndex, setProfilesIndex] = useState(0);
@@ -78,9 +80,7 @@ const TinderPage = ({ title, profiles, suggestedArticles }) => {
       <MetaImage url={PREVIEW_URL} />
       <MetaDescription description={PREVIEW_DESCRIPTION} />
       <div className={b()}>
-        {!!nextProfile && (
-          <link rel="prefetch" href={`${nextProfile.photoUrl}?w=${IMAGE_SIZE * 2}`} />
-        )}
+        {!!nextProfile && <link rel="prefetch" href={rawMode(nextProfile.photoUrl)} />}
         <Header toggleSidebar={useToggleSidebar()} color="#ffffff" />
         <div className={b('wrapper')}>
           {!profilesLeft && (
@@ -92,12 +92,10 @@ const TinderPage = ({ title, profiles, suggestedArticles }) => {
           {!!profilesLeft && (
             <div className={b('card')}>
               <div className={b('photo-container')}>
-                <Image
+                <img
                   className={b('photo')}
                   alt={profile.nickname}
-                  baseUrl={profile.photoUrl}
-                  sourceSizes={[IMAGE_SIZE]}
-                  inViewport
+                  src={rawMode(profile.photoUrl)}
                 />
                 <div className={cn(b('buttons'))}>
                   <Button className={cn(b('button', { dislike: true }))} onClick={dislike}>
@@ -114,7 +112,7 @@ const TinderPage = ({ title, profiles, suggestedArticles }) => {
               </div>
             </div>
           )}
-          <ShareButtons className={b('share')} basicText={title} />
+          <ShareButtons className={b('share')} basicText={SHARE_TEXT} url={URL} />
         </div>
         {isPopupShown && (
           <>
@@ -122,17 +120,16 @@ const TinderPage = ({ title, profiles, suggestedArticles }) => {
             <div className={b('match-wrapper')}>
               <div className={b('match')}>
                 <img className={b('match-image')} alt="It's a match!" src={MATCH_IMAGE_URL} />
-                <Image
+                <img
                   className={b('match-photo')}
                   alt={profile.nickname}
-                  baseUrl={profile.photoUrl}
-                  sourceSizes={[IMAGE_SIZE]}
+                  src={rawMode(profile.photoUrl)}
                 />
                 <div className={b('match-content')}>
                   <div className={b('match-text')}>
                     {fiberyRenderer(profile.acceptMessage.content)}
                   </div>
-                  <ShareButtons className={b('match-share')} basicText={title} />
+                  <ShareButtons className={b('match-share')} basicText={SHARE_TEXT} url={URL} />
                 </div>
                 <Button className={b('match-button')} onClick={next}>
                   {profilesLeft > 1 ? 'Добра, хачу іншых паглядзець' : 'Дзякуй!'}

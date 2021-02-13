@@ -30,14 +30,14 @@ const Header = ({ toggleSidebar, color }) => {
           ) : (
             <Link route={ROUTES_NAMES.main}>
               <span style={color ? { color } : {}}>
-                <Text id="header.to-main" />
+                {router.route.startsWith('/game') ? 'Wir.by' : <Text id="header.to-main" />}
               </span>
             </Link>
           )}
         </div>
       </div>
       <Clickable tag="div" titleId="sidebar.open" className={b('burger')} onClick={toggleSidebar}>
-        {[...Array(3)].map((value, i) => (
+        {[...Array(3)].map((_, i) => (
           <div
             // eslint-disable-next-line react/no-array-index-key
             key={i}
