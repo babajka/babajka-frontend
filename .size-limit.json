@@ -69,6 +69,6 @@
     "name": "> app [server]",
     "path": ".next/server/pages/_app.js",
     "running": false,
-    "limit": "32 kB"
+    "limit": "33 kB"
   }
 ]

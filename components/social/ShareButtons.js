@@ -17,12 +17,12 @@ import styles from './social-buttons.module.scss';
 const b = bem(styles);
 const POPUP_WINDOW_PARAMS = 'width=600,height=400';
 
-const ShareButtons = ({ className, noAsPath, basicText, extendedText }) => {
+const ShareButtons = ({ className, noAsPath, basicText, extendedText, url: forceUrl }) => {
   const router = useRouter();
   const lang = useLocaleContext();
   const [forceButtonGroup, setForceButtonGroup] = useState(false);
   const urlPath = noAsPath ? '' : router.asPath;
-  const url = `${DOMAIN_SECURE}${urlPath}`;
+  const url = forceUrl || `${DOMAIN_SECURE}${urlPath}`;
 
   return (
     <>
@@ -76,6 +76,7 @@ ShareButtons.propTypes = {
   noAsPath: PropTypes.bool,
   basicText: PropTypes.string.isRequired,
   extendedText: PropTypes.string,
+  url: PropTypes.string,
 };
 
 ShareButtons.defaultProps = {
