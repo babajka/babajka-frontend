@@ -28,7 +28,6 @@ const LANG = 'be';
 const URL = 'https://tinder.wir.by';
 const PREVIEW_URL =
   'https://res.cloudinary.com/wir-by/image/upload/c_scale,w_1200,f_auto,q_auto/v1613152867/production/games/game-tinder-preview.png';
-const PREVIEW_DESCRIPTION = 'Хто з беларускіх класікаў вам напіша?';
 const MATCH_IMAGE_URL =
   'https://res.cloudinary.com/wir-by/image/upload/c_scale,w_457,f_auto,q_auto/v1612824869/production/games/game-tinder-match.png';
 const SHARE_TEXT = 'Знайдзі сабе пару на: ';
@@ -42,7 +41,7 @@ const postStats = (action, personId) =>
 
 const rawMode = url => `${url}?mode=raw`;
 
-const TinderPage = ({ title, profiles, suggestedArticles }) => {
+const TinderPage = ({ title, subtitle, profiles, suggestedArticles }) => {
   const [profilesIndex, setProfilesIndex] = useState(0);
   const [isPopupShown, togglePopup] = useBoolean(false);
 
@@ -77,7 +76,7 @@ const TinderPage = ({ title, profiles, suggestedArticles }) => {
   return (
     <>
       <MetaImage url={PREVIEW_URL} />
-      <MetaDescription description={PREVIEW_DESCRIPTION} />
+      <MetaDescription description={subtitle} />
       <div className={b()}>
         {!!nextProfile && <link rel="prefetch" href={rawMode(nextProfile.photoUrl)} />}
         <Header toggleSidebar={useToggleSidebar()} color="#ffffff" />
@@ -156,12 +155,13 @@ TinderPage.getLayoutProps = ({ title }) => ({
 });
 
 export const getStaticProps = async () => {
-  const { title, people, suggestedArticles = null } = await makeRequest(
+  const { title, subtitle, people, suggestedArticles = null } = await makeRequest(
     api.games.tinder.get(TINDER_SLUG)
   );
   return {
     props: {
       title,
+      subtitle,
       profiles: shuffle(people),
       suggestedArticles: getLocalizedSuggested(suggestedArticles, LANG),
     },
