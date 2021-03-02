@@ -40,6 +40,31 @@
     }
   }
 
+  &__coub {
+    height: 200px;
+    width: 200px;
+
+    @include screen-touch {
+      height: 240px;
+      width: 240px;
+    }
+
+    @include screen-tablet {
+      height: 300px;
+      width: 300px;
+    }
+
+    @include screen-tablet-large {
+      height: 360px;
+      width: 360px;
+    }
+
+    @include screen-desktop {
+      height: 480px;
+      width: 480px;
+    }
+  }
+
   &__content-unavailable {
     text-decoration: underline solid $primary-warning;
   }
