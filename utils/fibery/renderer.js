@@ -7,8 +7,12 @@ import identity from 'lodash/identity';
 
 import Image from 'components/common/Image';
 import ExternalLink from 'components/common/ExternalLink';
+
 import VideoPlayer from 'components/common/VideoPlayer';
 import parseYoutubeUrl from 'lib/utils/parseYoutubeUrl';
+
+import CoubPlayer from 'components/common/CoubPlayer';
+import parseCoubUrl from 'lib/utils/parseCoubUrl';
 
 import toString from './toString';
 import { getTableMeta, traverseTable, TYPES } from './parseTable';
@@ -43,6 +47,11 @@ const MARKS = {
     const videoId = parseYoutubeUrl(href);
     if (videoId && href === node) {
       return <VideoPlayer videoId={videoId} />;
+    }
+
+    const coubId = parseCoubUrl(href);
+    if (coubId && href === node) {
+      return <CoubPlayer coubId={coubId} />;
     }
 
     return (
