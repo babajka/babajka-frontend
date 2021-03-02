@@ -15,7 +15,7 @@
     "name": "> topic [server]",
     "path": ".next/server/pages/topic.js",
     "running": false,
-    "limit": "21 kB"
+    "limit": "22 kB"
   },
   {
     "name": "> tag [server]",
