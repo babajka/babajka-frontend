@@ -57,7 +57,7 @@
     "name": "> article [server]",
     "path": ".next/server/pages/article.js",
     "running": false,
-    "limit": "46 kB"
+    "limit": "47 kB"
   },
   {
     "name": "> app",
