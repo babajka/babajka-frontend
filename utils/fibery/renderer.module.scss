@@ -256,3 +256,108 @@ $block-spacing: 60px;
     padding: 0;
   }
 }
+
+$paragraph-spacing: 24px;
+
+// TODO: 'rendered' is to become anchor class here; nest all other classes from this file.
+// Styles for rendered content should only be defined in this file, not in article.module.scss or somewhere else.
+// Once all styles nested, bem may be applied in renderer.
+.rendered {
+  h3 {
+    // Header level 1 within rendered content.
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 36px;
+    margin-block: 0;
+    margin-bottom: 14px;
+    margin-top: $block-spacing;
+
+    @include screen-tablet-large {
+      margin-bottom: 12px;
+    }
+
+    @include screen-tablet {
+      font-size: 27px;
+      line-height: 30px;
+      margin-bottom: 8px;
+    }
+
+    @include screen-touch {
+      font-size: 27px;
+      line-height: 36px;
+      margin-bottom: 3px;
+    }
+
+    @include screen-mobile {
+      font-size: 27px;
+      line-height: 36px;
+      margin-bottom: 6px;
+    }
+  }
+
+  h4 {
+    // Header level 2 within rendered content.
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 27px;
+    margin-block: 0;
+    margin-bottom: 9px;
+    margin-top: $block-spacing;
+
+    @include screen-tablet {
+      font-size: 18px;
+      line-height: 31px;
+    }
+
+    @include screen-touch {
+      font-size: 18px;
+      line-height: 30px;
+    }
+
+    @include screen-mobile {
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+
+  p {
+    margin-top: 12px;
+
+    @include screen-touch {
+      margin-top: 18px;
+    }
+
+    @include screen-tablet {
+      margin-top: 21px;
+
+      br {
+        display: none;
+      }
+    }
+
+    @include screen-tablet-large {
+      margin-top: $paragraph-spacing;
+
+      br {
+        display: none;
+      }
+    }
+
+    @include screen-desktop {
+      margin-top: $paragraph-spacing;
+
+      br {
+        display: none;
+      }
+    }
+  }
+
+  h3 + p,
+  h4 + p {
+    margin-top: 0;
+  }
+
+  &__hard {
+    height: 48px;
+  }
+}
