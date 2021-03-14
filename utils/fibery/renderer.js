@@ -34,7 +34,7 @@ const renderContent = (content, overrides = {}) => {
   return content.map(({ type, ...params }, key) => {
     if (!process.env.isProd && !renderers[type]) {
       // eslint-disable-next-line no-console
-      console.log('Missed renderer: ', type);
+      console.log('Missing renderer: ', type);
     }
 
     const render = renderers[type] || returnNull;
@@ -72,7 +72,7 @@ const addMarks = (text, marks) => {
     // TEMP:
     if (!process.env.isProd && !MARKS[type]) {
       // eslint-disable-next-line no-console
-      console.log('Missed mark: ', type);
+      console.log('Missing mark: ', type);
     }
     const renderMark = MARKS[type] || identity;
     return renderMark(acc, params);
