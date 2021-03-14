@@ -15,25 +15,50 @@ import Text from './Text';
 
 const b = bem(styles);
 
-const getTrackUrl = trackId =>
-  `${YANDEX_MUSIC_EMBED_PREFIX}/#track/${trackId}/${YANDEX_MUSIC_ALBUM_ID}`;
+const getTrackUrl = (trackId, playlistUsername, playlistId) => {
+  if (playlistUsername && playlistId) {
+    return `${YANDEX_MUSIC_EMBED_PREFIX}/#playlist/${playlistUsername}/${playlistId}`;
+  }
+  if (trackId) {
+    return `${YANDEX_MUSIC_EMBED_PREFIX}/#track/${trackId}/${YANDEX_MUSIC_ALBUM_ID}`;
+  }
+  return '';
+};
 
 // Const values for Yandex Music Player Dimensions are not documented anywhere and are found empirically.
 
 const YANDEX_MUSIC_PLAYER_HEIGHT = {
-  desktop: 180,
-  mobile: 380,
+  track: {
+    desktop: 180,
+    mobile: 380,
+  },
+  playlist: {
+    desktop: 420,
+    mobile: 480,
+  },
 };
 
 const YANDEX_MUSIC_PLAYER_SCREEN_THRESHOLD = 650;
 
-const AudioPlayer = ({ trackId, width }) => {
+const AudioPlayer = ({ trackId, playlistUsername, playlistId, width }) => {
+  const mode = playlistUsername && playlistId ? 'playlist' : 'track';
+
   const height =
     useWindowWidth() < YANDEX_MUSIC_PLAYER_SCREEN_THRESHOLD
-      ? YANDEX_MUSIC_PLAYER_HEIGHT.mobile
-      : YANDEX_MUSIC_PLAYER_HEIGHT.desktop;
+      ? YANDEX_MUSIC_PLAYER_HEIGHT[mode].mobile
+      : YANDEX_MUSIC_PLAYER_HEIGHT[mode].desktop;
 
-  return trackId ? (
+  const srcUrl = getTrackUrl(trackId, playlistUsername, playlistId);
+
+  if (!srcUrl) {
+    return (
+      <div className={cn(b('content-unavailable'), typography['common-text'])}>
+        <Text id="article.audio-currently-not-available" />
+      </div>
+    );
+  }
+
+  return (
     <div className={styles['article-page-interactive']}>
       <span>
         <iframe
@@ -43,24 +68,24 @@ const AudioPlayer = ({ trackId, width }) => {
           style={{ border: 'none', width, height }}
           width={width}
           height={height}
-          src={getTrackUrl(trackId)}
+          src={srcUrl}
         />
       </span>
-    </div>
-  ) : (
-    <div className={cn(b('content-unavailable'), typography['common-text'])}>
-      <Text id="article.podcast-will-be-available-soon" />
     </div>
   );
 };
 
 AudioPlayer.propTypes = {
   trackId: PropTypes.string,
+  playlistUsername: PropTypes.string,
+  playlistId: PropTypes.string,
   width: PropTypes.string,
 };
 
 AudioPlayer.defaultProps = {
   trackId: '',
+  playlistUsername: '',
+  playlistId: '',
   width: '100%',
 };
 
