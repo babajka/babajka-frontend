@@ -5,6 +5,8 @@ import dynamic from 'next/dynamic';
 import cn from 'classnames';
 import identity from 'lodash/identity';
 
+import typography from 'styles/typography.module.scss';
+
 import Image from 'components/common/Image';
 import ExternalLink from 'components/common/ExternalLink';
 
@@ -138,9 +140,23 @@ const RENDERERS = {
       </blockquote>
     );
   },
-  hard_break: ({ key }) => <span key={key} className={styles['article-page-content__hard']} />,
-  heading: ({ key, attrs: { level }, content }) =>
-    createElement(`h${level}`, { key }, renderContent(content)),
+  hard_break: ({ key }) => <span key={key} className={styles.rendered__hard} />,
+  heading: ({ key, attrs: { level }, content }) => {
+    // As clarified by @butuk, <h1 /> is only used for Article title, while content itself only may contain
+    // two levels for headings which are <h3 /> and <h4 />.
+    // At this moment Fibery produces headings of levels 1-4 (level 4 is "Caption Header"), therefore mapping is as following.
+    const FIBERY_HEADING_LEVEL_TO_ELEMENT_TAG = {
+      1: 'h3',
+      2: 'h4',
+      3: 'h4',
+      4: 'h4',
+    };
+    return createElement(
+      FIBERY_HEADING_LEVEL_TO_ELEMENT_TAG[level],
+      { key },
+      renderContent(content)
+    );
+  },
   image: ({ key, attrs: { alt, src, title } }) => {
     const { url, align } = parseImage(src);
     const right = align === 'right';
@@ -213,4 +229,8 @@ const RENDERERS = {
   list_item: ({ key, content }) => <li key={key}>{renderContent(content)}</li>,
 };
 
-export default renderContent;
+const renderContentStyled = content => (
+  <div className={cn(typography['common-text'], styles.rendered)}>{renderContent(content)}</div>
+);
+
+export default renderContentStyled;

@@ -132,9 +132,7 @@ const Article = ({
 
           {collection?.articles.length > 1 && <CollectionNote data={collection} locale={locale} />}
 
-          <div className={cn(styles['article-page-text-content'], typography['common-text'])}>
-            {fiberyRenderer(text.content)}
-          </div>
+          {fiberyRenderer(text.content)}
 
           {/* FIXME: hardcode */}
           {SLUG_TO_QUIZ_ID[slug] && (

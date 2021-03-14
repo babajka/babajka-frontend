@@ -1,9 +1,6 @@
 @import 'styles/responsiveness';
 @import 'styles/variables';
 
-$block-spacing: 60px;
-$paragraph-spacing: 24px;
-
 .article-page {
   &__cover {
     object-fit: cover;
@@ -288,60 +285,4 @@ $paragraph-spacing: 24px;
 
 .article-page-content {
   overflow: auto;
-}
-
-.article-page-text-content {
-  p {
-    margin-top: 12px;
-
-    @include screen-touch {
-      margin-top: 18px;
-    }
-
-    @include screen-tablet {
-      margin-top: 21px;
-
-      br {
-        display: none;
-      }
-    }
-
-    @include screen-tablet-large {
-      margin-top: $paragraph-spacing;
-
-      br {
-        display: none;
-      }
-    }
-
-    @include screen-desktop {
-      margin-top: $paragraph-spacing;
-
-      br {
-        display: none;
-      }
-    }
-  }
-
-  h2 {
-    margin-top: 70px;
-  }
-
-  h3 {
-    margin-top: $block-spacing;
-  }
-
-  h4 {
-    margin-bottom: 0;
-    margin-top: $block-spacing;
-
-    // stylelint-disable-next-line scss/selector-no-redundant-nesting-selector
-    & + p {
-      margin-top: 0;
-    }
-  }
-
-  &__hard {
-    height: 48px;
-  }
 }
