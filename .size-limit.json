@@ -9,7 +9,7 @@
     "name": "> all css",
     "path": ".next/static/**/*.css",
     "running": false,
-    "limit": "46 kB"
+    "limit": "47 kB"
   },
   {
     "name": "> topic [server]",
@@ -39,13 +39,13 @@
     "name": "> game/tinder [server]",
     "path": ".next/server/pages/game/tinder.html",
     "running": false,
-    "limit": "25 kB"
+    "limit": "26 kB"
   },
   {
     "name": "> diary [server]",
     "path": ".next/server/pages/diary.js",
     "running": false,
-    "limit": "35 kB"
+    "limit": "36 kB"
   },
   {
     "name": "> home [server]",

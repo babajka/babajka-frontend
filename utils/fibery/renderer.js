@@ -5,8 +5,6 @@ import dynamic from 'next/dynamic';
 import cn from 'classnames';
 import identity from 'lodash/identity';
 
-import typography from 'styles/typography.module.scss';
-
 import Image from 'components/common/Image';
 import ExternalLink from 'components/common/ExternalLink';
 
@@ -230,7 +228,7 @@ const RENDERERS = {
 };
 
 const renderContentStyled = content => (
-  <div className={cn(typography['common-text'], styles.rendered)}>{renderContent(content)}</div>
+  <div className={styles.rendered}>{renderContent(content)}</div>
 );
 
 export default renderContentStyled;
