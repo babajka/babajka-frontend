@@ -14,6 +14,9 @@ import parseYoutubeUrl from 'lib/utils/parseYoutubeUrl';
 import CoubPlayer from 'components/common/CoubPlayer';
 import parseCoubUrl from 'lib/utils/parseCoubUrl';
 
+import AudioPlayer from 'components/common/AudioPlayer';
+import parseYMPlaylistUrl from 'lib/utils/parseYMPlaylistUrl';
+
 import toString from './toString';
 import { getTableMeta, traverseTable, TYPES } from './parseTable';
 import { parseQuote, parseImage } from './utils';
@@ -52,6 +55,16 @@ const MARKS = {
     const coubId = parseCoubUrl(href);
     if (coubId && href === node) {
       return <CoubPlayer coubId={coubId} />;
+    }
+
+    const ymPlaylist = parseYMPlaylistUrl(href);
+    if (ymPlaylist?.playlistUsername && ymPlaylist?.playlistId) {
+      return (
+        <AudioPlayer
+          playlistUsername={ymPlaylist.playlistUsername}
+          playlistId={ymPlaylist.playlistId}
+        />
+      );
     }
 
     return (
