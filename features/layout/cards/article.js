@@ -71,6 +71,7 @@ const COLLECTIONS_HIDE_COVER = {
 };
 
 const COLLECTIONS_HIDE_COMPLETELY = {
+  bahdanovicz: true,
   vierszy2020: true,
 };
 
