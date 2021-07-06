@@ -240,8 +240,6 @@ $block-spacing: 60px;
 }
 
 .article-split {
-  margin: $block-spacing 0;
-
   tr {
     display: flex;
     justify-content: flex-start;
@@ -256,7 +254,7 @@ $block-spacing: 60px;
   }
 
   td {
-    padding: 2%;
+    padding: 0 2%;
     width: 50%;
 
     @include screen-touch {
