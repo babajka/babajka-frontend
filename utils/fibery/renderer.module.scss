@@ -245,10 +245,27 @@ $block-spacing: 60px;
   tr {
     display: flex;
     justify-content: flex-start;
+
+    @include screen-touch {
+      flex-direction: column;
+    }
+
+    @include screen-mobile {
+      flex-direction: column;
+    }
   }
 
   td {
+    padding: 2%;
     width: 50%;
+
+    @include screen-touch {
+      width: 100%;
+    }
+
+    @include screen-mobile {
+      width: 100%;
+    }
   }
 
   p {
