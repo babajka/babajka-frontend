@@ -240,15 +240,30 @@ $block-spacing: 60px;
 }
 
 .article-split {
-  margin: $block-spacing 0;
-
   tr {
     display: flex;
     justify-content: flex-start;
+
+    @include screen-touch {
+      flex-direction: column;
+    }
+
+    @include screen-mobile {
+      flex-direction: column;
+    }
   }
 
   td {
+    padding: 0 2%;
     width: 50%;
+
+    @include screen-touch {
+      width: 100%;
+    }
+
+    @include screen-mobile {
+      width: 100%;
+    }
   }
 
   p {
