@@ -7,6 +7,7 @@ export const TYPES = createConstants(
   'NOTE',
   'POEM',
   'SPLIT',
+  'TIMELINE',
   'CAROUSEL'
 );
 

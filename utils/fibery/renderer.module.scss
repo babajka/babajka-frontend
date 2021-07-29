@@ -375,4 +375,80 @@ $paragraph-spacing: 24px;
   &__hard {
     height: 48px;
   }
+
+  &__article-timeline {
+    &-entry {
+      display: flex;
+      flex-direction: row;
+
+      @include screen-tablet-touch-mobile {
+        flex-direction: column;
+      }
+    }
+
+    &-date-image {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &-date {
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 36px;
+
+      @include screen-tablet-touch-mobile {
+        font-size: 27px;
+      }
+    }
+
+    &-image {
+      width: 190px;
+
+      @include screen-tablet-large {
+        width: 172px;
+      }
+
+      @include screen-tablet-touch-mobile {
+        width: 172px;
+      }
+    }
+
+    &-text-annotation {
+      display: flex;
+      flex-direction: row;
+
+      @include screen-touch {
+        flex-direction: column;
+      }
+
+      @include screen-mobile {
+        flex-direction: column;
+      }
+    }
+
+    &-text {
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 36px;
+
+      @include screen-tablet {
+        font-size: 18px;
+        line-height: 30px;
+      }
+
+      @include screen-touch {
+        font-size: 18px;
+        line-height: 30px;
+      }
+
+      @include screen-mobile {
+        font-size: 16px;
+        line-height: 24px;
+      }
+    }
+
+    &-annotation {
+      color: #ff0000; // Do not apply custom styling -- use 'right-element' ?
+    }
+  }
 }

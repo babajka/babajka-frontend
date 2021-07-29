@@ -23,7 +23,7 @@ import { parseQuote, parseImage } from './utils';
 
 import styles from './renderer.module.scss';
 
-const { TABLE, TABLE_RIGHT, NOTE, POEM, SPLIT, CAROUSEL } = TYPES;
+const { TABLE, TABLE_RIGHT, NOTE, POEM, SPLIT, TIMELINE, CAROUSEL } = TYPES;
 
 const returnNull = () => null;
 
@@ -126,6 +126,41 @@ const CUSTOM_RENDERER = {
         {renderContent(poemContent, {
           table_row: ({ key, content }) => <div key={key}>{renderContent(content, tableCell)}</div>,
         })}
+      </div>
+    );
+  },
+  [TIMELINE]: timelineContent => {
+    const data = traverseTable(timelineContent, true);
+    const timelineEvents = data.map(row => {
+      // Assuming that is how traverseTable works.
+      return {
+        date: row[0],
+        imageUrl: row[1], // Upload images to fibery or put links? Images in fibery is more editor-friendly.
+        text: row[2],
+        annotation: row[3],
+      };
+    });
+    return (
+      <div className={styles['rendered__article-timeline']}>
+        {timelineEvents.map(({ date, imageUrl, text, annotation }) => (
+          <div className={styles['rendered__article-timeline-entry']}>
+            <div className={styles['rendered__article-timeline-date-image']}>
+              <div className={styles['rendered__article-timeline-date']}>{date}</div>
+              <Image
+                className={styles['rendered__article-timeline-image']}
+                alt={date} // Replace with the beginning of 'text'.
+                sourceSizes={[190]}
+                baseUrl={imageUrl}
+                mode="x" // TODO: Clarify mode.
+              />
+            </div>
+            <div className={styles['rendered__article-timeline-text-annotation']}>
+              {/* TODO: Render content ? */}
+              <div className={styles['rendered__article-timeline-text']}>{text}</div>
+              <div className={styles['rendered__article-timeline-annotation']}>{annotation}</div>
+            </div>
+          </div>
+        ))}
       </div>
     );
   },
