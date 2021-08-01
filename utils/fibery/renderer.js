@@ -18,7 +18,7 @@ import AudioPlayer from 'components/common/AudioPlayer';
 import parseYMPlaylistUrl from 'lib/utils/parseYMPlaylistUrl';
 
 import toString from './toString';
-import { getTableMeta, traverseTable, TYPES } from './parseTable';
+import { getTableMeta, traverseTable, traverseTableRowByRow, TYPES } from './parseTable';
 import { parseQuote, parseImage } from './utils';
 
 import styles from './renderer.module.scss';
@@ -130,15 +130,19 @@ const CUSTOM_RENDERER = {
     );
   },
   [TIMELINE]: timelineContent => {
-    const data = traverseTable(timelineContent, true);
-    const timelineEvents = data.map(row => {
-      // Assuming that is how traverseTable works.
-      return {
-        date: row[0],
-        imageUrl: row[1], // Upload images to fibery or put links? Images in fibery is more editor-friendly.
-        text: row[2],
-        annotation: row[3],
+    const data = traverseTableRowByRow(timelineContent, true);
+    const timelineEvents = data.map(([date, image, text, annotation]) => {
+      const timelineEvent = {
+        date,
+        // imageUrl: image && image.type === 'image' && .url, // Upload images to fibery or put links? Images in fibery is more editor-friendly.
+        text: text.map(p => <div>{p}</div>),
+        annotation,
       };
+      if (image && image.length > 0 && image[0].type === 'image') {
+        const { url } = parseImage(image[0].attrs.src);
+        timelineEvent.imageUrl = url;
+      }
+      return timelineEvent;
     });
     return (
       <div className={styles['rendered__article-timeline']}>
@@ -146,13 +150,15 @@ const CUSTOM_RENDERER = {
           <div className={styles['rendered__article-timeline-entry']}>
             <div className={styles['rendered__article-timeline-date-image']}>
               <div className={styles['rendered__article-timeline-date']}>{date}</div>
-              <Image
-                className={styles['rendered__article-timeline-image']}
-                alt={date} // Replace with the beginning of 'text'.
-                sourceSizes={[190]}
-                baseUrl={imageUrl}
-                mode="x" // TODO: Clarify mode.
-              />
+              {imageUrl && (
+                <Image
+                  className={styles['rendered__article-timeline-image']}
+                  alt={date} // Replace with the beginning of 'text'.
+                  sourceSizes={[190]}
+                  baseUrl={imageUrl}
+                  mode="x" // TODO: Clarify mode.
+                />
+              )}
             </div>
             <div className={styles['rendered__article-timeline-text-annotation']}>
               {/* TODO: Render content ? */}

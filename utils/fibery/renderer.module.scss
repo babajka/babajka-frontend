@@ -380,15 +380,41 @@ $paragraph-spacing: 24px;
     &-entry {
       display: flex;
       flex-direction: row;
+      margin-bottom: 72px;
+
+      @include screen-tablet-large {
+        margin-bottom: 60px;
+      }
+
+      @include screen-tablet {
+        margin-bottom: 54px;
+      }
 
       @include screen-tablet-touch-mobile {
         flex-direction: column;
+      }
+
+      @include screen-touch {
+        margin-bottom: 44px;
+      }
+
+      @include screen-mobile {
+        margin-bottom: 108px;
       }
     }
 
     &-date-image {
       display: flex;
       flex-direction: column;
+
+      @include screen-desktop {
+        align-items: stretch;
+        min-width: 148px;
+      }
+
+      @include screen-tablet-large {
+        min-width: 124px;
+      }
     }
 
     &-date {
@@ -404,11 +430,19 @@ $paragraph-spacing: 24px;
     &-image {
       width: 190px;
 
+      @include screen-desktop {
+        //left: -10px;
+        align-self: flex-start;
+        margin-top: 15px;
+        //right: 0;
+      }
+
       @include screen-tablet-large {
         width: 172px;
       }
 
       @include screen-tablet-touch-mobile {
+        align-self: center;
         width: 172px;
       }
     }
@@ -417,12 +451,26 @@ $paragraph-spacing: 24px;
       display: flex;
       flex-direction: row;
 
+      @include screen-desktop {
+        margin-left: 32px;
+      }
+
+      @include screen-tablet-large {
+        margin-left: 20px;
+      }
+
+      @include screen-tablet {
+        margin-top: 24px;
+      }
+
       @include screen-touch {
         flex-direction: column;
+        margin-top: 18px;
       }
 
       @include screen-mobile {
         flex-direction: column;
+        margin-top: 18px;
       }
     }
 
@@ -445,10 +493,38 @@ $paragraph-spacing: 24px;
         font-size: 16px;
         line-height: 24px;
       }
+
+      div:not(:last-child) {
+        margin-bottom: 20px;
+      }
     }
 
     &-annotation {
-      color: #ff0000; // Do not apply custom styling -- use 'right-element' ?
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      margin-left: 60px;
+
+      @include screen-tablet-large {
+        margin-left: 49px;
+      }
+
+      @include screen-tablet {
+        margin-left: 25px;
+      }
+
+      @include screen-tablet-touch-mobile {
+        font-size: 14px;
+        line-height: 18px;
+      }
+
+      @include screen-touch {
+        margin-top: 36px;
+      }
+
+      @include screen-mobile {
+        margin-top: 30px;
+      }
     }
   }
 }
