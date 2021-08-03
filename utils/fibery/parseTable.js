@@ -54,6 +54,7 @@ export const traverseTableRowByRow = (table = [], returnUnknown = false) => {
       if (cellType !== 'table_cell') {
         return '';
       }
+      // console.log('CELL:', cellType, cellContent);
       return traverseTable(cellContent, returnUnknown);
     });
     return [...acc, t];

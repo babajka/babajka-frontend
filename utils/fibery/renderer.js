@@ -131,12 +131,28 @@ const CUSTOM_RENDERER = {
   },
   [TIMELINE]: timelineContent => {
     const data = traverseTableRowByRow(timelineContent, true);
+    // console.log('TO BE RENDERED', data);
     const timelineEvents = data.map(([date, image, text, annotation]) => {
       const timelineEvent = {
-        date,
+        date: date.reduce((acc, cur) => {
+          if (typeof cur !== 'string') {
+            return acc;
+          }
+          return acc.concat(cur);
+        }, ''),
         // imageUrl: image && image.type === 'image' && .url, // Upload images to fibery or put links? Images in fibery is more editor-friendly.
-        text: text.map(p => <div>{p}</div>),
-        annotation,
+        text: text.map(p => {
+          if (typeof p !== 'string') {
+            return '';
+          }
+          return <div>{p}</div>;
+        }),
+        annotation: annotation.map(p => {
+          if (typeof p !== 'string') {
+            return '';
+          }
+          return <div>{p}</div>;
+        }),
       };
       if (image && image.length > 0 && image[0].type === 'image') {
         const { url } = parseImage(image[0].attrs.src);
