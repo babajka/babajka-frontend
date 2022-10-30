@@ -15,5 +15,6 @@ Migration of babajka-frontend from `next@10` to `next@13`
 
 ```
 nvm use
+npm i
 npm run dev
 ```
