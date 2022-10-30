@@ -44,7 +44,7 @@
     "google-spreadsheet": "^3.0.13",
     "http-proxy-middleware": "^0.20.0",
     "js-cookie": "^2.2.0",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "next": "^10.0.3",
     "next-compose-plugins": "^2.2.1",
     "next-routes": "^1.4.2",
