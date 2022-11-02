@@ -4,12 +4,13 @@ Migration of babajka-frontend from `next@10` to `next@13`
 
 ## Stack / Features
 
-- Typescript
-- Tailwind
-- Next Image Component
-- Server Components
-- Vercel Deployments (?)
-- next i18n support
+- [x] Typescript
+- [ ] Tailwind
+- [ ] Next Image Component
+- [x] @next/fonts
+- [ ] next i18n support
+- [ ] Server Components
+- [ ] Vercel Deployments (?)
 
 ## Getting Started
 
