@@ -18,12 +18,12 @@ import AudioPlayer from 'components/common/AudioPlayer';
 import parseYMPlaylistUrl from 'lib/utils/parseYMPlaylistUrl';
 
 import toString from './toString';
-import { getTableMeta, traverseTable, TYPES } from './parseTable';
+import { getTableMeta, traverseTable, traverseTableRowByRow, TYPES } from './parseTable';
 import { parseQuote, parseImage } from './utils';
 
 import styles from './renderer.module.scss';
 
-const { TABLE, TABLE_RIGHT, NOTE, POEM, SPLIT, CAROUSEL } = TYPES;
+const { TABLE, TABLE_RIGHT, NOTE, POEM, SPLIT, TIMELINE, CAROUSEL } = TYPES;
 
 const returnNull = () => null;
 
@@ -126,6 +126,61 @@ const CUSTOM_RENDERER = {
         {renderContent(poemContent, {
           table_row: ({ key, content }) => <div key={key}>{renderContent(content, tableCell)}</div>,
         })}
+      </div>
+    );
+  },
+  [TIMELINE]: timelineContent => {
+    const data = traverseTableRowByRow(timelineContent, true);
+    const timelineEvents = data.map(([date, image, text, annotation]) => {
+      const timelineEvent = {
+        date: date.reduce((acc, cur) => {
+          if (typeof cur !== 'string') {
+            return acc;
+          }
+          return acc.concat(cur);
+        }, ''),
+        text: text.map(p => {
+          if (typeof p !== 'string') {
+            return '';
+          }
+          return <div>{p}</div>;
+        }),
+        annotation: annotation.map(p => {
+          if (typeof p !== 'string') {
+            return '';
+          }
+          return <div>{p}</div>;
+        }),
+      };
+      if (image && image.length > 0 && image[0].type === 'image') {
+        const { url } = parseImage(image[0].attrs.src);
+        timelineEvent.imageUrl = url;
+      }
+      return timelineEvent;
+    });
+    return (
+      <div className={styles['rendered__article-timeline']}>
+        {timelineEvents.map(({ date, imageUrl, text, annotation }) => (
+          <div className={styles['rendered__article-timeline-entry']}>
+            <div className={styles['rendered__article-timeline-date-image']}>
+              <div className={styles['rendered__article-timeline-date']}>{date}</div>
+              {imageUrl && (
+                <Image
+                  className={styles['rendered__article-timeline-image']}
+                  alt={date} // Replace with the beginning of 'text'.
+                  sourceSizes={[190]}
+                  baseUrl={imageUrl}
+                  mode="x" // TODO: Clarify mode.
+                />
+              )}
+            </div>
+            <div className={styles['rendered__article-timeline-text-annotation']}>
+              {/* TODO: Render content ? */}
+              <div className={styles['rendered__article-timeline-text']}>{text}</div>
+              <div className={styles['rendered__article-timeline-annotation']}>{annotation}</div>
+            </div>
+          </div>
+        ))}
       </div>
     );
   },

@@ -240,15 +240,30 @@ $block-spacing: 60px;
 }
 
 .article-split {
-  margin: $block-spacing 0;
-
   tr {
     display: flex;
     justify-content: flex-start;
+
+    @include screen-touch {
+      flex-direction: column;
+    }
+
+    @include screen-mobile {
+      flex-direction: column;
+    }
   }
 
   td {
+    padding: 0 2%;
     width: 50%;
+
+    @include screen-touch {
+      width: 100%;
+    }
+
+    @include screen-mobile {
+      width: 100%;
+    }
   }
 
   p {
@@ -359,5 +374,176 @@ $paragraph-spacing: 24px;
 
   &__hard {
     height: 48px;
+  }
+
+  &__article-timeline {
+    &-entry {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 72px;
+
+      @include screen-tablet-large {
+        margin-bottom: 60px;
+      }
+
+      @include screen-tablet {
+        margin-bottom: 54px;
+      }
+
+      @include screen-tablet-touch-mobile {
+        flex-direction: column;
+      }
+
+      @include screen-touch {
+        margin-bottom: 44px;
+      }
+
+      @include screen-mobile {
+        margin-bottom: 108px;
+      }
+    }
+
+    &-date-image {
+      display: flex;
+      flex-direction: column;
+
+      @include screen-desktop {
+        align-items: stretch;
+        max-width: 148px;
+        min-width: 148px;
+      }
+
+      @include screen-tablet-large {
+        max-width: 124px;
+        min-width: 124px;
+      }
+    }
+
+    &-date {
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 36px;
+
+      @include screen-tablet-touch-mobile {
+        font-size: 27px;
+      }
+    }
+
+    &-image {
+      width: 119px;
+
+      @include screen-desktop {
+        //left: -10px;
+        align-self: flex-start;
+        margin-top: 15px;
+        //right: 0;
+      }
+
+      @include screen-tablet-large {
+        width: 96px;
+      }
+
+      @include screen-tablet-touch-mobile {
+        align-self: center;
+        width: 172px;
+      }
+    }
+
+    &-text-annotation {
+      display: flex;
+      flex-direction: row;
+
+      @include screen-desktop {
+        margin-left: 32px;
+      }
+
+      @include screen-tablet-large {
+        margin-left: 20px;
+      }
+
+      @include screen-tablet {
+        margin-top: 24px;
+      }
+
+      @include screen-touch {
+        flex-direction: column;
+        margin-top: 18px;
+      }
+
+      @include screen-mobile {
+        flex-direction: column;
+        margin-top: 18px;
+      }
+    }
+
+    &-text {
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 36px;
+
+      @include screen-desktop {
+        max-width: 540px;
+        min-width: 540px;
+      }
+
+      @include screen-tablet-large {
+        max-width: 432px;
+        min-width: 432px;
+      }
+
+      @include screen-tablet {
+        font-size: 18px;
+        line-height: 30px;
+        max-width: 432px;
+        min-width: 432px;
+      }
+
+      @include screen-touch {
+        font-size: 18px;
+        line-height: 30px;
+      }
+
+      @include screen-mobile {
+        font-size: 16px;
+        line-height: 24px;
+      }
+
+      div:not(:last-child) {
+        margin-bottom: 20px;
+      }
+    }
+
+    &-annotation {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+
+      @include screen-desktop {
+        margin-left: 60px;
+      }
+
+      @include screen-tablet-large {
+        margin-left: 49px;
+      }
+
+      @include screen-tablet {
+        margin-left: 25px;
+      }
+
+      @include screen-tablet-touch-mobile {
+        font-size: 14px;
+        line-height: 18px;
+      }
+
+      @include screen-touch {
+        margin-left: 60px;
+        margin-top: 36px;
+      }
+
+      @include screen-mobile {
+        margin-left: 60px;
+        margin-top: 30px;
+      }
+    }
   }
 }

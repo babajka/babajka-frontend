@@ -7,6 +7,7 @@ export const TYPES = createConstants(
   'NOTE',
   'POEM',
   'SPLIT',
+  'TIMELINE',
   'CAROUSEL'
 );
 
@@ -42,4 +43,19 @@ export const getTableMeta = content => {
     return [TYPES.TABLE, content];
   }
   return [type, rest];
+};
+
+export const traverseTableRowByRow = (table = [], returnUnknown = false) => {
+  return table.reduce((acc, { type, content }) => {
+    if (type !== 'table_row') {
+      return acc;
+    }
+    const t = content.map(({ type: cellType, content: cellContent }) => {
+      if (cellType !== 'table_cell') {
+        return '';
+      }
+      return traverseTable(cellContent, returnUnknown);
+    });
+    return [...acc, t];
+  }, []);
 };
