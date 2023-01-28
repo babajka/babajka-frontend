@@ -1,0 +1,31 @@
+@import 'styles/responsiveness';
+@import 'styles/variables';
+
+@import 'features/layout/cards/index';
+
+$experiment-viershy-listapad-text-color: #294d68;
+
+.wir-card-wrapper {
+  color: $primary-white;
+
+  &--theme-light {
+    color: $primary-black;
+  }
+
+  &--experiment-viershy-listapad-custom-color {
+    color: $experiment-viershy-listapad-text-color;
+  }
+
+  &--with-border {
+    box-shadow: inset $border-width-default $border-width-default $primary-widescreen-background,
+      inset (-$border-width-default) (-$border-width-default) $primary-widescreen-background;
+  }
+
+  &:hover {
+    @media (hover: hover) {
+      // stylelint-disable-next-line declaration-no-important
+      box-shadow: inset $border-width-hover $border-width-hover $primary,
+        inset (-$border-width-hover) (-$border-width-hover) $primary !important;
+    }
+  }
+}

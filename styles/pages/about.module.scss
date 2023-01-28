@@ -1,0 +1,127 @@
+@import 'styles/responsiveness';
+@import 'styles/variables';
+
+// The convention in Babajka project is that we go from 'desktop' to 'mobile'.
+// TODO(uladbohdan): to replace with mobile->desktop approach which is already
+// in use in other parts of the project.
+$heading-font-size: 48px 48px 48px 30px 30px;
+$heading-line-height: 60px 60px 60px 36px 36px;
+$subheading-font-size: 30px 30px 30px 20px 20px;
+$subheading-line-height: 36px 36px 36px 27px 27px;
+$text-font-size: 20px 20px 20px 16px 16px;
+$text-line-height: 36px 36px 36px 24px 24px;
+$text-margin-top-large: 156px 156px 60px 60px 60px;
+$team-margin-top: 120px 120px 90px 30px 30px;
+$partner-logo-margin-right: 30px 30px 60px 36px 36px;
+
+.about-page {
+  margin-bottom: 50px;
+
+  &__heading {
+    font-weight: bold;
+    margin-top: 48px;
+  }
+
+  &__subheading {
+    font-weight: bold;
+    text-align: left;
+
+    &--mobile-only {
+      display: none;
+
+      @include screen-touch {
+        display: inherit;
+      }
+
+      @include screen-mobile {
+        display: inherit;
+      }
+    }
+  }
+
+  &__text {
+    &--margin-top {
+      &--small {
+        margin-top: 30px;
+      }
+
+      &--medium {
+        margin-top: 40px;
+      }
+    }
+  }
+
+  &__team {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 120px;
+  }
+
+  &__partners-logos {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 30px;
+  }
+
+  &__partner-logo {
+    margin-bottom: 20px;
+
+    img {
+      height: 80px;
+      width: auto;
+    }
+
+    &--size--small {
+      img {
+        height: 60px;
+      }
+    }
+
+    &--size--smallest {
+      img {
+        height: 40px;
+      }
+    }
+  }
+}
+
+@each $idx, $screen-name in $indexed-screens {
+  @include screen-size($screen-name) {
+    .about-page {
+      &__heading {
+        font-size: nth($heading-font-size, $idx);
+        line-height: nth($heading-line-height, $idx);
+      }
+
+      &__subheading {
+        font-size: nth($subheading-font-size, $idx);
+        line-height: nth($subheading-line-height, $idx);
+      }
+
+      &__text {
+        font-size: nth($text-font-size, $idx);
+        line-height: nth($text-line-height, $idx);
+
+        &--margin-top {
+          // stylelint-disable-next-line max-nesting-depth
+          &--large {
+            margin-top: nth($text-margin-top-large, $idx);
+          }
+        }
+      }
+
+      &__team {
+        margin-top: nth($team-margin-top, $idx);
+      }
+
+      &__partner-logo {
+        &:not(:last-child) {
+          margin-right: nth($partner-logo-margin-right, $idx);
+        }
+      }
+    }
+  }
+}

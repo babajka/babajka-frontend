@@ -1,21 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
 import { localize } from 'components/common/Text';
-import Article from 'components/articles/Article';
-import HeaderLinks from 'components/common/layout/header/HeaderLinks';
+import Article from 'features/articles/Article';
+import HeaderLinks from 'components/layout/header/HeaderLinks';
 
 import { ROUTES_NAMES } from 'routes';
+import api from 'constants/api';
 
-import { publicArticleActions, publicArticleSelectors } from 'redux/ducks/publicArticle';
-import { populateRequest } from 'utils/request';
-import { ArticleShape } from 'utils/customPropTypes';
-
-const mapStateToProps = (state, { routerQuery: { slug } }) => ({
-  article: publicArticleSelectors.getCurrent(state, slug),
-  otherLocales: publicArticleSelectors.getOtherLocales(state, slug),
-});
+import { getLocalizedArticle, getLocalesBySlug } from 'utils/getters';
+import { makeRequest, catchServerSideErrors } from 'utils/request';
 
 const ArticlePage = ({ article, otherLocales }) => (
   <>
@@ -31,27 +24,24 @@ const ArticlePage = ({ article, otherLocales }) => (
   </>
 );
 
-ArticlePage.propTypes = {
-  article: ArticleShape,
-  otherLocales: PropTypes.arrayOf(
-    PropTypes.shape({
-      slug: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  routerQuery: PropTypes.shape({
-    slug: PropTypes.string.isRequired,
-  }).isRequired,
-};
-
-ArticlePage.defaultProps = {
-  article: null,
-};
-
 ArticlePage.layoutProps = () => ({
   title: 'header.articles',
 });
 
-ArticlePage.getInitialProps = ctx =>
-  populateRequest(ctx, ({ query: { slug } }) => publicArticleActions.fetchBySlug(slug));
+// TODO: replace with SSG after migration from `next-routes`
+export const getServerSideProps = catchServerSideErrors(async ({ query: { slug } }) => {
+  const article = await makeRequest(api.publicArticle.getBySlug(slug));
 
-export default connect(mapStateToProps)(ArticlePage);
+  const { locales } = article;
+  const localesBySlug = getLocalesBySlug({ locales });
+  const currentLocale = localesBySlug[slug];
+
+  return {
+    props: {
+      article: getLocalizedArticle(article, currentLocale),
+      otherLocales: Object.values(locales).filter(({ locale }) => locale !== currentLocale),
+    },
+  };
+});
+
+export default ArticlePage;

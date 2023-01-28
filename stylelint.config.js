@@ -15,7 +15,7 @@ module.exports = {
   extends: [
     'stylelint-config-standard',
     'stylelint-config-sass-guidelines',
-    './node_modules/prettier-stylelint/config.js',
+    'stylelint-prettier/recommended',
   ],
   plugins: ['stylelint-scss'],
   rules: {
@@ -125,5 +125,13 @@ module.exports = {
 
     // Prevents adding unnecesary Specificity or complicated sass stuff
     'scss/selector-no-redundant-nesting-selector': true,
+
+    // pass css-modules :global selector
+    'selector-pseudo-class-no-unknown': [
+      true,
+      {
+        ignorePseudoClasses: ['/^global$/'],
+      },
+    ],
   },
 };

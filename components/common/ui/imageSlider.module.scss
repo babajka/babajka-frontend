@@ -1,0 +1,42 @@
+@import 'styles/responsiveness';
+@import 'styles/variables';
+
+$image-width-constraint: 0.8;
+
+.image-slider {
+  text-decoration: none;
+
+  &__subtitle {
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  &__slide {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 40px;
+  }
+
+  &__slide-image {
+    display: block;
+    flex-grow: 1;
+    height: auto;
+    max-height: 500px;
+    object-fit: contain;
+    width: auto;
+
+    @each $idx, $screen-name in $indexed-screens {
+      @include screen-size($screen-name) {
+        max-width: map-get($page-content, $screen-name) * $image-width-constraint;
+      }
+    }
+  }
+
+  &__slide-description {
+    font-size: 14px;
+    line-height: 18px;
+    text-align: center;
+  }
+}

@@ -16,6 +16,8 @@ $primary-grey-article-table: #cccccc;
 $primary-black: #000000;
 $primary-white: #ffffff;
 
+$primary-warning: #ed812b;
+
 // Social networks official colors
 $facebook-color: #3b5998;
 $vk-color: #45668e;
@@ -35,9 +37,25 @@ $zindex: (
   sidebar: 200,
   modal-background: 300,
   modal-content: 400,
-  button-go-up: 500
+  button-go-up: 500,
 );
 
 $min-website-width: 330px;
 
 $default-font-size: 16px;
+
+$content-font-size: (
+  desktop: 20px,
+  tablet-large: 20px,
+  tablet: 18px,
+  touch: 18px,
+  mobile: 16px,
+);
+
+$content-line-height: (
+  desktop: 36px,
+  tablet-large: 33px,
+  tablet: 30px,
+  touch: 30px,
+  mobile: 24px,
+);

@@ -1,0 +1,69 @@
+@import 'styles/responsiveness';
+@import 'styles/variables';
+
+.collection-page {
+  padding-bottom: 3rem;
+  padding-top: 3rem;
+
+  &__heading {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 46px;
+
+    @include screen-mobile {
+      flex-direction: column;
+    }
+  }
+
+  &__cover {
+    border-radius: 50%;
+    height: 90px;
+    margin-right: 29px;
+    width: 90px;
+
+    @include screen-mobile {
+      margin-bottom: 30px;
+      margin-right: 0;
+    }
+  }
+
+  &__text {
+    text-decoration: none; // keeper.
+  }
+
+  &__subheading {
+    font-size: 14px;
+    letter-spacing: 1px;
+    line-height: 24px;
+    text-transform: uppercase;
+  }
+
+  &__title {
+    font-size: 48px;
+    font-weight: bold;
+    line-height: 60px;
+
+    @include screen-tablet-touch-mobile {
+      font-size: 30px;
+      line-height: 36px;
+    }
+
+    &--hack-starbellit {
+      @include screen-touch {
+        font-size: 24px;
+        line-height: 30px;
+      }
+
+      @include screen-mobile {
+        font-size: 24px;
+        line-height: 30px;
+      }
+    }
+  }
+
+  &__authors {
+    color: $primary;
+    font-size: 16px;
+    line-height: 24px;
+  }
+}

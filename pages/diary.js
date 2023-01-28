@@ -1,15 +1,13 @@
-import 'styles/pages/diary.scss';
+import styles from 'styles/pages/diary.module.scss';
 
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import cn from 'classnames';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import cn from 'classnames';
+import bem from 'bem-css-modules';
 
 import Image from 'components/common/Image';
-import Redirect from 'components/common/Redirect';
 import { localize } from 'components/common/Text';
-import DiaryLinkArrows from 'components/specials/diary/DiaryLinkArrows';
+import DiaryLinkArrows from 'features/diary/DiaryLinkArrows';
 import ShareButtons from 'components/social/ShareButtons';
 import {
   MetaTitle,
@@ -18,66 +16,49 @@ import {
   MetaImage,
   DEFAULT_IMAGE,
 } from 'components/social/Metatags';
-import TwoArticlesInRow from 'components/articles/blocks/TwoArticlesInRow';
+import TwoArticlesInRow from 'features/layout/blocks/articles/TwoArticlesInRow';
 
-import { diaryActions, diarySelectors } from 'redux/ducks/diary';
-import { formatDate, getYear, dateIsToday } from 'utils/formatters';
+import { formatLocalizedDate, DATE_FORMAT, SHORT_DATE_FORMAT } from 'utils/formatters/date';
 import fiberyRenderer from 'utils/fibery/renderer';
 import fiberyToString from 'utils/fibery/toString';
-import { populateRequest, makeRequest } from 'utils/request';
-import { DiaryShape, LangType } from 'utils/customPropTypes';
+import { makeRequest, catchServerSideErrors } from 'utils/request';
 import { getLocalizedArticles } from 'utils/getters';
+import { getDiary, getDiaryShareText, isNextDiaryAvailable } from 'utils/features/diary';
 import host from 'utils/host';
 
-import { DATE_FORMAT, SHORT_DATE_FORMAT } from 'constants';
+import { Router, ROUTES_NAMES } from 'routes';
 import { DIARY_PICTURE_WIDTH } from 'constants/misc';
-import { ROUTES_NAMES } from 'routes';
 import api from 'constants/api';
 
-const mapStateToProps = (state, { lang }) => ({
-  diary: diarySelectors.getCurrent(state, lang),
-});
-
-const getShareText = (date, name, lang, content) => {
-  const today = dateIsToday(date);
-  const year = getYear(date);
-
-  const base = [
-    today ? 'Сёння' : `${formatDate(date, DATE_FORMAT)} `,
-    today && year && `, у ${year} годзе, `,
-    `${name} ${localize('diary.wrote', lang)}`,
-  ]
-    .filter(Boolean)
-    .join('');
-
-  return {
-    basicText: `${base}...`,
-    extendedText: `${base}:\n«${content}...»\n`,
-  };
-};
+const b = bem(styles);
 
 const DiaryPage = ({
-  diary: { slug, author: { name, diaryImage: image } = {}, date, text: { content } = {} },
+  diary: {
+    slug,
+    author: { name, diaryImage: image },
+    date,
+    text: { content },
+  },
+  articles,
+  metaTitle,
+  metaKeywords,
+  shortContent,
+  basicShareText,
+  extendedShareText,
   lang,
-  routerQuery,
+  arrowProps,
 }) => {
-  const [articles, setArticles] = useState([]);
-  useEffect(() => {
-    makeRequest(api.articles.getChunk({ take: 2 })).then(({ data }) => setArticles(data));
-  }, []);
   const router = useRouter();
-  const metaTitle = `${formatDate(date, DATE_FORMAT)}, ${name}`;
-  const metaKeywords = [
-    formatDate(date, SHORT_DATE_FORMAT),
-    name,
-    localize('diary.meta-keywords', lang),
-  ].join(', ');
-  const [first, second] = getLocalizedArticles(articles, lang);
-  const shortContent = fiberyToString(content).substring(0, 140);
+  const {
+    query: { slug: routerSlug },
+  } = router;
+  const [first, second] = articles;
 
-  if (!routerQuery.slug) {
-    return <Redirect to={ROUTES_NAMES.diary} params={{ slug }} options={{ shallow: true }} />;
-  }
+  useEffect(() => {
+    if (!routerSlug) {
+      Router.replaceRoute(ROUTES_NAMES.diary, { lang, slug }, { shallow: true });
+    }
+  }, [lang, routerSlug, slug]);
 
   return (
     <>
@@ -86,50 +67,77 @@ const DiaryPage = ({
       <MetaKeywords keywords={metaKeywords} />
       <MetaImage url={image ? `${host}${image}` : DEFAULT_IMAGE} small />
 
-      <div className="wir-content-padding diary-page">
-        <DiaryLinkArrows className="diary-page__arrows diary-page__arrows--top" size={36} />
-        <div className={cn('diary-page__title', { 'diary-page__title--with-image': image })}>
-          <div className="diary-page__date">{formatDate(date, DATE_FORMAT)}</div>
-          <div className="diary-page__name">{name}</div>
+      <div className={cn('wir-content-padding', b())}>
+        <DiaryLinkArrows className={b('arrows')} size={36} {...arrowProps} />
+        <div className={b('title', { 'with-image': !!image })}>
+          <h1>{formatLocalizedDate(date, lang, DATE_FORMAT)}</h1>
+          <h1>{name}</h1>
         </div>
-        <div
-          className={cn('diary-page__image-container', {
-            'diary-page__image-container--no-image': !image,
-          })}
-        >
+        <div className={b('image-container', { 'no-image': !image })}>
           {image && (
             <Image
-              className="diary-page__image"
+              className={b('image')}
               alt={name}
               sourceSizes={[DIARY_PICTURE_WIDTH]}
               baseUrl={image}
               mode="x"
+              inViewport
             />
           )}
         </div>
-        <div className="diary-page__text">{fiberyRenderer(content)}</div>
-        <div className="diary-page__share">
-          <ShareButtons urlPath={router.asPath} {...getShareText(date, name, lang, shortContent)} />
+        <div className={b('text')}>{fiberyRenderer(content)}</div>
+        <div className={b('share')}>
+          <ShareButtons
+            className={b('share')}
+            basicText={basicShareText}
+            extendedText={extendedShareText}
+          />
         </div>
-        <DiaryLinkArrows className="diary-page__arrows diary-page__arrows--bottom" size={36} />
+        <DiaryLinkArrows className={b('arrows', { bottom: true })} size={36} {...arrowProps} />
       </div>
 
       {!!articles.length && (
-        <TwoArticlesInRow className="diary-page-extras" first={first} second={second} />
+        <TwoArticlesInRow className={b('extras')} first={first} second={second} />
       )}
     </>
   );
 };
 
-DiaryPage.propTypes = {
-  diary: DiaryShape.isRequired,
-  lang: LangType.isRequired,
-  routerQuery: PropTypes.shape({
-    slug: PropTypes.string,
-  }).isRequired,
-};
+// TODO: replace with SSG after migration from `next-routes`
+export const getServerSideProps = catchServerSideErrors(async ({ query: { slug, lang } }) => {
+  const url = slug ? api.diary.getBySlug(slug) : api.diary.today;
 
-DiaryPage.getInitialProps = ctx =>
-  populateRequest(ctx, ({ query: { slug } }) => diaryActions.getBySlug(slug));
+  const { data, prev, next } = await makeRequest(url);
+  const { data: articles } = await makeRequest(api.articles.getChunk({ take: 2 }));
 
-export default connect(mapStateToProps)(DiaryPage);
+  const diary = getDiary(data, lang);
+  const {
+    author: { name },
+    date,
+    text,
+  } = diary;
+
+  const metaTitle = `${formatLocalizedDate(date, lang, DATE_FORMAT)}, ${name}`;
+  const metaKeywords = [
+    formatLocalizedDate(date, lang, SHORT_DATE_FORMAT),
+    name,
+    localize('diary.meta-keywords', lang),
+  ].join(', ');
+  const shortContent = fiberyToString(text.content).substring(0, 140);
+  const shareData = getDiaryShareText(date, name, lang, shortContent);
+
+  return {
+    props: {
+      diary,
+      articles: getLocalizedArticles(articles, lang),
+      metaTitle,
+      metaKeywords,
+      shortContent,
+      basicShareText: shareData.basicText,
+      extendedShareText: shareData.extendedText,
+      arrowProps: { prev, next, isNextAvailable: isNextDiaryAvailable({ data, next }) },
+    },
+  };
+});
+
+export default DiaryPage;

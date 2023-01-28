@@ -1,8 +1,8 @@
-import './social-buttons.scss';
-
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import qs from 'qs';
+import qs from 'querystring';
+import bem from 'bem-css-modules';
 import cn from 'classnames';
 
 import Text, { localize, useLocaleContext } from 'components/common/Text';
@@ -12,27 +12,25 @@ import ButtonGroup from 'components/common/ButtonGroup';
 
 import { SHARE_NETWORKS } from 'constants/social';
 import { DOMAIN_SECURE } from 'constants';
+import styles from './social-buttons.module.scss';
 
+const b = bem(styles);
 const POPUP_WINDOW_PARAMS = 'width=600,height=400';
 
-const ShareButtons = ({ urlPath, basicText, extendedText }) => {
+const ShareButtons = ({ className, noAsPath, basicText, extendedText, url: forceUrl }) => {
+  const router = useRouter();
   const lang = useLocaleContext();
   const [forceButtonGroup, setForceButtonGroup] = useState(false);
+  const urlPath = noAsPath ? '' : router.asPath;
+  const url = forceUrl || `${DOMAIN_SECURE}${urlPath}`;
 
   return (
     <>
-      <div
-        className={cn('wir-social-buttons__native', {
-          'wir-social-buttons__native--hidden': forceButtonGroup,
-        })}
-      >
+      <div className={cn(b('native', { hidden: forceButtonGroup }), className)}>
         <Button
           onClick={() => {
             if (navigator.share) {
-              navigator.share({
-                title: basicText,
-                url: `${DOMAIN_SECURE}${urlPath}`,
-              });
+              navigator.share({ text: basicText, url });
             } else {
               setForceButtonGroup(true);
             }
@@ -45,23 +43,19 @@ const ShareButtons = ({ urlPath, basicText, extendedText }) => {
           <Text id="common.share-link" />
         </Button>
       </div>
-      <div
-        className={cn('wir-social-buttons__generic', {
-          'wir-social-buttons__generic--shown': forceButtonGroup,
-        })}
-      >
-        <ButtonGroup className="wir-social-buttons" icon>
+      <div className={cn(b('generic', { shown: forceButtonGroup }), className)}>
+        <ButtonGroup icon>
           {SHARE_NETWORKS.map(({ id, icon = id, baseUrl, getParams }) => {
             const text = id === 'twitter' ? extendedText || basicText : basicText;
             return (
               <button
                 key={id}
-                className={`wir-button wir-button__icon wir-social-buttons__button wir-social-buttons__button--${id}`}
+                className={b('button', { [id]: true })}
                 title={localize(`common.share-${id}`, lang)}
                 type="button"
                 onClick={() => {
                   window.open(
-                    `${baseUrl}?${qs.stringify(getParams(`${DOMAIN_SECURE}${urlPath}`, text))}`,
+                    `${baseUrl}?${qs.stringify(getParams(url, text))}`,
                     localize(`common.share-link`, lang),
                     POPUP_WINDOW_PARAMS
                   );
@@ -78,13 +72,16 @@ const ShareButtons = ({ urlPath, basicText, extendedText }) => {
 };
 
 ShareButtons.propTypes = {
-  urlPath: PropTypes.string,
+  className: PropTypes.string,
+  noAsPath: PropTypes.bool,
   basicText: PropTypes.string.isRequired,
   extendedText: PropTypes.string,
+  url: PropTypes.string,
 };
 
 ShareButtons.defaultProps = {
-  urlPath: '',
+  className: '',
+  noAsPath: false,
   extendedText: '',
 };
 

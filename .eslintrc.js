@@ -2,14 +2,6 @@ module.exports = {
   parser: 'babel-eslint',
   extends: ['airbnb', 'prettier', 'prettier/react'],
   plugins: ['prettier', 'react-hooks'],
-  globals: {
-    __ENV__: false,
-    __VERSION__: false,
-    __PROD__: false,
-    __STAGING__: false,
-    __DEV__: false,
-    __TESTING__: false,
-  },
   env: {
     browser: true,
   },
@@ -19,6 +11,8 @@ module.exports = {
 
     // we use named export in utils
     'import/prefer-default-export': 'off',
+    // to find unused code:
+    // 'import/no-unused-modules': ['error', { unusedExports: true }],
 
     // we use bind
     'react/jsx-no-bind': 'off',
@@ -26,10 +20,11 @@ module.exports = {
     'react/jsx-filename-extension': ['error', { extensions: ['.js'] }],
     // weird rule
     'react/jsx-one-expression-per-line': 'off',
-    // allow create components without prop-types check
-    'react/prop-types': ['warn', { skipUndeclared: true }],
-    'react/forbid-prop-types': 'warn',
-    'react/require-default-props': 'warn',
+    // temporary disable prop-types check
+    'react/prop-types': 'off',
+    'react/forbid-prop-types': 'off',
+    'react/require-default-props': 'off',
+    'react/jsx-props-no-spreading': 'off',
 
     // react-hooks
     'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks

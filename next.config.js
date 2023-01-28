@@ -1,74 +1,23 @@
 const withPlugins = require('next-compose-plugins');
-const fonts = require('next-fonts');
-const sass = require('@zeit/next-sass');
-const css = require('@zeit/next-css');
-const bundleAnalyzer = require('@zeit/next-bundle-analyzer');
-// eslint-disable-next-line import/no-extraneous-dependencies
-const webpack = require('webpack');
-const GenerateJsonPlugin = require('generate-json-webpack-plugin');
-const envCi = require('env-ci');
+const getBundleAnalyzer = require('@next/bundle-analyzer');
 
-const packageJson = require('./package.json');
-const { definePlugin, sassLoaderOptions } = require('./utils/webpack-plugins');
-const { VALID_LOCALES } = require('./constants');
 const ENV = require('./utils/env');
 
-const langs = VALID_LOCALES.join('|');
-
-const { branch, commit } = envCi();
-const { version } = packageJson;
-
 const nextConfig = {
-  experimental: {
-    // https://github.com/zeit/next.js/issues/7949#issuecomment-524929448
-    granularChunks: true,
+  env: {
+    isProd: ENV === 'production',
+    isStaging: ENV === 'staging',
+    isDev: ENV !== 'production' && ENV !== 'staging',
   },
-  webpack(config) {
-    config.plugins.push(
-      ...[
-        new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, new RegExp(langs)),
-        definePlugin,
-        new GenerateJsonPlugin('static/info.json', {
-          env: ENV,
-          version,
-          commit,
-          branch,
-        }),
-      ]
-    );
-    return config;
-  },
+  // i18n: {
+  //   locales: ['be', 'ru', 'en'],
+  //   defaultLocale: 'be',
+  //   localeDetection: false,
+  // },
 };
 
-const plugins = [
-  [fonts, { enableSvg: true }],
+const withBundleAnalyzer = getBundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+});
 
-  css,
-
-  [
-    sass,
-    {
-      sassLoaderOptions,
-    },
-  ],
-
-  [
-    bundleAnalyzer,
-    {
-      analyzeServer: ['server', 'both'].includes(process.env.BUNDLE_ANALYZE),
-      analyzeBrowser: ['browser', 'both'].includes(process.env.BUNDLE_ANALYZE),
-      bundleAnalyzerConfig: {
-        server: {
-          analyzerMode: 'static',
-          reportFilename: '../../reports/server.html',
-        },
-        browser: {
-          analyzerMode: 'static',
-          reportFilename: '../reports/client.html',
-        },
-      },
-    },
-  ],
-];
-
-module.exports = withPlugins(plugins, nextConfig);
+module.exports = withPlugins([withBundleAnalyzer], nextConfig);

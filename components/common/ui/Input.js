@@ -1,55 +1,48 @@
-import './input.scss';
-
 import React from 'react';
 import PropTypes from 'prop-types';
+import bem from 'bem-css-modules';
 
 import Clickable from 'components/common/Clickable';
 import Icon from 'components/common/ui/Icon';
+import Spinner from 'components/common/ui/Spinner';
 
-const getClass = (cls, err) => `${cls}${err ? ` ${cls}--error` : ''}`;
+import styles from './input.module.scss';
 
-const Input = ({
-  pending,
-  leftIcon,
-  rightIcon,
-  disabled,
-  error,
-  onRightClick,
-  placeholder,
-  ...props
-}) => (
-  <>
-    <div className="wir-input">
-      <input
-        className="wir-input__input"
-        type="text"
-        disabled={disabled}
-        placeholder={placeholder}
-        aria-label={placeholder}
-        {...props}
-      />
-      {pending && (
-        <span className="wir-input__icon wir-input__icon--left wir-input__icon--loading">
-          <Icon name="circle-notch" />
-        </span>
-      )}
-      {leftIcon && (
-        <span className={`${getClass('wir-input__icon', error)} wir-input__icon--left`}>
-          <Icon {...leftIcon} />
-        </span>
-      )}
-      {rightIcon && (
-        <Clickable
-          className={`${getClass('wir-input__icon', error)} wir-input__icon--right`}
-          onClick={onRightClick}
-        >
-          <Icon {...rightIcon} />
-        </Clickable>
-      )}
-      <span className={getClass('wir-input__bar', error)} />
-    </div>
-    {error && <p className="wir-input__error">{error}</p>}
-  </>
+const b = bem(styles);
+
+const Input = React.forwardRef(
+  ({ pending, leftIcon, rightIcon, disabled, error, onRightClick, placeholder, ...props }, ref) => (
+    <>
+      <div className={b()}>
+        <input
+          ref={ref}
+          className={b('control')}
+          type="text"
+          disabled={disabled}
+          placeholder={placeholder}
+          aria-label={placeholder}
+          {...props}
+        />
+        {pending && (
+          <span className={b('icon', { left: true })}>
+            <Spinner />
+          </span>
+        )}
+        {leftIcon && (
+          <span className={b('icon', { left: true, error: !!error })}>
+            <Icon {...leftIcon} />
+          </span>
+        )}
+        {rightIcon && (
+          <Clickable className={b('icon', { right: true, error: !!error })} onClick={onRightClick}>
+            <Icon {...rightIcon} />
+          </Clickable>
+        )}
+        <span className={b('bar', { error: !!error })} />
+      </div>
+      {error && <p className={b('error')}>{error}</p>}
+    </>
+  )
 );
 
 Input.propTypes = {

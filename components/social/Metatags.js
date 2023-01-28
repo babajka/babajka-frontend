@@ -10,7 +10,7 @@ import { APPLE_TOUCH_ICON } from 'constants/assets';
 
 export const MetaTitle = ({ title, type }) => (
   <Head>
-    <title>Wir.by | {title}</title>
+    <title>{title} | Wir.by</title>
     <meta key="meta-title" name="title" content={title} />
     <meta key="meta-title-fb" property="og:title" content={title} />
     <meta key="meta-type-fb" property="og:type" content={type} />
@@ -123,6 +123,7 @@ export const MetaAppleTouchDevices = ({ title }) => (
 
 const Metatags = ({ url }) => (
   <Head>
+    {!process.env.isProd && <meta name="robots" content="noindex" />}
     {/* Basic metatags */}
     <meta charSet="utf-8" />
     <meta httpEquiv="X-UA-Compatible" content="IE=edge" />

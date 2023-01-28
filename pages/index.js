@@ -1,53 +1,44 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import keyBy from 'lodash/keyBy';
+import React, { useMemo } from 'react';
 
-import BLOCKS_BY_TYPE from 'components/articles/blocks';
+import CardBlocksLayout from 'features/layout/card-blocks-layout';
+import { DiaryProvider } from 'features/diary/store';
 
-import { homeActions, homeSelectors } from 'redux/ducks/home';
-import { populateRequest } from 'utils/request';
-import { ArticlesArray, ArticlesById, TopicsById, TagsById, LangType } from 'utils/customPropTypes';
+import { makeRequest } from 'utils/request';
+import { localizeData } from 'utils/getters';
+import { REVALIDATE_TIMEOUT } from 'constants/misc';
+import api from 'constants/api';
 
-const mapStateToProps = (state, { lang = 'be' }) => ({
-  blocks: homeSelectors.getBlocks(state),
-  data: homeSelectors.getData(state, lang),
-  lang,
-});
-
-const MainPage = ({ blocks, data, lang }) => {
-  const blocksByType = keyBy(blocks, 'type');
-  return blocks.map((block, index) => {
-    const Block = BLOCKS_BY_TYPE[block.type];
-    if (!Block) {
-      return null;
-    }
-    return (
-      // eslint-disable-next-line react/no-array-index-key
-      <Block key={index} block={block} data={data} blocks={blocksByType} lang={lang} />
-    );
-  });
+const MainPage = ({ blocks, data, diary, lang }) => {
+  const localized = useMemo(() => localizeData(data, lang), [data, lang]);
+  return (
+    <DiaryProvider value={diary}>
+      <CardBlocksLayout blocks={blocks} data={localized} inViewport />
+    </DiaryProvider>
+  );
 };
-
-MainPage.propTypes = {
-  blocks: PropTypes.arrayOf(
-    PropTypes.shape({
-      type: PropTypes.oneOf(Object.keys(BLOCKS_BY_TYPE)).isRequired,
-    })
-  ).isRequired,
-  data: PropTypes.shape({
-    articles: ArticlesById.isRequired,
-    tags: TagsById.isRequired,
-    topics: TopicsById.isRequired,
-    latestArticles: ArticlesArray.isRequired,
-  }).isRequired,
-  lang: LangType.isRequired,
-};
-
-MainPage.getInitialProps = ctx => populateRequest(ctx, homeActions.fetch);
 
 MainPage.getLayoutProps = () => ({
   title: 'header.main',
 });
 
-export default connect(mapStateToProps)(MainPage);
+// TODO: use built-in i18n mechanism
+export const getStaticProps = async () => {
+  const { blocks, data } = await makeRequest(api.storage.getMainPage);
+  const hasDiary = blocks.some(({ type }) => type === 'diary');
+
+  let diary;
+  if (hasDiary) {
+    diary = await makeRequest(api.diary.today);
+  }
+
+  return {
+    props: {
+      blocks,
+      data,
+      diary,
+    },
+    revalidate: REVALIDATE_TIMEOUT,
+  };
+};
+
+export default MainPage;

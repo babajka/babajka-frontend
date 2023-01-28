@@ -1,0 +1,22 @@
+@import 'styles/responsiveness';
+@import 'styles/variables';
+
+.block {
+  // Rule with no effect to force keep the .block class.
+  font-weight: normal;
+
+  &--no-background {
+    margin-top: 60px;
+  }
+
+  &--with-background {
+    background-color: $primary-black;
+    margin-bottom: 20px;
+    margin-top: 80px;
+  }
+
+  &--negative-margin-top {
+    // stylelint-disable-next-line declaration-no-important
+    margin-top: -15px !important;
+  }
+}

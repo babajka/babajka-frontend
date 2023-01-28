@@ -1,0 +1,165 @@
+@import 'styles/responsiveness';
+@import 'styles/variables';
+
+html {
+  height: 100%;
+  max-width: 100vw;
+}
+
+body {
+  background-color: $primary-widescreen-background;
+  font-family: 'Ubuntu', sans-serif;
+  height: 100%;
+  margin: 0;
+  max-width: 100vw;
+  min-width: $min-website-width;
+
+  @include sidebar-visible {
+    display: block;
+    height: unset;
+    overflow: auto;
+  }
+}
+
+footer {
+  flex-shrink: 0;
+}
+
+// stylelint-disable-next-line selector-max-id
+#__next {
+  position: relative;
+}
+
+.wir-root {
+  background-color: $primary-white;
+  margin: auto;
+  max-width: $widescreen;
+  min-height: 100vh;
+  min-width: $min-website-width;
+  overflow-x: hidden;
+  position: relative;
+
+  @include sidebar-visible {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &--sidebar-expanded {
+    overflow-x: unset;
+    overflow-y: scroll;
+    position: fixed;
+  }
+}
+
+.wir-space {
+  display: flex;
+  flex-direction: column;
+  max-width: 100vw;
+  min-height: 100vh;
+  min-width: $min-website-width;
+
+  @include sidebar-visible {
+    flex-grow: 1;
+  }
+}
+
+.wir-content {
+  flex: 1 0 auto;
+}
+
+.wir-overlay {
+  background-color: $primary-black;
+  bottom: 0;
+  display: none;
+  height: 100%;
+  left: 0;
+  opacity: 0.5;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: map-get($zindex, sidebar-overlay);
+
+  &--active {
+    display: block;
+    overflow-y: scroll;
+    position: fixed;
+  }
+}
+
+.wir-sidebar {
+  background-color: $primary-concrete;
+  bottom: 0;
+  flex-shrink: 0;
+  min-height: 100vh;
+  -webkit-overflow-scrolling: touch;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  position: fixed;
+  right: -255px;
+  top: 0;
+  transition: 0.5s right;
+  z-index: map-get($zindex, sidebar);
+
+  @include mobile {
+    right: -100vw;
+  }
+
+  @include sidebar-visible {
+    background-color: $primary-concrete;
+    overflow-y: unset;
+    position: unset;
+    right: unset;
+    width: unset;
+  }
+
+  &--expanded {
+    // This represents the state when sidebar is positioned on top of other content.
+    // This happens when one toggles burger button.
+    // This only possible on screens which are less than $desktop-with-sidebar.
+
+    @include sidebar-invisible {
+      height: 100%;
+      right: 0;
+      transition: 0.5s right;
+    }
+  }
+}
+
+.wir-up {
+  bottom: 30px;
+  font-size: 3rem;
+  position: absolute;
+  right: 30px;
+  z-index: map-get($zindex, button-go-up);
+}
+
+.wir-content-padding {
+  @include screen-desktop {
+    padding-left: calc((100% - #{map-get($page-content, desktop)}) / 3);
+    padding-right: calc((100% - #{map-get($page-content, desktop)}) * 2 / 3);
+  }
+
+  @include screen-tablet-large {
+    padding-left: calc((100% - #{map-get($page-content, tablet-large)}) / 3);
+    padding-right: calc((100% - #{map-get($page-content, tablet-large)}) * 2 / 3);
+  }
+
+  @include screen-tablet {
+    padding-left: calc((100% - #{map-get($page-content, tablet)}) / 3);
+    padding-right: calc((100% - #{map-get($page-content, tablet)}) * 2 / 3);
+  }
+
+  @include screen-touch {
+    padding-left: calc((100% - #{map-get($page-content, touch)}) / 3);
+    padding-right: calc((100% - #{map-get($page-content, touch)}) * 2 / 3);
+  }
+
+  @include screen-mobile {
+    padding-left: calc((100% - #{map-get($page-content, mobile)}) / 3);
+    padding-right: calc((100% - #{map-get($page-content, mobile)}) * 2 / 3);
+  }
+}
+
+.nowrap {
+  white-space: nowrap;
+}

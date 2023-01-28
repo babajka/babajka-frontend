@@ -1,68 +1,92 @@
+import typography from 'styles/typography.module.scss';
+
 import React from 'react';
 import PropTypes from 'prop-types';
-import qs from 'qs';
+import cn from 'classnames';
+import bem from 'bem-css-modules';
 
-import { SOUNDCLOUD_EMBED_PREFIX } from 'constants/social';
+import useWindowWidth from 'hooks/useWindowWidth';
 
-/* eslint-disable camelcase */
-const getUrl = ({
-  url,
-  color,
-  auto_play = false,
-  hide_related = true,
-  show_comments = false,
-  show_user = true,
-  show_reposts = true,
-  show_teaser = false,
-  visual = false,
-}) =>
-  `${SOUNDCLOUD_EMBED_PREFIX}/?${qs.stringify({
-    url,
-    color,
-    auto_play,
-    hide_related,
-    show_comments,
-    show_user,
-    show_reposts,
-    show_teaser,
-    visual,
-  })}`;
-/* eslint-enable */
+import { YANDEX_MUSIC_EMBED_PREFIX, YANDEX_MUSIC_ALBUM_ID } from 'constants/social';
 
-const AudioPlayer = ({ trackId, type, width, height, color }) => (
-  <div className="article-page-interactive">
-    <span className="article__playerwrapper">
-      <iframe
-        className="article__player"
-        title="AudioPlayer"
-        width={width}
-        height={height}
-        scrolling="no"
-        frameBorder="no"
-        allow="autoplay"
-        src={getUrl({
-          url: `https://api.soundcloud.com/tracks/${trackId}`,
-          color,
-          visual: type === 'big',
-        })}
-      />
-    </span>
-  </div>
-);
+import styles from './audioVideoPlayer.module.scss';
+
+import Text from './Text';
+
+const b = bem(styles);
+
+const getTrackUrl = (trackId, playlistUsername, playlistId) => {
+  if (playlistUsername && playlistId) {
+    return `${YANDEX_MUSIC_EMBED_PREFIX}/#playlist/${playlistUsername}/${playlistId}`;
+  }
+  if (trackId) {
+    return `${YANDEX_MUSIC_EMBED_PREFIX}/#track/${trackId}/${YANDEX_MUSIC_ALBUM_ID}`;
+  }
+  return '';
+};
+
+// Const values for Yandex Music Player Dimensions are not documented anywhere and are found empirically.
+
+const YANDEX_MUSIC_PLAYER_HEIGHT = {
+  track: {
+    desktop: 180,
+    mobile: 380,
+  },
+  playlist: {
+    desktop: 420,
+    mobile: 480,
+  },
+};
+
+const YANDEX_MUSIC_PLAYER_SCREEN_THRESHOLD = 650;
+
+const AudioPlayer = ({ trackId, playlistUsername, playlistId, width }) => {
+  const mode = playlistUsername && playlistId ? 'playlist' : 'track';
+
+  const height =
+    useWindowWidth() < YANDEX_MUSIC_PLAYER_SCREEN_THRESHOLD
+      ? YANDEX_MUSIC_PLAYER_HEIGHT[mode].mobile
+      : YANDEX_MUSIC_PLAYER_HEIGHT[mode].desktop;
+
+  const srcUrl = getTrackUrl(trackId, playlistUsername, playlistId);
+
+  if (!srcUrl) {
+    return (
+      <div className={cn(b('content-unavailable'), typography['common-text'])}>
+        <Text id="article.audio-currently-not-available" />
+      </div>
+    );
+  }
+
+  return (
+    <div className={styles['article-page-interactive']}>
+      <span>
+        <iframe
+          title="AudioPlayer"
+          key={trackId}
+          frameBorder="0"
+          style={{ border: 'none', width, height }}
+          width={width}
+          height={height}
+          src={srcUrl}
+        />
+      </span>
+    </div>
+  );
+};
 
 AudioPlayer.propTypes = {
-  trackId: PropTypes.string.isRequired,
+  trackId: PropTypes.string,
+  playlistUsername: PropTypes.string,
+  playlistId: PropTypes.string,
   width: PropTypes.string,
-  height: PropTypes.string,
-  color: PropTypes.string,
-  type: PropTypes.oneOf(['big', 'small']),
 };
 
 AudioPlayer.defaultProps = {
+  trackId: '',
+  playlistUsername: '',
+  playlistId: '',
   width: '100%',
-  height: '165',
-  type: 'small',
-  color: '',
 };
 
 export default AudioPlayer;

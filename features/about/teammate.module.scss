@@ -1,0 +1,49 @@
+@import 'styles/responsiveness';
+@import 'styles/variables';
+
+// The convention in Babajka project is that we go from 'desktop' to 'mobile'.
+$team-num-columns: 7 6 4 3 2;
+
+.teammate {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 5px;
+
+  &__pic {
+    height: 102px;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  &__name {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 21px;
+    margin-bottom: 2px;
+    margin-top: 5px;
+  }
+
+  &__role {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  &__placeholder {
+    @include screen-touch {
+      display: none;
+    }
+
+    @include screen-mobile {
+      display: none;
+    }
+  }
+}
+
+@each $idx, $screen-name in $indexed-screens {
+  @include screen-size($screen-name) {
+    .teammate {
+      width: map-get($page-content, $screen-name) / nth($team-num-columns, $idx);
+    }
+  }
+}

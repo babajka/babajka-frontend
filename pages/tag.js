@@ -1,8 +1,7 @@
-import 'styles/pages/tag.scss';
+import styles from 'styles/pages/tag.module.scss';
 
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import bem from 'bem-css-modules';
 
 import {
   MetaTitle,
@@ -12,58 +11,17 @@ import {
   DEFAULT_IMAGE,
 } from 'components/social/Metatags';
 import { localize } from 'components/common/Text';
-import FeaturedBlock from 'components/articles/blocks/FeaturedBlock';
-import TagPageBlockB from 'components/articles/blocks/TagPageBlockB';
-import TagPageBlockCD from 'components/articles/blocks/TagPageBlockCD';
+import { ArticlesList } from 'features/layout/blocks/articles/list-block';
 
-import { tagsActions, tagsSelectors } from 'redux/ducks/tags';
-import { ArticlesArray, TagShape, LangType } from 'utils/customPropTypes';
-import { populateRequest } from 'utils/request';
-import { renderTag, getTopicLink, getTagImageUrl } from 'utils/tags';
+import { makeRequest, catchServerSideErrors } from 'utils/request';
+import { renderTag, getTopicLink, getTagImageUrl } from 'utils/features/tags';
+import { getLocalizedTag, getLocalizedArticles } from 'utils/getters';
 import host from 'utils/host';
+import api from 'constants/api';
 
-import { TOPICS } from 'constants';
+const b = bem(styles);
 
-const PAGE_LEVEL_ORDER = ['B1', 'C', 'D', 'C', 'B2', 'C', 'D', 'C'];
-
-const BLOCK_BY_LEVEL = {
-  B1: TagPageBlockB,
-  B2: TagPageBlockB,
-  C: TagPageBlockCD,
-  D: TagPageBlockCD,
-};
-
-const LAYOUT_BY_LEVEL = {
-  B1: 'large-left',
-  B2: 'large-right',
-  C: 'row-of-three',
-  D: 'row-of-two',
-};
-
-const ArticlesBlocks = ({ articlesCount, blocks }) => {
-  if (articlesCount === 1) {
-    const [article] = blocks[0];
-    const { articleId } = article;
-    return (
-      <FeaturedBlock
-        // This is a workaround in order to use FeaturedBlock as it is.
-        block={{ frozen: true, articleId }}
-        data={{ articles: { [articleId]: article } }}
-      />
-    );
-  }
-
-  return blocks.map((block, index) => {
-    const levelName = PAGE_LEVEL_ORDER[index % PAGE_LEVEL_ORDER.length];
-    const Block = BLOCK_BY_LEVEL[levelName];
-    // eslint-disable-next-line react/no-array-index-key
-    return <Block key={index} articles={block} layout={LAYOUT_BY_LEVEL[levelName]} />;
-  });
-};
-
-const mapStateToProps = (state, { lang }) => tagsSelectors.getData(state, lang);
-
-const TagPage = ({ lang, routerQuery: { topic }, tag, blocks, articlesCount }) => {
+const TagPage = ({ lang, topic, tag, articles }) => {
   const title = renderTag(tag);
   const imageUrl = getTagImageUrl(tag);
   const metaKeywords = [title, localize(`topic.meta_${topic}_keywords`, lang)].join(', ');
@@ -74,29 +32,32 @@ const TagPage = ({ lang, routerQuery: { topic }, tag, blocks, articlesCount }) =
       <MetaDescription description={localize(`topic.meta_other_${topic}_description`, lang)} />
       <MetaKeywords keywords={metaKeywords} />
 
-      <div className="tag-page">
-        <div className="wir-content-padding tag-page__header">
-          <div className="tag-page__topic">{getTopicLink({ topic, postfix: 'one' })}</div>
-          <div className="tag-page__title">{title}</div>
+      <div className={b()}>
+        <div className="wir-content-padding">
+          <div className={b('topic')}>{getTopicLink({ topic, postfix: 'one' })}</div>
+          <h1 className={b('title')}>{title}</h1>
         </div>
-        <ArticlesBlocks articlesCount={articlesCount} blocks={blocks} />
+        <ArticlesList articles={articles} />
       </div>
     </>
   );
 };
 
-TagPage.propTypes = {
-  lang: LangType.isRequired,
-  routerQuery: PropTypes.shape({
-    topic: PropTypes.oneOf(TOPICS).isRequired,
-    tag: PropTypes.string.isRequired,
-  }).isRequired,
-  tag: TagShape.isRequired,
-  blocks: PropTypes.arrayOf(ArticlesArray).isRequired,
-  articlesCount: PropTypes.number.isRequired,
-};
+// TODO: replace with SSG after migration from `next-routes`
+export const getServerSideProps = catchServerSideErrors(
+  async ({ query: { topic, tag: tagSlug, lang } }) => {
+    const { tag, articles } = await makeRequest(api.tags.getArticles(tagSlug));
 
-TagPage.getInitialProps = ctx =>
-  populateRequest(ctx, ({ query: { tag } }) => tagsActions.fetchArticles(tag));
+    const localizedArticles = getLocalizedArticles(articles, lang);
 
-export default connect(mapStateToProps)(TagPage);
+    return {
+      props: {
+        topic,
+        tag: getLocalizedTag(tag, lang),
+        articles: localizedArticles,
+      },
+    };
+  }
+);
+
+export default TagPage;

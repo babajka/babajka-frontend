@@ -1,0 +1,239 @@
+@import 'styles/responsiveness';
+@import 'styles/variables';
+
+.banner {
+  position: relative;
+
+  img {
+    cursor: pointer;
+    width: 100%;
+  }
+
+  &__title {
+    position: absolute;
+  }
+
+  &__subtitle {
+    position: absolute;
+  }
+
+  &__mapa-title {
+    color: $primary-black;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 36px;
+
+    @include screen-desktop {
+      height: 108px;
+      left: 330px;
+      top: 38px;
+      width: 213px;
+    }
+
+    @include screen-tablet-large {
+      height: 108px;
+      left: 325px;
+      top: 38px;
+      width: 213px;
+    }
+
+    @include screen-tablet {
+      height: 108px;
+      left: 300px;
+      top: 38px;
+      width: 213px;
+    }
+
+    @include screen-touch {
+      font-size: 20px;
+      height: 81px;
+      left: 290px;
+      line-height: 27px;
+      top: 40px;
+      width: 138px;
+    }
+
+    @include screen-mobile {
+      font-size: 20px;
+      height: 54px;
+      left: 35px;
+      line-height: 27px;
+      top: 50px;
+      width: 220px;
+    }
+  }
+
+  &__mapa-subtitle {
+    // HACK to keep the rule.
+    text-decoration: none;
+  }
+
+  &__ny2021-title {
+    color: $primary-white;
+    font-weight: 700;
+
+    @include screen-desktop {
+      font-size: 60px;
+      height: 66px;
+      left: 60px;
+      line-height: 66px;
+      top: 78px;
+      width: 512px;
+    }
+
+    @include screen-tablet-large {
+      font-size: 48px;
+      height: 60px;
+      left: 30px;
+      line-height: 60px;
+      top: 78px;
+      width: 512px;
+    }
+
+    @include screen-tablet {
+      font-size: 48px;
+      height: 96px;
+      left: 30px;
+      line-height: 48px;
+      top: 60px;
+      width: 253px;
+    }
+
+    @include screen-touch {
+      font-size: 48px;
+      height: 96px;
+      left: 30px;
+      line-height: 48px;
+      top: 60px;
+      width: 253px;
+    }
+
+    @include screen-mobile {
+      font-size: 30px;
+      height: 72px;
+      left: 30px;
+      line-height: 36px;
+      top: 222px;
+      width: 171px;
+    }
+  }
+
+  &__ny2021-subtitle {
+    color: $primary-white;
+    font-size: 16px;
+    font-weight: 400;
+    height: 24px;
+    line-height: 24px;
+    width: 177px;
+
+    @include screen-desktop {
+      left: 60px;
+      top: 54px;
+    }
+
+    @include screen-tablet-large {
+      left: 30px;
+      top: 54px;
+    }
+
+    @include screen-tablet {
+      left: 30px;
+      top: 36px;
+    }
+
+    @include screen-touch {
+      left: 30px;
+      top: 36px;
+    }
+
+    @include screen-mobile {
+      left: 30px;
+      top: 198px;
+    }
+  }
+
+  &__tinder-title {
+    color: $primary-white;
+    font-weight: 700;
+
+    @include screen-desktop {
+      font-size: 60px;
+      height: 66px;
+      left: 388px;
+      line-height: 66px;
+      top: 78px;
+      width: 532px;
+    }
+
+    @include screen-tablet-large {
+      font-size: 48px;
+      height: 60px;
+      left: 330px;
+      line-height: 60px;
+      top: 78px;
+      width: 512px;
+    }
+
+    @include screen-tablet {
+      font-size: 48px;
+      height: 96px;
+      left: 330px;
+      line-height: 48px;
+      top: 60px;
+      width: 253px;
+    }
+
+    @include screen-touch {
+      font-size: 48px;
+      height: 96px;
+      left: 204px;
+      line-height: 48px;
+      top: 60px;
+      width: 253px;
+    }
+
+    @include screen-mobile {
+      font-size: 30px;
+      height: 72px;
+      left: 108px;
+      line-height: 36px;
+      top: 222px;
+      width: 171px;
+    }
+  }
+
+  &__tinder-subtitle {
+    color: $primary-white;
+    font-size: 16px;
+    font-weight: 400;
+    height: 24px;
+    line-height: 24px;
+    width: 177px;
+
+    @include screen-desktop {
+      left: 388px;
+      top: 54px;
+    }
+
+    @include screen-tablet-large {
+      left: 330px;
+      top: 54px;
+    }
+
+    @include screen-tablet {
+      left: 330px;
+      top: 36px;
+    }
+
+    @include screen-touch {
+      left: 204px;
+      top: 36px;
+    }
+
+    @include screen-mobile {
+      left: 108px;
+      top: 198px;
+    }
+  }
+}

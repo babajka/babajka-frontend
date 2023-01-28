@@ -1,0 +1,29 @@
+@import 'styles/responsiveness';
+@import 'styles/variables';
+
+.tag-page {
+  padding-bottom: 3rem;
+  padding-top: 3rem;
+
+  &__topic {
+    font-size: $default-font-size;
+    line-height: 24px;
+    text-transform: uppercase;
+  }
+
+  &__title {
+    font-size: 48px;
+    font-weight: bold;
+    line-height: 60px;
+    padding-bottom: 50px;
+  }
+}
+
+@include screen-mobile {
+  .tag-page {
+    &__title {
+      font-size: 36px;
+      line-height: 42px;
+    }
+  }
+}

@@ -1,0 +1,595 @@
+@import 'styles/responsiveness';
+@import 'styles/variables';
+
+@import 'features/layout/cards/index';
+
+.tag-card {
+  display: flex;
+  position: relative;
+
+  &__location {
+    background-size: cover;
+    box-sizing: border-box;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    &-title {
+      font-weight: bold;
+    }
+  }
+
+  &__person {
+    background-color: $primary-black;
+    display: flex;
+    flex-direction: row-reverse;
+    position: relative;
+
+    &-cover-container {
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    &--theme-black > &-cover-container,
+    &--theme-white > &-cover-container {
+      margin-right: $border-width-default;
+      margin-top: $border-width-default;
+    }
+
+    &:hover > &-cover-container {
+      @media (hover: hover) {
+        margin-right: $border-width-hover;
+        margin-top: $border-width-hover;
+      }
+    }
+
+    &-cover {
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      width: 100%;
+    }
+
+    &--theme-black > &-cover-container > &-cover,
+    &--theme-white > &-cover-container > &-cover {
+      right: -($border-width-default);
+      top: -($border-width-default);
+    }
+
+    &:hover > &-cover-container > &-cover {
+      @media (hover: hover) {
+        right: -($border-width-hover);
+        top: -($border-width-hover);
+      }
+    }
+
+    &-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    &-subtitle {
+      font-size: 14px;
+      line-height: 18px;
+    }
+
+    &-title {
+      font-weight: bold;
+    }
+  }
+}
+
+@mixin shared-cover-rules($cover-size) {
+  .tag-card {
+    &__person {
+      &-cover-container {
+        height: $cover-size;
+        width: $cover-size;
+      }
+
+      &-cover {
+        height: $cover-size;
+        width: $cover-size;
+      }
+    }
+  }
+
+  /* stylelint-disable */
+  .tag-card__person--theme-black > .tag-card__person-cover-container,
+  .tag-card__person--theme-white > .tag-card__person-cover-container {
+    height: $cover-size - 2 * $border-width-default;
+    width: $cover-size - $border-width-default;
+  }
+
+  .tag-card__person:hover > .tag-card__person-cover-container {
+    @media (hover: hover) {
+      height: $cover-size - 2 * $border-width-hover;
+      width: $cover-size - $border-width-hover;
+    }
+  }
+  /* stylelint-enable */
+}
+
+@mixin shared-size-l {
+  @include shared-cover-rules(390px);
+
+  .tag-card {
+    @include l-sizes;
+
+    &__location {
+      padding: 0 39px 43px;
+
+      &-title {
+        font-size: 72px;
+        line-height: 72px;
+      }
+    }
+
+    &__person {
+      &-content {
+        bottom: 42px;
+        left: 30px;
+        position: absolute;
+        width: 240px;
+      }
+
+      &-title {
+        font-size: 72px;
+        line-height: 72px;
+        margin-top: 18px;
+        max-height: 72px * 2;
+        max-width: 420px;
+      }
+
+      &-description {
+        font-size: 14px;
+        line-height: 21px;
+        margin-top: 19px;
+      }
+    }
+  }
+}
+
+@mixin shared-size-square-m {
+  @include shared-cover-rules(390px);
+
+  .tag-card {
+    @include square-m-sizes;
+
+    &__location {
+      padding: 0 30px 42px;
+
+      &-title {
+        font-size: 48px;
+        line-height: 60px;
+      }
+    }
+
+    &__person {
+      &-content {
+        bottom: 42px;
+        left: 30px;
+        position: absolute;
+        right: 48px;
+        width: 100%;
+      }
+
+      &-title {
+        font-size: 48px;
+        line-height: 60px;
+        margin-top: 18px;
+        max-height: 60px * 2;
+        max-width: 312px;
+      }
+
+      &-description {
+        display: none;
+      }
+    }
+  }
+}
+
+@mixin shared-size-square-s {
+  @include shared-cover-rules(300px);
+
+  .tag-card {
+    @include square-s-sizes;
+
+    &__location {
+      padding: 0 30px 42px;
+
+      &-title {
+        font-size: 48px;
+        line-height: 60px;
+      }
+    }
+
+    &__person {
+      &-content {
+        bottom: 42px;
+        left: 23px;
+        position: absolute;
+        right: 37px;
+        width: 100%;
+      }
+
+      &-title {
+        font-size: 30px;
+        line-height: 36px;
+        max-height: 36px * 2;
+        max-width: 240px;
+      }
+
+      &-description {
+        display: none;
+      }
+    }
+  }
+}
+
+@mixin shared-sizes-ms-s-wide {
+  @include shared-cover-rules(194px);
+
+  .tag-card {
+    &__location {
+      padding: 0 30px 42px;
+
+      &-title {
+        font-size: 30px;
+        line-height: 36px;
+      }
+    }
+
+    &__person {
+      &-content {
+        bottom: 42px;
+        left: 30px;
+        position: absolute;
+        width: 230px;
+      }
+
+      &-title {
+        font-size: 30px;
+        line-height: 36px;
+        max-height: 36px * 2;
+      }
+
+      &-description {
+        display: none;
+      }
+    }
+  }
+}
+
+@mixin shared-size-ms {
+  @include shared-sizes-ms-s-wide;
+
+  .tag-card {
+    @include ms-sizes;
+
+    &__location {
+      //
+    }
+
+    &__person {
+      &-title {
+        max-width: 400px;
+      }
+    }
+  }
+}
+
+@mixin shared-size-s-wide {
+  @include shared-sizes-ms-s-wide;
+
+  .tag-card {
+    @include s-wide-sizes;
+
+    &__location {
+      //
+    }
+
+    &__person {
+      &-title {
+        max-width: 320px;
+      }
+    }
+  }
+}
+
+@mixin shared-size-s {
+  @include shared-cover-rules(194px);
+
+  .tag-card {
+    @include s-sizes;
+
+    &__location {
+      padding: 0 30px 42px;
+
+      &-title {
+        font-size: 60px;
+        line-height: 72px;
+      }
+    }
+
+    &__person {
+      &-content {
+        bottom: 42px;
+        left: 30px;
+        position: absolute;
+        width: 230px;
+      }
+
+      &-title {
+        font-size: 30px;
+        line-height: 36px;
+        max-height: 36px * 2;
+        max-width: 270px;
+      }
+
+      &-description {
+        display: none;
+      }
+    }
+  }
+}
+
+@mixin shared-sizes-xs-wide-xs {
+  @include shared-cover-rules(194px);
+
+  .tag-card {
+    &__person {
+      &-content {
+        bottom: 42px;
+        left: 30px;
+        position: absolute;
+        width: 150px;
+      }
+
+      &-title {
+        font-size: 30px;
+        line-height: 36px;
+        margin-top: 7px;
+        max-height: 36px * 2;
+      }
+
+      &-description {
+        display: none;
+      }
+    }
+  }
+}
+
+@mixin shared-size-xs-wide {
+  @include shared-sizes-xs-wide-xs;
+
+  .tag-card {
+    @include xs-wide-sizes;
+
+    &__location {
+      padding: 0 30px 42px;
+
+      &-title {
+        font-size: 30px;
+        line-height: 36px;
+      }
+    }
+
+    &__person {
+      &-title {
+        max-width: 240px;
+      }
+    }
+  }
+}
+
+@mixin shared-size-xs {
+  @include shared-sizes-xs-wide-xs;
+
+  .tag-card {
+    @include xs-sizes;
+
+    &__location {
+      padding: 0 30px 42px;
+
+      &-title {
+        font-size: 30px;
+        line-height: 36px;
+      }
+    }
+
+    &__person {
+      &-title {
+        max-width: 174px;
+      }
+    }
+  }
+}
+
+@mixin tag-card-radius(
+  $bottom-left: false,
+  $bottom-right: false,
+  $top-left: false,
+  $top-right: false
+) {
+  $tag-card-border-radius: 3px;
+
+  .tag-card {
+    @if $bottom-left {
+      border-bottom-left-radius: $tag-card-border-radius;
+    }
+
+    @if $bottom-right {
+      border-bottom-right-radius: $tag-card-border-radius;
+    }
+
+    @if $top-left {
+      border-top-left-radius: $tag-card-border-radius;
+    }
+
+    @if $top-right {
+      border-top-right-radius: $tag-card-border-radius;
+    }
+
+    &__person {
+      &-cover {
+        @if $bottom-right {
+          border-bottom-right-radius: $tag-card-border-radius;
+        }
+
+        @if $top-right {
+          border-top-right-radius: $tag-card-border-radius;
+        }
+      }
+    }
+  }
+}
+
+// Below are the rules for cards to be auto adjustable.
+//
+// This module only lets 'auto' mode for TagCards.
+// In order to enable explicit set of card sizes, you should add
+// 'card-size' wrappers for existing mixins just as it's done in articleCard.
+// scss module. For example:
+//
+// .card-size-xs {
+//   @include shared-size-xs;
+// }
+
+.block-tags-by-topic {
+  &__1 {
+    @include screen-desktop {
+      @include shared-size-l;
+    }
+
+    @include screen-tablet-large {
+      @include shared-size-square-m;
+    }
+
+    @include screen-tablet {
+      @include shared-size-square-m;
+    }
+
+    @include screen-mobile {
+      @include shared-size-l;
+    }
+  }
+
+  &__2 {
+    @include screen-desktop {
+      @include shared-size-s;
+    }
+
+    @include screen-tablet-large {
+      @include shared-size-s-wide;
+    }
+
+    @include screen-tablet {
+      @include shared-size-xs;
+    }
+
+    @include screen-touch {
+      @include shared-size-ms;
+    }
+
+    @include screen-mobile {
+      @include shared-size-xs-wide;
+    }
+  }
+
+  // On 'mobile' and 'touch' screens there is no difference
+  // between '1-2' and '2-1' block styles.
+
+  &__2-top {
+    @include screen-touch {
+      @include tag-card-radius($top-left: true, $top-right: true);
+    }
+
+    @include screen-mobile {
+      @include tag-card-radius($top-left: true, $top-right: true);
+    }
+  }
+
+  &__2-bottom {
+    @include screen-touch {
+      @include tag-card-radius($bottom-left: true, $bottom-right: true);
+    }
+
+    @include screen-mobile {
+      @include tag-card-radius($bottom-left: true, $bottom-right: true);
+    }
+  }
+}
+
+.block-tags-by-topic--style--1-2 {
+  &.block-tags-by-topic {
+    &__1 {
+      @include tag-card-radius($bottom-left: true, $top-left: true);
+    }
+
+    &__2-top {
+      @include screen-desktop {
+        @include tag-card-radius($top-right: true);
+      }
+
+      @include screen-tablet-large {
+        @include tag-card-radius($top-right: true);
+      }
+
+      @include screen-tablet {
+        @include tag-card-radius($top-right: true);
+      }
+    }
+
+    &__2-bottom {
+      @include screen-desktop {
+        @include tag-card-radius($bottom-right: true);
+      }
+
+      @include screen-tablet-large {
+        @include tag-card-radius($bottom-right: true);
+      }
+
+      @include screen-tablet {
+        @include tag-card-radius($bottom-right: true);
+      }
+    }
+  }
+}
+
+.block-tags-by-topic--style--2-1 {
+  &.block-tags-by-topic {
+    &__1 {
+      @include tag-card-radius($bottom-right: true, $top-right: true);
+    }
+
+    &__2-top {
+      @include screen-desktop {
+        @include tag-card-radius($top-left: true);
+      }
+
+      @include screen-tablet-large {
+        @include tag-card-radius($top-left: true);
+      }
+
+      @include screen-tablet {
+        @include tag-card-radius($top-left: true);
+      }
+    }
+
+    &__2-bottom {
+      @include screen-desktop {
+        @include tag-card-radius($bottom-left: true);
+      }
+
+      @include screen-tablet-large {
+        @include tag-card-radius($bottom-left: true);
+      }
+
+      @include screen-tablet {
+        @include tag-card-radius($bottom-left: true);
+      }
+    }
+  }
+}
