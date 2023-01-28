@@ -9,7 +9,6 @@ import ExternalLink from 'components/common/ExternalLink';
 import Icon from 'components/common/ui/Icon';
 // import MolamolaIcon from 'components/common/ui/MolamolaIcon';
 
-import MailLink from 'components/social/MailLink';
 import ShareButtons from 'components/social/ShareButtons';
 
 import { NETWORKS, PODCASTS_PLATFORMS } from 'constants/social';
@@ -93,7 +92,7 @@ const Footer = () => (
               render={(text, link) => (
                 <>
                   {text}
-                  <MailLink>{link}</MailLink>
+                  <ExternalLink href="mailto:wir.help@gmail.com">{link}</ExternalLink>
                 </>
               )}
             />

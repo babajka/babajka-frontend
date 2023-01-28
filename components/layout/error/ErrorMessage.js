@@ -35,7 +35,7 @@ const ErrorMessage = ({ code }) => (
     <div className={b('contact-us')}>
       <Text id="errors.contact-us" />
       {': '}
-      <ExternalLink href="mailto:dev@wir.by">dev@wir.by</ExternalLink>
+      <ExternalLink href="mailto:wir.development@gmail.com">wir.development@gmail.com</ExternalLink>
     </div>
   </div>
 );
