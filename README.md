@@ -9,22 +9,30 @@
 
 Next.js &amp; React app
 
+## get started
+
+1. You have to check that your `node` version is correct, to do this run `nvm use`, if the version is not correct run `nvm install [correct version]`.
+2. Create an `.env` file like `.env.example` and ask the admin for the required keys.
+3. Run `git submodule update --init` to update submodules.
+4. Run `npm install` or `make install` scripts.
+5. Run `make start` to run dev server
+
 ## scripts
 
 - `nvm use` - set correct `node` version
-- `npm start` to run dev server with hot-reloading (`npm run dev`)
-- `npm run start:prod` to build and run a production version
-- `npm run build` to build a production version (`WIR_ENV=staging` must be set for [`dev.wir.by`](http://dev.wir.by))
-- `npm run local-backend` to run dev server that uses `http://localhost:8080` as backend
-- `npm run deploy-from-local` to deploy code on [`dev.wir.by`](http://dev.wir.by)
-- `npm run lint` to check code style with [`eslint`](http://eslint.org/),
+- `npm start` - to run dev server with hot-reloading (`npm run dev`)
+- `npm run start:prod` - to build and run a production version
+- `npm run build` - to build a production version (`WIR_ENV=staging` must be set for [`dev.wir.by`](http://dev.wir.by))
+- `npm run local-backend` - to run dev server that uses `http://localhost:8080` as backend
+- `npm run deploy-from-local` - to deploy code on [`dev.wir.by`](http://dev.wir.by)
+- `npm run lint` - to check code style with [`eslint`](http://eslint.org/),
   [`airbnb`](https://github.com/airbnb/javascript/tree/master/react) react style guide and
   [`prettier`](https://prettier.io)
-- `npm run lint` to just fix style with `prettier` and check on `eslint` errors
-- `npm run update-dict` to fetch translations from [GoogleDrive](https://docs.google.com/spreadsheets/d/e/2PACX-1vTAexRyfGOsnzvZKvVpPkr8M-l3Ph2vAvBqVu7W_vrPOQ3iUIGg4ZVcOLCeFj-Qg6BowPluH9QO3vXM/pubhtml#) and store it in `data/i18n.json` (gitignored)
-- `npm run reset-cache` to delete `.next` builded & cached files
-- `npm run size` to check client-side bundle sizes with [`@ai/size-limit`](https://github.com/ai/size-limit)
-- `npm run analyze` to run [`@next/bundle-analyzer`](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)
+- `npm run lint` - to just fix style with `prettier` and check on `eslint` errors
+- `npm run update-dict` - to fetch translations from [GoogleDrive](https://docs.google.com/spreadsheets/d/e/2PACX-1vTAexRyfGOsnzvZKvVpPkr8M-l3Ph2vAvBqVu7W_vrPOQ3iUIGg4ZVcOLCeFj-Qg6BowPluH9QO3vXM/pubhtml#) and store it in `data/i18n.json` (gitignored)
+- `npm run reset-cache` - to delete `.next` builded & cached files
+- `npm run size` - to check client-side bundle sizes with [`@ai/size-limit`](https://github.com/ai/size-limit)
+- `npm run analyze` - to run [`@next/bundle-analyzer`](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)
 
 ## rules
 
