@@ -72,6 +72,10 @@ const Article = ({
   // https://caniuse.com/#feat=array-flat
   const tags = flatten(Object.values(tagsObject));
 
+  // As it is currently hard to control whether hidden articles appear or not in "suggested" section,
+  // the whole feature is disabled.
+  const suggestedArticlesEnabled = false;
+
   return (
     <>
       <MetaTitle title={title} type="article" />
@@ -162,7 +166,7 @@ const Article = ({
         </div>
       </div>
 
-      {suggestedArticles && (
+      {suggestedArticlesEnabled && suggestedArticles && (
         <div>
           <CardBlocksLayout blocks={suggestedArticles.blocks} data={suggestedArticles.data} />
         </div>
