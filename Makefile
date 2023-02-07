@@ -31,3 +31,13 @@ analyze:
 
 install:
 	npm i
+
+docker-build:
+	docker build --build-arg WIR_ENV=staging --build-arg BACKEND_URL=https://api.wir.by --build-arg BABAJKA_GOOGLE_API_KEY='' -t babajka/frontend .
+
+docker-publish:
+	make docker-build
+	docker push babajka/frontend
+
+docker-run-locally:
+	docker run -dp 3000:3000 babajka/frontend
