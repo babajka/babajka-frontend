@@ -1,0 +1,23 @@
+@import 'styles/variables';
+
+.container {
+  display: flex;
+  flex-direction: row;
+  width: 200px;
+}
+
+.interactiveIcon {
+  color: $primary-grey;
+  margin-right: 5px;
+}
+
+.cover {
+  margin-right: 10px;
+  width: 90px;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
