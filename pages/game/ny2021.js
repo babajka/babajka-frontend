@@ -56,6 +56,10 @@ const Game2021page = ({ title, description, suggestedArticles }) => {
 
   const textStr = text ? fiberyToString(text.content, { useBreak: true }) : '';
 
+  // As it is currently hard to control whether hidden articles appear or not in "suggested" section,
+  // the whole feature is disabled.
+  const suggestedArticlesEnabled = false;
+
   return (
     <>
       <MetaImage url={PREVIEW_URL} />
@@ -90,7 +94,7 @@ const Game2021page = ({ title, description, suggestedArticles }) => {
           </div>
         </div>
       </div>
-      {suggestedArticles && (
+      {suggestedArticlesEnabled && suggestedArticles && (
         <CardBlocksLayout blocks={suggestedArticles.blocks} data={suggestedArticles.data} />
       )}
     </>
