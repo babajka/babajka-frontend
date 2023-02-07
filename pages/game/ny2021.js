@@ -21,7 +21,7 @@ import { getLocalizedTag, getLocalizedSuggested } from 'utils/getters';
 
 import api from 'constants/api';
 import { NY2021 } from 'constants';
-import { REVALIDATE_TIMEOUT } from 'constants/misc';
+import { REVALIDATE_TIMEOUT, SUGGESTED_ARTICLES_ENABLED } from 'constants/misc';
 
 const b = bem(styles);
 const LANG = 'be';
@@ -90,7 +90,7 @@ const Game2021page = ({ title, description, suggestedArticles }) => {
           </div>
         </div>
       </div>
-      {suggestedArticles && (
+      {SUGGESTED_ARTICLES_ENABLED && suggestedArticles && (
         <CardBlocksLayout blocks={suggestedArticles.blocks} data={suggestedArticles.data} />
       )}
     </>

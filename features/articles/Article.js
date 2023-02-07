@@ -6,6 +6,7 @@ import cn from 'classnames';
 import bem from 'bem-css-modules';
 
 // import { CROWDFUNDING_CAMPAIGN } from 'constants/misc';
+import { SUGGESTED_ARTICLES_ENABLED } from 'constants/misc';
 
 import {
   MetaTitle,
@@ -71,10 +72,6 @@ const Article = ({
   const imageUrl = images.page || images.horizontal;
   // https://caniuse.com/#feat=array-flat
   const tags = flatten(Object.values(tagsObject));
-
-  // As it is currently hard to control whether hidden articles appear or not in "suggested" section,
-  // the whole feature is disabled.
-  const suggestedArticlesEnabled = false;
 
   return (
     <>
@@ -166,7 +163,7 @@ const Article = ({
         </div>
       </div>
 
-      {suggestedArticlesEnabled && suggestedArticles && (
+      {SUGGESTED_ARTICLES_ENABLED && suggestedArticles && (
         <div>
           <CardBlocksLayout blocks={suggestedArticles.blocks} data={suggestedArticles.data} />
         </div>
