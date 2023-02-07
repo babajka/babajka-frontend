@@ -21,7 +21,7 @@ import { getLocalizedTag, getLocalizedSuggested } from 'utils/getters';
 
 import api from 'constants/api';
 import { NY2021 } from 'constants';
-import { REVALIDATE_TIMEOUT } from 'constants/misc';
+import { REVALIDATE_TIMEOUT, SUGGESTED_ARTICLES_ENABLED } from 'constants/misc';
 
 const b = bem(styles);
 const LANG = 'be';
@@ -55,10 +55,6 @@ const Game2021page = ({ title, description, suggestedArticles }) => {
   }, []);
 
   const textStr = text ? fiberyToString(text.content, { useBreak: true }) : '';
-
-  // As it is currently hard to control whether hidden articles appear or not in "suggested" section,
-  // the whole feature is disabled.
-  const suggestedArticlesEnabled = false;
 
   return (
     <>
@@ -94,7 +90,7 @@ const Game2021page = ({ title, description, suggestedArticles }) => {
           </div>
         </div>
       </div>
-      {suggestedArticlesEnabled && suggestedArticles && (
+      {SUGGESTED_ARTICLES_ENABLED && suggestedArticles && (
         <CardBlocksLayout blocks={suggestedArticles.blocks} data={suggestedArticles.data} />
       )}
     </>

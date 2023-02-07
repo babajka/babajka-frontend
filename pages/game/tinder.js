@@ -21,6 +21,7 @@ import { makeRequest } from 'utils/request';
 import { getLocalizedSuggested } from 'utils/getters';
 
 import api from 'constants/api';
+import { SUGGESTED_ARTICLES_ENABLED } from 'constants/misc';
 
 const b = bem(styles);
 const TINDER_SLUG = 'belarusian-writers';
@@ -72,10 +73,6 @@ const TinderPage = ({ title, subtitle, profiles, suggestedArticles }) => {
   }, [profilesIndex, togglePopup]);
 
   const nextProfile = profiles[profilesIndex + 1];
-
-  // As it is currently hard to control whether hidden articles appear or not in "suggested" section,
-  // the whole feature is disabled.
-  const suggestedArticlesEnabled = false;
 
   return (
     <>
@@ -146,7 +143,7 @@ const TinderPage = ({ title, subtitle, profiles, suggestedArticles }) => {
           </>
         )}
       </div>
-      {suggestedArticlesEnabled && suggestedArticles && (
+      {SUGGESTED_ARTICLES_ENABLED && suggestedArticles && (
         <CardBlocksLayout blocks={suggestedArticles.blocks} data={suggestedArticles.data} />
       )}
     </>
