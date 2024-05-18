@@ -53,6 +53,7 @@ const App = ({ Component, pageProps: basePageProps }) => {
     hideHeader,
     hideSidebar,
     hideFooter,
+    adminPage,
   } = getLayoutProps(pageProps);
   const title = noLocTitle || localize(titleId, locale);
 
@@ -70,6 +71,10 @@ const App = ({ Component, pageProps: basePageProps }) => {
       clearUtmParams();
     }
   }, []);
+
+  if (adminPage) {
+    return <Component {...pageProps} />;
+  }
 
   return (
     <LocaleContext.Provider value={locale}>

@@ -45,6 +45,9 @@ const ROUTES = [
   {
     name: 'game/tinder',
   },
+  {
+    name: 'admin',
+  },
 ].map(({ name, pattern = `/${name}`, page = name }) => ({
   name,
   pattern: `/:lang(${langs})${pattern}`,
