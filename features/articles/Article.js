@@ -16,7 +16,7 @@ import {
   MetaArticleItems,
   DEFAULT_IMAGE,
 } from 'components/social/Metatags';
-import AudioPlayer from 'components/common/AudioPlayer';
+import AudioButtons from 'components/common/AudioButtons';
 import VideoPlayer from 'components/common/VideoPlayer';
 import Image from 'components/common/Image';
 // import ExternalLink from 'components/common/ExternalLink';
@@ -55,7 +55,6 @@ const Article = ({
     keywords,
     text,
     type,
-    audio,
     video,
     tagsByTopic,
     collection,
@@ -129,7 +128,7 @@ const Article = ({
 
       <div className="wir-content-padding">
         <div className={styles['article-page-content']}>
-          {type === 'audio' && <AudioPlayer trackId={audio.id} />}
+          {type === 'audio' && <AudioButtons />}
           {type === 'video' && <VideoPlayer videoId={video.id} />}
 
           {collection?.articles.length > 1 && <CollectionNote data={collection} locale={locale} />}

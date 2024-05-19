@@ -25,8 +25,8 @@ export const NETWORKS = [
   },
   {
     id: 'twitter',
-    label: 'Twitter',
-    link: 'https://twitter.com/wir_by',
+    label: '𝕏 (Twitter)',
+    link: 'https://x.com/wir_by',
     color: '#1da1f2',
   },
   {
@@ -77,15 +77,28 @@ export const SHARE_NETWORKS = [
 
 export const PODCASTS_PLATFORMS = [
   {
-    id: 'yandexmusic',
-    label: 'Yandex Music',
-    link: 'https://music.yandex.ru/album/10622616',
-  },
-  {
     id: 'applepodcasts',
     label: 'Apple Podcasts',
     link:
       'https://podcasts.apple.com/by/podcast/wir-by-беларуская-і-сусветная-культура/id1511316106',
+    // https://marketing.services.apple/apple-podcasts-identity-guidelines
+    badgeLink:
+      'https://res.cloudinary.com/wir-by/image/upload/c_scale,h_100,f_auto,q_auto/v1716138382/production/podcast-platforms/apple.png',
+  },
+  {
+    id: 'yandexmusic',
+    label: 'Yandex Music',
+    link: 'https://music.yandex.ru/album/10622616',
+    // https://yandex.ru/support/music/button.html
+    badgeLink:
+      'https://res.cloudinary.com/wir-by/image/upload/c_scale,h_100,f_auto,q_auto/v1716139098/production/podcast-platforms/yandex.png',
+  },
+  {
+    id: 'spotifypodcasts',
+    label: 'Spotify',
+    link: 'https://open.spotify.com/show/61Q5hmZfpw3fDoNM6cGir5',
+    badgeLink:
+      'https://res.cloudinary.com/wir-by/image/upload/c_scale,h_100,f_auto,q_auto/v1716139336/production/podcast-platforms/spotify.png',
   },
   {
     id: 'googlepodcasts',
@@ -106,11 +119,6 @@ export const PODCASTS_PLATFORMS = [
     id: 'castboxpodcasts',
     label: 'Castbox',
     link: 'https://castbox.fm/vc/2834723',
-  },
-  {
-    id: 'spotifypodcasts',
-    label: 'Spotify',
-    link: 'https://open.spotify.com/show/61Q5hmZfpw3fDoNM6cGir5',
   },
   {
     id: 'overcastpodcasts',
