@@ -55,6 +55,7 @@ const Article = ({
     keywords,
     text,
     type,
+    audio,
     video,
     tagsByTopic,
     collection,
@@ -128,7 +129,8 @@ const Article = ({
 
       <div className="wir-content-padding">
         <div className={styles['article-page-content']}>
-          {type === 'audio' && <AudioButtons />}
+          {/* TODO: Add Spotify and Apple to trackIds. We currently don't have it in Fibery. */}
+          {type === 'audio' && <AudioButtons trackIds={{ yandexmusic: audio.id }} />}
           {type === 'video' && <VideoPlayer videoId={video.id} />}
 
           {collection?.articles.length > 1 && <CollectionNote data={collection} locale={locale} />}

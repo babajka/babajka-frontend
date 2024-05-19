@@ -7,16 +7,15 @@ import styles from './audioVideoPlayer.module.scss';
 
 const b = bem(styles);
 
-// AudioButtons could be improved to accept episode IDs for each platform and to create per-episode links.
-// We currently don't have this information in Fibery.
-const AudioButtons = () => (
+const AudioButtons = ({ trackIds }) => (
   <div className={b()}>
     <div className={b('audio-buttons')}>
-      {PODCASTS_PLATFORMS.map(
-        ({ id, label, link, badgeLink }) =>
+      {PODCASTS_PLATFORMS.map(({ id, label, link, badgeLink, episodeLink }) => {
+        const externalLink = episodeLink && trackIds[id] ? episodeLink(trackIds[id]) : link;
+        return (
           badgeLink && (
             <div key={id} className={b('audio-button')}>
-              <ExternalLink href={link}>
+              <ExternalLink href={externalLink}>
                 <img
                   src={badgeLink}
                   alt={label}
@@ -26,7 +25,8 @@ const AudioButtons = () => (
               </ExternalLink>
             </div>
           )
-      )}
+        );
+      })}
     </div>
   </div>
 );
