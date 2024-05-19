@@ -94,7 +94,7 @@ export const PODCASTS_PLATFORMS = [
     // https://yandex.ru/support/music/button.html
     badgeLink:
       'https://res.cloudinary.com/wir-by/image/upload/c_scale,h_100,f_auto,q_auto/v1716139098/production/podcast-platforms/yandex.png',
-    episodeLink: episodeId => `https://music.yandex.ru/album/10622616?track=${episodeId}`, // TODO: FIX
+    episodeLink: episodeId => `https://music.yandex.com/album/10622616/track/${episodeId}`,
   },
   {
     id: 'spotifypodcasts',
