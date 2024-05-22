@@ -79,13 +79,12 @@ export const PODCASTS_PLATFORMS = [
   {
     id: 'applepodcasts',
     label: 'Apple Podcasts',
-    link:
-      'https://podcasts.apple.com/by/podcast/wir-by-беларуская-і-сусветная-культура/id1511316106',
+    link: 'https://podcasts.apple.com/by/podcast/id1511316106',
     // https://marketing.services.apple/apple-podcasts-identity-guidelines
     badgeLink:
       'https://res.cloudinary.com/wir-by/image/upload/c_scale,h_100,f_auto,q_auto/v1716138382/production/podcast-platforms/apple.png',
     buildEpisodeLink: episodeId =>
-      `https://podcasts.apple.com/by/podcast/wir-by-беларуская-і-сусветная-культура/id1511316106?i=${episodeId}`,
+      `https://podcasts.apple.com/by/podcast/id1511316106?i=${episodeId}`,
   },
   {
     id: 'yandexmusic',
