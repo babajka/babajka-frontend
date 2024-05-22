@@ -106,9 +106,9 @@ export const PODCASTS_PLATFORMS = [
       `https://open.spotify.com/episode/6nQzNc5lJPXtQbsovlwqiI?si=${episodeId}`,
   },
   {
-    id: 'googlepodcasts',
-    label: 'Google Podcasts',
-    link: 'https://podcasts.google.com/feed/aHR0cHM6Ly93aXIuYnkvcnNzL3BvZGNhc3RzLw',
+    id: 'youtubepodcasts',
+    label: 'YouTube Podcasts',
+    link: 'https://www.youtube.com/@WirBy/podcasts',
   },
   // {
   //   id: 'vkpodcasts',
