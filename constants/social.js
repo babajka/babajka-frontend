@@ -101,8 +101,7 @@ export const PODCASTS_PLATFORMS = [
     link: 'https://open.spotify.com/show/61Q5hmZfpw3fDoNM6cGir5',
     badgeLink:
       'https://res.cloudinary.com/wir-by/image/upload/c_scale,h_100,f_auto,q_auto/v1716139336/production/podcast-platforms/spotify.png',
-    episodeLink: episodeId =>
-      `https://open.spotify.com/episode/6nQzNc5lJPXtQbsovlwqiI?si=${episodeId}`,
+    episodeLink: episodeId => `https://open.spotify.com/episode/${episodeId}`,
   },
   {
     id: 'youtubepodcasts',
