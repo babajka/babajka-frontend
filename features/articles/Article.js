@@ -130,8 +130,15 @@ const Article = ({
       <div className="wir-content-padding">
         <div className={styles['article-page-content']}>
           {(type === 'video' || video) && <VideoPlayer videoId={video.id} />}
-          {/* TODO: Add Spotify and Apple to trackIds. We currently don't have it in Fibery. */}
-          {(type === 'audio' || audio) && <AudioButtons trackIds={{ yandexmusic: audio.id }} />}
+          {(type === 'audio' || audio) && (
+            <AudioButtons
+              trackIds={{
+                yandexmusic: audio.episodeIds?.yandexmusic || audio.id,
+                applepodcasts: audio.episodeIds?.applepodcasts,
+                spotifypodcasts: audio.episodeIds?.spotifypodcasts,
+              }}
+            />
+          )}
 
           {collection?.articles.length > 1 && <CollectionNote data={collection} locale={locale} />}
 
