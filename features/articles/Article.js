@@ -24,7 +24,6 @@ import Image from 'components/common/Image';
 // import MolamolaIcon from 'components/common/ui/MolamolaIcon';
 import ShareButtons from 'components/social/ShareButtons';
 import ExCoQuiz from 'features/ex-co-quiz';
-import FilloutQuiz from 'features/fillout-quiz';
 import TextWithSeparator from 'lib/components/TextWithSeparator';
 
 import { ArticleShape } from 'utils/customPropTypes';
@@ -45,11 +44,6 @@ const SLUG_TO_EXCO_QUIZ_ID = {
   bielaruski: 'a8822357-22c3-4090-bfe6-765948466bbe',
   'karatkiewich-test': 'd97b130c-8088-4183-aaf4-a1af49b4e814',
   'kupala-test': '27c28c25-f228-460b-8c69-cdfee9fe08f5',
-};
-
-const SLUG_TO_FILLOUT_QUIZ_ID = {
-  'vusy-test': '8zb3Kocohous',
-  'kupala-tescik': '9HWpJGsnrKus',
 };
 
 const Article = ({
@@ -153,12 +147,9 @@ const Article = ({
 
           <div className={typography['common-text']}>{fiberyRenderer(text.content)}</div>
 
-          {/* FIXME: hardcode */}
+          {/* FIXME: Make it a part of article content, same as it is done for Fillout Quizes. */}
           {SLUG_TO_EXCO_QUIZ_ID[slug] && (
             <ExCoQuiz key={SLUG_TO_EXCO_QUIZ_ID[slug]} id={SLUG_TO_EXCO_QUIZ_ID[slug]} />
-          )}
-          {SLUG_TO_FILLOUT_QUIZ_ID[slug] && (
-            <FilloutQuiz key={SLUG_TO_FILLOUT_QUIZ_ID[slug]} id={SLUG_TO_FILLOUT_QUIZ_ID[slug]} />
           )}
 
           <div className={b('post-actions')}>
