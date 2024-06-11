@@ -135,8 +135,10 @@ const Article = ({
 
       <div className="wir-content-padding">
         <div className={styles['article-page-content']}>
-          {(type === 'video' || video) && <VideoPlayer videoId={video.id} />}
-          {(type === 'audio' || audio) && (
+          {type === 'audio' && audio.episodeIds?.youtubepodcasts && (
+            <VideoPlayer videoId={audio.episodeIds.youtubepodcasts} />
+          )}
+          {type === 'audio' && (
             <AudioButtons
               trackIds={{
                 yandexmusic: audio.episodeIds?.yandexmusic || audio.id,
@@ -145,6 +147,7 @@ const Article = ({
               }}
             />
           )}
+          {type === 'video' && <VideoPlayer videoId={video.id} />}
 
           {collection?.articles.length > 1 && <CollectionNote data={collection} locale={locale} />}
 
