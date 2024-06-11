@@ -49,6 +49,7 @@ const SLUG_TO_EXCO_QUIZ_ID = {
 
 const SLUG_TO_FILLOUT_QUIZ_ID = {
   'vusy-test': '8zb3Kocohous',
+  'kupala-tescik': '9HWpJGsnrKus',
 };
 
 const Article = ({
