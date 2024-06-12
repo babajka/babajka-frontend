@@ -3,21 +3,21 @@ import PropTypes from 'prop-types';
 
 import styles from './quiz.module.scss';
 
-function loadSdk(d, s, id) {
-  const fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {
-    window.Fillout.render();
-    return;
+function loadSdk(id) {
+  let script = document.getElementById(id);
+  if (script) {
+    script.remove();
   }
-  const js = d.createElement(s);
-  js.id = id;
-  js.src = 'https://server.fillout.com/embed/v1/';
-  fjs.parentNode.insertBefore(js, fjs);
+
+  script = document.createElement('script');
+  script.id = id;
+  script.src = 'https://server.fillout.com/embed/v1/';
+  document.body.appendChild(script);
 }
 
 const FilloutQuiz = ({ id }) => {
   useLayoutEffect(() => {
-    loadSdk(document, 'script', 'fillout-sdk');
+    loadSdk('fillout-sdk');
   }, []);
   return (
     <div
