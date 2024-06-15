@@ -17,13 +17,15 @@ import parseCoubUrl from 'lib/utils/parseCoubUrl';
 import AudioPlayer from 'components/common/AudioPlayer';
 import parseYMPlaylistUrl from 'lib/utils/parseYMPlaylistUrl';
 
+import FilloutQuiz from 'features/fillout-quiz';
+
 import toString from './toString';
 import { getTableMeta, traverseTable, traverseTableRowByRow, TYPES } from './parseTable';
 import { parseQuote, parseImage } from './utils';
 
 import styles from './renderer.module.scss';
 
-const { TABLE, TABLE_RIGHT, NOTE, POEM, SPLIT, TIMELINE, CAROUSEL } = TYPES;
+const { TABLE, TABLE_RIGHT, NOTE, POEM, SPLIT, TIMELINE, CAROUSEL, FILLOUT_QUIZ } = TYPES;
 
 const returnNull = () => null;
 
@@ -183,6 +185,10 @@ const CUSTOM_RENDERER = {
         ))}
       </div>
     );
+  },
+  [FILLOUT_QUIZ]: content => {
+    const quizId = traverseTable(content, false)[0];
+    return <FilloutQuiz key={quizId} id={quizId} />;
   },
 };
 

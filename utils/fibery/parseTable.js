@@ -8,7 +8,8 @@ export const TYPES = createConstants(
   'POEM',
   'SPLIT',
   'TIMELINE',
-  'CAROUSEL'
+  'CAROUSEL',
+  'FILLOUT_QUIZ'
 );
 
 export const traverseTable = (content = [], returnUnknown = false) =>

@@ -68,4 +68,63 @@
   &__content-unavailable {
     text-decoration: underline solid $primary-warning;
   }
+
+  &__audio-buttons {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 150px;
+    justify-content: space-between;
+    margin-bottom: 30px;
+
+    @include screen-touch {
+      height: 165px;
+      margin-bottom: 40px;
+    }
+
+    @include screen-tablet {
+      flex-direction: row;
+      height: unset;
+      justify-content: start;
+      margin-bottom: 50px;
+    }
+
+    @include screen-tablet-large {
+      flex-direction: row;
+      height: unset;
+      justify-content: start;
+      margin-bottom: 60px;
+    }
+
+    @include screen-desktop {
+      flex-direction: row;
+      height: unset;
+      justify-content: start;
+      margin-bottom: 72px;
+    }
+  }
+
+  &__audio-button {
+    margin-right: 15px;
+  }
+
+  &__audio-button-image {
+    height: 40px;
+
+    @include screen-touch {
+      height: 45px;
+    }
+
+    @include screen-tablet {
+      height: 50px;
+    }
+
+    @include screen-tablet-large {
+      height: 50px;
+    }
+
+    @include screen-desktop {
+      height: 50px;
+    }
+  }
 }

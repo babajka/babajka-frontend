@@ -16,7 +16,7 @@ import {
   MetaArticleItems,
   DEFAULT_IMAGE,
 } from 'components/social/Metatags';
-import AudioPlayer from 'components/common/AudioPlayer';
+import AudioButtons from 'components/common/AudioButtons';
 import VideoPlayer from 'components/common/VideoPlayer';
 import Image from 'components/common/Image';
 // import ExternalLink from 'components/common/ExternalLink';
@@ -40,7 +40,7 @@ import CollectionNote from './CollectionNote';
 const b = bem(styles);
 const COVER_SIZES = [1200, 1000, 770, 640, 360];
 
-const SLUG_TO_QUIZ_ID = {
+const SLUG_TO_EXCO_QUIZ_ID = {
   bielaruski: 'a8822357-22c3-4090-bfe6-765948466bbe',
   'karatkiewich-test': 'd97b130c-8088-4183-aaf4-a1af49b4e814',
   'kupala-test': '27c28c25-f228-460b-8c69-cdfee9fe08f5',
@@ -129,16 +129,27 @@ const Article = ({
 
       <div className="wir-content-padding">
         <div className={styles['article-page-content']}>
-          {type === 'audio' && <AudioPlayer trackId={audio.id} />}
+          {type === 'audio' && audio.episodeIds?.youtubepodcasts && (
+            <VideoPlayer videoId={audio.episodeIds.youtubepodcasts} />
+          )}
+          {type === 'audio' && (
+            <AudioButtons
+              trackIds={{
+                yandexmusic: audio.episodeIds?.yandexmusic || audio.id,
+                applepodcasts: audio.episodeIds?.applepodcasts,
+                spotifypodcasts: audio.episodeIds?.spotifypodcasts,
+              }}
+            />
+          )}
           {type === 'video' && <VideoPlayer videoId={video.id} />}
 
           {collection?.articles.length > 1 && <CollectionNote data={collection} locale={locale} />}
 
           <div className={typography['common-text']}>{fiberyRenderer(text.content)}</div>
 
-          {/* FIXME: hardcode */}
-          {SLUG_TO_QUIZ_ID[slug] && (
-            <ExCoQuiz key={SLUG_TO_QUIZ_ID[slug]} id={SLUG_TO_QUIZ_ID[slug]} />
+          {/* FIXME: Make it a part of article content, same as it is done for Fillout Quizes. */}
+          {SLUG_TO_EXCO_QUIZ_ID[slug] && (
+            <ExCoQuiz key={SLUG_TO_EXCO_QUIZ_ID[slug]} id={SLUG_TO_EXCO_QUIZ_ID[slug]} />
           )}
 
           <div className={b('post-actions')}>
