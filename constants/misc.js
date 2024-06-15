@@ -19,4 +19,4 @@ export const CROWDFUNDING_CAMPAIGN = {
 
 // The whole 'suggested articles' feature could be enabled or disabled with this parameter.
 // This is added to better control links to the articles which are disabled or deleted.
-export const SUGGESTED_ARTICLES_ENABLED = false;
+export const SUGGESTED_ARTICLES_ENABLED = true;
