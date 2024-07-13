@@ -107,7 +107,7 @@ const CUSTOM_RENDERER = {
     const data = traverseTable(content, true);
     const { images, description } = data.reduce(
       (acc, cur) => {
-        if (cur?.type === 'image') {
+        if (cur?.type === 'image' || cur?.type === 'imageBlock') {
           acc.images.push(cur.attrs);
         }
         if (typeof cur === 'string') {
