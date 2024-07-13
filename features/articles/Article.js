@@ -135,9 +135,8 @@ const Article = ({
           {type === 'audio' && (
             <AudioButtons
               trackIds={{
+                ...audio.episodeIds,
                 yandexmusic: audio.episodeIds?.yandexmusic || audio.id,
-                applepodcasts: audio.episodeIds?.applepodcasts,
-                spotifypodcasts: audio.episodeIds?.spotifypodcasts,
               }}
             />
           )}
@@ -147,7 +146,7 @@ const Article = ({
 
           <div className={typography['common-text']}>{fiberyRenderer(text.content)}</div>
 
-          {/* FIXME: Make it a part of article content, same as it is done for Fillout Quizes. */}
+          {/* TODO: Migrate all quizes from Exco to Fillout and cleanup this code. Alternatively, support Exco Quiz ID as article content, as it is done for Fillout quizes. */}
           {SLUG_TO_EXCO_QUIZ_ID[slug] && (
             <ExCoQuiz key={SLUG_TO_EXCO_QUIZ_ID[slug]} id={SLUG_TO_EXCO_QUIZ_ID[slug]} />
           )}
