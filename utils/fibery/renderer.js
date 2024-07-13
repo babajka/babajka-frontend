@@ -154,7 +154,11 @@ const CUSTOM_RENDERER = {
           return <div>{p}</div>;
         }),
       };
-      if (image && image.length > 0 && image[0].type === 'image') {
+      if (
+        image &&
+        image.length > 0 &&
+        (image[0].type === 'image' || image[0].type === 'imageBlock')
+      ) {
         const { url } = parseImage(image[0].attrs.src);
         timelineEvent.imageUrl = url;
       }
