@@ -197,12 +197,11 @@ const CUSTOM_RENDERER = {
 };
 
 const IMAGE_RENDERER = ({ key, attrs: { alt, src, title } }) => {
-  const { url, align } = parseImage(src);
-  const right = align === 'right';
-  if (right) {
+  const { url, isRight } = parseImage(src);
+  if (isRight) {
     return (
       <span key={key} className={cn(styles['article-image'], styles['right-element'])}>
-        {right && (
+        {isRight && (
           <ExternalLink href={url}>
             <Image
               className={styles['article-image__image']}
