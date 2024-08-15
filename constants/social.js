@@ -25,8 +25,8 @@ export const NETWORKS = [
   },
   {
     id: 'twitter',
-    label: 'Twitter',
-    link: 'https://twitter.com/wir_by',
+    label: '𝕏 (Twitter)',
+    link: 'https://x.com/wir_by',
     color: '#1da1f2',
   },
   {

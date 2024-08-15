@@ -186,6 +186,35 @@ const CUSTOM_RENDERER = {
   },
 };
 
+const IMAGE_RENDERER = ({ key, attrs: { alt, src, title } }) => {
+  const { url, align } = parseImage(src);
+  const right = align === 'right';
+  if (right) {
+    return (
+      <span key={key} className={cn(styles['article-image'], styles['right-element'])}>
+        {right && (
+          <ExternalLink href={url}>
+            <Image
+              className={styles['article-image__image']}
+              alt={alt}
+              sourceSizes={[240]}
+              baseUrl={url}
+              mode="x"
+            />
+          </ExternalLink>
+        )}
+        <span className={styles['article-image__caption']}>{title}</span>
+      </span>
+    );
+  }
+  return (
+    <span key={key} className={styles['article-image']}>
+      <img className={styles['article-image__image']} src={url} alt={alt} loading="lazy" />
+      <span className={styles['article-image__caption']}>{title}</span>
+    </span>
+  );
+};
+
 const RENDERERS = {
   // debug: (...params) => {
   //   console.log(params)
@@ -223,34 +252,8 @@ const RENDERERS = {
       renderContent(content)
     );
   },
-  image: ({ key, attrs: { alt, src, title } }) => {
-    const { url, align } = parseImage(src);
-    const right = align === 'right';
-    if (right) {
-      return (
-        <span key={key} className={cn(styles['article-image'], styles['right-element'])}>
-          {right && (
-            <ExternalLink href={url}>
-              <Image
-                className={styles['article-image__image']}
-                alt={alt}
-                sourceSizes={[240]}
-                baseUrl={url}
-                mode="x"
-              />
-            </ExternalLink>
-          )}
-          <span className={styles['article-image__caption']}>{title}</span>
-        </span>
-      );
-    }
-    return (
-      <span key={key} className={styles['article-image']}>
-        <img className={styles['article-image__image']} src={url} alt={alt} loading="lazy" />
-        <span className={styles['article-image__caption']}>{title}</span>
-      </span>
-    );
-  },
+  image: IMAGE_RENDERER,
+  imageBlock: IMAGE_RENDERER,
   paragraph: ({ key, attrs = {}, content }) => {
     return <p key={attrs.guid || key}>{renderContent(content)}</p>;
   },
