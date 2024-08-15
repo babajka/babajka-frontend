@@ -9,6 +9,7 @@ export const parseQuote = s => {
 export const parseImage = src => {
   const [url, rawParams] = src.split('#');
   const params = new URLSearchParams(rawParams);
-  const align = params.get('align') || 'center';
-  return { url, align };
+  const alignParam = params.get('align');
+  const isRight = alignParam === 'right' || alignParam === ':alignment/block-right';
+  return { url, isRight };
 };

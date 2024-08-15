@@ -105,7 +105,7 @@ const CUSTOM_RENDERER = {
     const data = traverseTable(content, true);
     const { images, description } = data.reduce(
       (acc, cur) => {
-        if (cur?.type === 'image') {
+        if (cur?.type === 'image' || cur?.type === 'imageBlock') {
           acc.images.push(cur.attrs);
         }
         if (typeof cur === 'string') {
@@ -152,7 +152,11 @@ const CUSTOM_RENDERER = {
           return <div>{p}</div>;
         }),
       };
-      if (image && image.length > 0 && image[0].type === 'image') {
+      if (
+        image &&
+        image.length > 0 &&
+        (image[0].type === 'image' || image[0].type === 'imageBlock')
+      ) {
         const { url } = parseImage(image[0].attrs.src);
         timelineEvent.imageUrl = url;
       }
@@ -187,12 +191,11 @@ const CUSTOM_RENDERER = {
 };
 
 const IMAGE_RENDERER = ({ key, attrs: { alt, src, title } }) => {
-  const { url, align } = parseImage(src);
-  const right = align === 'right';
-  if (right) {
+  const { url, isRight } = parseImage(src);
+  if (isRight) {
     return (
       <span key={key} className={cn(styles['article-image'], styles['right-element'])}>
-        {right && (
+        {isRight && (
           <ExternalLink href={url}>
             <Image
               className={styles['article-image__image']}
