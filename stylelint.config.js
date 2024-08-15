@@ -75,6 +75,7 @@ module.exports = {
 
     // Selectors
     'no-duplicate-selectors': true,
+    'selector-class-pattern': '.',
 
     // Blocks
     'block-no-empty': true,
