@@ -40,7 +40,7 @@ import CollectionNote from './CollectionNote';
 const b = bem(styles);
 const COVER_SIZES = [1200, 1000, 770, 640, 360];
 
-const SLUG_TO_QUIZ_ID = {
+const SLUG_TO_EXCO_QUIZ_ID = {
   bielaruski: 'a8822357-22c3-4090-bfe6-765948466bbe',
   'karatkiewich-test': 'd97b130c-8088-4183-aaf4-a1af49b4e814',
   'kupala-test': '27c28c25-f228-460b-8c69-cdfee9fe08f5',
@@ -136,9 +136,9 @@ const Article = ({
 
           <div className={typography['common-text']}>{fiberyRenderer(text.content)}</div>
 
-          {/* FIXME: hardcode */}
-          {SLUG_TO_QUIZ_ID[slug] && (
-            <ExCoQuiz key={SLUG_TO_QUIZ_ID[slug]} id={SLUG_TO_QUIZ_ID[slug]} />
+          {/* TODO: Migrate all quizes from Exco to Fillout and cleanup this code. Alternatively, support Exco Quiz ID as article content, as it is done for Fillout quizes. */}
+          {SLUG_TO_EXCO_QUIZ_ID[slug] && (
+            <ExCoQuiz key={SLUG_TO_EXCO_QUIZ_ID[slug]} id={SLUG_TO_EXCO_QUIZ_ID[slug]} />
           )}
 
           <div className={b('post-actions')}>
