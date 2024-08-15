@@ -60,6 +60,15 @@ const ArticleMediaShape = PropTypes.shape({
   url: PropTypes.string,
 });
 
+const ArticleAudioShape = PropTypes.shape({
+  id: PropTypes.string, // For backward-compatibility; stands for yandexmusic episode ID.
+  episodeIds: PropTypes.shape({
+    applepodcasts: PropTypes.string,
+    spotifypodcasts: PropTypes.string,
+    yandexmusic: PropTypes.string,
+  }),
+});
+
 export const ArticleType = PropTypes.oneOf(['text', 'video', 'audio']);
 
 const ArticlePreviewModel = {
@@ -75,7 +84,7 @@ const ArticlePreviewModel = {
   type: ArticleType.isRequired,
   images: ArticleCoversShape.isRequired,
   video: ArticleMediaShape,
-  audio: ArticleMediaShape,
+  audio: ArticleAudioShape,
   metadata: MetadataShape.isRequired,
   tagsByTopic: PropTypes.objectOf(TagsArray).isRequired,
   theme: ThemeType.isRequired,

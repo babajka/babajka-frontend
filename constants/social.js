@@ -77,20 +77,35 @@ export const SHARE_NETWORKS = [
 
 export const PODCASTS_PLATFORMS = [
   {
+    id: 'applepodcasts',
+    label: 'Apple Podcasts',
+    link: 'https://podcasts.apple.com/by/podcast/id1511316106',
+    // https://marketing.services.apple/apple-podcasts-identity-guidelines
+    badgeLink:
+      'https://res.cloudinary.com/wir-by/image/upload/c_scale,h_100,f_auto,q_auto/v1716138382/production/podcast-platforms/apple.png',
+    episodeLink: episodeId => `https://podcasts.apple.com/by/podcast/id1511316106?i=${episodeId}`,
+  },
+  {
     id: 'yandexmusic',
     label: 'Yandex Music',
     link: 'https://music.yandex.ru/album/10622616',
+    // https://yandex.ru/support/music/button.html
+    badgeLink:
+      'https://res.cloudinary.com/wir-by/image/upload/c_scale,h_100,f_auto,q_auto/v1716139098/production/podcast-platforms/yandex.png',
+    episodeLink: episodeId => `https://music.yandex.com/album/10622616/track/${episodeId}`,
   },
   {
-    id: 'applepodcasts',
-    label: 'Apple Podcasts',
-    link:
-      'https://podcasts.apple.com/by/podcast/wir-by-беларуская-і-сусветная-культура/id1511316106',
+    id: 'spotifypodcasts',
+    label: 'Spotify',
+    link: 'https://open.spotify.com/show/61Q5hmZfpw3fDoNM6cGir5',
+    badgeLink:
+      'https://res.cloudinary.com/wir-by/image/upload/c_scale,h_100,f_auto,q_auto/v1716139336/production/podcast-platforms/spotify.png',
+    episodeLink: episodeId => `https://open.spotify.com/episode/${episodeId}`,
   },
   {
-    id: 'googlepodcasts',
-    label: 'Google Podcasts',
-    link: 'https://podcasts.google.com/feed/aHR0cHM6Ly93aXIuYnkvcnNzL3BvZGNhc3RzLw',
+    id: 'youtubepodcasts',
+    label: 'YouTube Podcasts',
+    link: 'https://www.youtube.com/@WirBy/podcasts',
   },
   // {
   //   id: 'vkpodcasts',
@@ -106,11 +121,6 @@ export const PODCASTS_PLATFORMS = [
     id: 'castboxpodcasts',
     label: 'Castbox',
     link: 'https://castbox.fm/vc/2834723',
-  },
-  {
-    id: 'spotifypodcasts',
-    label: 'Spotify',
-    link: 'https://open.spotify.com/show/61Q5hmZfpw3fDoNM6cGir5',
   },
   {
     id: 'overcastpodcasts',
