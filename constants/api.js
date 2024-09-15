@@ -39,5 +39,9 @@ export default {
       get: slug => `${API_URL}/games/tinder/${slug}`,
       postStats: `${API_URL}/games/tinder/stats`,
     },
+    xy: {
+      get: slug => `${API_URL}/games/xy/${slug}`,
+      getOutcome: (slug, input) => `${API_URL}/games/xy/getOutcome/${slug}?input=${input}`,
+    },
   },
 };

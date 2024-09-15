@@ -1,0 +1,111 @@
+@import 'styles/responsiveness';
+@import 'styles/variables';
+
+.xygame-page {
+  background-color: #000000;
+  color: #ffffff;
+
+  &__wrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__header {
+    color: #ffffff;
+    margin-bottom: 60px;
+    margin-top: 60px;
+    text-align: center;
+    width: 660px;
+  }
+
+  &__header-title {
+    font-size: 60px;
+    font-weight: 700;
+    line-height: 66px;
+    margin-bottom: 20px;
+  }
+
+  &__header-subtitle {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+  }
+
+  &__interactive {
+    border-radius: 6px;
+    height: 270px;
+    width: 660px;
+  }
+
+  &__layout-vertical {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__image-bottom {
+    color: #ff0000;
+  }
+
+  &__layout-horizontal {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  &__image-left {
+    width: 135px;
+  }
+
+  &__image-right {
+    width: 135px;
+  }
+
+  &__game {
+    flex-grow: 1;
+    padding: 20px 40px 0;
+    text-align: center;
+  }
+
+  &__question {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 36px;
+  }
+
+  &__input {
+    border-bottom: 2px #ffffff solid;
+    height: 60px;
+  }
+
+  &__button {
+    background-color: #0dc6aa;
+    border: 0;
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 36px;
+    margin-top: 40px;
+    padding: 6px 24px 12px;
+    width: 138px;
+
+    &--inactive {
+      opacity: 40%;
+    }
+  }
+
+  &__social {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 100px;
+    padding-top: 60px;
+    width: 660px;
+  }
+
+  &__share {
+    color: #ff0000;
+  }
+}
