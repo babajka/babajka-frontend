@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import bem from 'bem-css-modules';
+import cn from 'classnames';
 
 import Clickable from 'components/common/Clickable';
 import Icon from 'components/common/ui/Icon';
@@ -11,12 +12,26 @@ import styles from './input.module.scss';
 const b = bem(styles);
 
 const Input = React.forwardRef(
-  ({ pending, leftIcon, rightIcon, disabled, error, onRightClick, placeholder, ...props }, ref) => (
+  (
+    {
+      className,
+      pending,
+      leftIcon,
+      rightIcon,
+      disabled,
+      error,
+      onRightClick,
+      placeholder,
+      barColor,
+      ...props
+    },
+    ref
+  ) => (
     <>
       <div className={b()}>
         <input
           ref={ref}
-          className={b('control')}
+          className={cn(b('control'), className)}
           type="text"
           disabled={disabled}
           placeholder={placeholder}
@@ -38,7 +53,7 @@ const Input = React.forwardRef(
             <Icon {...rightIcon} />
           </Clickable>
         )}
-        <span className={b('bar', { error: !!error })} />
+        <span className={b('bar', { error: !!error })} style={{ 'background-color': barColor }} />
       </div>
       {error && <p className={b('error')}>{error}</p>}
     </>
@@ -47,6 +62,7 @@ const Input = React.forwardRef(
 
 Input.propTypes = {
   /* eslint-disable react/require-default-props */
+  className: PropTypes.string,
   pending: PropTypes.bool,
   disabled: PropTypes.bool,
   leftIcon: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
@@ -55,6 +71,7 @@ Input.propTypes = {
   error: PropTypes.node,
   onRightClick: PropTypes.func,
   placeholder: PropTypes.string,
+  barColor: PropTypes.string,
   /* eslint-enable */
 };
 

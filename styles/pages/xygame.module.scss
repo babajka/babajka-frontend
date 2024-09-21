@@ -2,8 +2,7 @@
 @import 'styles/variables';
 
 .xygame-page {
-  background-color: #000000;
-  color: #ffffff;
+  border-radius: 0; // Remove.
 
   &__wrapper {
     align-items: center;
@@ -18,6 +17,10 @@
     margin-top: 60px;
     text-align: center;
     width: 660px;
+
+    @include screen-tablet-touch-mobile {
+      width: 85%;
+    }
   }
 
   &__header-title {
@@ -37,6 +40,22 @@
     border-radius: 6px;
     height: 270px;
     width: 660px;
+
+    @include screen-tablet-touch-mobile {
+      height: unset;
+    }
+
+    @include screen-tablet {
+      max-width: 525px;
+    }
+
+    @include screen-touch {
+      width: 85%;
+    }
+
+    @include screen-mobile {
+      width: 85%;
+    }
   }
 
   &__layout-vertical {
@@ -45,26 +64,38 @@
   }
 
   &__image-bottom {
-    color: #ff0000;
+    display: none;
+
+    @include screen-tablet-touch-mobile {
+      display: block;
+    }
   }
 
   &__layout-horizontal {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
   }
 
   &__image-left {
     width: 135px;
+
+    @include screen-tablet-touch-mobile {
+      display: none;
+    }
   }
 
   &__image-right {
     width: 135px;
+
+    @include screen-tablet-touch-mobile {
+      display: none;
+    }
   }
 
   &__game {
-    flex-grow: 1;
-    padding: 20px 40px 0;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
     text-align: center;
   }
 
@@ -72,11 +103,20 @@
     font-size: 30px;
     font-weight: 700;
     line-height: 36px;
+    margin: 20px 40px 0;
+  }
+
+  &__input-wrapper {
+    max-width: 100%;
+    padding: 10px 40px 0;
   }
 
   &__input {
-    border-bottom: 2px #ffffff solid;
-    height: 60px;
+    color: #ffffff;
+    font-size: 40px;
+    height: 50px;
+    text-align: center;
+    width: 100%;
   }
 
   &__button {
@@ -91,9 +131,27 @@
     padding: 6px 24px 12px;
     width: 138px;
 
+    @include screen-tablet-touch-mobile {
+      margin-bottom: 50px;
+    }
+
     &--inactive {
       opacity: 40%;
     }
+  }
+
+  &__response {
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 36px;
+    margin: 20px 40px 0;
+  }
+
+  &__outcome {
+    font-size: 20px; // ?
+    font-weight: 300;
+    line-height: 36px; // ?
+    margin: 20px 20px 0;
   }
 
   &__social {

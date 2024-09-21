@@ -15,6 +15,7 @@ import { MetaImage, MetaDescription } from 'components/social/Metatags';
 
 import useToggleSidebar from 'hooks/useToggleSidebar';
 
+import fiberyRenderer from 'utils/fibery/renderer';
 import fiberyToString from 'utils/fibery/toString';
 import { makeRequest, catchServerSideErrors } from 'utils/request';
 import { getLocalizedSuggested } from 'utils/getters';
@@ -26,13 +27,24 @@ const b = bem(styles);
 
 // XY Games are currently implemented to only support Belarusian language.
 const LANG = 'be';
+const initialOutcome = {
+  data: {
+    text: {
+      be: {
+        content: [],
+      },
+    },
+  },
+  inputValue: '',
+};
 
 const XYGamePage = ({
+  slug,
   title,
   subtitle,
   //   inputType,
   question,
-  //   response,
+  response,
   images: { left, right, bottom },
   colors: { colorBackgroundOuter, colorBackgroundInner, colorText },
   suggestedArticles,
@@ -40,23 +52,54 @@ const XYGamePage = ({
   const textStr = subtitle ? fiberyToString(subtitle, { useBreak: true }) : '';
 
   const inputRef = useRef();
-  const [formValue] = useState('');
+  const [formValue, setValue] = useState('');
 
-  const onSubmit = useCallback();
+  const onChange = useCallback(({ target: { value } }) => {
+    setValue(value);
+  }, []);
+
+  // const onSubmit = useCallback();
+
+  const [
+    {
+      data: {
+        text: {
+          be: { content },
+        },
+      },
+      inputValue,
+    },
+    setOutcome,
+  ] = useState(initialOutcome);
+
+  // TODO: use swr
+  const fetchOutcome = useCallback(async () => {
+    try {
+      const data = await makeRequest(
+        `https://api.wir.by/api/games/xy/getOutcome/${slug}?input=${inputRef.current.value}`
+      ); // api.games.xy.getOutcome(slug, inputRef.current.value));
+      setOutcome({ data, inputValue: inputRef.current.value });
+    } catch (err) {
+      // setCookie(initialCookie);
+      // setError(true);
+    } finally {
+      // setPending(false);
+    }
+  }, []);
 
   return (
     <>
       <MetaImage url={bottom} />
       <MetaDescription description={subtitle} />
-      <div className={b()}>
+      <div className={b()} style={{ 'background-color': colorBackgroundOuter }}>
         <Header toggleSidebar={useToggleSidebar()} color={colorText} />
 
         <div
           className={cn(typography['common-text'], b('wrapper'))}
-          style={{ 'background-color': colorBackgroundOuter }}
+          style={{ 'background-color': colorBackgroundOuter, color: colorText }}
         >
           <div className={b('header')}>
-            <h1 className={b('header-title')}>{title}</h1>
+            <h1 className={cn(typography['common-title'], b('header-title'))}>{title}</h1>
             <h2 className={b('header-subtitle')}>{subtitle}</h2>
           </div>
           <div className={b('interactive')} style={{ 'background-color': colorBackgroundInner }}>
@@ -66,28 +109,44 @@ const XYGamePage = ({
                   <img src={left} alt="img" />
                 </div>
                 <div className={b('game')}>
-                  <div className={b('question')}>{question}</div>
-                  <form onSubmit={onSubmit}>
-                    <Input
-                      ref={inputRef}
-                      className={b('input')}
-                      // aria-labelledby="footer-subscribe"
-                      name="ageInput"
-                      value={formValue}
-                    />
-                    <Button className={b('button', { inactive: true })}>Адказаць</Button>
-                  </form>
+                  {content.length === 0 && (
+                    <>
+                      <div className={b('question')}>{question}</div>
+
+                      <div className={b('input-wrapper')}>
+                        <Input
+                          ref={inputRef}
+                          value={formValue}
+                          onChange={onChange}
+                          className={b('input')}
+                          // aria-labelledby="footer-subscribe"
+                          name="ageInput"
+                          barColor={colorText}
+                        />
+                      </div>
+
+                      <Button
+                        className={b('button', { inactive: !formValue })}
+                        onClick={fetchOutcome}
+                      >
+                        Адказаць
+                      </Button>
+                    </>
+                  )}
+
+                  {content.length !== 0 && (
+                    <>
+                      <div className={b('response')}>{response.replace('{INPUT}', inputValue)}</div>
+                      <div className={b('outcome')}>{fiberyRenderer(content)}</div>
+                    </>
+                  )}
                 </div>
                 <div className={b('image-right')}>
                   <img src={right} alt="img" />
                 </div>
               </div>
-              <div className={b('image-bottom')}>
-                <img src={bottom} alt="img" />
-              </div>
+              <img className={b('image-bottom')} src={bottom} alt="img" />
             </div>
-            <p>{left}</p>
-            <p>{right}</p>
             {/* <Button className={b('btn')} onClick={fetchCookie} pending={pending}>
               {!error && `Атрымаць${initial ? '' : ' яшчэ адно'}`}
               {error && 'Памылка, паспрабуйце яшчэ'}
@@ -124,6 +183,7 @@ export const getServerSideProps = catchServerSideErrors(async ({ query: { slug }
 
   return {
     props: {
+      slug,
       title: title[LANG],
       subtitle: subtitle[LANG],
       inputType,

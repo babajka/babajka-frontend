@@ -18,6 +18,15 @@ const b = bem(styles);
 
 const Header = ({ toggleSidebar, color }) => {
   const router = useRouter();
+
+  // const joinedColors = {};
+  // if (color) {
+  //   joinedColors.color = color;
+  // }
+  // if (backgroundColor) {
+  //   joinedColors.backgroundColor = backgroundColor
+  // }
+
   return (
     <header className={b()}>
       <Link className={b('logo')} route={ROUTES_NAMES.main} titleId="header.to-main">
@@ -42,6 +51,7 @@ const Header = ({ toggleSidebar, color }) => {
             // eslint-disable-next-line react/no-array-index-key
             key={i}
             className={b('burger-item')}
+            // What is this backgroundColor for, is it used?
             style={color ? { backgroundColor: color } : {}}
           />
         ))}
