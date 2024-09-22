@@ -12,7 +12,6 @@
   }
 
   &__header {
-    color: #ffffff;
     margin-bottom: 60px;
     margin-top: 60px;
     text-align: center;
@@ -96,7 +95,13 @@
     align-items: center;
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
+    height: 270px;
     text-align: center;
+
+    @include screen-tablet-touch-mobile {
+      height: unset;
+    }
   }
 
   &__question {
@@ -112,9 +117,10 @@
   }
 
   &__input {
-    color: #ffffff;
-    font-size: 40px;
-    height: 50px;
+    font-size: 48px;
+    font-weight: 700;
+    height: 60px;
+    line-height: 60px;
     text-align: center;
     width: 100%;
   }
@@ -129,10 +135,15 @@
     line-height: 36px;
     margin-top: 40px;
     padding: 6px 24px 12px;
-    width: 138px;
+    width: 155px;
 
     @include screen-tablet-touch-mobile {
       margin-bottom: 50px;
+    }
+
+    &:hover {
+      background-color: #0fe1c0;
+      color: #ffffff;
     }
 
     &--inactive {
@@ -144,14 +155,19 @@
     font-size: 30px;
     font-weight: 600;
     line-height: 36px;
-    margin: 20px 40px 0;
+    margin: 20px 40px;
   }
 
   &__outcome {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
     font-size: 20px; // ?
     font-weight: 300;
-    line-height: 36px; // ?
-    margin: 20px 20px 0;
+    line-height: 30px; // ?
+    margin: 0 20px;
+    overflow: hidden;
   }
 
   &__social {
@@ -161,9 +177,5 @@
     padding-bottom: 100px;
     padding-top: 60px;
     width: 660px;
-  }
-
-  &__share {
-    color: #ff0000;
   }
 }

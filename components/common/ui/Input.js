@@ -32,7 +32,6 @@ const Input = React.forwardRef(
         <input
           ref={ref}
           className={cn(b('control'), className)}
-          type="text"
           disabled={disabled}
           placeholder={placeholder}
           aria-label={placeholder}
