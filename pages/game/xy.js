@@ -102,6 +102,7 @@ const XYGamePage = ({
 
   const cleanupState = useCallback(() => {
     setOutcome(initialOutcome);
+    setValue('');
   }, []);
 
   return (
