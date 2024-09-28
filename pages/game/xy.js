@@ -10,7 +10,7 @@ import Button from 'components/common/Button';
 import Input from 'components/common/ui/Input';
 import ShareButtons from 'components/social/ShareButtons';
 import CardBlocksLayout from 'features/layout/card-blocks-layout';
-import { MetaImage, MetaDescription } from 'components/social/Metatags';
+import { MetaImage, MetaDescription, MetaKeywords, MetaTitle } from 'components/social/Metatags';
 
 import useToggleSidebar from 'hooks/useToggleSidebar';
 
@@ -44,6 +44,7 @@ const XYGamePage = ({
   inputType,
   question,
   response,
+  keywords,
   images: { left, right, bottom, background, preview },
   colors: { background: colorBackground, text: colorText },
   suggestedArticles,
@@ -87,11 +88,9 @@ const XYGamePage = ({
         throw new Error('Invalid input');
       }
 
-      const data = await makeRequest(
-        api.games.xy.getOutcome(slug, value)
-        // For some reason, does not work locally; needs to be replaced with:
-        // `https://api.wir.by/api/games/xy/getOutcome/${slug}?input=${value}`
-      );
+      const data = await makeRequest(api.games.xy.getOutcome(slug), 'POST', {
+        input: value,
+      });
       setOutcome({ data, inputValue: value });
     } catch (err) {
       setOutcome(initialOutcome);
@@ -107,8 +106,11 @@ const XYGamePage = ({
 
   return (
     <>
-      <MetaImage url={preview} />
+      <MetaTitle title={title} />
       <MetaDescription description={subtitle} />
+      <MetaKeywords keywords={keywords} />
+      <MetaImage url={preview} />
+
       <div
         className={b()}
         style={{
@@ -201,6 +203,7 @@ export const getServerSideProps = catchServerSideErrors(async ({ query: { slug }
     response,
     images,
     colors,
+    keywords,
     suggestedArticles = null,
   } = await makeRequest(api.games.xy.get(slug));
 
@@ -214,6 +217,7 @@ export const getServerSideProps = catchServerSideErrors(async ({ query: { slug }
       response: response[LANG],
       images,
       colors,
+      keywords,
       suggestedArticles: getLocalizedSuggested(suggestedArticles, LANG),
     },
   };

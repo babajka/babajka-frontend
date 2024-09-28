@@ -41,7 +41,7 @@ export default {
     },
     xy: {
       get: slug => `${API_URL}/games/xy/${slug}`,
-      getOutcome: (slug, input) => `${API_URL}/games/xy/getOutcome/${slug}?input=${input}`,
+      getOutcome: slug => `${API_URL}/games/xy/getOutcome/${slug}`,
     },
   },
 };
