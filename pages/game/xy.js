@@ -44,12 +44,8 @@ const XYGamePage = ({
   inputType,
   question,
   response,
-  images: { left, right, bottom },
-  colors: {
-    backgroundOuter: colorBackgroundOuter,
-    backgroundInner: colorBackgroundInner,
-    text: colorText,
-  },
+  images: { left, right, bottom, background, preview },
+  colors: { background: colorBackground, text: colorText },
   suggestedArticles,
 }) => {
   const inputRef = useRef();
@@ -92,8 +88,10 @@ const XYGamePage = ({
       }
 
       const data = await makeRequest(
-        `https://api.wir.by/api/games/xy/getOutcome/${slug}?input=${value}` // TODO: Revert before pushing to production.
-      ); // api.games.xy.getOutcome(slug, value));
+        api.games.xy.getOutcome(slug, value)
+        // For some reason, does not work locally; needs to be replaced with:
+        // `https://api.wir.by/api/games/xy/getOutcome/${slug}?input=${value}`
+      );
       setOutcome({ data, inputValue: value });
     } catch (err) {
       setOutcome(initialOutcome);
@@ -103,22 +101,30 @@ const XYGamePage = ({
     }
   }, []);
 
+  const cleanupState = useCallback(() => {
+    setOutcome(initialOutcome);
+  }, []);
+
   return (
     <>
-      <MetaImage url={bottom} />
+      <MetaImage url={preview} />
       <MetaDescription description={subtitle} />
-      <div className={b()} style={{ 'background-color': colorBackgroundOuter }}>
+      <div
+        className={b()}
+        style={{
+          'background-color': colorBackground,
+          'background-image': `url(${background})`,
+          color: colorText,
+        }}
+      >
         <Header toggleSidebar={useToggleSidebar()} color={colorText} />
 
-        <div
-          className={cn(typography['common-text'], b('wrapper'))}
-          style={{ 'background-color': colorBackgroundOuter, color: colorText }}
-        >
+        <div className={cn(typography['common-text'], b('wrapper'))}>
           <div className={b('header')}>
             <h1 className={cn(typography['common-title'], b('header-title'))}>{title}</h1>
             <h2 className={b('header-subtitle')}>{subtitle}</h2>
           </div>
-          <div className={b('interactive')} style={{ 'background-color': colorBackgroundInner }}>
+          <div className={b('interactive')}>
             <div className={b('layout-vertical')}>
               <div className={b('layout-horizontal')}>
                 <img className={b('image-left')} src={left} alt="img" />
@@ -144,6 +150,7 @@ const XYGamePage = ({
                         className={b('button', { inactive: !formValue || error })}
                         onClick={fetchOutcome}
                         pending={pending}
+                        disabled={!formValue || error}
                       >
                         {!error && 'Адказаць'}
                         {error && 'Памылка :('}
@@ -157,6 +164,9 @@ const XYGamePage = ({
                       <div className={b('outcome')}>
                         <div>{fiberyToString(content)}</div>
                       </div>
+                      <Button className={b('button')} onClick={cleanupState}>
+                        Яшчэ раз
+                      </Button>
                     </>
                   )}
                 </div>

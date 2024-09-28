@@ -2,7 +2,17 @@
 @import 'styles/variables';
 
 .xygame-page {
-  border-radius: 0; // Remove.
+  background-position: left top;
+  background-size: auto 100vh;
+  margin-bottom: 80px;
+
+  @include screen-touch {
+    background-size: auto 200vh;
+  }
+
+  @include screen-mobile {
+    background-size: auto 200vh;
+  }
 
   &__wrapper {
     align-items: center;
@@ -36,12 +46,13 @@
   }
 
   &__interactive {
+    background-color: #ffffff1a;
     border-radius: 6px;
-    height: 270px;
+    min-height: 270px;
     width: 660px;
 
     @include screen-tablet-touch-mobile {
-      height: unset;
+      min-height: unset;
     }
 
     @include screen-tablet {
@@ -71,6 +82,7 @@
   }
 
   &__layout-horizontal {
+    align-items: flex-start;
     display: flex;
     flex-direction: row;
   }
@@ -96,12 +108,7 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    height: 270px;
     text-align: center;
-
-    @include screen-tablet-touch-mobile {
-      height: unset;
-    }
   }
 
   &__question {
@@ -133,6 +140,7 @@
     font-size: 20px;
     font-weight: 400;
     line-height: 36px;
+    margin-bottom: 40px;
     margin-top: 40px;
     padding: 6px 24px 12px;
     width: 155px;
