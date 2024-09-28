@@ -73,7 +73,7 @@ const XYGamePage = ({
 
   const isInputValid = value => {
     if (inputType === 'AGE') {
-      return Number(value) >= 1 && Number(value) <= 120; // TODO: Clarify max age.
+      return Number(value) >= 1 && Number(value) <= 120;
     }
     return true;
   };
