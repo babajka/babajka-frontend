@@ -14,11 +14,12 @@ import styles from './banner.module.scss';
 const b = bem(styles);
 
 const CDN_HOST = 'https://res.cloudinary.com/wir-by/image/upload';
-const BANNERS_AVAILABLE = ['mapa', 'ny2021', 'tinder'];
+const BANNERS_AVAILABLE = ['mapa', 'ny2021', 'tinder', 'uzrost'];
 const LINK = {
   mapa: { href: 'https://map.wir.by?utm_source=wirby-main-page' },
   [NY2021]: { route: `game/${NY2021}` },
   tinder: { route: `game/tinder` },
+  uzrost: { href: 'game/uzrost' },
 };
 const IMAGE_LINK = {
   mapa: (width, screen) =>
@@ -27,6 +28,8 @@ const IMAGE_LINK = {
     `${CDN_HOST}/c_scale,w_${width},f_auto,q_auto/v1607868560/production/banners/newyear2021-all-sizes/${screen}.png`,
   tinder: (width, screen) =>
     `${CDN_HOST}/c_scale,w_${width},f_auto,q_auto/v1613151926/production/banners/tinder-all-sizes/${screen}.png`,
+  uzrost: (width, screen) =>
+    `${CDN_HOST}/c_scale,w_${width},f_auto,q_auto/v1727729557/production/banners/uzrost-all-sizes/${screen}.png`,
 };
 
 const BANNERS = banner =>
@@ -56,7 +59,10 @@ const BannerBlock = ({ block: { banner }, inViewport }) => {
     <BlockWrapper>
       <div className={b()}>
         <Link {...linkProps}>
-          <div className={cn(b('title'), b(`${banner}-title`))}>{title}</div>
+          {banner !== 'uzrost' && (
+            // TODO: Decouple uzrost banners images from text.
+            <div className={cn(b('title'), b(`${banner}-title`))}>{title}</div>
+          )}
           {[NY2021, 'tinder'].includes(banner) && (
             <div className={cn(b('subtitle'), b(`${banner}-subtitle`))}>{subtitle}</div>
           )}

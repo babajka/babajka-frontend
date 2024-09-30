@@ -236,4 +236,9 @@
       top: 198px;
     }
   }
+
+  &__uzrost-title {
+    color: $primary-white;
+    // TODO: Decouple uzrost banners images from text.
+  }
 }
