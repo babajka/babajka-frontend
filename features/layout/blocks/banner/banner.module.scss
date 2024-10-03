@@ -236,4 +236,92 @@
       top: 198px;
     }
   }
+
+  &__uzrost-title {
+    color: $primary-white;
+    font-weight: 700;
+
+    @include screen-desktop {
+      font-size: 60px;
+      height: 66px;
+      left: 196px;
+      line-height: 66px;
+      top: 78px;
+      width: 645px;
+    }
+
+    @include screen-tablet-large {
+      font-size: 48px;
+      height: 60px;
+      left: 152px;
+      line-height: 60px;
+      top: 84px;
+      width: 515px;
+    }
+
+    @include screen-tablet {
+      font-size: 48px;
+      height: 48px;
+      left: 61px;
+      line-height: 48px;
+      top: 96px;
+      width: 515px;
+    }
+
+    @include screen-touch {
+      font-size: 48px;
+      height: 96px;
+      left: 59px;
+      line-height: 48px;
+      text-align: center;
+      top: 70px;
+      width: 362px;
+    }
+
+    @include screen-mobile {
+      font-size: 30px;
+      height: 72px;
+      left: 46px;
+      line-height: 36px;
+      text-align: center;
+      top: 136px;
+      width: 209px;
+    }
+  }
+
+  &__uzrost-subtitle {
+    color: $primary-white;
+    font-size: 16px;
+    font-weight: 400;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    width: 177px;
+
+    @include screen-desktop {
+      left: 467px;
+      top: 54px;
+      width: 87px;
+    }
+
+    @include screen-tablet-large {
+      left: 320px;
+      top: 60px;
+    }
+
+    @include screen-tablet {
+      left: 224px;
+      top: 72px;
+    }
+
+    @include screen-touch {
+      left: 152px;
+      top: 46px;
+    }
+
+    @include screen-mobile {
+      left: 62px;
+      top: 112px;
+    }
+  }
 }

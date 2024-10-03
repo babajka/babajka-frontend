@@ -18,6 +18,7 @@ const b = bem(styles);
 
 const Header = ({ toggleSidebar, color }) => {
   const router = useRouter();
+
   return (
     <header className={b()}>
       <Link className={b('logo')} route={ROUTES_NAMES.main} titleId="header.to-main">
