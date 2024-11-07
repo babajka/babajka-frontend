@@ -1,7 +1,7 @@
 import styles from 'styles/pages/xygame.module.scss';
 import typography from 'styles/typography.module.scss';
 
-import React, { useRef, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import bem from 'bem-css-modules';
 import cn from 'classnames';
 
@@ -26,17 +26,6 @@ const b = bem(styles);
 // XY Games are currently implemented to only support Belarusian language.
 const LANG = 'be';
 
-const initialOutcome = {
-  data: {
-    text: {
-      be: {
-        content: [],
-      },
-    },
-  },
-  inputValue: '',
-};
-
 const XYGamePage = ({
   slug,
   title,
@@ -49,27 +38,16 @@ const XYGamePage = ({
   colors: { background: colorBackground, text: colorText },
   suggestedArticles,
 }) => {
-  const inputRef = useRef();
-  const [formValue, setValue] = useState('');
   const [error, setError] = useState(false);
   const [pending, setPending] = useState(false);
 
-  const onChange = useCallback(({ target: { value } }) => {
-    setValue(value);
+  const [inputValue, setInputValue] = useState('');
+  const onInputChange = useCallback(({ target: { value } }) => {
+    setInputValue(value);
     setError(false);
   }, []);
 
-  const [
-    {
-      data: {
-        text: {
-          be: { content },
-        },
-      },
-      inputValue,
-    },
-    setOutcome,
-  ] = useState(initialOutcome);
+  const [content, setContent] = useState([]);
 
   const isInputValid = useCallback(
     value => {
@@ -86,26 +64,27 @@ const XYGamePage = ({
       setPending(true);
       setError(false);
 
-      const { value } = inputRef.current;
-      if (!isInputValid(value)) {
+      if (!isInputValid(inputValue)) {
         throw new Error('Invalid input');
       }
 
       const data = await makeRequest(api.games.xy.getOutcome(slug), 'POST', {
-        input: value,
+        input: inputValue,
       });
-      setOutcome({ data, inputValue: value });
+
+      setContent(data.text[LANG].content);
     } catch (err) {
-      setOutcome(initialOutcome);
+      setContent([]);
+      setInputValue('');
       setError(true);
     } finally {
       setPending(false);
     }
-  }, [isInputValid, slug]);
+  }, [inputValue, isInputValid, slug]);
 
   const cleanupState = useCallback(() => {
-    setOutcome(initialOutcome);
-    setValue('');
+    setContent([]);
+    setInputValue('');
   }, []);
 
   return (
@@ -118,8 +97,8 @@ const XYGamePage = ({
       <div
         className={b()}
         style={{
-          'background-color': colorBackground,
-          'background-image': `url(${background})`,
+          backgroundColor: colorBackground,
+          backgroundImage: `url(${background})`,
           color: colorText,
         }}
       >
@@ -141,9 +120,8 @@ const XYGamePage = ({
 
                       <div className={b('input-wrapper')} style={{ color: colorText }}>
                         <Input
-                          ref={inputRef}
-                          value={formValue}
-                          onChange={onChange}
+                          value={inputValue}
+                          onChange={onInputChange}
                           className={b('input')}
                           name="ageInput"
                           barColor={colorText}
@@ -153,10 +131,10 @@ const XYGamePage = ({
                       </div>
 
                       <Button
-                        className={b('button', { inactive: !formValue || error })}
+                        className={b('button', { inactive: !inputValue || error })}
                         onClick={fetchOutcome}
                         pending={pending}
-                        disabled={!formValue || error}
+                        disabled={!inputValue || error}
                       >
                         {!error && 'Адказаць'}
                         {error && 'Памылка :('}
