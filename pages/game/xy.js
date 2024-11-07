@@ -71,12 +71,15 @@ const XYGamePage = ({
     setOutcome,
   ] = useState(initialOutcome);
 
-  const isInputValid = value => {
-    if (inputType === 'AGE') {
-      return Number(value) >= 1 && Number(value) <= 120;
-    }
-    return true;
-  };
+  const isInputValid = useCallback(
+    value => {
+      if (inputType === 'AGE') {
+        return Number(value) >= 1 && Number(value) <= 120;
+      }
+      return true;
+    },
+    [inputType]
+  );
 
   const fetchOutcome = useCallback(async () => {
     try {
@@ -98,7 +101,7 @@ const XYGamePage = ({
     } finally {
       setPending(false);
     }
-  }, []);
+  }, [isInputValid, slug]);
 
   const cleanupState = useCallback(() => {
     setOutcome(initialOutcome);
@@ -144,7 +147,7 @@ const XYGamePage = ({
                           className={b('input')}
                           name="ageInput"
                           barColor={colorText}
-                          type={inputType === 'AGE' && 'number'}
+                          type={inputType === 'AGE' ? 'number' : 'text'}
                           style={{ color: colorText }}
                         />
                       </div>

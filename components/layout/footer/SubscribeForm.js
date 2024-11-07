@@ -90,6 +90,7 @@ const SubscribeForm = () => {
             onRightClick={onSubmit}
             pending={pending}
             error={apiError}
+            type="email"
           />
         </form>
       )}

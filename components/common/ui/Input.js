@@ -23,6 +23,7 @@ const Input = React.forwardRef(
       onRightClick,
       placeholder,
       barColor,
+      type = 'text',
       ...props
     },
     ref
@@ -32,6 +33,7 @@ const Input = React.forwardRef(
         <input
           ref={ref}
           className={cn(b('control'), className)}
+          type={type}
           disabled={disabled}
           placeholder={placeholder}
           aria-label={placeholder}
@@ -71,6 +73,7 @@ Input.propTypes = {
   onRightClick: PropTypes.func,
   placeholder: PropTypes.string,
   barColor: PropTypes.string,
+  type: PropTypes.oneOf(['text', 'email', 'number']),
   /* eslint-enable */
 };
 
