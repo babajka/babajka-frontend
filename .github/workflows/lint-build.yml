@@ -18,11 +18,12 @@ jobs:
       - name: use node.js (.nvmrc)
         uses: actions/setup-node@v1
         with:
-          node-version: "${{ steps.nvm.outputs.NVMRC }}"
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
 
       - name: update submodules
         run: git submodule update --init
 
       - run: npm install
       - run: npm run lint
+      - run: npm run test:run
       - run: make build
