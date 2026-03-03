@@ -1,14 +1,16 @@
+// eslint-disable-next-line import/no-unresolved
 import { defineConfig } from 'vitest/config';
+import path from 'path';
 
 export default defineConfig({
   resolve: {
     alias: {
-      components: '/Users/drapegnik/projects/wir/babajka-frontend/components',
-      constants: '/Users/drapegnik/projects/wir/babajka-frontend/constants',
-      hooks: '/Users/drapegnik/projects/wir/babajka-frontend/hooks',
-      lib: '/Users/drapegnik/projects/wir/babajka-frontend/lib',
-      utils: '/Users/drapegnik/projects/wir/babajka-frontend/utils',
-      features: '/Users/drapegnik/projects/wir/babajka-frontend/features',
+      components: path.resolve(__dirname, 'components'),
+      constants: path.resolve(__dirname, 'constants'),
+      hooks: path.resolve(__dirname, 'hooks'),
+      lib: path.resolve(__dirname, 'lib'),
+      utils: path.resolve(__dirname, 'utils'),
+      features: path.resolve(__dirname, 'features'),
     },
   },
   test: {
