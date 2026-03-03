@@ -56,14 +56,14 @@ npm run test:ui      # Run Vitest with UI
 
 Add tests to legacy app (`root/`) to ensure functionality is preserved during migration.
 
-- [ ] Install vitest, @testing-library/react, @testing-library/jest-dom, jsdom
-- [ ] Add test script: `vitest`
-- [ ] Configure `vitest.config.ts`
-- [ ] Write unit tests for `utils/` (date formatting, API helpers)
-- [ ] Write component tests for key UI (Button, Link, Image)
-- [ ] Write page tests for main pages (index, article, collection)
-- [ ] Run tests: `npm run test` - ensure all pass
-- [ ] Add test step to CI workflow
+- [x] Install vitest, @testing-library/react, @testing-library/jest-dom, jsdom
+- [x] Add test script: `vitest`
+- [x] Configure `vitest.config.ts`
+- [x] Write unit tests for `utils/` (date formatting, API helpers)
+- [x] Write component tests for key UI (Button, Link, Image)
+- [x] Write page tests for main pages (index, article, collection)
+- [x] Run tests: `npm run test` - ensure all pass
+- [x] Add test step to CI workflow
 
 ---
 
