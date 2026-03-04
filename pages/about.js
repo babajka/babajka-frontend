@@ -36,7 +36,17 @@ const AboutPage = ({ lang }) => (
         <Text id="about.section1-header" />
       </h1>
       <div className={b('text', { 'margin-top': 'small' })}>
-        <Text id="about.section1-text" />
+        <Text
+          id="about.section1-text"
+          render={(text, footer) => (
+            <>
+              {text}
+              <br />
+              <br />
+              {footer}
+            </>
+          )}
+        />
       </div>
       {/*
       <div

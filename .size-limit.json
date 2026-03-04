@@ -42,6 +42,12 @@
     "limit": "26 kB"
   },
   {
+    "name": "> game/xy [server]",
+    "path": ".next/server/pages/game/xy.html",
+    "running": false,
+    "limit": "15 kB"
+  },
+  {
     "name": "> diary [server]",
     "path": ".next/server/pages/diary.js",
     "running": false,

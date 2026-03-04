@@ -74,6 +74,19 @@
     }
   }
 
+  // remove number input arrows in Chrome, Safari, Edge, Opera
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+
+  // remove number input arrows in Firefox
+  // stylelint-disable-next-line selector-no-qualifying-type
+  input[type='number'] {
+    appearance: textfield;
+  }
+
   // change autocomplete styles in Chrome
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
