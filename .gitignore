@@ -17,5 +17,6 @@ data/*.json
 
 .husky
 
-# agent skills: installed locally from v3/skills-lock.json (npx skills experimental_install)
+# agent skills: installed locally, see "Agent skills" in v3/README.md
 v3/.claude/skills/
+v3/.agents/

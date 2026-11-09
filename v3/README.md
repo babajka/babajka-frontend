@@ -64,14 +64,23 @@ npm run fetch-dict     # node scripts/fetch-dict.ts → data/i18n.json
 
 ## Agent skills used during migration
 
-Skills are **project-scoped in `v3/`**. Only `v3/skills-lock.json` is committed. The skill files themselves (`v3/.claude/skills/`) are gitignored, and each developer installs them locally from the lockfile after cloning. Claude Code exposes them with a `v3:` prefix, only when working inside `v3/`.
+Skills are **project-scoped in `v3/`**. Only `v3/skills-lock.json` is committed, to record sources and hashes. The skill files themselves (`v3/.claude/skills/`) are gitignored, and each developer installs them locally after cloning. Claude Code exposes them with a `v3:` prefix, only when working inside `v3/`.
 
 ```bash
-cd v3 && nvm use                         # the skills CLI needs Node >= 22 (fails on the root's Node 16/18)
-npx skills experimental_install          # restore skills from skills-lock.json
-npx skills add <repo> -s <skill> -a claude-code -y   # add a new one (updates the lockfile)
-npx skills update -p                     # update project skills
+cd v3 && nvm use   # the skills CLI needs Node >= 22 (fails on the root's Node 16/18)
+
+# install / restore (into v3/.claude/skills, for Claude Code)
+npx skills add vercel-labs/agent-skills -a claude-code -y \
+  -s vercel-react-best-practices -s vercel-composition-patterns \
+  -s vercel-react-view-transitions -s web-design-guidelines
+npx skills add lombiq/tailwind-agent-skills -s tailwind-4-docs -a claude-code -y
+npx skills add wshobson/agents -s tailwind-design-system -a claude-code -y
+npx skills add currents-dev/playwright-best-practices-skill -s playwright-best-practices -a claude-code -y
+
+npx skills update -p   # update project skills
 ```
+
+Don't use `npx skills experimental_install` to restore. It installs into the generic `v3/.agents/skills/`, which Claude Code doesn't read.
 
 Third-party skills run with full agent permissions. Review a new skill (or an update that changes `skills-lock.json` hashes) before committing the lockfile.
 
@@ -139,7 +148,7 @@ Delete the old scaffold (`v3/app`, configs, lockfile) and regenerate it with `np
 
 Then:
 
-- [ ] Keep `v3/skills-lock.json` and `v3/README.md` when deleting the old scaffold, then run `npx skills experimental_install`.
+- [ ] Keep `v3/skills-lock.json` and `v3/README.md` when deleting the old scaffold, then reinstall the skills with the commands in "Agent skills".
 - [ ] `v3/.nvmrc` → `26`; `engines.node: ">=26"`
 - [ ] Install the Phase 1 skills (`next-dev-loop` + `agent-browser`, `next-cache-components-optimizer`, `next-partial-prefetching-adoption`, `next-bundle-optimizer`). See "Agent skills".
 - [ ] Commit the `AGENTS.md` that `create-next-app`/`next dev` generates; it points to the bundled docs. Link the root `AGENTS.md` and `CLAUDE.md` to it.
