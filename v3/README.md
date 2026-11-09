@@ -64,22 +64,45 @@ npm run fetch-dict     # node scripts/fetch-dict.ts → data/i18n.json
 
 ## Agent skills used during migration
 
-Install them project-scoped in `v3/`.
+Skills are installed **project-scoped in `v3/`**: committed to `v3/.claude/skills/` and pinned in `v3/skills-lock.json`. Claude Code exposes them with a `v3:` prefix, only when working inside `v3/`.
 
-| Skill                               | Install                                                                                  | Used for                                                                                          |
-| ----------------------------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| Next.js bundled docs                | automatic: `next dev` writes the pointer into `v3/AGENTS.md`                             | Version-matched Next docs in `node_modules/next/dist/docs/`. Read these before writing Next code. |
-| `next-dev-loop`                     | `npx skills add vercel/next.js --skill next-dev-loop` (+ `npm i -g agent-browser@^0.27`) | Agent verifies each page at runtime: DOM, console, network, React tree.                           |
-| `next-cache-components-optimizer`   | `npx skills add vercel/next.js --skill next-cache-components-optimizer`                  | `instant()` tests for key navigations (Phase 5).                                                  |
-| `next-partial-prefetching-adoption` | `npx skills add vercel/next.js --skill next-partial-prefetching-adoption`                | Shared loading shells for links.                                                                  |
-| `next-bundle-optimizer`             | `npx skills add vercel/next.js --skill next-bundle-optimizer`                            | JS size audit before cutover.                                                                     |
-| `vercel-react-best-practices`       | `npx skills add vercel-labs/agent-skills --skill react-best-practices`                   | Perf rules while writing components.                                                              |
-| `vercel-composition-patterns`       | `npx skills add vercel-labs/agent-skills --skill composition-patterns`                   | Card/Block component APIs. They currently pass many props; move to compound components.           |
-| `web-design-guidelines`             | `npx skills add vercel-labs/agent-skills --skill web-design-guidelines`                  | a11y/UX review of each migrated page.                                                             |
-| `vercel-react-view-transitions`     | `npx skills add vercel-labs/agent-skills --skill react-view-transitions`                 | Optional page transitions (Phase 5).                                                              |
-| `tailwind-4-docs`                   | `npx skills add lombiq/tailwind-agent-skills --skill tailwind-4-docs`                    | Tailwind v4 API. Agents tend to write v3 syntax.                                                  |
-| `tailwind-design-system`            | `npx skills add wshobson/agents --skill tailwind-design-system`                          | Turning SCSS tokens into `@theme`.                                                                |
-| `playwright-best-practices`         | `npx skills add currents-dev/playwright-best-practices-skill`                            | Visual/e2e test harness.                                                                          |
+```bash
+cd v3 && nvm use                         # the skills CLI needs Node >= 22 (fails on the root's Node 16/18)
+npx skills experimental_install          # restore skills from skills-lock.json
+npx skills add <repo> -s <skill> -a claude-code -y   # add a new one (updates the lockfile)
+npx skills update -p                     # update project skills
+```
+
+Third-party skills run with full agent permissions. Review the diff of `.claude/skills/` before committing an install or update.
+
+**Installed now** (knowledge/rules; no running app needed):
+
+| Skill                           | Source                                         | Used for                                                                                           |
+| ------------------------------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `vercel-react-best-practices`   | `vercel-labs/agent-skills`                     | Perf rules while writing components.                                                               |
+| `vercel-composition-patterns`   | `vercel-labs/agent-skills`                     | Card/Block component APIs. They currently pass many props; move to compound components.            |
+| `web-design-guidelines`         | `vercel-labs/agent-skills`                     | a11y/UX review of each migrated page. Fetches the latest rules from GitHub on each run.            |
+| `vercel-react-view-transitions` | `vercel-labs/agent-skills`                     | Optional page transitions (Phase 5).                                                               |
+| `tailwind-4-docs`               | `lombiq/tailwind-agent-skills`                 | Tailwind v4 API; agents tend to write v3 syntax. **Needs a one-time local docs snapshot** (below). |
+| `tailwind-design-system`        | `wshobson/agents`                              | Turning SCSS tokens into `@theme`.                                                                 |
+| `playwright-best-practices`     | `currents-dev/playwright-best-practices-skill` | Visual/e2e test harness.                                                                           |
+
+`tailwind-4-docs` setup. The Tailwind docs are source-available but not open source, so the snapshot is gitignored and each developer creates it locally (refresh weekly):
+
+```bash
+cd v3 && python3 .claude/skills/tailwind-4-docs/scripts/sync_tailwind_docs.py --accept-docs-license
+```
+
+**Install in Phase 1**, once v3 runs Next 16.4. These drive a running `next dev` (`/_next/mcp`) or the Turbopack bundle analyzer:
+
+| Skill                               | Install                                                                                             | Used for                                                                |
+| ----------------------------------- | --------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `next-dev-loop`                     | `npx skills add vercel/next.js -s next-dev-loop -a claude-code -y` + `npm i -g agent-browser@^0.27` | Agent verifies each page at runtime: DOM, console, network, React tree. |
+| `next-cache-components-optimizer`   | `npx skills add vercel/next.js -s next-cache-components-optimizer -a claude-code -y`                | `instant()` tests for key navigations (Phase 5).                        |
+| `next-partial-prefetching-adoption` | `npx skills add vercel/next.js -s next-partial-prefetching-adoption -a claude-code -y`              | Shared loading shells for links.                                        |
+| `next-bundle-optimizer`             | `npx skills add vercel/next.js -s next-bundle-optimizer -a claude-code -y`                          | JS size audit before cutover.                                           |
+
+**Not a skill:** Next.js docs. From 16.3, `next dev` writes a pointer into `v3/AGENTS.md` to the version-matched docs in `node_modules/next/dist/docs/`. Read those before writing Next code.
 
 Not used:
 
@@ -116,7 +139,9 @@ Delete the old scaffold (`v3/app`, configs, lockfile) and regenerate it with `np
 
 Then:
 
+- [ ] Keep `v3/.claude/`, `v3/skills-lock.json` and `v3/README.md` when deleting the old scaffold.
 - [ ] `v3/.nvmrc` → `26`; `engines.node: ">=26"`
+- [ ] Install the Phase 1 skills (`next-dev-loop` + `agent-browser`, `next-cache-components-optimizer`, `next-partial-prefetching-adoption`, `next-bundle-optimizer`). See "Agent skills".
 - [ ] Commit the `AGENTS.md` that `create-next-app`/`next dev` generates; it points to the bundled docs. Link the root `AGENTS.md` and `CLAUDE.md` to it.
 - [ ] `next.config.ts`:
   - `output: 'standalone'`

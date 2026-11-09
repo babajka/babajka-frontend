@@ -16,3 +16,7 @@ data/*.json
 *.DS_Store
 
 .husky
+
+# tailwind-4-docs skill: local docs snapshot (source-available license, do not commit)
+v3/.claude/skills/tailwind-4-docs/references/docs/
+v3/.claude/skills/tailwind-4-docs/references/docs-index.tsx
