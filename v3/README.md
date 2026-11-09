@@ -256,13 +256,14 @@ Measure each item against legacy with the bundle analyzer and Web Vitals (Lighth
    - YouTube/Coub/Yandex Music use a click-to-load facade (poster + play button) instead of eager iframes.
    - Quizzes load via `next/script strategy="lazyOnload"`.
 7. **Slider.** Replace swiper 5 + `react-id-swiper` with a CSS scroll-snap carousel and a tiny client island for the arrows. If parity needs it, fall back to Swiper 12 lazy-loaded with `next/dynamic`.
-8. **Analytics.**
-   - `react-ga` uses Universal Analytics, which is dead since 2023. Either move to GA4 via `@next/third-parties/google` (needs a new `G-` id) or drop it.
-   - Yandex Metrika via `next/script afterInteractive`.
-   - `clearUtmParams` stays.
+8. **Remove analytics completely.** v3 ships with no analytics; whether to bring it back is decided later (see [Later: analytics](#later-analytics)).
+   - Drop Google Analytics. `react-ga` uses Universal Analytics, which stopped collecting data in 2023, so it currently does nothing.
+   - Drop Yandex Metrika: the `loadYM` script injection and the `<noscript>` pixel.
+   - Drop the `GA_ID`/`YM_ID` constants and `clearUtmParams`, which only exists for analytics.
+   - This leaves no third-party scripts in the critical path and no tracking cookies, so no consent banner is needed.
 9. **Dependencies dropped:**
    - `express`, `cookie-parser`, `http-proxy-middleware`, `command-line-args`, `next-routes`, `next-compose-plugins`
-   - `env-ci`, `js-cookie`, `react-scroll-up`, `normalize.css`, `sass`, `bem-css-modules`, `prop-types`
+   - `env-ci`, `js-cookie`, `react-scroll-up`, `normalize.css`, `sass`, `bem-css-modules`, `prop-types`, `react-ga`
    - `lodash` → native or `es-toolkit`
    - `querystring`
    - `google-spreadsheet` becomes a devDependency used only by the script
@@ -286,6 +287,32 @@ Measure each item against legacy with the bundle analyzer and Web Vitals (Lighth
   - `server.js`, `routes.js`, `.babelrc.js`, `stylelint.config.js`, the `lib`/`assets` submodules
   - old deps and the root `vitest.config.js`
 - [ ] Update root `AGENTS.md`, `CLAUDE.md`, `README.md`, the deploy scripts in `bin/deploy/`, and `pm2-config.json`.
+
+---
+
+## Later: analytics
+
+Not part of the migration. v3 launches without analytics (Phase 5, item 8). After cutover, decide whether we need it at all.
+
+**Questions to answer first:**
+
+- What decisions would the numbers drive? For example: which topics or formats to write more of, how traffic arrives (search, social, newsletter), or whether games and diary are worth maintaining.
+- Do we need per-article stats, or are site-wide totals enough?
+- Which constraints apply: privacy/GDPR (a consent banner is needed only if we set tracking cookies), where data is stored, budget, and who maintains it?
+
+**Options (from lightest to heaviest):**
+
+| Option                             | Client JS | Cookies / consent                  | Cost & effort                           | Notes                                                                                                                            |
+| ---------------------------------- | --------- | ---------------------------------- | --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Nothing                            | 0         | none                               | 0                                       | Current state after v3.                                                                                                          |
+| Server logs (nginx + GoAccess)     | 0         | none                               | low, self-hosted                        | Page views, referrers and bots, with no script. Less accurate (bots, caching).                                                   |
+| Cloudflare Web Analytics           | ~5 KB     | cookieless                         | free                                    | Needs Cloudflare in front of the site, or their beacon. Page views, referrers and Web Vitals.                                    |
+| Umami / Plausible CE (self-hosted) | ~1–2 KB   | cookieless                         | free software, needs a DB on our server | Simple dashboard, per-page stats, UTM and referrers, custom events (games, subscribe). Plausible also offers a paid hosted plan. |
+| Own Web Vitals RUM                 | ~1 KB     | none                               | low                                     | `useReportWebVitals` posting to our backend. Performance only, not audience. Can be combined with any option above.              |
+| GA4 (`@next/third-parties/google`) | ~50 KB+   | cookies → consent banner in the EU | free                                    | Most powerful, but heaviest, and Google-owned data. Needs a new `G-` property.                                                   |
+| Yandex Metrika                     | ~50 KB+   | cookies → consent banner           | free                                    | Session recordings and heatmaps. Data is stored in Russia; check whether that's acceptable.                                      |
+
+**Default recommendation:** if we decide we need analytics, use self-hosted Umami or Plausible CE. Load it via `next/script strategy="afterInteractive"`, plus Web Vitals RUM. That gives no cookies, no consent banner and a negligible performance cost.
 
 ---
 
