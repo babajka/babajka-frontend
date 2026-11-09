@@ -14,6 +14,8 @@ jobs:
     env:
       CI_JOB_NUMBER: 1
       BABAJKA_GOOGLE_API_KEY: ${{ secrets.BABAJKA_GOOGLE_API_KEY }}
+      # the action also builds the base branch, whose build script may lack the flag (webpack 4 + OpenSSL 3)
+      NODE_OPTIONS: --openssl-legacy-provider
     steps:
       - uses: actions/checkout@v4
         with:
