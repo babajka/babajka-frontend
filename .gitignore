@@ -16,3 +16,7 @@ data/*.json
 *.DS_Store
 
 .husky
+
+# agent skills: installed locally, see "Agent skills" in v3/README.md
+v3/.claude/skills/
+v3/.agents/
