@@ -60,3 +60,13 @@ Path aliases (`components/`, `utils/`, ...) come from babel `module-resolver` in
 ## Commits
 
 semantic-release derives versions from commit messages: `fix(scope):`/`style(scope):` → patch, `feat(scope):` → minor, `major(scope):` → major.
+
+## Pull requests
+
+When opening or updating a PR (`gh pr create` / `gh pr edit`):
+
+1. **Generate the description** from the actual diff against `master` (`git diff origin/master...HEAD`), not from commit messages alone. Sections:
+   - **Summary**: what changed and why, grouped by area.
+   - **Changes visible to users**: every behavior or UI change in the production app (pages, components, titles, meta tags, locales), with the root cause for bug fixes. Say explicitly if there are none. Include changes from submodule bumps (`lib`, `assets`).
+   - **QA**: a checklist with concrete steps (exact URLs for `be`/`ru`/`en`, what to click, expected text or values), split into build/deploy, per-change checks and CI. Mention environment requirements (Node version, env vars, server-side `npm ci`).
+2. **Attach labels** that match the PR, picked from the repo's existing labels (`gh label list`): `🐞bug`/`🔨fix` for fixes, `⭐feature`, `✨improvement`, `🌳refactor`, `💅styles`, `⚙️tools` for CI, tooling and tests, `dependencies` for dependency or lockfile changes, `🚧WIP` for drafts.
