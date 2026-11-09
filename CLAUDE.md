@@ -14,7 +14,7 @@ Code style, naming, and general command reference live in AGENTS.md — follow i
 
 ## Tests
 
-Vitest with jsdom, globals enabled, `@testing-library/jest-dom` matchers loaded via `vitest.setup.js`. Tests are colocated as `*.test.js` / `*.test.jsx` (e.g. `utils/localization.test.jsx`, `lib/utils/*.test.js`).
+Vitest with jsdom, globals enabled, `@testing-library/jest-dom` matchers loaded via `vitest.setup.js`. Tests are colocated as `*.test.js`, with JSX allowed (a few older ones are `.test.jsx`). Page tests live in `__tests__/pages/`, because files in `pages/` become routes. Mock `routes` (`vi.mock('routes', ...)`) when rendering components that use `components/common/Link`.
 
 ```bash
 npm run test:run                              # run all once (npm run test = watch mode)

@@ -3,6 +3,13 @@ import { defineConfig } from 'vitest/config';
 import path from 'path';
 
 export default defineConfig({
+  // legacy source files are `.js` with JSX
+  esbuild: {
+    jsx: 'automatic',
+    loader: 'jsx',
+    include: /\.[jt]sx?$/,
+    exclude: [],
+  },
   resolve: {
     alias: {
       components: path.resolve(__dirname, 'components'),
@@ -11,7 +18,15 @@ export default defineConfig({
       lib: path.resolve(__dirname, 'lib'),
       utils: path.resolve(__dirname, 'utils'),
       features: path.resolve(__dirname, 'features'),
+      pages: path.resolve(__dirname, 'pages'),
+      data: path.resolve(__dirname, 'data'),
+      styles: path.resolve(__dirname, 'styles'),
+      assets: path.resolve(__dirname, 'assets'),
+      routes: path.resolve(__dirname, 'routes.js'),
     },
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom'],
   },
   test: {
     environment: 'jsdom',

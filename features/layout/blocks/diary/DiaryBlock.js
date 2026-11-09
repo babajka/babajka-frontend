@@ -4,7 +4,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import bem from 'bem-css-modules';
 
 import Link from 'components/common/Link';
-import Text from 'components/common/Text';
+import Text, { useLocaleContext } from 'components/common/Text';
 import Image from 'components/common/Image';
 import BlockWrapper from 'features/layout/blocks/wrapper';
 import DiaryArrows from 'features/diary/DiaryArrows';
@@ -21,7 +21,8 @@ import { ROUTES_NAMES } from 'routes';
 
 const b = bem(styles);
 
-const DiaryBlock = ({ lang, inViewport }) => {
+const DiaryBlock = ({ inViewport }) => {
+  const lang = useLocaleContext();
   const [{ data, next, prev }, setState] = useDiary();
 
   const { month, day } = data;

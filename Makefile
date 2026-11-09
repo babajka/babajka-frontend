@@ -7,6 +7,9 @@ local-backend:
 lint:
 	npm run lint
 
+test:
+	npm run test
+
 _pre_build:
 	[ ! -z "${BACKEND_URL}" ] || (echo "\n\n\tPlease, set 'BACKEND_URL' env var, or run 'make build'\n\n" && exit 1)
 	@echo "\n\n\tWARNING: Generate static pages. Make sure actual api at ${BACKEND_URL}\n\n"
