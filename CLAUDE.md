@@ -53,7 +53,9 @@ Path aliases (`components/`, `utils/`, ...) come from babel `module-resolver` in
 
 ### v3 migration
 
-`v3/` is a separate app (own `package.json`, Next 16 + TypeScript + Tailwind + App Router) that is the in-progress rewrite. Work there with `cd v3` and its own npm scripts. The phased migration plan and checklist are in `v3/README.md` — update its checkboxes when completing phases. The root app is the legacy app being preserved (and covered with tests) during migration.
+`v3/` is a separate app (own `package.json`) for the in-progress rewrite. The phased plan and checklist are in `v3/README.md`; update its checkboxes when completing phases.
+
+**Current state:** `v3/` is still an outdated 2022 scaffold: Next ^13.0.1, React 18, Tailwind v3, `experimental.appDir`. The target is Next 16.4, React 19.3, Tailwind v4 and Node 26. Phase 1 of the plan **deletes and regenerates** the scaffold. Do not build on the existing v3 code, and do not write Next 16 APIs against its current dependencies. Do Phase 1 first. The root app is the legacy app being preserved (and covered with tests) during migration.
 
 ## Commits
 

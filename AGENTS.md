@@ -51,7 +51,7 @@ npm run deploy-prod-from-local  # Deploy to production
 ### General
 
 - Use JavaScript (ES6+), not TypeScript
-- Use `.js` extension for all files
+- Use `.js` extension for source files; tests are colocated as `*.test.js`, or `*.test.jsx` when they render JSX
 - Use `babel-module-resolver` for path aliases (e.g., `components/`, `utils/`)
 - Base URL is project root (`./`)
 
@@ -147,7 +147,7 @@ export default Button;
 - Use `next/router` for routing
 - Place pages in `pages/` directory
 - Use `getStaticProps`, `getStaticPaths`, or `getServerSideProps` for data fetching
-- Use `Link` component from `next/link` for internal navigation
+- Use `components/common/Link` for internal navigation (`route={ROUTES_NAMES.x}` + `params`). It wraps the `next-routes` `Link` and injects the current `lang`; raw `next/link` bypasses the `/:lang` locale routing
 
 ### File Organization
 

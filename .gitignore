@@ -17,6 +17,5 @@ data/*.json
 
 .husky
 
-# tailwind-4-docs skill: local docs snapshot (source-available license, do not commit)
-v3/.claude/skills/tailwind-4-docs/references/docs/
-v3/.claude/skills/tailwind-4-docs/references/docs-index.tsx
+# agent skills: installed locally from v3/skills-lock.json (npx skills experimental_install)
+v3/.claude/skills/

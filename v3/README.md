@@ -64,7 +64,7 @@ npm run fetch-dict     # node scripts/fetch-dict.ts → data/i18n.json
 
 ## Agent skills used during migration
 
-Skills are installed **project-scoped in `v3/`**: committed to `v3/.claude/skills/` and pinned in `v3/skills-lock.json`. Claude Code exposes them with a `v3:` prefix, only when working inside `v3/`.
+Skills are **project-scoped in `v3/`**. Only `v3/skills-lock.json` is committed. The skill files themselves (`v3/.claude/skills/`) are gitignored, and each developer installs them locally from the lockfile after cloning. Claude Code exposes them with a `v3:` prefix, only when working inside `v3/`.
 
 ```bash
 cd v3 && nvm use                         # the skills CLI needs Node >= 22 (fails on the root's Node 16/18)
@@ -73,7 +73,7 @@ npx skills add <repo> -s <skill> -a claude-code -y   # add a new one (updates th
 npx skills update -p                     # update project skills
 ```
 
-Third-party skills run with full agent permissions. Review the diff of `.claude/skills/` before committing an install or update.
+Third-party skills run with full agent permissions. Review a new skill (or an update that changes `skills-lock.json` hashes) before committing the lockfile.
 
 **Installed now** (knowledge/rules; no running app needed):
 
@@ -87,7 +87,7 @@ Third-party skills run with full agent permissions. Review the diff of `.claude/
 | `tailwind-design-system`        | `wshobson/agents`                              | Turning SCSS tokens into `@theme`.                                                                 |
 | `playwright-best-practices`     | `currents-dev/playwright-best-practices-skill` | Visual/e2e test harness.                                                                           |
 
-`tailwind-4-docs` setup. The Tailwind docs are source-available but not open source, so the snapshot is gitignored and each developer creates it locally (refresh weekly):
+`tailwind-4-docs` setup. The Tailwind docs are source-available but not open source, so each developer creates the snapshot locally (refresh weekly):
 
 ```bash
 cd v3 && python3 .claude/skills/tailwind-4-docs/scripts/sync_tailwind_docs.py --accept-docs-license
@@ -139,7 +139,7 @@ Delete the old scaffold (`v3/app`, configs, lockfile) and regenerate it with `np
 
 Then:
 
-- [ ] Keep `v3/.claude/`, `v3/skills-lock.json` and `v3/README.md` when deleting the old scaffold.
+- [ ] Keep `v3/skills-lock.json` and `v3/README.md` when deleting the old scaffold, then run `npx skills experimental_install`.
 - [ ] `v3/.nvmrc` → `26`; `engines.node: ">=26"`
 - [ ] Install the Phase 1 skills (`next-dev-loop` + `agent-browser`, `next-cache-components-optimizer`, `next-partial-prefetching-adoption`, `next-bundle-optimizer`). See "Agent skills".
 - [ ] Commit the `AGENTS.md` that `create-next-app`/`next dev` generates; it points to the bundled docs. Link the root `AGENTS.md` and `CLAUDE.md` to it.
@@ -150,7 +150,8 @@ Then:
   - `experimental.agentUpgrade: 'security'`
   - `typedRoutes: true`
   - `images` config (see Phase 5)
-  - `rewrites()` that proxy `/api/:path*`, `/auth/:path*`, `/rss` to `BACKEND_URL`. These replace the Express proxy in `server.js`.
+  - `rewrites()` that proxy `/api/:path*`, `/auth/:path*` and `/test/:path*` to `BACKEND_URL`, matching the Express proxy in `server.js`. `/test` is kept on purpose: it serves local fixtures from the backend's `public/test` for fully local development.
+  - Also proxy `/rss` (Footer link). Legacy `server.js` doesn't proxy it, so check how prod serves it (likely nginx) before relying on the rewrite.
 - [ ] `tsconfig.json`: strict, `@/*` alias
 - [ ] ESLint 9 flat config (`eslint-config-next`; `next lint` was removed in Next 16), Prettier 3 + `prettier-plugin-tailwindcss`
 - [ ] Vitest 4 + Testing Library + jsdom. Port the legacy unit tests for `localization`, `date`, `constants`, `lib/utils`.
@@ -213,7 +214,7 @@ Then:
 - [ ] Cached loaders, one per resource, using `'use cache'`, `cacheLife(...)` and `cacheTag(...)`:
   - `getArticle(slug)`, `getMainPage()`, `getTopic(t)`, `getTag(t)`, `getCollection(s)`, `getDiary(slug|date)`, `getSidebar()`
   - Today the article, tag, topic and collection pages hit the backend on **every request**.
-- [ ] Optional `app/_revalidate/route.ts` (secret-protected) to call `revalidateTag` from the backend on publish. Don't use `/api`, which is proxied to the backend.
+- [ ] Optional `app/_revalidate/route.ts` (secret-protected) to call `revalidateTag` from the backend on publish. Don't put it under `/api`, `/auth` or `/test`, which are proxied to the backend.
 - [ ] Inline the used `lib/` submodule utils into `v3/lib/`, and drop the submodule dependency:
   - `clearUtmParams`, `createConstants`, `isEmail`
   - `parseYoutubeUrl`, `parseCoubUrl`, `parseYMPlaylistUrl`
