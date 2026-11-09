@@ -128,15 +128,14 @@ Not used:
 
 - [x] Vitest in legacy root, tests for `utils/`, `constants/`, `lib/utils`
 - [x] CI runs `npm run test:run`
-- [ ] Fix known legacy bugs first, so the baseline screenshots are correct:
-  - [ ] `pages/article.js` sets `layoutProps`, but `_app` reads `getLayoutProps`, so the page title is wrong.
-  - [ ] `DiaryBlock` expects `lang`, but `CardBlocksLayout` never passes it, so it always falls back to `be`.
-- [ ] Collect a **fixture list of real URLs** in `v3/e2e/routes.ts`. Use fixed slugs, one per feature:
-  - an article with each Fibery feature: CAROUSEL, POEM, TIMELINE, TABLE/NOTE/SPLIT, YouTube, Coub, Yandex Music, quote, right-aligned image, Fillout quiz, ex.co quiz
-  - a tag, a topic, a collection
-  - diary with and without a slug
-  - status 404/500, about, both games
-  - each in `be`/`ru`/`en`
+- [x] Fix known legacy bugs first, so the baseline screenshots are correct (with regression tests):
+  - [x] `pages/article.js` set `layoutProps`, but `_app` reads `getLayoutProps`, so the page title was wrong. Test: `__tests__/pages/article.test.js`.
+  - [x] `DiaryBlock` expected a `lang` prop that `CardBlocksLayout` never passed, so dates were always in `be`. It now reads `LocaleContext`. Test: `features/layout/blocks/diary/DiaryBlock.test.js`.
+- [x] Collect a **fixture list of real URLs** in `v3/e2e/routes.ts`: 21 fixtures, 38 URLs, all checked against wir.by.
+  - Articles were picked by scanning all 123 prod articles for Fibery features: TABLE, NOTE, POEM, SPLIT, TIMELINE, CAROUSEL, FILLOUT_QUIZ, YouTube, Coub, quote, right-aligned image, ex.co quiz, plus audio/video/collection articles and `ru` content.
+  - Also covered: main, about, topic, tag, collection, diary (slug and today), status 404/500, not-found, both games.
+  - Prod content has no TABLE_RIGHT tables, no Yandex Music playlist embeds, and no `en` article texts. Port these renderer paths with unit tests instead of screenshots.
+  - Each fixture lists its `unstable` parts (random motto, today's diary, embeds, tinder shuffle), which the visual harness must mask or freeze.
 
 ## Phase 1 — Fresh v3 scaffold
 
@@ -148,7 +147,7 @@ Delete the old scaffold (`v3/app`, configs, lockfile) and regenerate it with `np
 
 Then:
 
-- [ ] Keep `v3/skills-lock.json` and `v3/README.md` when deleting the old scaffold, then reinstall the skills with the commands in "Agent skills".
+- [ ] Keep `v3/skills-lock.json`, `v3/README.md` and `v3/e2e/` when deleting the old scaffold, then reinstall the skills with the commands in "Agent skills".
 - [ ] `v3/.nvmrc` → `26`; `engines.node: ">=26"`
 - [ ] Install the Phase 1 skills (`next-dev-loop` + `agent-browser`, `next-cache-components-optimizer`, `next-partial-prefetching-adoption`, `next-bundle-optimizer`). See "Agent skills".
 - [ ] Commit the `AGENTS.md` that `create-next-app`/`next dev` generates; it points to the bundled docs. Link the root `AGENTS.md` and `CLAUDE.md` to it.
