@@ -28,6 +28,7 @@ npm run lint        # Run full lint: prettier + eslint + stylelint
 make lint           # Same as above
 npm run prettify    # Run prettier only
 npm run stylelint   # Run stylelint only
+npm run test        # Run vitest tests
 ```
 
 ### Other Commands
@@ -44,8 +45,6 @@ npm run fetch-data  # Update dictionary and team data from Google Sheets
 npm run deploy-dev-from-local   # Deploy to dev environment
 npm run deploy-prod-from-local  # Deploy to production
 ```
-
-**Note:** This project has NO test suite. Do not write tests.
 
 ## Code Style Guidelines
 
