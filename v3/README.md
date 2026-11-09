@@ -127,7 +127,9 @@ Not used:
 ## Phase 0 — Legacy safety net
 
 - [x] Vitest in legacy root, tests for `utils/`, `constants/`, `lib/utils`
-- [x] CI runs `npm run test:run`
+- [x] CI (`.github/workflows/lint-build.yml`) runs `npm ci`, `lint:ci` (check-only), `test:run` and `make build` on PRs and pushes to `master`.
+  - [ ] Enable GitHub Actions for the repo. Both workflows were `disabled_manually`, so CI never ran.
+  - Legacy builds on Node 18 only with `--openssl-legacy-provider` (webpack 4), which is now set in the `build`/`dev` scripts.
 - [x] Fix known legacy bugs first, so the baseline screenshots are correct (with regression tests):
   - [x] `pages/article.js` set `layoutProps`, but `_app` reads `getLayoutProps`, so the page title was wrong. Test: `__tests__/pages/article.test.js`.
   - [x] `DiaryBlock` expected a `lang` prop that `CardBlocksLayout` never passed, so dates were always in `be`. It now reads `LocaleContext`. Test: `features/layout/blocks/diary/DiaryBlock.test.js`.

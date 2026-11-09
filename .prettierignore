@@ -21,3 +21,7 @@ CHANGELOG.md
 .next
 
 v3/.claude/
+
+# v3/ code uses its own tooling; only its markdown is checked from the root
+v3/**/*.js
+v3/**/*.scss

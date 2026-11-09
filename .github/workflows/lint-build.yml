@@ -1,29 +1,35 @@
-name: lint & build
+name: lint, test & build
 
-on: push
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
 
 jobs:
-  lint-build:
+  lint-test-build:
     runs-on: ubuntu-latest
     env:
+      # needed by `postinstall` (fetch-data); not exposed to PRs from forks
       BABAJKA_GOOGLE_API_KEY: ${{ secrets.BABAJKA_GOOGLE_API_KEY }}
     steps:
-      - name: checkout code
-        uses: actions/checkout@v2
-
-      - name: read .nvmrc
-        run: echo ::set-output name=NVMRC::$(cat .nvmrc)
-        id: nvm
-
-      - name: use node.js (.nvmrc)
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
         with:
-          node-version: '${{ steps.nvm.outputs.NVMRC }}'
+          submodules: true
 
-      - name: update submodules
-        run: git submodule update --init
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
 
-      - run: npm install
-      - run: npm run lint
+      - run: npm ci
+      - run: npm run lint:ci
       - run: npm run test:run
       - run: make build

@@ -28,6 +28,7 @@ npm run lint        # Run full lint: prettier + eslint + stylelint
 make lint           # Same as above
 npm run prettify    # Run prettier only
 npm run stylelint   # Run stylelint only
+npm run lint:ci     # Check-only lint (no --write/--fix), used in CI
 npm run test        # Run vitest tests
 ```
 
