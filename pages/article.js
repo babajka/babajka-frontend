@@ -24,7 +24,7 @@ const ArticlePage = ({ article, otherLocales }) => (
   </>
 );
 
-ArticlePage.layoutProps = () => ({
+ArticlePage.getLayoutProps = () => ({
   title: 'header.articles',
 });
 

@@ -14,15 +14,15 @@ Code style, naming, and general command reference live in AGENTS.md — follow i
 
 ## Tests
 
-Vitest with jsdom, globals enabled, `@testing-library/jest-dom` matchers loaded via `vitest.setup.js`. Tests are colocated as `*.test.js` / `*.test.jsx` (e.g. `utils/localization.test.jsx`, `lib/utils/*.test.js`).
+Vitest with jsdom, globals enabled, `@testing-library/jest-dom` matchers loaded via `vitest.setup.js`. Tests are colocated as `*.test.js` (JSX allowed; `.jsx` is rejected by ESLint). Vitest globals (`describe`, `it`, `expect`, `vi`) are declared for test files in `.eslintrc.js`; `v3/` is excluded. Page tests live in `__tests__/pages/`, because files in `pages/` become routes. Mock `routes` (`vi.mock('routes', ...)`) when rendering components that use `components/common/Link`.
 
 ```bash
 npm run test:run                              # run all once (npm run test = watch mode)
-npx vitest run utils/localization.test.jsx    # single file
+npx vitest run utils/localization.test.js     # single file
 npx vitest run -t "test name"                 # filter by test name
 ```
 
-Path aliases (`components/`, `utils/`, ...) come from babel `module-resolver` in the app but are duplicated as explicit `resolve.alias` entries in `vitest.config.js` — add a new alias there if you add a new top-level source dir. `routes` and `data/` are not aliased in vitest yet, so testing modules that import them needs an alias added first.
+Path aliases (`components/`, `utils/`, ...) come from babel `module-resolver` in the app but are duplicated as explicit `resolve.alias` entries in `vitest.config.js` — add a new alias there if you add a new top-level source dir.
 
 ## Architecture
 
@@ -60,3 +60,13 @@ Path aliases (`components/`, `utils/`, ...) come from babel `module-resolver` in
 ## Commits
 
 semantic-release derives versions from commit messages: `fix(scope):`/`style(scope):` → patch, `feat(scope):` → minor, `major(scope):` → major.
+
+## Pull requests
+
+When opening or updating a PR (`gh pr create` / `gh pr edit`):
+
+1. **Generate the description** from the actual diff against `master` (`git diff origin/master...HEAD`), not from commit messages alone. Sections:
+   - **Summary**: what changed and why, grouped by area.
+   - **Changes visible to users**: every behavior or UI change in the production app (pages, components, titles, meta tags, locales), with the root cause for bug fixes. Say explicitly if there are none. Include changes from submodule bumps (`lib`, `assets`).
+   - **QA**: a checklist with concrete steps (exact URLs for `be`/`ru`/`en`, what to click, expected text or values), split into build/deploy, per-change checks and CI. Mention environment requirements (Node version, env vars, server-side `npm ci`).
+2. **Attach labels** that match the PR, picked from the repo's existing labels (`gh label list`): `🐞bug`/`🔨fix` for fixes, `⭐feature`, `✨improvement`, `🌳refactor`, `💅styles`, `⚙️tools` for CI, tooling and tests, `dependencies` for dependency or lockfile changes, `🚧WIP` for drafts.

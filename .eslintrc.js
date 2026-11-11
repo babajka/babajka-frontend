@@ -55,6 +55,14 @@ module.exports = {
     // this rule was deprecated in `v6.1.0` and will no longer be maintained
     'jsx-a11y/label-has-for': 'off',
   },
+  overrides: [
+    {
+      // vitest runs with `globals: true`
+      files: ['**/*.test.js', '__tests__/**/*.js'],
+      env: { jest: true },
+      globals: { vi: 'readonly' },
+    },
+  ],
   settings: {
     'import/resolver': {
       'babel-module': {},

@@ -28,6 +28,7 @@ npm run lint        # Run full lint: prettier + eslint + stylelint
 make lint           # Same as above
 npm run prettify    # Run prettier only
 npm run stylelint   # Run stylelint only
+npm run lint:ci     # Check-only lint (no --write/--fix), used in CI
 npm run test        # Run vitest tests
 ```
 
@@ -51,7 +52,7 @@ npm run deploy-prod-from-local  # Deploy to production
 ### General
 
 - Use JavaScript (ES6+), not TypeScript
-- Use `.js` extension for source files; tests are colocated as `*.test.js`, or `*.test.jsx` when they render JSX
+- Use `.js` extension for all files, including tests that render JSX (ESLint `react/jsx-filename-extension` rejects JSX in `.jsx`). Tests are colocated as `*.test.js`, except page tests, which go in `__tests__/pages/` (anything inside `pages/` becomes a route)
 - Use `babel-module-resolver` for path aliases (e.g., `components/`, `utils/`)
 - Base URL is project root (`./`)
 
