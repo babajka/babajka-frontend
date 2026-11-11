@@ -37,4 +37,7 @@ jobs:
       - run: npm run lint
       - run: npm run typecheck
       - run: npm run test
+      # the /api, /auth and /test rewrites are fixed at build time; same API as legacy `make build`
       - run: npm run build
+        env:
+          BACKEND_URL: https://api-prod.wir.by

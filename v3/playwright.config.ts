@@ -1,10 +1,13 @@
 import { defineConfig, devices } from '@playwright/test';
 
 /**
- * Projects:
- *   e2e     smoke tests against v3                      (npm run e2e)
- *   legacy  visual parity, writes the baseline          (npm run visual:baseline)
- *   v3      visual parity, compares against the baseline (npm run visual:compare)
+ * Which tests run is chosen by PW_APP, set by the npm scripts:
+ *   (unset)        e2e     smoke tests against v3                       (npm run e2e)
+ *   PW_APP=legacy  legacy  visual parity, writes the baseline           (npm run visual:baseline)
+ *   PW_APP=v3      v3      visual parity, compares against the baseline (npm run visual:compare)
+ *
+ * Only that one project exists in a run, so a plain `npx playwright test` runs the smoke tests and
+ * never screenshots against a server that isn't running or a baseline that doesn't exist.
  *
  * Set LEGACY_URL / V3_URL to run against deployed apps (e.g. dev.wir.by); local servers are then
  * not started.
@@ -13,8 +16,17 @@ import { defineConfig, devices } from '@playwright/test';
 const LEGACY_URL = process.env.LEGACY_URL || 'http://localhost:3000';
 const V3_URL = process.env.V3_URL || 'http://localhost:3001';
 
-// `visual:baseline` sets PW_APP=legacy, so the legacy app is only started when it's needed.
-const NEEDS_LEGACY = process.env.PW_APP === 'legacy';
+const PW_APP = process.env.PW_APP as 'legacy' | 'v3' | undefined;
+if (PW_APP && PW_APP !== 'legacy' && PW_APP !== 'v3') {
+  throw new Error(`Unknown PW_APP=${PW_APP}, expected 'legacy' or 'v3'.`);
+}
+const NEEDS_LEGACY = PW_APP === 'legacy';
+
+const PROJECTS = {
+  e2e: { name: 'e2e', testMatch: 'smoke.spec.ts', use: { baseURL: V3_URL } },
+  legacy: { name: 'legacy', testMatch: 'visual.spec.ts', use: { baseURL: LEGACY_URL } },
+  v3: { name: 'v3', testMatch: 'visual.spec.ts', use: { baseURL: V3_URL } },
+};
 
 // Both apps use the same backend, so they render the same content.
 const BACKEND_URL = process.env.BACKEND_URL || 'https://api.wir.by';
@@ -67,10 +79,6 @@ export default defineConfig({
     ...devices['Desktop Chrome'],
     trace: 'on-first-retry',
   },
-  projects: [
-    { name: 'e2e', testMatch: 'smoke.spec.ts', use: { baseURL: V3_URL } },
-    { name: 'legacy', testMatch: 'visual.spec.ts', use: { baseURL: LEGACY_URL } },
-    { name: 'v3', testMatch: 'visual.spec.ts', use: { baseURL: V3_URL } },
-  ],
+  projects: [PROJECTS[PW_APP ?? 'e2e']],
   webServer,
 });

@@ -16,6 +16,16 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.ts'],
     include: ['**/*.test.{ts,tsx}'],
-    exclude: ['node_modules/**', '.next/**', 'e2e/**', '.claude/**'],
+    exclude: [
+      'node_modules/**',
+      '.next/**',
+      'e2e/**',
+      'coverage/**',
+      'playwright-report/**',
+      'test-results/**',
+      // locally installed agent skills (gitignored)
+      '.claude/**',
+      '.agents/**',
+    ],
   },
 });

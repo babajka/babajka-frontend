@@ -7,6 +7,7 @@
   },
   "scripts": {
     "dev": "next dev --port 3001",
+    "prebuild": "node -e \"process.env.BACKEND_URL || (console.error('BACKEND_URL is required: the /api, /auth and /test rewrites are fixed at build time. Use e.g. BACKEND_URL=https://api-prod.wir.by (prod) or https://api.wir.by (dev).'), process.exit(1))\"",
     "build": "next build",
     "postbuild": "cp -R public .next/standalone/ && cp -R .next/static .next/standalone/.next/",
     "start": "PORT=${PORT:-3001} node .next/standalone/server.js",
@@ -15,9 +16,9 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "e2e": "playwright test --project=e2e",
-    "visual:baseline": "PW_APP=legacy playwright test --project=legacy --update-snapshots",
-    "visual:compare": "playwright test --project=v3",
+    "e2e": "playwright test",
+    "visual:baseline": "PW_APP=legacy playwright test --update-snapshots",
+    "visual:compare": "PW_APP=v3 playwright test",
     "analyze": "next analyze"
   },
   "dependencies": {

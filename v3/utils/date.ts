@@ -20,4 +20,4 @@ export const formatLocalizedDate = (
   date: Date | number,
   lang: Lang = DEFAULT_LOCALE,
   f = DATE_FORMAT
-) => format(date, f, { locale: LOCALES[lang] || be });
+) => format(date, f, { locale: LOCALES[lang] });

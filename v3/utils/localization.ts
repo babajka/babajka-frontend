@@ -45,4 +45,11 @@ export const localizeFields =
     return localized as LocalizedFields<O, K>;
   };
 
-export const replaceLocale = (url: string, lang: Lang) => url.replace(`/${lang}`, '');
+/**
+ * Removes a leading `/${lang}` segment: `/ru/article/x` → `/article/x`.
+ * Legacy used `url.replace(`/${lang}`, '')`, which also cut `/en` out of `/article/enigma`.
+ */
+export const replaceLocale = (url: string, lang: Lang) => {
+  const rest = url.replace(new RegExp(`^/${lang}(?=[/?#]|$)`), '');
+  return rest.startsWith('/') ? rest : `/${rest}`;
+};

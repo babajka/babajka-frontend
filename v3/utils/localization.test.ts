@@ -98,5 +98,18 @@ describe('utils/localization', () => {
     it('should handle URL without locale', () => {
       expect(replaceLocale('/article/slug', 'be')).toBe('/article/slug');
     });
+
+    it('should only remove a leading locale segment', () => {
+      expect(replaceLocale('/article/enigma', 'en')).toBe('/article/enigma');
+      expect(replaceLocale('/article/belarus', 'be')).toBe('/article/belarus');
+      expect(replaceLocale('/be/article/belarus', 'be')).toBe('/article/belarus');
+      expect(replaceLocale('/english', 'en')).toBe('/english');
+    });
+
+    it('should handle a bare locale, query and hash', () => {
+      expect(replaceLocale('/ru', 'ru')).toBe('/');
+      expect(replaceLocale('/ru?x=1', 'ru')).toBe('/?x=1');
+      expect(replaceLocale('/en#top', 'en')).toBe('/#top');
+    });
   });
 });

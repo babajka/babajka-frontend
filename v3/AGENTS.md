@@ -30,5 +30,5 @@ npm run lint         # eslint + prettier --check
 npm run typecheck    # next typegen + tsc --noEmit
 npm run test         # vitest (unit), colocated *.test.ts(x)
 npm run e2e          # playwright smoke tests (starts `npm run dev`)
-npm run build        # standalone output, then `npm run start`
+BACKEND_URL=https://api.wir.by npm run build  # required: rewrites are fixed at build time; then `npm run start`
 ```

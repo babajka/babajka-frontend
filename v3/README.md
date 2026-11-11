@@ -34,13 +34,13 @@ npm run dev        # http://localhost:3001, BACKEND_URL defaults to https://api.
 
 ```bash
 npm run dev            # next dev --port 3001 (Turbopack)
-npm run build          # next build (standalone); postbuild copies public/ and .next/static into it
+npm run build          # next build (standalone); needs BACKEND_URL (fixed at build time, see below); postbuild copies public/ and .next/static
 npm run start          # node .next/standalone/server.js on PORT (default 3001)
 npm run lint           # eslint (flat config) + prettier --check
 npm run format         # prettier --write + eslint --fix
 npm run typecheck      # next typegen + tsc --noEmit
 npm run test           # vitest run (unit); test:watch for watch mode
-npm run e2e            # playwright smoke tests against v3 (starts `npm run dev`)
+npm run e2e            # playwright smoke tests against v3 (starts `npm run dev`); also the default for `npx playwright test`
 npm run visual:baseline  # screenshot legacy (:3000) → baseline
 npm run visual:compare   # screenshot v3 (:3001) and diff against baseline
 npm run analyze        # next analyze (Turbopack bundle analyzer)
@@ -167,6 +167,7 @@ Generated with `create-next-app@16.4.6 --react-compiler --cache-components --age
   - `typedRoutes: true`
   - `images`: `localPatterns` for `/api/files/**` (article images are relative backend URLs) and `remotePatterns` for `res.cloudinary.com/wir-by`. The custom loader comes in Phase 5.
   - `rewrites()` that proxy `/api/:path*`, `/auth/:path*` and `/test/:path*` to `BACKEND_URL`, matching the Express proxy in `server.js`. `/test` is kept on purpose: it serves local fixtures from the backend's `public/test` for fully local development.
+  - The rewrite targets are fixed at `next build` (written into `routes-manifest.json`), so `BACKEND_URL` at `npm run start` has no effect. `npm run build` fails without `BACKEND_URL` (`prebuild` guard, like legacy `make build`). CI builds with `https://api-prod.wir.by`. `next dev` and `next typegen` default to `https://api.wir.by`.
   - `/rss` is **not** proxied. Checked: `wir.by/rss` → 301 → `wir.by/rss/`, a static `text/xml` file served by nginx, and `api.wir.by/rss` is 404. The Footer link must keep pointing at it (absolute `https://wir.by/rss` when porting the Footer, since v3 doesn't serve it).
   - `turbopack.root` and `outputFileTracingRoot` are pinned to `v3/`. Otherwise Next picks the legacy root (it has its own lockfile) as the workspace root.
 - [x] `tsconfig.json`: strict, `@/*` alias
@@ -382,11 +383,12 @@ playwright.config.ts    # projects: e2e (v3), legacy (baseURL :3000), v3 (baseUR
 ```
 
 - **One baseline for both apps.** `snapshotPathTemplate: '{testDir}/__screenshots__/{arg}{ext}'` leaves out the project name, so both projects read the same file.
-  - `visual:baseline` = `playwright test --project=legacy --update-snapshots`
-  - `visual:compare` = `playwright test --project=v3`
+  - `visual:baseline` = `PW_APP=legacy playwright test --update-snapshots`
+  - `visual:compare` = `PW_APP=v3 playwright test`
+  - `PW_APP` decides which single project exists in a run. Without it only the `e2e` smoke project runs, so a plain `npx playwright test` never screenshots a server that isn't running.
 - **The HTML report** (`npx playwright show-report`) shows expected/actual/diff with a slider for each failure. That's the review tool for each page PR.
 - **Starting the apps.** `webServer` in `playwright.config.ts` starts only the app the run needs, and reuses a server that is already running:
-  - legacy (`visual:baseline` sets `PW_APP=legacy`): `cd .. && nvm exec npm run dev`, which picks the root `.nvmrc`. Needs the root `npm ci` and `.env`.
+  - legacy (`visual:baseline`): `cd .. && nvm exec npm run dev`, which picks the root `.nvmrc`. Needs the root `npm ci` and `.env`.
   - v3 (`visual:compare`, `e2e`): `npm run dev`
   - Both use the same `BACKEND_URL` (prod API), so the content is the same.
   - Set `LEGACY_URL` / `V3_URL` to run against deployed apps; no local server is started then.
