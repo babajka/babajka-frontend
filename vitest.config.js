@@ -32,10 +32,8 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: ['./vitest.setup.js'],
-    include: ['**/*.test.js', '**/*.test.ts', '**/*.test.jsx', '**/*.spec.js', '**/*.spec.ts'],
-    coverage: {
-      provider: 'v8',
-      reporter: ['text', 'json', 'html'],
-    },
+    include: ['**/*.test.js'],
+    // v3 is a separate app with its own test setup
+    exclude: ['**/node_modules/**', '.next/**', 'v3/**'],
   },
 });

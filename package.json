@@ -32,7 +32,6 @@
     "gds": "github-deploy-status -u babajka -p babajka-frontend",
     "analyze": "cross-env ANALYZE=true make build",
     "test": "vitest",
-    "test:ui": "vitest --ui",
     "test:run": "vitest run"
   },
   "dependencies": {

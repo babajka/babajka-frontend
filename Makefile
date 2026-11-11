@@ -8,7 +8,7 @@ lint:
 	npm run lint
 
 test:
-	npm run test
+	npm run test:run
 
 _pre_build:
 	[ ! -z "${BACKEND_URL}" ] || (echo "\n\n\tPlease, set 'BACKEND_URL' env var, or run 'make build'\n\n" && exit 1)

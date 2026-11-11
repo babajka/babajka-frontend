@@ -14,15 +14,15 @@ Code style, naming, and general command reference live in AGENTS.md — follow i
 
 ## Tests
 
-Vitest with jsdom, globals enabled, `@testing-library/jest-dom` matchers loaded via `vitest.setup.js`. Tests are colocated as `*.test.js`, with JSX allowed (a few older ones are `.test.jsx`). Page tests live in `__tests__/pages/`, because files in `pages/` become routes. Mock `routes` (`vi.mock('routes', ...)`) when rendering components that use `components/common/Link`.
+Vitest with jsdom, globals enabled, `@testing-library/jest-dom` matchers loaded via `vitest.setup.js`. Tests are colocated as `*.test.js` (JSX allowed; `.jsx` is rejected by ESLint). Vitest globals (`describe`, `it`, `expect`, `vi`) are declared for test files in `.eslintrc.js`; `v3/` is excluded. Page tests live in `__tests__/pages/`, because files in `pages/` become routes. Mock `routes` (`vi.mock('routes', ...)`) when rendering components that use `components/common/Link`.
 
 ```bash
 npm run test:run                              # run all once (npm run test = watch mode)
-npx vitest run utils/localization.test.jsx    # single file
+npx vitest run utils/localization.test.js     # single file
 npx vitest run -t "test name"                 # filter by test name
 ```
 
-Path aliases (`components/`, `utils/`, ...) come from babel `module-resolver` in the app but are duplicated as explicit `resolve.alias` entries in `vitest.config.js` — add a new alias there if you add a new top-level source dir. `routes` and `data/` are not aliased in vitest yet, so testing modules that import them needs an alias added first.
+Path aliases (`components/`, `utils/`, ...) come from babel `module-resolver` in the app but are duplicated as explicit `resolve.alias` entries in `vitest.config.js` — add a new alias there if you add a new top-level source dir.
 
 ## Architecture
 
