@@ -1,0 +1,40 @@
+name: v3
+
+on:
+  push:
+    branches: [master]
+    paths: ['v3/**', '.github/workflows/v3.yml']
+  pull_request:
+    paths: ['v3/**', '.github/workflows/v3.yml']
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: v3
+
+jobs:
+  v3:
+    runs-on: ubuntu-latest
+    steps:
+      # v3 doesn't use the `lib`/`assets` submodules
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: v3/.nvmrc
+          cache: npm
+          cache-dependency-path: v3/package-lock.json
+
+      - run: npm ci
+      - run: npm audit --audit-level=high
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run test
+      - run: npm run build

@@ -1,40 +1,17 @@
-import { Ubuntu } from '@next/font/google';
-import Link from 'next/link';
-import 'styles/globals.css';
+import type { Metadata } from 'next';
 
-const ubuntu = Ubuntu({
-  weight: ['400', '700'],
-  subsets: [
-    'cyrillic',
-    // 'cyrillic-ext',
-    'latin',
-    'latin-ext',
-  ],
-});
+import './globals.css';
 
-interface Props {
-  children: React.ReactNode;
-}
-
-const CoreLayout = ({ children }: Props) => {
-  return (
-    <html lang="en" className={ubuntu.className}>
-      <body>
-        <nav className="p-3">
-          <ul className="flex justify-center space-x-4">
-            <li>
-              <Link href="/">Home Page</Link>
-            </li>
-            <li>
-              <Link href="/fonts">Fonts</Link>
-            </li>
-          </ul>
-        </nav>
-        <main>{children}</main>
-        <footer>Footer</footer>
-      </body>
-    </html>
-  );
+export const metadata: Metadata = {
+  title: 'Wir.by v3',
+  robots: { index: false, follow: false },
 };
 
-export default CoreLayout;
+// Placeholder root layout. Phase 2 replaces it with `app/[lang]/layout.tsx`.
+export default function RootLayout({ children }: LayoutProps<'/'>) {
+  return (
+    <html lang="be" className="h-full antialiased">
+      <body className="flex min-h-full flex-col">{children}</body>
+    </html>
+  );
+}
