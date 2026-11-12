@@ -11,6 +11,12 @@ const eslintConfig = defineConfig([
   {
     rules: {
       'no-console': ['error', { allow: ['warn', 'error'] }],
+      // `_` / `_name` mark intentionally unused values (e.g. fields dropped by destructuring),
+      // like the legacy ESLint config.
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_', ignoreRestSiblings: true },
+      ],
     },
   },
   globalIgnores([

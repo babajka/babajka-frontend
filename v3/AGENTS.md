@@ -20,6 +20,9 @@ Rewrite of the legacy app in the repo root. The migration plan, phase checklists
 - Styling is Tailwind v4, CSS-first (`@theme` in `app/globals.css`). There is no `tailwind.config.js`.
 - `cacheComponents`, `partialPrefetching`, `reactCompiler` and `typedRoutes` are on (see `next.config.ts`). Don't add manual `useMemo`/`useCallback` for performance.
 - `/api`, `/auth` and `/test` are rewritten to `BACKEND_URL`, so don't put app routes under them.
+- Pages live under `app/[lang]/`. Read the locale in Server Components with `getLang()` / `getT()` / `<Text>` from `@/lib/i18n/server`, and in client islands with `useT()` / `useLang()` from `@/lib/i18n/client`. Translation keys are typed (`DictKey`); refresh the dictionary with `npm run fetch-dict`.
+- Fetch backend data through the cached loaders in `@/lib/loaders` (`'use cache'` + `cacheLife` + `cacheTag`), and map 404s with `orNotFound()` from `@/lib/request`. Add new endpoints to `@/lib/api`.
+- Style with the legacy tokens in `app/globals.css`: breakpoints `touch`/`tablet`/`tablet-lg`/`desktop`/`sidebar`/`wide` (mobile-first), `text-body`/`text-title`, `content-padding`, `z-*`, `card-*`. Combine classes with `cn()` from `@/lib/utils/cn`. Icons are in `@/components/icons`.
 - Keep behaviour identical to legacy until a page passes visual parity. Port legacy unit tests along with the code they cover.
 
 ## Commands

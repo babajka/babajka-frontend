@@ -23,9 +23,29 @@ describe('proxy', () => {
     expect(response.headers.get('x-middleware-rewrite')).toBeNull();
   });
 
-  it('should send X-Robots-Tag on pages with NOINDEX=true', async () => {
+  it('should redirect to the locale with 302, using the WIR_LOCALE cookie', async () => {
+    const proxy = await loadProxy({ NOINDEX: '' });
+    const withCookie = request('/be/about');
+    withCookie.cookies.set('WIR_LOCALE', 'ru');
+
+    const root = proxy(request('/'));
+    expect(root.status).toBe(302);
+    expect(root.headers.get('location')).toBe('https://wir.skarb.click/be');
+    expect(proxy(withCookie).headers.get('location')).toBe('https://wir.skarb.click/ru/about');
+    expect(proxy(request('/be/about')).headers.get('location')).toBeNull();
+  });
+
+  it('should send X-Robots-Tag on redirects too with NOINDEX=true', async () => {
     const proxy = await loadProxy({ NOINDEX: 'true' });
     const response = proxy(request('/'));
+
+    expect(response.status).toBe(302);
+    expect(response.headers.get('X-Robots-Tag')).toBe('noindex, nofollow');
+  });
+
+  it('should send X-Robots-Tag on pages with NOINDEX=true', async () => {
+    const proxy = await loadProxy({ NOINDEX: 'true' });
+    const response = proxy(request('/be'));
 
     expect(response.headers.get('X-Robots-Tag')).toBe('noindex, nofollow');
     expect(response.headers.get('x-middleware-rewrite')).toBeNull();

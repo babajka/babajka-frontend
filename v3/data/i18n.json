@@ -1,0 +1,725 @@
+{
+  "about": {
+    "logo-art-museum": {
+      "be": "Лагатып Нацыянальнага мастацкага музея",
+      "en": "Logo of National Art Museum",
+      "ru": "Логотип Национального художественного музея"
+    },
+    "logo-ethno": {
+      "be": "Лагатып «Этнаўсё»",
+      "en": "Logo of Etnaŭsio",
+      "ru": "Логотип «Этновсе»"
+    },
+    "logo-festyval-mou": {
+      "be": "Лагатып Мінскага фестывалю моў у Мінску",
+      "en": "Logo of Minsk Languages Festival ",
+      "ru": "Логотип Минского фестиваля языков"
+    },
+    "logo-kalehium": {
+      "be": "Лагатып Беларускага Калегіюма",
+      "en": "Logo of Belarusian Collegium",
+      "ru": "Логотип Беларуского Коллегиума"
+    },
+    "logo-libra": {
+      "be": "Лагатып галерэі LIBRA",
+      "en": "Logo of Libra Art Gallery",
+      "ru": "Логотип галереи LIBRA"
+    },
+    "logo-litbel": {
+      "be": "Лагатып Саюза беларускіх пісьменнікаў",
+      "en": "Logo of the Union of Belarusian Writers",
+      "ru": "Логотип Союза беларуских писателей"
+    },
+    "logo-masaraksh": {
+      "be": "Лагатып лекторыя «Масаракш»",
+      "en": "Logo of Massaraksh Lecture Centre",
+      "ru": "Логотип лектория «Массаракш»"
+    },
+    "logo-museum-brouka": {
+      "be": "Лагатып Літаратурнага музея Петруся Броўкі",
+      "en": "Logo of Piatruś Broŭka Literature Museum",
+      "ru": "Логотип Литературного музея Петруся Бровки"
+    },
+    "logo-shafa": {
+      "be": "Лагатып Кніжнай Шафы",
+      "en": "Logo of \"Knižnaja Šafa\" bookstore",
+      "ru": "Логотип «Книжной Шафы»"
+    },
+    "logo-wrights": {
+      "be": "Лагатып школы маладога пісьменніка W/rights",
+      "en": "Logo of W/rights school",
+      "ru": "Логотип школы молодого писателя W/rights"
+    },
+    "meta-description": {
+      "be": "Беларуская і сусветная культура: глядзець, слухаць, чытаць.",
+      "en": "Belarusian and world culture: watch, listen & read.",
+      "ru": "Белорусская и мировая культура: смотреть, слушать, читать."
+    },
+    "meta-keywords": {
+      "be": "пра праект, мэта, мэты, апісанне праекта, каманда, партнёры, падтрымка",
+      "en": "about the project, goals, project description, team, partners, supporters",
+      "ru": "О проекте, цели, цель, описание проекта, команда, партнеры, поддержка"
+    },
+    "meta-title": {
+      "be": "Пра праект",
+      "en": "About the project",
+      "ru": "О проекте"
+    },
+    "section-partners-header": {
+      "be": "Нас падтрымліваюць",
+      "en": "We are supported by",
+      "ru": "Нас поддерживают"
+    },
+    "section-team-header": {
+      "be": "Наша каманда",
+      "en": "Our team",
+      "ru": "Наша команда"
+    },
+    "section-team-subtext1": {
+      "be": "Выражаем падзяку ||Максіму Кузьмічу||.",
+      "en": "We are thankful to ||Maksim Kuźmič||.",
+      "ru": "Выражаем благодарность ||Максиму Кузьмичу||."
+    },
+    "section-team-subtext2": {
+      "be": "Выражаем падзяку || Ганне Бучко || (лагатып), || Даніілу Печанко||, ||Генадзю Цярэнцьеву || (саўндтрэк да лекцый), ||Антаніне Вярцінскай|| (распрацоўка сайта), ||Кацярыне Крывальцэвіч||, ||Наталлі Кусцінскай||, ||Кацярыне Алімпіевай||, ||Ірыне Галухінай||, ||Антосю Спясівых|| і || Лізавеце Чэканавай||.",
+      "en": "We give our thanks to || Hanna Bučko || (logo), || Daniił Piečanko||, || Hienadź Ciarenćjeŭ || (soundtrack for the lectures), || Antanina Viarcinskaja || (website development), || Kaciaryna Kryvalcevič ||, || Natallia Kuscinskaja||, ||Katerina Alimpieva||, ||Irina Galukhina||, ||Anton Spiasivykh|| and ||Lizaveta Chekanova||.",
+      "ru": "Выражаем благодарность || Анне Бучко || (логотип), || Даниилу Печанко||, || Геннадию Терентьеву || (саундтрек к лекциям), || Антонине Вертинской || (разработка сайта), || Екатерине Кривальцевич||, ||Наталье Кустинской||, ||Катерине Алимпиевой||, ||Ирине Галухиной||, ||Антону Спесивых|| и ||Лизавете Чекановой||."
+    },
+    "section-team-subtext3": {
+      "be": "Асобная падзяка спадару ||Віталю Князеву, яго сям'і і сябрам||.",
+      "en": "Special thanks to ||Mr. Vital Kniaziew, his family and friends||.",
+      "ru": "Отдельная благодарность ||Виталию Князеву, его семье и друзьям||."
+    },
+    "section1-header": {
+      "be": "Беларуская і сусветная культура: глядзець, слухаць, чытаць.",
+      "en": "Belarusian and world culture: watch, listen and read.",
+      "ru": "Белорусская и мировая культура: смотреть, слушать, читать."
+    },
+    "section1-text": {
+      "be": "Беларуская культура нярэдка ўспрымаецца ізалявана ад сусветнага і еўрапейскага кантэксту. Мы хочам гэта змяніць. На wir.by вы знойдзеце лекцыі навукоўцаў і даследчыкаў у відэа і падкастах, артыкулы, гульні і спецпраекты пра гісторыю, лінгвістыку, літаратуру, мастацтва і міфалогію.\n||Праект падтрымліваецца адукацыйнай праграмай Octopus.",
+      "en": "Belarusian culture is often seen in isolation from the European and global context. We wish to change that. On wir.by you will find lectures by scientists and researchers presented in videos and podcasts, as well as articles, games and special projects on history, linguistics, literature, art, and mythology.",
+      "ru": "Белорусская культура нередко воспринимается изолированно от мирового и европейского контекста. Мы хотим это изменить. На wir.by вы найдете лекции ученых и исследователей в видео и подкастах, статьи, игры и спецпроекты по истории, лингвистике, литературе, искусству и мифологии."
+    }
+  },
+  "article": {
+    "audio-currently-not-available": {
+      "be": "Аўдыёплэер часова не даступны.",
+      "en": "Audio Player is currently not available.",
+      "ru": "Аудиоплеер временно не доступен."
+    },
+    "collection-part": {
+      "be": "частка цыкла",
+      "en": "part of collection",
+      "ru": "часть цикла"
+    },
+    "listen": {
+      "be": "Слухаць",
+      "en": "Listen",
+      "ru": "Слушать"
+    },
+    "listen-podcast": {
+      "be": "Слухаць падкаст",
+      "en": "Listen to podcast",
+      "ru": "Слушать подкаст"
+    },
+    "of-collection": {
+      "be": "частка цыкла",
+      "en": "of collection",
+      "ru": "часть цикла"
+    },
+    "podcast-will-be-available-soon": {
+      "be": "Падкаст неўзабаве з'явіцца на гэтай старонцы.",
+      "en": "Podcast will be available on this page soon.",
+      "ru": "Запись подкаста скоро появится на этой странице."
+    },
+    "read": {
+      "be": "Чытаць",
+      "en": "Read",
+      "ru": "Читать"
+    },
+    "read-article": {
+      "be": "Чытаць артыкул",
+      "en": "Read the article",
+      "ru": "Читать статью"
+    },
+    "read-in": {
+      "be": "Чытаць па-беларуску",
+      "en": "Read in English",
+      "ru": "Читать по-русски"
+    },
+    "suggested-articles": {
+      "be": "Чытайце таксама:",
+      "en": "Continue reading:",
+      "ru": "Читайте также:"
+    },
+    "support-crowdfunding": {
+      "be": "Падтрымаць нас на краўдфандынгавай пляцоўцы",
+      "en": "Support our crowdfunding campaign",
+      "ru": "Поддержать нас на краудфандинговой площадке"
+    },
+    "this-is-the": {
+      "be": "Гэта",
+      "en": "This is a part ",
+      "ru": "Это"
+    },
+    "watch": {
+      "be": "Глядзець",
+      "en": "Watch",
+      "ru": "Смотреть"
+    },
+    "watch-video": {
+      "be": "Глядзець відэа",
+      "en": "Watch the video",
+      "ru": "Смотреть видео"
+    }
+  },
+  "banners": {
+    "mapa-subtitle": {},
+    "mapa-title": {
+      "be": "Мапа беларускіх легенд",
+      "en": "Map of Belarusian Legends",
+      "ru": "Карта белорусских легенд"
+    },
+    "ny2021-subtitle": {
+      "be": "Прадказанне",
+      "en": "Fortune game",
+      "ru": "Предсказание"
+    },
+    "ny2021-title": {
+      "be": "Што чакае ў 2021",
+      "en": "What to expect in 2021",
+      "ru": "Что ждёт в 2021"
+    },
+    "tinder-subtitle": {
+      "be": "Пісьменніцкі Tinder",
+      "en": "Writers' Tinder",
+      "ru": "Писательский Tinder"
+    },
+    "tinder-title": {
+      "be": "Знайдзі сабе пару",
+      "en": "Find a match",
+      "ru": "Найди себе пару"
+    },
+    "uzrost-subtitle": {
+      "be": "Міні-гульня",
+      "en": "Mini game",
+      "ru": "Мини-игра"
+    },
+    "uzrost-title": {
+      "be": "Што ты сабе думаеш",
+      "en": "What are you thinking",
+      "ru": "Что ты себе думаешь"
+    }
+  },
+  "collection": {
+    "meta_keywords": {
+      "be": "цыкл, цыкл лекцый, калекцыя",
+      "en": "collection, lectures",
+      "ru": "цикл, цикл лекций, коллекция"
+    },
+    "one": {
+      "be": "Цыкл",
+      "en": "Collection",
+      "ru": "Цикл"
+    }
+  },
+  "common": {
+    "motto": {
+      "be": "Беларуская||, а таксама || сусветная || культура || і || гісторыя",
+      "en": "Belarusian|| and || world || culture || and || history",
+      "ru": "Белорусская||, а также || мировая || культура || и || история"
+    },
+    "motto-short": {
+      "be": "Асветніцкі || wir.by",
+      "en": "Educational || wir.by",
+      "ru": "Просветительский || wir.by"
+    },
+    "project-apple-title": {
+      "be": "Wir.by",
+      "en": "Wir.by",
+      "ru": "Wir.by"
+    },
+    "project-description": {
+      "be": "Wir.by – беларуская і сусветная культура ў відэа, падкастах, артыкулах, гульнях і спецпраектах.",
+      "en": "Wir.by – Belarusian and world culture in videos, podcasts, articles, games and special projects.",
+      "ru": "Wir.by – белорусская и мировая культура в статьях, лекциях исследователей, играх и спецпроектах."
+    },
+    "project-type": {
+      "be": "Асветніцкая пляцоўка",
+      "en": "Educational platform",
+      "ru": "Просветительская площадка"
+    },
+    "share-facebook": {
+      "be": "Падзяліцца ў Facebook",
+      "en": "Share on Facebook",
+      "ru": "Поделиться в Facebook"
+    },
+    "share-link": {
+      "be": "Падзяліцца спасылкай",
+      "en": "Share link",
+      "ru": "Поделиться ссылкой"
+    },
+    "share-odnoklassniki": {
+      "be": "Падзяліцца ў OK.RU",
+      "en": "Share on OK.RU",
+      "ru": "Поделиться в OK.RU"
+    },
+    "share-telegram": {
+      "be": "Падзяліцца ў Telegram",
+      "en": "Share on Telegram",
+      "ru": "Поделиться в Telegram"
+    },
+    "share-twitter": {
+      "be": "Падзяліцца ў Twitter",
+      "en": "Share on Twitter",
+      "ru": "Поделиться в Twitter"
+    },
+    "share-vk": {
+      "be": "Падзяліцца ў VK",
+      "en": "Share on VK",
+      "ru": "Поделиться в VK"
+    }
+  },
+  "diary": {
+    "meta-keywords": {
+      "be": "дзённік, дзённік дня, у гэты дзень",
+      "en": "diary, diary of the day, this day, events at this day",
+      "ru": "дневник, дневник дня, в этот день"
+    },
+    "more": {
+      "be": "Цалкам",
+      "en": "More",
+      "ru": "Полностью"
+    },
+    "next": {
+      "be": "Наступны",
+      "en": "Next",
+      "ru": "Следующий"
+    },
+    "previous": {
+      "be": "Папярэдні",
+      "en": "Previous",
+      "ru": "Предыдущий"
+    },
+    "wrote": {
+      "be": "занатаваў у дзённіку",
+      "en": "wrote in his diary",
+      "ru": "записал в дневнике"
+    }
+  },
+  "errors": {
+    "404-subtitle": {
+      "be": "Матэрыял змяніў месцазнаходжанне альбо ніколі не існаваў",
+      "en": "Page has been moved or never existed",
+      "ru": "Материал переехал или никогда не существовал"
+    },
+    "404-title": {
+      "be": "Старонка не існуе",
+      "en": "Page does not exist",
+      "ru": "Страница не существует"
+    },
+    "500-subtitle": {
+      "be": "Нешта пайшло не так на нашых серверах. Выбачаемся!",
+      "en": "Something went wrong. Sorry!",
+      "ru": "Что-то пошло не так на наших серверах. Извините!"
+    },
+    "500-title": {
+      "be": "Унутраная памылка",
+      "en": "Server error",
+      "ru": "Внутренняя ошибка"
+    },
+    "contact-us": {
+      "be": "Звяжыцеся з намі, калі вам падаецца, што мы павінны ведаць пра гэтую памылку",
+      "en": "Please, contact us if you believe we should know about this error",
+      "ru": "Свяжитесь с нами, если вам кажется, что мы должны знать об этой ошибке"
+    },
+    "go-to-main": {
+      "be": "Перайсці на галоўную",
+      "en": "Go to main page",
+      "ru": "Перейти на главную"
+    }
+  },
+  "footer": {
+    "add-email": {
+      "be": "Дадаць яшчэ email",
+      "en": "Add another email",
+      "ru": "Добавить еще один email"
+    },
+    "contact-us": {
+      "be": "Калі вы знайшлі памылку, у вас ёсць заўвагі па сайце або вы жадаеце дапамагчы нам, калі ласка, напішыце || на wir.help@gmail.com",
+      "en": "In case you found an error or an issue with our website or want to offer your help please email us || at wir.help@gmail.com",
+      "ru": "Если вы нашли ошибку, у вас есть замечания по сайту или вы хотите помочь нам, напишите, пожалуйста || на wir.help@gmail.com"
+    },
+    "copyright": {
+      "be": "Падчас капіравання і цытавання нашых матэрыялаў, калі ласка, не забывайцеся пазначаць першакрыніцу, адкуль вы атрымалі інфармацыю.",
+      "en": "If copying or quoting our content, please do not forget to refer to the source of information.",
+      "ru": "При копировании и цитировании наших материалов, пожалуйста, не забывайте ссылаться на первоисточник, из которого вы получили информацию."
+    },
+    "help-us": {
+      "be": "Дапамагчы нам",
+      "en": "Help us",
+      "ru": "Помочь нам"
+    },
+    "listen-us": {
+      "be": "Слухайце нас",
+      "en": "Listen to us",
+      "ru": "Слушайте нас"
+    },
+    "materials": {
+      "be": "Матэрыялы",
+      "en": "Content",
+      "ru": "Материалы"
+    },
+    "our-networks": {
+      "be": "Мы ў сацсетках",
+      "en": "Our pages",
+      "ru": "Мы в соцсетях"
+    },
+    "rss": {
+      "be": "RSS-стужка",
+      "en": "RSS feed",
+      "ru": "RSS-лента"
+    },
+    "share": {
+      "be": "Распавесці пра нас усім",
+      "en": "Share",
+      "ru": "Рассказать о нас всем"
+    },
+    "subscribe": {
+      "be": "Падпісацца на абнаўленні",
+      "en": "Subscribe",
+      "ru": "Подписаться на обновления"
+    },
+    "subscribed": {
+      "be": "Вы падпісаліся! Чакайце лістоў || на",
+      "en": "Thanks for subscribing! We will send our newsletter || to",
+      "ru": "Вы подписались! Ждите писем || на"
+    },
+    "support-financially": {
+      "be": "Падтрымаць матэрыяльна",
+      "en": "Support financially",
+      "ru": "Поддержать материально"
+    },
+    "wir-on": {
+      "be": "Wir на",
+      "en": "Wir on",
+      "ru": "Wir на"
+    }
+  },
+  "header": {
+    "about": {
+      "be": "Пра нас",
+      "en": "About",
+      "ru": "О нас"
+    },
+    "articles": {
+      "be": "Артыкулы",
+      "en": "Articles",
+      "ru": "Статьи"
+    },
+    "main": {
+      "be": "Галоўная",
+      "en": "Home",
+      "ru": "Главная"
+    },
+    "to-main": {
+      "be": "На галоўную",
+      "en": "Back Home",
+      "ru": "На главную"
+    }
+  },
+  "sidebar": {
+    "about": {
+      "be": "Пра праект",
+      "en": "About us",
+      "ru": "О проекте"
+    },
+    "all-team": {
+      "be": "Уся каманда wir.by",
+      "en": "The wir.by team",
+      "ru": "Вся команда Wir.by"
+    },
+    "close": {
+      "be": "Закрыць",
+      "en": "Close",
+      "ru": "Закрыть"
+    },
+    "open": {
+      "be": "Адкрыць",
+      "en": "Open",
+      "ru": "Открыть"
+    }
+  },
+  "topic": {
+    "authors": {
+      "be": "Аўтары",
+      "en": "Our authors",
+      "ru": "Авторы"
+    },
+    "authors_all_mainPage": {
+      "be": "Усе аўтары",
+      "en": "All authors",
+      "ru": "Все авторы"
+    },
+    "authors_all_sidebar": {
+      "be": "Усе аўтары",
+      "en": "All authors",
+      "ru": "Все авторы"
+    },
+    "authors_essentials": {
+      "be": "Папулярныя аўтары",
+      "en": "Popular authors",
+      "ru": "Популярные авторы"
+    },
+    "authors_one": {
+      "be": "Аўтар",
+      "en": "Author",
+      "ru": "Автор"
+    },
+    "brands": {
+      "be": "Партнёры",
+      "en": "Partners",
+      "ru": "Партнеры"
+    },
+    "brands_all_mainPage": {
+      "be": "Усе партнёры",
+      "en": "All partners",
+      "ru": "Все партнеры"
+    },
+    "brands_all_sidebar": {
+      "be": "Усе партнёры",
+      "en": "All partners",
+      "ru": "Все партнеры"
+    },
+    "brands_essentials": {
+      "be": "Матэрыялы партнёраў",
+      "en": "Partner materials",
+      "ru": "Материалы партнеров"
+    },
+    "brands_one": {
+      "be": "Партнёр",
+      "en": "Partner",
+      "ru": "Партнер"
+    },
+    "by_authors": {
+      "be": "Аўтарах",
+      "en": "Author",
+      "ru": "Авторам"
+    },
+    "by_brands": {
+      "be": "Партнёрах",
+      "en": "Partner",
+      "ru": "Партнерам"
+    },
+    "by_locations": {
+      "be": "Месцах",
+      "en": "Location",
+      "ru": "Местам"
+    },
+    "by_personalities": {
+      "be": "Асобах",
+      "en": "Personality",
+      "ru": "Персоналиям"
+    },
+    "by_themes": {
+      "be": "Па тэмах",
+      "en": "By topic",
+      "ru": "По темам"
+    },
+    "by_times": {
+      "be": "Перыядах",
+      "en": "Time period",
+      "ru": "Периодам"
+    },
+    "locations": {
+      "be": "Месцы",
+      "en": "Locations",
+      "ru": "Места"
+    },
+    "locations_all_mainPage": {
+      "be": "Усе месцы",
+      "en": "All locations",
+      "ru": "Все места"
+    },
+    "locations_all_sidebar": {
+      "be": "Усе месцы",
+      "en": "All locations",
+      "ru": "Все места"
+    },
+    "locations_essentials": {
+      "be": "Асноўныя месцы",
+      "en": "Main locations",
+      "ru": "Основные места"
+    },
+    "locations_one": {
+      "be": "Месца",
+      "en": "Location",
+      "ru": "Место"
+    },
+    "meta_authors_description": {
+      "be": "Аўтарскія матэрыялы на Wir.by",
+      "en": "Content by author on Wir.by",
+      "ru": "Авторские материалы на Wir.by"
+    },
+    "meta_authors_keywords": {
+      "be": "аўтар, аўтары, аўтарскія матэрыялы, аўтарскі матэрыял",
+      "en": "author, authors, original content, proprietary content",
+      "ru": "автор, авторы, авторские материалы, авторский материал"
+    },
+    "meta_brands_description": {
+      "be": "Мы робім сумесныя матэрыялы з нашымі партнёрамі. Чытайце, слухайце і глядзіце на Wir.by",
+      "en": "We create content in cooperation with our partners. Read, listen and watch it on Wir.by",
+      "ru": "Мы создаем совместные материалы с нашими партнерами. Читайте, слушайте и смотрите на Wir.by"
+    },
+    "meta_brands_keywords": {
+      "be": "партнёр, партнёры, партнёрства, партнёрскі матэрыял, партнёрскія матэрыялы, калабарацыя, сумесна",
+      "en": "partner, partners, partnership, affiliate content, affiliate articles, collaboration, together with",
+      "ru": "партнер, партнеры, партнерство, партнерский материал, партнерские материалы, коллаборация, совместно"
+    },
+    "meta_locations_description": {
+      "be": "На Wir.by матэрыялы размеркаваныя па лакацыях — даследуйце вашыя ўлюбёныя мясціны",
+      "en": "All content on Wir.by is classified by location so you can explore your favourite places",
+      "ru": "На Wir.by материалы объединены по локациям — исследуйте ваши любимые места"
+    },
+    "meta_locations_keywords": {
+      "be": "месца, месцы, лакацыі, горад, гарады, краіны",
+      "en": "place, places, locations, city, cities, countries",
+      "ru": "место, места, локации, город, города, страны"
+    },
+    "meta_other_authors_description": {
+      "be": "Аўтарскія матэрыялы на Wir.by",
+      "en": "Content by author on Wir.by",
+      "ru": "Авторские материалы на Wir.by"
+    },
+    "meta_other_brands_description": {
+      "be": "Глядзіце партнёрскія матэрыялы на Wir.by",
+      "en": "Take a look at our collaborations on Wir.by",
+      "ru": "Знакомьтесь с партнерскими материалами на Wir.by"
+    },
+    "meta_other_locations_description": {
+      "be": "Даследуйце іншыя лакацыі на Wir.by",
+      "en": "Explore other locations on Wir.by",
+      "ru": "Исследуйте другие локации на Wir.by"
+    },
+    "meta_other_personalities_description": {
+      "be": "Выбітныя асобы на Wir.by",
+      "en": "Prominent individuals on Wir.by",
+      "ru": "Выдающиеся личности на Wir.by"
+    },
+    "meta_other_themes_description": {
+      "be": "Матэрыялы па ўсіх тэмах на Wir.by",
+      "en": "Content on all topics on Wir.by",
+      "ru": "Материалы по всем темам на Wir.by"
+    },
+    "meta_other_times_description": {
+      "be": "Матэрыялы, размеркаваныя па часе — на Wir.by",
+      "en": "Content by historical period on Wir.by",
+      "ru": "Материалы по временным периодам — на Wir.by"
+    },
+    "meta_personalities_description": {
+      "be": "Даследуйце выбітных асобаў на Wir.by",
+      "en": "Explore prominent individuals on Wir.by",
+      "ru": "Исследуйте выдающихся личностей на Wir.by"
+    },
+    "meta_personalities_keywords": {
+      "be": "асоба, асобы, персоны, выбітная асоба, дасягненне, дасягненні",
+      "en": "personality, personalities, personalia, prominent figures, achievement, achievements",
+      "ru": "персоналия, персоналии, персоны, выдающаяся личность, достижение, достижения"
+    },
+    "meta_themes_description": {
+      "be": "Лінгвістыка, архітэктура, кіно, філасофія... на Wir.by",
+      "en": "Linguistics, architecture, cinema, philosophy... on Wir.by",
+      "ru": "Лингвистика, архитектура, кино, философия... на Wir.by"
+    },
+    "meta_themes_keywords": {
+      "be": "тэма, тэмы, топік, топікі, галіна, культура, сферы",
+      "en": "topic, topics, field, culture, areas",
+      "ru": "тема, темы, топик, топики, область, культура, сферы "
+    },
+    "meta_times_description": {
+      "be": "Матэрыялы на Wir.by размеркаваныя па гістарычных перыядах",
+      "en": "All content on Wir.by is classified by historical period",
+      "ru": "Материалы на Wir.by объединены по историческим периодам"
+    },
+    "meta_times_keywords": {
+      "be": "час, часы, часавы перыяд, перыяды, эра, эпоха, год, стагоддзе",
+      "en": "time, times, time period, periods, era, age, year, century",
+      "ru": "время, времена, временной период, периоды, эра, эпоха, год, век"
+    },
+    "personalities": {
+      "be": "Асобы",
+      "en": "Personalities",
+      "ru": "Персоналии"
+    },
+    "personalities_all_mainPage": {
+      "be": "Усе асобы",
+      "en": "All personalities",
+      "ru": "Все персоналии"
+    },
+    "personalities_all_sidebar": {
+      "be": "Усе асобы",
+      "en": "All personalities",
+      "ru": "Все персоналии"
+    },
+    "personalities_essentials": {
+      "be": "Асноўныя асобы",
+      "en": "Key personalia",
+      "ru": "Основные персоналии"
+    },
+    "personalities_one": {
+      "be": "Асоба",
+      "en": "Personality",
+      "ru": "Персоналия"
+    },
+    "themes": {
+      "be": "Тэмы",
+      "en": "Topics",
+      "ru": "Темы"
+    },
+    "themes_all_mainPage": {
+      "be": "Усе тэмы",
+      "en": "All topics",
+      "ru": "Все темы"
+    },
+    "themes_all_sidebar": {
+      "be": "Усе тэмы",
+      "en": "All topics",
+      "ru": "Все темы"
+    },
+    "themes_essentials": {
+      "be": "Асноўныя тэмы",
+      "en": "Main topics",
+      "ru": "Основные темы"
+    },
+    "themes_one": {
+      "be": "Тэма",
+      "en": "Topic",
+      "ru": "Тема"
+    },
+    "times": {
+      "be": "Часы",
+      "en": "Time",
+      "ru": "Периоды"
+    },
+    "times_all_mainPage": {
+      "be": "Усе перыяды",
+      "en": "All periods",
+      "ru": "Все периоды"
+    },
+    "times_all_sidebar": {
+      "be": "Уся храналогія",
+      "en": "All timeline",
+      "ru": "Вся хронология"
+    },
+    "times_essentials": {
+      "be": "Значныя перыяды",
+      "en": "Significant periods",
+      "ru": "Значимые периоды"
+    },
+    "times_one": {
+      "be": "Гістарычны момант",
+      "en": "Landmark",
+      "ru": "Исторический момент"
+    }
+  }
+}
