@@ -23,6 +23,8 @@ ARG BACKEND_URL
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \
     BACKEND_URL=$BACKEND_URL \
+    # public preview: X-Robots-Tag noindex on every response (proxy.ts)
+    NOINDEX=true \
     HOSTNAME=0.0.0.0 \
     PORT=8080
 WORKDIR /app
