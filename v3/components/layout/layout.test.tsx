@@ -184,8 +184,12 @@ describe('components/layout', () => {
 
   describe('ErrorMessage', () => {
     it('should render the localized 404 and mark the page to hide the footer', async () => {
-      const { container } = render(<ErrorMessage code={404} lang="ru" />);
       const ru = getMessages('ru');
+      const { container } = render(
+        <I18nProvider lang="ru" messages={ru}>
+          <ErrorMessage code={404} />
+        </I18nProvider>
+      );
 
       expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
         `404 ${ru['errors.404-title']}`

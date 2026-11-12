@@ -1,20 +1,22 @@
+'use client';
+
 import Link from '@/components/ui/Link';
 import ExternalLink from '@/components/ui/ExternalLink';
 import { NETWORKS } from '@/constants/social';
-import type { Lang } from '@/constants';
-import { createT } from '@/lib/i18n/dict';
+import { useLang, useT } from '@/lib/i18n/client';
 import { routes } from '@/lib/routes';
 import { DEV_EMAIL } from '@/lib/site';
 
 export type ErrorCode = 404 | 500;
 
 /**
- * Legacy components/layout/error/ErrorMessage.js (404/500 pages). Takes `lang` explicitly: it's also
- * rendered by error.tsx, a Client Component that can't read the route on the server.
+ * Legacy components/layout/error/ErrorMessage.js (404/500 pages). A Client Component, because
+ * error.tsx (a Client Component) renders it too; its strings come from the `errors` client scope.
  * `data-hide-footer` hides the footer, like legacy `getLayoutProps: { hideFooter: true }`.
  */
-const ErrorMessage = ({ code, lang }: { code: ErrorCode; lang: Lang }) => {
-  const t = createT(lang);
+const ErrorMessage = ({ code }: { code: ErrorCode }) => {
+  const t = useT();
+  const lang = useLang();
 
   return (
     <div data-hide-footer className="px-8 pt-6 pb-12 desktop:p-12">
