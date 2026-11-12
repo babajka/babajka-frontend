@@ -1,31 +1,34 @@
+import { isValid } from 'date-fns';
 import Image from 'next/image';
 import { connection } from 'next/server';
 
 import type { Lang } from '@/constants';
-import { BACKEND_URL, getLatestArticles, type ArticlesChunk } from '@/lib/api';
+import { getArticles } from '@/lib/loaders';
+import { BACKEND_URL } from '@/lib/request';
+import type { ArticlesChunk } from '@/lib/types';
 import { formatLocalizedDate } from '@/utils/date';
 import { localize } from '@/utils/localization';
 
 type Props = { lang?: Lang; take?: number };
 
 /**
- * Deployment check: renders the latest articles from the backend at request time.
- * - server → API: the fetch below runs in the Next server (in the container).
+ * Deployment check: renders the latest articles from the backend.
+ * - server → API: the cached loader (lib/loaders.ts) fetches from the Next server (container).
  * - browser → `/api/*` rewrite → API: covers go through `next/image` from `/api/files/...`.
  */
 const LatestArticles = async ({ lang = 'be', take = 6 }: Props) => {
-  // Request time only: a real request from the running server, and `next build` (also in Docker)
-  // doesn't need the backend.
+  // Request time only, so `next build` (also in Docker) doesn't need the backend. The loader result
+  // is still cached for a few minutes (`cacheLife('minutes')`).
   await connection();
 
   const backendHost = new URL(BACKEND_URL).host;
   let chunk: ArticlesChunk;
   try {
-    chunk = await getLatestArticles(take);
+    chunk = await getArticles({ take });
   } catch (error) {
     console.error('LatestArticles: backend request failed', error);
     return (
-      <p role="alert" className="text-red-700">
+      <p role="alert" className="text-error">
         Backend {backendHost} is unreachable: {error instanceof Error ? error.message : 'unknown'}
       </p>
     );
@@ -36,10 +39,10 @@ const LatestArticles = async ({ lang = 'be', take = 6 }: Props) => {
       <h2 id="latest-articles" className="mb-1 text-xl font-bold">
         Latest articles
       </h2>
-      <p className="mb-6 text-sm text-gray-600">
-        {chunk.total} articles on {backendHost}, fetched at {new Date().toISOString()}
+      <p className="mb-6 text-sm text-grey">
+        {chunk.total} articles on {backendHost}
       </p>
-      <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="sm:grid-cols-2 lg:grid-cols-3 grid gap-6">
         {chunk.data.map(article => {
           const locale = localize(article.locales, lang);
           const cover = article.images?.horizontal;
@@ -58,9 +61,12 @@ const LatestArticles = async ({ lang = 'be', take = 6 }: Props) => {
                 )}
                 <h3 className="font-bold">{locale?.title}</h3>
                 {locale?.subtitle && <p className="text-sm">{locale.subtitle}</p>}
-                <time dateTime={article.publishAt} className="text-xs text-gray-600">
-                  {formatLocalizedDate(new Date(article.publishAt), lang)}
-                </time>
+                {/* publishAt is optional (unpublished articles) */}
+                {article.publishAt && isValid(new Date(article.publishAt)) && (
+                  <time dateTime={article.publishAt} className="text-xs text-grey">
+                    {formatLocalizedDate(new Date(article.publishAt), lang)}
+                  </time>
+                )}
               </article>
             </li>
           );

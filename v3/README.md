@@ -62,7 +62,7 @@ npm run e2e            # playwright smoke tests against v3 (starts `npm run dev`
 npm run visual:baseline  # screenshot legacy (:3000) → baseline
 npm run visual:compare   # screenshot v3 (:3001) and diff against baseline
 npm run analyze        # next analyze (Turbopack bundle analyzer)
-npm run fetch-dict     # Phase 2: node scripts/fetch-dict.ts → data/i18n.json
+npm run fetch-dict     # Google Sheet → data/i18n.json (committed); needs BABAJKA_GOOGLE_API_KEY in v3/.env
 ```
 
 `npm run build` and `npm run typecheck` delete `.next/dev/types` first (`clean-dev-types`). `next dev` writes route types there for the branch it ran on, `tsconfig.json` includes them, and `next build`/`tsc` don't regenerate them. After switching branches, stale ones fail the type check with errors like `__InvalidParamMatchingKeys` or `Cannot find module '…/page.js'`. Both commands generate fresh route types in `.next/types` themselves, and a running `next dev` rewrites its own on the next change.
@@ -210,61 +210,71 @@ Generated with `create-next-app@16.4.6 --react-compiler --cache-components --age
 
 **Design tokens** (`app/globals.css`, `@theme`). Port the values from `styles/variables.scss`, `styles/responsiveness.scss`, `styles/typography.module.scss`.
 
-- [ ] Colors:
+- [x] Colors:
   - `primary #1a9582`, `primary-dark #103a2a`
   - `caribbean #0dc6aa`, `turquoise #00ffd8`
   - `grey #888888`, `concrete #f2f2f2`, `widescreen-bg #c4c4c4`, `table #cccccc`
   - `warning #ed812b`, `error #e21017`
-  - social colors
-  - stray hardcoded colors from the modules: `#c4d4d5`, `#fe4771`, `#ff7860`, `#fef04c`, etc.
-- [ ] Breakpoints. Legacy uses exclusive max-width ranges; convert them to mobile-first min-width:
+  - social colors (`facebook`, `vk`, `twitter`, `google-plus`, `instagram`, `telegram`, `youtube`, `odnoklassniki`)
+  - stray hardcoded colors from the modules, named by use: `table-header #f8fafb`, `table-border #c4d4d5`, `link-dark #45565b`, `tinder #fe4771`, `tinder-from #ff7860`, `tinder-to #fb0b85`, `slavics #fef04c`, `viershy #294d68`.
+  - The Tailwind default palette is kept for now. Drop it (`--color-*: initial`) once all pages are ported, if nothing uses it.
+- [x] Breakpoints. Legacy uses exclusive max-width ranges; convert them to mobile-first min-width:
   - `touch 500px`, `tablet 650px`, `tablet-lg 800px`, `desktop 1100px`, `sidebar 1360px`, `wide 1600px`
-  - Base styles (no prefix) = mobile < 500.
-- [ ] Typography utilities `text-body` and `text-title`, with the responsive size/line-height steps of `.common-text` and `.common-title`. Weights: 400/700 only.
-- [ ] Container `content-padding` utility replacing `.wir-content-padding`, with page widths 300/480/624/818/1020.
-- [ ] z-index scale: overlay 100, sidebar 200, modal 300/400, go-up 500.
-- [ ] Card size tokens from `features/layout/cards/index.scss`: l, ms, square-m/s, s-wide, s, xs-wide, xs.
-- [ ] `next/font/google` Ubuntu 400/700 (cyrillic, latin, latin-ext) as `--font-sans`. Drop the render-blocking Google Fonts `@import`. Keep Georgia as `--font-serif`.
-- [ ] Icons: copy the ~12 used Font Awesome paths into `components/icons/*.tsx` as inline SVG. Drop the whole FA font (3 packs). Used icons:
-  - times, heart, rss, circle-notch, arrow-alt-circle-up, envelope, arrow-right
-  - brands: facebook-square, twitter, vk, telegram-plane, odnoklassniki
-- [ ] `cn()` = `clsx` + `tailwind-merge`. It replaces `classnames` and `bem-css-modules`.
+  - Base styles (no prefix) = mobile < 500. The Tailwind defaults (`sm`, `md`, …) are removed.
+- [x] Typography utilities `text-body` and `text-title`, with the responsive size/line-height steps of `.common-text` and `.common-title`. Weights: 400/700 only.
+- [x] Container `content-padding` utility replacing `.wir-content-padding`, with page widths 300/480/624/818/1020 (`--page-width-*`).
+- [x] z-index scale: `z-sidebar-overlay` 100, `z-sidebar` 200, `z-modal-backdrop` 300, `z-modal` 400, `z-go-up` 500.
+- [x] Card size tokens from `features/layout/cards/index.scss`: `card-l`, `card-ms`, `card-square-m`, `card-square-s`, `card-s-wide`, `card-s`, `card-xs-wide`, `card-xs` (width + height).
+- [x] `next/font/google` Ubuntu 400/700 (cyrillic, latin, latin-ext) as `--font-sans` (`app/[lang]/layout.tsx`). No Google Fonts request: the font is self-hosted under `/_next/static/media`. Georgia is `--font-serif`.
+- [x] Icons: the used Font Awesome paths are inline SVG components in `components/icons/` (`createIcon`, 1em high, `currentColor`, `aria-hidden` unless `title` is set; CC BY 4.0 attribution in `index.ts`). 17 icons, the plan's 12 plus the ones legacy builds dynamically:
+  - times, heart, rss, circle-notch, arrow-alt-circle-up, envelope, arrow-right, external-link-alt (share button)
+  - brands: facebook-square, twitter, vk, telegram-plane, odnoklassniki (share), facebook, instagram, telegram, youtube (error page, `NETWORKS`)
+- [x] `cn()` = `clsx` + `tailwind-merge` (`lib/utils/cn.ts`). It replaces `classnames` and `bem-css-modules`, and knows the custom utilities above (e.g. `cn('text-body', 'text-title')` → `text-title`).
 
 **i18n.**
 
-- [ ] `app/[lang]/layout.tsx` is the root layout:
+- [x] `app/[lang]/layout.tsx` is the root layout:
   - `<html lang={lang}>`
-  - `generateStaticParams` → `be`, `ru`, `en`
-- [ ] `proxy.ts` (Next 16's replacement for `middleware.ts`) ports the `server.js` logic exactly:
-  - `/` → `/{cookie||be}`
+  - `generateStaticParams` → `be`, `ru`, `en` (all prerendered)
+  - Cache Components doesn't allow `dynamicParams = false`, so the layout calls `notFound()` for an unknown locale.
+- [x] `proxy.ts` (Next 16's replacement for `middleware.ts`) ports the `server.js` logic (`lib/locale-redirect.ts`, unit-tested rule by rule):
+  - `/` → `/{cookie||be}` (302, like Express)
   - a path without a locale → prefixed with one
   - a `WIR_LOCALE` cookie different from the path's locale → redirect
-  - static paths are skipped
-- [ ] Dictionary:
-  - `scripts/fetch-dict.ts` runs natively on Node 26 (type stripping) and writes `data/i18n.json`.
-  - Run it explicitly / in CI, not in `postinstall`.
-  - Typed keys.
-  - Server helper `getT(lang)` + client `useT()` for islands. Keep the `||` split behaviour of `<Text>`.
-- [ ] Port `utils/localization.ts` (`localize`, `localizeFields`, `replaceLocale`) and `utils/getters.ts`.
-  - `utils/localization.ts` is already ported (Phase 1, with tests); `utils/getters.ts` is left.
+  - static paths are skipped: `_next`, `static`, the backend proxy (`api`, `auth`, `test`), `revalidate`, and root files with an extension (`favicon.ico`, `robots.txt`)
+  - Two small differences, both to avoid needless redirects: `/` goes to `/be`, not `/be/`, and the query is kept when switching to the cookie locale (legacy dropped it).
+- [x] Dictionary:
+  - `scripts/fetch-dict.mts` runs natively on Node 26 (type stripping) and writes `data/i18n.json`. No dependencies: it calls the Google Sheets REST API with `fetch`, so `google-spreadsheet` isn't needed. Output is identical to legacy (141 keys).
+  - Run it explicitly (`npm run fetch-dict`), not in `postinstall`.
+  - **`data/i18n.json` is committed** (legacy gitignores it): typed keys need it at typecheck time, and builds (CI, Docker on Майстэрня) then don't need the Google API key. The strings are public anyway (they ship in the page).
+  - Typed keys: `DictKey` = `'<scope>.<key>'` from the JSON, so a typo fails `tsc`.
+  - Server: `getT(lang?)` and `<Text id render?>` (`lib/i18n/server.tsx`). The locale comes from `next/root-params` (`lang()`), so Server Components need no `lang` prop or `LocaleContext`. Client islands: `I18nProvider` (in the root layout, with the resolved messages for one locale) + `useT()` / `useLang()` / `<ClientText>` (`lib/i18n/client.tsx`).
+  - Same rules as legacy `<Text>`: requested locale → `be` → the key itself, and `render` gets the `||`-separated parts (default: the first part).
+- [x] Port `utils/localization.ts` (`localize`, `localizeFields`, `replaceLocale`) and `utils/getters.ts`.
+  - `utils/localization.ts` was ported in Phase 1. `utils/getters.ts` is ported without lodash, with view types (`LocalizedArticle`, `LocalizedCollection`, …) and tests (legacy had none).
 - [x] Date formatting: `date-fns` v4 with `be`, `ru`, `enUS` (`utils/date.ts`, ported in Phase 1).
 
 **Data layer.**
 
-- [ ] `lib/api.ts`: typed endpoint registry (from `constants/api.js`), using `URLSearchParams` instead of `querystring`.
-- [ ] `lib/request.ts`:
-  - server fetch to `BACKEND_URL`
-  - `RequestError`
-  - 404 → `notFound()`
-- [ ] Cached loaders, one per resource, using `'use cache'`, `cacheLife(...)` and `cacheTag(...)`:
-  - `getArticle(slug)`, `getMainPage()`, `getTopic(t)`, `getTag(t)`, `getCollection(s)`, `getDiary(slug|date)`, `getSidebar()`
+- [x] `lib/api.ts`: typed endpoint registry (from `constants/api.js`), using `URLSearchParams` instead of `querystring`. Path segments are now URL-encoded.
+- [x] `lib/request.ts`:
+  - server fetch to `BACKEND_URL`, JSON or text, with a 10 s timeout (legacy had none)
+  - `RequestError` (`url`, `status`)
+  - `orNotFound(promise)`: 404 → `notFound()`. Other errors go to the error boundary (Phase 3), instead of the legacy redirect to `/status/500`.
+- [x] Cached loaders, one per resource, using `'use cache'`, `cacheLife(...)` and `cacheTag(...)` (`lib/loaders.ts`, tags in `lib/cache-tags.ts`):
+  - `getArticle(slug)`, `getArticles(pagination)`, `getMainPage()`, `getTopic(t)`, `getTag(t)`, `getCollection(s)`, `getDiary(slug | {month, day} | 'today')`, `getSidebar()`
+  - `hours` for published content (article, topic, tag, collection), `minutes` for what changes with new publications or by date (main page, sidebar, diary, article lists).
+  - Response types are `unknown` except article lists; each page adds its types when it's ported (Phase 4).
   - Today the article, tag, topic and collection pages hit the backend on **every request**.
-- [ ] Optional `app/_revalidate/route.ts` (secret-protected) to call `revalidateTag` from the backend on publish. Don't put it under `/api`, `/auth` or `/test`, which are proxied to the backend.
-- [ ] Inline the used `lib/` submodule utils into `v3/lib/`, and drop the submodule dependency (Phase 1 already ported `createConstants`, `isEmail` and the three `parse*Url` with tests):
-  - `clearUtmParams`, `createConstants`, `isEmail`
-  - `parseYoutubeUrl`, `parseCoubUrl`, `parseYMPlaylistUrl`
-  - `Clickable`, `TextWithSeparator`
-- [ ] Copy `assets/logo` into `v3/components/Logo.tsx`.
+- [x] `app/revalidate/route.ts` (secret-protected) to call `revalidateTag(tag, 'max')` from the backend on publish: `POST /revalidate` with `Authorization: Bearer $REVALIDATE_SECRET` and `{"tags": [...]}`. It returns 404 when `REVALIDATE_SECRET` isn't set. Not `app/_revalidate`: folders starting with `_` are private in the App Router (not routed). Not under `/api`, `/auth` or `/test`, which are proxied to the backend.
+  - [ ] Set `REVALIDATE_SECRET` on the deploy and call it from the backend on publish (backend change).
+- [x] Inline the used `lib/` submodule code into v3, and drop the submodule dependency (v3 doesn't use `lib/` or `assets/`):
+  - `createConstants`, `isEmail`, `parseYoutubeUrl`, `parseCoubUrl`, `parseYMPlaylistUrl` (`lib/utils/`, Phase 1)
+  - `Clickable`, `TextWithSeparator` → `components/` (`Clickable` uses `onKeyDown`; legacy used the deprecated `onKeyPress`)
+  - `clearUtmParams` is **not** ported: it only exists for analytics, which v3 drops (Phase 5, item 8).
+- [x] Copy `assets/logo` into `v3/components/Logo.tsx` (with an optional accessible `title`).
+
+The placeholder home page (`app/[lang]/page.tsx`) uses all of this: `<Text>` (the motto, per locale) and the cached `getArticles` loader.
 
 ## Phase 3 — Layout shell
 

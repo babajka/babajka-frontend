@@ -1,4 +1,200 @@
 @import 'tailwindcss';
 
-/* Design tokens (colors, breakpoints, typography, z-index, card sizes) are ported from the legacy
-   SCSS in Phase 2. See "Phase 2 — Foundations" in README.md. */
+/*
+ * Design tokens, ported from the legacy SCSS:
+ *   styles/variables.scss, styles/responsiveness.scss, styles/typography.module.scss,
+ *   components/layout/layout.scss (.wir-content-padding), features/layout/cards/index.scss
+ */
+
+@theme {
+  /* Breakpoints. Legacy uses exclusive max-width ranges (`screen-*` mixins); here they are
+     mobile-first min-widths, so unprefixed utilities = mobile (< 500px). The Tailwind defaults
+     (sm, md, …) are removed so only the legacy ranges exist. */
+  --breakpoint-*: initial;
+  --breakpoint-touch: 500px;
+  --breakpoint-tablet: 650px;
+  --breakpoint-tablet-lg: 800px;
+  --breakpoint-desktop: 1100px;
+  --breakpoint-sidebar: 1360px; /* sidebar becomes a static column */
+  --breakpoint-wide: 1600px;
+
+  /* Brand colors */
+  --color-primary: #1a9582;
+  --color-primary-dark: #103a2a;
+  --color-caribbean: #0dc6aa; /* links: light theme hover, dark theme default */
+  --color-turquoise: #00ffd8; /* links: dark theme hover */
+  --color-grey: #888888;
+  --color-concrete: #f2f2f2;
+  --color-widescreen-bg: #c4c4c4;
+  --color-table: #cccccc;
+  --color-warning: #ed812b;
+  --color-error: #e21017;
+
+  /* Social networks, official colors */
+  --color-facebook: #3b5998;
+  --color-vk: #45668e;
+  --color-twitter: #1da1f2;
+  --color-google-plus: #d34836;
+  --color-instagram: #517fa4;
+  --color-telegram: #0088cc;
+  --color-youtube: #bb0000;
+  --color-odnoklassniki: #ed812b;
+
+  /* Stray colors hardcoded in legacy modules */
+  --color-table-header: #f8fafb; /* components/common/ui/table.module.scss */
+  --color-table-border: #c4d4d5; /* components/common/ui/table.module.scss */
+  --color-link-dark: #45565b; /* components/common/ui/link.module.scss */
+  --color-tinder: #fe4771; /* styles/pages/tinder.module.scss */
+  --color-tinder-from: #ff7860; /* tinder background gradient */
+  --color-tinder-to: #fb0b85;
+  --color-slavics: #fef04c; /* features/layout/cards/article.module.scss experiment */
+  --color-viershy: #294d68; /* features/layout/cards/wrapper.module.scss experiment */
+
+  /* Fonts. Ubuntu comes from next/font (app/[lang]/layout.tsx), weights 400/700 only. */
+  --font-serif: Georgia, serif;
+
+  /* Page content widths per range (legacy $page-content) */
+  --page-width-mobile: 300px;
+  --page-width-touch: 480px;
+  --page-width-tablet: 624px;
+  --page-width-tablet-lg: 818px;
+  --page-width-desktop: 1020px;
+
+  --min-website-width: 330px;
+}
+
+@theme inline {
+  --font-sans: var(--font-ubuntu), sans-serif;
+}
+
+/* Body text: legacy `.common-text` ($content-font-size / $content-line-height). */
+@utility text-body {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+
+  @variant touch {
+    font-size: 18px;
+    line-height: 30px;
+  }
+
+  @variant tablet-lg {
+    font-size: 20px;
+    line-height: 33px;
+  }
+
+  @variant desktop {
+    line-height: 36px;
+  }
+}
+
+/* Page titles: legacy `.common-title`. */
+@utility text-title {
+  font-size: 36px;
+  line-height: 42px;
+  font-weight: 700;
+
+  @variant touch {
+    font-size: 42px;
+    line-height: 54px;
+  }
+
+  @variant tablet {
+    font-size: 48px;
+    line-height: 60px;
+  }
+
+  @variant tablet-lg {
+    font-size: 54px;
+    line-height: 69px;
+  }
+
+  @variant desktop {
+    font-size: 60px;
+    line-height: 72px;
+  }
+}
+
+/* Legacy `.wir-content-padding`: content of the page width, offset 1/3 left, 2/3 right. */
+@utility content-padding {
+  padding-left: calc((100% - var(--page-width-mobile)) / 3);
+  padding-right: calc((100% - var(--page-width-mobile)) * 2 / 3);
+
+  @variant touch {
+    padding-left: calc((100% - var(--page-width-touch)) / 3);
+    padding-right: calc((100% - var(--page-width-touch)) * 2 / 3);
+  }
+
+  @variant tablet {
+    padding-left: calc((100% - var(--page-width-tablet)) / 3);
+    padding-right: calc((100% - var(--page-width-tablet)) * 2 / 3);
+  }
+
+  @variant tablet-lg {
+    padding-left: calc((100% - var(--page-width-tablet-lg)) / 3);
+    padding-right: calc((100% - var(--page-width-tablet-lg)) * 2 / 3);
+  }
+
+  @variant desktop {
+    padding-left: calc((100% - var(--page-width-desktop)) / 3);
+    padding-right: calc((100% - var(--page-width-desktop)) * 2 / 3);
+  }
+}
+
+/* z-index scale (legacy $zindex) */
+@utility z-sidebar-overlay {
+  z-index: 100;
+}
+@utility z-sidebar {
+  z-index: 200;
+}
+@utility z-modal-backdrop {
+  z-index: 300;
+}
+@utility z-modal {
+  z-index: 400;
+}
+@utility z-go-up {
+  z-index: 500;
+}
+
+/* Card sizes (features/layout/cards/index.scss mixins), width × height */
+@utility card-l {
+  width: 624px;
+  height: 390px;
+}
+@utility card-ms {
+  width: 480px;
+  height: 194px;
+}
+@utility card-square-m {
+  width: 390px;
+  height: 390px;
+}
+@utility card-square-s {
+  width: 300px;
+  height: 300px;
+}
+@utility card-s-wide {
+  width: 426px;
+  height: 194px;
+}
+@utility card-s {
+  width: 394px;
+  height: 194px;
+}
+@utility card-xs-wide {
+  width: 300px;
+  height: 194px;
+}
+@utility card-xs {
+  width: 232px;
+  height: 194px;
+}
+
+@layer base {
+  body {
+    min-width: var(--min-website-width);
+    @apply font-sans;
+  }
+}
