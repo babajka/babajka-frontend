@@ -9,7 +9,10 @@ ARG BACKEND_URL=https://api.wir.by
 # lightningcss and tailwind oxide are most reliable on linux-gnu.
 FROM node:26-slim AS build
 ARG BACKEND_URL
+# Absolute URLs in metadata (og:url, og:image), baked into prerendered pages.
+ARG SITE_URL=https://wir.skarb.click
 ENV BACKEND_URL=$BACKEND_URL \
+    SITE_URL=$SITE_URL \
     NEXT_TELEMETRY_DISABLED=1
 WORKDIR /app
 COPY package.json package-lock.json ./
