@@ -3,7 +3,7 @@
 // Input types are deliberately loose: the exact backend types are added per page in Phase 4.
 import { isBefore, parseISO } from 'date-fns';
 
-import { TOPICS, type Lang, type Topic } from '@/constants';
+import { isKnownTopic, TOPICS, type Lang, type Topic } from '@/constants';
 import { localize, localizeFields, type Localized } from '@/utils/localization';
 
 type Raw = Record<string, unknown>;
@@ -99,8 +99,6 @@ export const getLocalizedTag = (
   topicSlug,
   content: (isKnownTopic(topicSlug) && LOCALIZE_TAG_CONTENT[topicSlug](content, lang)) || {},
 });
-
-const isKnownTopic = (topic: unknown): topic is Topic => TOPICS.includes(topic as Topic);
 
 // Tags of a topic this app doesn't know (a new topic on the backend, or no topicSlug) are skipped
 // instead of crashing the page. Legacy crashed here.

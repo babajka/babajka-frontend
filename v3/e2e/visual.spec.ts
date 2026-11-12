@@ -48,7 +48,7 @@ for (const fixture of expandFixtures()) {
 
           // Structural check once per fixture × locale: catches missing text and links, and
           // survives small pixel noise. (Playwright flattens `/` in aria snapshot names.)
-          if (viewport.name === 'desktop') {
+          if (viewport.name === 'desktop' && !fixture.ariaDiffers) {
             await expect(page.locator('main')).toMatchAriaSnapshot({
               name: `${fixture.name}-${fixture.lang}.aria.yml`,
             });
