@@ -20,7 +20,11 @@
     "e2e": "playwright test",
     "visual:baseline": "PW_APP=legacy playwright test --update-snapshots",
     "visual:compare": "PW_APP=v3 playwright test",
-    "analyze": "next analyze"
+    "analyze": "next analyze",
+    "predeploy": "npm run lint && npm run typecheck && npm run test",
+    "deploy": "skarb deploy",
+    "deploy:status": "skarb status",
+    "deploy:logs": "skarb logs -f"
   },
   "dependencies": {
     "@opentelemetry/api": "^1.10.0",

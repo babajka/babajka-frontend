@@ -1,0 +1,5 @@
+# Майстэрня: https://wir.skarb.click, deployed with `npm run deploy` (see README.md).
+name: wir
+kind: web
+access: public
+port: 8080
