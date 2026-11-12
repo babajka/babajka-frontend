@@ -30,6 +30,23 @@ npm ci
 npm run dev        # http://localhost:3001, BACKEND_URL defaults to https://api.wir.by
 ```
 
+## Deploy to Майстэрня (preview)
+
+v3 is deployed as a public preview at **https://wir.skarb.click** (`skarb.yml`: `access: public`, `noindex`). The image is built on the NAS from `Dockerfile`; no local Docker is needed.
+
+```bash
+cd v3 && nvm use
+skarb login            # once, in the browser
+npm run deploy         # predeploy: lint + typecheck + test, then `skarb deploy`
+npm run deploy:status  # state and recent builds
+npm run deploy:logs    # app log (skarb logs --build for the build log)
+```
+
+- **Backend:** the dev API `https://api.wir.by`, like the legacy dev deploy. `BACKEND_URL` is a build `ARG` in the `Dockerfile` (the `/api` rewrites are fixed at build time), and is also set at runtime for server-side fetches. Change it there, not with `skarb secrets`.
+- **How the app reaches the API:** only from the server. `lib/api.ts` fetches `BACKEND_URL` directly, and browser requests to `/api/*` (e.g. images via `next/image`) go through the rewrite. So CORS and the `wir.skarb.click` domain don't matter to the backend.
+- **Read-only image:** the container runs as a non-root user and only `/data` and `/tmp` are writable. `.next/cache` (incl. optimized images) is a symlink to `/tmp/next-cache`, so the cache is lost on each deploy or restart.
+- **Deployment check:** the home page renders the latest articles (`components/LatestArticles.tsx`) at request time, with the backend host and fetch time. If the backend is unreachable, it shows the error instead of a 500.
+
 ## Commands
 
 ```bash
