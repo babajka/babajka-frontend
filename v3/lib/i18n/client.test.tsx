@@ -2,9 +2,10 @@ import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
 import { ClientText, I18nProvider, useLang, useT } from '@/lib/i18n/client';
-import { getMessages, type DictKey } from '@/lib/i18n/dict';
+import { getMessages } from '@/lib/i18n/dict';
+import type { ClientKey } from '@/lib/i18n/shared';
 
-const Probe = ({ id }: { id: DictKey }) => {
+const Probe = ({ id }: { id: ClientKey }) => {
   const t = useT();
   return (
     <p>
@@ -38,6 +39,21 @@ describe('lib/i18n/client', () => {
     );
     expect(screen.getByTestId('default')).toHaveTextContent(first);
     expect(screen.getByTestId('render')).toHaveTextContent(`${first}|${second.trim()}`);
+  });
+
+  it('should only accept client-scope keys (checked by tsc)', () => {
+    const Server = () => {
+      const t = useT();
+      // @ts-expect-error `topic` isn't a client scope: its translations never reach the browser
+      return <p>{t('topic.themes')}</p>;
+    };
+    render(
+      <I18nProvider lang="be" messages={getMessages('be')}>
+        <Server />
+      </I18nProvider>
+    );
+    // and at runtime a non-client key isn't in the messages, so it renders as the key
+    expect(screen.getByText('topic.themes')).toBeInTheDocument();
   });
 
   it('should render the key without a provider', () => {

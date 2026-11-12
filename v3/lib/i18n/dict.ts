@@ -1,19 +1,20 @@
-// UI dictionary: typed keys, lookup and the `||` split of legacy `components/common/Text.js`.
+// UI dictionary: lookup with the fallbacks of legacy `components/common/Text.js`.
 // data/i18n.json comes from the Google Sheet (`npm run fetch-dict`).
+//
+// Server-only: the whole dictionary (all locales) stays on the server. Client islands get only the
+// `CLIENT_SCOPES` of one locale, through `getMessages()` → `I18nProvider`. Importing this module
+// from a Client Component fails the build.
+import 'server-only';
+
 import dict from '@/data/i18n.json';
 import { DEFAULT_LOCALE, type Lang } from '@/constants';
 
-type Dict = typeof dict;
-type Scope = keyof Dict;
+import { CLIENT_SCOPES, type ClientKey, type ClientMessages, type DictKey } from './shared';
 
-/** `'<scope>.<key>'`, e.g. `'footer.rss'`. Only keys present in data/i18n.json type-check. */
-export type DictKey = { [S in Scope]: `${S}.${keyof Dict[S] & string}` }[Scope];
+export { CLIENT_SCOPES, SEPARATOR, splitParts } from './shared';
+export type { ClientKey, ClientMessages, DictKey } from './shared';
 
-/** All translations for one locale, as passed to client islands. */
-export type Messages = Record<DictKey, string>;
-
-/** Separator for multi-part translations, e.g. a text with a link in the middle. */
-export const SEPARATOR = '||';
+type Scope = keyof typeof dict;
 
 const lookup = (id: string, lang: Lang): string => {
   const dot = id.indexOf('.');
@@ -40,23 +41,23 @@ export const translate = (id: DictKey, lang: Lang): string => {
   return text || id;
 };
 
-/** Legacy `<Text render>` gets the parts of a `||`-separated translation as arguments. */
-export const splitParts = (text: string) => text.split(SEPARATOR);
-
-const ALL_KEYS = (Object.entries(dict) as [Scope, Record<string, unknown>][]).flatMap(
-  ([scope, entries]) => Object.keys(entries).map(key => `${scope}.${key}` as DictKey)
+const CLIENT_KEYS = CLIENT_SCOPES.flatMap(scope =>
+  Object.keys(dict[scope as Scope]).map(key => `${scope}.${key}` as ClientKey)
 );
 
 /**
- * Every key resolved for `lang` (with fallbacks), for the client provider. ~140 short strings.
- * No warnings here: keys empty in the Sheet only warn when a component actually uses them.
+ * The `CLIENT_SCOPES` keys resolved for `lang` (with fallbacks), for `I18nProvider`: ~35 short
+ * strings, about 1 KB gzipped. No warnings here: keys empty in the Sheet only warn when a component
+ * actually uses them.
  */
-const MESSAGES = new Map<Lang, Messages>();
+const MESSAGES = new Map<Lang, ClientMessages>();
 
-export const getMessages = (lang: Lang): Messages => {
+export const getMessages = (lang: Lang): ClientMessages => {
   let messages = MESSAGES.get(lang);
   if (!messages) {
-    messages = Object.fromEntries(ALL_KEYS.map(id => [id, resolve(id, lang) || id])) as Messages;
+    messages = Object.fromEntries(
+      CLIENT_KEYS.map(id => [id, resolve(id, lang) || id])
+    ) as ClientMessages;
     MESSAGES.set(lang, messages);
   }
   return messages;
