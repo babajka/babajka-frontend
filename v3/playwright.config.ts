@@ -23,7 +23,7 @@ if (PW_APP && PW_APP !== 'legacy' && PW_APP !== 'v3') {
 const NEEDS_LEGACY = PW_APP === 'legacy';
 
 const PROJECTS = {
-  e2e: { name: 'e2e', testMatch: 'smoke.spec.ts', use: { baseURL: V3_URL } },
+  e2e: { name: 'e2e', testMatch: ['smoke.spec.ts', 'layout.spec.ts'], use: { baseURL: V3_URL } },
   legacy: { name: 'legacy', testMatch: 'visual.spec.ts', use: { baseURL: LEGACY_URL } },
   v3: { name: 'v3', testMatch: 'visual.spec.ts', use: { baseURL: V3_URL } },
 };
@@ -45,9 +45,8 @@ if (!process.env.V3_URL && !NEEDS_LEGACY) {
 
 if (!process.env.LEGACY_URL && NEEDS_LEGACY) {
   webServer.push({
-    // Legacy runs on its own Node version (root `.nvmrc`), so go through nvm. Needs the root
-    // `npm ci` and `.env` with BABAJKA_GOOGLE_API_KEY (see root CLAUDE.md).
-    command: 'bash -c \'. "$NVM_DIR/nvm.sh" && cd .. && nvm exec npm run dev\'',
+    // Legacy runs on its own Node version (root .nvmrc), started through nvm (see the script).
+    command: 'bash e2e/start-legacy.sh',
     url: LEGACY_URL,
     reuseExistingServer: true,
     timeout: 300_000,
