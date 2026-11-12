@@ -1,0 +1,18 @@
+version: 2
+updates:
+  # v3 only: the legacy root app is frozen except for bug fixes (see v3/README.md).
+  - package-ecosystem: npm
+    directory: /v3
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    labels: ['dependencies']
+    groups:
+      next:
+        patterns: ['next', 'eslint-config-next', 'react', 'react-dom', '@types/react*']
+      testing:
+        patterns: ['vitest', 'vite', '@vitejs/*', '@testing-library/*', 'jsdom', '@playwright/test']
+      lint:
+        patterns: ['eslint', 'eslint-*', 'prettier', 'prettier-*', 'typescript']
+      tailwind:
+        patterns: ['tailwindcss', '@tailwindcss/*']

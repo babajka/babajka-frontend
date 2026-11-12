@@ -34,33 +34,36 @@ npm run dev        # http://localhost:3001, BACKEND_URL defaults to https://api.
 
 ```bash
 npm run dev            # next dev --port 3001 (Turbopack)
-npm run build          # next build
-npm run start          # node .next/standalone/server.js
+npm run build          # next build (standalone); needs BACKEND_URL (fixed at build time, see below); postbuild copies public/ and .next/static
+npm run start          # node .next/standalone/server.js on PORT (default 3001)
 npm run lint           # eslint (flat config) + prettier --check
-npm run typecheck      # tsc --noEmit
-npm run test           # vitest (unit)
-npm run e2e            # playwright smoke tests against v3
+npm run format         # prettier --write + eslint --fix
+npm run typecheck      # next typegen + tsc --noEmit (clears stale .next/dev/types first, see below)
+npm run test           # vitest run (unit); test:watch for watch mode
+npm run e2e            # playwright smoke tests against v3 (starts `npm run dev`); also the default for `npx playwright test`
 npm run visual:baseline  # screenshot legacy (:3000) → baseline
 npm run visual:compare   # screenshot v3 (:3001) and diff against baseline
 npm run analyze        # next analyze (Turbopack bundle analyzer)
-npm run fetch-dict     # node scripts/fetch-dict.ts → data/i18n.json
+npm run fetch-dict     # Phase 2: node scripts/fetch-dict.ts → data/i18n.json
 ```
+
+`npm run build` and `npm run typecheck` delete `.next/dev/types` first (`clean-dev-types`). `next dev` writes route types there for the branch it ran on, `tsconfig.json` includes them, and `next build`/`tsc` don't regenerate them. After switching branches, stale ones fail the type check with errors like `__InvalidParamMatchingKeys` or `Cannot find module '…/page.js'`. Both commands generate fresh route types in `.next/types` themselves, and a running `next dev` rewrites its own on the next change.
 
 ---
 
 ## Review of the old "Stack / Features Checklist"
 
-| Old item             | Status           | Notes                                                                                                                                             |
-| -------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| TypeScript           | ⚠️ scaffold only | TS 4.8, `target es5`, no path aliases. Redo with TS 5.x + `moduleResolution: bundler`.                                                            |
-| Tailwind CSS         | ⚠️ outdated      | Tailwind v3 JS config. v4 is CSS-first: `@import "tailwindcss"` + `@theme`, `@tailwindcss/postcss`. Delete `tailwind.config.js` and autoprefixer. |
-| Next.js App Router   | ⚠️ outdated      | Next 13 with `experimental.appDir`. Redo on Next 16.4.                                                                                            |
-| Next Image Component | ❌               | Planned with a custom loader for the backend's `?w=` resizing (Phase 5).                                                                          |
-| `@next/fonts`        | ❌ wrong         | The package was removed in Next 14. Use the built-in `next/font/google`.                                                                          |
-| next i18n support    | ❌ n/a           | The App Router has no built-in i18n. Use the `[lang]` segment + `proxy.ts` (Phase 2).                                                             |
-| Server Components    | ❌               | Nothing migrated yet.                                                                                                                             |
-| Vitest testing       | ❌ in v3         | Only exists in legacy root.                                                                                                                       |
-| React 18             | ❌ change        | Target React 19.3, which is what Next 16.4 ships.                                                                                                 |
+| Old item             | Status     | Notes                                                                                                                            |
+| -------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| TypeScript           | ✅ Phase 1 | TS 5.x strict, `moduleResolution: bundler`, `@/*` alias.                                                                         |
+| Tailwind CSS         | ✅ Phase 1 | Tailwind v4, CSS-first (`@import 'tailwindcss'`, tokens via `@theme` in Phase 2), `@tailwindcss/turbopack` loader. No JS config. |
+| Next.js App Router   | ✅ Phase 1 | Next 16.4.6, App Router, Turbopack.                                                                                              |
+| Next Image Component | ❌         | Planned with a custom loader for the backend's `?w=` resizing (Phase 5).                                                         |
+| `@next/fonts`        | ❌ wrong   | The package was removed in Next 14. Use the built-in `next/font/google`.                                                         |
+| next i18n support    | ❌ n/a     | The App Router has no built-in i18n. Use the `[lang]` segment + `proxy.ts` (Phase 2).                                            |
+| Server Components    | ❌         | Nothing migrated yet.                                                                                                            |
+| Vitest testing       | ✅ Phase 1 | Vitest 4 + Testing Library + jsdom; legacy unit tests ported.                                                                    |
+| React 18             | ✅ Phase 1 | React 19.3 with the React Compiler.                                                                                              |
 
 ## Agent skills used during migration
 
@@ -104,12 +107,12 @@ cd v3 && python3 .claude/skills/tailwind-4-docs/scripts/sync_tailwind_docs.py --
 
 **Install in Phase 1**, once v3 runs Next 16.4. These drive a running `next dev` (`/_next/mcp`) or the Turbopack bundle analyzer:
 
-| Skill                               | Install                                                                                             | Used for                                                                |
-| ----------------------------------- | --------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| `next-dev-loop`                     | `npx skills add vercel/next.js -s next-dev-loop -a claude-code -y` + `npm i -g agent-browser@^0.27` | Agent verifies each page at runtime: DOM, console, network, React tree. |
-| `next-cache-components-optimizer`   | `npx skills add vercel/next.js -s next-cache-components-optimizer -a claude-code -y`                | `instant()` tests for key navigations (Phase 5).                        |
-| `next-partial-prefetching-adoption` | `npx skills add vercel/next.js -s next-partial-prefetching-adoption -a claude-code -y`              | Shared loading shells for links.                                        |
-| `next-bundle-optimizer`             | `npx skills add vercel/next.js -s next-bundle-optimizer -a claude-code -y`                          | JS size audit before cutover.                                           |
+| Skill                               | Install                                                                                                                  | Used for                                                                |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------- |
+| `next-dev-loop`                     | `npx skills add vercel/next.js -s next-dev-loop -a claude-code -y` + `npm i -g agent-browser@latest` (needs `>= 0.31.1`) | Agent verifies each page at runtime: DOM, console, network, React tree. |
+| `next-cache-components-optimizer`   | `npx skills add vercel/next.js -s next-cache-components-optimizer -a claude-code -y`                                     | `instant()` tests for key navigations (Phase 5).                        |
+| `next-partial-prefetching-adoption` | `npx skills add vercel/next.js -s next-partial-prefetching-adoption -a claude-code -y`                                   | Shared loading shells for links.                                        |
+| `next-bundle-optimizer`             | `npx skills add vercel/next.js -s next-bundle-optimizer -a claude-code -y`                                               | JS size audit before cutover.                                           |
 
 **Not a skill:** Next.js docs. From 16.3, `next dev` writes a pointer into `v3/AGENTS.md` to the version-matched docs in `node_modules/next/dist/docs/`. Read those before writing Next code.
 
@@ -149,28 +152,41 @@ Delete the old scaffold (`v3/app`, configs, lockfile) and regenerate it with `np
 
 Then:
 
-- [ ] Keep `v3/skills-lock.json`, `v3/README.md` and `v3/e2e/` when deleting the old scaffold, then reinstall the skills with the commands in "Agent skills".
-- [ ] `v3/.nvmrc` → `26`; `engines.node: ">=26"`
-- [ ] Install the Phase 1 skills (`next-dev-loop` + `agent-browser`, `next-cache-components-optimizer`, `next-partial-prefetching-adoption`, `next-bundle-optimizer`). See "Agent skills".
-- [ ] Commit the `AGENTS.md` that `create-next-app`/`next dev` generates; it points to the bundled docs. Link the root `AGENTS.md` and `CLAUDE.md` to it.
-- [ ] `next.config.ts`:
+Generated with `create-next-app@16.4.6 --react-compiler --cache-components --agents-md` on Node 26.
+
+- [x] Keep `v3/skills-lock.json`, `v3/README.md` and `v3/e2e/` when deleting the old scaffold, then reinstall the skills with the commands in "Agent skills".
+  - The skills CLI upgraded `skills-lock.json` to format v2, which blanked the old hashes. Reinstalling recomputed them; the skill contents were unchanged.
+- [x] `v3/.nvmrc` → `26`; `engines.node: ">=26"`
+- [x] Install the Phase 1 skills (`next-cache-components-optimizer`, `next-partial-prefetching-adoption`, `next-bundle-optimizer`, `next-dev-loop`). See "Agent skills".
+- [ ] `agent-browser` for `next-dev-loop`: a global install, which each developer does locally (`npm i -g agent-browser@latest` on Node 26). `next-dev-loop` now needs `>= 0.31.1`.
+- [x] Commit the `AGENTS.md` that `create-next-app`/`next dev` generates; it points to the bundled docs. Link the root `AGENTS.md` and `CLAUDE.md` to it.
+  - `v3/CLAUDE.md` imports `v3/AGENTS.md`, so Claude Code reads it when working in `v3/`. v3 rules go below the generated block.
+- [x] `next.config.ts`:
   - `output: 'standalone'`
   - `reactCompiler: true`
   - `cacheComponents: true`, `partialPrefetching: true`
   - `experimental.agentUpgrade: 'security'`
   - `typedRoutes: true`
-  - `images` config (see Phase 5)
+  - `images`: `localPatterns` for `/api/files/**` (article images are relative backend URLs) and `remotePatterns` for `res.cloudinary.com/wir-by`. The custom loader comes in Phase 5.
   - `rewrites()` that proxy `/api/:path*`, `/auth/:path*` and `/test/:path*` to `BACKEND_URL`, matching the Express proxy in `server.js`. `/test` is kept on purpose: it serves local fixtures from the backend's `public/test` for fully local development.
-  - Also proxy `/rss` (Footer link). Legacy `server.js` doesn't proxy it, so check how prod serves it (likely nginx) before relying on the rewrite.
-- [ ] `tsconfig.json`: strict, `@/*` alias
-- [ ] ESLint 9 flat config (`eslint-config-next`; `next lint` was removed in Next 16), Prettier 3 + `prettier-plugin-tailwindcss`
-- [ ] Vitest 4 + Testing Library + jsdom. Port the legacy unit tests for `localization`, `date`, `constants`, `lib/utils`.
-- [ ] Playwright + the visual harness (see the "Visual parity" section below)
-- [ ] CI job `v3` in `.github/workflows/`:
+  - The rewrite targets are fixed at `next build` (written into `routes-manifest.json`), so `BACKEND_URL` at `npm run start` has no effect. `npm run build` fails without `BACKEND_URL` (`prebuild` guard, like legacy `make build`). CI builds with `https://api-prod.wir.by`. `next dev` and `next typegen` default to `https://api.wir.by`.
+  - `/rss` is **not** proxied. Checked: `wir.by/rss` → 301 → `wir.by/rss/`, a static `text/xml` file served by nginx, and `api.wir.by/rss` is 404. The Footer link must keep pointing at it (absolute `https://wir.by/rss` when porting the Footer, since v3 doesn't serve it).
+  - `turbopack.root` and `outputFileTracingRoot` are pinned to `v3/`. Otherwise Next picks the legacy root (it has its own lockfile) as the workspace root.
+- [x] `tsconfig.json`: strict, `@/*` alias
+- [x] ESLint 9 flat config (`eslint-config-next` + `eslint-config-prettier`; `next lint` was removed in Next 16), Prettier 3 + `prettier-plugin-tailwindcss`, same style as the root (`printWidth: 100`, single quotes). Markdown is left to the root Prettier.
+- [x] Vitest 4 + Testing Library + jsdom. Port the legacy unit tests for `localization`, `date`, `constants`, `lib/utils`.
+  - The tested code was ported with them, as small TS modules: `constants/index.ts`, `utils/localization.ts`, `utils/date.ts` (date-fns v4), `lib/utils/{createConstants,isEmail,parseYoutubeUrl,parseCoubUrl,parseYMPlaylistUrl}.ts`.
+  - Not ported: `getLocale` (reads the Pages Router `router`), `STATIC_PATHS` (only for the Express redirect), `isUrl` (unused).
+  - `vitest.config.mts` pins `TZ=UTC`, so the date tests pass in any timezone.
+- [x] Playwright + the visual harness (see the "Visual parity" section below). Checked end to end on `about` (`be`): the legacy baseline renders correctly.
+- [x] CI job `v3` in `.github/workflows/v3.yml` (runs only on changes to `v3/**`):
   - `npm ci`, `lint`, `typecheck`, `test`, `build`
-  - `npm audit --audit-level=high` must pass
-  - Dependabot for `v3/`
-- [ ] Verify: `npm run dev` serves a placeholder at `:3001`, and `npm run build` works
+  - `npm audit --audit-level=high` must pass (currently 7 moderate, all in the `@typescript-eslint` chain)
+  - Dependabot for `v3/` (`.github/dependabot.yml`, weekly, grouped)
+  - It only runs once GitHub Actions is enabled for the repo (see Phase 0).
+- [x] Verify: `npm run dev` serves a placeholder at `:3001`, and `npm run build` works (the `e2e` smoke test checks the dev server).
+
+**Setup gotcha:** `@opentelemetry/api` is a direct dependency even though nothing imports it. Next's tracer does a plain `require('@opentelemetry/api')`, which walks up out of `v3/` into the legacy `node_modules` and finds a 2020 version (0.14), so `next build` fails with `trace.getSpan is not a function`. The local copy shadows it. It can be removed after the Phase 6 move to the root.
 
 ## Phase 2 — Foundations
 
@@ -212,7 +228,8 @@ Then:
   - Typed keys.
   - Server helper `getT(lang)` + client `useT()` for islands. Keep the `||` split behaviour of `<Text>`.
 - [ ] Port `utils/localization.ts` (`localize`, `localizeFields`, `replaceLocale`) and `utils/getters.ts`.
-- [ ] Date formatting: `date-fns` v4 with `be`, `ru`, `enUS`.
+  - `utils/localization.ts` is already ported (Phase 1, with tests); `utils/getters.ts` is left.
+- [x] Date formatting: `date-fns` v4 with `be`, `ru`, `enUS` (`utils/date.ts`, ported in Phase 1).
 
 **Data layer.**
 
@@ -225,7 +242,7 @@ Then:
   - `getArticle(slug)`, `getMainPage()`, `getTopic(t)`, `getTag(t)`, `getCollection(s)`, `getDiary(slug|date)`, `getSidebar()`
   - Today the article, tag, topic and collection pages hit the backend on **every request**.
 - [ ] Optional `app/_revalidate/route.ts` (secret-protected) to call `revalidateTag` from the backend on publish. Don't put it under `/api`, `/auth` or `/test`, which are proxied to the backend.
-- [ ] Inline the used `lib/` submodule utils into `v3/lib/`, and drop the submodule dependency:
+- [ ] Inline the used `lib/` submodule utils into `v3/lib/`, and drop the submodule dependency (Phase 1 already ported `createConstants`, `isEmail` and the three `parse*Url` with tests):
   - `clearUtmParams`, `createConstants`, `isEmail`
   - `parseYoutubeUrl`, `parseCoubUrl`, `parseYMPlaylistUrl`
   - `Clickable`, `TextWithSeparator`
@@ -358,21 +375,26 @@ Playwright drives both apps and uses its built-in screenshot diff. Legacy screen
 
 ```
 v3/e2e/
-  routes.ts             # fixture URL list (path, locales, masks, wait conditions)
+  routes.ts             # fixture URL list (path, locales, what it covers, unstable parts)
   viewports.ts          # one per legacy breakpoint range
   visual.spec.ts        # for each route × locale × viewport → expect(page).toHaveScreenshot()
-  __screenshots__/      # baseline from legacy (gitignored or Git LFS)
-playwright.config.ts    # projects: legacy (baseURL :3000), v3 (baseURL :3001)
+  visual.css            # injected via stylePath (hides scrollbars)
+  smoke.spec.ts         # v3-only smoke tests (`npm run e2e`)
+  __screenshots__/      # baseline from legacy (gitignored): <fixture>/<lang>-<width>.png, <fixture>-<lang>.aria.yml
+playwright.config.ts    # projects: e2e (v3), legacy (baseURL :3000), v3 (baseURL :3001)
 ```
 
 - **One baseline for both apps.** `snapshotPathTemplate: '{testDir}/__screenshots__/{arg}{ext}'` leaves out the project name, so both projects read the same file.
-  - `visual:baseline` = `playwright test --project=legacy --update-snapshots`
-  - `visual:compare` = `playwright test --project=v3`
+  - `visual:baseline` = `PW_APP=legacy playwright test --update-snapshots`
+  - `visual:compare` = `PW_APP=v3 playwright test`
+  - `PW_APP` decides which single project exists in a run. Without it only the `e2e` smoke project runs, so a plain `npx playwright test` never screenshots a server that isn't running.
 - **The HTML report** (`npx playwright show-report`) shows expected/actual/diff with a slider for each failure. That's the review tool for each page PR.
-- **Starting both apps.** `webServer` in `playwright.config.ts` starts them, and reuses servers that are already running:
-  - legacy: `cd .. && nvm exec npm run dev`, which picks the root `.nvmrc`
-  - v3: `npm run dev`
+- **Starting the apps.** `webServer` in `playwright.config.ts` starts only the app the run needs, and reuses a server that is already running:
+  - legacy (`visual:baseline`): `cd .. && nvm exec npm run dev`, which picks the root `.nvmrc`. Needs the root `npm ci` and `.env`.
+  - v3 (`visual:compare`, `e2e`): `npm run dev`
   - Both use the same `BACKEND_URL` (prod API), so the content is the same.
+  - Set `LEGACY_URL` / `V3_URL` to run against deployed apps; no local server is started then.
+- **Size:** 21 fixtures → 38 URLs × 7 viewports = 266 tests. Use `--grep <fixture name>` while porting a page.
 - **Viewports** (one per legacy range): 375, 560, 720, 900 and 1280 px wide, plus 1440 (sidebar visible) and 1680 (widescreen max-width).
 - **Stability:**
   - `animations: 'disabled'`, `caret: 'hide'`

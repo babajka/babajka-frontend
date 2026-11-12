@@ -1,0 +1,10 @@
+/* Injected into every visual-parity screenshot (`stylePath` in playwright.config.ts). */
+
+/* Scrollbars differ between runs and platforms. */
+* {
+  scrollbar-width: none !important;
+}
+
+*::-webkit-scrollbar {
+  display: none !important;
+}
