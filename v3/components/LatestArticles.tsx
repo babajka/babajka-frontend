@@ -42,7 +42,7 @@ const LatestArticles = async ({ lang = 'be', take = 6 }: Props) => {
       <p className="mb-6 text-sm text-grey">
         {chunk.total} articles on {backendHost}
       </p>
-      <ul className="sm:grid-cols-2 lg:grid-cols-3 grid gap-6">
+      <ul className="grid gap-6 tablet:grid-cols-2 desktop:grid-cols-3">
         {chunk.data.map(article => {
           const locale = localize(article.locales, lang);
           const cover = article.images?.horizontal;
@@ -55,7 +55,7 @@ const LatestArticles = async ({ lang = 'be', take = 6 }: Props) => {
                     alt=""
                     width={640}
                     height={360}
-                    sizes="(min-width: 1024px) 320px, (min-width: 640px) 50vw, 100vw"
+                    sizes="(min-width: 1100px) 33vw, (min-width: 650px) 50vw, 100vw"
                     className="aspect-video w-full rounded object-cover"
                   />
                 )}

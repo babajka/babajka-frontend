@@ -44,9 +44,22 @@ describe('lib/request', () => {
     });
   });
 
-  it('should return text for non-JSON responses', async () => {
-    mockFetch({ ok: true, contentType: 'text/plain', text: () => Promise.resolve('ok') });
-    await expect(request('/api/x')).resolves.toBe('ok');
+  it('should reject a non-JSON 200 response, e.g. a gateway HTML page', async () => {
+    mockFetch({ ok: true, status: 200, contentType: 'text/html' });
+
+    const error = await request('/api/x').catch((e: unknown) => e);
+    expect(error).toBeInstanceOf(RequestError);
+    expect(error).toMatchObject({ status: 200, message: expect.stringContaining('text/html') });
+  });
+
+  it('should return text when asked to', async () => {
+    const fetchMock = mockFetch({
+      ok: true,
+      contentType: 'text/plain',
+      text: () => Promise.resolve('ok'),
+    });
+    await expect(request('/api/x', { responseType: 'text' })).resolves.toBe('ok');
+    expect(fetchMock.mock.calls[0][1].headers.accept).toBe('*/*');
   });
 
   it('should throw RequestError with the status', async () => {

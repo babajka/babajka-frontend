@@ -10,6 +10,17 @@ type ClickableProps = Omit<HTMLAttributes<HTMLElement>, 'onClick'> & {
   disabled?: boolean;
 };
 
+// Elements with a native `disabled` attribute; others get `aria-disabled`.
+const SUPPORTS_DISABLED = new Set<string>([
+  'button',
+  'input',
+  'select',
+  'textarea',
+  'fieldset',
+  'optgroup',
+  'option',
+]);
+
 const Clickable = ({
   tag = 'span',
   onClick,
@@ -23,7 +34,10 @@ const Clickable = ({
     tag,
     {
       ...props,
-      onClick,
+      // Legacy kept onClick on a disabled element, so a mouse click still fired it.
+      onClick: interactive ? onClick : undefined,
+      ...(disabled &&
+        (SUPPORTS_DISABLED.has(tag) ? { disabled: true } : { 'aria-disabled': true })),
       ...(interactive && {
         role: 'button',
         tabIndex: 0,

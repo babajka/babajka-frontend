@@ -1,4 +1,4 @@
-import type { SVGProps } from 'react';
+import { useId, type SVGProps } from 'react';
 
 // Ported from the legacy `assets` submodule (`assets/logo/Logo.js`, `logo.svg`).
 
@@ -10,12 +10,10 @@ type LogoProps = Omit<SVGProps<SVGSVGElement>, 'viewBox' | 'width' | 'height' | 
   title?: string;
 };
 
-// The gradient id must be unique per page only if the stops differ, so it's keyed by color.
-const gradientId = (color?: string) =>
-  `logo-gradient${color ? `-${color.replace(/[^a-z0-9]/gi, '')}` : ''}`;
-
 const Logo = ({ size, color, title, ...props }: LogoProps) => {
-  const id = gradientId(color);
+  // Unique per instance: a shared id makes every logo use the first <linearGradient> in the page,
+  // which breaks colors and renders nothing if that first logo is hidden (display: none).
+  const id = `logo-gradient-${useId()}`;
   return (
     <svg
       width={size}

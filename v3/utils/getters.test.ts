@@ -126,6 +126,22 @@ describe('utils/getters', () => {
     });
   });
 
+  describe('unknown topics', () => {
+    it('should skip tags of an unknown topic instead of crashing', () => {
+      const unknown = { ...TAG, _id: 't2', topicSlug: 'podcasts' } as unknown as RawTag;
+      const result = getLocalizedArticle(article({ tags: [TAG, unknown] }), 'be');
+
+      expect(result?.tagsByTopic?.personalities.map(t => t.id)).toEqual(['t1']);
+      expect(Object.keys(result?.tagsByTopic ?? {})).not.toContain('podcasts');
+      expect(Object.keys(localizeData({ tags: [unknown] }, 'be').tags ?? {})).toEqual([]);
+    });
+
+    it('should localize an unknown-topic tag on its own with empty content', () => {
+      const unknown = { ...TAG, topicSlug: undefined } as unknown as RawTag;
+      expect(getLocalizedTag(unknown, 'be').content).toEqual({});
+    });
+  });
+
   describe('getLocalizedCollection', () => {
     it('should default articles to null', () => {
       expect(
