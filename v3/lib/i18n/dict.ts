@@ -51,8 +51,16 @@ const ALL_KEYS = (Object.entries(dict) as [Scope, Record<string, unknown>][]).fl
  * Every key resolved for `lang` (with fallbacks), for the client provider. ~140 short strings.
  * No warnings here: keys empty in the Sheet only warn when a component actually uses them.
  */
-export const getMessages = (lang: Lang): Messages =>
-  Object.fromEntries(ALL_KEYS.map(id => [id, resolve(id, lang) || id])) as Messages;
+const MESSAGES = new Map<Lang, Messages>();
+
+export const getMessages = (lang: Lang): Messages => {
+  let messages = MESSAGES.get(lang);
+  if (!messages) {
+    messages = Object.fromEntries(ALL_KEYS.map(id => [id, resolve(id, lang) || id])) as Messages;
+    MESSAGES.set(lang, messages);
+  }
+  return messages;
+};
 
 export type Translate = (id: DictKey) => string;
 

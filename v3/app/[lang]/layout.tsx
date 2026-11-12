@@ -1,11 +1,10 @@
 import type { Metadata } from 'next';
 import { Ubuntu } from 'next/font/google';
 import { notFound } from 'next/navigation';
-import { lang as rootLang } from 'next/root-params';
-
-import { isLang, VALID_LOCALES } from '@/constants';
+import { VALID_LOCALES } from '@/constants';
 import { I18nProvider } from '@/lib/i18n/client';
 import { getMessages } from '@/lib/i18n/dict';
+import { getRootLang } from '@/lib/i18n/server';
 
 import '../globals.css';
 
@@ -29,8 +28,8 @@ export const generateStaticParams = () => VALID_LOCALES.map(lang => ({ lang }));
 
 // Root layout (Phase 3 adds the CoreLayout chrome and the full metadata).
 export default async function RootLayout({ children }: LayoutProps<'/[lang]'>) {
-  const lang = await rootLang();
-  if (!isLang(lang)) {
+  const lang = await getRootLang();
+  if (!lang) {
     notFound();
   }
 

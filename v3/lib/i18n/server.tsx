@@ -7,11 +7,14 @@ import { DEFAULT_LOCALE, isLang, type Lang } from '@/constants';
 
 import { createT, splitParts, translate, type DictKey } from './dict';
 
-/** Current locale from the URL. Falls back to `be` outside the `[lang]` segment. */
-export const getLang = async (): Promise<Lang> => {
+/** Locale from the `[lang]` root segment, or `null` if it isn't a valid locale. */
+export const getRootLang = async (): Promise<Lang | null> => {
   const value = await rootLang();
-  return isLang(value) ? value : DEFAULT_LOCALE;
+  return isLang(value) ? value : null;
 };
+
+/** Current locale from the URL. Falls back to `be` outside the `[lang]` segment. */
+export const getLang = async (): Promise<Lang> => (await getRootLang()) ?? DEFAULT_LOCALE;
 
 /** `const t = await getT(); t('footer.rss')`. Pass `lang` to skip reading the route. */
 export const getT = async (lang?: Lang) => createT(lang ?? (await getLang()));

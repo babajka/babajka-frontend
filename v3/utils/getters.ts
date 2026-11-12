@@ -97,11 +97,15 @@ export const getLocalizedTag = (
   ...rest,
   id,
   topicSlug,
-  content: LOCALIZE_TAG_CONTENT[topicSlug](content, lang) ?? {},
+  content: (isKnownTopic(topicSlug) && LOCALIZE_TAG_CONTENT[topicSlug](content, lang)) || {},
 });
 
+const isKnownTopic = (topic: unknown): topic is Topic => TOPICS.includes(topic as Topic);
+
+// Tags of a topic this app doesn't know (a new topic on the backend, or no topicSlug) are skipped
+// instead of crashing the page. Legacy crashed here.
 const getLocalizedTags = (tags: RawTag[], lang: Lang) =>
-  tags.map(tag => getLocalizedTag(tag, lang));
+  tags.filter(tag => isKnownTopic(tag.topicSlug)).map(tag => getLocalizedTag(tag, lang));
 
 const getInitTagsByTopic = () =>
   Object.fromEntries(TOPICS.map(topic => [topic, []])) as unknown as Record<Topic, LocalizedTag[]>;

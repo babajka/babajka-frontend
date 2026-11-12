@@ -76,7 +76,7 @@ export const getCollection = async (slug: string) => {
 export const getDiary = async (by: { slug: string } | { month: number; day: number } | 'today') => {
   'use cache';
   cacheLife('minutes');
-  cacheTag(CACHE_TAGS.diary);
+  cacheTag(CACHE_TAGS.articles, CACHE_TAGS.diary);
   if (by === 'today') {
     return request<Unported>(api.diary.today);
   }

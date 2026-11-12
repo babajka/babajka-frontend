@@ -7,12 +7,18 @@
 //
 // Not under /api, /auth or /test: those are proxied to the backend (next.config.ts).
 // Disabled (404) when REVALIDATE_SECRET is not set.
+import { createHash, timingSafeEqual } from 'node:crypto';
+
 import { revalidateTag } from 'next/cache';
 
 const MAX_TAGS = 50;
 
+// Constant-time comparison, so response timing doesn't leak the secret. Hashing first gives
+// equal-length buffers, as `timingSafeEqual` requires, without leaking the secret's length.
+const digest = (value: string) => createHash('sha256').update(value).digest();
+
 const isAuthorized = (request: Request, secret: string) =>
-  request.headers.get('authorization') === `Bearer ${secret}`;
+  timingSafeEqual(digest(request.headers.get('authorization') ?? ''), digest(`Bearer ${secret}`));
 
 export async function POST(request: Request) {
   const secret = process.env.REVALIDATE_SECRET;
