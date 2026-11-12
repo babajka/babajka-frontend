@@ -6,9 +6,11 @@ import { createContext, use, type ReactNode } from 'react';
 
 import { DEFAULT_LOCALE, type Lang } from '@/constants';
 
-import { splitParts, type DictKey, type Messages } from './dict';
+// Only `./shared`, never `./dict`: that would put the whole dictionary into the client bundle
+// (it's `server-only`, so the build would fail).
+import { splitParts, type ClientKey, type ClientMessages } from './shared';
 
-type I18nContextValue = { lang: Lang; messages: Messages | null };
+type I18nContextValue = { lang: Lang; messages: ClientMessages | null };
 
 const I18nContext = createContext<I18nContextValue>({ lang: DEFAULT_LOCALE, messages: null });
 
@@ -25,11 +27,11 @@ export const useLang = () => use(I18nContext).lang;
 /** `const t = useT(); t('footer.subscribe')`. Missing keys render as the key, like legacy. */
 export const useT = () => {
   const { messages } = use(I18nContext);
-  return (id: DictKey) => messages?.[id] ?? id;
+  return (id: ClientKey) => messages?.[id] ?? id;
 };
 
 type ClientTextProps = {
-  id: DictKey;
+  id: ClientKey;
   render?: (...parts: string[]) => ReactNode;
 };
 

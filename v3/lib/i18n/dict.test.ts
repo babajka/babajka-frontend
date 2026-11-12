@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import dict from '@/data/i18n.json';
 import {
   createT,
+  CLIENT_SCOPES,
   getMessages,
   isDictKey,
   splitParts,
@@ -39,10 +40,22 @@ describe('lib/i18n/dict', () => {
     expect(warn).not.toHaveBeenCalled();
   });
 
-  it('should resolve every key for the client', () => {
+  it('should resolve only the client scopes for the client', () => {
     const messages = getMessages('ru');
+    const scopes = new Set(Object.keys(messages).map(key => key.split('.')[0]));
+
     expect(messages['footer.rss']).toBe(dict.footer.rss.ru);
-    expect(Object.keys(messages).length).toBeGreaterThan(100);
+    expect([...scopes].sort()).toEqual([...CLIENT_SCOPES].sort());
+    expect(messages).not.toHaveProperty('topic.themes');
+    expect(Object.keys(messages)).toHaveLength(
+      CLIENT_SCOPES.reduce((sum, scope) => sum + Object.keys(dict[scope]).length, 0)
+    );
+  });
+
+  it('should keep the client messages small (they ship with every page)', () => {
+    for (const lang of ['be', 'ru', 'en'] as const) {
+      expect(JSON.stringify(getMessages(lang)).length).toBeLessThan(4_000);
+    }
   });
 
   it('should create a bound t()', () => {
