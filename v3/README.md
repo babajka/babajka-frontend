@@ -38,7 +38,7 @@ npm run build          # next build (standalone); needs BACKEND_URL (fixed at bu
 npm run start          # node .next/standalone/server.js on PORT (default 3001)
 npm run lint           # eslint (flat config) + prettier --check
 npm run format         # prettier --write + eslint --fix
-npm run typecheck      # next typegen + tsc --noEmit
+npm run typecheck      # next typegen + tsc --noEmit (clears stale .next/dev/types first, see below)
 npm run test           # vitest run (unit); test:watch for watch mode
 npm run e2e            # playwright smoke tests against v3 (starts `npm run dev`); also the default for `npx playwright test`
 npm run visual:baseline  # screenshot legacy (:3000) → baseline
@@ -46,6 +46,8 @@ npm run visual:compare   # screenshot v3 (:3001) and diff against baseline
 npm run analyze        # next analyze (Turbopack bundle analyzer)
 npm run fetch-dict     # Phase 2: node scripts/fetch-dict.ts → data/i18n.json
 ```
+
+`npm run build` and `npm run typecheck` delete `.next/dev/types` first (`clean-dev-types`). `next dev` writes route types there for the branch it ran on, `tsconfig.json` includes them, and `next build`/`tsc` don't regenerate them. After switching branches, stale ones fail the type check with errors like `__InvalidParamMatchingKeys` or `Cannot find module '…/page.js'`. Both commands generate fresh route types in `.next/types` themselves, and a running `next dev` rewrites its own on the next change.
 
 ---
 
