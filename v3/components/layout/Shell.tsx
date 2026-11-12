@@ -76,7 +76,12 @@ const Shell = ({ children, header, sidebar, footer }: ShellProps) => {
           aria-label={t('sidebar.open')}
           onClick={closeOnLink}
           className={cn(
-            'fixed top-0 bottom-0 z-sidebar min-h-screen shrink-0 overflow-x-hidden overflow-y-scroll overscroll-contain bg-concrete transition-[right,visibility] duration-500',
+            'fixed top-0 bottom-0 z-sidebar min-h-screen shrink-0 overflow-x-hidden overflow-y-scroll bg-concrete transition-[right,visibility] duration-500',
+            // Off-canvas only: don't let scrolling the open sidebar scroll the page behind it. Not
+            // on the static column (≥1360px): overflow-x-hidden makes it a scroll container even
+            // with overflow-y visible, and `contain` would then swallow the wheel, so the page
+            // wouldn't scroll with the cursor over the sidebar.
+            'max-sidebar:overscroll-contain',
             // legacy: -100vw on mobile (< 650px), -255px above
             '-right-[100vw] tablet:-right-[255px]',
             open && 'right-0 h-full tablet:right-0',

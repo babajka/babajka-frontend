@@ -47,6 +47,17 @@ test('the header shows the motto on the main page only, also after client naviga
   await expect(banner.getByRole('link', { name: /Беларуская/ })).toHaveCount(0);
 });
 
+test('the page scrolls with the cursor over the static sidebar', async ({ page }) => {
+  // Regression: overscroll-behavior: contain on the static column swallowed the wheel.
+  await page.setViewportSize({ width: 1440, height: 800 });
+  await page.goto('/be');
+  const box = (await page.getByRole('navigation').boundingBox())!;
+
+  await page.mouse.move(box.x + box.width / 2, 400);
+  await page.mouse.wheel(0, 600);
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
+});
+
 test.describe('mobile sidebar', () => {
   test.use({ viewport: { width: 375, height: 800 } });
 
