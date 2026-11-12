@@ -21,6 +21,7 @@
     "visual:baseline": "PW_APP=legacy playwright test --update-snapshots",
     "visual:compare": "PW_APP=v3 playwright test",
     "analyze": "next analyze",
+    "fetch-dict": "node --env-file-if-exists=.env scripts/fetch-dict.mts",
     "predeploy": "npm run lint && npm run typecheck && npm run test",
     "deploy": "skarb deploy",
     "deploy:status": "skarb status",
@@ -28,10 +29,13 @@
   },
   "dependencies": {
     "@opentelemetry/api": "^1.10.0",
+    "clsx": "^2.1.1",
     "date-fns": "^4.4.0",
     "next": "16.4.6",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "server-only": "^0.0.1",
+    "tailwind-merge": "^3.7.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.65.0",
