@@ -11,11 +11,12 @@
 // (lib/request.ts). Errors are not cached.
 import { cacheLife, cacheTag } from 'next/cache';
 
-import type { Topic } from '@/constants';
+import type { Lang, Topic } from '@/constants';
 import { api, type Pagination } from '@/lib/api';
 import { CACHE_TAGS } from '@/lib/cache-tags';
 import { request } from '@/lib/request';
-import type { ArticlesChunk } from '@/lib/types';
+import type { ArticlesChunk, DiaryResponse, MainPage } from '@/lib/types';
+import { localizeData } from '@/utils/getters';
 
 // Response types of the endpoints below are added with the pages that use them (Phase 4).
 type Unported = unknown;
@@ -34,11 +35,16 @@ export const getArticles = async (pagination: Pagination) => {
   return request<ArticlesChunk>(api.articles.getChunk(pagination));
 };
 
-export const getMainPage = async () => {
+/**
+ * The main page for one locale. Localizing is cached with the data: it reads the current time to
+ * mark published articles, which a prerender only allows inside a cache.
+ */
+export const getLocalizedMainPage = async (lang: Lang) => {
   'use cache';
   cacheLife('minutes');
   cacheTag(CACHE_TAGS.articles, CACHE_TAGS.mainPage);
-  return request<Unported>(api.storage.getMainPage);
+  const { blocks, data } = await request<MainPage>(api.storage.getMainPage);
+  return { blocks, data: localizeData(data, lang) };
 };
 
 export const getSidebar = async () => {
@@ -78,9 +84,9 @@ export const getDiary = async (by: { slug: string } | { month: number; day: numb
   cacheLife('minutes');
   cacheTag(CACHE_TAGS.articles, CACHE_TAGS.diary);
   if (by === 'today') {
-    return request<Unported>(api.diary.today);
+    return request<DiaryResponse>(api.diary.today);
   }
-  return request<Unported>(
+  return request<DiaryResponse>(
     'slug' in by ? api.diary.getBySlug(by.slug) : api.diary.getByDay(by.month, by.day)
   );
 };

@@ -1,24 +1,26 @@
-import { Suspense } from 'react';
+import type { Metadata } from 'next';
 
-import LatestArticles from '@/components/LatestArticles';
-import { getLang, Text } from '@/lib/i18n/server';
+import CardBlocksLayout from '@/components/blocks/CardBlocksLayout';
+import { getLang, getT } from '@/lib/i18n/server';
+import { getDiary, getLocalizedMainPage } from '@/lib/loaders';
+import { pageMetadata } from '@/lib/metadata';
+import { routes } from '@/lib/routes';
 
-// Placeholder home page. Phase 4 ports the real main page.
-export default async function Home() {
+export async function generateMetadata(): Promise<Metadata> {
   const lang = await getLang();
+  const t = await getT(lang);
+  return pageMetadata({
+    lang,
+    title: t('header.main'),
+    description: t('common.project-description'),
+    url: routes.main(lang),
+  });
+}
 
-  return (
-    <div className="flex flex-col items-center gap-8 p-8">
-      <div className="flex flex-col items-center gap-2 text-center">
-        <h1 className="text-title">Wir.by v3</h1>
-        <p className="text-body">
-          <Text id="common.motto" render={(...parts) => parts.join('')} />
-        </p>
-        <p className="text-grey">Work in progress. The production site is at https://wir.by.</p>
-      </div>
-      <Suspense fallback={<p>Loading articles…</p>}>
-        <LatestArticles lang={lang} />
-      </Suspense>
-    </div>
-  );
+export default async function MainPage() {
+  const lang = await getLang();
+  const { blocks, data } = await getLocalizedMainPage(lang);
+  const diary = blocks.some(({ type }) => type === 'diary') ? await getDiary('today') : undefined;
+
+  return <CardBlocksLayout blocks={blocks} data={data} diary={diary} lang={lang} inViewport />;
 }

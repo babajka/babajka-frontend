@@ -46,7 +46,7 @@ npm run deploy:logs    # app log (skarb logs --build for the build log)
 - **How the app reaches the API:** only from the server. `lib/api.ts` fetches `BACKEND_URL` directly, and browser requests to `/api/*` (e.g. images via `next/image`) go through the rewrite. So CORS and the `wir.skarb.click` domain don't matter to the backend.
 - **Read-only image:** the container runs as a non-root user and only `/data` and `/tmp` are writable. `.next/cache` (incl. optimized images) is a symlink to `/tmp/next-cache`, so the cache is lost on each deploy or restart.
 - **Not indexed:** the image sets `NOINDEX=true`, so `proxy.ts` sends `X-Robots-Tag: noindex, nofollow` on every response: pages, `/_next/image`, static files and the `/api` proxy (`headers()` in `next.config.ts` doesn't reach the external `/api` rewrite, so with `NOINDEX` the proxy does that rewrite itself). Pages also have `<meta name="robots" content="noindex, nofollow">`. Without `NOINDEX` (future prod), the proxy does nothing.
-- **Deployment check:** the home page renders the latest articles (`components/LatestArticles.tsx`) at request time, with the backend host and fetch time. If the backend is unreachable, it shows the error instead of a 500.
+- **Deployment check:** the main page is prerendered from the backend, so `npm run build` needs `BACKEND_URL` to be reachable (legacy `getStaticProps` needed it too).
 
 ## Commands
 
@@ -276,8 +276,6 @@ Generated with `create-next-app@16.4.6 --react-compiler --cache-components --age
   - `clearUtmParams` is **not** ported: it only exists for analytics, which v3 drops (Phase 5, item 8).
 - [x] Copy `assets/logo` into `v3/components/Logo.tsx` (with an optional accessible `title`).
 
-The placeholder home page (`app/[lang]/page.tsx`) uses all of this: `<Text>` (the motto, per locale) and the cached `getArticles` loader.
-
 ## Phase 3 — Layout shell
 
 Checked with the visual harness against legacy on the layout-only fixtures `status-404`, `status-500` and `not-found`: all 35 screenshots (every width and locale) match within 1%. The ARIA check is skipped for them on purpose (`ariaDiffers`: v3 adds a heading, paragraphs and names for the icon links).
@@ -316,7 +314,9 @@ Notes for the next phases:
 - Tailwind's `text-*` sizes no longer set a line height (`--text-*--line-height: inherit` in `globals.css`), and the base line height is normalize.css's 1.15: legacy SCSS set font sizes only. Set `leading-*` where legacy set a line height.
 - Icons are inline-block with `vertical-align: -0.125em` (Font Awesome's own SVG styles): Tailwind's preflight makes `svg` a block, which changed line heights.
 
-## Phase 4 — Pages (one PR each, in this order)
+## Phase 4 — Pages (one stacked PR each)
+
+The main page goes right after `about`: its cards and blocks are used by the article, listing, diary and game pages, and it's the page that proves them against legacy.
 
 Each page is done when:
 
@@ -328,6 +328,11 @@ Each page is done when:
 - [x] `about` — static, with `export const ensureStatic = 'navigation'`. The dead code (`features/about/*`, `team.json`, `partners.js`) isn't ported.
   - `lib/metadata.ts` (`pageMetadata`) builds page metadata. Next merges metadata shallowly, so a page that sets `openGraph` or `twitter` replaces the layout's whole object.
   - Legacy printed an empty `twitter:card` on this page; v3 prints `summary`.
+- [x] Main page `/`:
+  - `components/blocks/CardBlocksLayout` + all blocks, `components/cards/*`. A card size is a utility that sets custom properties per breakpoint (`desktop:article-xxl`, `components/cards/cards.css`), and the card's parts read them.
+  - Localized on the server, in a cached loader (`getLocalizedMainPage`); legacy localized in the browser after hydration, which caused a flash.
+  - The diary's "next" arrow is off on the entry the block opened with (today), so it doesn't depend on the browser's clock.
+  - `visual.spec.ts` scrolls through the page first, so lazy images are loaded in both apps before the screenshot.
 - [ ] `article/[slug]` — the biggest one:
   - Port the Fibery renderer (`utils/fibery/*`) as **server components**.
   - Embeds become client islands only where needed.
@@ -337,9 +342,6 @@ Each page is done when:
 - [ ] `diary/[[...slug]]`:
   - "Today" is computed from a date string passed into a cached loader.
   - Replace the `Router.replaceRoute` hack with `redirect()` to the canonical slug.
-- [ ] Main page `/`:
-  - `CardBlocksLayout` + all blocks/cards: `article.module.scss` (855 lines) and `tag.module.scss` (595 lines) are the largest Tailwind ports.
-  - Localize on the server; legacy localizes in the browser after hydration, which causes a flash.
 - [ ] `game/ny2021`, `game/tinder` (route group without chrome):
   - The tinder shuffle moves to the client; legacy shuffles once at build.
   - `POST` stats via a server action or `/api`.

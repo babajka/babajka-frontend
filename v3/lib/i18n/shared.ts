@@ -14,7 +14,7 @@ export type DictKey = { [S in Scope]: KeysOf<S> }[Scope];
  * every key; a client island can only use these, so the rest of the dictionary stays on the server.
  * Add a scope here when a client island needs it.
  */
-export const CLIENT_SCOPES = ['common', 'errors', 'footer', 'sidebar'] as const;
+export const CLIENT_SCOPES = ['common', 'diary', 'errors', 'footer', 'sidebar'] as const;
 
 export type ClientScope = (typeof CLIENT_SCOPES)[number];
 

@@ -17,4 +17,5 @@ export { TelegramIcon } from './Telegram'; // fab fa-telegram
 export { TelegramPlaneIcon } from './TelegramPlane'; // fab fa-telegram-plane
 export { TwitterIcon } from './Twitter'; // fab fa-twitter
 export { YoutubeIcon } from './Youtube'; // fab fa-youtube
+export { VolumeUpIcon } from './VolumeUp'; // fas fa-volume-up
 export { OdnoklassnikiIcon } from './Odnoklassniki'; // fab fa-odnoklassniki
