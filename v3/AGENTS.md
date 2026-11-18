@@ -32,3 +32,5 @@ npm run test         # vitest (unit), colocated *.test.ts(x)
 npm run e2e          # playwright smoke tests (starts `npm run dev`)
 BACKEND_URL=https://api.wir.by npm run build  # required: rewrites are fixed at build time; then `npm run start`
 ```
+
+Deploy: `npm run deploy` publishes to Майстэрня at https://wir.skarb.click (see "Deploy to Майстэрня" in README.md).
