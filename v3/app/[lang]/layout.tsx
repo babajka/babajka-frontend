@@ -1,19 +1,13 @@
 import type { Metadata, Viewport } from 'next';
 import { Ubuntu } from 'next/font/google';
 import { notFound } from 'next/navigation';
-import { LOCALE_CODE, VALID_LOCALES } from '@/constants';
-import { DEFAULT_KEYWORDS, FACEBOOK_APP_ID, TWITTER_HANDLE } from '@/constants/social';
+import { VALID_LOCALES } from '@/constants';
+import { DEFAULT_KEYWORDS, FACEBOOK_APP_ID } from '@/constants/social';
 import { I18nProvider } from '@/lib/i18n/client';
 import { getMessages } from '@/lib/i18n/dict';
 import { getLang, getRootLang, getT } from '@/lib/i18n/server';
-import {
-  APPLE_TOUCH_ICON,
-  DEFAULT_IMAGE,
-  FAVICON_URL,
-  IS_PROD,
-  SITE_URL,
-  THEME_COLOR,
-} from '@/lib/site';
+import { socialMetadata } from '@/lib/metadata';
+import { APPLE_TOUCH_ICON, FAVICON_URL, IS_PROD, SITE_URL, THEME_COLOR } from '@/lib/site';
 
 import '../globals.css';
 
@@ -46,22 +40,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
     robots: IS_PROD ? undefined : { index: false, follow: false },
     icons: { icon: { url: FAVICON_URL, type: 'image/png' }, apple: APPLE_TOUCH_ICON },
     appleWebApp: { title: t('common.project-apple-title') },
-    openGraph: {
-      type: 'website',
-      siteName: 'Wir.by',
-      title,
-      description,
-      images: DEFAULT_IMAGE,
-      locale: LOCALE_CODE[lang],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      site: TWITTER_HANDLE,
-      creator: TWITTER_HANDLE,
-      title,
-      description,
-      images: DEFAULT_IMAGE,
-    },
+    ...socialMetadata({ lang, title, description }),
     facebook: { appId: FACEBOOK_APP_ID },
   };
 };
