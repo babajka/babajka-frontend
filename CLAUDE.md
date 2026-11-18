@@ -55,7 +55,10 @@ Path aliases (`components/`, `utils/`, ...) come from babel `module-resolver` in
 
 `v3/` is a separate app (own `package.json`) for the in-progress rewrite. The phased plan and checklist are in `v3/README.md`; update its checkboxes when completing phases.
 
-**Current state:** `v3/` is still an outdated 2022 scaffold: Next ^13.0.1, React 18, Tailwind v3, `experimental.appDir`. The target is Next 16.4, React 19.3, Tailwind v4 and Node 26. Phase 1 of the plan **deletes and regenerates** the scaffold. Do not build on the existing v3 code, and do not write Next 16 APIs against its current dependencies. Do Phase 1 first. The root app is the legacy app being preserved (and covered with tests) during migration.
+**Current state:** Phase 1 is done. `v3/` is a fresh Next 16.4 / React 19.3 / Tailwind v4 / TypeScript scaffold on Node 26, serving a placeholder page on `:3001`. Before working in `v3/`, read `v3/AGENTS.md` (imported by `v3/CLAUDE.md`): Next 16 differs from training data, and the version-matched docs are in `v3/node_modules/next/dist/docs/`. The root app is the legacy app being preserved (and covered with tests) during migration.
+
+- Run v3 commands on Node 26 from `v3/` (`cd v3 && nvm use`). The root's Node 18 can't run them.
+- v3 has its own lint, test and CI setup (`.github/workflows/v3.yml`). The root ESLint, Vitest and lint-staged configs skip `v3/`, but the root Prettier still checks `v3/**/*.md`.
 
 ## Commits
 

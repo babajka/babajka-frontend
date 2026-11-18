@@ -1,21 +1,15 @@
-package.json
-package-lock.json
-# ide
-.idea/
-.vscode/
-
-# npm
 node_modules/
-package.json
+.next/
+out/
+coverage/
+playwright-report/
+test-results/
+e2e/__screenshots__/
+.claude/
+.agents/
 package-lock.json
-yarn.lock
+skills-lock.json
+next-env.d.ts
 
-# misc
-coverage
-tsconfig.json
-
-# changelog
-CHANGELOG.md
-
-# next
-.next
+# markdown is checked by the root prettier (see root .prettierignore)
+*.md

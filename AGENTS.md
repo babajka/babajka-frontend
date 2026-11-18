@@ -4,6 +4,8 @@
 
 This is a Next.js (v10) + React (v16) application with Express server-side rendering. The project uses SCSS with BEM CSS modules for styling.
 
+This guide covers the legacy app in the repo root. The rewrite in `v3/` (Next 16, TypeScript, Tailwind v4, Node 26) has its own rules: see [`v3/AGENTS.md`](v3/AGENTS.md) and the migration plan in [`v3/README.md`](v3/README.md).
+
 ## Build Commands
 
 ### Development
