@@ -19,6 +19,11 @@ export type Fixture = {
   covers: string[];
   /** content that differs between loads or days; mask it or freeze it in the visual test */
   unstable?: string[];
+  /**
+   * Why v3's accessibility tree intentionally differs from legacy (e.g. real headings, labelled
+   * icon links). Skips only the ARIA snapshot check; pixels must still match.
+   */
+  ariaDiffers?: string;
 };
 
 const ALL: Lang[] = ['be', 'ru', 'en'];
@@ -114,13 +119,26 @@ export const FIXTURES: Fixture[] = [
   },
 
   // status / errors
-  { name: 'status-404', path: '/status/404', langs: ALL, covers: ['404 page'] },
-  { name: 'status-500', path: '/status/500', langs: BE, covers: ['500 page'] },
+  {
+    name: 'status-404',
+    path: '/status/404',
+    langs: ALL,
+    covers: ['404 page'],
+    ariaDiffers: 'v3 adds a heading, paragraphs and names for the social icon links',
+  },
+  {
+    name: 'status-500',
+    path: '/status/500',
+    langs: BE,
+    covers: ['500 page'],
+    ariaDiffers: 'v3 adds a heading, paragraphs and names for the social icon links',
+  },
   {
     name: 'not-found',
     path: '/article/this-slug-does-not-exist',
     langs: BE,
     covers: ['404 via notFound'],
+    ariaDiffers: 'v3 adds a heading, paragraphs and names for the social icon links',
   },
 
   // games (no header/footer chrome)

@@ -8,3 +8,8 @@
 *::-webkit-scrollbar {
   display: none !important;
 }
+
+/* Next.js dev tools badge (v3 runs `next dev` in local comparisons). */
+nextjs-portal {
+  display: none !important;
+}

@@ -280,22 +280,41 @@ The placeholder home page (`app/[lang]/page.tsx`) uses all of this: `<Text>` (th
 
 ## Phase 3 — Layout shell
 
-- [ ] `app/[lang]/layout.tsx`: CoreLayout markup (root, space, content, footer) and default `generateMetadata`:
-  - `og:*`, `twitter:site`, `fb:app_id`, locale, theme-color
-  - `robots: noindex` unless production
-  - favicon / apple-touch icon
+Checked with the visual harness against legacy on the layout-only fixtures `status-404`, `status-500` and `not-found`: all 35 screenshots (every width and locale) match within 1%. The ARIA check is skipped for them on purpose (`ariaDiffers`: v3 adds a heading, paragraphs and names for the icon links).
+
+- [x] `app/[lang]/layout.tsx`: default `generateMetadata` (CoreLayout markup moved to the route groups, see below):
+  - title `{page} | Wir.by` (default `common.project-type`), description, keywords
+  - `og:*`, `twitter:site`/`creator`, `fb:app_id`, `og:locale`, `theme-color` (`viewport`)
+  - `robots: noindex` unless production (`WIR_ENV=production`, see `lib/site.ts`)
+  - favicon / apple-touch icon (the dev icon outside production, like legacy)
+  - `metadataBase` = `SITE_URL` (set in the Dockerfile for the preview). `og:url` comes per page in Phase 4.
   - This replaces `components/social/Metatags`.
-- [ ] Sidebar: a client island with an off-canvas overlay below 1360px and a static column from 1360px up.
-  - Sidebar data is fetched **on the server** (cached) instead of in a `useEffect`.
-  - The language switch sets the cookie with a server action, or `document.cookie`; `js-cookie` is dropped.
-- [ ] Header (server) + burger button (client). `Motto` random pick happens client-side after mount (mask it in screenshots).
-- [ ] `HeaderLinks`: Portal-into-`#header-links` becomes a `@headerLinks` parallel-route slot, or a `headerLinks` prop via a per-page layout.
-- [ ] Footer + `SubscribeForm` (client, or a server action that posts to `/api/mail`).
-- [ ] Go-up button: a tiny client component; drop `react-scroll-up`.
-- [ ] Layout flags (`hideHeader`, `hideSidebar`, `hideFooter`) become route groups:
+- [x] Sidebar (`components/layout/Sidebar.tsx`, server): off-canvas overlay below 1360px and a static column from 1360px up. The open/closed state lives in the client `Shell`.
+  - Sidebar data is fetched **on the server** (cached `getSidebar()`) instead of in a `useEffect`. A backend error renders the sidebar without sections instead of failing the page.
+  - The language switch (`LangSwitch`) sets the `WIR_LOCALE` cookie with `document.cookie` (session cookie on `/`, like js-cookie did); `js-cookie` is dropped. Its links are the same page in the other locales; on dynamic pages they point to the main page until the path streams in.
+  - Following a link in the sidebar closes it (one delegated handler instead of legacy `onMouseUp` on every link).
+- [x] Header (server) + burger button (client). `Motto` (client) picks the random culture tag once per page load with `useSyncExternalStore`, so the server render is stable; the link has `data-unstable="motto"` for masking.
+- [x] `HeaderLinks`: the header title is a `@header` parallel-route slot of the `(site)` layout:
+  - `@header/page.tsx`: the motto (main page)
+  - `@header/default.tsx` + `@header/[...rest]/page.tsx`: "to main". The catch-all is needed: on client navigation a slot otherwise keeps its last content (the motto).
+  - Phase 4 pages with header links add `@header/<route>/page.tsx` (e.g. `@header/article/[slug]`), using `HeaderTitle`.
+- [x] Footer + `SubscribeForm` (client; posts from the browser to `/api/mail` through the rewrite, like legacy). The RSS link points to `https://wir.by/rss` (served by nginx, not by this app). The copyright year is a cached component (`CurrentYear`), since Cache Components doesn't allow `new Date()` in the static shell.
+- [x] Go-up button: a tiny client component (`GoUp`, shown after 160px like `react-scroll-up`, honours reduced motion); `react-scroll-up` is dropped.
+- [x] Layout flags (`hideHeader`, `hideSidebar`, `hideFooter`) become route groups:
   - `app/[lang]/(site)/…` for the normal chrome
-  - `app/[lang]/(game)/…` for games without header/footer
-- [ ] `not-found.tsx`, `error.tsx`, `global-error.tsx` replace `_error.js` and `pages/status.js`. Keep `/status/404|500` URLs as redirects.
+  - `app/[lang]/(game)/…` for games: no shared header (legacy games only set `hideHeader`; they render their own header with the burger)
+  - `hideFooter` (error pages) is CSS: `ErrorMessage` has `data-hide-footer`, and `.wir-root:has([data-hide-footer]) .wir-footer` hides the footer, so it's right in the server render.
+- [x] `not-found.tsx`, `error.tsx`, `global-error.tsx` replace `_error.js` and `pages/status.js`:
+  - Unknown URLs under `/{lang}` hit `(site)/[...rest]/page.tsx`, which calls `notFound()`, so the 404 renders localized inside the chrome with status 404. (A root-level 404 can't do that with a `[lang]` root layout.) Its HTML is a prerendered empty shell that renders on the client (Next's Partial Prerendering resume); acceptable for a `noindex` page.
+  - `/status/404|500` are kept as **pages**, not redirects (`status/404/page.tsx`, `status/500/page.tsx`): legacy rendered them with 200, and old links keep working. Other codes are a 404.
+  - `global-error.tsx`: static trilingual 500 for errors in the root layout itself.
+- [x] Shared UI ported to Tailwind: `components/ui/` (`Link`, `ExternalLink`, `linkClass` = legacy `linkCn`, `Button`, `ButtonGroup`, `Input`, `Spinner`), `components/social/ShareButtons`, `components/tags` (`TagLink`, `renderTag`), `constants/social.ts`, `lib/routes.ts` (legacy `routes.js` URLs; `Route` casts until the pages exist).
+
+Notes for the next phases:
+
+- **Next 16 keeps the previous page mounted (hidden) after client navigation** (React `<Activity>`), so the DOM can contain two copies of a page. Never use fixed `id`s in components (use `useId()`), and in tests prefer visible, role-based queries.
+- Tailwind's `text-*` sizes no longer set a line height (`--text-*--line-height: inherit` in `globals.css`), and the base line height is normalize.css's 1.15: legacy SCSS set font sizes only. Set `leading-*` where legacy set a line height.
+- Icons are inline-block with `vertical-align: -0.125em` (Font Awesome's own SVG styles): Tailwind's preflight makes `svg` a block, which changed line heights.
 
 ## Phase 4 — Pages (one PR each, in this order)
 
@@ -420,7 +439,7 @@ playwright.config.ts    # projects: e2e (v3), legacy (baseURL :3000), v3 (baseUR
   - `PW_APP` decides which single project exists in a run. Without it only the `e2e` smoke project runs, so a plain `npx playwright test` never screenshots a server that isn't running.
 - **The HTML report** (`npx playwright show-report`) shows expected/actual/diff with a slider for each failure. That's the review tool for each page PR.
 - **Starting the apps.** `webServer` in `playwright.config.ts` starts only the app the run needs, and reuses a server that is already running:
-  - legacy (`visual:baseline`): `cd .. && nvm exec npm run dev`, which picks the root `.nvmrc`. Needs the root `npm ci` and `.env`.
+  - legacy (`visual:baseline`): `e2e/start-legacy.sh` finds `nvm.sh` (`$NVM_DIR`, Homebrew) and runs `npm run dev` in the root with the root `.nvmrc` Node. Needs the root `npm ci` and `.env`.
   - v3 (`visual:compare`, `e2e`): `npm run dev`
   - Both use the same `BACKEND_URL` (prod API), so the content is the same.
   - Set `LEGACY_URL` / `V3_URL` to run against deployed apps; no local server is started then.
@@ -433,6 +452,7 @@ playwright.config.ts    # projects: e2e (v3), legacy (baseURL :3000), v3 (baseUR
   - `stylePath` to hide scrollbars
 - **Masks for content that changes between loads:** random motto, tinder cards, iframes/embeds, ad/quiz SDKs.
 - **Tolerance:** `maxDiffPixelRatio: 0.01` by default. Loosen it per route only with a comment explaining why; font hinting differs slightly between `next/font` and Google CSS.
-- **Structural check.** Next to pixels, `expect(page.locator('main')).toMatchAriaSnapshot()` against the legacy snapshot catches missing text and links, and survives small pixel noise.
+- **Structural check.** Next to pixels, `expect(page.locator('main')).toMatchAriaSnapshot()` against the legacy snapshot catches missing text and links, and survives small pixel noise. Where v3 intentionally improves the accessibility tree (real headings, labelled icon links), the fixture sets `ariaDiffers` with the reason, which skips only this check.
+- **Dev tools badge.** `e2e/visual.css` hides the Next.js dev indicator, which v3 shows under `next dev`.
 - **Agent loop:** while porting a page, the agent uses `next-dev-loop` + `agent-browser` on `:3001`, and runs `visual:compare --grep <page>` before calling the page done.
 - **CI:** a manual `workflow_dispatch` job runs the comparison against deployed `dev.wir.by` legacy vs v3. Locally it's two `npm run dev`s.

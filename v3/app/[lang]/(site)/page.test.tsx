@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import Home from '@/app/[lang]/page';
+import Home from '@/app/[lang]/(site)/page';
 
 // The articles list is covered in components/LatestArticles.test.tsx.
 vi.mock('@/components/LatestArticles', () => ({ default: () => null }));

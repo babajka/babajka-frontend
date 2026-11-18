@@ -33,7 +33,7 @@ test('locale routing: / redirects to /be, and pages render in their locale', asy
 
   await page.goto('/ru');
   await expect(page.locator('html')).toHaveAttribute('lang', 'ru');
-  await expect(page.getByText(/Белорусская/)).toBeVisible();
+  await expect(page.getByText(/Белорусская/).first()).toBeVisible();
 });
 
 test('the WIR_LOCALE cookie switches to the preferred locale', async ({
