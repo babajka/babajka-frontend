@@ -9,8 +9,13 @@ process.env.TZ = 'UTC';
 export default defineConfig({
   plugins: [react()],
   resolve: {
-    // Same alias as `paths` in tsconfig.json.
-    alias: { '@': fileURLToPath(new URL('.', import.meta.url)) },
+    alias: {
+      // Same alias as `paths` in tsconfig.json.
+      '@': fileURLToPath(new URL('.', import.meta.url)),
+      // `server-only` throws outside React Server Components (its guard against client bundles).
+      // jsdom tests import server modules directly, so use its no-op server entry.
+      'server-only': fileURLToPath(new URL('./node_modules/server-only/empty.js', import.meta.url)),
+    },
   },
   test: {
     environment: 'jsdom',

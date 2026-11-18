@@ -25,3 +25,25 @@ test('home page renders the latest articles from the backend', async ({ page }) 
   expect(await articles.count()).toBeGreaterThan(0);
   await expect(page.getByText(/articles on api\.wir\.by/)).toBeVisible();
 });
+
+test('locale routing: / redirects to /be, and pages render in their locale', async ({ page }) => {
+  await page.goto('/');
+  await expect(page).toHaveURL(/\/be$/);
+  await expect(page.locator('html')).toHaveAttribute('lang', 'be');
+
+  await page.goto('/ru');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'ru');
+  await expect(page.getByText(/Белорусская/)).toBeVisible();
+});
+
+test('the WIR_LOCALE cookie switches to the preferred locale', async ({
+  page,
+  context,
+  baseURL,
+}) => {
+  await context.addCookies([{ name: 'WIR_LOCALE', value: 'en', url: baseURL! }]);
+
+  await page.goto('/be');
+  await expect(page).toHaveURL(/\/en$/);
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+});

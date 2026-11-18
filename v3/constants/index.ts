@@ -24,6 +24,9 @@ export const LANGS = VALID_LOCALES.map(id => ({ id, label: LOCALES[id] }));
 export const isLang = (value: unknown): value is Lang =>
   typeof value === 'string' && (VALID_LOCALES as string[]).includes(value);
 
+// Cookie with the user's preferred locale, set by the language switch (legacy constants/server.js).
+export const LOCALE_COOKIE_NAME = 'WIR_LOCALE';
+
 export const DOMAIN_SECURE = 'https://wir.by';
 
 // `themes` should be first (check out Footer)

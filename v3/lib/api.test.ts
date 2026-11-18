@@ -1,39 +1,36 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
-import { BACKEND_URL, getLatestArticles, RequestError } from '@/lib/api';
+import { api } from '@/lib/api';
 
-const mockFetch = (response: Partial<Response>) => {
-  const fetchMock = vi.fn().mockResolvedValue(response);
-  vi.stubGlobal('fetch', fetchMock);
-  return fetchMock;
-};
-
+// Same URLs as legacy constants/api.js.
 describe('lib/api', () => {
-  afterEach(() => {
-    vi.unstubAllGlobals();
+  it('should build static endpoints', () => {
+    expect(api.storage.getMainPage).toBe('/api/storage/main-page');
+    expect(api.storage.getSidebar).toBe('/api/storage/sidebar');
+    expect(api.core.subscribe).toBe('/api/mail');
+    expect(api.diary.today).toBe('/api/specials/diary/today');
+    expect(api.games.tinder.postStats).toBe('/api/games/tinder/stats');
   });
 
-  describe('getLatestArticles', () => {
-    it('should request the articles chunk from the backend', async () => {
-      const chunk = { data: [], total: 0 };
-      const fetchMock = mockFetch({ ok: true, json: () => Promise.resolve(chunk) });
+  it('should build endpoints with params', () => {
+    expect(api.publicArticle.getBySlug('kupala-kolas')).toBe('/api/articles/kupala-kolas');
+    expect(api.diary.getByDay(11, 9)).toBe('/api/specials/diary/get/11/9');
+    expect(api.diary.getBySlug('f31126')).toBe('/api/specials/diary/getBySlug/f31126');
+    expect(api.topics.getArticles('personalities')).toBe('/api/topics/articles/personalities');
+    expect(api.tags.getArticles('kupala')).toBe('/api/tags/articles/kupala');
+    expect(api.collections.getOne('bel-kino')).toBe('/api/collections/bel-kino');
+    expect(api.games.fortune.get('ny2021')).toBe('/api/games/fortune/ny2021');
+    expect(api.games.fortune.getCookie('ny2021')).toBe('/api/games/fortune/getCookie/ny2021');
+    expect(api.games.tinder.get('tinder')).toBe('/api/games/tinder/tinder');
+  });
 
-      await expect(getLatestArticles(6)).resolves.toEqual(chunk);
-      expect(fetchMock).toHaveBeenCalledWith(
-        `${BACKEND_URL}/api/articles?skip=0&take=6`,
-        expect.objectContaining({ headers: { accept: 'application/json' } })
-      );
-    });
+  it('should encode path segments', () => {
+    expect(api.publicArticle.getBySlug('a/b?c')).toBe('/api/articles/a%2Fb%3Fc');
+  });
 
-    it('should throw RequestError on a non-2xx response', async () => {
-      mockFetch({ ok: false, status: 502 });
-
-      const error = await getLatestArticles(1).catch(e => e);
-      expect(error).toBeInstanceOf(RequestError);
-      expect(error).toMatchObject({
-        status: 502,
-        url: `${BACKEND_URL}/api/articles?skip=0&take=1`,
-      });
-    });
+  it('should build the articles query like querystring did', () => {
+    expect(api.articles.getChunk()).toBe('/api/articles?skip=0');
+    expect(api.articles.getChunk({ take: 2 })).toBe('/api/articles?skip=0&take=2');
+    expect(api.articles.getChunk({ skip: 10, take: 5 })).toBe('/api/articles?skip=10&take=5');
   });
 });

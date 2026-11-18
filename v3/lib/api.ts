@@ -1,45 +1,60 @@
-// Minimal typed client for the babajka backend. Seed of Phase 2 `lib/api.ts` + `lib/request.ts`.
-// Runs on the server only: it fetches BACKEND_URL directly (no CORS, no proxy).
-import type { Localized } from '@/utils/localization';
+// Backend endpoint registry, ported from legacy `constants/api.js`. Paths only (no host):
+// lib/request.ts prefixes BACKEND_URL on the server, and the browser goes through the /api rewrite.
+// `URLSearchParams` replaces `querystring`; path segments are URL-encoded (legacy didn't).
 
-// Same default as `next.config.ts` (dev API). In Docker it's set for both build and runtime.
-export const BACKEND_URL = process.env.BACKEND_URL || 'https://api.wir.by';
+const API_URL = '/api';
+const segment = encodeURIComponent;
 
-export class RequestError extends Error {
-  constructor(
-    readonly url: string,
-    readonly status: number
-  ) {
-    super(`Request to ${url} failed with ${status}`);
-    this.name = 'RequestError';
-  }
-}
+export type Pagination = { skip?: number; take?: number };
 
-const request = async <T>(path: string): Promise<T> => {
-  const url = `${BACKEND_URL}${path}`;
-  const response = await fetch(url, { headers: { accept: 'application/json' } });
-  if (!response.ok) {
-    throw new RequestError(url, response.status);
-  }
-  return response.json() as Promise<T>;
+const query = (params: Record<string, number | string | undefined>) => {
+  const search = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined) {
+      search.set(key, String(value));
+    }
+  });
+  return search.toString();
 };
 
-/** One locale of an article, as `GET /api/articles` returns it. */
-export type ArticleLocale = {
-  slug: string;
-  title: string;
-  subtitle?: string;
-};
-
-export type Article = {
-  _id: string;
-  publishAt: string;
-  locales: Localized<ArticleLocale>;
-  images?: { horizontal?: string; vertical?: string };
-};
-
-export type ArticlesChunk = { data: Article[]; total: number };
-
-/** Latest published articles. Legacy: `constants/api.js` → `articles.getChunk`. */
-export const getLatestArticles = (take: number) =>
-  request<ArticlesChunk>(`/api/articles?${new URLSearchParams({ skip: '0', take: String(take) })}`);
+export const api = {
+  storage: {
+    getMainPage: `${API_URL}/storage/main-page`,
+    getSidebar: `${API_URL}/storage/sidebar`,
+  },
+  core: {
+    subscribe: `${API_URL}/mail`,
+  },
+  publicArticle: {
+    getBySlug: (slug: string) => `${API_URL}/articles/${segment(slug)}`,
+  },
+  articles: {
+    getChunk: ({ skip = 0, take }: Pagination = {}) =>
+      `${API_URL}/articles?${query({ skip, take })}`,
+  },
+  diary: {
+    getByDay: (month: number | string, day: number | string) =>
+      `${API_URL}/specials/diary/get/${segment(month)}/${segment(day)}`,
+    getBySlug: (slug: string) => `${API_URL}/specials/diary/getBySlug/${segment(slug)}`,
+    today: `${API_URL}/specials/diary/today`,
+  },
+  topics: {
+    getArticles: (topic: string) => `${API_URL}/topics/articles/${segment(topic)}`,
+  },
+  tags: {
+    getArticles: (tag: string) => `${API_URL}/tags/articles/${segment(tag)}`,
+  },
+  collections: {
+    getOne: (slug: string) => `${API_URL}/collections/${segment(slug)}`,
+  },
+  games: {
+    fortune: {
+      get: (slug: string) => `${API_URL}/games/fortune/${segment(slug)}`,
+      getCookie: (slug: string) => `${API_URL}/games/fortune/getCookie/${segment(slug)}`,
+    },
+    tinder: {
+      get: (slug: string) => `${API_URL}/games/tinder/${segment(slug)}`,
+      postStats: `${API_URL}/games/tinder/stats`,
+    },
+  },
+} as const;
