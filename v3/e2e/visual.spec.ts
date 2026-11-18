@@ -24,6 +24,15 @@ const GLOBAL_MASKS = ['iframe'];
 
 const waitForStablePage = async (page: Page) => {
   await page.waitForLoadState('networkidle');
+  // Lazy images below the fold change the page height when they arrive: load them all first.
+  await page.evaluate(async () => {
+    for (let y = 0; y < document.documentElement.scrollHeight; y += window.innerHeight / 2) {
+      window.scrollTo(0, y);
+      await new Promise(resolve => setTimeout(resolve, 50));
+    }
+    window.scrollTo(0, 0);
+  });
+  await page.waitForLoadState('networkidle');
   await page.evaluate(() => document.fonts.ready);
 };
 
@@ -42,7 +51,9 @@ for (const fixture of expandFixtures()) {
             [fixture.name, `${fixture.lang}-${viewport.width}.png`],
             {
               fullPage: true,
-              mask: GLOBAL_MASKS.map(selector => page.locator(selector)),
+              mask: [...GLOBAL_MASKS, ...(fixture.masks ?? [])].map(selector =>
+                page.locator(selector)
+              ),
             }
           );
 

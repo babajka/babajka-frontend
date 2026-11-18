@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import '../components/cards/cards.css';
 
 /*
  * Design tokens, ported from the legacy SCSS:

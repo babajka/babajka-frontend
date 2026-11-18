@@ -19,6 +19,7 @@ export const routes = {
     route(`/${lang}/collection/${encodeURIComponent(slug)}`),
   diary: (lang: Lang, slug?: string) =>
     route(slug ? `/${lang}/diary/${encodeURIComponent(slug)}` : `/${lang}/diary`),
+  game: (lang: Lang, slug: string) => route(`/${lang}/game/${encodeURIComponent(slug)}`),
   status: (lang: Lang, code: 404 | 500) => route(`/${lang}/status/${code}`),
 };
 

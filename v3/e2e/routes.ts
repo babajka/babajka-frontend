@@ -24,6 +24,8 @@ export type Fixture = {
    * icon links). Skips only the ARIA snapshot check; pixels must still match.
    */
   ariaDiffers?: string;
+  /** Selectors to mask on this page, for both apps (their markup differs). */
+  masks?: string[];
 };
 
 const ALL: Lang[] = ['be', 'ru', 'en'];
@@ -37,6 +39,8 @@ export const FIXTURES: Fixture[] = [
     langs: ALL,
     covers: ['card blocks', 'banner', 'diary block', 'header', 'sidebar', 'footer'],
     unstable: ['diary block (today)', 'header motto (random)', 'newest articles'],
+    // The motto links to a random culture tag: legacy, then v3.
+    masks: ['#header-links', 'header > div:has([data-unstable="motto"])'],
   },
   { name: 'about', path: '/about', langs: ALL, covers: ['static page'] },
 

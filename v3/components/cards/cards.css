@@ -1,0 +1,540 @@
+/*
+ * Article and tag cards: legacy features/layout/cards/{article,tag,wrapper}.module.scss.
+ *
+ * A card's size changes per breakpoint, and the size decides the layout of everything inside. So a
+ * size is a utility that only sets custom properties (`desktop:article-xxl`), and the card's parts
+ * read them. Every size sets every property: a larger breakpoint has to override the smaller one.
+ */
+
+/* Cover on the left, full card height (legacy shared-vertical-cover). */
+@utility article-vertical {
+  --card-dir: row;
+  --cover-basis: auto;
+  --cover-shrink: 0;
+  --cover-dw: 1;
+  --cover-dh: 2;
+  --cover-top: 0%;
+  --cover-top-k: 1;
+  --cover-shift: 0%;
+  --cover-collection: block;
+  --content-grow: 0;
+  --content-shrink: 1;
+  --content-justify: flex-start;
+  --cover-max-h: var(--card-h);
+  --cover-min-h: var(--card-h);
+  --cover-img-h: var(--card-h);
+  --slavics-bg: var(--color-slavics);
+  --slavics-color: initial;
+}
+
+/* xxl, xl, l (legacy shared-sizes-xxl-xl-l). */
+@utility article-wide {
+  @apply article-vertical;
+  --collection-mt: 24px;
+  --order-size: 20px;
+  --order-lh: 36px;
+  --name-size: 20px;
+  --name-lh: 27px;
+  --filler-mid: block;
+  --filler-bottom: none;
+  --label-display: none;
+  --desc-display: block;
+  --author-lh: 24px;
+}
+
+/* Cover on top, the card's full width (legacy shared-sizes-square-s-square-m). */
+@utility article-square {
+  --card-dir: column;
+  --cover-shrink: 1;
+  --cover-dw: 2;
+  --cover-dh: 1;
+  --cover-top: 50%;
+  --cover-top-k: 0.5;
+  --cover-shift: -50%;
+  --cover-collection: none;
+  --cover-w: var(--card-w);
+  --cover-basis: var(--cover-max-h);
+  --cover-img-h: var(--cover-max-h);
+  --content-grow: 1;
+  --content-shrink: 0;
+  --content-justify: flex-end;
+  --collection-mt: 19px;
+  --order-size: 16px;
+  --order-lh: 24px;
+  --name-size: 16px;
+  --name-lh: 21px;
+  --title-size: 24px;
+  --title-lh: 30px;
+  --title-mt: 10px;
+  --title-mb: 12px;
+  --title-mb-c: 12px;
+  --title-max: 90px;
+  --desc-display: none;
+  --desc-size: 16px;
+  --desc-lh: 24px;
+  --desc-max: none;
+  --filler-mid: none;
+  --filler-bottom: none;
+  --label-display: none;
+  --author-lh: 18px;
+  --brand-mr: 12px;
+  --slavics-bg: initial;
+  --slavics-color: var(--color-white);
+}
+
+@utility article-xxl {
+  @apply article-wide;
+  --card-w: 1020px;
+  --card-h: 630px;
+  --cover-w: 390px;
+  --content-pl: 30px;
+  --content-pr: 60px;
+  --title-size: 48px;
+  --title-lh: 60px;
+  --title-mt: 24px;
+  --title-mb: 30px;
+  --title-mb-c: 30px;
+  --title-max: 180px;
+  --desc-size: 24px;
+  --desc-lh: 36px;
+  --desc-max: 216px;
+  --amb: 60px;
+  --amb-b: 48px;
+  --amb-c: 60px;
+  --amb-bc: 48px;
+  --brand-mr: 20px;
+}
+
+@utility article-xl {
+  @apply article-wide;
+  --card-w: 818px;
+  --card-h: 504px;
+  --cover-w: 313px;
+  --content-pl: 24px;
+  --content-pr: 62px;
+  --title-size: 30px;
+  --title-lh: 36px;
+  --title-mt: 24px;
+  --title-mb: 30px;
+  --title-mb-c: 30px;
+  --title-max: 108px;
+  --desc-size: 16px;
+  --desc-lh: 24px;
+  --desc-max: 252px;
+  --amb: 48px;
+  --amb-b: 36px;
+  --amb-c: 48px;
+  --amb-bc: 36px;
+  --brand-mr: 15px;
+}
+
+@utility article-l {
+  @apply article-wide;
+  --card-w: 624px;
+  --card-h: 390px;
+  --cover-w: 240px;
+  --content-pl: 30px;
+  --content-pr: 42px;
+  --title-size: 24px;
+  --title-lh: 30px;
+  --title-mt: 24px;
+  --title-mb: 24px;
+  --title-mb-c: 24px;
+  --title-max: 90px;
+  --desc-size: 16px;
+  --desc-lh: 24px;
+  --desc-max: 120px;
+  --amb: 48px;
+  --amb-b: 36px;
+  --amb-c: 48px;
+  --amb-bc: 36px;
+  --brand-mr: 18px;
+}
+
+@utility article-m {
+  @apply article-vertical;
+  --card-w: 480px;
+  --card-h: 300px;
+  --cover-w: 184px;
+  --content-pl: 11px;
+  --content-pr: 30px;
+  --collection-mt: 24px;
+  --order-size: 16px;
+  --order-lh: 21px;
+  --name-size: 16px;
+  --name-lh: 21px;
+  --title-size: 24px;
+  --title-lh: 30px;
+  --title-mt: 24px;
+  --title-mb: 24px;
+  --title-mb-c: 12px;
+  --title-max: 90px;
+  --desc-display: none;
+  --desc-size: 16px;
+  --desc-lh: 24px;
+  --desc-max: none;
+  --filler-mid: none;
+  --filler-bottom: block;
+  --label-display: block;
+  --author-lh: 24px;
+  --amb: 0px;
+  --amb-b: 0px;
+  --amb-c: 36px;
+  --amb-bc: 36px;
+  --brand-mr: 18px;
+}
+
+@utility article-square-m {
+  @apply article-square;
+  --card-w: 390px;
+  --card-h: 390px;
+  --cover-max-h: 240px;
+  --cover-min-h: 168px;
+  --content-pl: 39px;
+  --content-pr: 39px;
+  --amb: 30px;
+  --amb-b: 30px;
+  --amb-c: 30px;
+  --amb-bc: 30px;
+}
+
+@utility article-square-s {
+  @apply article-square;
+  --card-w: 300px;
+  --card-h: 300px;
+  --cover-max-h: 186px;
+  --cover-min-h: 114px;
+  --content-pl: 24px;
+  --content-pr: 24px;
+  --amb: 30px;
+  --amb-b: 24px;
+  --amb-c: 30px;
+  --amb-bc: 24px;
+}
+
+/* Tag cards. `--tag-content-*` place the person's text over the cover. */
+@utility tag-l {
+  --card-w: 624px;
+  --card-h: 390px;
+  --tag-cover: 390px;
+  --tag-location-p: 0 39px 43px;
+  --tag-location-size: 72px;
+  --tag-location-lh: 72px;
+  --tag-content-left: 30px;
+  --tag-content-right: auto;
+  --tag-content-w: 240px;
+  --tag-title-size: 72px;
+  --tag-title-lh: 72px;
+  --tag-title-mt: 18px;
+  --tag-title-max-h: 144px;
+  --tag-title-max-w: 420px;
+  --tag-desc: block;
+}
+
+@utility tag-square-m {
+  --card-w: 390px;
+  --card-h: 390px;
+  --tag-cover: 390px;
+  --tag-location-p: 0 30px 42px;
+  --tag-location-size: 48px;
+  --tag-location-lh: 60px;
+  --tag-content-left: 30px;
+  --tag-content-right: 48px;
+  --tag-content-w: 100%;
+  --tag-title-size: 48px;
+  --tag-title-lh: 60px;
+  --tag-title-mt: 18px;
+  --tag-title-max-h: 120px;
+  --tag-title-max-w: 312px;
+  --tag-desc: none;
+}
+
+/* ms, s-wide, s, xs-wide, xs: the 194px high cards. */
+@utility tag-low {
+  --card-h: 194px;
+  --tag-cover: 194px;
+  --tag-location-p: 0 30px 42px;
+  --tag-location-size: 30px;
+  --tag-location-lh: 36px;
+  --tag-content-left: 30px;
+  --tag-content-right: auto;
+  --tag-content-w: 230px;
+  --tag-title-size: 30px;
+  --tag-title-lh: 36px;
+  --tag-title-mt: 0px;
+  --tag-title-max-h: 72px;
+  --tag-desc: none;
+}
+
+@utility tag-ms {
+  @apply tag-low;
+  --card-w: 480px;
+  --tag-title-max-w: 400px;
+}
+
+@utility tag-s-wide {
+  @apply tag-low;
+  --card-w: 426px;
+  --tag-title-max-w: 320px;
+}
+
+@utility tag-s {
+  @apply tag-low;
+  --card-w: 394px;
+  --tag-location-size: 60px;
+  --tag-location-lh: 72px;
+  --tag-title-max-w: 270px;
+}
+
+@utility tag-xs-wide {
+  @apply tag-low;
+  --card-w: 300px;
+  --tag-content-w: 150px;
+  --tag-title-mt: 7px;
+  --tag-title-max-w: 240px;
+}
+
+@utility tag-xs {
+  @apply tag-low;
+  --card-w: 232px;
+  --tag-content-w: 150px;
+  --tag-title-mt: 7px;
+  --tag-title-max-w: 174px;
+}
+
+@layer components {
+  /* legacy wrapper.module.scss */
+  .wir-card {
+    --inset: 0px;
+    color: var(--card-text);
+    width: var(--card-w);
+    height: var(--card-h);
+  }
+
+  .wir-card[data-edge] {
+    --inset: 1px;
+  }
+
+  .wir-card[data-border] {
+    box-shadow:
+      inset 1px 1px var(--color-widescreen-bg),
+      inset -1px -1px var(--color-widescreen-bg);
+  }
+
+  @media (hover: hover) {
+    .wir-card:hover {
+      --inset: 6px;
+      box-shadow:
+        inset 6px 6px var(--color-primary),
+        inset -6px -6px var(--color-primary) !important;
+    }
+  }
+
+  /* legacy article.module.scss */
+  .article-card {
+    display: flex;
+    flex-direction: var(--card-dir);
+  }
+
+  .article-card[data-slavics] {
+    background-color: var(--slavics-bg, var(--card-bg)) !important;
+    color: var(--slavics-color, var(--card-text)) !important;
+  }
+
+  .article-card__cover-box {
+    position: relative;
+    overflow: hidden;
+    flex-basis: var(--cover-basis);
+    flex-shrink: var(--cover-shrink);
+    width: calc(var(--cover-w) - var(--cover-dw) * var(--inset));
+    min-height: calc(var(--cover-min-h) - var(--cover-dh) * var(--inset));
+    max-height: calc(var(--cover-max-h) - var(--cover-dh) * var(--inset));
+    margin-top: var(--inset);
+    margin-left: var(--inset);
+  }
+
+  .article-card__cover-box[data-collection] {
+    display: var(--cover-collection);
+  }
+
+  .article-card__cover {
+    position: absolute;
+    top: calc(var(--cover-top) - var(--cover-top-k) * var(--inset));
+    left: calc(-1 * var(--inset));
+    display: inline-block;
+    width: var(--cover-w);
+    height: var(--cover-img-h);
+    transform: translateY(var(--cover-shift));
+  }
+
+  .article-card__content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: var(--content-grow);
+    flex-shrink: var(--content-shrink);
+    justify-content: var(--content-justify);
+    max-height: 100%;
+    padding: 0 var(--content-pr) 0 var(--content-pl);
+  }
+
+  .article-card__collection {
+    display: flex;
+    margin-top: var(--collection-mt);
+  }
+
+  .article-card__order {
+    font-size: var(--order-size);
+    line-height: var(--order-lh);
+  }
+
+  .article-card__collection-name {
+    font-size: var(--name-size);
+    font-weight: 700;
+    line-height: var(--name-lh);
+  }
+
+  .article-card__title {
+    overflow: hidden;
+    max-height: var(--title-max);
+    margin-top: var(--title-mt);
+    margin-bottom: var(--title-mb);
+    font-size: var(--title-size);
+    font-weight: 700;
+    line-height: var(--title-lh);
+  }
+
+  .article-card[data-collection] .article-card__title {
+    margin-bottom: var(--title-mb-c);
+  }
+
+  .article-card__description {
+    position: relative;
+    display: var(--desc-display);
+    overflow: hidden;
+    font-size: var(--desc-size);
+    line-height: var(--desc-lh);
+  }
+
+  .article-card__description-text {
+    overflow: hidden;
+    max-height: var(--desc-max);
+  }
+
+  .article-card__filler-middle {
+    display: var(--filler-mid);
+    flex-grow: 1;
+  }
+
+  .article-card__filler-bottom {
+    display: var(--filler-bottom);
+    flex-grow: 1;
+  }
+
+  .article-card__label {
+    display: var(--label-display);
+    margin-bottom: 36px;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .article-card__author {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--amb);
+    font-size: 16px;
+    line-height: var(--author-lh);
+  }
+
+  .article-card[data-brand] .article-card__author {
+    margin-bottom: var(--amb-b);
+  }
+
+  .article-card[data-collection] .article-card__author {
+    margin-bottom: var(--amb-c);
+  }
+
+  .article-card[data-brand][data-collection] .article-card__author {
+    margin-bottom: var(--amb-bc);
+  }
+
+  .article-card__brand {
+    height: 24px;
+    margin-right: var(--brand-mr);
+  }
+
+  /* legacy tag.module.scss */
+  .tag-card {
+    position: relative;
+    display: flex;
+    border-radius: var(--r-tl, 0) var(--r-tr, 0) var(--r-br, 0) var(--r-bl, 0);
+  }
+
+  .tag-card__location {
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: var(--tag-location-p);
+    background-size: cover;
+  }
+
+  .tag-card__location-title {
+    font-size: var(--tag-location-size);
+    font-weight: 700;
+    line-height: var(--tag-location-lh);
+  }
+
+  .tag-card__person {
+    flex-direction: row-reverse;
+  }
+
+  .tag-card__cover-box {
+    position: relative;
+    overflow: hidden;
+    width: calc(var(--tag-cover) - var(--inset));
+    height: calc(var(--tag-cover) - 2 * var(--inset));
+    margin-top: var(--inset);
+    margin-right: var(--inset);
+  }
+
+  .tag-card__cover {
+    position: absolute;
+    top: calc(-1 * var(--inset));
+    right: calc(-1 * var(--inset));
+    width: var(--tag-cover);
+    max-width: none;
+    height: var(--tag-cover);
+    border-radius: 0 var(--r-tr, 0) var(--r-br, 0) 0;
+    object-fit: cover;
+  }
+
+  .tag-card__content {
+    position: absolute;
+    right: var(--tag-content-right);
+    bottom: 42px;
+    left: var(--tag-content-left);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: var(--tag-content-w);
+  }
+
+  .tag-card__subtitle {
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .tag-card__title {
+    max-width: var(--tag-title-max-w);
+    max-height: var(--tag-title-max-h);
+    margin-top: var(--tag-title-mt);
+    font-size: var(--tag-title-size);
+    font-weight: 700;
+    line-height: var(--tag-title-lh);
+  }
+
+  .tag-card__description {
+    display: var(--tag-desc);
+    margin-top: 19px;
+    font-size: 14px;
+    line-height: 21px;
+  }
+}
