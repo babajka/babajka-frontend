@@ -325,7 +325,9 @@ Each page is done when:
 3. the `next-dev-loop` check is clean (no console errors or hydration warnings),
 4. `web-design-guidelines` review is done.
 
-- [ ] `about` — static. Add `export const ensureStatic = 'navigation'`. Drop dead code: `features/about/*`, `team.json`, `partners.js`.
+- [x] `about` — static, with `export const ensureStatic = 'navigation'`. The dead code (`features/about/*`, `team.json`, `partners.js`) isn't ported.
+  - `lib/metadata.ts` (`pageMetadata`) builds page metadata. Next merges metadata shallowly, so a page that sets `openGraph` or `twitter` replaces the layout's whole object.
+  - Legacy printed an empty `twitter:card` on this page; v3 prints `summary`.
 - [ ] `article/[slug]` — the biggest one:
   - Port the Fibery renderer (`utils/fibery/*`) as **server components**.
   - Embeds become client islands only where needed.
