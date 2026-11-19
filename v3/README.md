@@ -294,8 +294,8 @@ Checked with the visual harness against legacy on the layout-only fixtures `stat
 - [x] Header (server) + burger button (client). `Motto` (client) picks the random culture tag once per page load with `useSyncExternalStore`, so the server render is stable; the link has `data-unstable="motto"` for masking.
 - [x] `HeaderLinks`: the header title is a `@header` parallel-route slot of the `(site)` layout:
   - `@header/page.tsx`: the motto (main page)
-  - `@header/default.tsx` + `@header/[...rest]/page.tsx`: "to main". The catch-all is needed: on client navigation a slot otherwise keeps its last content (the motto).
-  - Phase 4 pages with header links add `@header/<route>/page.tsx` (e.g. `@header/article/[slug]`), using `HeaderTitle`.
+  - `@header/default.tsx`: "to main". Every page also has its own `@header/<route>/page.tsx`: on client navigation a slot otherwise keeps its last content (the motto). A catch-all slot doesn't work here: strict route matching then rejects the `(game)` pages in `next dev`.
+  - Pages with header links use `HeaderTitle` there (e.g. `@header/article/[slug]`).
 - [x] Footer + `SubscribeForm` (client; posts from the browser to `/api/mail` through the rewrite, like legacy). The RSS link points to `https://wir.by/rss` (served by nginx, not by this app). The copyright year is a cached component (`CurrentYear`), since Cache Components doesn't allow `new Date()` in the static shell.
 - [x] Go-up button: a tiny client component (`GoUp`, shown after 160px like `react-scroll-up`, honours reduced motion); `react-scroll-up` is dropped.
 - [x] Layout flags (`hideHeader`, `hideSidebar`, `hideFooter`) become route groups:
@@ -345,9 +345,9 @@ Each page is done when:
 - [x] `diary/[[...slug]]`:
   - `/diary` computes today's date in Minsk and passes it into the cached loader, then `redirect()`s to the entry's slug (legacy replaced the URL in the browser).
   - The page is cached. Only the "next" arrow and the share text depend on today's date, so they render per request inside `<Suspense>`.
-- [ ] `game/ny2021`, `game/tinder` (route group without chrome):
-  - The tinder shuffle moves to the client; legacy shuffles once at build.
-  - `POST` stats via a server action or `/api`.
+- [x] `game/ny2021`, `game/tinder` (route group without the shared header):
+  - The profiles are shuffled in the browser after hydration; legacy shuffled once per build, so everybody saw the same order.
+  - Stats go from the browser to `/api/games/tinder/stats`. A failed request no longer blocks the game.
 
 ## Phase 5 — Performance & quality (do along the way, measure before/after)
 

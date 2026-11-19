@@ -26,6 +26,8 @@ const LangLinks = ({ hrefFor }: { hrefFor: (lang: Lang) => ReturnType<typeof rou
         <li key={id}>
           <NextLink
             href={hrefFor(id)}
+            // Rarely used, and prefetching another locale's static shell looped without end.
+            prefetch={false}
             hrefLang={id}
             lang={id}
             className={linkClass()}

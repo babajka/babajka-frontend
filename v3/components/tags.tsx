@@ -28,6 +28,7 @@ type TagLinkProps = LinkStyleProps & {
   topic: Topic;
   tag: string;
   className?: string;
+  target?: string;
   children: ReactNode;
 };
 

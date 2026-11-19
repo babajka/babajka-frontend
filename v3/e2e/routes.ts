@@ -155,13 +155,21 @@ export const FIXTURES: Fixture[] = [
   },
 
   // games (no header/footer chrome)
-  { name: 'game-ny2021', path: '/game/ny2021', langs: BE, covers: ['fortune game'] },
+  {
+    name: 'game-ny2021',
+    path: '/game/ny2021',
+    langs: BE,
+    covers: ['fortune game'],
+    ariaDiffers: 'v3 hides the decorative logo inside the labelled link',
+  },
   {
     name: 'game-tinder',
     path: '/game/tinder',
     langs: BE,
     covers: ['tinder game'],
     unstable: ['shuffled profile order'],
+    pixelsDiffer: 'the first profile is random in v3; legacy shuffles once per build',
+    ariaDiffers: 'the first profile is random in v3; legacy shuffles once per build',
   },
 ];
 

@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
-// Smoke tests against v3 only (`npm run e2e`). Grows with each ported page in Phase 4.
-test('placeholder page renders without console errors', async ({ page }) => {
+// Smoke tests against v3 only (`npm run e2e`).
+test('main page renders without console errors', async ({ page }) => {
   const errors: string[] = [];
   page.on('console', message => {
     if (message.type() === 'error') {
@@ -10,20 +10,19 @@ test('placeholder page renders without console errors', async ({ page }) => {
   });
   page.on('pageerror', error => errors.push(error.message));
 
-  await page.goto('/');
+  await page.goto('/be');
 
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Wir.by v3');
+  await expect(page.locator('main a[href^="/be/article/"]').first()).toBeVisible();
   expect(errors).toEqual([]);
 });
 
-// Needs the backend (dev API by default): checks the server → API path end to end.
-test('home page renders the latest articles from the backend', async ({ page }) => {
-  await page.goto('/');
+test('an article opens from the main page', async ({ page }) => {
+  await page.goto('/be');
 
-  const articles = page.getByRole('article');
-  await expect(articles.first()).toBeVisible();
-  expect(await articles.count()).toBeGreaterThan(0);
-  await expect(page.getByText(/articles on api\.wir\.by/)).toBeVisible();
+  await page.locator('main a[href^="/be/article/"]').first().click();
+
+  await expect(page).toHaveURL(/\/be\/article\//);
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 });
 
 test('locale routing: / redirects to /be, and pages render in their locale', async ({ page }) => {
