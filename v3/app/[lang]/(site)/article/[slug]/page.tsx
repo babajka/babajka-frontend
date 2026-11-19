@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
-import { Fragment } from 'react';
 
 import CollectionNote from '@/components/article/CollectionNote';
 import CardBlocksLayout from '@/components/blocks/CardBlocksLayout';
-import { TagNameLink } from '@/components/blocks/TopicLink';
+import { TagNameLink, TagNameLinks } from '@/components/blocks/TopicLink';
 import { AudioButtons, VideoPlayer } from '@/components/fibery/players';
 import { ExCoQuiz } from '@/components/fibery/quizzes';
 import FiberyContent from '@/components/fibery/renderer';
@@ -137,21 +136,11 @@ export default async function ArticlePage(props: PageProps<'/[lang]/article/[slu
             ))}
             <div className="ml-3 flex flex-col leading-6 text-primary">
               <span>
-                {brands.map((tag, index) => (
-                  <Fragment key={String(tag.slug)}>
-                    {index > 0 && <span>,&nbsp;</span>}
-                    <TagNameLink lang={lang} tag={tag} />
-                  </Fragment>
-                ))}
+                <TagNameLinks lang={lang} tags={brands} />
                 {!!brands.length && !!authors.length && ','}
               </span>
               <span>
-                {authors.map((tag, index) => (
-                  <Fragment key={String(tag.slug)}>
-                    {index > 0 && <span>,&nbsp;</span>}
-                    <TagNameLink lang={lang} tag={tag} />
-                  </Fragment>
-                ))}
+                <TagNameLinks lang={lang} tags={authors} />
               </span>
             </div>
           </div>

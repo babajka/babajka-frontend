@@ -181,6 +181,15 @@ export function getLocalizedCollection(
   };
 }
 
+/** Every author of the collection's articles, once. */
+export const getCollectionAuthors = (articles: LocalizedArticle[]) => {
+  const authors = new Map<unknown, LocalizedTag>();
+  articles.forEach(({ tagsByTopic }) =>
+    tagsByTopic?.authors.forEach(author => authors.set(author.slug, author))
+  );
+  return [...authors.values()];
+};
+
 /*
  *               BLOCKS DATA (main page, suggested articles)
  */

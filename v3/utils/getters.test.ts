@@ -1,11 +1,14 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import {
+  getCollectionAuthors,
   getLocalesBySlug,
   getLocalizedArticle,
   getLocalizedCollection,
   getLocalizedTag,
   localizeData,
+  type LocalizedArticle,
+  type LocalizedTag,
   type RawArticle,
   type RawTag,
 } from '@/utils/getters';
@@ -175,5 +178,17 @@ describe('utils/getters', () => {
         { 'a-be': 'be', 'a-ru': 'ru' }
       );
     });
+  });
+});
+
+describe('getCollectionAuthors', () => {
+  it('lists every author once, in order of appearance', () => {
+    const author = (slug: string) => ({ slug }) as unknown as LocalizedTag;
+    const article = (...slugs: string[]) =>
+      ({ tagsByTopic: { authors: slugs.map(author) } }) as unknown as LocalizedArticle;
+
+    const authors = getCollectionAuthors([article('a', 'b'), article('b', 'c')]);
+
+    expect(authors.map(({ slug }) => slug)).toEqual(['a', 'b', 'c']);
   });
 });

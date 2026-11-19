@@ -16,16 +16,26 @@ import type { Lang, Topic } from '@/constants';
 import { api, type Pagination } from '@/lib/api';
 import { CACHE_TAGS } from '@/lib/cache-tags';
 import { request, requestOrNull } from '@/lib/request';
-import type { ArticlesChunk, DiaryResponse, MainPage } from '@/lib/types';
+import type {
+  ArticlesChunk,
+  CollectionResponse,
+  DiaryResponse,
+  MainPage,
+  TagResponse,
+  TopicResponse,
+} from '@/lib/types';
 import {
   getLocalesBySlug,
   getLocalizedArticle,
+  getLocalizedArticles,
+  getLocalizedCollection,
+  getLocalizedTag,
   localizeData,
   type LocalizedArticle,
   type RawArticle,
 } from '@/utils/getters';
 
-// Response types of the endpoints below are added with the pages that use them (Phase 4).
+// The response type of the sidebar is added when it's needed.
 type Unported = unknown;
 
 /**
@@ -78,25 +88,58 @@ export const getSidebar = async () => {
   return request<Unported>(api.storage.getSidebar);
 };
 
-export const getTopic = async (topic: Topic) => {
+export const getTopicPage = async (topic: Topic, lang: Lang) => {
   'use cache';
   cacheLife('hours');
   cacheTag(CACHE_TAGS.articles, CACHE_TAGS.topic(topic));
-  return request<Unported>(api.topics.getArticles(topic));
+  const { tags, articles, articlesByTag } = await request<TopicResponse>(
+    api.topics.getArticles(topic)
+  );
+  const localized = (getLocalizedArticles(articles, lang) ?? []).filter(
+    article => article !== null
+  );
+  const articleById = Object.fromEntries(localized.map(article => [article.id, article]));
+  const getArticlesOf = (slug: string) =>
+    (articlesByTag[slug] ?? []).flatMap(id => articleById[id] ?? []);
+
+  return tags
+    .filter(({ slug }) => articlesByTag[slug]?.length)
+    .sort((x, y) => articlesByTag[y.slug].length - articlesByTag[x.slug].length)
+    .map(tag => ({
+      tag: getLocalizedTag(tag, lang),
+      articles: getArticlesOf(tag.slug),
+    }));
 };
 
-export const getTag = async (tag: string) => {
+export const getTagPage = async (slug: string, lang: Lang) => {
   'use cache';
   cacheLife('hours');
-  cacheTag(CACHE_TAGS.articles, CACHE_TAGS.tag(tag));
-  return request<Unported>(api.tags.getArticles(tag));
+  cacheTag(CACHE_TAGS.articles, CACHE_TAGS.tag(slug));
+  const response = await requestOrNull<TagResponse>(api.tags.getArticles(slug));
+  if (!response) {
+    cacheLife('minutes');
+    return null;
+  }
+  return {
+    tag: getLocalizedTag(response.tag, lang),
+    articles: (getLocalizedArticles(response.articles, lang) ?? []).filter(a => a !== null),
+  };
 };
 
-export const getCollection = async (slug: string) => {
+export const getCollectionPage = async (slug: string, lang: Lang) => {
   'use cache';
   cacheLife('hours');
   cacheTag(CACHE_TAGS.articles, CACHE_TAGS.collection(slug));
-  return request<Unported>(api.collections.getOne(slug));
+  const response = await requestOrNull<CollectionResponse>(api.collections.getOne(slug));
+  if (!response) {
+    cacheLife('minutes');
+    return null;
+  }
+  const { articles: rawArticles, ...collection } = response.collection;
+  return {
+    collection: getLocalizedCollection(collection, lang),
+    articles: (getLocalizedArticles(rawArticles, lang) ?? []).filter(a => a !== null),
+  };
 };
 
 /**
