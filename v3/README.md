@@ -341,7 +341,7 @@ Each page is done when:
   - A status doesn't survive a `'use cache'` boundary, so the loader returns `null` on a 404 (`requestOrNull`).
   - **A missing article answers `200` with the 404 page and `noindex`** (legacy: `404`). The prerendered shell starts the response before the backend answers, and Next can't change the status after that.
   - Known differences: legacy's `article-coub-poem` breaks on hydration (an empty 480px box after each coub), v3 doesn't (`pixelsDiffer` in `e2e/routes.ts`). Swiper 12 doesn't clone slides (`ariaDiffers`).
-- [ ] `topic/[topic]`, `topic/[topic]/tag/[tag]`, `collection/[slug]`.
+- [x] `topic/[topic]`, `topic/[topic]/tag/[tag]`, `collection/[slug]`: localized inside cached loaders. All topics are prerendered, tags and collections are cached on the first visit.
 - [ ] `diary/[[...slug]]`:
   - "Today" is computed from a date string passed into a cached loader.
   - Replace the `Router.replaceRoute` hack with `redirect()` to the canonical slug.

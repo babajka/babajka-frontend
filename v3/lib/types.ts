@@ -1,7 +1,7 @@
 // Backend response types. Only what's used so far; each page adds its types when it's ported
 // (Phase 4), from the real responses, not from legacy PropTypes.
 import type { Topic } from '@/constants';
-import type { RawBlocksData, RawTag } from '@/utils/getters';
+import type { RawArticle, RawBlocksData, RawCollection, RawTag } from '@/utils/getters';
 import type { Localized } from '@/utils/localization';
 
 /** One locale of an article, as the article lists return it. */
@@ -52,3 +52,18 @@ export type DiaryEntry = DiaryDay & {
 };
 
 export type DiaryResponse = { data: DiaryEntry; prev?: DiaryDay; next?: DiaryDay };
+
+/*
+ *               LISTINGS
+ */
+
+export type TopicResponse = {
+  tags: (RawTag & { slug: string })[];
+  articles: RawArticle[];
+  /** Article ids by tag slug. */
+  articlesByTag: Record<string, string[]>;
+};
+
+export type TagResponse = { tag: RawTag; articles: RawArticle[] };
+
+export type CollectionResponse = { collection: RawCollection };
