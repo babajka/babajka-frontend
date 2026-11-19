@@ -1,7 +1,14 @@
 // Backend response types. Only what's used so far; each page adds its types when it's ported
 // (Phase 4), from the real responses, not from legacy PropTypes.
 import type { Topic } from '@/constants';
-import type { RawArticle, RawBlocksData, RawCollection, RawTag } from '@/utils/getters';
+import type { FiberyNode } from '@/utils/fibery/toString';
+import type {
+  RawArticle,
+  RawBlocksData,
+  RawCollection,
+  RawSuggested,
+  RawTag,
+} from '@/utils/getters';
 import type { Localized } from '@/utils/localization';
 
 /** One locale of an article, as the article lists return it. */
@@ -67,3 +74,34 @@ export type TopicResponse = {
 export type TagResponse = { tag: RawTag; articles: RawArticle[] };
 
 export type CollectionResponse = { collection: RawCollection };
+
+/*
+ *               GAMES
+ */
+
+export type FortuneGameResponse = {
+  title: string;
+  description: FiberyNode[];
+  suggestedArticles?: RawSuggested | null;
+};
+
+export type FortuneCookie = {
+  author?: string | null;
+  authorTag?: RawTag | null;
+  text?: { content?: FiberyNode[] };
+};
+
+export type TinderPerson = {
+  personStatsId: string;
+  nickname: string;
+  photoUrl: string;
+  description: { content?: FiberyNode[] };
+  acceptMessage: { content?: FiberyNode[] };
+};
+
+export type TinderGameResponse = {
+  title: string;
+  subtitle: string;
+  people: TinderPerson[];
+  suggestedArticles?: RawSuggested | null;
+};

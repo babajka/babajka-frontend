@@ -12,7 +12,7 @@
 // (`requestOrNull`), and pages map it with `orNotFound()` (lib/request.ts).
 import { cacheLife, cacheTag } from 'next/cache';
 
-import type { Lang, Topic } from '@/constants';
+import { NY2021, TINDER_SLUG, type Lang, type Topic } from '@/constants';
 import { api, type Pagination } from '@/lib/api';
 import { CACHE_TAGS } from '@/lib/cache-tags';
 import { request, requestOrNull } from '@/lib/request';
@@ -20,16 +20,20 @@ import type {
   ArticlesChunk,
   CollectionResponse,
   DiaryResponse,
+  FortuneGameResponse,
   MainPage,
   TagResponse,
+  TinderGameResponse,
   TopicResponse,
 } from '@/lib/types';
 import { getDiary as getDiaryView } from '@/utils/diary';
+import { fiberyToString } from '@/utils/fibery/toString';
 import {
   getLocalesBySlug,
   getLocalizedArticle,
   getLocalizedArticles,
   getLocalizedCollection,
+  getLocalizedSuggested,
   getLocalizedTag,
   localizeData,
   type LocalizedArticle,
@@ -181,4 +185,31 @@ export const getDiaryPage = async (
     diary: getDiaryView(response.data, lang),
     articles: (getLocalizedArticles(articles, lang) ?? []).filter(a => a !== null),
   };
+};
+
+const GAME_LANG = 'be';
+
+/** The games exist in Belarusian only. */
+export const getFortuneGame = async () => {
+  'use cache';
+  cacheLife('minutes');
+  cacheTag(CACHE_TAGS.articles);
+  const { title, description, suggestedArticles } = await request<FortuneGameResponse>(
+    api.games.fortune.get(NY2021)
+  );
+  return {
+    title,
+    description: fiberyToString(description),
+    suggestedArticles: getLocalizedSuggested(suggestedArticles, GAME_LANG),
+  };
+};
+
+export const getTinderGame = async () => {
+  'use cache';
+  cacheLife('minutes');
+  cacheTag(CACHE_TAGS.articles);
+  const { suggestedArticles, ...game } = await request<TinderGameResponse>(
+    api.games.tinder.get(TINDER_SLUG)
+  );
+  return { ...game, suggestedArticles: getLocalizedSuggested(suggestedArticles, GAME_LANG) };
 };

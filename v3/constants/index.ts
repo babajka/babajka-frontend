@@ -44,3 +44,4 @@ export type Topic = (typeof TOPICS)[number];
 export const isKnownTopic = (topic: unknown): topic is Topic => TOPICS.includes(topic as Topic);
 
 export const NY2021 = 'ny2021';
+export const TINDER_SLUG = 'belarusian-writers';

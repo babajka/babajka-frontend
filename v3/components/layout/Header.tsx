@@ -21,11 +21,13 @@ export const HeaderTitle = ({ children }: { children: ReactNode }) => (
 );
 
 /** Default title: a link to the main page ("Wir.by" on games, like legacy). */
-export const ToMainTitle = async ({ label }: { label?: string }) => {
+export const ToMainTitle = async ({ label, color }: { label?: string; color?: string }) => {
   const lang = await getLang();
   return (
     <HeaderTitle>
-      <Link href={routes.main(lang)}>{label ?? <Text id="header.to-main" />}</Link>
+      <Link href={routes.main(lang)}>
+        <span style={color ? { color } : undefined}>{label ?? <Text id="header.to-main" />}</span>
+      </Link>
     </HeaderTitle>
   );
 };
