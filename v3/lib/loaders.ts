@@ -24,6 +24,7 @@ import type {
   TagResponse,
   TopicResponse,
 } from '@/lib/types';
+import { getDiary as getDiaryView } from '@/utils/diary';
 import {
   getLocalesBySlug,
   getLocalizedArticle,
@@ -156,4 +157,28 @@ export const getDiary = async (by: { slug: string } | { month: number; day: numb
   return request<DiaryResponse>(
     'slug' in by ? api.diary.getBySlug(by.slug) : api.diary.getByDay(by.month, by.day)
   );
+};
+
+/** The diary page: an entry by slug or by day, with the two latest articles. */
+export const getDiaryPage = async (
+  by: { slug: string } | { month: number; day: number },
+  lang: Lang
+) => {
+  'use cache';
+  cacheLife('minutes');
+  cacheTag(CACHE_TAGS.articles, CACHE_TAGS.diary);
+  const response = await requestOrNull<DiaryResponse>(
+    'slug' in by ? api.diary.getBySlug(by.slug) : api.diary.getByDay(by.month, by.day)
+  );
+  if (!response) {
+    return null;
+  }
+  const { data: articles } = await request<{ data: RawArticle[] }>(
+    api.articles.getChunk({ take: 2 })
+  );
+  return {
+    ...response,
+    diary: getDiaryView(response.data, lang),
+    articles: (getLocalizedArticles(articles, lang) ?? []).filter(a => a !== null),
+  };
 };

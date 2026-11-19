@@ -5,9 +5,9 @@ import { linkClass } from '@/components/ui/link-class';
 import { useT } from '@/lib/i18n/client';
 import { cn } from '@/lib/utils/cn';
 
-const ArrowIcon = ({ size, right }: { size: number; right?: boolean }) => (
+export const ArrowIcon = ({ size, right }: { size: number; right?: boolean }) => (
   <svg
-    className={cn('inline', right && 'rotate-180')}
+    className={cn('inline align-baseline', right && 'rotate-180')}
     width={size}
     height={size}
     viewBox="0 0 35 16"
