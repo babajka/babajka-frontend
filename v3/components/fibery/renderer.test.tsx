@@ -47,7 +47,7 @@ describe('FiberyContent', () => {
     const { container } = render(
       <FiberyContent content={[paragraph(text(href, [{ type: 'link', attrs: { href } }]))]} />
     );
-    expect(screen.getByTitle('VideoPlayer')).toHaveAttribute(
+    expect(screen.getByTitle('YouTube')).toHaveAttribute(
       'src',
       'https://www.youtube.com/embed/dQw4w9WgXcQ'
     );

@@ -52,13 +52,13 @@ describe('getDiaryShareText', () => {
 
   it('names the year on today', () => {
     expect(getDiaryShareText({ ...options, isToday: true }).basicText).toBe(
-      'Сёння, у 1942 годзе, Name wrote...'
+      'Сёння, у 1942 годзе, Name wrote…'
     );
   });
 
   it('names the date on other days', () => {
     expect(getDiaryShareText({ ...options, isToday: false }).extendedText).toBe(
-      '19 лістапада 1942 Name wrote:\n«text...»\n'
+      '19 лістапада 1942 Name wrote:\n«text…»\n'
     );
   });
 });

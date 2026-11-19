@@ -9,6 +9,10 @@ import { getTopicPage } from '@/lib/loaders';
 import { pageMetadata } from '@/lib/metadata';
 import { routes } from '@/lib/routes';
 
+// Waits for the topic, like legacy SSR (and like its `@header` slot page). Without it, `next dev`
+// flags `await params` outside `<Suspense>`.
+export const instant = false;
+
 export const generateStaticParams = () => TOPICS.map(topic => ({ topic }));
 
 const getTopic = async ({ params }: PageProps<'/[lang]/topic/[topic]'>): Promise<Topic> => {

@@ -15,6 +15,8 @@ const Link = ({ dark, active, disabled, noStyles, className, ...props }: LinkPro
   <NextLink
     className={linkClass({ dark, active, disabled, noStyles }, className)}
     aria-disabled={disabled || undefined}
+    // `link-disabled` only stops the mouse: keep keyboard users from following it too.
+    tabIndex={disabled ? -1 : undefined}
     {...props}
   />
 );

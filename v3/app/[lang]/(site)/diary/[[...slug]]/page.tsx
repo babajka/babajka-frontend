@@ -61,7 +61,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   return pageMetadata({
     lang,
     title: `${formatLocalizedDate(date, lang, DATE_FORMAT)}, ${name}`,
-    description: `${shortContent}...`,
+    description: `${shortContent}…`,
     keywords: [
       formatLocalizedDate(date, lang, SHORT_DATE_FORMAT),
       name,

@@ -1,9 +1,9 @@
-import type { ButtonHTMLAttributes, ComponentType } from 'react';
+import type { ComponentProps, ComponentType } from 'react';
 
 import type { IconProps } from '@/components/icons/createIcon';
 import { cn } from '@/lib/utils/cn';
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+type ButtonProps = ComponentProps<'button'> & {
   highlighted?: boolean;
   icon?: ComponentType<IconProps>;
 };
@@ -13,7 +13,7 @@ const Button = ({ className, highlighted, icon: Icon, children, ...props }: Butt
   <button
     type="button"
     className={cn(
-      'cursor-pointer rounded-[5px] border border-table bg-white px-5 py-2.5 text-sm leading-6 outline-none hover:text-primary active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.25)]',
+      'cursor-pointer rounded-[5px] border border-table bg-white px-5 py-2.5 text-sm leading-6 outline-none hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-caribbean focus-visible:outline-solid active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.25)]',
       highlighted && 'border-0 bg-primary text-white hover:text-concrete',
       className
     )}
