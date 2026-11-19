@@ -4,7 +4,9 @@ type ImageProps = {
   /** Backend image without a query: the size goes into `?w=` or `?h=`. */
   baseUrl: string;
   /** Size in CSS pixels. The 2x source is added for high-density screens. */
-  size: number;
+  size?: number;
+  /** Widths for a fluid image: the browser picks one by the screen width. */
+  widths?: number[];
   alt: string;
   title?: string;
   className?: string;
@@ -19,7 +21,8 @@ type ImageProps = {
  */
 const Image = ({
   baseUrl,
-  size,
+  size = 0,
+  widths,
   alt,
   title,
   className,
@@ -29,7 +32,13 @@ const Image = ({
   // eslint-disable-next-line @next/next/no-img-element -- Phase 5 moves to next/image with a loader
   <img
     className={cn('inline max-w-none align-baseline', className)}
-    srcSet={`${baseUrl}?${dimension}=${size} 1x,${baseUrl}?${dimension}=${size * 2} 2x`}
+    srcSet={
+      widths
+        ? widths
+            .flatMap(w => [`${baseUrl}?w=${w} ${w}w`, `${baseUrl}?w=${w * 2} ${w * 2}w`])
+            .join(',')
+        : `${baseUrl}?${dimension}=${size} 1x,${baseUrl}?${dimension}=${size * 2} 2x`
+    }
     alt={alt}
     title={title}
     loading={inViewport ? 'eager' : 'lazy'}

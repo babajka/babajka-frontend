@@ -21,6 +21,16 @@ describe('socialMetadata', () => {
   });
 });
 
+describe('article metadata', () => {
+  it('prints the article tags', () => {
+    const article = { authors: ['A'], tags: ['B'], publishedTime: '2024-01-01' };
+    expect(socialMetadata({ ...base, article }).openGraph).toMatchObject({
+      type: 'article',
+      ...article,
+    });
+  });
+});
+
 describe('pageMetadata', () => {
   it('sets the page url on og:url and twitter:url', () => {
     const metadata = pageMetadata({ ...base, url: '/ru/about' });

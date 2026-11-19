@@ -47,15 +47,17 @@ for (const fixture of expandFixtures()) {
           await page.goto(fixture.url);
           await waitForStablePage(page);
 
-          await expect(page).toHaveScreenshot(
-            [fixture.name, `${fixture.lang}-${viewport.width}.png`],
-            {
-              fullPage: true,
-              mask: [...GLOBAL_MASKS, ...(fixture.masks ?? [])].map(selector =>
-                page.locator(selector)
-              ),
-            }
-          );
+          if (!fixture.pixelsDiffer) {
+            await expect(page).toHaveScreenshot(
+              [fixture.name, `${fixture.lang}-${viewport.width}.png`],
+              {
+                fullPage: true,
+                mask: [...GLOBAL_MASKS, ...(fixture.masks ?? [])].map(selector =>
+                  page.locator(selector)
+                ),
+              }
+            );
+          }
 
           // Structural check once per fixture × locale: catches missing text and links, and
           // survives small pixel noise. (Playwright flattens `/` in aria snapshot names.)

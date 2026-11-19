@@ -1,0 +1,480 @@
+/*
+ * Rendered article content: legacy utils/fibery/renderer.module.scss.
+ *
+ * Kept close to the legacy file on purpose. The content comes from an editor, so these rules style
+ * plain elements, and their order matters: `.rendered p` overrides the margins of the blocks above.
+ * Legacy had no Tailwind preflight, so the browser defaults it relied on are restored here.
+ */
+@layer components {
+  .rendered,
+  .rendered * {
+    box-sizing: content-box;
+  }
+
+  .rendered p {
+    margin-bottom: 1em;
+  }
+
+  .rendered ul,
+  .rendered ol {
+    padding-left: 40px;
+  }
+
+  .rendered ol {
+    list-style: decimal;
+  }
+
+  .rendered table {
+    border-collapse: separate;
+    border-spacing: 2px;
+  }
+
+  .rendered td,
+  .rendered th {
+    padding: 1px;
+  }
+
+  .rendered img {
+    display: inline;
+    max-width: none;
+    vertical-align: baseline;
+  }
+
+  .article-ordered {
+    margin: 0;
+  }
+
+  .article-ordered li {
+    margin-top: 24px;
+  }
+
+  .right-element {
+    display: inline-block;
+    width: 240px;
+    margin: 0 0 10px 30px;
+    font-size: 14px;
+    line-height: 21px;
+  }
+
+  @media (width >= 500px) and (width < 650px) {
+    .right-element {
+      margin-left: 60px;
+    }
+  }
+
+  @media (width >= 650px) {
+    .right-element {
+      float: right;
+      margin-left: 30px;
+    }
+  }
+
+  .right-element .article-ordered {
+    padding-left: 24px;
+  }
+
+  .right-element .article-ordered li {
+    margin-top: 0;
+  }
+
+  /* Legacy: 20px below 650px and from 650px, so the `margin: 0` in between never applied. */
+  .right-element.article-table,
+  .right-element.article-image {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .article-note {
+    line-height: 24px;
+  }
+
+  .article-note th {
+    text-align: left;
+  }
+
+  .article-note p,
+  .article-note li {
+    margin: 0;
+  }
+
+  .article-image {
+    display: block;
+    margin-top: 60px;
+    margin-bottom: 60px;
+  }
+
+  .rendered .article-image__image {
+    width: 100%;
+    object-position: 50% 0;
+  }
+
+  .article-image__caption {
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .article-quote {
+    margin: 60px 0;
+  }
+
+  .article-quote__text {
+    padding-left: 20px;
+    border-left: 1px solid #000000;
+    font-size: 20px;
+    line-height: 32px;
+  }
+
+  .article-quote__caption {
+    font-size: 12px;
+    line-height: 20px;
+  }
+
+  @media (width >= 500px) {
+    .article-quote__text {
+      padding-left: 24px;
+      font-size: 24px;
+      line-height: 36px;
+    }
+
+    .article-quote__caption {
+      font-size: 14px;
+      line-height: 22px;
+    }
+  }
+
+  @media (width >= 800px) {
+    .article-quote__text {
+      padding-left: 30px;
+      font-size: 30px;
+      line-height: 42px;
+    }
+
+    .article-quote__caption {
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+
+  .article-table {
+    display: flex;
+    margin: 60px 0;
+  }
+
+  .article-table th {
+    padding: 0 1px 17px;
+    border-bottom: 0.25px solid var(--color-table);
+    text-align: left;
+  }
+
+  .article-table td {
+    padding: 17px 0;
+    border-bottom: 0.25px solid var(--color-table);
+  }
+
+  .article-table p {
+    margin: 0;
+    padding: 0;
+  }
+
+  .article-unordered {
+    margin: 0;
+    list-style: none;
+  }
+
+  .article-unordered li {
+    margin-top: 24px;
+  }
+
+  .article-unordered li::before {
+    margin-left: -25px;
+    content: '—  ';
+  }
+
+  .article-unordered p {
+    display: inline;
+    margin: 0;
+    padding: 0;
+  }
+
+  .article-poem {
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 60px;
+  }
+
+  .article-poem div {
+    margin-left: 10%;
+  }
+
+  @media (width < 800px) {
+    .article-poem div {
+      margin-left: 0;
+    }
+  }
+
+  .article-poem div:not(:first-child) {
+    padding-top: 12px;
+  }
+
+  .article-poem p {
+    margin-top: 0 !important;
+    margin-bottom: 0;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: left;
+  }
+
+  .article-split tr {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .article-split td {
+    width: 100%;
+    padding: 0 2%;
+  }
+
+  @media (width >= 650px) {
+    .article-split tr {
+      flex-direction: row;
+    }
+
+    .article-split td {
+      width: 50%;
+    }
+  }
+
+  .article-split p {
+    margin: 0;
+    padding: 0;
+  }
+
+  .rendered h3 {
+    margin-top: 60px;
+    margin-bottom: 6px;
+    font-size: 27px;
+    font-weight: 700;
+    line-height: 36px;
+  }
+
+  .rendered h4 {
+    margin-top: 60px;
+    margin-bottom: 9px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+  }
+
+  .rendered p {
+    margin-top: 12px;
+  }
+
+  @media (width >= 500px) {
+    .rendered h3 {
+      margin-bottom: 3px;
+    }
+
+    .rendered h4 {
+      font-size: 18px;
+      line-height: 30px;
+    }
+
+    .rendered p {
+      margin-top: 18px;
+    }
+  }
+
+  @media (width >= 650px) {
+    .rendered h3 {
+      margin-bottom: 8px;
+      line-height: 30px;
+    }
+
+    .rendered h4 {
+      line-height: 31px;
+    }
+
+    .rendered p {
+      margin-top: 21px;
+    }
+  }
+
+  @media (width >= 800px) {
+    .rendered h3 {
+      margin-bottom: 12px;
+      font-size: 30px;
+      line-height: 36px;
+    }
+
+    .rendered h4 {
+      font-size: 20px;
+      line-height: 27px;
+    }
+
+    .rendered p {
+      margin-top: 24px;
+    }
+  }
+
+  @media (width >= 1100px) {
+    .rendered h3 {
+      margin-bottom: 14px;
+    }
+  }
+
+  .rendered h3 + p,
+  .rendered h4 + p {
+    margin-top: 0;
+  }
+
+  .timeline-entry {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 108px;
+  }
+
+  .timeline-date-image {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .timeline-date {
+    font-size: 27px;
+    font-weight: 700;
+    line-height: 36px;
+  }
+
+  .rendered .timeline-image {
+    align-self: center;
+    width: 172px;
+  }
+
+  .timeline-text-annotation {
+    display: flex;
+    flex-direction: column;
+    margin-top: 18px;
+  }
+
+  .timeline-text {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+  }
+
+  .timeline-text div:not(:last-child) {
+    margin-bottom: 20px;
+  }
+
+  .timeline-annotation {
+    margin-top: 30px;
+    margin-left: 60px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+  }
+
+  @media (width >= 500px) {
+    .timeline-entry {
+      margin-bottom: 44px;
+    }
+
+    .timeline-text {
+      font-size: 18px;
+      line-height: 30px;
+    }
+
+    .timeline-annotation {
+      margin-top: 36px;
+    }
+  }
+
+  @media (width >= 650px) {
+    .timeline-entry {
+      margin-bottom: 54px;
+    }
+
+    .timeline-text-annotation {
+      flex-direction: row;
+      margin-top: 24px;
+    }
+
+    .timeline-text {
+      min-width: 432px;
+      max-width: 432px;
+    }
+
+    .timeline-annotation {
+      margin-top: 0;
+      margin-left: 25px;
+    }
+  }
+
+  @media (width >= 800px) {
+    .timeline-entry {
+      flex-direction: row;
+      margin-bottom: 60px;
+    }
+
+    .timeline-date-image {
+      min-width: 124px;
+      max-width: 124px;
+    }
+
+    .timeline-date {
+      font-size: 30px;
+    }
+
+    .rendered .timeline-image {
+      align-self: auto;
+      width: 96px;
+    }
+
+    .timeline-text-annotation {
+      margin-top: 0;
+      margin-left: 20px;
+    }
+
+    .timeline-text {
+      font-size: 20px;
+      line-height: 36px;
+    }
+
+    .timeline-annotation {
+      margin-left: 49px;
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+
+  @media (width >= 1100px) {
+    .timeline-entry {
+      margin-bottom: 72px;
+    }
+
+    .timeline-date-image {
+      align-items: stretch;
+      min-width: 148px;
+      max-width: 148px;
+    }
+
+    .rendered .timeline-image {
+      align-self: flex-start;
+      width: 119px;
+      margin-top: 15px;
+    }
+
+    .timeline-text-annotation {
+      margin-left: 32px;
+    }
+
+    .timeline-text {
+      min-width: 540px;
+      max-width: 540px;
+    }
+
+    .timeline-annotation {
+      margin-left: 60px;
+    }
+  }
+}

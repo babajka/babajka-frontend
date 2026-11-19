@@ -17,6 +17,8 @@ type SocialOptions = {
   smallImage?: boolean;
   /** Page path with the locale, resolved against `metadataBase`, e.g. `/be/about`. */
   url?: string;
+  /** Printed as `og:type=article` with the `article:*` tags. */
+  article?: { authors: string[]; tags: string[]; publishedTime?: string };
 };
 
 export const socialMetadata = ({
@@ -26,9 +28,10 @@ export const socialMetadata = ({
   image = DEFAULT_IMAGE,
   smallImage = false,
   url,
+  article,
 }: SocialOptions): Pick<Metadata, 'openGraph' | 'twitter'> => ({
   openGraph: {
-    type: 'website',
+    ...(article ? { type: 'article', ...article } : { type: 'website' }),
     siteName: 'Wir.by',
     title,
     description,

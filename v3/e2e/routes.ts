@@ -24,6 +24,11 @@ export type Fixture = {
    * icon links). Skips only the ARIA snapshot check; pixels must still match.
    */
   ariaDiffers?: string;
+  /**
+   * Why v3's pixels intentionally differ from legacy, e.g. a legacy rendering bug. Skips only the
+   * screenshot check; the ARIA snapshot must still match.
+   */
+  pixelsDiffer?: string;
   /** Selectors to mask on this page, for both apps (their markup differs). */
   masks?: string[];
 };
@@ -78,6 +83,8 @@ export const FIXTURES: Fixture[] = [
     langs: BE,
     covers: ['CAROUSEL (swiper)'],
     unstable: ['slider position'],
+    ariaDiffers:
+      'Swiper 12 loops by moving slides; legacy Swiper 5 cloned the first and last slide',
   },
   {
     name: 'article-fillout-quiz',
@@ -105,6 +112,8 @@ export const FIXTURES: Fixture[] = [
     langs: BE,
     covers: ['COUB', 'POEM', 'HEADING'],
     unstable: ['coub iframe'],
+    pixelsDiffer:
+      'legacy renders a <div> player inside a <p>, so hydration puts each poem after a coub into an empty 480px player box',
   },
 
   // listings

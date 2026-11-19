@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import '../components/cards/cards.css';
+@import '../components/fibery/fibery.css';
 
 /*
  * Design tokens, ported from the legacy SCSS:
