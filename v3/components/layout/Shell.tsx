@@ -2,11 +2,19 @@
 
 import { useId, useState, type MouseEvent, type ReactNode } from 'react';
 
-import { useT } from '@/lib/i18n/client';
+import type { Lang } from '@/constants';
+import { useLang, useT } from '@/lib/i18n/client';
 import { cn } from '@/lib/utils/cn';
 
 import GoUp from './GoUp';
 import { SidebarContext } from './SidebarContext';
+
+/** Not in the dictionary (the Google Sheet): a new key there would need the sheet edited first. */
+const SKIP_LINK: Record<Lang, string> = {
+  be: 'Да зместу',
+  ru: 'К содержанию',
+  en: 'Skip to content',
+};
 
 type ShellProps = {
   children: ReactNode;
@@ -29,6 +37,8 @@ const Shell = ({ children, header, sidebar, footer }: ShellProps) => {
   // Not a fixed id: Next 16 keeps the previous page mounted (hidden) after navigation, so fixed ids
   // would be duplicated in the DOM.
   const id = useId();
+  const mainId = `${id}main`;
+  const lang = useLang();
   const context = {
     open,
     id,
@@ -54,9 +64,17 @@ const Shell = ({ children, header, sidebar, footer }: ShellProps) => {
         )}
       >
         <div className="flex min-h-screen max-w-screen min-w-(--min-website-width) flex-col sidebar:grow">
+          <a
+            href={`#${mainId}`}
+            className="sr-only link focus-visible:not-sr-only focus-visible:fixed focus-visible:top-2 focus-visible:left-2 focus-visible:z-[1000] focus-visible:bg-white focus-visible:px-4 focus-visible:py-2"
+          >
+            {SKIP_LINK[lang]}
+          </a>
           {header}
 
-          <main className="flex-[1_0_auto]">{children}</main>
+          <main id={mainId} tabIndex={-1} className="flex-[1_0_auto] outline-none">
+            {children}
+          </main>
 
           {footer && <div className="wir-footer shrink-0">{footer}</div>}
 

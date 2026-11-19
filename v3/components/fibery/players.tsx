@@ -16,7 +16,8 @@ export const VideoPlayer = ({ videoId }: { videoId: string }) => (
     <span className="block h-[200px] tablet:h-[300px] tablet-lg:h-[400px] desktop:h-[600px]">
       <iframe
         className="block size-full"
-        title="VideoPlayer"
+        title="YouTube"
+        loading="lazy"
         src={`${YOUTUBE_EMBED_PREFIX}/${videoId}`}
         allowFullScreen
       />
@@ -29,7 +30,8 @@ export const CoubPlayer = ({ coubId }: { coubId: string }) => (
     <span className="block size-[200px] touch:size-[240px] tablet:size-[300px] tablet-lg:size-[360px] desktop:size-[480px]">
       <iframe
         className="block size-full"
-        title="CoubPlayer"
+        title="Coub"
+        loading="lazy"
         src={`https://coub.com/embed/${coubId}?muted=false&autostart=false&originalSize=false&startWithHD=true`}
         allow="autoplay"
         allowFullScreen
@@ -45,7 +47,8 @@ export const PlaylistPlayer = ({ playlistUsername, playlistId }: PlaylistPlayerP
   <span className={INTERACTIVE}>
     <iframe
       className="block h-[480px] w-full tablet:h-[420px]"
-      title="AudioPlayer"
+      title="Яндекс Музыка"
+      loading="lazy"
       src={`${YANDEX_MUSIC_EMBED_PREFIX}/#playlist/${playlistUsername}/${playlistId}`}
     />
   </span>

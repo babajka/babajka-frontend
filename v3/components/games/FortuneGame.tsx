@@ -50,7 +50,7 @@ const FortuneGame = ({ title, description }: { title: string; description: strin
 
   return (
     <>
-      <div className="flex min-h-[256px] flex-col justify-center text-center">
+      <div className="flex min-h-[256px] flex-col justify-center text-center" aria-live="polite">
         {cookie ? (
           <>
             <span className="text-2xl leading-[31.2px] touch:text-[27px] touch:leading-[39px] tablet-lg:text-[30px] tablet-lg:leading-[42.9px] desktop:leading-[48px]">

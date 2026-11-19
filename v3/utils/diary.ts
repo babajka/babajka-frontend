@@ -57,5 +57,5 @@ export const getDiaryShareText = ({
     ? `Сёння, у ${getYear(date)} годзе, `
     : `${formatLocalizedDate(date, lang, DATE_FORMAT)} `;
   const base = `${when}${name} ${wrote}`;
-  return { basicText: `${base}...`, extendedText: `${base}:\n«${content}...»\n` };
+  return { basicText: `${base}…`, extendedText: `${base}:\n«${content}…»\n` };
 };

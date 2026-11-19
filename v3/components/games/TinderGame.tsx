@@ -14,6 +14,7 @@ const SHARE_TEXT = 'Знайдзі сабе пару на: ';
 const MATCH_IMAGE_URL =
   'https://res.cloudinary.com/wir-by/image/upload/c_scale,w_457,f_auto,q_auto/v1612824869/production/games/game-tinder-match.png';
 const MATCH_CHANCE = 0.7;
+const MATCH_LABEL = 'It’s a match!';
 
 export type TinderProfile = {
   id: string;
@@ -143,10 +144,16 @@ const TinderGame = ({ title, profiles: initialProfiles }: TinderGameProps) => {
       {isMatch && profile && (
         <>
           <div className="fixed inset-0 z-[600] bg-black opacity-90" />
-          <div className="fixed inset-0 z-[700] flex flex-col items-center overflow-y-scroll text-base leading-6">
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label={MATCH_LABEL}
+            className="fixed inset-0 z-[700] flex flex-col items-center overflow-y-scroll overscroll-contain text-base leading-6"
+            onKeyDown={event => event.key === 'Escape' && closeMatch()}
+          >
             <div className="mt-7 mb-5 flex shrink-0 flex-col items-center justify-center">
               {/* eslint-disable-next-line @next/next/no-img-element -- a fixed image from a CDN */}
-              <img className="w-[456px] max-w-full" alt="It's a match!" src={MATCH_IMAGE_URL} />
+              <img className="w-[456px] max-w-full" alt={MATCH_LABEL} src={MATCH_IMAGE_URL} />
               {/* eslint-disable-next-line @next/next/no-img-element -- the original photo */}
               <img
                 className="z-[500] mt-6 size-[90px] rounded-full"
@@ -159,6 +166,8 @@ const TinderGame = ({ title, profiles: initialProfiles }: TinderGameProps) => {
               </div>
               <Button
                 className={cn(ACTION_BUTTON, 'mx-3 mt-[60px] px-6 py-2 text-xl leading-9')}
+                // The popup takes the focus, so the keyboard can close it right away.
+                ref={button => button?.focus({ preventScroll: true })}
                 onClick={closeMatch}
               >
                 {profilesLeft > 1 ? 'Добра, хачу іншых паглядзець' : 'Дзякуй!'}

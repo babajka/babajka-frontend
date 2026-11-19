@@ -348,6 +348,13 @@ Each page is done when:
 - [x] `game/ny2021`, `game/tinder` (route group without the shared header):
   - The profiles are shuffled in the browser after hydration; legacy shuffled once per build, so everybody saw the same order.
   - Stats go from the browser to `/api/games/tinder/stats`. A failed request no longer blocks the game.
+- [x] `web-design-guidelines` review of every page. Fixed where `main` keeps legacy's accessibility tree, which `visual:compare` checks:
+  - a skip link to `<main>` (outside it), visible focus rings on buttons and button groups,
+  - a disabled link (the diary's "next") leaves the tab order; `Clickable` reacts to Space as well as Enter,
+  - player iframes have real titles and `loading="lazy"`,
+  - the Tinder match popup is a modal dialog: it takes the focus and closes on Escape; the fortune result is announced (`aria-live`),
+  - `…` instead of `...` in the diary's description and share text.
+  - The rest changes the accessibility tree, so it waits until after cutover, see Phase 5, item 15.
 
 ## Phase 5 — Performance & quality (do along the way, measure before/after)
 
@@ -381,6 +388,12 @@ Measure each item against legacy with the bundle analyzer and Web Vitals (Lighth
 12. **React Compiler** on, so no manual memoization (`useMemo(localizeData)` etc.).
 13. **Optional:** `<ViewTransition>` page transitions (React 19.3 stable) via the `react-view-transitions` skill.
 14. **Before cutover:** run `/next-bundle-optimizer`, compare `next analyze` snapshots, and set budgets in CI. These replace `size-limit`.
+15. **Accessibility beyond legacy parity** (from the Phase 4 `web-design-guidelines` review; each one changes the ARIA snapshots, so re-take them on purpose):
+    - Heading levels: the article body jumps from `<h1>` to `<h3>`/`<h4>`; the diary has two `<h1>` (date and author); tag names on the topic page and profile names in Tinder aren't headings.
+    - `<img>` without `width`/`height` (CLS): covered by item 3.
+    - `text-wrap: balance` on titles (changes line breaks, so pixels too).
+    - The ex.co quiz spinner has no accessible name; the diary arrows' SVGs aren't `aria-hidden` (legacy exposes them as unnamed images).
+    - Lists: the article's tag row and the collection note's article list are `<div>`s, not `<ul>`.
 
 ## Phase 6 — Side-by-side deploy & cutover
 
