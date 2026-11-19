@@ -61,12 +61,20 @@ const getPage = async ({ params }: PageProps<'/[lang]/article/[slug]'>) => {
   return orNotFound(getLocalizedArticlePage(decodeURIComponent(slug), lang));
 };
 
-/** The newest articles are prerendered, the others are rendered and cached on the first visit. */
+/**
+ * The newest articles are prerendered, the others are cached on the first visit. A backend failure
+ * here shouldn't fail the build: one article is enough to validate the route.
+ */
 export async function generateStaticParams() {
-  const { data } = await getArticles({ take: 12 });
-  return data.flatMap(({ locales }) =>
-    Object.values(locales).flatMap(locale => (locale ? [{ slug: locale.slug }] : []))
-  );
+  try {
+    const { data } = await getArticles({ take: 12 });
+    return data.flatMap(({ locales }) =>
+      Object.values(locales).flatMap(locale => (locale ? [{ slug: locale.slug }] : []))
+    );
+  } catch (error) {
+    console.error('generateStaticParams: backend request failed', error);
+    return [{ slug: 'kupala-kolas' }];
+  }
 }
 
 export async function generateMetadata(
