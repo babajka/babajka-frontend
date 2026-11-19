@@ -333,11 +333,14 @@ Each page is done when:
   - Localized on the server, in a cached loader (`getLocalizedMainPage`); legacy localized in the browser after hydration, which caused a flash.
   - The diary's "next" arrow is off on the entry the block opened with (today), so it doesn't depend on the browser's clock.
   - `visual.spec.ts` scrolls through the page first, so lazy images are loaded in both apps before the screenshot.
-- [ ] `article/[slug]` — the biggest one:
-  - Port the Fibery renderer (`utils/fibery/*`) as **server components**.
-  - Embeds become client islands only where needed.
-  - `generateMetadata` with `article:*` tags and other-locale links.
-  - ex.co / Fillout quizzes via `next/script`.
+- [x] `article/[slug]`:
+  - The Fibery renderer is Server Components (`components/fibery/renderer.tsx`). Client islands: the carousel (Swiper 12, loaded only on articles that have one) and the quizzes. Players are spans, because they can stand inside a paragraph.
+  - ex.co loads through `next/script`. Fillout keeps legacy's script injection: its SDK only scans the page when it runs, so it has to run again on every mount.
+  - `generateMetadata` prints `og:type=article` and the `article:*` tags; `@header/article/[slug]` has the links to the other languages.
+  - The 12 newest articles are prerendered, the others are cached on the first visit. The route waits for the article (`instant = false`).
+  - A status doesn't survive a `'use cache'` boundary, so the loader returns `null` on a 404 (`requestOrNull`).
+  - **A missing article answers `200` with the 404 page and `noindex`** (legacy: `404`). The prerendered shell starts the response before the backend answers, and Next can't change the status after that.
+  - Known differences: legacy's `article-coub-poem` breaks on hydration (an empty 480px box after each coub), v3 doesn't (`pixelsDiffer` in `e2e/routes.ts`). Swiper 12 doesn't clone slides (`ariaDiffers`).
 - [ ] `topic/[topic]`, `topic/[topic]/tag/[tag]`, `collection/[slug]`.
 - [ ] `diary/[[...slug]]`:
   - "Today" is computed from a date string passed into a cached loader.

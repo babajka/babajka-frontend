@@ -1,5 +1,4 @@
 // Ported from legacy `constants/social.js` (the parts the layout shell uses).
-// Podcast badges and episode links are added with the article page (Phase 4).
 
 import {
   FacebookIcon,
@@ -15,6 +14,9 @@ import {
 
 export const FACEBOOK_APP_ID = '332376853960377';
 export const TWITTER_HANDLE = '@wir_by';
+
+export const YOUTUBE_EMBED_PREFIX = 'https://www.youtube.com/embed';
+export const YANDEX_MUSIC_EMBED_PREFIX = 'https://music.yandex.ru/iframe';
 
 /** Our pages in social networks (footer, error page). */
 export const NETWORKS = [
@@ -90,17 +92,37 @@ export const SHARE_NETWORKS = [
   },
 ] as const;
 
-export const PODCASTS_PLATFORMS = [
+const BADGES = 'https://res.cloudinary.com/wir-by/image/upload/c_scale,h_100,f_auto,q_auto';
+
+type PodcastPlatform = {
+  id: string;
+  label: string;
+  link: string;
+  badgeLink?: string;
+  episodeLink?: (episodeId: string) => string;
+};
+
+export const PODCASTS_PLATFORMS: PodcastPlatform[] = [
   {
     id: 'applepodcasts',
     label: 'Apple Podcasts',
     link: 'https://podcasts.apple.com/by/podcast/id1511316106',
+    badgeLink: `${BADGES}/v1716138382/production/podcast-platforms/apple.png`,
+    episodeLink: id => `https://podcasts.apple.com/by/podcast/id1511316106?i=${id}`,
   },
-  { id: 'yandexmusic', label: 'Yandex Music', link: 'https://music.yandex.ru/album/10622616' },
+  {
+    id: 'yandexmusic',
+    label: 'Yandex Music',
+    link: 'https://music.yandex.ru/album/10622616',
+    badgeLink: `${BADGES}/v1716139098/production/podcast-platforms/yandex.png`,
+    episodeLink: id => `https://music.yandex.com/album/10622616/track/${id}`,
+  },
   {
     id: 'spotifypodcasts',
     label: 'Spotify',
     link: 'https://open.spotify.com/show/61Q5hmZfpw3fDoNM6cGir5',
+    badgeLink: `${BADGES}/v1716139336/production/podcast-platforms/spotify.png`,
+    episodeLink: id => `https://open.spotify.com/episode/${id}`,
   },
   {
     id: 'youtubepodcasts',
@@ -110,7 +132,7 @@ export const PODCASTS_PLATFORMS = [
   { id: 'soundcloudpodcasts', label: 'SoundCloud', link: 'https://soundcloud.com/user-779783062' },
   { id: 'castboxpodcasts', label: 'Castbox', link: 'https://castbox.fm/vc/2834723' },
   { id: 'overcastpodcasts', label: 'Overcast', link: 'https://overcast.fm/itunes1511316106' },
-] as const;
+];
 
 export const DEFAULT_KEYWORDS = [
   'wir',

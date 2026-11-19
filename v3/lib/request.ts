@@ -63,14 +63,34 @@ export const request = async <T = unknown>(
   return response.json() as Promise<T>;
 };
 
-/** `const article = await orNotFound(getArticle(slug))`: a backend 404 renders the 404 page. */
-export const orNotFound = async <T>(promise: Promise<T>): Promise<T> => {
+/**
+ * For loaders with `'use cache'`: an error doesn't keep its status across the cache boundary, so a
+ * backend 404 is returned as `null`, for `orNotFound()` to handle.
+ */
+export const requestOrNull = async <T = unknown>(path: string): Promise<T | null> => {
   try {
-    return await promise;
+    return await request<T>(path);
+  } catch (error) {
+    if (isNotFoundError(error)) {
+      return null;
+    }
+    throw error;
+  }
+};
+
+/** `const article = await orNotFound(getArticle(slug))`: a missing resource renders the 404 page. */
+export const orNotFound = async <T>(promise: Promise<T>): Promise<NonNullable<T>> => {
+  let value: T;
+  try {
+    value = await promise;
   } catch (error) {
     if (isNotFoundError(error)) {
       notFound();
     }
     throw error;
   }
+  if (value === null || value === undefined) {
+    notFound();
+  }
+  return value;
 };

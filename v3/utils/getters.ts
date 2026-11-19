@@ -39,7 +39,7 @@ export type RawSuggested = { blocks: unknown; data: RawBlocksData };
 
 export type RawArticle = Raw & {
   _id: string;
-  locales: Localized<Raw & { text?: Raw; metrics?: unknown }>;
+  locales: Localized<Raw & { slug: string; text?: Raw; metrics?: unknown }>;
   collection?: RawCollection | null;
   publishAt?: string;
   tags?: RawTag[] | null;

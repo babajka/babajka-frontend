@@ -7,25 +7,49 @@
 //   and the backend can revalidate it right away by tag.
 // - `minutes`: pages that change with new publications or by date (main page, sidebar, diary).
 //
-// Loaders throw `RequestError` on backend errors. Pages map a 404 with `orNotFound()`
-// (lib/request.ts). Errors are not cached.
+// Loaders throw `RequestError` on backend errors, which are not cached. A status doesn't survive
+// the cache boundary, so loaders of pages that can be missing return `null` on a 404
+// (`requestOrNull`), and pages map it with `orNotFound()` (lib/request.ts).
 import { cacheLife, cacheTag } from 'next/cache';
 
 import type { Lang, Topic } from '@/constants';
 import { api, type Pagination } from '@/lib/api';
 import { CACHE_TAGS } from '@/lib/cache-tags';
-import { request } from '@/lib/request';
+import { request, requestOrNull } from '@/lib/request';
 import type { ArticlesChunk, DiaryResponse, MainPage } from '@/lib/types';
-import { localizeData } from '@/utils/getters';
+import {
+  getLocalesBySlug,
+  getLocalizedArticle,
+  localizeData,
+  type LocalizedArticle,
+  type RawArticle,
+} from '@/utils/getters';
 
 // Response types of the endpoints below are added with the pages that use them (Phase 4).
 type Unported = unknown;
 
-export const getArticle = async (slug: string) => {
+/**
+ * An article in the language of its slug, with links to the other languages. Localized inside the
+ * cache, because localizing reads the current time.
+ */
+export const getLocalizedArticlePage = async (slug: string, fallbackLang: Lang) => {
   'use cache';
   cacheLife('hours');
   cacheTag(CACHE_TAGS.articles, CACHE_TAGS.article(slug));
-  return request<Unported>(api.publicArticle.getBySlug(slug));
+  const raw = await requestOrNull<RawArticle>(api.publicArticle.getBySlug(slug));
+  if (!raw) {
+    // It may be published soon.
+    cacheLife('minutes');
+    return null;
+  }
+  const locale = getLocalesBySlug(raw)[slug] ?? fallbackLang;
+  return {
+    article: getLocalizedArticle(raw, locale) as LocalizedArticle,
+    locale,
+    otherLocales: Object.entries(raw.locales).flatMap(([lang, value]) =>
+      value && lang !== locale ? [{ locale: lang as Lang, slug: String(value.slug) }] : []
+    ),
+  };
 };
 
 export const getArticles = async (pagination: Pagination) => {

@@ -88,3 +88,13 @@ describe('lib/request', () => {
     });
   });
 });
+
+describe('orNotFound with null', () => {
+  it('renders the 404 page for a missing resource', async () => {
+    await expect(orNotFound(Promise.resolve(null))).rejects.toThrow();
+  });
+
+  it('returns the value otherwise', async () => {
+    await expect(orNotFound(Promise.resolve(0))).resolves.toBe(0);
+  });
+});
