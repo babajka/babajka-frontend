@@ -22,11 +22,21 @@ export const FeaturedBlock = ({
     </BlockWrapper>
   ) : null;
 
-type TwoArticlesInRowProps = BaseProps & { first?: LocalizedArticle; second?: LocalizedArticle };
+type TwoArticlesInRowProps = BaseProps & {
+  first?: LocalizedArticle;
+  second?: LocalizedArticle;
+  className?: string;
+};
 
 /** Legacy blocks/articles/TwoArticlesInRow.js. */
-export const TwoArticlesInRow = ({ first, second, lang, inViewport }: TwoArticlesInRowProps) => (
-  <BlockWrapper className="flex flex-col justify-between tablet-lg:flex-row">
+export const TwoArticlesInRow = ({
+  first,
+  second,
+  lang,
+  inViewport,
+  className,
+}: TwoArticlesInRowProps) => (
+  <BlockWrapper className={cn('flex flex-col justify-between tablet-lg:flex-row', className)}>
     <div className="mb-[30px] tablet-lg:mb-0">
       {first && (
         <ArticleCard
